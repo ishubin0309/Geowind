@@ -35,7 +35,7 @@ class Parcelle
     /**
      * @var Departement
      *
-     * @ORM\OneToOne(targetEntity="Departement")
+     * @ORM\ManyToOne(targetEntity="Departement")
      */
     private $departement;
 
