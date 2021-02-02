@@ -1,0 +1,360 @@
+{% extends 'base.html.twig' %}
+
+{% set title = 'Portail' %}
+{% set item = 'portail' %}
+
+{% block body %}
+
+  <div class="container-fluid">
+
+    {% if is_granted('ROLE_CREATE') %}
+      <a href="{{ path('liste_new') }}" class="btn btn-success btn-sm"><i class="fa fa-paperclip"></i> Importer Liste</a>
+      <a href="{{ path('projet_new') }}" class="btn btn-success btn-sm"><i class="fa fa-file-o"></i> Nouvelle fiche</a>
+    {% endif %}
+    <a id="button-show" class="btn btn-primary btn-sm disabled"><i class="fa fa-fw fa-eye"></i> Afficher</a>
+    <a id="button-export" class="btn btn-primary btn-sm disabled"><i class="fa fa-fw fa-file-excel-o"></i> CSV</a>
+    <button id="button-delete" class="btn btn-danger btn-sm" disabled data-placement="right" title="Double click"><i class="fa fa-fw fa-trash"></i> Supprimer</button>
+    {#<a id="button-edit" class="btn btn-warning btn-sm disabled"><i class="fa fa-fw fa-pencil"></i> Editer</a>#}
+    {% if is_granted('ROLE_EDIT_ALL') and liste.id is defined %}
+      <button id="button-liste-delete" class="btn btn-danger btn-sm" title="Double click"><i class="fa fa-fw fa-trash"></i> Supprimer Liste</button>
+    {% endif %}
+    <br>
+    {% set projetsPageTotal = 0 %}
+    {% for projet in projets %}{% set projetsPageTotal = projetsPageTotal + 1 %}{% endfor %}
+    <h4 id="selected-counter">0 site sélectionné sur {{ projetsPageTotal }}</h4>
+    <nav style="margin-left:20%;" aria-label="Page navigation center-text">
+      <ul class="pagination">
+        {% if totalPages %}
+        {% set route_path = liste.id is defined ? path('view_liste', {'liste' : liste.id}) : path('homepage') %}
+        <li class="page-item {% if page <= 0 %}disabled{% endif %}"><a class="page-link" href="{% if page > 1 %}{{ route_path ~ '?page=' ~ (page - 1) }}{% endif %}">Précédent</a></li>
+        {% for i in 1..totalPages %}
+          <li class="page-item {% if page == i %}active{% endif %}"><a class="page-link" href="{{ route_path ~ '?page=' ~ i }}">{{ i }}</a></li>
+        {% endfor %}
+        {% endif %}
+        <li class="page-item {% if page >= totalPages %}disabled{% endif %}"><a class="page-link" href="{% if page < totalPages %}{{ route_path ~ '?page=' ~ (page + 1) }}{% endif %}">Suivant</a></li>
+      </ul>
+    </nav>
+
+  </div>
+
+  <div id="start-grid"></div>
+  <div id="grid" class="excel-grid"></div>
+
+  <div id="export-modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Exporter CSV</h4>
+        </div>
+        <form id="csv-form" method="POST">
+          <div class="modal-body">
+            <input id="export-csv-ids" type="hidden" name="ids">
+            {% for key, option in export_option.optionList %}
+              <label><input type="checkbox" name="selectedFields[]" checked value="{{ key }}"> {{ option }}</label><br>
+            {% endfor %}
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+            <button type="submit" class="btn btn-success"><i class="fa fa-fw fa-file-excel-o"></i> Export CSV</button>
+          </div>
+        </form>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+
+{% endblock %}
+
+{% block js %}
+
+  <script>
+
+    $("#grid").css({ top: $('#start-grid').position().top + 'px' });
+
+    var options = {
+      enableCellNavigation: true,
+      enableColumnReorder: false,
+      enableTextSelectionOnCells: true,
+      forceFitColumns: false
+    };
+
+    var checkboxSelector = new Slick.CheckboxSelectColumn({
+      cssClass: "slick-cell-checkboxsel"
+    });
+
+    var typeProjet = {{ grid_helper.getJsontypeProjets|raw }};
+    var typeSite = {{ grid_helper.getJsontypeSites|raw }};
+    var phases = {{ grid_helper.getJsonPhases|raw }};
+    var progressions = {{ grid_helper.getJsonProgressions|raw }};
+    var environnements = {{ grid_helper.getJsonEnvironnements|raw }};
+
+    function typeProjetFormatter(row, cell, value, columnDef, dataContext) {
+      return typeProjet[value] !== undefined ? typeProjet[value]['name'] : value;
+    }
+
+    function typeSiteFormatter(row, cell, value, columnDef, dataContext) {
+      return typeSite[value] !== undefined ? typeSite[value]['name'] : value;
+    }
+
+    function phaseFormatter(row, cell, value, columnDef, dataContext) {
+      return phases[value] !== undefined ? phases[value]['name'] : value;
+    }
+
+    function progressionFormatter(row, cell, value, columnDef, dataContext) {
+      return progressions[value] !== undefined ? progressions[value]['name'] : value;
+    }
+
+    function environnementFormatter(row, cell, value, columnDef, dataContext) {
+      return environnements[value]['name'];
+    }
+
+    var flashCircle = '{{ asset('images/circle-flash.gif')|e('js') }}';
+    function progressionIndicateurFormatter(row, cell, value, columnDef, dataContext) {
+      var color = progressions[value]['color'];
+      var classes = 'indicateur';
+      if (value == 'en_verif') {
+        var classes = 'indicateur-flash';
+        return '<div class="' + classes + '"></div>';
+      }
+      return '<div class="' + classes + '" style="background:'+color+';"></div>';
+    }
+
+    var checkboxColumn = checkboxSelector.getColumnDefinition();
+    checkboxColumn.maxWidth = 25;
+    checkboxColumn.width = 25;
+    checkboxColumn.headerCssClass = 'slick-header-column-checkboxsel';
+
+    var grid;
+    var dataView = new Slick.Data.DataView();
+
+    var columns = [
+      checkboxColumn,
+      { id: "id", name: "ID", field: "id", width: 70, maxWidth: 100, sortable: true, sorter: numericSorter, },
+      { id: "typeProjet", name: "Type de projet", field: "typeProjet", width: 70, maxWidth: 250, formatter: typeProjetFormatter, sortable: true, sorter: stringSorter, },
+      { id: "typeSite", name: "Type de Site", field: "typeSite", width: 70, maxWidth: 250, formatter: typeSiteFormatter, sortable: true, sorter: stringSorter, },
+      { id: "environnement", name: "Environnement", field: "environnement", sortable: true, sorter: stringSorter, formatter: environnementFormatter, width: 110, maxWidth: 110 },
+      { id: "origine", name: "Origine", field: "origine", sortable: true, sorter: stringSorter, width: 130, maxWidth: 250 },
+      {# { id: "chefProjet", name: "Chef de projet", field: "chefProjet", sortable: true, sorter: stringSorter, width: 130, maxWidth: 250 }, #}
+      {# { id: "partenaire", name: "Partenaire", field: "partenaire", sortable: true, sorter: stringSorter, width: 130, maxWidth: 250 }, #}
+      { id: "potentiel", name: "Potentiel (MW)", field: "potentiel", sortable: true, cssClass: 'text-right', sorter: numericSorter, width: 100, maxWidth: 100 },
+      { id: "region", name: "Région", field: "region", sortable: true, sorter: stringSorter, maxWidth: 250 },
+      { id: "departement", name: "Département", field: "departement", sortable: true, sorter: stringSorter, maxWidth: 250 },
+      { id: "phase", name: "Phase", field: "phase", sortable: true, sorter: stringSorter, formatter: phaseFormatter, width: 110, maxWidth: 110 },
+      { id: "progression", name: "Etat", field: "progression", sortable: true, sorter: stringSorter, formatter: progressionFormatter, width: 110, maxWidth: 110 },
+      {# { id: "engage", name: "Engagé(€HT)", field: "engage", sortable: true, sorter: numericSorter, cssClass: 'text-right', width: 90, maxWidth: 90 }, #}
+      {# { id: "paye", name: "Payé(€HT)", field: "paye", sortable: true, sorter: numericSorter, cssClass: 'text-right', width: 80, maxWidth: 80 }, #}
+      { id: "dateCrea", name: '<strong>Date création</strong><br>Date maj', headerCssClass: "column-date-switch", field: "dateCrea", sortable: true, sorter: dateSorter, width: 100, maxWidth: 100, header: {
+        buttons: [
+          {
+            cssClass: "switch-current-crea",
+            command: "toggle-date",
+          }
+        ]
+      }},
+      { id: "progressionIndicateur", name: "", field: "progressionIndicateur", width: 26, maxWidth: 26, cssClass: 'column-progression-indicateur', formatter: progressionIndicateurFormatter },
+    ];
+
+
+    $(function () {
+      var data = [];
+
+      {% for projet in projets %}
+        data.push({
+          id: {{ projet.id }},
+          typeProjet: '{{ projet.typeProjet }}',
+          typeSite: '{{ projet.typeSite }}',
+          origine: '{{ projet.origine }}',
+          chefProjet: '{{ projet.chefProjet }}',
+          partenaire: '{{ projet.partenaire }}',
+          potentiel: {{ projet.potentiel }},
+          region: '{{ projet.departement.region|e('js') }}',
+          departement: '{{ projet.departement|e('js') }}',
+          environnement: '{{ projet.environnement }}',
+          dateCrea: '{{ projet.dateCreation|date('d/m/Y') }}',
+          dateMaj: '{{ projet.dateMaj|date('d/m/Y') }}',
+          {# engage: {{ projet.montantEngage }}, #}
+          {# paye: {{ projet.montantPaye }}, #}
+          phase: '{{ projet.phase|e('js') }}',
+          progression: '{{ projet.progression }}',
+          progressionIndicateur: '{{ projet.progression }}',
+          canEdit: {{ is_granted('edit', projet) ? 1 : 0 }},
+        });
+      {% endfor %}
+      dataView.setItems(data);
+
+
+      grid = new Slick.Grid("#grid", dataView, columns, options);
+      grid.registerPlugin( new Slick.AutoTooltips({ enableForHeaderCells: true }) );
+      grid.registerPlugin(checkboxSelector);
+      grid.setSelectionModel(new Slick.RowSelectionModel({selectActiveRow: false}));
+
+      var headerButtonsPlugin = new Slick.Plugins.HeaderButtons();
+      headerButtonsPlugin.onCommand.subscribe(function(e, args) {
+        var button = args.button;
+        var command = args.command;
+        if (command == "toggle-date") {
+          if (button.cssClass == "switch-current-crea") {
+            button.cssClass = "switch-current-maj";
+            args.column.field = 'dateMaj';
+            args.column.name = 'Date cre<br><strong>Date maj</strong>';
+          } else {
+            button.cssClass = "switch-current-crea";
+            args.column.field = 'dateCrea';
+            args.column.name = '<strong>Date cre</strong><br>Date maj';
+          }
+          grid.setColumns(grid.getColumns());
+        }
+      });
+
+      grid.registerPlugin(headerButtonsPlugin);
+
+      grid.autosizeColumns();
+
+      dataView.syncGridSelection(grid, true);
+
+      grid.onSelectedRowsChanged.subscribe(function() {
+        selectedRows = grid.getSelectedRows();
+        var selected = selectedRows.length;
+        var total = grid.getDataLength();
+
+        var ids = [];
+        for (var i = 0, len = selectedRows.length; i < len; ++i) {
+          var item = dataView.getItem(selectedRows[i]);
+          ids.push(item.id);
+        }
+
+        if (selected > 1) {
+          $('#button-delete').prop('disabled', false);
+          $('#button-edit').addClass('disabled');
+          $('#button-show').removeClass('disabled');
+          $('#button-export').removeClass('disabled');
+          $('#button-show').attr('href', Routing.generate('projet_index', { show: ids.join() }));
+
+        } else if (selected === 1) {
+
+          var item = dataView.getItem(selectedRows[0]);
+          var id = item.id;
+          $('#button-delete').prop('disabled', false);
+
+          if (item.canEdit) {
+            $('#button-edit').removeClass('disabled');
+            $('#button-edit').attr('href', Routing.generate('projet_edit', { id: id }));
+          }
+
+          $('#button-show').removeClass('disabled');
+          $('#button-export').removeClass('disabled');
+          $('#button-show').attr('href', Routing.generate('projet_index', { show: ids.join() }));
+
+        } else {
+          $('#button-delete').prop('disabled', true);
+          $('#button-edit').addClass('disabled');
+          $('#button-show').addClass('disabled');
+          $('#button-export').addClass('disabled');
+        }
+
+
+
+        if (selected > 1) {
+          $('#selected-counter').text(selected + ' sites sélectionnés sur ' + total);
+        } else {
+          $('#selected-counter').text(selected + ' site sélectionné sur ' + total);
+        }
+
+      });
+
+      grid.onSort.subscribe(function(e, args) {
+        sortdir = args.sortAsc ? 1 : -1;
+        sortcol = args.sortCol.field;
+        dataView.sort(args.sortCol.sorter, sortdir);
+        args.grid.invalidateAllRows();
+        args.grid.render();
+      });
+
+      $(window).resize(function(){
+        $("#grid").css({ top: $('#start-grid').position().top + 'px' });
+        grid.resizeCanvas();
+      });
+      
+      $('#button-export').click(function () {
+        var ids = dataView.mapRowsToIds(selectedRows);
+        $('#export-csv-ids').val(ids.join());
+        $('#csv-form').attr('action', Routing.generate('projet_bulk_csv'));
+        $('#export-modal').modal('toggle');
+      });
+      {% if liste.id is defined %}
+      $('#button-liste-delete').dblclick(function() {
+        swal({
+          title: "Supprimer La Liste « {{liste.listeOriginalName}} » ?",
+          text: "La liste avec tous ces sites seront supprimés définitivement.",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#DD6B55",
+          confirmButtonText: "Supprimer",
+          cancelButtonText: "Annuler",
+          closeOnConfirm: false,
+          closeOnCancel: true,
+          allowOutsideClick: true,
+          showLoaderOnConfirm: true,
+        },
+        function(isConfirm){
+          if (isConfirm) {
+            var csrf = '{{ csrf_token('token')|e('js') }}';
+            $.ajax({
+              url: Routing.generate('liste_delete'),
+              type: 'DELETE',
+              data: { id: {{ liste.id }}, token: csrf  },
+              success: function(result) {
+                location.reload();
+              }
+            });
+          } else {
+
+          }
+        });
+      });
+      {% endif %}
+      $('#button-delete').dblclick(function() {
+        var selectedRows = grid.getSelectedRows();
+
+        if (selectedRows.length == 0) {
+          return;
+        }
+
+        var ids = dataView.mapRowsToIds(selectedRows);
+
+        swal({
+          title: "Supprimer ?",
+          text: "Les sites sélectionnés seront supprimés définitivement.",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#DD6B55",
+          confirmButtonText: "Supprimer",
+          cancelButtonText: "Annuler",
+          closeOnConfirm: false,
+          closeOnCancel: true,
+          allowOutsideClick: true,
+          showLoaderOnConfirm: true,
+        },
+        function(isConfirm){
+          if (isConfirm) {
+            var csrf = '{{ csrf_token('token')|e('js') }}';
+            $.ajax({
+              url: Routing.generate('projet_batch_delete'),
+              type: 'DELETE',
+              data: { ids: ids, token: csrf  },
+              success: function(result) {
+                location.reload();
+              }
+            });
+          } else {
+
+          }
+        });
+
+      });
+
+    });
+  </script>
+
+{% endblock %}

@@ -1,0 +1,51 @@
+# To get started with security, check out the documentation:
+# http://symfony.com/doc/current/security.html
+security:
+
+    always_authenticate_before_granting: true
+    
+    access_decision_manager:
+        strategy: unanimous
+
+    encoders:
+        AppBundle\Entity\User:
+            algorithm: bcrypt
+
+    providers:
+        main:
+            entity:
+                class: AppBundle:User
+                property: username
+
+    firewalls:
+        # disables authentication for assets and the profiler, adapt it according to your needs
+        dev:
+            pattern: ^/(_(profiler|wdt)|assets|vendor)/
+            security: false
+
+        main:
+            provider: main
+            form_login:
+                login_path:           login
+                check_path:           login_check
+                default_target_path:  homepage
+            logout:
+                path: /app/logout
+                target: /
+            anonymous:    true
+            remember_me:
+                secret: "%secret%"
+                lifetime: 604800 # 7 jours en secondes
+                path:     /
+                domain:   ~
+
+    role_hierarchy:
+        ROLE_ADMIN: [ROLE_VIEW_ALL, ROLE_EDIT_ALL]
+        ROLE_VIEW_ALL: [ROLE_VIEW_SELF]
+        ROLE_EDIT_ALL: [ROLE_EDIT_SELF]
+        ROLE_USER: [ROLE_CREATE, ROLE_VIEW, ROLE_EDIT]
+
+    access_control:
+        - { path: ^/app/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/app, roles: ROLE_USER }
+        - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }

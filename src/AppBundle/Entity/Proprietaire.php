@@ -1,0 +1,344 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use DateTime;
+use Doctrine\ORM\Mapping as ORM;
+use AppBundle\Entity\Traits\BlameableTrait;
+use AppBundle\Entity\Traits\TimestampableTrait;
+use Symfony\Component\Validator\Constraints as Assert;
+
+/**
+ * Entité Contact
+ *
+ * @author Stéphane Ear <stephaneear@gmail.com>
+ *
+ * @ORM\Entity
+ */
+class Proprietaire
+{
+    use BlameableTrait;
+    use TimestampableTrait;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string")
+     */
+    private $parcelles;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $proprietaire;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $telephoneProprietaire;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $adresseProprietaire;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $emailProprietaire;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $accordProprietaire;
+    
+    /**
+     * @var DateTime
+     *
+     * @ORM\Column(type="date", nullable=true)
+     * @Assert\Date()
+     */
+    private $dateSignatureProprietaire;
+    
+    /**
+     * @var DateTime
+     *
+     * @ORM\Column(type="date", nullable=true)
+     * @Assert\Date()
+     */
+    private $dateEcheanceProprietaire;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $exploitant;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $telephoneExploitant;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $adresseExploitant;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $emailExploitant;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $accordExploitant;
+    
+    /**
+     * @var DateTime
+     *
+     * @ORM\Column(type="date", nullable=true)
+     * @Assert\Date()
+     */
+    private $dateSignatureExploitant;
+    
+    /**
+     * @var DateTime
+     *
+     * @ORM\Column(type="date", nullable=true)
+     * @Assert\Date()
+     */
+    private $dateEcheanceExploitant;
+    
+    /**
+     * @var Projet
+     *
+     * @ORM\ManyToOne(targetEntity="Projet", inversedBy="proprietaires")
+     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
+     */
+    private $projet;
+
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+    
+    public function getParcelles()
+    {
+        return $this->parcelles;
+    }
+
+    public function getProprietaire()
+    {
+        return $this->proprietaire;
+    }
+
+    public function getTelephoneProprietaire()
+    {
+        return $this->telephoneProprietaire;
+    }
+
+    public function getAdresseProprietaire()
+    {
+        return $this->adresseProprietaire;
+    }
+
+    public function getEmailProprietaire()
+    {
+        return $this->emailProprietaire;
+    }
+
+    public function getExploitant()
+    {
+        return $this->exploitant;
+    }
+
+    public function getTelephoneExploitant()
+    {
+        return $this->telephoneExploitant;
+    }
+
+    public function getAdresseExploitant()
+    {
+        return $this->adresseExploitant;
+    }
+
+    public function getEmailExploitant()
+    {
+        return $this->emailExploitant;
+    }
+
+    public function getProjet()
+    {
+        return $this->projet;
+    }
+
+    public function setParcelles($parcelles)
+    {
+        $this->parcelles = $parcelles;
+        return $this;
+    }
+
+    public function setProprietaire($proprietaire)
+    {
+        $this->proprietaire = $proprietaire;
+        return $this;
+    }
+
+    public function setTelephoneProprietaire($telephoneProprietaire)
+    {
+        $this->telephoneProprietaire = $telephoneProprietaire;
+        return $this;
+    }
+
+    public function setAdresseProprietaire($adresseProprietaire)
+    {
+        $this->adresseProprietaire = $adresseProprietaire;
+        return $this;
+    }
+
+    public function setEmailProprietaire($emailProprietaire)
+    {
+        $this->emailProprietaire = $emailProprietaire;
+        return $this;
+    }
+
+    public function setExploitant($exploitant)
+    {
+        $this->exploitant = $exploitant;
+        return $this;
+    }
+
+    public function setTelephoneExploitant($telephoneExploitant)
+    {
+        $this->telephoneExploitant = $telephoneExploitant;
+        return $this;
+    }
+
+    public function setAdresseExploitant($adresseExploitant)
+    {
+        $this->adresseExploitant = $adresseExploitant;
+        return $this;
+    }
+
+    public function setEmailExploitant($emailExploitant)
+    {
+        $this->emailExploitant = $emailExploitant;
+        return $this;
+    }
+    
+    public function getAccordProprietaire()
+    {
+        return $this->accordProprietaire;
+    }
+
+    public function getAccordExploitant()
+    {
+        return $this->accordExploitant;
+    }
+
+    public function setAccordProprietaire($accordProprietaire)
+    {
+        $this->accordProprietaire = $accordProprietaire;
+        return $this;
+    }
+
+    public function setAccordExploitant($accordExploitant)
+    {
+        $this->accordExploitant = $accordExploitant;
+        return $this;
+    }
+    
+    /**
+     * @param \AppBundle\Entity\Projet $projet
+     * @return $this
+     */
+    public function setProjet(Projet $projet)
+    {
+        $this->projet = $projet;
+        return $this;
+    }
+    
+    public function getDateSignatureProprietaire()
+    {
+        return $this->dateSignatureProprietaire;
+    }
+
+    public function getDateEcheanceProprietaire()
+    {
+        return $this->dateEcheanceProprietaire;
+    }
+
+    public function getDateSignatureExploitant()
+    {
+        return $this->dateSignatureExploitant;
+    }
+
+    public function getDateEcheanceExploitant()
+    {
+        return $this->dateEcheanceExploitant;
+    }
+
+    public function setDateSignatureProprietaire(DateTime $dateSignatureProprietaire = null)
+    {
+        $this->dateSignatureProprietaire = $dateSignatureProprietaire;
+        return $this;
+    }
+
+    public function setDateEcheanceProprietaire(DateTime $dateEcheanceProprietaire = null)
+    {
+        $this->dateEcheanceProprietaire = $dateEcheanceProprietaire;
+        return $this;
+    }
+
+    public function setDateSignatureExploitant(DateTime $dateSignatureExploitant = null)
+    {
+        $this->dateSignatureExploitant = $dateSignatureExploitant;
+        return $this;
+    }
+
+    public function setDateEcheanceExploitant(DateTime $dateEcheanceExploitant = null)
+    {
+        $this->dateEcheanceExploitant = $dateEcheanceExploitant;
+        return $this;
+    }
+    
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->parcelles;
+    }
+}

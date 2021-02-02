@@ -1,0 +1,133 @@
+{% extends 'base.html.twig' %}
+
+{% set title = 'Propriétaires' %}
+{% set item = 'proprietaire' %}
+
+{% block body %}
+
+  <div class="container-fluid">
+    <h1> <i class="fa fa-users fa-fw"></i> Propriétaires</h1>
+  </div>
+
+  <div id="start-grid"></div>
+  <div id="grid" class="excel-grid"></div>
+
+
+{% endblock %}
+
+{% block js %}
+
+  <script>
+
+    $("#grid").css({ top: $('#start-grid').position().top + 'px' });
+
+    var options = {
+      enableCellNavigation: true,
+      enableColumnReorder: false,
+      enableTextSelectionOnCells: true,
+      forceFitColumns: false
+    };
+
+    var checkboxSelector = new Slick.CheckboxSelectColumn({
+      cssClass: "slick-cell-checkboxsel"
+    });
+
+    var niveaux = {{ grid_helper.getJsonNiveaux|raw }};
+    var missions = {{ grid_helper.getJsonMissions|raw }};
+
+    function niveauFormatter(row, cell, value, columnDef, dataContext) {
+      return niveaux[value]['name'];
+    }
+
+    function missionFormatter(row, cell, value, columnDef, dataContext) {
+      return missions[value]['name'];
+    }
+
+    var checkboxColumn = checkboxSelector.getColumnDefinition();
+    checkboxColumn.maxWidth = 25;
+    checkboxColumn.width = 25;
+    checkboxColumn.headerCssClass = 'slick-header-column-checkboxsel';
+    
+    function projetFormatter(row, cell, value, columnDef, dataContext) {
+      return '<a href="' + Routing.generate('projet_index', { 'focus': value }) + '">' + value + '</a>';
+    }
+
+    var grid;
+    var dataView = new Slick.Data.DataView();
+
+    var columns = [
+      { id: "projetId", name: "ID Projet", field: "projetId", width: 100, maxWidth: 100, sortable: true, formatter: projetFormatter, sorter: numericSorter, },
+      { id: "parcelles", name: "Parcelles", field: "parcelles", sortable: true, sorter: stringSorter },
+      { id: "type", name: 'Propriétaire/Exploitant', field: "type", sortable: true, sorter: stringSorter },
+      { id: "identite", name: "Identité", field: "identite", sortable: true, sorter: stringSorter },
+      { id: "accord", name: "Accords", field: "accord", sortable: true, sorter: stringSorter },
+      { id: "telephone", name: "Téléphone", field: "telephone", sortable: true, sorter: stringSorter },
+      { id: "adresse", name: "Adresse", field: "adresse", sortable: true, sorter: stringSorter },
+      { id: "email", name: "Email", field: "email", sortable: true, sorter: stringSorter },
+      { id: "dateSignature", name: "Date signature", field: "dateSignature", sortable: true, sorter: dateSorter, width: 100, maxWidth: 100 },
+      { id: "dateEcheance", name: "Date échéance", field: "dateEcheance", sortable: true, sorter: dateSorter, width: 100, maxWidth: 100 },
+    ];
+
+    var dateMajColumn = { id: "dateMaj", name: "Date maj", field: "dateMaj", sortable: true };
+
+    $(function () {
+      var data = [];
+      {% for projet in projets %}
+        {% for proprietaire in projet.proprietaires %}
+          data.push({
+            id: {{ proprietaire.id }},
+            projetId: {{ projet.id }},
+            parcelles: '{{ proprietaire.parcelles|e('js') }}',
+            type: 'Propriétaire',
+            identite: '{{ proprietaire.proprietaire|e('js') }}',
+            accord: '{{ proprietaire.accordProprietaire|e('js') }}',
+            telephone: '{{ proprietaire.telephoneProprietaire|e('js') }}',
+            adresse: '{{ proprietaire.adresseProprietaire|e('js') }}',
+            email: '{{ proprietaire.emailProprietaire|e('js') }}',
+            dateSignature: '{{ proprietaire.dateSignatureProprietaire is not null ? proprietaire.dateSignatureProprietaire|date('d/m/Y') }}',
+            dateSignature: '{{ proprietaire.dateEcheanceProprietaire is not null ? proprietaire.dateEcheanceProprietaire|date('d/m/Y') }}',
+          });
+          data.push({
+            id: -{{ proprietaire.id }},
+            projetId: {{ projet.id }},
+            parcelles: '{{ proprietaire.parcelles|e('js') }}',
+            type: 'Exploitant',
+            identite: '{{ proprietaire.exploitant|e('js') }}',
+            accord: '{{ proprietaire.accordExploitant|e('js') }}',
+            telephone: '{{ proprietaire.telephoneExploitant|e('js') }}',
+            adresse: '{{ proprietaire.adresseExploitant|e('js') }}',
+            email: '{{ proprietaire.emailExploitant|e('js') }}',
+            dateSignature: '{{ proprietaire.dateSignatureExploitant is not null ? proprietaire.dateSignatureExploitant|date('d/m/Y') }}',
+            dateSignature: '{{ proprietaire.dateEcheanceExploitant is not null ? proprietaire.dateEcheanceExploitant|date('d/m/Y') }}',
+          });
+        {% endfor %}
+      {% endfor %}
+
+      dataView.setItems(data);
+
+      grid = new Slick.Grid("#grid", dataView, columns, options);
+      grid.registerPlugin( new Slick.AutoTooltips({ enableForHeaderCells: true }) );
+      grid.registerPlugin(checkboxSelector);
+      grid.setSelectionModel(new Slick.RowSelectionModel({selectActiveRow: false}));
+
+      grid.autosizeColumns();
+
+      dataView.syncGridSelection(grid, true);
+
+      grid.onSort.subscribe(function(e, args) {
+        sortdir = args.sortAsc ? 1 : -1;
+        sortcol = args.sortCol.field;
+        dataView.sort(args.sortCol.sorter, sortdir);
+        args.grid.invalidateAllRows();
+        args.grid.render();
+      });
+
+      $(window).resize(function(){
+          grid.resizeCanvas();
+          grid.autosizeColumns();
+      });
+
+    });
+  </script>
+
+{% endblock %}

@@ -1,0 +1,126 @@
+{% extends 'base.html.twig' %}
+
+{% set title = 'Archives' %}
+{% set item = 'archives' %}
+
+{% block css %}
+  <style>
+  <!--
+    body {
+      overflow-y: scroll;
+    }
+  -->
+  </style>
+{% endblock %}
+
+{% block body %}
+
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-5">
+        <div id="loading-text" class="loading-text"><i class="fa fa-spinner fa-spin fa-fw"></i> Chargement ...</div>
+        <div id="projet-data">
+{#          {% if projets is not empty %}
+            {% include 'projet/projet-data.html.twig' with { 'projet': projets[focus_index] } %}
+          {% endif %}#}
+        </div>
+      </div>
+      <div class="col-sm-7">
+        <div id="map" class="map map-home"></div>
+      </div>
+    </div>
+    <div class="row m-t-10">
+      <div id="fullcontent" class="col-xs-12">
+        
+      </div>
+    </div>
+  </div>
+        
+  <div id="export-modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Export CSV</h4>
+        </div>
+        <form id="csv-form" method="POST">
+          <div class="modal-body">
+            {% for key, option in export_option.optionList %}
+              <label><input type="checkbox" name="selectedFields[]" checked value="{{ key }}"> {{ option }}</label><br>
+            {% endfor %}
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+            <button type="submit" class="btn btn-success"><i class="fa fa-fw fa-file-excel-o"></i> Export CSV</button>
+          </div>
+        </form>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+
+{% endblock %}
+
+{% block js %}
+  <script>
+
+    $('#map').height(function(index, height) {
+      return window.innerHeight - $(this).offset().top - 40;
+  });
+
+    var map = L.map('map').setView([46, 2], 5.5);
+
+    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    var progressions = {{ grid_helper.getJsonProgressions|raw }};
+
+    var markers = {};
+
+    $.each(progressions, function(code, progression) {
+      markers[code] = new L.DivIcon.SVGIcon({ iconSize: L.point(24, 32), weight: 1, circleWeight: 1, color: '#000000', fillColor: progression.color, fillOpacity: 0.7 });
+    })
+
+    {% for projet in projets %}
+      L.marker([{{ projet.latitude }}, {{ projet.longitude }}], { id: {{ projet.id }}, icon: markers["{{ projet.progression|e('js') }}"]}).addTo(map).bindTooltip("{{ projet.denomination|e('js') }}").bindPopup("{{ projet.denomination|e('js') }}").on('click', onMarkerClick){% if loop.index0 == focus_index %}.openPopup(){% endif %};
+    {% endfor %}
+
+
+    function onMarkerClick() {
+      var id = this.options.id;
+      $('#edit-link').data('id', id).prop('disabled', true)
+      $('#show-link').data('id', id).prop('disabled', true);
+      loadProjetData(id);
+    }
+
+    function loadProjetData(id) {
+      $('#loading-text').show();
+      $('#projet-data').hide();
+      $('#fullcontent').hide();
+      
+      $('#projet-data').load(Routing.generate('projet_data', { id: id, {% if show is not null %}show: '{{ show|e('js') }}'{% endif %} }), '', function() {
+        $('#loading-text').hide();
+        
+        $('#edit-link').data('id', id).prop('disabled', false)
+        $('#show-link').data('id', id).prop('disabled', false);
+        
+        $('#fullcontent').html('');
+        $('#fullrow').detach().appendTo($('#fullcontent'));
+        
+        $('#projet-data').show();
+        $('#fullcontent').show();
+      });
+    }
+    
+    $('body').on('click', '#export-projet', function () {
+      var projetId = $(this).data('id');
+      $('#csv-form').attr('action', Routing.generate('projet_csv', { 'id': projetId }));
+      $('#export-modal').modal('toggle');
+    });
+    
+    {% if projets is not empty %}
+      loadProjetData({{ projets[focus_index].id }});
+    {% endif %}
+
+  </script>
+{% endblock %}

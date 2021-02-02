@@ -1,0 +1,106 @@
+<table class="table table-super-condensed table-bordered table-hover">
+  <tbody>
+    <tr>
+      <th colspan="2" style="vertical-align: middle;">
+        <a id="edit-link" href="{{ path('parc_edit', { 'id': parc.id }) }}" class="btn btn-xs btn-danger pull-right">
+          <i class="fa fa-pencil"></i> Editer
+        </a>
+      </th>
+    </tr>
+    <tr>
+      <th style="width: 170px;">ID</th>
+      <td>{{ parc.id }}</td>
+    </tr>
+    <tr>
+      <th>Dénomination</th>
+      <td>{{ parc.denomination }}</td>
+    </tr>
+    <tr>
+      <th>Région</th>
+      <td>{{ parc.region }}</td>
+    </tr>
+    <tr>
+      <th>Département</th>
+      <td>{{ parc.departement }}</td>
+    </tr>
+    <tr>
+      <th>Commune</th>
+      <td>{{ parc.commune }}</td>
+    </tr>
+    <tr>
+      <th>Longitude</th>
+      <td>{{ parc.longitude }}</td>
+    </tr>
+    <tr>
+      <th>Latitude</th>
+      <td>{{ parc.latitude }}</td>
+    </tr>
+    <tr>
+      <th>&nbsp;</th>
+      <td></td>
+    </tr>
+    <tr>
+      <th>Mise en service</th>
+      <td>{{ parc.miseEnService }}</td>
+    </tr>
+    <tr>
+      <th>Type de machine</th>
+      <td>{{ parc.typeMachine }}</td>
+    </tr>
+    <tr>
+      <th class="text-danger">Puissance nominale unitaire</th>
+      <td>{{ parc.puissanceNominaleUnitaire }}</td>
+    </tr>
+    <tr>
+      <th class="text-danger">Puissance nominale totale</th>
+      <td>{{ parc.puissanceNominaleTotale }}</td>
+    </tr>
+    <tr>
+      <th class="text-danger">Productible estimé</th>
+      <td>{{ parc.productibleEstime }}</td>
+    </tr>
+    <tr>
+      <th>&nbsp;</th>
+      <td></td>
+    </tr>
+    <tr>
+      <th>Développeur</th>
+      <td>{{ parc.developpeur }}</td>
+    </tr>
+    <tr>
+      <th>Opérateur</th>
+      <td>{{ parc.operateur }}</td>
+    </tr>
+    <tr>
+      <th>Nom contact</th>
+      <td>{{ parc.nomContact }}</td>
+    </tr>
+    <tr>
+      <th>Téléphone</th>
+      <td>{{ parc.telephoneContact }}</td>
+    </tr>
+    <tr>
+      <th>Email contact</th>
+      <td>{{ parc.emailContact }}</td>
+    </tr>
+    <tr>
+      <th>&nbsp;</th>
+      <td></td>
+    </tr>
+    <tr>
+      <th>Document</th>
+      <td>
+        {% if parc.document is not empty %}
+        <a href="{{ path('parc_download', { 'id': parc.id }) }}">
+          <i class="fa fa-download"></i> {{ parc.documentOriginalName }}
+        </a>
+        {% endif %}
+      </td>
+    </tr>
+    <tr>
+      <th>Description</th>
+      <td>{{ parc.description|nl2br }}</td>
+    </tr>
+    
+  </tbody>
+</table>

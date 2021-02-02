@@ -1,0 +1,397 @@
+{% extends 'base.html.twig' %}
+
+{% set title = 'Recherche' %}
+{% set item = 'recherche' %}
+
+{% block body %}
+
+  <div class="container-fluid">
+
+    <h1><i class="fa fa-search"></i> Recherche</h1>
+    {% set total_mw = 0 %}
+    {% for projet in projets %}{% set total_mw = total_mw + projet.potentiel %}{% endfor %}
+    <h4 id="selected-counter">0 site sélectionné = 0 MW</h4>
+    {% set projetsPageTotal = 0 %}
+    {% for projet in projets %}{% set projetsPageTotal = projetsPageTotal + 1 %}{% endfor %}
+    <h4 id="referenced-counter">{{ projetsPageTotal }} site{{ projetsPageTotal > 1 ? 's' }} référencé{{ projetsPageTotal > 1 ? 's' }} = {{ total_mw }} MW</h4>
+
+    <div class="search-fields">
+    <form class="form-inline">
+      <div class="form-group">
+        <label for="select-origine">Origine</label>
+        <select id="select-origine" class="form-control input-sm input-filter" data-attr="origine">
+          <option value=""></option>
+          {% for user in users %}
+            <option value="{{ user }}">{{ user }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      {# <div class="form-group">
+        <label for="select-chef">Chef de projet</label>
+        <select id="select-chef" class="form-control input-sm input-filter" data-attr="chefProjet">
+          <option value=""></option>
+          {% for user in users %}
+            <option value="{{ user }}">{{ user }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="partenaire">Partenaire</label>
+        <select id="partenaire" class="form-control input-sm input-filter" data-attr="partenaire">
+          <option value=""></option>
+          {% for user in users %}
+            <option value="{{ user }}">{{ user }}</option>
+          {% endfor %}
+        </select>
+      </div> #}
+      <div class="form-group">
+        <label for="select-regions">Région</label>
+        <select id="select-regions" class="form-control input-sm input-filter" data-attr="region">
+          <option value=""></option>
+          {% for region in regions %}
+            <option value="{{ region.nom }}">{{ region.nom }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="select-departements">Département</label>
+        <select id="select-departements" class="form-control input-sm input-filter" data-attr="departement">
+          <option value=""></option>
+          {% for departement in departements %}
+            <option value="{{ departement.nom }}">{{ departement.nom }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="select-types">Type de Projet</label>
+        <select id="select-types" class="form-control input-sm input-filter" data-attr="typeProjet">
+          <option value=""></option>
+          {% for code, type in typesProjet %}
+            <option value="{{ code }}">{{ type }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="select-types">Type de Site</label>
+        <select id="select-types" class="form-control input-sm input-filter" data-attr="typeSite">
+          <option value=""></option>
+          {% for code, type in typesSite %}
+            <option value="{{ code }}">{{ type }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="select-types">Phase</label>
+        <select id="select-types" class="form-control input-sm input-filter" data-attr="phase">
+          <option value=""></option>
+          {% for code, phase in phases %}
+            <option value="{{ code }}">{{ phase }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="select-types">Progression</label>
+        <select id="select-types" class="form-control input-sm input-filter" data-attr="progression">
+          <option value=""></option>
+          {% for code, progression in progressions %}
+            <option value="{{ code }}">{{ progression }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="form-group">
+        <button id="form-clear" class="btn btn-default btn-sm" type="reset" value="Clear">Clear</button>
+      </div>
+  </form>
+
+  </div>
+
+
+  </div>
+    <nav style="margin-left:20%;" aria-label="Page navigation center-text">
+      <ul class="pagination">
+        {% if totalPages %}
+        {% set route_path = 'search_index' %}
+        <li class="page-item {% if page <= 0 %}disabled{% endif %}"><a class="page-link" href="{% if page > 1 %}{{ path(route_path, {'page' : page - 1}) }}{% endif %}">Précédent</a></li>
+        {% for i in 1..totalPages %}
+          <li class="page-item {% if page == i %}active{% endif %}"><a class="page-link" href="{{ path(route_path, {'page' : i}) }}">{{ i }}</a></li>
+        {% endfor %}
+        {% endif %}
+        <li class="page-item {% if page >= totalPages %}disabled{% endif %}"><a class="page-link" href="{% if page < totalPages %}{{ path(route_path, {'page' : page + 1}) }}{% endif %}">Suivant</a></li>
+      </ul>
+    </nav>
+
+  <div id="start-grid"></div>
+  <div id="grid" class="excel-grid"></div>
+
+
+{% endblock %}
+
+{% block js %}
+
+  <script>
+
+    $("#grid").css({ top: $('#start-grid').position().top + 'px' });
+
+    var options = {
+      enableCellNavigation: true,
+      enableColumnReorder: false,
+      enableTextSelectionOnCells: true,
+      forceFitColumns: false,
+    };
+
+    var checkboxSelector = new Slick.CheckboxSelectColumn({
+      cssClass: "slick-cell-checkboxsel"
+    });
+    
+    var typeProjet = {{ grid_helper.getJsontypeProjets|raw }};
+    var typeSite = {{ grid_helper.getJsontypeSites|raw }};
+
+    function typeProjetFormatter(row, cell, value, columnDef, dataContext) {
+      return typeProjet[value] !== undefined ? typeProjet[value]['name'] : value;
+    }
+
+    function typeSiteFormatter(row, cell, value, columnDef, dataContext) {
+      return typeSite[value] !== undefined ? typeSite[value]['name'] : value;
+    }
+
+    var phases = {{ grid_helper.getJsonPhases|raw }};
+    var progressions = {{ grid_helper.getJsonProgressions|raw }};
+    var environnements = {{ grid_helper.getJsonEnvironnements|raw }};
+
+    function phaseFormatter(row, cell, value, columnDef, dataContext) {
+      return phases[value] !== undefined ? phases[value]['name'] : value;
+    }
+
+    function progressionFormatter(row, cell, value, columnDef, dataContext) {
+      return progressions[value] !== undefined ? progressions[value]['name'] : value;
+    }
+
+    function environnementFormatter(row, cell, value, columnDef, dataContext) {
+      return environnements[value]['name'];
+    }
+
+    var flashCircle = '{{ asset('images/circle-flash.gif')|e('js') }}';
+    function progressionIndicateurFormatter(row, cell, value, columnDef, dataContext) {
+      var color = progressions[value]['color'];
+      var classes = 'indicateur';
+      if (value == 'en_verif') {
+        var classes = 'indicateur-flash';
+        return '<div class="' + classes + '"></div>';
+      }
+      return '<div class="' + classes + '" style="background:'+color+';"></div>';
+    }
+
+    var checkboxColumn = checkboxSelector.getColumnDefinition();
+    checkboxColumn.maxWidth = 25;
+    checkboxColumn.width = 25;
+    checkboxColumn.headerCssClass = 'slick-header-column-checkboxsel';
+
+    var grid;
+    var dataView = new Slick.Data.DataView();
+
+    var columns = [
+      checkboxColumn,
+      { id: "id", name: "ID", field: "id", width: 70, maxWidth: 70, sortable: true, sorter: numericSorter, },
+      { id: "typeProjet", name: "Type de projet", field: "typeProjet", width: 70, maxWidth: 250, formatter: typeProjetFormatter, sortable: true, sorter: stringSorter, },
+      { id: "typeSite", name: "Type de Site", field: "typeSite", width: 70, maxWidth: 250, formatter: typeSiteFormatter, sortable: true, sorter: stringSorter, },
+      { id: "environnement", name: "Environnement", field: "environnement", sortable: true, sorter: stringSorter, formatter: environnementFormatter },
+      { id: "origine", name: "Origine", field: "origine", sortable: true, sorter: stringSorter, width: 130, },
+      {# { id: "chefProjet", name: "Chef de projet", field: "chefProjet", sortable: true, sorter: stringSorter, width: 130, }, #}
+      {# { id: "partenaire", name: "Partenaire", field: "partenaire", sortable: true, sorter: stringSorter, width: 130, maxWidth: 250 }, #}
+      { id: "potentiel", name: "Potentiel (MW)", field: "potentiel", sortable: true, sorter: numericSorter, width: 130, maxWidth: 100 },
+      { id: "region", name: "Région", field: "region", sortable: true, sorter: stringSorter, },
+      { id: "departement", name: "Département", field: "departement", sortable: true, sorter: stringSorter },
+      { id: "communes", name: "Communes", field: "communes", sortable: true, sorter: stringSorter },
+      {#{ id: "denomination", name: "Dénomination", field: "denomination", sortable: true, sorter: stringSorter },#}
+      { id: "phase", name: "Phase", field: "phase", sortable: true, sorter: stringSorter, formatter: phaseFormatter },
+      { id: "progression", name: "Etat", field: "progression", sortable: true, sorter: stringSorter, formatter: progressionFormatter },
+      { id: "dateCrea", name: "Date creation", field: "dateCrea", sortable: true, sorter: dateSorter, width: 80, maxWidth: 80 },
+      { id: "dateMaj", name: "Date maj", field: "dateMaj", sortable: true, sorter: dateSorter, width: 80, maxWidth: 80 },
+      { id: "progressionIndicateur", name: "", field: "progressionIndicateur", width: 26, maxWidth: 26, cssClass: 'column-progression-indicateur', formatter: progressionIndicateurFormatter },
+    ];
+
+    function filter(item, args){
+      if (args.origine != "" && item["origine"] !== args.origine) {
+          return false;
+      }
+
+      if (args.typeProjet != "" && item["typeProjet"] !== args.typeProjet) {
+          return false;
+      }
+
+      if (args.typeSite != "" && item["typeSite"] !== args.typeSite) {
+          return false;
+      }
+
+      if (args.chefProjet != "" && item["chefProjet"] !== args.chefProjet) {
+          return false;
+      }
+
+      if (args.partenaire != "" && item["partenaire"] !== args.partenaire) {
+          return false;
+      }
+
+      if (args.region != "" && item["region"] !== args.region) {
+          return false;
+      }
+
+      if (args.departement != "" && item["departement"] !== args.departement) {
+          return false;
+      }
+
+      if (args.phase != "" && item["phase"] !== args.phase) {
+          return false;
+      }
+
+      if (args.progression != "" && item["progression"] !== args.progression) {
+          return false;
+      }
+
+      return true;
+    }
+
+    $(function () {
+      var data = [];
+
+      {% for projet in projets %}
+        data.push({
+          id: {{ projet.id }},
+          typeProjet: '{{ projet.typeProjet }}',
+          typeSite: '{{ projet.typeSite }}',
+          origine: '{{ projet.origine }}',
+          chefProjet: '{{ projet.chefProjet }}',
+          partenaire: '{{ projet.partenaire }}',
+          potentiel: {{ projet.potentiel }},
+          denomination: '{{ projet.denomination|e('js') }}',
+          communes: '{{ projet.communesInline|e('js') }}',
+          region: '{{ projet.departement.region|e('js') }}',
+          departement: '{{ projet.departement|e('js') }}',
+          environnement: '{{ projet.environnement }}',
+          dateCrea: '{{ projet.dateCreation|date('d/m/Y') }}',
+          dateMaj: '{{ projet.dateMaj|date('d/m/Y') }}',
+          {# engage: {{ projet.montantEngage }}, #}
+          {# paye: {{ projet.montantPaye }}, #}
+          phase: '{{ projet.phase|e('js') }}',
+          progression: '{{ projet.progression }}',
+          progressionIndicateur: '{{ projet.progression }}',
+        });
+      {% endfor %}
+
+      var filterArgs = {
+        typeProjet: "",
+        typeSite: "",
+        origine: "",
+        chefProjet: "",
+        partenaire: "",
+        region: "",
+        departement: "",
+        phase: "",
+        progression: "",
+      };
+
+      function updateFilter(){
+        dataView.setFilterArgs(filterArgs);
+        dataView.refresh();
+      }
+
+      $('#form-clear').click(function() {
+        filterArgs = {
+          typeProjet: "",
+          typeSite: "",
+          origine: "",
+          chefProjet: "",
+          partenaire: "",
+          region: "",
+          departement: "",
+          phase: "",
+          progression: "",
+        };
+
+        updateFilter();
+      });
+
+      $(".input-filter").change(function (e) {
+        filterArgs[$(this).data('attr')] = this.value;
+        updateFilter();
+      });
+
+      dataView.beginUpdate();
+      dataView.setItems(data);
+
+      dataView.setFilterArgs(filterArgs);
+
+      dataView.setFilter(filter);
+      dataView.endUpdate();
+
+      grid = new Slick.Grid("#grid", dataView, columns, options);
+      grid.registerPlugin( new Slick.AutoTooltips({ enableForHeaderCells: true }) );
+      grid.registerPlugin(checkboxSelector);
+      grid.setSelectionModel(new Slick.RowSelectionModel({selectActiveRow: false}));
+      grid.autosizeColumns();
+      dataView.syncGridSelection(grid, true);
+
+      grid.onSelectedRowsChanged.subscribe(function() {
+        selectedRows = grid.getSelectedRows();
+        var selected = selectedRows.length;
+
+
+        var potentiel = 0;
+
+
+        for (var i = 0, len = selectedRows.length; i < len; ++i) {
+          var item = dataView.getItem(selectedRows[i]);
+          potentiel += item.potentiel;
+        }
+
+
+
+        if (selected > 1) {
+          $('#selected-counter').text(selected + ' sites sélectionnés = ' + potentiel + ' MW');
+        } else {
+          $('#selected-counter').text(selected + ' site sélectionné = ' + potentiel + ' MW');
+        }
+
+      });
+
+      dataView.onRowCountChanged.subscribe(function (e, args) {
+
+        var total = dataView.getLength();
+        var totalPotentiel = 0;
+
+        for (var i = 0; i<total; ++i) {
+          var item = dataView.getItem(i);
+          totalPotentiel += item.potentiel;
+        }
+
+        if (total > 1) {
+          $('#referenced-counter').text(total + ' sites référencés = ' + totalPotentiel + ' MW');
+        } else {
+          $('#referenced-counter').text(total + ' site référencé = ' + totalPotentiel + ' MW');
+        }
+
+        grid.setSelectedRows([]);
+        grid.updateRowCount();
+        grid.render();
+      });
+      dataView.onRowsChanged.subscribe(function (e, args) {
+        grid.invalidateRows(args.rows);
+        grid.render();
+      });
+
+      grid.onSort.subscribe(function(e, args) {
+        sortdir = args.sortAsc ? 1 : -1;
+        sortcol = args.sortCol.field;
+        dataView.sort(args.sortCol.sorter, sortdir);
+        args.grid.invalidateAllRows();
+        args.grid.render();
+      });
+
+      $(window).resize(function(){
+          $("#grid").css({ top: $('#start-grid').position().top + 'px' });
+          grid.resizeCanvas();
+      });
+
+    });
+  </script>
+
+{% endblock %}

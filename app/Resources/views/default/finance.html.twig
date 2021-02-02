@@ -1,0 +1,159 @@
+{% extends 'base.html.twig' %}
+
+{% set title = 'Finance' %}
+{% set item = 'finance' %}
+
+{% block body %}
+
+  <div class="container-fluid">
+
+    <h1>Finances <i class="fa fa-euro"></i></h1>
+    <h4 id="selected-counter">Total engagé: 0€ HT | Total payé: 0€ HT</h4>
+
+  </div>
+
+  <div id="start-grid"></div>
+  <div id="grid" class="excel-grid"></div>
+
+
+{% endblock %}
+
+{% block js %}
+
+  <script>
+
+    $("#grid").css({ top: $('#start-grid').position().top + 'px' });
+
+    var options = {
+      enableCellNavigation: true,
+      enableColumnReorder: false,
+      enableTextSelectionOnCells: true,
+      forceFitColumns: false
+    };
+
+    var checkboxSelector = new Slick.CheckboxSelectColumn({
+      cssClass: "slick-cell-checkboxsel"
+    });
+
+    var checkboxColumn = checkboxSelector.getColumnDefinition();
+    checkboxColumn.maxWidth = 25;
+    checkboxColumn.width = 25;
+    checkboxColumn.headerCssClass = 'slick-header-column-checkboxsel';
+
+    var grid;
+    var dataView = new Slick.Data.DataView();
+
+    var columns = [
+      checkboxColumn,
+      { id: "idProjet", name: "ID Projet", field: "id", width: 100, maxWidth: 100, sortable: true, sorter: numericSorter, },
+      { id: "denomination", name: "Dénomination", field: "denomination", sortable: true, sorter: stringSorter },
+      { id: "departement", name: "Département", field: "departement", sortable: true, sorter: stringSorter },
+      { id: "phase", name: "Phase", field: "phase", sortable: true, sorter: stringSorter },
+      { id: "titre", name: "Titre", field: "titre", sortable: true, sorter: stringSorter },
+      { id: "bureau", name: "BE", field: "bureau", sortable: true, sorter: stringSorter },
+      { id: "total", name: "Total(€HT)", field: "total", sortable: true, sorter: numericSorter, cssClass: 'text-right', width: 100, maxWidth: 100 },
+      { id: "engage", name: "Engagé(€HT)", field: "engage", sortable: true, sorter: numericSorter, cssClass: 'text-right', width: 100, maxWidth: 100 },
+      { id: "paye", name: "Payé(€HT)", field: "paye", sortable: true, sorter: numericSorter, cssClass: 'text-right', width: 100, maxWidth: 100 },
+      { id: "restant", name: "Restant(€HT)", field: "restant", sortable: true, sorter: numericSorter, cssClass: 'text-right', width: 100, maxWidth: 100 },
+      { id: "dateEngmt", name: "Date engmt", field: "dateEngmt", sortable: true, sorter: dateSorter, width: 100, maxWidth: 100 },
+      { id: "dateEcheance", name: "Date d'échéance", field: "dateEcheance", sortable: true, sorter: dateSorter, width: 100, maxWidth: 100 },
+    ];
+
+    var dateMajColumn = { id: "dateMaj", name: "Date maj", field: "dateMaj", sortable: true };
+
+    $(function () {
+      var data = [];
+      {% for projet in projets %}
+        {% for finance in projet.finances %}
+          data.push({
+            id: {{ finance.id }},
+            idProjet: {{ projet.id }},
+            denomination: '{{ finance.projet.denomination|e('js') }}',
+            phase: '{{ finance.phase|e('js') }}',
+            titre: '{{ finance.titre|e('js') }}',
+            departement: '{{ finance.projet.departement|e('js') }}',
+            total: {{ finance.montantTotal }},
+            engage: {{ finance.montantEngage }},
+            paye: {{ finance.montantPaye }},
+            restant: {{ finance.montantRestant }},
+            bureau: '{{ finance.bureau.nom|e('js') }}',
+            dateEngmt: '{{ finance.dateEngmt|date('d/m/Y') }}',
+            dateEcheance: '{{ finance.dateEcheance is not null ? finance.dateEcheance|date('d/m/Y') : '' }}',
+          });
+        {% endfor %}
+      {% endfor %}
+
+      dataView.setItems(data);
+
+      grid = new Slick.Grid("#grid", dataView, columns, options);
+      grid.registerPlugin( new Slick.AutoTooltips({ enableForHeaderCells: true }) );
+      grid.registerPlugin(checkboxSelector);
+      grid.setSelectionModel(new Slick.RowSelectionModel({selectActiveRow: false}));
+
+      grid.autosizeColumns();
+
+      dataView.syncGridSelection(grid, true);
+
+      grid.onSelectedRowsChanged.subscribe(function() {
+        selectedRows = grid.getSelectedRows();
+        var selected = selectedRows.length;
+        var total = grid.getDataLength();
+
+        var paye = 0;
+        var engage = 0;
+        for (var i = 0, len = selectedRows.length; i < len; ++i) {
+          var item = dataView.getItem(selectedRows[i]);
+          paye += item.paye;
+          engage += item.engage;
+        }
+
+        var somme = 'Total engagé: ' + engage + '€ HT | Total payé: ' + paye + '€ HT';
+        $('#selected-counter').text(somme);
+
+      });
+
+      grid.onSort.subscribe(function(e, args) {
+        sortdir = args.sortAsc ? 1 : -1;
+        sortcol = args.sortCol.field;
+        dataView.sort(args.sortCol.sorter, sortdir);
+        args.grid.invalidateAllRows();
+        args.grid.render();
+      });
+
+      $(window).resize(function(){
+          grid.resizeCanvas();
+          grid.autosizeColumns();
+      });
+
+      $('input[type=radio][name=montant]').change(function() {
+        var index = 13;
+        if (this.value === 'paye') {
+          columns[index].field = 'paye';
+          columns[index].name = 'Payé(€)';
+          grid.setColumns(columns);
+        }
+        else if (this.value === 'engage') {
+          columns[index].field = 'engage';
+          columns[index].name = 'Engagé(€)';
+          grid.setColumns(columns);
+        }
+      });
+
+      $('input[type=radio][name=date]').change(function() {
+        var index = 14;
+        if (this.value === 'cre') {
+          columns[index].field = 'dateCrea';
+          columns[index].name = 'Date cre';
+          grid.setColumns(columns);
+        }
+        else if (this.value === 'maj') {
+          columns[index].field = 'dateMaj';
+          columns[index].name = 'Date maj';
+          grid.setColumns(columns);
+        }
+      });
+
+    });
+  </script>
+
+{% endblock %}

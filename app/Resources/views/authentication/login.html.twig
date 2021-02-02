@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
+    <link rel="stylesheet" href="{{ asset('css/login.css') }}?v=201710112027">
+  </head>
+  <body>
+    <div class="login-page">
+      <div class="form">
+        <img src="{{ asset('images/logo.jpg') }}" class="logo">
+        <form class="login-form" action="{{ path('login_check') }}" method="post">
+          <input type="text" name="_username" placeholder="Nom d'utilisateur" class="{{ exception is not null ? 'has-error' }}" value="{{ last_username }}" autofocus>
+          <input type="password" name="_password" placeholder="Mot de passe" class="{{ exception is not null ? 'has-error' }}">
+          <label for="remember-me"><input type="checkbox" id="remember-me" value="1" name="_remember_me"> Rester connecté</label>
+          <button>Connexion</button>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

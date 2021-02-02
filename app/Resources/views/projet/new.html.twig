@@ -1,0 +1,932 @@
+{% extends 'base.html.twig' %}
+
+{% set title = 'Nouvelle fiche' %}
+{% set item = 'creer' %}
+
+{% form_theme form 'bootstrap_3_horizontal_sm_layout.html.twig' %}
+
+{% block body %}
+
+  {{ form_start(form) }}
+  <div class="container-fluid">
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nouveau_projet_nav" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#"><img alt="Brand" width="20"  src="{{ asset('favicon.png') }}"></a>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="nouveau_projet_nav">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="#" rel="tab_localisation">Localisation</a></li>
+          <li class=""><a href="#" rel="tab_contacts">Contacts</a></li>
+          <li class=""><a href="#" rel="tab_site">Site</a></li>
+          <li class=""><a href="#" rel="tab_projet">Projet</a></li>
+          <li class=""><a href="#" rel="tab_parcelles">Parcelles</a></li>
+          <li class=""><a href="#" rel="tab_foncier">Foncier</a></li>
+          <li class=""><a href="#" rel="tab_enjeux">Enjeux</a></li>
+          <li class=""><a href="#" rel="tab_etat">Etat</a></li>
+          <li class=""><a href="#" rel="tab_taches">Taches</a></li>
+          <li class=""><a href="#" rel="tab_concertation">Concertation</a></li>
+          <li class=""><a href="#" rel="tab_commandes">Commandes</a></li>
+          <li class=""><a href="#" rel="tab_documents">Documents</a></li>
+          <li class=""><a href="#" rel="tab_image">Image</a></li>
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
+  {# <h1><i class="fa fa-file-o fa-fw"></i> {{ title }}</h1> #}
+  <div class="row">
+    <div id="fields_div" class="col-sm-6">
+
+      <fieldset class="" id="tab_localisation">
+        <legend>Références</legend>
+        {{ form_row(form.archived) }}
+        {{ form_row(form.denomination) }}
+        {{ form_row(form.dateCreation) }}
+        
+        <legend>Typologies</legend>
+        {{ form_row(form.typeProjet) }}
+        {{ form_row(form.typeSite) }}
+        {{ form_row(form.environnement) }}
+
+        {# <legend>Classement</legend>
+        {{ form_row(form.phase) }}
+        {{ form_row(form.progression) }} #}
+
+        <legend>Situation administrative</legend>
+        {{ form_row(form.departement) }}
+        {{ form_row(form.communes) }}
+        
+        <legend>Situation géographique</legend>
+        {{ form_row(form.latitude) }}
+        {{ form_row(form.longitude) }}
+      </fieldset>
+
+      <fieldset class="hide" id="tab_contacts">
+        <legend>Contacts</legend>
+        <table class="table table-condensed table-form">
+          <thead>
+            <tr>
+              <th>Fonction</th>
+              <th>Utilisateur</th>
+              <th>Téléphone</th>
+            </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>Origine</td>
+            <td class="required">{{ form_widget(form.origine) }}</td>
+            <td>{{ form_widget(form.origineTelephone) }}</td>
+          </tr>
+          <tr>
+            <td>Chef projet</td>
+            <td class="required">{{ form_widget(form.chefProjet) }}</td>
+            <td>{{ form_widget(form.chefProjetTelephone) }}</td>
+          </tr>
+          <tr>
+            <td>Partenaire</td>
+            <td class="required">{{ form_widget(form.partenaire) }}</td>
+            <td>{{ form_widget(form.partenaireTelephone) }}</td>
+          <tr>
+          </tbody>
+        </table>
+      </fieldset>
+
+      <fieldset class="hide" id="tab_site">
+        <legend></legend>
+        <div class="form_site hide" id="form_site_terrain">
+          {{ form_widget(form.terrain) }}
+        </div>
+        <div class="form_site hide" id="form_site_batimentNouveau">
+          {{ form_row(form.batimentNouveau) }}
+        </div>
+        <div class="form_site hide" id="form_site_batimentExistant">
+          {{ form_widget(form.batimentExistant) }}
+        </div>
+      </fieldset>
+
+      <fieldset class="hide" id="tab_projet">
+        <legend>Inplantation</legend>
+        {{ form_row(form.photoEsquisseFile) }}
+        {{ form_row(form.photoAvantFile) }}
+        {{ form_row(form.photoDefinitifFile) }}
+        <legend>Modalités</legend>
+        {{ form_row(form.contrat) }}
+        {{ form_row(form.debouche) }}
+        <legend>Equipement</legend>
+        {{ form_row(form.technologie) }}
+        <div class="form-group form-group-sm">
+          <div class="col-sm-12">
+            <p></p>
+          </div>
+        </div>
+        <legend>Installation</legend>
+        {{ form_row(form.surfaceUtile) }}
+        {{ form_row(form.unite) }}
+        {{ form_row(form.puissanceUnitaire) }}
+        {{ form_row(form.puissanceTotale) }}
+        {{ form_row(form.production) }}
+        {{ form_row(form.emprise) }}
+        {{ form_row(form.potentiel) }}
+      </fieldset>
+
+      <fieldset class="hide" id="tab_parcelles">
+        {{ form_widget(form.parcelles) }}
+      </fieldset>
+
+      <fieldset class="hide" id="tab_enjeux">
+        {{ form_widget(form.enjeuxs) }}
+      </fieldset>
+
+      <fieldset class="hide" id="tab_etat">
+        {{ form_widget(form.etats) }}
+      </fieldset>
+
+      <fieldset class="hide" id="tab_taches">
+        {{ form_widget(form.taches) }}
+      </fieldset>
+
+      <fieldset class="hide" id="tab_concertation">
+        {{ form_widget(form.concertations) }}
+      </fieldset>
+
+      <fieldset class="hide" id="tab_commandes">
+        {{ form_widget(form.finances) }}
+      </fieldset>
+
+      <fieldset class="hide" id="tab_documents">
+        {{ form_widget(form.documents) }}
+      </fieldset>
+
+      <fieldset class="hide" id="tab_image">
+        <div class="col-md-6">
+          <input type="text" id="projet_notes_recherche" class="form-control hide" placeholder="recherche" autocomplete="off">
+        </div>
+        {{ form_widget(form.notes) }}
+      </fieldset>
+      
+      <fieldset class="hide" id="tab_foncier">
+        <legend>Accords</legend>
+        {{ form_widget(form.proprietaires) }}
+      </fieldset>
+
+    </div>
+    <div class="col-sm-6">
+      <div id="map" class="map map-home" style="height: 500px; margin-bottom: 20px;"></div>
+      <div id="main_photo" class="hide col-sm-12"><img style="width: inherit;" src=""><nav style="margin-left:30%;" aria-label="Page navigation center-text"><ul class="pagination"><li class="page-item disabled"><a id="prev_image" class="page-link" href="#">Précédent</a></li><li class="page-item disabled"><a id="next_image" class="page-link" href="#">Suivant</a></li></ul></nav></div>
+
+      <fieldset>
+        <legend>Commentaires</legend>
+        {{ form_widget(form.commentaires) }}
+      </fieldset>
+
+      <div class="text-right m-t-10">
+        <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Sauvegarder</button>
+      </div>
+       
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-xs-12">
+    
+      {{ form_rest(form) }}
+    </div>
+  </div>
+
+
+  </div>
+
+      {{ form_end(form) }}
+
+{% endblock %}
+
+{% block js %}
+  <script>
+    var map = L.map('map').setView([46, 2], 5.4);
+
+    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    var marker = null;
+
+    var lat = null;
+    var long = null;
+
+    $('#projet_latitude').change(function() {
+      lat = $(this).val().replace(',', '.');
+      updateMarkerPosition();
+    });
+
+    $('#projet_longitude').change(function() {
+      long = $(this).val().replace(',', '.');
+      updateMarkerPosition();
+    });
+
+    function updateMarkerPosition() {
+
+      if ($.isNumeric(lat) && $.isNumeric(long) && marker === null && lat != null && long != null) {
+        marker = L.marker([lat, long]).addTo(map);
+        map.panTo(new L.LatLng(lat, long));
+      }
+
+      if ($.isNumeric(lat) && $.isNumeric(long) && marker != null && lat != null && long != null) {
+        marker.setLatLng([lat, long]);
+        map.panTo(new L.LatLng(lat, long));
+      }
+
+    }
+    var customControl =  L.Control.extend({
+
+      options: {
+        position: 'topleft'
+      },
+
+      onAdd: function (map) {
+        var container = L.DomUtil.create('a');
+        container.setAttribute("role", "button");
+        container.title="Center";
+        container.text = "c";
+
+        container.style.backgroundColor = 'white';     
+        {# container.style.backgroundImage = "url(https://t1.gstatic.com/images?q=tbn:ANd9GcR6FCUMW5bPn8C4PbKak2BJQQsmC-K9-mbYBeFZm1ZM2w2GRy40Ew)"; #}
+        container.style.backgroundSize = "30px 30px";
+        container.style.width = '32px';
+        container.style.height = '32px';
+        container.style.lineHeight = '24px';
+        container.style.textDecoration = 'none';
+        container.style.cursor = 'pointer';
+        container.style.textAlign = 'center';
+        container.style.color = 'black';
+        container.style.fontSize = '24px';
+        container.style.borderRadius = '4px';
+        container.style.marginTop = '2px';
+        container.style.border = '2px solid rgba(0,0,0,0.2)';
+        
+        container.onmouseover = function(){
+          container.style.backgroundColor = '#f4f4f4'; 
+        }
+        container.onmouseout = function(){
+          container.style.backgroundColor = 'white'; 
+        }
+
+        container.onclick = function() {
+          update_marker = 0;
+          map.setView([46,2],5);
+        }
+
+        return container;
+      }
+    });
+
+    map.addControl(new customControl());
+    var update_marker = 1;
+    map.on('click', function(e) {
+      if(update_marker) {
+        lat = e.latlng.lat;
+        long = e.latlng.lng;
+        $('#projet_latitude').val(lat);
+        $('#projet_longitude').val(long);
+        updateMarkerPosition();
+      } else update_marker = 1;
+    });
+
+    $('#projet_typeProjet').change(function() {
+      type = $(this).val();
+      if(type.match('olien')) {
+        $('#projet_technologie').val('eolienne');
+        $('#projet_technologie').change();
+      } else {
+        $('#projet_technologie').val('photovoltaique');
+        $('#projet_technologie').change();
+      }
+      denomination = $('#projet_denomination').val().trim();
+      if(!denomination || denomination == 'Esol_id' || denomination == 'Ptoit_id' || denomination == 'Psol_id' || denomination == 'Pomb_id' || denomination == 'Ptoit_id') {
+        if(type == 'toiture_solaire') $('#projet_denomination').val('Ptoit_id');
+        else if(type == 'ferme_solaire') $('#projet_denomination').val('Psol_id');
+        else if(type == 'ombriere_solaire') $('#projet_denomination').val('Pomb_id');
+        else if(type == 'tracker_solaire') $('#projet_denomination').val('Ptoit_id');
+        else $('#projet_denomination').val('Esol_id');
+      }
+    });
+
+    var queryCommuneUrl = "{{ path('commune_search') }}";
+
+    $('.datepicker-type').datepicker({
+      format: 'dd/mm/yyyy',
+      autoclose: true,
+      language: 'fr',
+    });
+
+    $("select[id*=departement]").select2();
+    $("select[id*=commune]").select2({
+      ajax: {
+        url: queryCommuneUrl,
+        dataType: 'json',
+        delay: 500,
+        processResults: function (data) {
+          return {
+            results: data
+          };
+        }
+      },
+      escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+      minimumInputLength: 1,
+    });
+    
+    var queryCommuneUrl2 = "{{ path('commune_search_jquery') }}";
+    $("select[id*=departement]").select2();
+    $('#tab_parcelles [id*="_commune"]').autocomplete({
+      source: queryCommuneUrl2,
+      minLength: 1,
+      select: function( event, ui ) {
+        $(this).val(ui.item.value);
+      }
+    });
+
+    var $collectionHolder = $('#projet_finances');
+    var prototype = $collectionHolder.data('prototype');
+
+    $('#projet_finances_add_entry').click(function () {
+      var length = $collectionHolder.children().length;
+      var entry = prototype.replace(/__name__label__/g, length);
+      entry = entry.replace(/__name__/g, length);
+      $collectionHolder.append(entry);
+
+      $('#projet_finances_' + length + '_dateEngmt').datepicker({
+        format: 'dd/mm/yyyy',
+        autoclose: true,
+        language: 'fr',
+      });
+      $('#projet_finances_' + length + '_dateEcheance').datepicker({
+        format: 'dd/mm/yyyy',
+        autoclose: true,
+        language: 'fr',
+        clear: true,
+      });
+      $('#projet_finances_' + length + '_dateRemise').datepicker({
+        format: 'dd/mm/yyyy',
+        autoclose: true,
+        language: 'fr',
+        clear: true,
+      });
+    });
+
+    $('#projet_finances_remove_entry').click(function () {
+      $('> :last-child', $collectionHolder).remove();
+    });
+    
+    var $collectionHolderProprietaire = $('#projet_proprietaires');
+    var prototypeproprietaire = $collectionHolderProprietaire.data('prototype');
+
+    $('#projet_proprietaires_add_entry').click(function () {
+      var length = $collectionHolderProprietaire.children().length / 2;
+      var entry = prototypeproprietaire.replace(/__name__label__/g, length);
+      entry = entry.replace(/__name__/g, length);
+      $collectionHolderProprietaire.append(entry);
+      
+      $('#projet_proprietaires_' + length + '_dateSignatureProprietaire').datepicker({
+        format: 'dd/mm/yyyy',
+        autoclose: true,
+        language: 'fr',
+        clear: true,
+      });
+      $('#projet_proprietaires_' + length + '_dateEcheanceProprietaire').datepicker({
+        format: 'dd/mm/yyyy',
+        autoclose: true,
+        language: 'fr',
+        clearBtn: true,
+      });
+      $('#projet_proprietaires_' + length + '_dateSignatureExploitant').datepicker({
+        format: 'dd/mm/yyyy',
+        autoclose: true,
+        language: 'fr',
+        clearBtn: true,
+      });
+      $('#projet_proprietaires_' + length + '_dateEcheanceExploitant').datepicker({
+        format: 'dd/mm/yyyy',
+        autoclose: true,
+        language: 'fr',
+        clearBtn: true,
+      });
+    });
+
+    $('#projet_proprietaires_remove_entry').click(function () {
+      $('> :last-child', $collectionHolderProprietaire).remove();
+      $('> :last-child', $collectionHolderProprietaire).remove();
+    });
+
+    var $collectionHolderDC = $('#projet_dateCles');
+    var prototypeDC = $collectionHolderDC.data('prototype');
+
+    $('#projet_dateCles_add_entry').click(function () {
+      var length = $collectionHolderDC.children().length;
+      var entry = prototypeDC.replace(/__name__label__/g, length);
+      entry = entry.replace(/__name__/g, length);
+      $collectionHolderDC.append(entry);
+
+      $('#projet_dateCles_' + length + '_date').datepicker({
+        format: 'dd/mm/yyyy',
+        autoclose: true,
+        language: 'fr',
+        clear: true,
+      });
+    });
+
+    var telephones = {{ telephones|raw }}
+    $('#tab_contacts select').change(function () {
+      var selected_user = $(this).val();
+      var telephone_selector = $(this).parents('tr').find('input:last');
+      $.each(telephones, function(code, telephone) {
+        if(telephone.id == selected_user) telephone_selector.val(telephone.telephone);
+      });
+    })
+
+    var $collectionHolderDC = $('#projet_batimentExistant_toitures');
+    var prototypeDC = $collectionHolderDC.data('prototype');
+
+    $('#projet_batimentExistant_toitures_add_entry').click(function () {
+      var length = $collectionHolderDC.children().length;
+      var entry = prototypeDC.replace(/__name__label__/g, length);
+      entry = entry.replace(/__name__/g, length);
+      $collectionHolderDC.append(entry);
+
+    });
+
+    $('#projet_batimentExistant_toitures_remove_entry').click(function () {
+      $('> :last-child', $collectionHolderDC).remove();
+    });
+
+    var batiments = {{ grid_helper.getJsonBatiments|raw }};
+    $('#projet_batimentNouveau').change(function () {
+      $('#batimentNouveau_options p').html('');
+      $('#projet_batimentExistant_bardage').parents('.form-group').addClass('hide');
+      $('#projet_batimentExistant_ossature').parents('.form-group').addClass('hide');
+      $('#projet_batimentExistant_charpente').parents('.form-group').addClass('hide');
+      $('#projet_batimentExistant_photoFile').parents('.form-group').removeClass('hide');
+      if($(this).val()) {
+        var selected_batiment = $(this).val();
+        $.each(batiments, function(code, batiment) {
+          if(code == selected_batiment) {
+            $.each(batiment['data'], function(field, value) {
+              if(field == 'Longeur') $('#projet_batimentExistant_longeur').val(value.replace(/m/g, '').trim());
+              else if(field == 'Largeur') $('#projet_batimentExistant_largeur').val(value.replace(/m/g, '').trim());
+              else if(field == 'Faitage') $('#projet_batimentExistant_faitage').val(value.replace(/m/g, '').trim());
+              else if(field == 'Surface au sol') $('#projet_batimentExistant_surfaceSol').val(value.replace(/m²/g, '').trim());
+              if(field == 'Bardage' || field == 'Ossature' || field == 'Charpente' || field == 'Couverture') {
+                $('#projet_batimentExistant_'+field.toLowerCase()).parents('.form-group').removeClass('hide');
+                var select = '<div class="form-group form-group-sm"><label class="col-sm-4 control-label">'+field+':</label><div class="col-sm-8"><select id="'+field.toLowerCase()+'" class="form-control batiment_select_option">';
+                $.each(value, function(i, value2) {
+                  if((!$('#projet_batimentExistant_'+field.toLowerCase()).val() && !i) || ($('#projet_batimentExistant_'+field.toLowerCase()).val() && value2 == $('#projet_batimentExistant_'+field.toLowerCase()).val())) {
+                    $('#projet_batimentExistant_'+field.toLowerCase()).val(value2);
+                    select += '<option selected>'+value2+'</option>';
+                  } else select += '<option>'+value2+'</option>';
+                });
+                select += '</select></div></div>';
+                $('#batimentNouveau_options p').append(select);
+              } else if(field != 'Photo' && value.trim())
+                $('#batimentNouveau_options p').append('<div class="form-group form-group-sm"><label class="col-sm-4 control-label">'+field+':</label><div class="col-sm-8">' + value + '</div></div>');
+              else if(value.trim()) {
+                $('#batimentNouveau_options p').append('<div class="form-group form-group-sm"><img width="300" src="{{ asset('') }}upload/' + value + '"></div>');
+                $('#projet_batimentExistant_photoFile').parents('.form-group').addClass('hide');
+              }
+            });
+          }
+        });
+      }
+    });
+
+    $('body').on('change', 'select.batiment_select_option', function () {
+        var selected_field = $(this).attr('id');
+        var selected_value = $(this).val();
+        $('#projet_batimentExistant_'+selected_field).val(selected_value);
+    });
+
+    var $collectionHolderEtat = $('#projet_etats');
+    var prototypeEtat = $collectionHolderEtat.data('prototype');
+
+    $('#projet_etats_add_entry').click(function () {
+      var length = $collectionHolderEtat.children().length;
+      var entry = prototypeEtat.replace(/__name__label__/g, length);
+      entry = entry.replace(/__name__/g, length);
+      $collectionHolderEtat.append(entry);
+
+      $('#projet_etats_' + length + '_date').datepicker({
+        format: 'dd/mm/yyyy',
+        autoclose: true,
+        language: 'fr',
+      });
+
+      $('#projet_etats_' + length + '_dynamique').val(2);
+      
+      $('select[id*="projet_etats"][id*="_phase"]').change();
+    });
+
+    $('#projet_etats_remove_entry').click(function () {
+      $('> :last-child', $collectionHolderEtat).remove();
+    });
+
+    var etats = {{ grid_helper.getJsonEtats|raw }};
+    $('body').on('change', 'select[id*="projet_etats"][id*="_phase"]', function () {
+        var selected_phase = $(this).val();
+        var etat_selector = $(this).parents('tr').find('select:eq(1)');
+        $.each(etats, function(code, etat) {
+          $.each(etat['data'], function(field, value) {
+            if(code == selected_phase && !etat_selector.find('option[value="'+field+'"]').length)
+              etat_selector.append(new Option(value, field));
+            else if(code != selected_phase) etat_selector.find('option[value="'+field+'"]').remove();
+          });
+        });
+    });
+    $('body').on('change', 'select[id="projet_phase"]', function () {
+        var selected_phase = $(this).val();
+        var etat_selector = $('select[id="projet_progression"]');
+        etat_selector
+        $.each(etats, function(code, etat) {
+          $.each(etat['data'], function(field, value) {
+            if(code == selected_phase && !etat_selector.find('option[value="'+field+'"]').length)
+              etat_selector.append(new Option(value, field));
+            else if(code != selected_phase) etat_selector.find('option[value="'+field+'"]').remove();
+          });
+        });
+    });
+
+    var $collectionHolderTache = $('#projet_taches');
+    var prototypeTache = $collectionHolderTache.data('prototype');
+
+    $('#projet_taches_add_entry').click(function () {
+      var length = $collectionHolderTache.children().length;
+      var entry = prototypeTache.replace(/__name__label__/g, length);
+      entry = entry.replace(/__name__/g, length);
+      $collectionHolderTache.append(entry);
+
+      $('#projet_taches_' + length + '_date').datepicker({
+        format: 'dd/mm/yyyy',
+        autoclose: true,
+        language: 'fr',
+      });
+
+      $('#projet_taches_' + length + '_dynamique').val(2);
+      
+      $('#projet_taches_' + length + '_objet').change();
+    });
+
+    $('#projet_taches_remove_entry').click(function () {
+      $('> :last-child', $collectionHolderTache).remove();
+    });
+
+    var taches = {{ grid_helper.getJsonTaches|raw }};
+    $('body').on('change', 'select[id*="_objet"]', function () {
+        var selected_objet = $(this).val();
+        var tache_selector = $(this).parents('tr').find('select:eq(1)');
+        $.each(taches, function(code, tache) {
+          $.each(tache['data'], function(field, value) {
+            if(code == selected_objet && !tache_selector.find('option[value="'+field+'"]').length)
+              tache_selector.append(new Option(value, field));
+            else if(code != selected_objet) tache_selector.find('option[value="'+field+'"]').remove();
+          });
+        });
+    });
+
+    var $collectionHolderConcertation = $('#projet_concertations');
+    var prototypeConcertation = $collectionHolderConcertation.data('prototype');
+
+    $('#projet_concertations_add_entry').click(function () {
+      var length = $collectionHolderConcertation.children().length;
+      var entry = prototypeConcertation.replace(/__name__label__/g, length);
+      entry = entry.replace(/__name__/g, length);
+      $collectionHolderConcertation.append(entry);
+
+      $('#projet_concertations_' + length + '_date').datepicker({
+        format: 'dd/mm/yyyy',
+        autoclose: true,
+        language: 'fr',
+      });
+
+      $('#projet_concertations_' + length + '_dynamique').val(2);
+      
+    });
+
+    $('#projet_concertations_remove_entry').click(function () {
+      $('> :last-child', $collectionHolderConcertation).remove();
+    });
+
+    var $collectionHolderDocument = $('#projet_documents');
+    var prototypeDocument = $collectionHolderDocument.data('prototype');
+
+    $('#projet_documents_add_entry').click(function () {
+      var length = $collectionHolderDocument.children().length;
+      var entry = prototypeDocument.replace(/__name__label__/g, length);
+      entry = entry.replace(/__name__/g, length);
+      $collectionHolderDocument.append(entry);
+
+      $('#projet_documents_' + length + '_date').datepicker({
+        format: 'dd/mm/yyyy',
+        autoclose: true,
+        language: 'fr',
+      });
+
+    });
+
+    $('#projet_documents_remove_entry').click(function () {
+      $('> :last-child', $collectionHolderDocument).remove();
+    });
+
+    var $collectionHolderParcelle = $('#projet_parcelles');
+    var prototypeParcelle = $collectionHolderParcelle.data('prototype');
+
+    $('#projet_parcelles_add_entry').click(function () {
+      var length = $collectionHolderParcelle.children().length;
+      var entry = prototypeParcelle.replace(/__name__label__/g, length);
+      entry = entry.replace(/__name__/g, length);
+      $collectionHolderParcelle.append(entry);
+      
+      $('#projet_parcelles_' + length + '_departement').select2();
+      $('#projet_parcelles_' + length + '_commune').autocomplete({
+        source: queryCommuneUrl2,
+        minLength: 2,
+        select: function( event, ui ) {
+          $(this).val(ui.item.value);
+        }
+      });
+
+    });
+
+    $('#projet_parcelles_remove_entry').click(function () {
+      $('> :last-child', $collectionHolderParcelle).remove();
+    });
+
+    var $collectionHolderEnjeux = $('#projet_enjeuxs');
+    var prototypeEnjeux = $collectionHolderEnjeux.data('prototype');
+
+    $('#projet_enjeuxs_add_entry').click(function () {
+      var length = $collectionHolderEnjeux.children().length;
+      var entry = prototypeEnjeux.replace(/__name__label__/g, length);
+      entry = entry.replace(/__name__/g, length);
+      $collectionHolderEnjeux.append(entry);
+
+    });
+
+    $('#projet_enjeuxs_remove_entry').click(function () {
+      $('> :last-child', $collectionHolderEnjeux).remove();
+    });
+
+    var $collectionHolderNote = $('#projet_notes');
+    var prototypeNote = $collectionHolderNote.data('prototype');
+
+    $('#projet_notes_add_entry').click(function () {
+      var length = $collectionHolderNote.children().length;
+      var entry = prototypeNote.replace(/__name__label__/g, length);
+      entry = entry.replace(/__name__/g, length);
+      $collectionHolderNote.append(entry);
+
+      $('#projet_notes_' + length + '_date').datepicker({
+        format: 'dd/mm/yyyy',
+        autoclose: true,
+        language: 'fr',
+      });
+
+    });
+
+    $('#projet_notes_remove_entry').click(function () {
+      if($('> :last-child', $collectionHolderNote).length) {
+        var id = $('> :last-child', $collectionHolderNote).find('input').attr('id').match(/\d+/);
+        id = parseInt(id);
+        delete main_images[id];
+        if(current_main_image == id) {
+          current_main_image = current_main_image - 1;
+          if(main_images[current_main_image] !== undefined)
+            $('#main_photo img').attr('src', main_images[current_main_image][2]);
+          else $('#main_photo img').attr('src', '');
+        }
+        updatePrevNextButtons();
+      }
+      $('> :last-child', $collectionHolderNote).remove();
+    });
+
+    var technologies = {{ grid_helper.getJsonTechnologies|raw }};
+    $('#projet_technologie').change(function () {
+      if($('#projet_technologie').val() == 'eolienne') {
+        $('#projet_surfaceUtile').parents('.form-group').addClass('hide');
+      } else {
+        $('#projet_surfaceUtile').parents('.form-group').removeClass('hide');
+      }
+      if($(this).val()) {
+        var selected_technologie = $(this).val();
+        $.each(technologies, function(code, technologie) {
+          if(code == selected_technologie) {
+            $('#tab_projet p').html('');
+            var technologie_su = $('#projet_surfaceUtile').val() ? $('#projet_surfaceUtile').val() : 0;
+            var technologie_largeur = 0;
+            var technologie_longeur = 0;
+            var technologie_pu = 0;
+            $.each(technologie['data'], function(field, value) {
+              if(field == 'Longeur') technologie_longeur = value.replace(/m/g, '').trim();
+              else if(field == 'Largeur') technologie_largeur = value.replace(/m/g, '').trim();
+              else if(field == 'Modèle') {
+                technologie_pu = value.replace(/(W|V)/, '').trim();
+                $('#projet_puissanceUnitaire').val(technologie_pu);
+              }
+              $('#tab_projet p').append('<div class="form-group form-group-sm"><label class="col-sm-4 control-label">'+field+':</label><div class="col-sm-8">' + value + '</div></div>');
+            });
+            if($('#projet_technologie').val() == 'eolienne' || (technologie_su && technologie_largeur && technologie_longeur)) {
+              if($('#projet_technologie').val() == 'eolienne') {
+                var technologie_unite = parseFloat($('#projet_unite').val());
+              } else {
+                var technologie_unite = (technologie_su * 1000) / (technologie_largeur * technologie_longeur);
+                $('#projet_unite').val(technologie_unite.toFixed(3));
+              }
+              var technologie_pt = technologie_unite * technologie_pu;
+              $('#projet_puissanceTotale').val(technologie_pt.toFixed(3));
+            }
+          }
+        });
+      }
+    });
+    $('#projet_surfaceUtile').change(function () {
+      $('#projet_technologie').change();
+    });
+    $('#projet_unite').change(function () {
+      $('#projet_technologie').change();
+    });
+
+    var current_main_image = 0;
+    {% if form.vars.value.notes[0].photo is defined and form.vars.value.notes[0].photo %}
+    var main_images = {
+      {% for note in form.vars.value.notes %}
+      {{ loop.index0 }}:{0:'{{ note.titre }}', 1:'{{ note.note }}', 2:'{{ asset('upload/' ~ note.photo) }}', 3:'{{ note.date|date('d/m/Y') }}', 4: true}
+      {% if not loop.last %},{% endif %}{% endfor %}
+      };
+    $('#main_photo img').attr('src', main_images[0][2]);
+    {% if form.vars.value.notes[1].photo is defined and form.vars.value.notes[1].photo %}
+    updatePrevNextButtons();
+    {% endif %}
+    {% else %}
+    var main_images = {};
+    {% endif %}
+    function updatePrevNextButtons() {
+      $('#projet_notes tr.info').removeClass('info');
+      if(main_images[current_main_image][4]) $('#projet_notes tr:eq('+current_main_image+')').removeClass('success2').addClass('info');
+      else $('#projet_notes tr:eq('+current_main_image+')').removeClass('success2');
+      prev = -1;
+      next = -1;
+      $.each(main_images, function(i, value) {
+        if(current_main_image > i && value[4]) prev = 1;
+        if(next == -1 && current_main_image < i && value[4]) next = 1;
+      });
+      if(prev >= 0) $('#prev_image').parent().removeClass('disabled');
+      else  $('#prev_image').parent().addClass('disabled');
+      if(next >= 0) $('#next_image').parent().removeClass('disabled');
+      else $('#next_image').parent().addClass('disabled');
+      if(main_images[0] === undefined) {
+        $('#projet_notes_recherche').addClass('hide');
+        $('#projet_notes_recherche').val();
+      } else $('#projet_notes_recherche').removeClass('hide');
+    }
+    $('#next_image, #prev_image').click(function(e) {
+      e.preventDefault();
+      prev = -1;
+      next = -1;
+      $.each(main_images, function(i, value) {
+        if(current_main_image > i && value[4]) prev = i;
+        if(next == -1 && current_main_image < i && value[4]) next = i;
+      });
+      if(($(this).attr('id') == 'prev_image' && prev >= 0) || ($(this).attr('id') == 'next_image' && next >= 0)) {
+        if($(this).attr('id') == 'next_image') current_main_image = next;
+        else current_main_image = prev;
+        updatePrevNextButtons();
+        $('#main_photo img').attr('src', main_images[current_main_image][2]);
+      }
+    });
+    $('body').on('change', '#tab_image input[id*=_photoFile]', function() {
+      var id = $(this).attr('id').match(/\d+/);
+      id = parseInt(id);
+      if (this.files && this.files[0]) {
+        var reader = new FileReader();
+        
+        reader.onload = function(e) {
+          $('#main_photo img').attr('src', e.target.result);
+          if(main_images[id] !== undefined) main_images[id][2] = e.target.result;
+          else {
+            search = $('#projet_notes_recherche').val();
+            if(!search || $('#projet_notes_'+id+'_titre').val().match(new RegExp(search, 'gi')) || $('#projet_notes_'+id+'_note').val().match(new RegExp(search, 'gi')) || $('#projet_notes_'+id+'_date').val().match(new RegExp(search, 'gi')))
+              main_images[id] = {0: $('#projet_notes_'+id+'_titre').val(), 1: $('#projet_notes_'+id+'_note').val(), 2: e.target.result, 3: $('#projet_notes_'+id+'_date').val(), 4: true};
+            else main_images[id] = {0: $('#projet_notes_'+id+'_titre').val(), 1: $('#projet_notes_'+id+'_note').val(), 2: e.target.result, 3: $('#projet_notes_'+id+'_date').val(), 4: false};
+          }
+          current_main_image = id;
+          updatePrevNextButtons();
+        }
+        
+        reader.readAsDataURL(this.files[0]); // convert to base64 string
+      }
+    });
+    $('body').on('change', '#tab_image input[id*=_date]', function() {
+      var id = $(this).attr('id').match(/\d+/);
+      id = parseInt(id);
+      if(main_images[id] !== undefined) main_images[id][3] = $(this).val();
+    });
+    $('body').on('change', '#tab_image input[id*=_titre]', function() {
+      var id = $(this).attr('id').match(/\d+/);
+      id = parseInt(id);
+      if(main_images[id] !== undefined) main_images[id][0] = $(this).val();
+    });
+    $('body').on('change', '#tab_image input[id*=_note]', function() {
+      var id = $(this).attr('id').match(/\d+/);
+      id = parseInt(id);
+      if(main_images[id] !== undefined) main_images[id][1] = $(this).val();
+    });
+    $('#projet_notes_recherche').change(function() {
+      var search = $(this).val();
+      $('#main_photo img').attr('src', '');
+      found = 0;
+      $.each(main_images, function(i, value) {
+        if(value[0].match(new RegExp(search, 'gi')) || value[1].match(new RegExp(search, 'gi')) || value[3].match(new RegExp(search, 'gi'))) {
+          if(!found) {
+            $('#projet_notes tr:eq('+i+')').addClass('info');
+            found = 1;
+            current_main_image = i;
+            $('#main_photo img').attr('src', value[2]);
+            main_images[i][4] = true;
+          } else $('#projet_notes tr:eq('+i+')').addClass('success2');
+        } else {
+          main_images[i][4] = false;
+          $('#projet_notes tr:eq('+i+')').removeClass('success2').removeClass('info');
+        }
+      });
+      updatePrevNextButtons();
+    });
+
+    $('document').ready(function() {
+      $('#projet_batimentExistant_bardage').parents('.form-group').addClass('hide');
+      $('#projet_batimentExistant_ossature').parents('.form-group').addClass('hide');
+      $('#projet_batimentExistant_charpente').parents('.form-group').addClass('hide');
+      $('#projet_typeProjet').change();
+      $('#projet_technologie').change();
+      $('select[id*="_phase"]').change();
+      $('select[id*="_objet"]').change();
+      if(!$('#projet_etats tr').length) $('#projet_etats_add_entry').click();
+      if(!$('#projet_taches tr').length) $('#projet_taches_add_entry').click();
+      if($('#projet_taches tr').length < 2) {
+        $('#projet_taches_add_entry').click();
+        $('#projet_taches_1_objet').val('foncier');
+      }
+      $('<div id="batimentNouveau_options" class="form-group form-group-sm"><label class="col-sm-4 control-label"></label><div class="col-sm-8"><p></p></div></div>').insertAfter($('#projet_batimentExistant_photoFile').parents('div.form-group'));
+    });
+
+    $('#nouveau_projet_nav a').click(function (e) {
+      e.preventDefault();
+      var attr = $(this).attr('rel');
+      if(typeof attr !== typeof undefined && attr !== false) {
+        $('#nouveau_projet_nav li').removeClass('active');
+        $(this).parent().addClass('active');
+        $('fieldset').addClass('hide');
+        $('fieldset#' + attr).removeClass('hide');
+        if(attr != 'tab_localisation' && attr != 'tab_contacts' && attr != 'tab_site' && attr != 'tab_projet' && attr != 'tab_image') {
+          $('#map').addClass('hide');
+            $('#main_photo').addClass('hide');
+          $('#fields_div').removeClass('col-sm-6');
+          $('#fields_div').addClass('col-sm-12');
+          $('fieldset#' + attr + ' .col-sm-4').addClass('col-sm-2').removeClass('col-sm-4');
+        } else {
+          if(attr != 'tab_image') {
+            $('#map').removeClass('hide');
+            $('#main_photo').addClass('hide');
+          } else {
+            $('#map').addClass('hide');
+            $('#main_photo').removeClass('hide');
+          }
+          $('#fields_div').removeClass('col-sm-12');
+          $('#fields_div').addClass('col-sm-6');
+        }
+        if(attr == 'tab_site') {
+          $('.form_site').addClass('hide');
+          var type_site = $('#projet_typeSite').val();
+          $('#tab_site legend:eq(0)').text($('#projet_typeSite option:selected').text());
+          if(type_site == 'terrain') $('#form_site_terrain').removeClass('hide');
+          else if(type_site == 'batiment_existant') {
+            $('#projet_batimentExistant_bardage').parents('.form-group').addClass('hide');
+            $('#projet_batimentExistant_ossature').parents('.form-group').addClass('hide');
+            $('#projet_batimentExistant_charpente').parents('.form-group').addClass('hide');
+            $('#projet_batimentExistant_photoFile').parents('.form-group').removeClass('hide');
+            $('#form_site_batimentExistant').removeClass('hide');
+            $('#batimentNouveau_options').addClass('hide');
+          } else if(type_site == 'nouveau_batiment') {
+            $('#form_site_batimentNouveau').removeClass('hide');
+            $('#projet_batimentNouveau').change();
+            $('#form_site_batimentExistant').removeClass('hide');
+            $('#batimentNouveau_options').removeClass('hide');
+          }
+        }
+      }
+    });
+  </script>
+{% endblock %}

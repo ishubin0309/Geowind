@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% set title = 'Modifier ' ~ bureau %}
+{% set item = 'bureau' %}
+
+{% block body %}
+  <div class="container">
+    <a href="{{ path('bureau_index') }}" class="btn btn-default btn-xs pull-right"><i class="fa fa-fw fa-close"></i> Annuler</a>
+    <div class="page-title"><h1><i class="fa fa-pencil fa-fw"></i> {{ title }}</h1></div>
+    <hr>
+    {{ form_start(form) }}
+    {{ form_rest(form) }}
+    <div class="form-group">
+      <div class="col-sm-10 col-sm-offset-2">
+        <button type="submit" class="btn btn-primary"><i class="fa fa-check fa-fw"></i> Valider</button>
+      </div>
+    </div>
+    {{ form_end(form) }}
+  </div>
+{% endblock %}

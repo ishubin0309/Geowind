@@ -1,0 +1,108 @@
+{% extends 'base.html.twig' %}
+
+{% set title = 'Mairie' %}
+{% set item = 'annuaire' %}
+
+{% block body %}
+
+  <div class="container">
+    
+    <h3>Chercher une mairie</h3>
+    <hr>
+    
+    <select id="input-mairie" type="text" class="form-control"></select>
+      
+    <h3>Modèle
+      <a href="{{ path('model_new') }}" class="btn btn-primary btn-sm pull-right">Nouveau modèle</a>
+    </h3>
+    <hr>
+    
+    {% if models is empty %}
+      <div class="alert alert-info mt0">
+        Aucun modèle
+      </div>
+    {% else %}
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Intitulé du modèle</th>
+            <th class="column-fit"></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for model in models %}
+          <tr>
+            <td>{{ model }}</td>
+            <td class="column-fit">
+              <a href="{{ path('model_edit', { 'id': model.id }) }}" class="btn btn-danger btn-xs"><i class="fa fa-pencil"></i></a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% endif %}
+    
+    <h3>Mairies contactées</h3>
+    <hr>
+    
+    {% if messages is empty %}
+      <div class="alert alert-info mt0">
+        Aucune mairie contactée
+      </div>
+    {% else %}
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Mairie</th>
+            <th>Destinaire</th>
+            <th>Contactée par</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for message in messages %}
+          <tr>
+            <td>{{ message.createdAt|date('d/m/Y') }}</td>
+            <td><a href="{{ path('annuaire_mairie', { 'insee': message.mairie.insee }) }}">{{ message.mairie }}</a></td>
+            <td>{{ message.to }}</td>
+            <td>{{ message.createdBy }}</td>
+            <td></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% endif %}
+    
+    
+    
+    
+
+  </div>
+        
+{% endblock %}
+
+{% block js %}
+  <script>
+
+    
+    $("#input-mairie").select2({
+      ajax: {
+        url: Routing.generate('mairie_search'),
+        dataType: 'json',
+        delay: 500,
+        processResults: function (data) {
+          return {
+            results: data
+          };
+        }
+      },
+      escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+      minimumInputLength: 1,
+    });
+    
+    $('#input-mairie').on('select2:select', function (e) {
+      var data = e.params.data;
+      window.location.href = Routing.generate('annuaire_mairie', { insee: data.id });
+    });
+  </script>
+{% endblock %}

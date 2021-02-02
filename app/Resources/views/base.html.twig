@@ -1,0 +1,150 @@
+{% set zone = zone|default('pepiniere') %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
+    <title>{% block title %}{{ title is defined ? title : 'Portail' }}{% endblock %}</title>
+    <link rel="stylesheet" href="{{ asset('vendor/bootstrap-3.3.7-dist/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/font-awesome-4.7.0/css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/select2-4.0.3-dist/css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/DataTables/datatables.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/sweetalert/sweetalert.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/leaflet/leaflet.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/animate/animate.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/SlickGrid-master/controls/slick.columnpicker.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/SlickGrid-master/plugins/slick.headerbuttons.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/SlickGrid-master/slick.grid.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/slickgrid.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}?version=1.2">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    {% block css %}{% endblock %}
+  </head>
+  <body>
+
+    <nav class="navbar navbar-default primary-navbar">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          {% if zone == 'pepiniere' %}
+            <a class="navbar-brand" href="{{ path('homepage') }}"><img src="{{ asset('images/logo.jpg') }}" alt=""></a>
+          {% elseif zone == 'eolien' %}
+            <a class="navbar-brand" href="{{ path('cartographie') }}"><img src="{{ asset('images/logo.jpg') }}" alt=""></a>
+          {% endif %}
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            {% if zone == 'pepiniere' %}
+            <li{{ item is defined and item == 'afficher' ? ' class="active"' }}><a href="{{ path('projet_index') }}"><i class="fa fa-eye"></i> Afficher</a></li>
+            <li{{ item is defined and item == 'recherche' ? ' class="active"' }}><a href="{{ path('search_index') }}"{{ item is defined and item == 'portail' ? 'target="_blank"' }}><i class="fa fa-search"></i> Recherche</a></li>
+            <li{{ item is defined and item == 'finance' ? ' class="active"' }}><a href="{{ path('finance_index') }}"><i class="fa fa-euro"></i> Finances</a></li>
+            <li{{ item is defined and item == 'archives' ? ' class="active"' }}><a href="{{ path('projet_archive') }}"><i class="fa fa-archive"></i> Archives</a></li>
+            <li{{ item is defined and item == 'annuaire' ? ' class="active"' }}><a href="{{ path('annuaire_index') }}"><i class="fa fa-book"></i> Mairie</a></li>
+            <li{{ item is defined and item == 'proprietaires' ? ' class="active"' }}><a href="{{ path('proprietaires') }}"><i class="fa fa-users"></i> Propriétaires</a></li>
+            <li{{ item is defined and item == 'bureau' ? ' class="active"' }}><a href="{{ path('bureau_index') }}"><i class="fa fa-institution"></i> BE</a></li>
+            {% if is_granted('ROLE_ADMIN') %}
+              <li{{ item is defined and item == 'user' ? ' class="active"' }}><a href="{{ path('user_index') }}"><i class="fa fa-users"></i> Utilisateurs</a></li>
+            {% endif %}
+            <li class="dropdown dropdown-legend">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-dot-circle-o"></i> Légende <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                {% for pkey, progress in legend_menu.progressionList %}
+                  <li><a href="#"><div class="{{ legend_menu.getCssClass(pkey) }}" style="background-color: {{ legend_menu.getColor(pkey) }}"></div> {{ pkey|progression_format }}</a></li>
+                {% endfor %}
+              </ul>
+            </li>
+            <li class="dropdown dropdown-legend">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-paperclip"></i> Listes <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+              {{ render(controller("AppBundle:Projet:allListe")) }}
+              </ul>
+            </li>
+            {% elseif zone == 'eolien' %}
+              {#<li{{ item is defined and item == 'cartographie' ? ' class="active"' }}><a href="{{ path('cartographie') }}"{{ item is defined and item == 'portail' ? 'target="_blank"' }}>
+                  <i class="fa fa-map-o"></i> Cartographie des parcs éoliens construits</a></li>#}
+            {% endif %}
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                <i class="fa fa-user-o user-account-icon"></i> <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li>
+                    <div class="user-dropdown-content">
+                      <i class="user-dropdown-icon fa fa-user-circle"></i>
+                      <span>{{ app.user.prenom }} {{ app.user.nom }}</span><br>
+                      <small class="text-muted">{{ app.user.username }}</small>
+                      <small class="text-muted"><br>{{ app.user.email }}</small>
+                    </div>
+                    <div class="user-dropdown-footer">
+                      <div class="user-dropdown-footer-content">
+                        <a href="{{ path('home') }}" class="btn btn-default btn-sm btn-block"><i class="fa fa-home"></i> Page de garde</a>
+                        {% if is_granted('ROLE_ADMIN') %}
+                          <a href="{{ path('cartographie') }}" class="btn btn-default btn-sm btn-block"><i class="fa fa-map-o"></i> Carte des parcs éoliens</a>
+                        {% endif %}
+                        <a href="{{ path('homepage') }}" class="btn btn-default btn-sm btn-block"><i class="fa fa-map-pin"></i> Pépinières</a>
+                        <a href="{{ path('logout') }}" class="btn btn-danger btn-sm btn-block"><i class="fa fa-sign-out"></i> Déconnexion</a>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+            </li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+    {% include 'flash.html.twig' %}
+
+    {% block body %}{% endblock %}
+
+    <script src="{{ asset('vendor/jquery/jquery-3.2.1.min.js') }}"></script>
+    <script src="{{ asset('vendor/bootstrap-3.3.7-dist/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
+    <script src="{{ asset('vendor/bootstrap-datepicker/locales/bootstrap-datepicker.fr.min.js') }}"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/i18n/jquery-ui-i18n.min.js"></script>
+    <script src="{{ asset('vendor/sweetalert/sweetalert.min.js') }}"></script>
+    <script src="{{ asset('vendor/leaflet/leaflet.js') }}"></script>
+    <script src="{{ asset('vendor/select2-4.0.3-dist/js/select2.min.js') }}"></script>
+    <script src="{{ asset('vendor/DataTables/datatables.min.js') }}"></script>
+    <script src="{{ asset('vendor/SlickGrid-master/lib/jquery.event.drag-2.3.0.js') }}"></script>
+    <script src="{{ asset('vendor/SlickGrid-master/slick.core.js') }}"></script>
+    <script src="{{ asset('vendor/SlickGrid-master/plugins/slick.cellrangedecorator.js') }}"></script>
+    <script src="{{ asset('vendor/SlickGrid-master/plugins/slick.cellrangeselector.js') }}"></script>
+    <script src="{{ asset('vendor/SlickGrid-master/plugins/slick.cellcopymanager.js') }}"></script>
+    <script src="{{ asset('vendor/SlickGrid-master/plugins/slick.cellselectionmodel.js') }}"></script>
+    <script src="{{ asset('vendor/SlickGrid-master/plugins/slick.checkboxselectcolumn.js') }}"></script>
+    <script src="{{ asset('vendor/SlickGrid-master/plugins/slick.autotooltips.js') }}"></script>
+    <script src="{{ asset('vendor/SlickGrid-master/plugins/slick.rowselectionmodel.js') }}"></script>
+    <script src="{{ asset('vendor/SlickGrid-master/plugins/slick.headerbuttons.js') }}"></script>
+    <script src="{{ asset('vendor/SlickGrid-master/controls/slick.columnpicker.js') }}"></script>
+    <script src="{{ asset('vendor/SlickGrid-master/slick.formatters.js') }}"></script>
+    <script src="{{ asset('vendor/SlickGrid-master/slick.editors.js') }}"></script>
+    <script src="{{ asset('vendor/SlickGrid-master/slick.core.js') }}"></script>
+    <script src="{{ asset('vendor/SlickGrid-master/slick.dataview.js') }}"></script>
+    <script src="{{ asset('vendor/SlickGrid-master/slick.grid.js') }}"></script>
+    <script src="{{ asset('vendor/leaflet-svgicon-master/svg-icon.js') }}"></script>
+    <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+    <script>
+      $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+      })
+      $.datepicker.setDefaults(
+      $.extend(
+        {'dateFormat':'dd/mm/yy'},
+        $.datepicker.regional['fr']
+      )
+    );
+    </script>
+    {% block js %}{% endblock %}
+  </body>
+</html>

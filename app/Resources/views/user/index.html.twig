@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% set title = 'Liste des utilisateurs' %}
+{% set item = 'user' %}
+
+{% block body %}
+  <div class="container-fluid">
+    <a href="{{ path('user_new') }}" class="btn btn-primary btn-xs pull-right"><i class="fa fa-fw fa-user-plus"></i> Ajouter un utilisateur</a>
+    <div class="page-title"><h1><i class="fa fa-users fa-fw"></i> {{ title }}</h1></div>
+    <hr>
+    <table id="datatable" class="table table-striped table-middle">
+      <thead>
+        <tr>
+          <th class="column-fit">User</th>
+          <th>Nom</th>
+          <th>Prenom</th>
+          <th>Email</th>
+          <th>Téléphone</th>
+          <th>Droits</th>
+          <th class="column-fit">Date de création</th>
+          <th class="column-fit">Etat</th>
+          <th class="column-fit"></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for user in users %}
+        <tr>
+          <td class="column-fit">{{ user.username }}</td>
+          <td>{{ user.nom|upper }}</td>
+          <td>{{ user.prenom|capitalize }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.telephone }}</td>
+          <td class="column-fit">
+            {% if user.hasRole('ROLE_ADMIN') %}<i class="fa fa-cog" title="Admin"></i>{% endif %}
+            {% if user.hasRole('ROLE_MODIFY_ALL') %}<i class="fa fa-pencil" title="Tout modifier"></i>{% endif %}
+            {% if user.hasRole('ROLE_VIEW_ALL') %}<i class="fa fa-eye" title="Tout voir"></i>{% endif %}
+          </td>
+          <td class="column-fit">{{ user.createdAt is not null ? user.createdAt|date('d/m/Y') }}</td>
+          <td class="column-fit">{{ user.enabled ? '<span class="label label-success">Actif</span>' : '<span class="label label-danger">Désactivé</span>' }}</td>
+          <td class="column-fit"><a href="{{ path('user_edit', { 'id': user.id }) }}" class="btn btn-danger btn-xs"><i class="fa fa-fw fa-pencil"></i></a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}
+
+{% block js %}
+  <script>
+    $('#datatable').DataTable({
+      language: dtLang,
+      paging: false,
+      ordering: false,
+      bInfo: false,
+    });
+  </script>
+{% endblock %}

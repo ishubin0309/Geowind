@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geowind</title>
+    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/bootstrap-3.3.7-dist/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/font-awesome-4.7.0/css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/theme.css') }}?v=201711200000">
+  </head>
+  <body>
+
+    <!-- Navigation -->
+    <a id="menu-toggle" href="#" class="btn btn-dark btn-lg toggle"><i class="fa fa-bars"></i></a>
+    <nav id="sidebar-wrapper">
+      <ul class="sidebar-nav">
+        <a id="menu-close" href="#" class="btn btn-light btn-lg pull-right toggle"><i class="fa fa-times"></i></a>
+        <li class="sidebar-brand">
+          <a href="#top" class="jumpto" onclick=$("#menu-close").click();>Geowind</a>
+        </li>
+        <li>
+          <a href="#missions" class="jumpto" onclick=$("#menu-close").click();>Nos missions</a>
+        </li>
+        <li>
+          <a href="{{ path('homepage') }}" onclick=$("#menu-close").click();>Accès pépinière</a>
+        </li>
+        <li>
+          <a href="{{ path('cartographie') }}" onclick=$("#menu-close").click();>Accès parcs éoliens</a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Header -->
+    <header id="top" class="header">
+      <div class="text-vertical-center">
+       {# <a href="#missions" class="jumpto btn btn-dark btn-lg">Nos missions</a>
+        <a href="{{ path('login') }}" class="btn btn-dark btn-lg">Accéder</a>#}
+      </div>
+    </header>
+
+
+
+
+    <section id="missions" class="services bg-primary">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-10 col-lg-offset-1">
+            <h2 class="text-center">Nos missions</h2>
+            <hr class="small">
+            
+            <h2 class="text-left">Prospecter et développer</h2>
+            <ul>
+              <li>prospecter de nouveaux sites adaptés aux projets d'énergies renouvelables</li>
+              <li>les confronter aux contraintes et servitudes</li>
+              <li>concevoir les plans d'implantation et aménagements aux échelles de précision variables</li>
+              <li>élaborer les documents allant du niveau l'esquisse aux documents d’exécution</li>
+              <li>mener les projets jusqu'à l'obtention des autorisations, en apportant les réponses lors des phases d'instruction</li>
+            </ul>
+            
+            <hr class="small">
+
+            <h2 class="text-left">Notre équipe est pluri-disciplinaire</h2>
+            
+            <ul>
+              <li>formée aux métiers de conception et d'aménagement de projet</li>
+              <li>ayant des aptitudes à la concertation publique et administrative et d'animation</li>
+              <li>avec des aptitudes de négociation et de reporting</li>
+              <li>travaillant en réseaux avec des paysagistes, urbanistes, architectes et environnementalistes</li>
+            </ul>
+
+            <hr class="small">
+            
+            <h2 class="text-left">Notre outil facilite le suivi de nos missions</h2>
+            
+            <ul>
+              <li>les sites accessibles sur un site sécurisé</li>
+              <li>constituant un journal de nos actions</li>
+              <li>affichant l'avancement de nos travaux</li>
+            </ul>
+
+              <div class="text-right" style="margin-top: 30px;">Thomas Claudel, Catherine Dollfus, Djalil Mokrane, Barthelemy Affres</div>
+
+
+            
+            <!-- /.row (nested) -->
+          </div>
+          <!-- /.col-lg-10 -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container -->
+    </section>
+
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-10 col-lg-offset-1 text-center">
+            
+            <img src="{{ asset('images/logo.jpg') }}" alt="" style="height: 50px; margin-bottom: 10px;">
+            <ul class="list-unstyled">
+              <li><i class="fa fa-envelope-o fa-fw"></i> <a href="mailto:geowind@gmail.com">geowind@gmail.com</a>
+              </li>
+            </ul>
+
+          </div>
+        </div>
+      </div>
+      <a id="to-top" href="#top" class="btn btn-dark btn-lg"><i class="fa fa-chevron-up fa-fw fa-1x"></i></a>
+    </footer>
+
+    <script src="{{ asset('vendor/jquery/jquery-3.2.1.min.js') }}"></script>
+    <script src="{{ asset('vendor/bootstrap-3.3.7-dist/js/bootstrap.min.js') }}"></script>
+
+
+    <!-- Custom Theme JavaScript -->
+    <script>
+      // Closes the sidebar menu
+      $("#menu-close").click(function (e) {
+        e.preventDefault();
+        $("#sidebar-wrapper").toggleClass("active");
+      });
+      // Opens the sidebar menu
+      $("#menu-toggle").click(function (e) {
+        e.preventDefault();
+        $("#sidebar-wrapper").toggleClass("active");
+      });
+
+      $(function () {
+        $('.jumpto').click(function () {
+          if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') || location.hostname == this.hostname) {
+            var target = $(this.hash);
+            target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+            if (target.length) {
+              $('html,body').animate({
+                scrollTop: target.offset().top
+              }, 1000);
+              return false;
+            }
+          }
+        });
+      });
+
+      //#to-top button appears after scrolling
+      var fixed = false;
+      $(document).scroll(function () {
+        if ($(this).scrollTop() > 250) {
+          if (!fixed) {
+            fixed = true;
+            // $('#to-top').css({position:'fixed', display:'block'});
+            $('#to-top').show("slow", function () {
+              $('#to-top').css({
+                position: 'fixed',
+                display: 'block'
+              });
+            });
+          }
+        } else {
+          if (fixed) {
+            fixed = false;
+            $('#to-top').hide("slow", function () {
+              $('#to-top').css({
+                display: 'none'
+              });
+            });
+          }
+        }
+      });
+
+    </script>
+
+
+
+  </body>
+
+</html>
