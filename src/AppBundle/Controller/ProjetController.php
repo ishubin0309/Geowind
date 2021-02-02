@@ -176,6 +176,7 @@ class ProjetController extends Controller
             $row = 0;
             if (($handle = fopen($file_path, "r")) !== FALSE) {
                 $inseeColumn = false;
+                $communeColumn = false;
                 $departementColumn = false;
                 $latColumn = false;
                 $lngColumn = false;
@@ -195,6 +196,7 @@ class ProjetController extends Controller
                     if(!$row++) {
                         for ($c=0; $c < count($data); $c++) {
                             if($data[$c]=='INSEE_COM') $inseeColumn = $c;
+                            if($data[$c]=='Commune') $communeColumn = $c;
                             elseif($data[$c]=='Department') $departementColumn = $c;
                             elseif($data[$c]=='Latitude') $latColumn = $c;
                             elseif($data[$c]=='Longitude') $lngColumn = $c;
@@ -271,11 +273,11 @@ class ProjetController extends Controller
                                     $parcelle = new Parcelle();
                                     $parcelle->setNom(trim($value));
                                     $parcelle->setDepartement($departement);
-                                    /* if($inseeColumn !== false) {
+                                    if($inseeColumn !== false) {
                                         if($commune) $parcelle->setCommune($commune->getNom() . ' (' . $commune->getInsee() . ')');
+                                        elseif($communeColumn !== false) $parcelle->setCommune($data[$communeColumn] . ' (' . $data[$inseeColumn] . ')');
                                         else $parcelle->setCommune($data[$inseeColumn]);
-                                    } */
-                                    $parcelle->setCommune($data[$inseeColumn]);
+                                    } else if($communeColumn !== false) $parcelle->setCommune($data[$communeColumn] . ' (' . $data[$inseeColumn] . ')');
                                     $projet->addParcelle($parcelle);
                                 }
                             }
