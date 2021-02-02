@@ -14,10 +14,6 @@ class Tache
     const OBJET_CINQ = 'consultations';
     const OBJET_SIX = 'concertation';
 
-    const DYNAMIQUE_UN = '1';
-    const DYNAMIQUE_DEUX = '2';
-    const DYNAMIQUE_TROIS = '3';
-
     /**
      * @return array
      */
@@ -30,17 +26,6 @@ class Tache
             self::OBJET_QUATRE => 'Urbanisme',
             self::OBJET_CINQ => 'Consultations',
             self::OBJET_SIX => 'Concertation'
-        ];
-    }
-    /**
-     * @return array
-     */
-    public static function getDynamiqueList()
-    {
-        return [
-            self::DYNAMIQUE_UN => '+',
-            self::DYNAMIQUE_DEUX => '0',
-            self::DYNAMIQUE_TROIS => '-'
         ];
     }
 

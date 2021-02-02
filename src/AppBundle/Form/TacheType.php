@@ -3,6 +3,7 @@
 namespace AppBundle\Form;
 
 use AppBundle\Model\Tache;
+use AppBundle\Model\Etat;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -38,7 +39,7 @@ class TacheType extends AbstractType
             ])
             ->add('dynamique', ChoiceType::class, [
                 'label' => 'Dynamique',
-                'choices' => array_flip(Tache::getDynamiqueList()),
+                'choices' => array_flip(Etat::getDynamiqueList()),
             ])
             ->add('note', TextType::class, [
                 'label' => 'Note',

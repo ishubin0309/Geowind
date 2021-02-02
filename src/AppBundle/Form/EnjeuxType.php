@@ -3,6 +3,7 @@
 namespace AppBundle\Form;
 
 use AppBundle\Entity\Enjeux;
+use AppBundle\Model\Etat;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -26,13 +27,7 @@ class EnjeuxType extends AbstractType
             ->add('enjeux', ChoiceType::class, [
                 'label' => 'Enjeux',
                 'required' => false,
-                'choices' => [
-                    '++' => '++',
-                    '+' => '+',
-                    '0' => '0',
-                    '-' => '-',
-                    '--' => '--',
-                ],
+                'choices' => array_flip(Etat::getDynamiqueList()),
             ])
             ->add('risque', TextType::class, [
                 'label' => 'Risque',
