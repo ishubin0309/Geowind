@@ -26,18 +26,6 @@ class Progression
     public static function getProgressionList()
     {
         return [
-            self::EN_VERIF => 'en vérif',
-            self::ECARTE => 'écarté',
-            self::EN_STBY => 'en stby',
-            self::RETENU => 'retenu',
-            self::EN_SECUR => 'en sécur',
-            self::EN_DVPT => 'en dvpt1',
-            self::EN_DVPT2 => 'en dvpt2',
-            self::EN_INST => 'en inst',
-            self::AUTORISE => 'autorisé',
-            self::REFUSE => 'refusé',
-            self::CONSTRUIT => 'construit',
-            self::EN_RECOURS => 'en recours',
             'nouveau' => 'Nouveau',
             // 'esquisse' => 'Esquisse',
             'fiche_complete' => 'Fiche complète',

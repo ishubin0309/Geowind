@@ -26,9 +26,6 @@ class Projet
     use BlameableTrait;
     use TimestampableTrait;
 
-    const TYPE_EOL = 'EOL';
-    const TYPE_PVS = 'PVS';
-    const TYPE_BAT = 'BAT';
     const TYPE_PROJET_UN = 'parc__eolien';
     const TYPE_PROJET_DEUX = 'ferme_solaire';
     const TYPE_PROJET_TROIS = 'ombriere_solaire';
@@ -459,21 +456,9 @@ class Projet
     /**
      * @return array
      */
-    public static function getTypeProjetList($old_included=false)
+    public static function getTypeProjetList()
     {
-        if($old_included) {
-            return [
-                self::TYPE_EOL => 'EOL',
-                self::TYPE_BAT => 'BAT',
-                self::TYPE_PVS => 'PVS',
-                self::TYPE_PROJET_UN => 'Parc éolien',
-                self::TYPE_PROJET_DEUX => 'Ferme solaire',
-                self::TYPE_PROJET_TROIS => 'Ombrière solaire',
-                self::TYPE_PROJET_QUATRE => 'Tracker solaire',
-                self::TYPE_PROJET_CINQ => 'Eolienne isolée',
-                self::TYPE_PROJET_SIX => 'Toiture solaire'
-            ];
-        } else return [
+        return [
             self::TYPE_PROJET_UN => 'Parc éolien',
             self::TYPE_PROJET_DEUX => 'Ferme solaire',
             self::TYPE_PROJET_TROIS => 'Ombrière solaire',
