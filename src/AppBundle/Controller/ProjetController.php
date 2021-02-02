@@ -261,7 +261,7 @@ class ProjetController extends Controller
                         $departement = $em->getRepository('AppBundle:Departement')->findOneBy(['nom' => $data[$departementColumn]]);
                         if($departement) {
                             $projet->setDepartement($departement);
-                            if($inseeColumn) {
+                            if($inseeColumn !== false) {
                                 $commune = $em->getRepository('AppBundle:Commune')->findOneBy(['insee' => $data[$inseeColumn]]);
                                 if($commune) $projet->addCommune($commune);
                             }
@@ -269,7 +269,7 @@ class ProjetController extends Controller
                                 $parcelle = new Parcelle();
                                 $parcelle->setNom($data[$parcelleColumn]);
                                 $parcelle->setDepartement($departement);
-                                if($inseeColumn) {
+                                if($inseeColumn !== false) {
                                     if($commune) $parcelle->setCommune($commune->getNom() . ' (' . $commune->getInsee() . ')');
                                     else $parcelle->setCommune($data[$inseeColumn]);
                                 }
