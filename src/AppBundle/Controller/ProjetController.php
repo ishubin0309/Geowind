@@ -266,14 +266,17 @@ class ProjetController extends Controller
                                 if($commune) $projet->addCommune($commune);
                             }
                             if($parcelleColumn !== false && $data[$parcelleColumn]) {
-                                $parcelle = new Parcelle();
-                                $parcelle->setNom($data[$parcelleColumn]);
-                                $parcelle->setDepartement($departement);
-                                if($inseeColumn !== false) {
-                                    if($commune) $parcelle->setCommune($commune->getNom() . ' (' . $commune->getInsee() . ')');
-                                    else $parcelle->setCommune('(' . $data[$inseeColumn] . ')');
+                                $parcelle_array = explode(',', $data[$parcelleColumn]);
+                                foreach($parcelle_array as $value) {
+                                    $parcelle = new Parcelle();
+                                    $parcelle->setNom(trim($value));
+                                    $parcelle->setDepartement($departement);
+                                    if($inseeColumn !== false) {
+                                        if($commune) $parcelle->setCommune($commune->getNom() . ' (' . $commune->getInsee() . ')');
+                                        else $parcelle->setCommune('(' . $data[$inseeColumn] . ')');
+                                    }
+                                    $projet->addParcelle($parcelle);
                                 }
-                                $projet->addParcelle($parcelle);
                             }
                             $etat = new Etat();
                             $etat->setPhase('exploratoire');
