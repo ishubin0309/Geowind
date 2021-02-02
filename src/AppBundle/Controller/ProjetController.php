@@ -7,6 +7,7 @@ use AppBundle\Entity\Liste;
 use AppBundle\Entity\Terrain;
 use AppBundle\Entity\Batiment;
 use AppBundle\Entity\Etat;
+use AppBundle\Entity\Enjeux;
 use AppBundle\Entity\Tache;
 use AppBundle\Entity\Parcelle;
 use AppBundle\Model\Environnement;
@@ -187,6 +188,7 @@ class ProjetController extends Controller
                 $typeSiteColumn = false;
                 $potentielColumn = false;
                 $parcelleColumn = false;
+                $enjeuxColumns = [];
                 $listEnvironnements = Environnement::getEnvironnementList();
                 $listTypeProjets = Projet::getTypeProjetList();
                 $listTypeSites = Projet::getTypeSiteList();
@@ -207,6 +209,7 @@ class ProjetController extends Controller
                             elseif($data[$c]=='Type de site' || $data[$c]=='Type de bien') $typeSiteColumn = $c;
                             elseif($data[$c]=='Potentiel (MW)') $potentielColumn = $c;
                             elseif($data[$c]=='Parcelle') $parcelleColumn = $c;
+                            elseif(preg_match('%Enjeux\-(.+)%',  $data[$c], $m)) $enjeuxColumns[$m[1]] = $c;
                         }
                         if(false === $departementColumn || false === $latColumn || false === $lngColumn || false === $environnementColumn || false === $typeProjetColumn || false === $typeSiteColumn) {
                             $this->addFlash('danger', 'Le fichier manque des colonnes obligatoires.');
@@ -284,18 +287,27 @@ class ProjetController extends Controller
                             $etat = new Etat();
                             $etat->setPhase('exploratoire');
                             $etat->setEtat('nouveau');
-                            $etat->setDynamique('2');
+                            $etat->setDynamique('0');
                             $projet->addEtat($etat);
                             $tache = new Tache();
                             $tache->setObjet('servitudes');
                             $tache->setEtat('a_letude');
-                            $tache->setDynamique('2');
+                            $tache->setDynamique('0');
                             $projet->addTache($tache);
                             $tache = new Tache();
                             $tache->setObjet('foncier');
                             $tache->setEtat('a_letude');
-                            $tache->setDynamique('2');
+                            $tache->setDynamique('0');
                             $projet->addTache($tache);
+                            if(!empty($enjeuxColumns)) {
+                                foreach($enjeuxColumns as $facteur => $column) {
+                                    $enjeux = new Enjeux();
+                                    $facteurType = $enjeux->getFacteurType($facteur);
+                                    $enjeux->setFacteur($facteurType);
+                                    $enjeux->setEnjeux($data[$column]);
+                                    $projet->addEnjeux($enjeux);
+                                }
+                            }
 
                             $em->persist($projet);
                             $em->flush();

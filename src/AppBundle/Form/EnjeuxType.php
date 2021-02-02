@@ -27,9 +27,11 @@ class EnjeuxType extends AbstractType
                 'label' => 'Enjeux',
                 'required' => false,
                 'choices' => [
-                    'Fort' => 'fort',
-                    'Faible' => 'faible',
-                    'Nul' => 'nul',
+                    '++' => '++',
+                    '+' => '+',
+                    '0' => '0',
+                    '-' => '-',
+                    '--' => '--',
                 ],
             ])
             ->add('risque', TextType::class, [

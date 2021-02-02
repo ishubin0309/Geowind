@@ -170,6 +170,11 @@ class Enjeux
             'echeance' => 'Echéances'
         ];
     }
+    public static function getFacteurType($facteur)
+    {
+        $types = self::getFacteurList();
+        return array_search($facteur, $types) ? array_search($facteur, $types) : strtolower($facteur);
+    }
 
     /**
      * @return Projet

@@ -19,10 +19,6 @@ class Etat
     const PHASE_DIX = 'decision5';
     const PHASE_ONZE = 'construction';
 
-    const DYNAMIQUE_UN = '1';
-    const DYNAMIQUE_DEUX = '2';
-    const DYNAMIQUE_TROIS = '3';
-
     /**
      * @return array
      */
@@ -48,9 +44,11 @@ class Etat
     public static function getDynamiqueList()
     {
         return [
-            self::DYNAMIQUE_UN => '+',
-            self::DYNAMIQUE_DEUX => '0',
-            self::DYNAMIQUE_TROIS => '-'
+            '++' => '++',
+            '+' => '+',
+            '0' => '0',
+            '-' => '-',
+            '--' => '--',
         ];
     }
 
