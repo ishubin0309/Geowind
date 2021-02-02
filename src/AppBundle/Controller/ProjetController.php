@@ -271,10 +271,11 @@ class ProjetController extends Controller
                                     $parcelle = new Parcelle();
                                     $parcelle->setNom(trim($value));
                                     $parcelle->setDepartement($departement);
-                                    if($inseeColumn !== false) {
+                                    /* if($inseeColumn !== false) {
                                         if($commune) $parcelle->setCommune($commune->getNom() . ' (' . $commune->getInsee() . ')');
-                                        else $parcelle->setCommune('(' . $data[$inseeColumn] . ')');
-                                    }
+                                        else $parcelle->setCommune($data[$inseeColumn]);
+                                    } */
+                                    $parcelle->setCommune($data[$inseeColumn]);
                                     $projet->addParcelle($parcelle);
                                 }
                             }

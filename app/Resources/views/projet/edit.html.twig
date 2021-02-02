@@ -346,7 +346,6 @@
     });
     
     var queryCommuneUrl2 = "{{ path('commune_search_jquery') }}";
-    $("select[id*=departement]").select2();
     $('#tab_parcelles [id*="_commune"]').autocomplete({
       source: queryCommuneUrl2,
       minLength: 1,
@@ -654,7 +653,6 @@
       entry = entry.replace(/__name__/g, length);
       $collectionHolderParcelle.append(entry);
       
-      $('#projet_parcelles_' + length + '_departement').select2();
       $('#projet_parcelles_' + length + '_commune').autocomplete({
         source: queryCommuneUrl2,
         minLength: 2,
