@@ -63,7 +63,7 @@ class ProjetType extends AbstractType
                 'required' => true,
             ])
             ->add('typeSite', ChoiceType::class, [
-                'label' => 'type de bien',
+                'label' => 'type de Bien',
                 'choices' => array_flip(Projet::getTypeSiteList()),
                 'required' => true,
             ])
