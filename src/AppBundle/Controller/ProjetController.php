@@ -197,19 +197,19 @@ class ProjetController extends Controller
                 while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
                     if(!$row++) {
                         for ($c=0; $c < count($data); $c++) {
-                            if($data[$c]=='INSEE_COM') $inseeColumn = $c;
-                            if($data[$c]=='Commune') $communeColumn = $c;
-                            elseif($data[$c]=='Department') $departementColumn = $c;
-                            elseif($data[$c]=='Latitude') $latColumn = $c;
-                            elseif($data[$c]=='Longitude') $lngColumn = $c;
-                            elseif($data[$c]=='Altitude') $altitudeColumn = $c;
-                            elseif($data[$c]=='Environnement' || $data[$c]=='Type de milieu') $environnementColumn = $c;
-                            elseif($data[$c]=='Topographie') $topographieColumn = $c;
-                            elseif($data[$c]=='Type de projet') $typeProjetColumn = $c;
-                            elseif($data[$c]=='Type de site' || $data[$c]=='Type de bien') $typeSiteColumn = $c;
-                            elseif($data[$c]=='Potentiel (MW)') $potentielColumn = $c;
-                            elseif($data[$c]=='Parcelle') $parcelleColumn = $c;
-                            elseif(preg_match('%Enjeux\-(.+)%',  $data[$c], $m)) $enjeuxColumns[$m[1]] = $c;
+                            if(strtolower($data[$c])=='insee_com') $inseeColumn = $c;
+                            if(strtolower($data[$c])=='commune') $communeColumn = $c;
+                            elseif(strtolower($data[$c])=='department') $departementColumn = $c;
+                            elseif(strtolower($data[$c])=='latitude') $latColumn = $c;
+                            elseif(strtolower($data[$c])=='longitude') $lngColumn = $c;
+                            elseif(strtolower($data[$c])=='altitude') $altitudeColumn = $c;
+                            elseif(strtolower($data[$c])=='environnement' || strtolower($data[$c])=='type de milieu') $environnementColumn = $c;
+                            elseif(strtolower($data[$c])=='topographie') $topographieColumn = $c;
+                            elseif(strtolower($data[$c])=='type de projet') $typeProjetColumn = $c;
+                            elseif(strtolower($data[$c])=='type de site' || strtolower($data[$c])=='type de bien') $typeSiteColumn = $c;
+                            elseif(strtolower($data[$c])=='potentiel (mw)') $potentielColumn = $c;
+                            elseif(strtolower($data[$c])=='parcelle') $parcelleColumn = $c;
+                            elseif(preg_match('%enjeux\-(.+)%i',  $data[$c], $m)) $enjeuxColumns[$m[1]] = $c;
                         }
                         if(false === $departementColumn || false === $latColumn || false === $lngColumn || false === $environnementColumn || false === $typeProjetColumn || false === $typeSiteColumn) {
                             $this->addFlash('danger', 'Le fichier manque des colonnes obligatoires.');
