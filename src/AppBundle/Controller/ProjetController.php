@@ -8,6 +8,7 @@ use AppBundle\Entity\Terrain;
 use AppBundle\Entity\Batiment;
 use AppBundle\Entity\Etat;
 use AppBundle\Entity\Tache;
+use AppBundle\Entity\Parcelle;
 use AppBundle\Model\Environnement;
 use AppBundle\Form\ProjetEditType;
 use AppBundle\Form\ProjetType;
@@ -174,15 +175,17 @@ class ProjetController extends Controller
             $file_path = $dir . '/' . $liste->getListe();
             $row = 0;
             if (($handle = fopen($file_path, "r")) !== FALSE) {
-                $insee = false;
-                $departement = false;
-                $lat = false;
-                $lng = false;
-                $altitude = false;
-                $environnement = false;
-                $topographie = false;
-                $typeProjet = false;
-                $typeSite = false;
+                $inseeColumn = false;
+                $departementColumn = false;
+                $latColumn = false;
+                $lngColumn = false;
+                $altitudeColumn = false;
+                $environnementColumn = false;
+                $topographieColumn = false;
+                $typeProjetColumn = false;
+                $typeSiteColumn = false;
+                $potentialColumn = false;
+                $parcelleColumn = false;
                 $listEnvironnements = Environnement::getEnvironnementList();
                 $listTypeProjets = Projet::getTypeProjetList();
                 $listTypeSites = Projet::getTypeSiteList();
@@ -191,17 +194,19 @@ class ProjetController extends Controller
                 while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
                     if(!$row++) {
                         for ($c=0; $c < count($data); $c++) {
-                            if($data[$c]=='INSEE_COM') $insee = $c;
-                            elseif($data[$c]=='Department') $departement = $c;
-                            elseif($data[$c]=='Latitude') $lat = $c;
-                            elseif($data[$c]=='Longitude') $lng = $c;
-                            elseif($data[$c]=='Altitude') $altitude = $c;
-                            elseif($data[$c]=='Environnement') $environnement = $c;
-                            elseif($data[$c]=='Topographie') $topographie = $c;
-                            elseif($data[$c]=='Type de projet') $typeProjet = $c;
-                            elseif($data[$c]=='Type de site') $typeSite = $c;
+                            if($data[$c]=='INSEE_COM') $inseeColumn = $c;
+                            elseif($data[$c]=='Department') $departementColumn = $c;
+                            elseif($data[$c]=='Latitude') $latColumn = $c;
+                            elseif($data[$c]=='Longitude') $lngColumn = $c;
+                            elseif($data[$c]=='Altitude') $altitudeColumn = $c;
+                            elseif($data[$c]=='Environnement' || $data[$c]=='Type de milieu') $environnementColumn = $c;
+                            elseif($data[$c]=='Topographie') $topographieColumn = $c;
+                            elseif($data[$c]=='Type de projet') $typeProjetColumn = $c;
+                            elseif($data[$c]=='Type de site' || $data[$c]=='Type de bien') $typeSiteColumn = $c;
+                            elseif($data[$c]=='Potentiel (MW)') $potentialColumn = $c;
+                            elseif($data[$c]=='Parcelle') $parcelleColumn = $c;
                         }
-                        if(false === $departement || false === $lat || false === $lng || false === $environnement || false === $typeProjet || false === $typeSite) {
+                        if(false === $departementColumn || false === $latColumn || false === $lngColumn || false === $environnementColumn || false === $typeProjetColumn || false === $typeSiteColumn) {
                             $this->addFlash('danger', 'Le fichier manque des colonnes obligatoires.');
                             break;
                         }
@@ -219,15 +224,15 @@ class ProjetController extends Controller
                         $projet->setOrigineTelephone($telephone);
                         $projet->setChefProjetTelephone($telephone);
                         $projet->setDenomination($denomination);
-                        $projet->setLatitude($data[$lat]);
-                        $projet->setLongitude($data[$lng]);
-                        $env = array_search($data[$environnement], $listEnvironnements);
+                        $projet->setLatitude($data[$latColumn]);
+                        $projet->setLongitude($data[$lngColumn]);
+                        $env = array_search($data[$environnementColumn], $listEnvironnements);
                         if($env) $projet->setEnvironnement($env);
                         else $projet->setEnvironnement('foret');
-                        $tProjet = array_search($data[$typeSite], $listTypeProjets);
+                        $tProjet = array_search($data[$typeSiteColumn], $listTypeProjets);
                         if(!$tProjet) $tProjet = 'parc__eolien';
                         $projet->setTypeProjet($tProjet);
-                        $tSite = array_search($data[$typeSite], $listTypeSites);
+                        $tSite = array_search($data[$typeSiteColumn], $listTypeSites);
                         if(!$tSite) $tSite = 'terrain';
                         $projet->setTypeSite($tSite);
                         if($tProjet == 'parc__eolien' || $tProjet == 'eolienne_isolee') {
@@ -242,22 +247,33 @@ class ProjetController extends Controller
                             $projet->setTechnologie('photovoltaique');
                             $projet->setPuissanceUnitaire(300);
                         }
-                        if($tSite == 'terrain' && $altitude !== false) {
+                        if($potentialColumn !== false) $projet->setPotential($data[$potentialColumn]);
+                        if($tSite == 'terrain' && $altitudeColumn !== false) {
                             $terrain = new Terrain();
-                            if($altitude !== false) $terrain->setAltitude($data[$altitude]);
-                            if($topographie !== false) $terrain->setTopographie($data[$topographie]);
+                            if($altitudeColumn !== false) $terrain->setAltitude($data[$altitudeColumn]);
+                            if($topographieColumn !== false) $terrain->setTopographie($data[$topographieColumn]);
                             $projet->setTerrain($terrain);
                         } elseif($tSite == 'batiment_existant' || $tSite == 'nouveau_batiment') {
                             if($tSite == 'nouveau_batiment') $projet->setBatimentNouveau('type1');
                             $batiment = new Batiment();
                             $projet->setBatiment($batiment);
                         }
-                        $searchDepartement = $em->getRepository('AppBundle:Departement')->findOneBy(['nom' => $data[$departement]]);
-                        if($searchDepartement) {
-                            $projet->setDepartement($searchDepartement);
-                            if($insee) {
-                                $searchCommune = $em->getRepository('AppBundle:Commune')->findOneBy(['insee' => $data[$insee]]);
-                                if($searchCommune) $projet->addCommune($searchCommune);
+                        $departement = $em->getRepository('AppBundle:Departement')->findOneBy(['nom' => $data[$departementColumn]]);
+                        if($departement) {
+                            $projet->setDepartement($departement);
+                            if($inseeColumn) {
+                                $commune = $em->getRepository('AppBundle:Commune')->findOneBy(['insee' => $data[$inseeColumn]]);
+                                if($commune) $projet->addCommune($commune);
+                            }
+                            if($parcelleColumn !== false && $data[$parcelleColumn]) {
+                                $parcelle = new Parcelle();
+                                $parcelle->setNom($data[$parcelleColumn]);
+                                $parcelle->setDepartement($departement);
+                                if($inseeColumn) {
+                                    if($commune) $parcelle->setCommune($commune->getNom() . ' (' . $commune->getInsee() . ')');
+                                    else $parcelle->setCommune($inseeColumn);
+                                }
+                                $projet->addParcelle($parcelle);
                             }
                             $etat = new Etat();
                             $etat->setPhase('exploratoire');
@@ -278,7 +294,7 @@ class ProjetController extends Controller
                             $em->persist($projet);
                             $em->flush();
                         }
-                    } else $this->addFlash('warning', 'Projet avec latitude et longitude ('.$data[$lat] . ',' . $data[$lng].') déjà existe.');
+                    } else $this->addFlash('warning', 'Projet avec latitude et longitude ('.$data[$latColumn] . ',' . $data[$lngColumn].') déjà existe.');
                 }
                 fclose($handle);
             }
