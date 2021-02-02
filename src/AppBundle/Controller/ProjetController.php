@@ -184,7 +184,7 @@ class ProjetController extends Controller
                 $topographieColumn = false;
                 $typeProjetColumn = false;
                 $typeSiteColumn = false;
-                $potentialColumn = false;
+                $potentielColumn = false;
                 $parcelleColumn = false;
                 $listEnvironnements = Environnement::getEnvironnementList();
                 $listTypeProjets = Projet::getTypeProjetList();
@@ -203,7 +203,7 @@ class ProjetController extends Controller
                             elseif($data[$c]=='Topographie') $topographieColumn = $c;
                             elseif($data[$c]=='Type de projet') $typeProjetColumn = $c;
                             elseif($data[$c]=='Type de site' || $data[$c]=='Type de bien') $typeSiteColumn = $c;
-                            elseif($data[$c]=='Potentiel (MW)') $potentialColumn = $c;
+                            elseif($data[$c]=='Potentiel (MW)') $potentielColumn = $c;
                             elseif($data[$c]=='Parcelle') $parcelleColumn = $c;
                         }
                         if(false === $departementColumn || false === $latColumn || false === $lngColumn || false === $environnementColumn || false === $typeProjetColumn || false === $typeSiteColumn) {
@@ -247,7 +247,7 @@ class ProjetController extends Controller
                             $projet->setTechnologie('photovoltaique');
                             $projet->setPuissanceUnitaire(300);
                         }
-                        if($potentialColumn !== false) $projet->setPotential($data[$potentialColumn]);
+                        if($potentielColumn !== false) $projet->setPotentiel($data[$potentielColumn]);
                         if($tSite == 'terrain' && $altitudeColumn !== false) {
                             $terrain = new Terrain();
                             if($altitudeColumn !== false) $terrain->setAltitude($data[$altitudeColumn]);
