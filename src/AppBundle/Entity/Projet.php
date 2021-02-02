@@ -1816,7 +1816,7 @@ class Projet
      */
     public function __toString()
     {
-        return $this->denomination;
+        return $this->id ? str_replace('_id', '_'.$this->id, $this->denomination) : $this->denomination;
     }
     
     public function getOptionValue($option)
