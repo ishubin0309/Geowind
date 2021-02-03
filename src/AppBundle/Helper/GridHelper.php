@@ -23,7 +23,7 @@ class GridHelper
     public function getJsonTypeProjets()
     {
         $data = [];
-        $types = Projet::getTypeProjetList(true);
+        $types = Projet::getTypeProjetList();
 
         foreach ($types as $code => $type) {
             $data[$code] = [
@@ -53,12 +53,27 @@ class GridHelper
     public function getJsonTaches()
     {
         $data = [];
-        $phases = Tache::getObjetList();
+        $types = Tache::getObjetList();
 
-        foreach ($phases as $code => $phase) {
+        foreach ($types as $code => $type) {
             $data[$code] = [
-                'name' => $phase,
+                'name' => $type,
                 'data' => Tache::getTacheType($code),
+            ];
+        }
+
+        return json_encode($data);
+    }
+
+    public function getJsonTacheList()
+    {
+        $data = [];
+        $types = Tache::getTacheList();
+
+        foreach ($types as $code => $type) {
+            $data[$code] = [
+                'name' => $type,
+                'data' => $types[$code],
             ];
         }
 

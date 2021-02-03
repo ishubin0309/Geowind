@@ -41,11 +41,13 @@ class DefaultController extends Controller
         $totalPages = ceil($projetsTotal / $limit);
 
         $gridHelper = new GridHelper();
+        $columnsType = isset($_GET['type']) && $_GET['type'] >= 1 ? trim($_GET['type']) : 3;
 
         return $this->render('default/portail.html.twig', [
             'projets' => $projets,
             'page' => $page,
             'totalPages' => $totalPages,
+            'columnsType' => $columnsType,
             'grid_helper' => $gridHelper,
             'export_option' => new ExportOption(),
         ]);
@@ -71,11 +73,13 @@ class DefaultController extends Controller
         $totalPages = ceil($projetsTotal / $limit);
         $liste = $em->getRepository('AppBundle:Liste')->findOneBy(['id' => $liste]);
         $gridHelper = new GridHelper();
+        $columnsType = isset($_GET['type']) && $_GET['type'] >= 1 ? trim($_GET['type']) : 3;
 
         return $this->render('default/portail.html.twig', [
             'projets' => $projets,
             'page' => $page,
             'totalPages' => $totalPages,
+            'columnsType' => $columnsType,
             'grid_helper' => $gridHelper,
             'liste' => $liste,
             'export_option' => new ExportOption(),

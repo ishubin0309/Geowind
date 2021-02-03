@@ -7,14 +7,16 @@
 
   <div class="container-fluid">
 
-    {% if is_granted('ROLE_CREATE') %}
+    {% if is_granted('ROLE_VIEW_ALL') %}
       <a href="{{ path('liste_new') }}" class="btn btn-success btn-sm"><i class="fa fa-paperclip"></i> Importer Liste</a>
+    {% endif %}
+    {% if is_granted('ROLE_CREATE') %}
       <a href="{{ path('projet_new') }}" class="btn btn-success btn-sm"><i class="fa fa-file-o"></i> Nouvelle fiche</a>
     {% endif %}
     <a id="button-show" class="btn btn-primary btn-sm disabled"><i class="fa fa-fw fa-eye"></i> Afficher</a>
     <a id="button-export" class="btn btn-primary btn-sm disabled"><i class="fa fa-fw fa-file-excel-o"></i> CSV</a>
     <button id="button-delete" class="btn btn-danger btn-sm" disabled data-placement="right" title="Double click"><i class="fa fa-fw fa-trash"></i> Supprimer</button>
-    {#<a id="button-edit" class="btn btn-warning btn-sm disabled"><i class="fa fa-fw fa-pencil"></i> Editer</a>#}
+    <a id="button-edit" class="btn btn-warning btn-sm disabled"><i class="fa fa-fw fa-pencil"></i> Editer</a>
     {% if is_granted('ROLE_EDIT_ALL') and liste.id is defined %}
       <button id="button-liste-delete" class="btn btn-danger btn-sm" title="Double click"><i class="fa fa-fw fa-trash"></i> Supprimer Liste</button>
     {% endif %}
@@ -22,18 +24,29 @@
     {% set projetsPageTotal = 0 %}
     {% for projet in projets %}{% set projetsPageTotal = projetsPageTotal + 1 %}{% endfor %}
     <h4 id="selected-counter">0 site sélectionné sur {{ projetsPageTotal }}</h4>
-    <nav style="margin-left:20%;" aria-label="Page navigation center-text">
-      <ul class="pagination">
-        {% if totalPages %}
-        {% set route_path = liste.id is defined ? path('view_liste', {'liste' : liste.id}) : path('homepage') %}
-        <li class="page-item {% if page <= 0 %}disabled{% endif %}"><a class="page-link" href="{% if page > 1 %}{{ route_path ~ '?page=' ~ (page - 1) }}{% endif %}">Précédent</a></li>
-        {% for i in 1..totalPages %}
-          <li class="page-item {% if page == i %}active{% endif %}"><a class="page-link" href="{{ route_path ~ '?page=' ~ i }}">{{ i }}</a></li>
-        {% endfor %}
-        {% endif %}
-        <li class="page-item {% if page >= totalPages %}disabled{% endif %}"><a class="page-link" href="{% if page < totalPages %}{{ route_path ~ '?page=' ~ (page + 1) }}{% endif %}">Suivant</a></li>
-      </ul>
-    </nav>
+    <div class="row col-md-12">
+      <div class="col-md-3 col-lg-2">
+        <select id="change_type" class="form-control">
+          <option value="1">Liste-normale</option>
+          <option value="2" {% if columnsType == 2 %}selected{% endif %}>Liste-taches</option>
+          <option value="3" {% if columnsType == 3 %}selected{% endif %}>Liste-tendance</option>
+        </select>
+      </div>
+      <div class="col-md-9 col-lg-10">
+        <nav aria-label="Page navigation center-text">
+          <ul style="margin: 0px;margin-bottom: 10px;" class="pagination">
+            {% if totalPages %}
+            {% set route_path = liste.id is defined ? path('view_liste', {'liste' : liste.id}) : path('homepage') %}
+            <li class="page-item {% if page <= 1 %}disabled{% endif %}"><a class="page-link" href="{% if page > 1 %}{{ route_path ~ '?page=' ~ (page - 1) }}{% if columnsType > 1 %}&type={{ columnsType }}{% endif %}{% else %}#{% endif %}">Précédent</a></li>
+            {% for i in 1..totalPages %}
+              <li class="page-item {% if page == i %}active{% endif %}"><a class="page-link" href="{{ route_path ~ '?page=' ~ i }}{% if columnsType > 1 %}&type={{ columnsType }}{% endif %}">{{ i }}</a></li>
+            {% endfor %}
+            {% endif %}
+            <li class="page-item {% if page >= totalPages %}disabled{% endif %}"><a class="page-link" href="{% if page < totalPages %}{{ route_path ~ '?page=' ~ (page + 1) }}{% if columnsType > 1 %}&type={{ columnsType }}{% endif %}{% else %}#{% endif %}">Suivant</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
 
   </div>
 
@@ -67,7 +80,8 @@
 {% endblock %}
 
 {% block js %}
-
+  
+    <script>$('#change_type').change(function() {window.location = '{{ liste.id is defined ? path('view_liste', {'liste' : liste.id}) : path('homepage') }}' + '?type=' + $(this).val();});</script>
   <script>
 
     $("#grid").css({ top: $('#start-grid').position().top + 'px' });
@@ -88,6 +102,7 @@
     var phases = {{ grid_helper.getJsonPhases|raw }};
     var progressions = {{ grid_helper.getJsonProgressions|raw }};
     var environnements = {{ grid_helper.getJsonEnvironnements|raw }};
+    var taches = {{ grid_helper.getJsonTacheList|raw }};
 
     function typeProjetFormatter(row, cell, value, columnDef, dataContext) {
       return typeProjet[value] !== undefined ? typeProjet[value]['name'] : value;
@@ -103,6 +118,10 @@
 
     function progressionFormatter(row, cell, value, columnDef, dataContext) {
       return progressions[value] !== undefined ? progressions[value]['name'] : value;
+    }
+
+    function tacheFormatter(row, cell, value, columnDef, dataContext) {
+      return taches[value] !== undefined ? taches[value]['name'] : value;
     }
 
     function environnementFormatter(row, cell, value, columnDef, dataContext) {
@@ -129,6 +148,7 @@
     var dataView = new Slick.Data.DataView();
 
     var columns = [
+    {% if columnsType == 1 %}
       checkboxColumn,
       { id: "id", name: "ID", field: "id", width: 70, maxWidth: 100, sortable: true, sorter: numericSorter, },
       { id: "typeProjet", name: "Type de projet", field: "typeProjet", width: 70, maxWidth: 250, formatter: typeProjetFormatter, sortable: true, sorter: stringSorter, },
@@ -137,13 +157,11 @@
       { id: "origine", name: "Origine", field: "origine", sortable: true, sorter: stringSorter, width: 130, maxWidth: 250 },
       {# { id: "chefProjet", name: "Chef de projet", field: "chefProjet", sortable: true, sorter: stringSorter, width: 130, maxWidth: 250 }, #}
       {# { id: "partenaire", name: "Partenaire", field: "partenaire", sortable: true, sorter: stringSorter, width: 130, maxWidth: 250 }, #}
-      { id: "potentiel", name: "Potentiel (MW)", field: "potentiel", sortable: true, cssClass: 'text-right', sorter: numericSorter, width: 100, maxWidth: 100 },
       { id: "region", name: "Région", field: "region", sortable: true, sorter: stringSorter, maxWidth: 250 },
       { id: "departement", name: "Département", field: "departement", sortable: true, sorter: stringSorter, maxWidth: 250 },
+      { id: "potentiel", name: "Potentiel (MW)", field: "potentiel", sortable: true, cssClass: 'text-right', sorter: numericSorter, width: 100, maxWidth: 100 },
       { id: "phase", name: "Phase", field: "phase", sortable: true, sorter: stringSorter, formatter: phaseFormatter, width: 110, maxWidth: 110 },
       { id: "progression", name: "Etat", field: "progression", sortable: true, sorter: stringSorter, formatter: progressionFormatter, width: 110, maxWidth: 110 },
-      {# { id: "engage", name: "Engagé(€HT)", field: "engage", sortable: true, sorter: numericSorter, cssClass: 'text-right', width: 90, maxWidth: 90 }, #}
-      {# { id: "paye", name: "Payé(€HT)", field: "paye", sortable: true, sorter: numericSorter, cssClass: 'text-right', width: 80, maxWidth: 80 }, #}
       { id: "dateCrea", name: '<strong>Date création</strong><br>Date maj', headerCssClass: "column-date-switch", field: "dateCrea", sortable: true, sorter: dateSorter, width: 100, maxWidth: 100, header: {
         buttons: [
           {
@@ -153,12 +171,55 @@
         ]
       }},
       { id: "progressionIndicateur", name: "", field: "progressionIndicateur", width: 26, maxWidth: 26, cssClass: 'column-progression-indicateur', formatter: progressionIndicateurFormatter },
+    {% elseif columnsType == 2 %}
+      checkboxColumn,
+      { id: "id", name: "ID", field: "id", width: 70, maxWidth: 100, sortable: true, sorter: numericSorter, },
+      { id: "typeProjet", name: "Type de projet", field: "typeProjet", width: 70, maxWidth: 250, formatter: typeProjetFormatter, sortable: true, sorter: stringSorter, },
+      { id: "typeSite", name: "Type de Bien", field: "typeSite", width: 70, maxWidth: 250, formatter: typeSiteFormatter, sortable: true, sorter: stringSorter, },
+      { id: "departement", name: "Département", field: "departement", sortable: true, sorter: stringSorter, maxWidth: 250 },
+      { id: "potentiel", name: "Potentiel (MW)", field: "potentiel", sortable: true, cssClass: 'text-right', sorter: numericSorter, width: 100, maxWidth: 100 },
+      { id: "phase", name: "Phase", field: "phase", sortable: true, sorter: stringSorter, formatter: phaseFormatter, width: 110, maxWidth: 110 },
+      { id: "progression", name: "Etat", field: "progression", sortable: true, sorter: stringSorter, formatter: progressionFormatter, width: 110, maxWidth: 110 },
+      { id: "servitudes", name: "Servitudes", field: "servitudes", sortable: true, sorter: stringSorter, formatter: tacheFormatter, maxWidth: 250 },
+      { id: "foncier", name: "Foncier", field: "foncier", sortable: true, sorter: stringSorter, formatter: tacheFormatter, maxWidth: 250 },
+      { id: "mairie", name: "Mairie", field: "mairie", sortable: true, sorter: stringSorter, formatter: tacheFormatter, maxWidth: 250 },
+      { id: "consultations", name: "Consultations", field: "consultations", sortable: true, sorter: stringSorter, formatter: tacheFormatter, maxWidth: 250 },
+      { id: "urbanisme", name: "Urbanisme", field: "urbanisme", sortable: true, sorter: stringSorter, formatter: tacheFormatter, maxWidth: 250 },
+      {# { id: "concertation", name: "Concertation", field: "concertation", sortable: true, sorter: stringSorter, formatter: tacheFormatter, maxWidth: 250 }, #}
+      { id: "dateCrea", name: '<strong>Date création</strong><br>Date maj', headerCssClass: "column-date-switch", field: "dateCrea", sortable: true, sorter: dateSorter, width: 100, maxWidth: 100, header: {
+        buttons: [
+          {
+            cssClass: "switch-current-crea",
+            command: "toggle-date",
+          }
+        ]
+      }},
+      { id: "progressionIndicateur", name: "", field: "progressionIndicateur", width: 26, maxWidth: 26, cssClass: 'column-progression-indicateur', formatter: progressionIndicateurFormatter },
+    {% elseif columnsType == 3 %}
+      checkboxColumn,
+      { id: "id", name: "ID", field: "id", width: 70, maxWidth: 100, sortable: true, sorter: numericSorter, },
+      { id: "typeProjet", name: "Type de projet", field: "typeProjet", width: 70, maxWidth: 250, formatter: typeProjetFormatter, sortable: true, sorter: stringSorter, },
+      { id: "typeSite", name: "Type de Bien", field: "typeSite", width: 70, maxWidth: 250, formatter: typeSiteFormatter, sortable: true, sorter: stringSorter, },
+      { id: "departement", name: "Département", field: "departement", sortable: true, sorter: stringSorter, maxWidth: 250 },
+      { id: "potentiel", name: "Potentiel (MW)", field: "potentiel", sortable: true, cssClass: 'text-right', sorter: numericSorter, width: 100, maxWidth: 100 },
+      { id: "phase", name: "Phase", field: "phase", sortable: true, sorter: stringSorter, formatter: phaseFormatter, width: 110, maxWidth: 110 },
+      { id: "progression", name: "Etat", field: "progression", sortable: true, sorter: stringSorter, formatter: progressionFormatter, width: 110, maxWidth: 110 },
+      { id: "dynamique", name: "Dynamique", field: "dynamique", sortable: true, sorter: stringSorter, formatter: progressionFormatter, width: 110, maxWidth: 110 },
+      { id: "dateCrea", name: '<strong>Date création</strong><br>Date maj', headerCssClass: "column-date-switch", field: "dateCrea", sortable: true, sorter: dateSorter, width: 100, maxWidth: 100, header: {
+        buttons: [
+          {
+            cssClass: "switch-current-crea",
+            command: "toggle-date",
+          }
+        ]
+      }},
+      { id: "progressionIndicateur", name: "", field: "progressionIndicateur", width: 26, maxWidth: 26, cssClass: 'column-progression-indicateur', formatter: progressionIndicateurFormatter },
+    {% endif %}
     ];
 
 
     $(function () {
       var data = [];
-
       {% for projet in projets %}
         data.push({
           id: {{ projet.id }},
@@ -173,10 +234,52 @@
           environnement: '{{ projet.environnement }}',
           dateCrea: '{{ projet.dateCreation|date('d/m/Y') }}',
           dateMaj: '{{ projet.dateMaj|date('d/m/Y') }}',
-          {# engage: {{ projet.montantEngage }}, #}
-          {# paye: {{ projet.montantPaye }}, #}
+          {% if columnsType == 2 %}
+            {% set servitudes = false %}
+            {% set foncier = false %}
+            {% set mairie = false %}
+            {% set consultations = false %}
+            {% set urbanisme = false %}
+            {% set concertation = false %}
+            {% for tache in projet.taches %}
+              {% if not servitudes and tache.objet == 'servitudes'%}
+              {% set servitudes = true %}servitudes: '{{ tache.etat }}',
+              {% elseif not foncier and tache.objet == 'foncier'%}
+              {% set foncier = true %}foncier: '{{ tache.etat }}',
+              {% elseif not mairie and tache.objet == 'mairie'%}
+              {% set mairie = true %}mairie: '{{ tache.etat }}',
+              {% elseif not consultations and tache.objet == 'consultations'%}
+              {% set consultations = true %}consultations: '{{ tache.etat }}',
+              {% elseif not urbanisme and tache.objet == 'urbanisme'%}
+              {% set urbanisme = true %}urbanisme: '{{ tache.etat }}',
+              {% elseif not concertation and tache.objet == 'concertation'%}
+              {% set concertation = true %}concertation: '{{ tache.etat }}',
+              {% endif %}
+            {% endfor %}
+            {% if not servitudes %}servitudes: '',{% endif %}
+            {% if not foncier %}foncier: '',{% endif %}
+            {% if not mairie %}mairie: '',{% endif %}
+            {% if not consultations %}consultations: '',{% endif %}
+            {% if not urbanisme %}urbanisme: '',{% endif %}
+            {% if not concertation %}concertation: '',{% endif %}
+          {% endif %}
+          {% if columnsType == 3 %}
+            {% set phase = '' %}
+            {% set etatValue = '' %}
+            {% set dynamique = '' %}
+            {% for etat in projet.etats %}
+              {% set phase = etat.phase %}
+              {% set etatValue = etat.etat %}
+              {% set dynamique = etat.dynamique %}
+            {% endfor %}
+            phase: '{{ phase|e('js') }}',
+            progression: '{{ etatValue }}',
+            dynamique: '{{ dynamique }}',
+          {% endif %}
+          {% if columnsType != 3 %}
           phase: '{{ projet.phase|e('js') }}',
           progression: '{{ projet.progression }}',
+          {% endif %}
           progressionIndicateur: '{{ projet.progression }}',
           canEdit: {{ is_granted('edit', projet) ? 1 : 0 }},
         });
@@ -197,11 +300,11 @@
           if (button.cssClass == "switch-current-crea") {
             button.cssClass = "switch-current-maj";
             args.column.field = 'dateMaj';
-            args.column.name = 'Date cre<br><strong>Date maj</strong>';
+            args.column.name = 'Date création<br><strong>Date maj</strong>';
           } else {
             button.cssClass = "switch-current-crea";
             args.column.field = 'dateCrea';
-            args.column.name = '<strong>Date cre</strong><br>Date maj';
+            args.column.name = '<strong>Date création</strong><br>Date maj';
           }
           grid.setColumns(grid.getColumns());
         }

@@ -111,12 +111,12 @@
       <ul class="pagination">
         {% if totalPages %}
         {% set route_path = 'search_index' %}
-        <li class="page-item {% if page <= 0 %}disabled{% endif %}"><a class="page-link" href="{% if page > 1 %}{{ path(route_path, {'page' : page - 1}) }}{% endif %}">Précédent</a></li>
+        <li class="page-item {% if page <= 1 %}disabled{% endif %}"><a class="page-link" href="{% if page > 1 %}{{ route_path ~ '?page=' ~ (page - 1) }}{% else %}#{% endif %}">Précédent</a></li>
         {% for i in 1..totalPages %}
-          <li class="page-item {% if page == i %}active{% endif %}"><a class="page-link" href="{{ path(route_path, {'page' : i}) }}">{{ i }}</a></li>
+          <li class="page-item {% if page == i %}active{% endif %}"><a class="page-link" href="{{ route_path ~ '?page=' ~ i }}">{{ i }}</a></li>
         {% endfor %}
         {% endif %}
-        <li class="page-item {% if page >= totalPages %}disabled{% endif %}"><a class="page-link" href="{% if page < totalPages %}{{ path(route_path, {'page' : page + 1}) }}{% endif %}">Suivant</a></li>
+        <li class="page-item {% if page >= totalPages %}disabled{% endif %}"><a class="page-link" href="{% if page < totalPages %}{{ route_path ~ '?page=' ~ (page + 1) }}{% else %}#{% endif %}">Suivant</a></li>
       </ul>
     </nav>
 
