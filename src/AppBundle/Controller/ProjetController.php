@@ -349,7 +349,7 @@ class ProjetController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
 
             $em = $this->getDoctrine()->getManager();
-            $liste = $em->getRepository('AppBundle:Liste')->findBy(['listeOriginalName' => 'Sans liste']);
+            $liste = $em->getRepository('AppBundle:Liste')->findOneBy(['listeOriginalName' => 'Sans liste']);
             if(!$liste) {
                 $liste = new Liste();
                 $em->persist($liste);

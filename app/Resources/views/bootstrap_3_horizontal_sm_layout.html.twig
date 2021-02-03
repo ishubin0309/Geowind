@@ -335,7 +335,7 @@ col-sm-8
     <tr>
       <td>{{ form_widget(form.date, {'value' : "now"|date("d/m/Y")}) }}</td>
       <td>{{ form_widget(form.phase) }}</td>
-      <td>{{ form_widget(form.etat) }}</td>
+      <td>{{ form_widget(form.etat) }}{{ form_errors(form.etat) }}</td>
       <td>{{ form_widget(form.dynamique) }}</td>
       <td>{{ form_widget(form.note) }}</td>
     </tr>

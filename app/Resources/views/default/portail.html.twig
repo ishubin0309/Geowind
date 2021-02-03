@@ -132,7 +132,7 @@
     function progressionIndicateurFormatter(row, cell, value, columnDef, dataContext) {
       var color = progressions[value]['color'];
       var classes = 'indicateur';
-      if (value == 'en_verif') {
+      if (value == 'nouveau' || value == 'verification' || value == 'identification' || value == 'contacts' || value == 'en_attente_1' || value == 'en_attente_2' || value == 'en_attente_3' || value == 'en_attente_4' || value == 'en_attente_5') {
         var classes = 'indicateur-flash';
         return '<div class="' + classes + '"></div>';
       }

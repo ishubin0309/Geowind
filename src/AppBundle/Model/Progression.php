@@ -2,148 +2,72 @@
 
 namespace AppBundle\Model;
 
+use AppBundle\Model\Etat;
+
 /**
  * @author Stéphane Ear <stephaneear@gmail.com>
  */
 class Progression
 {
-    const EN_VERIF = 'en_verif';
-    const ECARTE = 'ecarte';
-    const EN_STBY = 'en_stby';
-    const RETENU = 'retenu';
-    const EN_SECUR = 'en_secur';
-    const EN_DVPT = 'en_dvpt';
-    const EN_DVPT2 = 'en_dvpt2';
-    const EN_INST = 'en_inst';
-    const AUTORISE = 'autorise';
-    const REFUSE = 'refuse';
-    const CONSTRUIT = 'construit';
-    const EN_RECOURS = 'en_recours';
-
-    /**
-     * @return array
-     */
-    public static function getProgressionList()
-    {
-        return [
-            'nouveau' => 'Nouveau',
-            // 'esquisse' => 'Esquisse',
-            'fiche_complete' => 'Fiche complète',
-            'verification' => 'Vérification',
-            'identification' => 'Identification',
-            'contacts' => 'Contacts',
-            'visites' => 'Visites',
-            'pourpalers' => 'Pourpalers',
-            'signatures' => 'Signatures',
-            'sous_promesse' => 'Sous promesse',
-            'developpement' => 'Développement',
-            'devis_etude' => 'Devis d\'études',
-            'budgete' => 'Budgété',
-            'a_letude' => 'A l\'étude',
-            'avant_projet' => 'Avant projet',
-            'prerapport' => 'Prérapport',
-            'projet_fige' => 'Projet figé',
-            'etudes_boucles' => 'Etudes bouclées',
-            'dossier_depose' => 'Dossier déposé',
-            'completude' => 'Complétude',
-            'a_lenquete' => 'A l\'enquête',
-            'replique' => 'Réplique',
-            'soutenance' => 'Soutenance',
-            'autorise' => 'Autorisé',
-            'purge' => 'Purgé',
-            'bornage' => 'Bornage',
-            'plan_exe' => 'Plan Exe',
-            'baux_signe' => 'Baux signés',
-            'etude_geo' => 'Etude géo',
-            'contrat_rac' => 'Contrat de rac',
-            'contrat_achat' => 'Contrat d\'achat',
-            'chiffrage' => 'Chiffrage',
-            'data_room' => 'Data room',
-            'audits' => 'Audits',
-            'finance' => 'Finançé',
-            'achats' => 'Achats',
-            'en_service' => 'En service',
-            'en_travaux' => 'En travaux'
-        ];
-    }
-
     /**
      * @return array
      */
     public static function getProgressionColors()
     {
         return [
-            self::EN_VERIF => '#FFFFFF',
-            self::ECARTE => '#000000',
-            self::EN_STBY => '#CCCCCC',
-            self::RETENU => '#FF99FF',
-            self::EN_SECUR => '#00FFFF',
-            self::EN_DVPT => '#FFFF66',
-            self::EN_DVPT2 => '#FFCC00',
-            self::EN_INST => '#83CAFF',
-            self::AUTORISE => '#3333FF',
-            self::REFUSE => '#FF3300',
-            self::CONSTRUIT => '#66CC00',
-            self::EN_RECOURS => '#FFCC00',
             'nouveau' => '#FFFFFF',
-            // 'esquisse' => '#FFFFFF',
-            'fiche_complete' => '#FFFFFF',
             'verification' => '#FFFFFF',
             'identification' => '#FFFFFF',
             'contacts' => '#FFFFFF',
-            'visites' => '#FFFFFF',
-            'pourpalers' => '#FFFFFF',
-            'signatures' => '#FFFFFF',
-            'sous_promesse' => '#FFFFFF',
-            'developpement' => '#FFFFFF',
-            'devis_etude' => '#FFFFFF',
-            'budgete' => '#FFFFFF',
-            'a_letude' => '#FFFFFF',
-            'avant_projet' => '#FFFFFF',
-            'prerapport' => '#FFFFFF',
-            'projet_fige' => '#FFFFFF',
-            'etudes_boucles' => '#FFFFFF',
-            'dossier_depose' => '#FFFFFF',
-            'completude' => '#FFFFFF',
-            'a_lenquete' => '#FFFFFF',
-            'replique' => '#FFFFFF',
-            'soutenance' => '#FFFFFF',
-            'autorise' => '#FFFFFF',
-            'purge' => '#FFFFFF',
-            'bornage' => '#FFFFFF',
-            'plan_exe' => '#FFFFFF',
-            'baux_signe' => '#FFFFFF',
-            'etude_geo' => '#FFFFFF',
-            'contrat_rac' => '#FFFFFF',
-            'contrat_achat' => '#FFFFFF',
-            'chiffrage' => '#FFFFFF',
-            'data_room' => '#FFFFFF',
-            'audits' => '#FFFFFF',
-            'finance' => '#FFFFFF',
-            'achats' => '#FFFFFF',
-            'en_service' => '#FFFFFF',
-            'en_travaux' => '#FFFFFF',
+            'visites' => '#FF99FF',
+            'pourpalers' => '#FF99FF',
+            'signatures' => '#FF99FF',
+            'sous_promesse' => '#FF99FF',
+            'accord_municipal' => '#FF99FF',
+            'devis_etude' => '#00FFFF',
+            'budgete' => '#00FFFF',
+            'a_letude' => '#00FFFF',
+            'avant_projet' => '#00FFFF',
+            'prerapport' => '#00FFFF',
+            'projet_fige' => '#00FFFF',
+            'etudes_boucles' => '#00FFFF',
+            'dossier_depose' => '#0000FF',
+            'completude' => '#0000FF',
+            'a_lenquete' => '#0000FF',
+            'replique' => '#0000FF',
+            'soutenance' => '#0000FF',
+            'autorise' => '#0000FF',
+            'purge' => '#0000FF',
+            'bornage' => '#FFFF00',
+            'plan_exe' => '#FFFF00',
+            'baux_signe' => '#FFFF00',
+            'etude_geo' => '#FFFF00',
+            'contrat_rac' => '#FFFF00',
+            'contrat_achat' => '#FFFF00',
+            'chiffrage' => '#00CC33',
+            'data_room' => '#00CC33',
+            'audits' => '#00CC33',
+            'finance' => '#00CC33',
+            'achats' => '#00CC33',
+            'en_travaux' => '#00CC33',
+            'en_service' => '#00CC33',
+            'rejet' => '#000000',
+            'abandon' => '#000000',
+            'retenu' => '#999999',
+            'en_attente' => '#FFFFFF',
+            'a_negocier' => '#FF99FF',
+            'a_developper' => '#00FFFF',
+            'a_deposer' => '#0000FF',
+            'a_construire' => '#00CC33',
+            'en_recours' => '#FF0000',
+            'refuse' => '#FF0000',
         ];
     }
 
     public static function getCssClass($progression)
     {
-        $data = [
-            self::EN_VERIF => 'indicateur-flash',
-            self::ECARTE => 'indicateur',
-            self::EN_STBY => 'indicateur',
-            self::RETENU => 'indicateur',
-            self::EN_SECUR => 'indicateur',
-            self::EN_DVPT => 'indicateur',
-            self::EN_DVPT2 => 'indicateur',
-            self::EN_INST => 'indicateur',
-            self::AUTORISE => 'indicateur',
-            self::REFUSE => 'indicateur',
-            self::CONSTRUIT => 'indicateur',
-            self::EN_RECOURS => 'indicateur',
-        ];
-
-        return isset($data[$progression]) ? $data[$progression] : null;
+        if(in_array($progression, ['nouveau','verification','identification','contacts','en_attente'])) return 'indicateur-flash';
+        else return 'indicateur';
     }
 
     /**
@@ -162,7 +86,7 @@ class Progression
      */
     public static function getName($code)
     {
-        $names = self::getProgressionList();
+        $names = Etat::getEtatList();
         return isset($names[$code]) ? $names[$code] : '';
     }
 }

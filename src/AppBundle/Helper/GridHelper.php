@@ -143,7 +143,7 @@ class GridHelper
     public function getJsonProgressions()
     {
         $data = [];
-        $progressions = Progression::getProgressionList();
+        $progressions = Etat::getEtatList();
 
         foreach ($progressions as $code => $progression) {
             $data[$code] = [

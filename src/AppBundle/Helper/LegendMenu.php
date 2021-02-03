@@ -2,6 +2,7 @@
 
 namespace AppBundle\Helper;
 
+use AppBundle\Model\Etat;
 use AppBundle\Model\Progression;
 
 /**
@@ -11,7 +12,7 @@ class LegendMenu
 {
     public function getProgressionList()
     {
-        return Progression::getProgressionList();
+        return Etat::getEtatList();
     }
 
     public function getColor($progression)

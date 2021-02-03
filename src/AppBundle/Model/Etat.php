@@ -59,8 +59,6 @@ class Etat
     {
         return [
             'nouveau' => 'Nouveau',
-            // 'esquisse' => 'Esquisse',
-            // 'fiche_complete' => 'Fiche complète',
             'verification' => 'Vérification',
             'identification' => 'Identification',
             'contacts' => 'Contacts',
@@ -68,7 +66,7 @@ class Etat
             'pourpalers' => 'Pourpalers',
             'signatures' => 'Signatures',
             'sous_promesse' => 'Sous promesse',
-            'developpement' => 'Développement',
+            'accord_municipal' => 'Accord municipal',
             'devis_etude' => 'Devis d\'études',
             'budgete' => 'Budgété',
             'a_letude' => 'A l\'étude',
@@ -94,16 +92,18 @@ class Etat
             'audits' => 'Audits',
             'finance' => 'Finançé',
             'achats' => 'Achats',
-            'en_service' => 'En service',
             'en_travaux' => 'En travaux',
-            'rejet_1' => 'Rejet',
-            'admis_1' => 'Admis',
-            'abandon_1' => 'Abandon',
-            'en_attente_1' => 'En attente',
-            'negocier_1' => 'Négocier',
-            'a_deposer_1' => 'A déposer',
-            'construire_1' => 'Construire',
-            'cession_1' => 'Cession'
+            'en_service' => 'En service',
+            'rejet' => 'Rejeté',
+            'abandon' => 'Abandon',
+            'retenu' => 'Retenu',
+            'en_attente' => 'En attente',
+            'a_negocier' => 'A négocier',
+            'a_developper' => 'A développer',
+            'a_deposer' => 'A déposer',
+            'a_construire' => 'A construire',
+            'en_recours' => 'En recours',
+            'refuse' => 'Refusé',
         ];
     }
 
@@ -113,52 +113,34 @@ class Etat
     public static function getEtatTypes()
     {
         $decision = [
-            'rejet' => 'Rejet',
-            'admis' => 'Admis',
+            'rejet' => 'Rejeté',
             'abandon' => 'Abandon',
+            'retenu' => 'Retenu',
             'en_attente' => 'En attente',
-            'negocier' => 'Négocier',
+            'a_negocier' => 'A négocier',
+            'a_developper' => 'A développer',
             'a_deposer' => 'A déposer',
-            'construire' => 'Construire',
-            'cession' => 'Cession'
+            'a_construire' => 'A construire',
+            'en_recours' => 'En recours',
+            'refuse' => 'Refusé'
         ];
         return [
             self::PHASE_UN => [
-                // 'esquisse' => 'Esquisse',
                 'nouveau' => 'Nouveau',
-                // 'fiche_complete' => 'Fiche complète',
                 'verification' => 'Vérification',
                 'identification' => 'Identification',
                 'contacts' => 'Contacts'
             ],
-            self::PHASE_DEUX => [
-                'rejet_1' => 'Rejet',
-                'admis_1' => 'Admis',
-                'abandon_1' => 'Abandon',
-                'en_attente_1' => 'En attente',
-                'negocier_1' => 'Négocier',
-                'a_deposer_1' => 'A déposer',
-                'construire_1' => 'Construire',
-                'cession_1' => 'Cession'
-            ],
+            self::PHASE_DEUX => $decision,
             self::PHASE_TROIS => [
                 'visites' => 'Visites',
                 'pourpalers' => 'Pourpalers',
                 'signatures' => 'Signatures',
-                'sous_promesse' => 'Sous promesse'
+                'sous_promesse' => 'Sous promesse',
+                'accord_municipal' => 'Accord municipal'
             ],
-            self::PHASE_QUATRE => [
-                'rejet_2' => 'Rejet',
-                'admis_2' => 'Admis',
-                'abandon_2' => 'Abandon',
-                'en_attente_2' => 'En attente',
-                'negocier_2' => 'Négocier',
-                'a_deposer_2' => 'A déposer',
-                'construire_2' => 'Construire',
-                'cession_2' => 'Cession'
-            ],
+            self::PHASE_QUATRE => $decision,
             self::PHASE_CINQ => [
-                'developpement' => 'Développement',
                 'devis_etude' => 'Devis d\'études',
                 'budgete' => 'Budgété',
                 'a_letude' => 'A l\'étude',
@@ -167,16 +149,7 @@ class Etat
                 'projet_fige' => 'Projet figé',
                 'etudes_boucles' => 'Etudes bouclées'
             ],
-            self::PHASE_SIX => [
-                'rejet_3' => 'Rejet',
-                'admis_3' => 'Admis',
-                'abandon_3' => 'Abandon',
-                'en_attente_3' => 'En attente',
-                'negocier_3' => 'Négocier',
-                'a_deposer_3' => 'A déposer',
-                'construire_3' => 'Construire',
-                'cession_3' => 'Cession'
-            ],
+            self::PHASE_SIX => $decision,
             self::PHASE_SEPT => [
                 'dossier_depose' => 'Dossier déposé',
                 'completude' => 'Complétude',
@@ -186,16 +159,7 @@ class Etat
                 'autorise' => 'Autorisé',
                 'purge' => 'Purgé'
             ],
-            self::PHASE_HUIT => [
-                'rejet_4' => 'Rejet',
-                'admis_4' => 'Admis',
-                'abandon_4' => 'Abandon',
-                'en_attente_4' => 'En attente',
-                'negocier_4' => 'Négocier',
-                'a_deposer_4' => 'A déposer',
-                'construire_4' => 'Construire',
-                'cession_4' => 'Cession'
-            ],
+            self::PHASE_HUIT => $decision,
             self::PHASE_NEUF => [
                 'bornage' => 'Bornage',
                 'plan_exe' => 'Plan Exe',
@@ -204,24 +168,15 @@ class Etat
                 'contrat_rac' => 'Contrat de rac',
                 'contrat_achat' => 'Contrat d\'achat'
             ],
-            self::PHASE_DIX => [
-                'rejet_5' => 'Rejet',
-                'admis_5' => 'Admis',
-                'abandon_5' => 'Abandon',
-                'en_attente_5' => 'En attente',
-                'negocier_5' => 'Négocier',
-                'a_deposer_5' => 'A déposer',
-                'construire_5' => 'Construire',
-                'cession_5' => 'Cession'
-            ],
+            self::PHASE_DIX => $decision,
             self::PHASE_ONZE => [
                 'chiffrage' => 'Chiffrage',
                 'data_room' => 'Data room',
                 'audits' => 'Audits',
                 'finance' => 'Finançé',
                 'achats' => 'Achats',
-                'en_service' => 'En service',
-                'en_travaux' => 'En travaux'
+                'en_travaux' => 'En travaux',
+                'en_service' => 'En service'
             ]
         ];
     }

@@ -548,7 +548,7 @@
           $.each(etat['data'], function(field, value) {
             if(code == selected_phase && !etat_selector.find('option[value="'+field+'"]').length)
               etat_selector.append(new Option(value, field));
-            else if(code != selected_phase) etat_selector.find('option[value="'+field+'"]').remove();
+            else if(code.replace(/\d$/, '') != selected_phase.replace(/\d$/, '')) etat_selector.find('option[value="'+field+'"]').remove();
           });
         });
     });
