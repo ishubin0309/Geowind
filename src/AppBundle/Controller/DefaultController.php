@@ -115,7 +115,7 @@ class DefaultController extends Controller
         $typesProjet = Projet::getTypeProjetList(1);
         $typesSite = Projet::getTypeSiteList();
         $phases = Etat::getPhaseList();
-        $progressions = Progression::getProgressionList();
+        $progressions = Etat::getEtatList();
         // $servitudes = Servitude::getServitudeList();
         // $fonciers = Foncier::getFoncierList();
         // $avisMairies = AvisMairie::getAvisMairieList();
