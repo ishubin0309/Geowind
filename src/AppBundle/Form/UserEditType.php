@@ -67,7 +67,7 @@ class UserEditType extends AbstractType
             ])
             ->add('roles', ChoiceType::class, [
                 'choices' => array_flip(User::getRolesList()),
-                'label' => 'Roles',
+                'label' => 'Droits',
                 'multiple' => true,
                 'expanded' => true,
                 'required' => true,
