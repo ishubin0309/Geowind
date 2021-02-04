@@ -18,3 +18,17 @@
     {{ form_end(form) }}
   </div>
 {% endblock %}
+
+{% block js %}
+<script>
+  $('#user_nom, #user_prenom').keyup(function() {
+    prenom = $('#user_prenom').val();
+    nom = $('#user_nom').val();
+    current_user_name = $('#user_nom').val();
+    user_name = '';
+    if(prenom) user_name = prenom.charAt(0);
+    if(nom) user_name += nom.substring(0, 2);
+    if(current_user_name != user_name) $('#user_username').val(user_name);
+  });
+</script>
+{% endblock %}
