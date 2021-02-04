@@ -7,5 +7,4 @@
 /bin
 /vendor
 /web
-!/web/images/*
 /command.txt
