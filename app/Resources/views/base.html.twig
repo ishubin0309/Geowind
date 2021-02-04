@@ -78,7 +78,8 @@
                 <ul class="dropdown-menu">
                   <li>
                     <div class="user-dropdown-content">
-                      <i class="user-dropdown-icon fa fa-user-circle"></i>
+                      {# <i class="user-dropdown-icon fa fa-user-circle"></i> #}
+                      <img class="user-dropdown-icon" style="border-radius: 10%;" width="50" alt="logo" src="{{ asset('upload/' ~ app.user.photo ) }}">
                       <span>{{ app.user.prenom }} {{ app.user.nom }}</span><br>
                       <small class="text-muted">{{ app.user.username }}</small>
                       <small class="text-muted"><br>{{ app.user.email }}</small>

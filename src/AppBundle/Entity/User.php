@@ -6,6 +6,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\HttpFoundation\File\File;
 use AppBundle\Entity\Traits\BlameableTrait;
 use AppBundle\Entity\Traits\TimestampableTrait;
 
@@ -17,6 +19,7 @@ use AppBundle\Entity\Traits\TimestampableTrait;
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  * @UniqueEntity("email")
  * @UniqueEntity("username")
+ * @Vich\Uploadable
  */
 class User implements AdvancedUserInterface, \Serializable
 {
@@ -98,6 +101,34 @@ class User implements AdvancedUserInterface, \Serializable
      * @Assert\NotBlank()
      */
     private $telephone;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="decimal", precision=20, scale=16)
+     */
+    private $latitude = 0;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="decimal", precision=20, scale=16)
+     */
+    private $longitude = 0;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $photo;
+
+    /**
+     * @var UploadedFile
+     *
+     * @Vich\UploadableField(mapping="geotiff", fileNameProperty="photo")
+     */
+    private $photoFile;
 
     /**
      * @var bool
@@ -358,6 +389,80 @@ class User implements AdvancedUserInterface, \Serializable
     public function setTelephone($telephone)
     {
         $this->telephone = $telephone;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLatitude()
+    {
+        return (float) $this->latitude;
+    }
+
+    /**
+     * @param string $latitude
+     * @return \AppBundle\Entity\User
+     */
+    public function setLatitude($latitude)
+    {
+        $this->latitude = $latitude;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLongitude()
+    {
+        return (float) $this->longitude;
+    }
+
+    /**
+     * @param string $longitude
+     * @return \AppBundle\Entity\User
+     */
+    public function setLongitude($longitude)
+    {
+        $this->longitude = $longitude;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPhoto()
+    {
+        return $this->photo;
+    }
+
+    /**
+     *
+     * @param string $photo
+     * @return \AppBundle\Entity\User
+     */
+    public function setPhoto($photo)
+    {
+        $this->photo = $photo;
+        return $this;
+    }
+
+    /**
+     * @return File|\Symfony\Component\HttpFoundation\File\UploadedFile|null
+     */
+    public function getPhotoFile()
+    {
+        return $this->photoFile;
+    }
+
+    /**
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $photo
+     *
+     * @return $this
+     */
+    public function setPhotoFile(File $photo = null)
+    {
+        $this->photoFile = $photo;
         return $this;
     }
 }

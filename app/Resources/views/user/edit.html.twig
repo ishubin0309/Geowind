@@ -8,8 +8,16 @@
     <a href="{{ path('user_index') }}" class="btn btn-default btn-xs pull-right"><i class="fa fa-fw fa-close"></i> Annuler</a>
     <div class="page-title"><h1><i class="fa fa-fw fa-pencil"></i> {{ title }}</h1></div>
     <hr>
-    {{ form_start(form) }}
-    {{ form_rest(form) }}
+    <div class="row">
+      <div class="col-sm-6">
+      {{ form_start(form) }}
+      {{ form_rest(form) }}
+      </div>
+      <div class="col-sm-6">
+        <div id="map" class="map map-home" style="height: 500px; margin-bottom: 20px;"></div>
+        <div id="main_photo" class="col-sm-12"><img style="width: inherit;" src=""></div>
+      </div>
+    </div>
     <div class="form-group">
       <div class="col-sm-10 col-sm-offset-2">
         <button type="submit" class="btn btn-primary"><i class="fa fa-check fa-fw"></i> Valider</button>
@@ -17,4 +25,114 @@
     </div>
     {{ form_end(form) }}
   </div>
+{% endblock %}
+
+{% block js %}
+<script>
+  var map = L.map('map').setView([46, 2], 5.5);
+
+    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    var marker = null;
+
+    var lat = {{ form.vars.value.latitude }};
+    var long = {{ form.vars.value.longitude }};
+
+    $('#user_edit_latitude').change(function() {
+      lat = $(this).val().replace(',', '.');
+      updateMarkerPosition();
+    });
+
+    $('#user_edit_longitude').change(function() {
+      long = $(this).val().replace(',', '.');
+      updateMarkerPosition();
+    });
+
+    function updateMarkerPosition() {
+
+      if ($.isNumeric(lat) && $.isNumeric(long) && marker === null && lat != null && long != null) {
+        marker = L.marker([lat, long]).addTo(map);
+        map.panTo(new L.LatLng(lat, long));
+      }
+
+      if ($.isNumeric(lat) && $.isNumeric(long) && marker != null && lat != null && long != null) {
+        marker.setLatLng([lat, long]);
+        map.panTo(new L.LatLng(lat, long));
+      }
+
+    }
+    var customControl =  L.Control.extend({
+
+      options: {
+        position: 'topleft'
+      },
+
+      onAdd: function (map) {
+        var container = L.DomUtil.create('a');
+        container.setAttribute("role", "button");
+        container.title="Center";
+        container.text = "c";
+
+        container.style.backgroundColor = 'white';     
+        {# container.style.backgroundImage = "url(https://t1.gstatic.com/images?q=tbn:ANd9GcR6FCUMW5bPn8C4PbKak2BJQQsmC-K9-mbYBeFZm1ZM2w2GRy40Ew)"; #}
+        container.style.backgroundSize = "30px 30px";
+        container.style.width = '32px';
+        container.style.height = '32px';
+        container.style.lineHeight = '24px';
+        container.style.textDecoration = 'none';
+        container.style.cursor = 'pointer';
+        container.style.textAlign = 'center';
+        container.style.color = 'black';
+        container.style.fontSize = '24px';
+        container.style.borderRadius = '4px';
+        container.style.marginTop = '2px';
+        container.style.border = '2px solid rgba(0,0,0,0.2)';
+        
+        container.onmouseover = function(){
+          container.style.backgroundColor = '#f4f4f4'; 
+        }
+        container.onmouseout = function(){
+          container.style.backgroundColor = 'white'; 
+        }
+
+        container.onclick = function() {
+          update_marker = 0;
+          map.setView([46,2],5);
+        }
+
+        return container;
+      }
+    });
+
+    map.addControl(new customControl());
+    var update_marker = 1;
+    map.on('click', function(e) {
+      if(update_marker) {
+        lat = e.latlng.lat;
+        long = e.latlng.lng;
+        $('#user_edit_latitude').val(lat);
+        $('#user_edit_longitude').val(long);
+        updateMarkerPosition();
+      } else update_marker = 1;
+    });
+    
+    updateMarkerPosition();
+
+    {% if form.vars.value.photo is defined and form.vars.value.photo %}
+    $('#main_photo img').attr('src', '{{ asset('upload/' ~ form.vars.value.photo) }}');
+    {% endif %}
+    $('#user_edit_photoFile').change(function() {
+      if (this.files && this.files[0]) {
+        var reader = new FileReader();
+        
+        reader.onload = function(e) {
+          $('#main_photo img').attr('src', e.target.result);
+        }
+        
+        reader.readAsDataURL(this.files[0]); // convert to base64 string
+      }
+    });
+</script>
 {% endblock %}

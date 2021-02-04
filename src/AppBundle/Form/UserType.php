@@ -7,6 +7,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -42,6 +44,18 @@ class UserType extends AbstractType
             ->add('telephone', TextType::class, [
                 'label' => 'Téléphone',
                 'required' => true,
+            ])
+            ->add('photoFile', FileType::class, [
+                'required' => false,
+                'label' => 'Photo',
+            ])
+            ->add('latitude', NumberType::class, [
+                'label' => 'Latitude',
+                'scale' => 10,
+            ])
+            ->add('longitude', NumberType::class, [
+                'label' => 'Longitude',
+                'scale' => 10,
             ])
             ->add('roles', ChoiceType::class, [
                 'choices' => array_flip(User::getRolesList()),
