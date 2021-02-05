@@ -102,7 +102,7 @@
     
     $('#input-mairie').on('select2:select', function (e) {
       var data = e.params.data;
-      window.location.href = Routing.generate('annuaire_mairie', { insee: data.id });
+      window.location.href = Routing.generate('annuaire_mairie', { insee: data.insee });
     });
   </script>
 {% endblock %}

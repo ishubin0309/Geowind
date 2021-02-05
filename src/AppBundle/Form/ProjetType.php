@@ -4,6 +4,7 @@ namespace AppBundle\Form;
 
 use AppBundle\Entity\Projet;
 use AppBundle\Form\EventListener\AddCommuneFieldSubscriber;
+use AppBundle\Form\EventListener\AddMairieFieldSubscriber;
 use AppBundle\Form\Extension\DatePickerType;
 use AppBundle\Form\Option\AvisMairieType;
 use AppBundle\Form\Option\EnvironnementType;
@@ -41,6 +42,7 @@ class ProjetType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->addEventSubscriber(new AddCommuneFieldSubscriber($this->entityManager));
+        $builder->addEventSubscriber(new AddMairieFieldSubscriber($this->entityManager));
 
         $builder
             ->add('archived', ChoiceType::class, [
@@ -100,6 +102,17 @@ class ProjetType extends AbstractType
                 },
             ])
             ->add('partenaireTelephone', TextType::class, [
+                'label' => 'Téléphone',
+                'required' => false,
+            ])
+            ->add('mairie', EntityType::class, [
+                'class' => 'AppBundle:Mairie',
+                'required' => false,
+                'label' => 'Mairie',
+                'choices' => array(),
+                'multiple' => false,
+            ])
+            ->add('mairieTelephone', TextType::class, [
                 'label' => 'Téléphone',
                 'required' => false,
             ])

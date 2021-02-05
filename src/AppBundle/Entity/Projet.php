@@ -150,6 +150,20 @@ class Projet
     private $departement;
 
     /**
+     * @var Mairie
+     *
+     * @ORM\ManyToOne(targetEntity="Mairie", inversedBy="projets")
+     */
+    private $mairie;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", name="mairie_telephone", nullable=true)
+     */
+    private $mairieTelephone;
+
+    /**
      * @var ArrayCollection|Commune[]
      *
      * @ORM\ManyToMany(targetEntity="Commune", inversedBy="projets")
@@ -737,6 +751,35 @@ class Projet
     public function setDepartement(Departement $departement)
     {
         $this->departement = $departement;
+        return $this;
+    }
+
+    /**
+     * @return Mairie
+     */
+    public function getMairie()
+    {
+        return $this->mairie;
+    }
+
+    /**
+     * @param \AppBundle\Entity\Mairie $mairie
+     * @return \AppBundle\Entity\Projet
+     */
+    public function setMairie(Mairie $mairie)
+    {
+        $this->mairie = $mairie;
+        return $this;
+    }
+
+    public function getMairieTelephone()
+    {
+        return $this->mairieTelephone;
+    }
+
+    public function setMairieTelephone($mairieTelephone)
+    {
+        $this->mairieTelephone = $mairieTelephone;
         return $this;
     }
 

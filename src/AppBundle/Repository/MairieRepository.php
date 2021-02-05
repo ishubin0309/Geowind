@@ -26,7 +26,9 @@ class MairieRepository extends EntityRepository
 
         foreach ($results as $result) {
             $arr = [
-                'id' => $result[0]['insee'],
+                'insee' => $result[0]['insee'],
+                'id' => $result[0]['id'],
+                'telephone' => $result[0]['telephone'],
                 'text' => $result[0]['mairie'] . ' (' . $result[0]['codePostal'] . ')',
             ];
             $data[] = $arr;

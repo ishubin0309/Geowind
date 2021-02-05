@@ -82,21 +82,26 @@
             </tr>
           </thead>
           <tbody>
-          <tr>
-            <td class="required">{{ form_widget(form.origine) }}</td>
-            <td>Origine</td>
-            <td>{{ form_widget(form.origineTelephone) }}</td>
-          </tr>
-          <tr>
-            <td class="required">{{ form_widget(form.chefProjet) }}</td>
-            <td>Chef projet</td>
-            <td>{{ form_widget(form.chefProjetTelephone) }}</td>
-          </tr>
-          <tr>
-            <td class="required">{{ form_widget(form.partenaire) }}</td>
-            <td>Partenaire</td>
-            <td>{{ form_widget(form.partenaireTelephone) }}</td>
-          <tr>
+            <tr>
+              <td class="required">{{ form_widget(form.origine) }}</td>
+              <td>Origine</td>
+              <td>{{ form_widget(form.origineTelephone) }}</td>
+            </tr>
+            <tr>
+              <td class="required">{{ form_widget(form.chefProjet) }}</td>
+              <td>Chef projet</td>
+              <td>{{ form_widget(form.chefProjetTelephone) }}</td>
+            </tr>
+            <tr>
+              <td class="required">{{ form_widget(form.partenaire) }}</td>
+              <td>Partenaire</td>
+              <td>{{ form_widget(form.partenaireTelephone) }}</td>
+            <tr>
+            <tr>
+              <td class="required">{{ form_widget(form.mairie, {'attr': {'style': 'width:100%'}}) }}</td>
+              <td>Mairie</td>
+              <td>{{ form_widget(form.mairieTelephone) }}</td>
+            <tr>
           </tbody>
         </table>
       </fieldset>
@@ -393,7 +398,7 @@
       language: 'fr',
     });
 
-    $("select[id*=commune]").select2({
+    $("#projet_communes").select2({
       ajax: {
         url: queryCommuneUrl,
         dataType: 'json',
@@ -415,6 +420,27 @@
       select: function( event, ui ) {
         $(this).val(ui.item.value);
       }
+    });
+
+    var queryMairieUrl = "{{ path('mairie_search') }}";
+    
+    $("#projet_mairie").select2({
+      ajax: {
+        url: queryMairieUrl,
+        dataType: 'json',
+        delay: 500,
+        processResults: function (data) {
+          return {
+            results: data
+          };
+        }
+      },
+      escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+      minimumInputLength: 1,
+    });
+    $('#projet_mairie').on('select2:select', function (e) {
+      var data = e.params.data;
+      $('#projet_mairieTelephone').val(data.telephone);
     });
 
     var $collectionHolder = $('#projet_finances');
