@@ -68,6 +68,7 @@
         <legend>Situation géographique</legend>
         {{ form_row(form.latitude) }}
         {{ form_row(form.longitude) }}
+        {{ form_row(form.adresse) }}
       </fieldset>
 
       <fieldset class="hide" id="tab_contacts">
@@ -300,6 +301,7 @@
       } else update_marker = 1;
     });
 
+    var last_reverse_search = null;
     $('#projet_communes, #projet_departement').change(function() {
       
       var nominatimUrl = 'https://nominatim.openstreetmap.org/search';
@@ -308,7 +310,8 @@
       if($(this).attr('id') == 'projet_communes')
         var query = $('#projet_communes option:selected').text().replace(/\(.+/, '').trim();
       else var query = $('#projet_departement option:selected').text().trim();
-      if(query) {
+      if(query && last_reverse_search != query) {
+        last_reverse_search = query;
         $.ajax({
           type: 'GET',
           url: nominatimUrl,
@@ -328,23 +331,35 @@
             return;
           }
 
-          var lat = data[0]['lat'];
-          var lon = data[0]['lon'];
+          var searchLat = data[0]['lat'];
+          var searchLong = data[0]['lon'];
           var bbox = data[0]['boundingbox'];
-          
-          if (bbox != undefined) {
-            map.fitBounds([
-              [bbox[0], bbox[2]],
-              [bbox[1], bbox[3]]
-            ]);
-          } else {
-            map.setView([lat, lon], 10);
+          var adresse = data[0]['display_name'];
+          if(adresse.match('France')) {
+            $('#projet_adresse').val(adresse);
+            
+            if (bbox != undefined) {
+              map.fitBounds([
+                [bbox[0], bbox[2]],
+                [bbox[1], bbox[3]]
+              ]);
+            } else {
+              map.setView([searchLat, searchLong], 10);
+            }
+            if($('#projet_latitude').val() != searchLat {# == '0,0000000000' #}) {
+              lat = searchLat;
+              long = searchLong;
+              $('#projet_latitude').val(lat);
+              $('#projet_longitude').val(long);
+              updateMarkerPosition();
+            }
           }
           
-          
         });
+      } else if(!query) {
+        map.setView([46,2],5.5);
       } else {
-        map.setView([46,2],5);
+        map.setView([lat, long], 10);
       }
       
     });

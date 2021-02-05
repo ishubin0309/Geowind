@@ -123,6 +123,10 @@ class ProjetType extends AbstractType
                 'choices' => array(),
                 'multiple' => true,
             ])
+            ->add('adresse', TextType::class, [
+                'label' => 'Adresse postale',
+                'required' => false,
+            ])
             ->add('latitude', NumberType::class, [
                 'label' => 'Latitude',
                 'scale' => 10,

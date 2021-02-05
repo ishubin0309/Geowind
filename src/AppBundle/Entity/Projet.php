@@ -79,6 +79,13 @@ class Projet
     /**
      * @var string
      *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $adresse;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(type="decimal", precision=20, scale=16)
      */
     private $latitude = 0;
@@ -571,6 +578,24 @@ class Projet
     public function setTypeSite($typeSite)
     {
         $this->typeSite = $typeSite;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getAdresse()
+    {
+        return $this->typeSite;
+    }
+
+    /**
+     * @param int $adresse
+     * @return \AppBundle\Entity\Projet
+     */
+    public function setAdresse($adresse)
+    {
+        $this->adresse = $adresse;
         return $this;
     }
 
