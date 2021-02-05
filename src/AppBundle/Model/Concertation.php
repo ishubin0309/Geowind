@@ -16,10 +16,6 @@ class Concertation
     const OBJET_SEPT = 'reunion';
     const OBJET_HUIT = 'porte_ouverte';
 
-    const DYNAMIQUE_UN = '1';
-    const DYNAMIQUE_DEUX = '2';
-    const DYNAMIQUE_TROIS = '3';
-
     /**
      * @return array
      */
@@ -34,17 +30,6 @@ class Concertation
             self::OBJET_SIX => 'Réplique',
             self::OBJET_SEPT => 'Réunion',
             self::OBJET_HUIT => 'Porte ouverte'
-        ];
-    }
-    /**
-     * @return array
-     */
-    public static function getDynamiqueList()
-    {
-        return [
-            self::DYNAMIQUE_UN => '+',
-            self::DYNAMIQUE_DEUX => '0',
-            self::DYNAMIQUE_TROIS => '-'
         ];
     }
 

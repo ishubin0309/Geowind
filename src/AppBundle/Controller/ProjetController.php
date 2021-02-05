@@ -296,7 +296,7 @@ class ProjetController extends Controller
                             $projet->addTache($tache);
                             $tache = new Tache();
                             $tache->setObjet('foncier');
-                            $tache->setEtat('a_letude');
+                            $tache->setEtat('a_identifier');
                             $tache->setDynamique('0');
                             $projet->addTache($tache);
                             if(!empty($enjeuxColumns)) {

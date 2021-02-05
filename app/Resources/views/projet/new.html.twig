@@ -590,7 +590,7 @@
         language: 'fr',
       });
 
-      $('#projet_etats_' + length + '_dynamique').val(2);
+      $('#projet_etats_' + length + '_dynamique').val('0');
       
       $('select[id*="projet_etats"][id*="_phase"]').change();
     });
@@ -604,23 +604,32 @@
         var selected_phase = $(this).val();
         var etat_selector = $(this).parents('tr').find('select:eq(1)');
         $.each(etats, function(code, etat) {
-          $.each(etat['data'], function(field, value) {
-            if(code == selected_phase && !etat_selector.find('option[value="'+field+'"]').length)
-              etat_selector.append(new Option(value, field));
-            else if(code.replace(/\d$/, '') != selected_phase.replace(/\d$/, '')) etat_selector.find('option[value="'+field+'"]').remove();
-          });
+          if(code == selected_phase) {
+            var selected_data = [];
+            $.each(etat['data'], function(field, value) {
+              if(!etat_selector.find('option[value="'+field+'"]').length) etat_selector.append(new Option(value, field));
+              selected_data.push(field);
+            });
+            $(etat_selector.find('option')).each(function(index,element) {
+              if(!selected_data.includes($(element).attr('value'))) $(element).remove();
+            });
+          }
         });
     });
     $('body').on('change', 'select[id="projet_phase"]', function () {
         var selected_phase = $(this).val();
         var etat_selector = $('select[id="projet_progression"]');
-        etat_selector
         $.each(etats, function(code, etat) {
-          $.each(etat['data'], function(field, value) {
-            if(code == selected_phase && !etat_selector.find('option[value="'+field+'"]').length)
-              etat_selector.append(new Option(value, field));
-            else if(code != selected_phase) etat_selector.find('option[value="'+field+'"]').remove();
-          });
+          if(code == selected_phase) {
+            var selected_data = [];
+            $.each(etat['data'], function(field, value) {
+              if(!etat_selector.find('option[value="'+field+'"]').length) etat_selector.append(new Option(value, field));
+              selected_data.push(field);
+            });
+            $(etat_selector.find('option')).each(function(index,element) {
+              if(!selected_data.includes($(element).attr('value'))) $(element).remove();
+            });
+          }
         });
     });
 
@@ -639,7 +648,7 @@
         language: 'fr',
       });
 
-      $('#projet_taches_' + length + '_dynamique').val(2);
+      $('#projet_taches_' + length + '_dynamique').val('0');
       
       $('#projet_taches_' + length + '_objet').change();
     });
@@ -653,11 +662,16 @@
         var selected_objet = $(this).val();
         var tache_selector = $(this).parents('tr').find('select:eq(1)');
         $.each(taches, function(code, tache) {
-          $.each(tache['data'], function(field, value) {
-            if(code == selected_objet && !tache_selector.find('option[value="'+field+'"]').length)
-              tache_selector.append(new Option(value, field));
-            else if(code != selected_objet) tache_selector.find('option[value="'+field+'"]').remove();
-          });
+          if(code == selected_objet) {
+            var selected_data = [];
+            $.each(tache['data'], function(field, value) {
+              if(!tache_selector.find('option[value="'+field+'"]').length) tache_selector.append(new Option(value, field));
+              selected_data.push(field);
+            });
+            $(tache_selector.find('option')).each(function(index,element) {
+              if(!selected_data.includes($(element).attr('value'))) $(element).remove();
+            });
+          }
         });
     });
 
@@ -676,7 +690,7 @@
         language: 'fr',
       });
 
-      $('#projet_concertations_' + length + '_dynamique').val(2);
+      $('#projet_concertations_' + length + '_dynamique').val('0');
       
     });
 
