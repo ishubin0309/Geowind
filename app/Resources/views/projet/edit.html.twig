@@ -220,6 +220,7 @@
 
     var marker = null;
 
+    var default_lat = {{ projet.latitude }};
     var lat = {{ projet.latitude }};
     var long = {{ projet.longitude }};
 
@@ -297,6 +298,7 @@
         long = e.latlng.lng;
         $('#projet_latitude').val(lat);
         $('#projet_longitude').val(long);
+        default_lat = lat;
         updateMarkerPosition();
       } else update_marker = 1;
     });
@@ -346,7 +348,7 @@
             } else {
               map.setView([searchLat, searchLong], 10);
             }
-            if($('#projet_latitude').val() != searchLat {# == '0,0000000000' #}) {
+            if($('#projet_latitude').val() != searchLat && !default_lat) {
               lat = searchLat;
               long = searchLong;
               $('#projet_latitude').val(lat);
@@ -363,6 +365,10 @@
       }
       
     });
+    {# if(!$('#projet_adresse').val()) {
+      if($('#projet_communes option:selected').text()) $('#projet_communes').change();
+      else $('#projet_departement').change();
+    } #}
 
     updateMarkerPosition(); {# this line is required for edit file #}
 

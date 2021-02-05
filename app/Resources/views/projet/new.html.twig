@@ -220,6 +220,7 @@
 
     var marker = null;
 
+    var default_lat = null;
     var lat = null;
     var long = null;
 
@@ -297,6 +298,7 @@
         long = e.latlng.lng;
         $('#projet_latitude').val(lat);
         $('#projet_longitude').val(long);
+        default_lat = lat;
         updateMarkerPosition();
       } else update_marker = 1;
     });
@@ -346,7 +348,7 @@
             } else {
               map.setView([searchLat, searchLong], 10);
             }
-            if($('#projet_latitude').val() != searchLat {# == '0,0000000000' #}) {
+            if($('#projet_latitude').val() != searchLat && !default_lat) {
               lat = searchLat;
               long = searchLong;
               $('#projet_latitude').val(lat);
