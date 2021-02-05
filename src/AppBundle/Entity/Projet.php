@@ -586,7 +586,7 @@ class Projet
      */
     public function getAdresse()
     {
-        return $this->terrain;
+        return $this->adresse;
     }
 
     /**
