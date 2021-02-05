@@ -118,7 +118,7 @@
       } else update_marker = 1;
     });
 
-    {% if form.vars.value.photo is defined and form.vars.value.photo %}
+    {# {% if form.vars.value.photo is defined and form.vars.value.photo %}
     $('#main_photo img').attr('src', '{{ asset('upload/' ~ form.vars.value.photo) }}');
     {% endif %}
     $('#user_photoFile').change(function() {
@@ -131,7 +131,7 @@
         
         reader.readAsDataURL(this.files[0]); // convert to base64 string
       }
-    });
+    }); #}
 
   $('#user_nom, #user_prenom').keyup(function() {
     prenom = $('#user_prenom').val();
@@ -140,7 +140,7 @@
     user_name = '';
     if(prenom) user_name = prenom.charAt(0);
     if(nom) user_name += nom.substring(0, 2);
-    if(current_user_name != user_name) $('#user_username').val(user_name);
+    if(current_user_name != user_name) $('#user_username').val(user_name.toUpperCase());
   });
 </script>
 {% endblock %}

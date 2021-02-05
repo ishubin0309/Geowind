@@ -45,10 +45,6 @@ class UserType extends AbstractType
                 'label' => 'Téléphone',
                 'required' => true,
             ])
-            ->add('photoFile', FileType::class, [
-                'required' => false,
-                'label' => 'Photo',
-            ])
             ->add('latitude', NumberType::class, [
                 'label' => 'Latitude',
                 'scale' => 10,
