@@ -300,6 +300,57 @@
       } else update_marker = 1;
     });
 
+    $('#projet_communes, #projet_departement').change(function() {
+      
+      var nominatimUrl = 'https://nominatim.openstreetmap.org/search';
+      $input = $(this);
+
+      if($(this).attr('id') == 'projet_communes')
+        var query = $('#projet_communes option:selected').text().replace(/\(.+/, '').trim();
+      else var query = $('#projet_departement option:selected').text().trim();
+      if(query) {
+        $.ajax({
+          type: 'GET',
+          url: nominatimUrl,
+          data: {
+            q: query,
+            extratags: 0,
+            namedetails: 0,
+            polygon_geojson: 0,
+            format: 'json',
+          },
+          dataType: 'json',
+
+        })
+        .done(function(data) {
+
+          if (data.length === 0) {
+            return;
+          }
+
+          var lat = data[0]['lat'];
+          var lon = data[0]['lon'];
+          var bbox = data[0]['boundingbox'];
+          
+          if (bbox != undefined) {
+            map.fitBounds([
+              [bbox[0], bbox[2]],
+              [bbox[1], bbox[3]]
+            ]);
+          } else {
+            map.setView([lat, lon], 10);
+          }
+          
+          
+        });
+      } else {
+        map.setView([46,2],5);
+      }
+      
+    });
+
+    updateMarkerPosition(); {# this line is required for edit file #}
+
     $('#projet_typeProjet').change(function() {
       type = $(this).val();
       if(type.match('olien')) {
@@ -318,8 +369,6 @@
         else $('#projet_denomination').val('Esol_id');
       }
     });
-
-    updateMarkerPosition();
 
     var queryCommuneUrl = "{{ path('commune_search') }}";
 
