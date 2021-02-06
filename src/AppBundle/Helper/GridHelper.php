@@ -140,6 +140,21 @@ class GridHelper
         return json_encode($data);
     }
 
+    public function getJsonDynamiques()
+    {
+        $data = [];
+        $dynamiques = Etat::getDynamiqueList();
+
+        foreach ($dynamiques as $code => $dynamique) {
+            $data[$code] = [
+                'name' => $dynamique,
+                'data' => $dynamiques[$code],
+            ];
+        }
+
+        return json_encode($data);
+    }
+
     public function getJsonProgressions()
     {
         $data = [];

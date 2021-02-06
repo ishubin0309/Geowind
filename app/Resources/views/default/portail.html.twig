@@ -103,6 +103,7 @@
     var progressions = {{ grid_helper.getJsonProgressions|raw }};
     var environnements = {{ grid_helper.getJsonEnvironnements|raw }};
     var taches = {{ grid_helper.getJsonTacheList|raw }};
+    var dynamiques = {{ grid_helper.getJsonDynamiques|raw }};
 
     function typeProjetFormatter(row, cell, value, columnDef, dataContext) {
       return typeProjet[value] !== undefined ? typeProjet[value]['name'] : value;
@@ -126,6 +127,9 @@
 
     function environnementFormatter(row, cell, value, columnDef, dataContext) {
       return environnements[value]['name'];
+    }
+    function dynamiqueFormatter(row, cell, value, columnDef, dataContext) {
+      return dynamiques[value] !== undefined ? dynamiques[value]['name'] : value;
     }
 
     var flashCircle = '{{ asset('images/circle-flash.gif')|e('js') }}';
@@ -162,7 +166,7 @@
       { id: "potentiel", name: "Potentiel (MW)", field: "potentiel", sortable: true, cssClass: 'text-right', sorter: numericSorter, width: 100, maxWidth: 100 },
       { id: "phase", name: "Phase", field: "phase", sortable: true, sorter: stringSorter, formatter: phaseFormatter, width: 110, maxWidth: 110 },
       { id: "progression", name: "Etat", field: "progression", sortable: true, sorter: stringSorter, formatter: progressionFormatter, width: 110, maxWidth: 110 },
-      { id: "dateCrea", name: '<strong>Date création</strong><br>Date maj', headerCssClass: "column-date-switch", field: "dateCrea", sortable: true, sorter: dateSorter, width: 100, maxWidth: 100, header: {
+      { id: "dateCrea", name: '<strong>Date création</strong><br>Date maj', headerCssClass: "column-date-switch", field: "dateCrea", sortable: true, sorter: dateSorter, width: 100, maxWidth: 250, header: {
         buttons: [
           {
             cssClass: "switch-current-crea",
@@ -186,7 +190,7 @@
       { id: "consultations", name: "Consultations", field: "consultations", sortable: true, sorter: stringSorter, formatter: tacheFormatter, maxWidth: 250 },
       { id: "urbanisme", name: "Urbanisme", field: "urbanisme", sortable: true, sorter: stringSorter, formatter: tacheFormatter, maxWidth: 250 },
       {# { id: "concertation", name: "Concertation", field: "concertation", sortable: true, sorter: stringSorter, formatter: tacheFormatter, maxWidth: 250 }, #}
-      { id: "dateCrea", name: '<strong>Date création</strong><br>Date maj', headerCssClass: "column-date-switch", field: "dateCrea", sortable: true, sorter: dateSorter, width: 100, maxWidth: 100, header: {
+      { id: "dateCrea", name: '<strong>Date création</strong><br>Date maj', headerCssClass: "column-date-switch", field: "dateCrea", sortable: true, sorter: dateSorter, width: 100, maxWidth: 250, header: {
         buttons: [
           {
             cssClass: "switch-current-crea",
@@ -201,11 +205,11 @@
       { id: "typeProjet", name: "Type de projet", field: "typeProjet", width: 70, maxWidth: 250, formatter: typeProjetFormatter, sortable: true, sorter: stringSorter, },
       { id: "typeSite", name: "Type de Bien", field: "typeSite", width: 70, maxWidth: 250, formatter: typeSiteFormatter, sortable: true, sorter: stringSorter, },
       { id: "departement", name: "Département", field: "departement", sortable: true, sorter: stringSorter, maxWidth: 250 },
-      { id: "potentiel", name: "Potentiel (MW)", field: "potentiel", sortable: true, cssClass: 'text-right', sorter: numericSorter, width: 100, maxWidth: 100 },
-      { id: "phase", name: "Phase", field: "phase", sortable: true, sorter: stringSorter, formatter: phaseFormatter, width: 110, maxWidth: 110 },
-      { id: "progression", name: "Etat", field: "progression", sortable: true, sorter: stringSorter, formatter: progressionFormatter, width: 110, maxWidth: 110 },
-      { id: "dynamique", name: "Dynamique", field: "dynamique", sortable: true, sorter: stringSorter, formatter: progressionFormatter, width: 110, maxWidth: 110 },
-      { id: "dateCrea", name: '<strong>Date création</strong><br>Date maj', headerCssClass: "column-date-switch", field: "dateCrea", sortable: true, sorter: dateSorter, width: 100, maxWidth: 100, header: {
+      { id: "potentiel", name: "Potentiel (MW)", field: "potentiel", sortable: true, cssClass: 'text-right', sorter: numericSorter, width: 100, maxWidth: 150 },
+      { id: "phase", name: "Phase", field: "phase", sortable: true, sorter: stringSorter, formatter: phaseFormatter, width: 110, maxWidth: 250 },
+      { id: "progression", name: "Etat", field: "progression", sortable: true, sorter: stringSorter, formatter: progressionFormatter, width: 110, maxWidth: 250 },
+      { id: "dynamique", name: "Dynamique", field: "dynamique", sortable: true, sorter: stringSorter, formatter: dynamiqueFormatter, width: 110, maxWidth: 250 },
+      { id: "dateCrea", name: '<strong>Date création</strong><br>Date maj', headerCssClass: "column-date-switch", field: "dateCrea", sortable: true, sorter: dateSorter, width: 100, maxWidth: 250, header: {
         buttons: [
           {
             cssClass: "switch-current-crea",
