@@ -889,6 +889,14 @@
     $('#projet_enjeuxs_remove_entry').click(function () {
       $('> :last-child', $collectionHolderEnjeux).remove();
     });
+    $('body').on('change', '#projet_enjeuxs select', function () {
+      if($(this).val() == '-2') $(this).parent().css('background-color', '#00FF66');
+      else if($(this).val() == '-1') $(this).parent().css('background-color', '#66CCFF');
+      else if($(this).val() == '0') $(this).parent().css('background-color', '#FFFF00');
+      else if($(this).val() == '1') $(this).parent().css('background-color', '#FF99FF');
+      else if($(this).val() == '2') $(this).parent().css('background-color', '#FF3333');
+      else $(this).parent().css('background-color', '');
+    });
 
     var $collectionHolderNote = $('#projet_notes');
     var prototypeNote = $collectionHolderNote.data('prototype');
@@ -1083,6 +1091,7 @@
       $('#projet_technologie').change();
       $('select[id*="_phase"]').change();
       $('select[id*="_objet"]').change();
+      $('#projet_enjeuxs select').change();
       if(!$('#projet_etats tr').length) $('#projet_etats_add_entry').click();
       if(!$('#projet_taches tr').length) $('#projet_taches_add_entry').click();
       if($('#projet_taches tr').length < 2) {
