@@ -305,21 +305,13 @@
         $('#projet_longitude').val(long);
         default_lat = lat;
         updateMarkerPosition();
+        reverseGeolocalisation(lat + ' ' + long, false);
       } else update_marker = 1;
     });
     
-    var last_reverse_search = null;
-    $('#projet_communes, #projet_departement').change(function() {
-      
+    function reverseGeolocalisation(query, update_marker) {
       var nominatimUrl = 'https://nominatim.openstreetmap.org/search';
-      $input = $(this);
-
-      if($(this).attr('id') == 'projet_communes')
-        var query = $('#projet_communes option:selected').text().replace(/\(.+/, '').trim();
-      else var query = $('#projet_departement option:selected').text().trim();
-      if(query && last_reverse_search != query) {
-        last_reverse_search = query;
-        $.ajax({
+      $.ajax({
           type: 'GET',
           url: nominatimUrl,
           data: {
@@ -344,25 +336,39 @@
           var adresse = data[0]['display_name'];
           if(adresse.match('France')) {
             $('#projet_adresse').val(adresse);
-            
-            if (bbox != undefined) {
-              map.fitBounds([
-                [bbox[0], bbox[2]],
-                [bbox[1], bbox[3]]
-              ]);
-            } else {
-              map.setView([searchLat, searchLong], 10);
-            }
-            if($('#projet_latitude').val() != searchLat && !default_lat) {
-              lat = searchLat;
-              long = searchLong;
-              $('#projet_latitude').val(lat);
-              $('#projet_longitude').val(long);
-              updateMarkerPosition();
+            if(update_marker) {
+              if (bbox != undefined) {
+                map.fitBounds([
+                  [bbox[0], bbox[2]],
+                  [bbox[1], bbox[3]]
+                ]);
+              } else {
+                map.setView([searchLat, searchLong], 10);
+              }
+              if($('#projet_latitude').val() != searchLat && !default_lat) {
+                lat = searchLat;
+                long = searchLong;
+                $('#projet_latitude').val(lat);
+                $('#projet_longitude').val(long);
+                updateMarkerPosition();
+              }
             }
           }
           
         });
+    }
+    var last_reverse_search = null;
+    $('#projet_communes, #projet_departement').change(function() {
+      
+      var nominatimUrl = 'https://nominatim.openstreetmap.org/search';
+      $input = $(this);
+
+      if($(this).attr('id') == 'projet_communes')
+        var query = $('#projet_communes option:selected').text().replace(/\(.+/, '').trim();
+      else var query = $('#projet_departement option:selected').text().trim();
+      if(query && last_reverse_search != query) {
+        last_reverse_search = query;
+        reverseGeolocalisation(query, true);
       } else if(!query) {
         map.setView([46,2],5.5);
       } else {
@@ -413,7 +419,7 @@
       }
       denomination = $('#projet_denomination').val().trim();
       search = denomination.match(/_(\d+)$/)
-      id = search && search[1] !== undefined ? search[1] : '';
+      id = search && search[1] !== undefined ? search[1] : 'id';
       if(!denomination || denomination == 'Esol_'+id || denomination == 'EOi_'+id || denomination == 'Ptoit_'+id || denomination == 'Psol_'+id || denomination == 'Pomb_'+id || denomination == 'Ptrack_'+id) {
         if(type == 'eolienne_isolee') $('#projet_denomination').val('EOi_'+id);
         else if(type == 'toiture_solaire') $('#projet_denomination').val('Ptoit_'+id);
