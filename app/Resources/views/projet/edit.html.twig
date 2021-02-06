@@ -104,12 +104,12 @@
             <tr>
             {% if form.vars.value.proprietaires[0] is defined %}
               {% for proprietaire in form.vars.value.proprietaires %}
-                <tr rel="{{ loop.index0 }}">
+                <tr rel="{{ loop.index0 }}" class="{% if not proprietaire.proprietaire %}hide{% endif %}">
                   <td class="required">{{ proprietaire.proprietaire ? proprietaire.proprietaire : '-' }}</td>
                   <td>Propriétaire</td>
                   <td>{{ proprietaire.telephoneProprietaire ? proprietaire.telephoneProprietaire : '-' }}</td>
                 <tr>
-                <tr rel="{{ loop.index0 }}">
+                <tr rel="{{ loop.index0 }}" class="{% if not proprietaire.exploitant %}hide{% endif %}">
                   <td class="required">{{ proprietaire.exploitant ? proprietaire.exploitant : '-' }}</td>
                   <td>Exploitant</td>
                   <td>{{ proprietaire.telephoneExploitant ? proprietaire.telephoneExploitant : '-' }}</td>
@@ -536,7 +536,7 @@
         language: 'fr',
         clearBtn: true,
       });
-      $('#tab_contacts tbody').append('<tr rel="'+length+'"><td>-</td><td>Propriétaire</td><td>-</td></tr><tr rel="'+length+'"><td>-</td><td>Exploitant</td><td>-</td></tr>');
+      $('#tab_contacts tbody').append('<tr rel="'+length+'" class="hide"><td>-</td><td>Propriétaire</td><td>-</td></tr><tr rel="'+length+'" class="hide"><td>-</td><td>Exploitant</td><td>-</td></tr>');
     });
 
     $('#projet_proprietaires_remove_entry').click(function () {
@@ -551,13 +551,17 @@
     $('#projet_proprietaires').on('change', '[id*="_proprietaire"], [id*="_telephoneProprietaire"], [id*="_exploitant"], [id*="_telephoneExploitant"]', function () {
       var id = $(this).attr('id').match(/\d+/);
       id = parseInt(id);
-      if($(this).attr('id')=='projet_proprietaires_'+id+'_proprietaire')
+      if($(this).attr('id')=='projet_proprietaires_'+id+'_proprietaire') {
         $('#tab_contacts tbody tr[rel="'+id+'"]:eq(0) td:eq(0)').text($(this).val());
-      else if($(this).attr('id')=='projet_proprietaires_'+id+'_telephoneProprietaire')
+        if($(this).val()) $('#tab_contacts tbody tr[rel="'+id+'"]:eq(0)').removeClass('hide');
+        else $('#tab_contacts tbody tr[rel="'+id+'"]:eq(0)').addClass('hide');
+      } else if($(this).attr('id')=='projet_proprietaires_'+id+'_telephoneProprietaire')
         $('#tab_contacts tbody tr[rel="'+id+'"]:eq(0) td:eq(2)').text($(this).val());
-      else if($(this).attr('id')=='projet_proprietaires_'+id+'_exploitant')
+      else if($(this).attr('id')=='projet_proprietaires_'+id+'_exploitant') {
         $('#tab_contacts tbody tr[rel="'+id+'"]:eq(1) td:eq(0)').text($(this).val());
-      else if($(this).attr('id')=='projet_proprietaires_'+id+'_telephoneExploitant')
+        if($(this).val()) $('#tab_contacts tbody tr[rel="'+id+'"]:eq(1)').removeClass('hide');
+        else $('#tab_contacts tbody tr[rel="'+id+'"]:eq(1)').addClass('hide');
+      } else if($(this).attr('id')=='projet_proprietaires_'+id+'_telephoneExploitant')
         $('#tab_contacts tbody tr[rel="'+id+'"]:eq(1) td:eq(2)').text($(this).val());
     });
 
