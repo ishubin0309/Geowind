@@ -391,10 +391,11 @@
           if($(element).val() == 'parking') $(element).removeClass('hide');
           else $(element).addClass('hide');
         });
-      } else if(type == 'eolienne_isolee') {
-        $('#projet_typeSite').val('terrain');
+      } else if(type == 'eolienne_isolee' || type == 'tracker_solaire') {
+        if($('#projet_typeSite').val() != 'parking') $('#projet_typeSite').val('terrain');
         $.each($('#projet_typeSite option'), function(i, element) {
-          $(element).removeClass('hide');
+          if($(element).val() == 'terrain' || $(element).val() == 'parking') $(element).removeClass('hide');
+          else $(element).addClass('hide');
         });
       } else if(type == 'toiture_solaire') {
         if($('#projet_typeSite').val() != 'nouveau_batiment') $('#projet_typeSite').val('batiment_existant');
