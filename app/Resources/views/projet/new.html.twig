@@ -1050,7 +1050,7 @@
           $('.form_site').addClass('hide');
           var type_site = $('#projet_typeSite').val();
           $('#tab_site legend:eq(0)').text($('#projet_typeSite option:selected').text());
-          if(type_site == 'terrain') $('#form_site_terrain').removeClass('hide');
+          if(type_site == 'terrain' || type_site == 'parking') $('#form_site_terrain').removeClass('hide');
           else if(type_site == 'batiment_existant') {
             $('#projet_batimentExistant_bardage').parents('.form-group').addClass('hide');
             $('#projet_batimentExistant_ossature').parents('.form-group').addClass('hide');
