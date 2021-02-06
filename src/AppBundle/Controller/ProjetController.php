@@ -244,12 +244,13 @@ class ProjetController extends Controller
                         if($tProjet == 'parc__eolien' || $tProjet == 'eolienne_isolee') {
                             $projet->setTechnologie('eolienne');
                             $projet->setPuissanceUnitaire(126);
-                            $projet->setDenomination('Esol_id');
+                            if($tProjet == 'parc__eolien') $projet->setDenomination('Esol_id');
+                            else $projet->setDenomination('EOi_id');
                         } else {
                             if($tProjet=='toiture_solaire') $projet->setDenomination('Ptoit_id');
                             elseif($tProjet=='ferme_solaire') $projet->setDenomination('Psol_id');
                             elseif($tProjet=='ombriere_solaire') $projet->setDenomination('Pomb_id');
-                            elseif($tProjet=='tracker_solaire') $projet->setDenomination('Ptra_id');
+                            elseif($tProjet=='tracker_solaire') $projet->setDenomination('Ptrack_');
                             $projet->setTechnologie('photovoltaique');
                             $projet->setPuissanceUnitaire(300);
                         }

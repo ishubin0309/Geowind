@@ -434,11 +434,12 @@
       denomination = $('#projet_denomination').val().trim();
       search = denomination.match(/_(\d+)$/)
       id = search && search[1] !== undefined ? search[1] : '';
-      if(!denomination || denomination == 'Esol_'+id || denomination == 'Ptoit_'+id || denomination == 'Psol_'+id || denomination == 'Pomb_'+id || denomination == 'Ptoit_'+id) {
-        if(type == 'toiture_solaire') $('#projet_denomination').val('Ptoit_'+id);
+      if(!denomination || denomination == 'Esol_'+id || denomination == 'EOi_'+id || denomination == 'Ptoit_'+id || denomination == 'Psol_'+id || denomination == 'Pomb_'+id || denomination == 'Ptrack_'+id) {
+        if(type == 'eolienne_isolee') $('#projet_denomination').val('EOi_'+id);
+        else if(type == 'toiture_solaire') $('#projet_denomination').val('Ptoit_'+id);
         else if(type == 'ferme_solaire') $('#projet_denomination').val('Psol_'+id);
         else if(type == 'ombriere_solaire') $('#projet_denomination').val('Pomb_'+id);
-        else if(type == 'tracker_solaire') $('#projet_denomination').val('Ptoit_'+id);
+        else if(type == 'tracker_solaire') $('#projet_denomination').val('Ptrack_'+id);
         else $('#projet_denomination').val('Esol_'+id);
       }
     });
