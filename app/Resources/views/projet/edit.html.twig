@@ -105,14 +105,14 @@
             {% if form.vars.value.proprietaires[0] is defined %}
               {% for proprietaire in form.vars.value.proprietaires %}
                 <tr rel="{{ loop.index0 }}">
-                  <td class="required">{{ proprietaire.proprietaire }}</td>
+                  <td class="required">{{ proprietaire.proprietaire ? proprietaire.proprietaire : '-' }}</td>
                   <td>Propriétaire</td>
-                  <td>{{ proprietaire.telephoneProprietaire }}</td>
+                  <td>{{ proprietaire.telephoneProprietaire ? proprietaire.telephoneProprietaire : '-' }}</td>
                 <tr>
                 <tr rel="{{ loop.index0 }}">
-                  <td class="required">{{ proprietaire.exploitant }}</td>
+                  <td class="required">{{ proprietaire.exploitant ? proprietaire.exploitant : '-' }}</td>
                   <td>Exploitant</td>
-                  <td>{{ proprietaire.telephoneExploitant }}</td>
+                  <td>{{ proprietaire.telephoneExploitant ? proprietaire.telephoneExploitant : '-' }}</td>
                 <tr>
               {% endfor %}
             {% endif %}
