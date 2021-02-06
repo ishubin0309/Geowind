@@ -29,9 +29,10 @@ class EnjeuxType extends AbstractType
                 'required' => false,
                 'choices' => array_flip(Etat::getDynamiqueList()),
             ])
-            ->add('risque', TextType::class, [
+            ->add('risque', ChoiceType::class, [
                 'label' => 'Risque',
                 'required' => false,
+                'choices' => array_flip(Etat::getDynamiqueList()),
             ])
             ->add('note', TextType::class, [
                 'label' => 'Note',

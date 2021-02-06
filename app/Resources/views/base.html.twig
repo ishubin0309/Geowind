@@ -19,7 +19,6 @@
     <link rel="stylesheet" href="{{ asset('vendor/SlickGrid-master/slick.grid.css') }}">
     <link rel="stylesheet" href="{{ asset('css/slickgrid.css') }}">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}?version=1.2">
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     {% block css %}{% endblock %}
   </head>
   <body>
@@ -108,8 +107,6 @@
     <script src="{{ asset('vendor/bootstrap-3.3.7-dist/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
     <script src="{{ asset('vendor/bootstrap-datepicker/locales/bootstrap-datepicker.fr.min.js') }}"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/i18n/jquery-ui-i18n.min.js"></script>
     <script src="{{ asset('vendor/sweetalert/sweetalert.min.js') }}"></script>
     <script src="{{ asset('vendor/leaflet/leaflet.js') }}"></script>
     <script src="{{ asset('vendor/select2-4.0.3-dist/js/select2.min.js') }}"></script>
@@ -138,12 +135,6 @@
       $(function () {
         $('[data-toggle="tooltip"]').tooltip()
       })
-      $.datepicker.setDefaults(
-      $.extend(
-        {'dateFormat':'dd/mm/yy'},
-        $.datepicker.regional['fr']
-      )
-    );
     </script>
     {% block js %}{% endblock %}
   </body>

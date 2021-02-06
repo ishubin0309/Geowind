@@ -2,6 +2,8 @@
 
 namespace AppBundle\Form;
 
+use AppBundle\Form\EventListener\AddParcelleCommuneFieldSubscriber as communeSubscriber;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -16,8 +18,16 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ParcelleType extends AbstractType
 {
+    private $entityManager;
+
+    public function __construct(EntityManagerInterface $entityManager)
+    {
+        $this->entityManager = $entityManager;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $builder->addEventSubscriber(new communeSubscriber($this->entityManager));
         $builder
             ->add('nom', TextType::class, [
                 'label' => 'Parcelle',
@@ -32,10 +42,12 @@ class ParcelleType extends AbstractType
                         ->orderBy('d.nom', 'ASC');
                 },
             ])
-            ->add('commune', TextType::class, [
+            ->add('commune', EntityType::class, [
+                'class' => 'AppBundle:Commune',
                 'required' => false,
                 'label' => 'Commune',
-                // 'choices' => array(),
+                'choices' => array(),
+                'multiple' => false,
             ])
             ->add('lieuDit', TextType::class, [
                 'label' => 'Lieu-dit',

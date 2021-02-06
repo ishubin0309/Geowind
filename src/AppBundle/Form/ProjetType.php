@@ -3,8 +3,8 @@
 namespace AppBundle\Form;
 
 use AppBundle\Entity\Projet;
-use AppBundle\Form\EventListener\AddCommuneFieldSubscriber;
-use AppBundle\Form\EventListener\AddMairieFieldSubscriber;
+use AppBundle\Form\EventListener\AddCommuneFieldSubscriber as communeSubscriber;
+use AppBundle\Form\EventListener\AddMairieFieldSubscriber as mairieSubscriber;
 use AppBundle\Form\Extension\DatePickerType;
 use AppBundle\Form\Option\AvisMairieType;
 use AppBundle\Form\Option\EnvironnementType;
@@ -41,8 +41,8 @@ class ProjetType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->addEventSubscriber(new AddCommuneFieldSubscriber($this->entityManager));
-        $builder->addEventSubscriber(new AddMairieFieldSubscriber($this->entityManager));
+        $builder->addEventSubscriber(new communeSubscriber($this->entityManager));
+        $builder->addEventSubscriber(new mairieSubscriber($this->entityManager));
 
         $builder
             ->add('archived', ChoiceType::class, [
@@ -83,7 +83,7 @@ class ProjetType extends AbstractType
             ])
             ->add('chefProjet', EntityType::class, [
                 'class' => 'AppBundle:User',
-                'required' => true,
+                'required' => false,
                 'label' => 'Chef projet',
                 'query_builder' => function (UserRepository $er) {
                     return $er->getFindAllQueryBuilder();
@@ -95,7 +95,7 @@ class ProjetType extends AbstractType
             ])
             ->add('partenaire', EntityType::class, [
                 'class' => 'AppBundle:User',
-                'required' => true,
+                'required' => false,
                 'label' => 'Partenaire',
                 'query_builder' => function (UserRepository $er) {
                     return $er->getFindAllQueryBuilder();

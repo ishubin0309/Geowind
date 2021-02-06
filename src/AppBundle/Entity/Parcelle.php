@@ -42,7 +42,7 @@ class Parcelle
     /**
      * @var string
      *
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\ManyToOne(targetEntity="Commune")
      */
     private $commune;
 
@@ -126,7 +126,7 @@ class Parcelle
     }
 
     /**
-     * @return string
+     * @return Commune
      */
     public function getCommune()
     {
@@ -134,10 +134,10 @@ class Parcelle
     }
 
     /**
-     * @param string $commune
+     * @param Commune $commune
      * @return \AppBundle\Entity\Parcelle
      */
-    public function setCommune($commune)
+    public function setCommune(Commune $commune)
     {
         $this->commune = $commune;
         return $this;

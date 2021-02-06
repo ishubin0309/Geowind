@@ -166,7 +166,7 @@ class Projet
     /**
      * @var ArrayCollection|Commune[]
      *
-     * @ORM\ManyToMany(targetEntity="Commune", inversedBy="projets")
+     * @ORM\ManyToMany(targetEntity="Commune", inversedBy="projets", cascade={"persist"})
      */
     private $communes;
 

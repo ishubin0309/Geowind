@@ -10,6 +10,7 @@ use AppBundle\Entity\Etat;
 use AppBundle\Entity\Enjeux;
 use AppBundle\Entity\Tache;
 use AppBundle\Entity\Parcelle;
+use AppBundle\Entity\Commune;
 use AppBundle\Model\Environnement;
 use AppBundle\Form\ProjetEditType;
 use AppBundle\Form\ProjetType;
@@ -269,6 +270,14 @@ class ProjetController extends Controller
                             if($inseeColumn !== false) {
                                 $commune = $em->getRepository('AppBundle:Commune')->findOneBy(['insee' => $data[$inseeColumn]]);
                                 if($commune) $projet->addCommune($commune);
+                                else {
+                                    $commune = new Commune();
+                                    $commune->setDepartement($departement);
+                                    $commune->setNom(strtoupper($data[$communeColumn]));
+                                    $commune->setInsee($data[$inseeColumn]);
+                                    $commune->setCode(substr($data[$inseeColumn],-3));
+                                    $projet->addCommune($commune);
+                                }
                             }
                             if($parcelleColumn !== false && $data[$parcelleColumn]) {
                                 $parcelle_array = explode(',', $data[$parcelleColumn]);
@@ -276,11 +285,12 @@ class ProjetController extends Controller
                                     $parcelle = new Parcelle();
                                     $parcelle->setNom(trim($value));
                                     $parcelle->setDepartement($departement);
-                                    if($inseeColumn !== false) {
+                                    if($commune) $parcelle->setCommune($commune);
+                                    /* if($inseeColumn !== false) {
                                         if($commune) $parcelle->setCommune($commune->getNom() . ' (' . $commune->getInsee() . ')');
                                         elseif($communeColumn !== false) $parcelle->setCommune($data[$communeColumn] . ' (' . $data[$inseeColumn] . ')');
                                         else $parcelle->setCommune($data[$inseeColumn]);
-                                    } else if($communeColumn !== false) $parcelle->setCommune($data[$communeColumn] . ' (' . $data[$inseeColumn] . ')');
+                                    } else if($communeColumn !== false) $parcelle->setCommune($data[$communeColumn] . ' (' . $data[$inseeColumn] . ')'); */
                                     $projet->addParcelle($parcelle);
                                 }
                             }
@@ -440,31 +450,6 @@ class ProjetController extends Controller
         }
 
         $response->setData($results);
-        return $response;
-    }
-
-    /**
-     * @Route("/communes/search/jquery", name="commune_search_jquery", options={ "expose": true })
-     * @Security("has_role('ROLE_VIEW')")
-     */
-    public function communesJqueryAction(Request $request)
-    {
-        $response = new JsonResponse();
-
-        $term = $request->query->get('term', null);
-
-        $results = [];
-        $results2 = [];
-
-        if (!empty($term)) {
-            $em = $this->getDoctrine()->getManager();
-            $results = $em->getRepository('AppBundle:Commune')->searchTerm($term);
-            foreach($results as $result) {
-                $results2[] = ['formatted' => trim(preg_replace('%\(.+?\)%', '', $result['text'])), 'value' => $result['text']];
-            }
-        }
-
-        $response->setData($results2);
         return $response;
     }
 

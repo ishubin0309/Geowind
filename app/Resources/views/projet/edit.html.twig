@@ -420,13 +420,19 @@
       minimumInputLength: 1,
     });
     
-    var queryCommuneUrl2 = "{{ path('commune_search_jquery') }}";
-    $('#tab_parcelles [id*="_commune"]').autocomplete({
-      source: queryCommuneUrl2,
-      minLength: 1,
-      select: function( event, ui ) {
-        $(this).val(ui.item.value);
-      }
+    $('#tab_parcelles [id*="_commune"]').select2({
+      ajax: {
+        url: queryCommuneUrl,
+        dataType: 'json',
+        delay: 500,
+        processResults: function (data) {
+          return {
+            results: data
+          };
+        }
+      },
+      escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+      minimumInputLength: 1,
     });
 
     $("#projet_origine, #projet_chefProjet, #projet_partenaire").select2();
@@ -766,12 +772,19 @@
       entry = entry.replace(/__name__/g, length);
       $collectionHolderParcelle.append(entry);
       
-      $('#projet_parcelles_' + length + '_commune').autocomplete({
-        source: queryCommuneUrl2,
-        minLength: 2,
-        select: function( event, ui ) {
-          $(this).val(ui.item.value);
-        }
+      $('#projet_parcelles_' + length + '_commune').select2({
+        ajax: {
+          url: queryCommuneUrl,
+          dataType: 'json',
+          delay: 500,
+          processResults: function (data) {
+            return {
+              results: data
+            };
+          }
+        },
+        escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+        minimumInputLength: 1,
       });
       
     });

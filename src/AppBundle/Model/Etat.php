@@ -44,11 +44,11 @@ class Etat
     public static function getDynamiqueList()
     {
         return [
-            '++' => '++',
-            '+' => '+',
-            '0' => '0',
-            '-' => '-',
-            '--' => '--',
+            '-2' => 'Très faible',
+            '-1' => 'Faible',
+            '0' => 'Modérés',
+            '1' => 'Fort',
+            '2' => 'Très fort',
         ];
     }
 
