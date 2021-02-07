@@ -1066,6 +1066,7 @@
       if($('#projet_taches tr').length < 2) {
         $('#projet_taches_add_entry').click();
         $('#projet_taches_1_objet').val('foncier');
+        $('#projet_taches_1_objet').change();
       }
       $('<div id="batimentNouveau_options" class="form-group form-group-sm"><label class="col-sm-4 control-label"></label><div class="col-sm-8"><p></p></div></div>').insertAfter($('#projet_batimentExistant_photoFile').parents('div.form-group'));
     });
