@@ -35,6 +35,11 @@
       cssClass: "slick-cell-checkboxsel"
     });
 
+    var phases = {{ grid_helper.getJsonPhases|raw }};
+    function phaseFormatter(row, cell, value, columnDef, dataContext) {
+      return phases[value] !== undefined ? phases[value]['name'] : value;
+    }
+
     var checkboxColumn = checkboxSelector.getColumnDefinition();
     checkboxColumn.maxWidth = 25;
     checkboxColumn.width = 25;
@@ -48,7 +53,7 @@
       { id: "idProjet", name: "ID", field: "idProjet", width: 100, maxWidth: 100, sortable: true, sorter: numericSorter, },
       { id: "denomination", name: "Dénomination", field: "denomination", sortable: true, sorter: stringSorter },
       {# { id: "departement", name: "Département", field: "departement", sortable: true, sorter: stringSorter }, #}
-      { id: "phase", name: "Phase", field: "phase", sortable: true, sorter: stringSorter },
+      { id: "phase", name: "Phase", field: "phase", sortable: true, sorter: stringSorter, formatter: phaseFormatter },
       { id: "titre", name: "Titre", field: "titre", sortable: true, sorter: stringSorter },
       { id: "bureau", name: "BE", field: "bureau", sortable: true, sorter: stringSorter },
       { id: "total", name: "Total(€HT)", field: "total", sortable: true, sorter: numericSorter, cssClass: 'text-right', width: 100, maxWidth: 100 },
@@ -69,7 +74,7 @@
             id: {{ finance.id }},
             idProjet: {{ projet.id }},
             denomination: '{{ finance.projet.denomination|e('js') }}',
-            phase: '{{ finance.phase|e('js') }}',
+            phase: '{{ finance.phase }}',
             titre: '{{ finance.titre|e('js') }}',
             departement: '{{ finance.projet.departement|e('js') }}',
             total: {{ finance.montantTotal }},
