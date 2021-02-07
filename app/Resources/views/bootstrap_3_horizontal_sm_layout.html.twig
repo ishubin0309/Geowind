@@ -114,7 +114,7 @@ col-sm-8
           <th>BE</th>
           <th>Date commande</th>
           <th>Date d'échéance</th>
-          <th>J(-)</th>
+          <th>J (-)</th>
         </tr>
       </thead>
       <tbody {{ block('widget_container_attributes') }}>
@@ -146,8 +146,8 @@ col-sm-8
       <td>{{ form_widget(form.montantPaye) }}</td>
       <td>{{ form_widget(form.montantRestant) }}</td>
       <td>{{ form_widget(form.bureau) }}</td>
-      <td>{{ form_widget(form.dateEngmt, {'value' : "now"|date("d/m/Y")}) }}</td>
-      <td>{{ form_widget(form.dateEcheance, {'value' : "now"|date("d/m/Y")}) }}</td>
+      <td>{% if form.vars.value.dateEngmt is defined %}{{ form_widget(form.dateEngmt) }}{% else %}{{ form_widget(form.dateEngmt, {'value' : "now"|date("d/m/Y")}) }}{% endif %}</td>
+      <td>{% if form.vars.value.dateEcheance is defined %}{{ form_widget(form.dateEcheance) }}{% else %}{{ form_widget(form.dateEcheance, {'value' : "now"|date("d/m/Y")}) }}{% endif %}</td>
       <td></td>
     </tr>
   {% endspaceless %}
@@ -242,8 +242,8 @@ col-sm-8
       <td>{{ form_widget(form.telephoneProprietaire) }}</td>
       <td>{{ form_widget(form.adresseProprietaire) }}</td>
       <td>{{ form_widget(form.emailProprietaire) }}</td>
-      <td>{{ form_widget(form.dateSignatureProprietaire, {'value' : "now"|date("d/m/Y")}) }}</td>
-      <td>{{ form_widget(form.dateEcheanceProprietaire, {'value' : "now"|date("d/m/Y")}) }}</td>
+      <td>{% if form.vars.value.dateSignatureProprietaire is defined %}{{ form_widget(form.dateSignatureProprietaire) }}{% else %}{{ form_widget(form.dateSignatureProprietaire, {'value' : "now"|date("d/m/Y")}) }}{% endif %}</td>
+      <td>{% if form.vars.value.dateEcheanceProprietaire is defined %}{{ form_widget(form.dateEcheanceProprietaire) }}{% else %}{{ form_widget(form.dateEcheanceProprietaire, {'value' : "now"|date("d/m/Y")}) }}{% endif %}</td>
     </tr>
     <tr class="exploitant_entry">
       <td></td>
@@ -252,8 +252,8 @@ col-sm-8
       <td>{{ form_widget(form.telephoneExploitant) }}</td>
       <td>{{ form_widget(form.adresseExploitant) }}</td>
       <td>{{ form_widget(form.emailExploitant) }}</td>
-      <td>{{ form_widget(form.dateSignatureExploitant, {'value' : "now"|date("d/m/Y")}) }}</td>
-      <td>{{ form_widget(form.dateEcheanceExploitant, {'value' : "now"|date("d/m/Y")}) }}</td>
+      <td>{% if form.vars.value.dateSignatureExploitant is defined %}{{ form_widget(form.dateSignatureExploitant) }}{% else %}{{ form_widget(form.dateSignatureExploitant, {'value' : "now"|date("d/m/Y")}) }}{% endif %}</td>
+      <td>{% if form.vars.value.dateEcheanceExploitant is defined %}{{ form_widget(form.dateEcheanceExploitant) }}{% else %}{{ form_widget(form.dateEcheanceExploitant, {'value' : "now"|date("d/m/Y")}) }}{% endif %}</td>
     </tr>
   {% endspaceless %}
 {% endblock %}
@@ -337,7 +337,7 @@ col-sm-8
 {% block _projet_etats_entry_row %}
   {% spaceless %}
     <tr>
-      <td>{{ form_widget(form.date, {'value' : "now"|date("d/m/Y")}) }}</td>
+      <td>{% if form.vars.value.date is defined %}{{ form_widget(form.date) }}{% else %}{{ form_widget(form.date, {'value' : "now"|date("d/m/Y")}) }}{% endif %}</td>
       <td>{{ form_widget(form.phase) }}</td>
       <td>{{ form_widget(form.etat) }}{{ form_errors(form.etat) }}</td>
       <td>{{ form_widget(form.dynamique) }}</td>
@@ -382,7 +382,7 @@ col-sm-8
 {% block _projet_taches_entry_row %}
   {% spaceless %}
     <tr>
-      <td>{{ form_widget(form.date, {'value' : "now"|date("d/m/Y")}) }}</td>
+      <td>{% if form.vars.value.date is defined %}{{ form_widget(form.date) }}{% else %}{{ form_widget(form.date, {'value' : "now"|date("d/m/Y")}) }}{% endif %}</td>
       <td>{{ form_widget(form.objet) }}</td>
       <td>{{ form_widget(form.etat) }}</td>
       <td>{{ form_widget(form.dynamique) }}</td>
@@ -426,7 +426,7 @@ col-sm-8
 {% block _projet_documents_entry_row %}
   {% spaceless %}
     <tr>
-      <td>{{ form_widget(form.date, {'value' : "now"|date("d/m/Y")}) }}</td>
+      <td>{% if form.vars.value.date is defined %}{{ form_widget(form.date) }}{% else %}{{ form_widget(form.date, {'value' : "now"|date("d/m/Y")}) }}{% endif %}</td>
       <td>{{ form_widget(form.titre) }}</td>
       <td>{{ form_widget(form.documentFile) }}</td>
       <td>{{ form_widget(form.description) }}</td>
@@ -470,7 +470,7 @@ col-sm-8
 {% block _projet_concertations_entry_row %}
   {% spaceless %}
     <tr>
-      <td>{{ form_widget(form.date, {'value' : "now"|date("d/m/Y")}) }}</td>
+      <td>{% if form.vars.value.date is defined %}{{ form_widget(form.date) }}{% else %}{{ form_widget(form.date, {'value' : "now"|date("d/m/Y")}) }}{% endif %}</td>
       <td>{{ form_widget(form.objet) }}</td>
       <td>{{ form_widget(form.destinataire) }}</td>
       <td>{{ form_widget(form.dynamique) }}</td>
@@ -561,7 +561,7 @@ col-sm-8
 {% block _projet_notes_entry_row %}
   {% spaceless %}
     <tr>
-      <td>{{ form_widget(form.date, {'value' : "now"|date("d/m/Y")}) }}</td>
+      <td>{% if form.vars.value.date is defined %}{{ form_widget(form.date) }}{% else %}{{ form_widget(form.date, {'value' : "now"|date("d/m/Y")}) }}{% endif %}</td>
       <td>{{ form_widget(form.titre) }}</td>
       <td>{{ form_widget(form.note) }}</td>
       <td>{{ form_widget(form.photoFile) }}</td>
@@ -604,7 +604,7 @@ col-sm-8
 {% block _projet_dateCles_entry_row %}
   {% spaceless %}
     <tr class="dateCle_entry">
-      <td>{{ form_widget(form.date, {'value' : "now"|date("d/m/Y")}) }}</td>
+      <td>{% if form.vars.value.date is defined %}{{ form_widget(form.date) }}{% else %}{{ form_widget(form.date, {'value' : "now"|date("d/m/Y")}) }}{% endif %}</td>
       <td>{{ form_widget(form.code) }}</td>
       <td>{{ form_widget(form.description) }}</td>
     </tr>
