@@ -45,9 +45,9 @@
 
     var columns = [
       checkboxColumn,
-      { id: "idProjet", name: "ID Projet", field: "id", width: 100, maxWidth: 100, sortable: true, sorter: numericSorter, },
+      { id: "idProjet", name: "ID", field: "id", width: 100, maxWidth: 100, sortable: true, sorter: numericSorter, },
       { id: "denomination", name: "Dénomination", field: "denomination", sortable: true, sorter: stringSorter },
-      { id: "departement", name: "Département", field: "departement", sortable: true, sorter: stringSorter },
+      {# { id: "departement", name: "Département", field: "departement", sortable: true, sorter: stringSorter }, #}
       { id: "phase", name: "Phase", field: "phase", sortable: true, sorter: stringSorter },
       { id: "titre", name: "Titre", field: "titre", sortable: true, sorter: stringSorter },
       { id: "bureau", name: "BE", field: "bureau", sortable: true, sorter: stringSorter },
@@ -55,7 +55,7 @@
       { id: "engage", name: "Engagé(€HT)", field: "engage", sortable: true, sorter: numericSorter, cssClass: 'text-right', width: 100, maxWidth: 100 },
       { id: "paye", name: "Payé(€HT)", field: "paye", sortable: true, sorter: numericSorter, cssClass: 'text-right', width: 100, maxWidth: 100 },
       { id: "restant", name: "Restant(€HT)", field: "restant", sortable: true, sorter: numericSorter, cssClass: 'text-right', width: 100, maxWidth: 100 },
-      { id: "dateEngmt", name: "Date engmt", field: "dateEngmt", sortable: true, sorter: dateSorter, width: 100, maxWidth: 100 },
+      { id: "dateEngmt", name: "Date commande", field: "dateEngmt", sortable: true, sorter: dateSorter, width: 100, maxWidth: 100 },
       { id: "dateEcheance", name: "Date d'échéance", field: "dateEcheance", sortable: true, sorter: dateSorter, width: 100, maxWidth: 100 },
     ];
 
