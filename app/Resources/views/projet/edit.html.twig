@@ -848,6 +848,7 @@
       entry = entry.replace(/__name__/g, length);
       $collectionHolderParcelle.append(entry);
       
+      $('#projet_parcelles_' + length + '_commune').val(9);
       $('#projet_parcelles_' + length + '_commune').select2({
         ajax: {
           url: queryCommuneUrl,

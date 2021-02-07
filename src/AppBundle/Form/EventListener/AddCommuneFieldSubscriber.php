@@ -34,7 +34,7 @@ class AddCommuneFieldSubscriber implements EventSubscriberInterface
         $form = $event->getForm();
 
         $choices = $projet->getCommunes();
-
+        
         $form->add('communes', EntityType::class, [
             'choices' => $choices,
             'label' => 'Communes',
