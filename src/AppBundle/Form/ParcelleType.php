@@ -35,7 +35,7 @@ class ParcelleType extends AbstractType
             ])
             ->add('departement', EntityType::class, [
                 'class' => 'AppBundle:Departement',
-                'required' => false,
+                'required' => true,
                 'label' => 'Département',
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('d')

@@ -153,20 +153,20 @@ class Enjeux
     public static function getFacteurList()
     {
         return [
-            'mairie' => 'Mairie',
-            'epci' => 'EPCI',
-            'habitations' => 'Habitations',
+            'servitudes' => 'Servitudes',
             'environnement' => 'Environnement',
             'monuments' => 'Monuments',
+            'mairie' => 'Mairie',
+            'consultation' => 'Consultation',
+            'urbanisme' => 'Urbanisme',
+            'epci' => 'EPCI',
+            'habitations' => 'Habitations',
             'paysages' => 'Paysages',
             'saturation' => 'Saturation',
-            'urbanisme' => 'Urbanisme',
-            'servitudes' => 'Servitudes',
             'raccordement' => 'Raccordement',
             'structure' => 'Structure',
             'potentiel' => 'Potentiel',
             'gisement' => 'Gisement',
-            'servitudes' => 'Servitudes',
             'echeance' => 'Echéances'
         ];
     }
