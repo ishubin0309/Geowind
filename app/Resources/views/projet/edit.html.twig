@@ -116,6 +116,15 @@
                 <tr>
               {% endfor %}
             {% endif %}
+            {% if form.vars.value.finances[0] is defined %}
+              {% for finance in form.vars.value.finances %}
+                <tr rel="{{ loop.index0 }}" class="{% if not finance.bureau %}hide{% endif %}">
+                  <td class="required">{{ finance.bureau.representant is defined ? finance.bureau.representant : '-' }}</td>
+                  <td>Chargé d'études</td>
+                  <td>{{ finance.bureau.telephone is defined ? finance.bureau.telephone : '-' }}</td>
+                <tr>
+              {% endfor %}
+            {% endif %}
           </tbody>
         </table>
       </fieldset>
