@@ -1055,10 +1055,32 @@
       updatePrevNextButtons();
     });
 
+    function CommandeMontant() {
+      var engage = 0;
+      var paye = 0;
+      $.each($('[id*="_montantEngage"]'), function(i, element) {
+        if($(element).val().trim()) {
+          engage += parseInt($(element).val().trim());
+        }
+      });
+      $.each($('[id*="_montantPaye"]'), function(i, element) {
+        if($(element).val().trim()) {
+          paye += parseInt($(element).val().trim());
+        }
+      });
+
+      var somme = 'Total engagé: ' + engage + '€ HT | Total payé: ' + paye + '€ HT';
+      $('#selected-counter').text(somme);
+    }
+    $('#tab_commandes').on('change', 'input', function() {
+      CommandeMontant();
+    });
+
     $('document').ready(function() {
       $('#projet_batimentExistant_bardage').parents('.form-group').addClass('hide');
       $('#projet_batimentExistant_ossature').parents('.form-group').addClass('hide');
       $('#projet_batimentExistant_charpente').parents('.form-group').addClass('hide');
+      CommandeMontant();
       $('#projet_typeProjet').change();
       $('#projet_technologie').change();
       $('select[id*="_phase"]').change();
