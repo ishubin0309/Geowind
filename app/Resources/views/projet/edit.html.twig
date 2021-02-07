@@ -538,6 +538,7 @@
         language: 'fr',
         clear: true,
       });
+      commandeUpdate();
     });
 
     $('#projet_finances_remove_entry').click(function () {
@@ -1085,7 +1086,7 @@
       updatePrevNextButtons();
     });
 
-    function CommandeMontant() {
+    function commandeUpdate() {
       var engage = 0;
       var paye = 0;
       $.each($('[id*="_montantEngage"]'), function(i, element) {
@@ -1101,16 +1102,32 @@
 
       var somme = 'Total engagé: ' + engage + '€ HT | Total payé: ' + paye + '€ HT';
       $('#selected-counter').text(somme);
+
+      $.each($('#projet_finances [id*="_dateEngmt"]'), function(i, element) {
+        var id = $(element).attr('id').match(/\d+/);
+        id = parseInt(id);
+        var row = $(element).parents('tr');
+        row.find('td:eq(0)').text((id + 1));
+        var dateEngmt = row.find('[id*="_dateEngmt"]').val().match(/(\d+)\/(\d+)\/(\d+)/);
+        var dateEcheance = row.find('[id*="_dateEcheance"]').val().match(/(\d+)\/(\d+)\/(\d+)/);
+        if(dateEngmt && dateEcheance) {
+          var date1 = new Date(dateEngmt[2] + '/' + dateEngmt[1] + '/' + dateEngmt[3]);
+          var date2 = new Date(dateEcheance[2] + '/' + dateEcheance[1] + '/' + dateEcheance[3]);
+          var diffTime = date2 - date1;
+          var diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+          row.find('td:eq(10)').text(diffDays);
+        } else row.find('td:eq(10)').text(0);
+      });
     }
     $('#tab_commandes').on('change', 'input', function() {
-      CommandeMontant();
+      commandeUpdate();
     });
 
     $('document').ready(function() {
       $('#projet_batimentExistant_bardage').parents('.form-group').addClass('hide');
       $('#projet_batimentExistant_ossature').parents('.form-group').addClass('hide');
       $('#projet_batimentExistant_charpente').parents('.form-group').addClass('hide');
-      CommandeMontant();
+      commandeUpdate();
       $('#projet_typeProjet').change();
       $('#projet_technologie').change();
       $('select[id*="_phase"]').change();

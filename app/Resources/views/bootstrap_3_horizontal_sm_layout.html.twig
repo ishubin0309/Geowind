@@ -104,6 +104,7 @@ col-sm-8
     <table class="table table-condensed table-form">
       <thead>
         <tr>
+          <th>#</th>
           <th class="col-sm-2">Phase</th>
           <th class="col-sm-2">Titre<span class="control-label required"></span></th>
           <th>Total(€HT)<span class="control-label required"></span></th>
@@ -113,6 +114,7 @@ col-sm-8
           <th>BE</th>
           <th>Date commande</th>
           <th>Date d'échéance</th>
+          <th>J(-)</th>
         </tr>
       </thead>
       <tbody {{ block('widget_container_attributes') }}>
@@ -136,6 +138,7 @@ col-sm-8
 {% block _projet_finances_entry_row %}
   {% spaceless %}
     <tr>
+      <td></td>
       <td>{{ form_widget(form.phase) }}</td>
       <td>{{ form_widget(form.titre) }}</td>
       <td>{{ form_widget(form.montantTotal) }}</td>
@@ -145,6 +148,7 @@ col-sm-8
       <td>{{ form_widget(form.bureau) }}</td>
       <td>{{ form_widget(form.dateEngmt, {'value' : "now"|date("d/m/Y")}) }}</td>
       <td>{{ form_widget(form.dateEcheance, {'value' : "now"|date("d/m/Y")}) }}</td>
+      <td></td>
     </tr>
   {% endspaceless %}
 {% endblock %}
