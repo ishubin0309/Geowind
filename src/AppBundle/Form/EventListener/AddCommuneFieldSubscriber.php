@@ -34,6 +34,7 @@ class AddCommuneFieldSubscriber implements EventSubscriberInterface
         $form = $event->getForm();
 
         $choices = $projet->getCommunes();
+        if(!$choices->count()) $choices = [$this->entityManager->getRepository('AppBundle:Commune')->findOneBy(['id' => 9])];
         
         $form->add('communes', EntityType::class, [
             'choices' => $choices,

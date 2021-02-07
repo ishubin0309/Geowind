@@ -33,8 +33,7 @@ class AddParcelleCommuneFieldSubscriber implements EventSubscriberInterface
         $parcelle = $event->getData();
         $form = $event->getForm();
         
-        if($parcelle) 
-            $choices = [$parcelle->getCommune()];
+        if($parcelle) $choices = [$parcelle->getCommune()];
         else $choices = [$this->entityManager->getRepository('AppBundle:Commune')->findOneBy(['id' => 9])];
 
         $form->add('commune', EntityType::class, [
