@@ -22,7 +22,7 @@ class BureauType extends AbstractType
                 'required' => true,
             ])
             ->add('representant', TextType::class, [
-                'label' => 'Représentant',
+                'label' => 'Chargé d\'études',
                 'required' => false,
             ])
             ->add('adresse', TextType::class, [

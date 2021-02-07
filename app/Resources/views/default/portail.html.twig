@@ -175,6 +175,7 @@
           }
         ]
       }},
+      { id: "dateDiff", name: "J+", field: "dateDiff", sortable: true, sorter: stringSorter, formatter: progressionFormatter, width: 110, maxWidth: 110 },
       { id: "progressionIndicateur", name: "", field: "progressionIndicateur", width: 26, maxWidth: 26, cssClass: 'column-progression-indicateur', formatter: progressionIndicateurFormatter },
     {% elseif columnsType == 2 %}
       checkboxColumn,
@@ -199,6 +200,7 @@
           }
         ]
       }},
+      { id: "dateDiff", name: "J+", field: "dateDiff", sortable: true, sorter: stringSorter, formatter: progressionFormatter, width: 110, maxWidth: 110 },
       { id: "progressionIndicateur", name: "", field: "progressionIndicateur", width: 26, maxWidth: 26, cssClass: 'column-progression-indicateur', formatter: progressionIndicateurFormatter },
     {% elseif columnsType == 3 %}
       checkboxColumn,
@@ -218,6 +220,7 @@
           }
         ]
       }},
+      { id: "dateDiff", name: "J+", field: "dateDiff", sortable: true, sorter: stringSorter, formatter: progressionFormatter, width: 110, maxWidth: 110 },
       { id: "progressionIndicateur", name: "", field: "progressionIndicateur", width: 26, maxWidth: 26, cssClass: 'column-progression-indicateur', formatter: progressionIndicateurFormatter },
     {% endif %}
     ];
@@ -295,6 +298,7 @@
           phase: '{{ projet.phase|e('js') }}',
           progression: '{{ projet.progression }}',
           {% endif %}
+          dateDiff: '',
           progressionIndicateur: '{{ projet.progression }}',
           canEdit: {{ is_granted('edit', projet) ? 1 : 0 }},
         });
