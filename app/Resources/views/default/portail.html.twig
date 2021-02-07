@@ -167,14 +167,8 @@
       { id: "potentiel", name: "Potentiel (MW)", field: "potentiel", sortable: true, cssClass: 'text-right', sorter: numericSorter, width: 100, maxWidth: 100 },
       { id: "phase", name: "Phase", field: "phase", sortable: true, sorter: stringSorter, formatter: phaseFormatter, width: 110, maxWidth: 110 },
       { id: "progression", name: "Etat", field: "progression", sortable: true, sorter: stringSorter, formatter: progressionFormatter, width: 110, maxWidth: 110 },
-      { id: "dateCrea", name: '<strong>Date création</strong><br>Date maj', headerCssClass: "column-date-switch", field: "dateCrea", sortable: true, sorter: dateSorter, width: 100, maxWidth: 250, header: {
-        buttons: [
-          {
-            cssClass: "switch-current-crea",
-            command: "toggle-date",
-          }
-        ]
-      }},
+      { id: "dateCrea", name: '<strong>Date création</strong>', field: "dateCrea", sortable: true, sorter: dateSorter, width: 100, maxWidth: 250},
+      { id: "dateMaj", name: '<strong>Date majour</strong>', field: "dateMaj", sortable: true, sorter: dateSorter, width: 100, maxWidth: 250},
       { id: "dateDiff", name: "<strong>J+</strong>", field: "dateDiff", sortable: true, sorter: stringSorter, formatter: progressionFormatter, width: 40, maxWidth: 100 },
       { id: "progressionIndicateur", name: "", field: "progressionIndicateur", width: 26, maxWidth: 26, cssClass: 'column-progression-indicateur', formatter: progressionIndicateurFormatter },
     {% elseif columnsType == 2 %}
@@ -192,14 +186,8 @@
       { id: "consultations", name: "Consultations", field: "consultations", sortable: true, sorter: stringSorter, formatter: tacheFormatter, maxWidth: 250 },
       { id: "urbanisme", name: "Urbanisme", field: "urbanisme", sortable: true, sorter: stringSorter, formatter: tacheFormatter, maxWidth: 250 },
       {# { id: "concertation", name: "Concertation", field: "concertation", sortable: true, sorter: stringSorter, formatter: tacheFormatter, maxWidth: 250 }, #}
-      { id: "dateCrea", name: '<strong>Date création</strong><br>Date maj', headerCssClass: "column-date-switch", field: "dateCrea", sortable: true, sorter: dateSorter, width: 100, maxWidth: 250, header: {
-        buttons: [
-          {
-            cssClass: "switch-current-crea",
-            command: "toggle-date",
-          }
-        ]
-      }},
+      { id: "dateCrea", name: '<strong>Date création</strong>', field: "dateCrea", sortable: true, sorter: dateSorter, width: 100, maxWidth: 250},
+      { id: "dateMaj", name: '<strong>Date majour</strong>', field: "dateMaj", sortable: true, sorter: dateSorter, width: 100, maxWidth: 250},
       { id: "dateDiff", name: "<strong>J+</strong>", field: "dateDiff", sortable: true, sorter: stringSorter, formatter: progressionFormatter, width: 40, maxWidth: 100 },
       { id: "progressionIndicateur", name: "", field: "progressionIndicateur", width: 26, maxWidth: 26, cssClass: 'column-progression-indicateur', formatter: progressionIndicateurFormatter },
     {% elseif columnsType == 3 %}
@@ -212,14 +200,8 @@
       { id: "phase", name: "Phase", field: "phase", sortable: true, sorter: stringSorter, formatter: phaseFormatter, width: 110, maxWidth: 250 },
       { id: "progression", name: "Etat", field: "progression", sortable: true, sorter: stringSorter, formatter: progressionFormatter, width: 110, maxWidth: 250 },
       { id: "dynamique", name: "Dynamique", field: "dynamique", sortable: true, sorter: stringSorter, formatter: dynamiqueFormatter, width: 110, maxWidth: 250 },
-      { id: "dateCrea", name: '<strong>Date création</strong><br>Date maj', headerCssClass: "column-date-switch", field: "dateCrea", sortable: true, sorter: dateSorter, width: 100, maxWidth: 250, header: {
-        buttons: [
-          {
-            cssClass: "switch-current-crea",
-            command: "toggle-date",
-          }
-        ]
-      }},
+      { id: "dateCrea", name: '<strong>Date création</strong>', field: "dateCrea", sortable: true, sorter: dateSorter, width: 100, maxWidth: 250},
+      { id: "dateMaj", name: '<strong>Date majour</strong>', field: "dateMaj", sortable: true, sorter: dateSorter, width: 100, maxWidth: 250},
       { id: "dateDiff", name: "<strong>J+</strong>", field: "dateDiff", sortable: true, sorter: stringSorter, formatter: progressionFormatter, width: 40, maxWidth: 100 },
       { id: "progressionIndicateur", name: "", field: "progressionIndicateur", width: 26, maxWidth: 26, cssClass: 'column-progression-indicateur', formatter: progressionIndicateurFormatter },
     {% endif %}
@@ -321,11 +303,11 @@
           if (button.cssClass == "switch-current-crea") {
             button.cssClass = "switch-current-maj";
             args.column.field = 'dateMaj';
-            args.column.name = 'Date création<br><strong>Date maj</strong>';
+            args.column.name = 'Date création<br><strong>Date majour</strong>';
           } else {
             button.cssClass = "switch-current-crea";
             args.column.field = 'dateCrea';
-            args.column.name = '<strong>Date création</strong><br>Date maj';
+            args.column.name = '<strong>Date création</strong><br>Date majour';
           }
           grid.setColumns(grid.getColumns());
         }
