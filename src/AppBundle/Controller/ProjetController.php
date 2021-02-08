@@ -326,7 +326,7 @@ class ProjetController extends Controller
 
                             $em->persist($projet);
                             $em->flush();
-                        }
+                        }  else $this->addFlash('warning', 'Département ('.$data[$departementColumn].') n\'existe pas.');
                     } else $this->addFlash('warning', 'Projet avec latitude et longitude ('.$data[$latColumn] . ',' . $data[$lngColumn].') déjà existe.');
                 }
                 fclose($handle);

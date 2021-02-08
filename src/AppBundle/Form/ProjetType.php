@@ -14,7 +14,7 @@ use AppBundle\Form\Option\ProgressionType;
 use AppBundle\Form\Option\PhaseType;
 use AppBundle\Form\Option\ServitudeType;
 use AppBundle\Repository\UserRepository;
-use AppBundle\Repository\BatimentRepository;
+use AppBundle\Repository\BatimentNouveauRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -189,10 +189,13 @@ class ProjetType extends AbstractType
             ->add('batimentExistant', BatimentType::class, [
                 'label' => 'Bâtiment Existant'
             ])
-            ->add('batimentNouveau', ChoiceType::class, [
-                'label' => 'Modèle',
-                'choices' => array_flip(Projet::getBatimentList()),
+            ->add('batimentNouveau', EntityType::class, [
+                'class' => 'AppBundle:BatimentNouveau',
                 'required' => false,
+                'label' => 'Modèle',
+                'query_builder' => function (BatimentNouveauRepository $er) {
+                    return $er->getFindAllQueryBuilder();
+                },
             ])
             ->add('photoEsquisseFile', FileType::class, [
                 'required' => false,
