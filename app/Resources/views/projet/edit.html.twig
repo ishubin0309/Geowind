@@ -945,7 +945,7 @@
       $('> :last-child', $collectionHolderNote).remove();
     });
     
-    var equipementType = 'Type1';
+    var equipementType = '{{ form.vars.value.equipement is defined and form.vars.value.equipement ? form.vars.value.equipement : "Type1" }}';
     var technologies = {{ grid_helper.getJsonTechnologies|raw }};
     $('#projet_technologie').change(function () {
       if($('#projet_technologie').val() == 'eolienne') {
@@ -965,7 +965,7 @@
             var technologie_pu = 0;
             $('#projet_equipement').html('');
             $.each(technologie['data'], function(field, value) {
-              $('#projet_equipement').append(new Option(field, field.replace(/\(.+?\)/, '').trim()));
+              $('#projet_equipement').append(new Option(field, field.replace(/\(.+?\)/, '').trim().toLowerCase()));
             });
             $('#projet_equipement').val(equipementType);
             $.each(technologie['data'][$( "#projet_equipement option:selected" ).text()], function(field, value) {
