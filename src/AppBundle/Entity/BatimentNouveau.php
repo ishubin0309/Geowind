@@ -4,20 +4,22 @@ namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\File;
 
 /**
- * Batiment entity
+ * BatimentNouveau entity
  *
  * @author Haffoudhi
  *
- * @ORM\Entity(repositoryClass="AppBundle\Repository\BatimentRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\BatimentNouveauRepository")
+ * @UniqueEntity("nom")
  * @Vich\Uploadable
  */
-class Batiment
+class BatimentNouveau
 {
     /**
      * @var int
@@ -27,6 +29,14 @@ class Batiment
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", unique=true)
+     * @Assert\NotBlank()
+     */
+    private $nom;
 
     /**
      * @var string
@@ -103,6 +113,13 @@ class Batiment
      *
      * @ORM\Column(type="string", nullable=true)
      */
+    private $note;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
     private $photo;
 
     /**
@@ -162,15 +179,16 @@ class Batiment
     private $toitures;
 
     /**
-     * @var Projet
+     * @var Departement
      *
-     * @ORM\OneToOne(targetEntity="Projet", mappedBy="batimentExistant")
+     * @ORM\OneToMany(targetEntity="Projet", mappedBy="batimentNouveau", cascade={"persist"})
      */
-    private $projet;
+    private $projets;
 
     public function __construct()
     {
         $this->toitures = new ArrayCollection();
+        $this->projets = new ArrayCollection();
     }
 
     /**
@@ -184,6 +202,24 @@ class Batiment
     /**
      * @return string
      */
+    public function getNom()
+    {
+        return $this->nom;
+    }
+
+    /**
+     * @param string $nom
+     * @return \AppBundle\Entity\BatimentNouveau
+     */
+    public function setNom($nom)
+    {
+        $this->nom = $nom;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
     public function getPans()
     {
         return $this->pans;
@@ -191,7 +227,7 @@ class Batiment
 
     /**
      * @param string $pans
-     * @return \AppBundle\Entity\Batiment
+     * @return \AppBundle\Entity\BatimentNouveau
      */
     public function setPans($pans)
     {
@@ -209,7 +245,7 @@ class Batiment
 
     /**
      * @param string $longeur
-     * @return \AppBundle\Entity\Batiment
+     * @return \AppBundle\Entity\BatimentNouveau
      */
     public function setLongeur($longeur)
     {
@@ -228,7 +264,7 @@ class Batiment
     /**
      *
      * @param string $largeur
-     * @return \AppBundle\Entity\Batiment
+     * @return \AppBundle\Entity\BatimentNouveau
      */
     public function setLargeur($largeur)
     {
@@ -247,7 +283,7 @@ class Batiment
     /**
      *
      * @param string $faitage
-     * @return \AppBundle\Entity\Batiment
+     * @return \AppBundle\Entity\BatimentNouveau
      */
     public function setFaitage($faitage)
     {
@@ -266,7 +302,7 @@ class Batiment
     /**
      *
      * @param string $surfaceSol
-     * @return \AppBundle\Entity\Batiment
+     * @return \AppBundle\Entity\BatimentNouveau
      */
     public function setSurfaceSol($surfaceSol)
     {
@@ -285,7 +321,7 @@ class Batiment
     /**
      *
      * @param string $structure
-     * @return \AppBundle\Entity\Batiment
+     * @return \AppBundle\Entity\BatimentNouveau
      */
     public function setStructure($structure)
     {
@@ -304,7 +340,7 @@ class Batiment
     /**
      *
      * @param string $couverture
-     * @return \AppBundle\Entity\Batiment
+     * @return \AppBundle\Entity\BatimentNouveau
      */
     public function setCouverture($couverture)
     {
@@ -323,7 +359,7 @@ class Batiment
     /**
      *
      * @param string $bardage
-     * @return \AppBundle\Entity\Batiment
+     * @return \AppBundle\Entity\BatimentNouveau
      */
     public function setBardage($bardage)
     {
@@ -342,7 +378,7 @@ class Batiment
     /**
      *
      * @param string $ossature
-     * @return \AppBundle\Entity\Batiment
+     * @return \AppBundle\Entity\BatimentNouveau
      */
     public function setOssature($ossature)
     {
@@ -361,11 +397,30 @@ class Batiment
     /**
      *
      * @param string $charpente
-     * @return \AppBundle\Entity\Batiment
+     * @return \AppBundle\Entity\BatimentNouveau
      */
     public function setCharpente($charpente)
     {
         $this->charpente = $charpente;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNote()
+    {
+        return $this->note;
+    }
+
+    /**
+     *
+     * @param string $note
+     * @return \AppBundle\Entity\BatimentNouveau
+     */
+    public function setNote($note)
+    {
+        $this->note = $note;
         return $this;
     }
 
@@ -380,7 +435,7 @@ class Batiment
     /**
      *
      * @param string $photo
-     * @return \AppBundle\Entity\Batiment
+     * @return \AppBundle\Entity\BatimentNouveau
      */
     public function setPhoto($photo)
     {
@@ -422,7 +477,7 @@ class Batiment
 
     /**
      * @param string $photoOriginalName
-     * @return \AppBundle\Entity\Batiment
+     * @return \AppBundle\Entity\BatimentNouveau
      */
     public function setPhotoOriginalName($photoOriginalName)
     {
@@ -441,7 +496,7 @@ class Batiment
     /**
      *
      * @param string $gestionnaire
-     * @return \AppBundle\Entity\Batiment
+     * @return \AppBundle\Entity\BatimentNouveau
      */
     public function setGestionnaire($gestionnaire)
     {
@@ -460,7 +515,7 @@ class Batiment
     /**
      *
      * @param string $distanceOnduleur
-     * @return \AppBundle\Entity\Batiment
+     * @return \AppBundle\Entity\BatimentNouveau
      */
     public function setDistanceOnduleur($distanceOnduleur)
     {
@@ -479,7 +534,7 @@ class Batiment
     /**
      *
      * @param string $distanceTranfo
-     * @return \AppBundle\Entity\Batiment
+     * @return \AppBundle\Entity\BatimentNouveau
      */
     public function setDistanceTranfo($distanceTranfo)
     {
@@ -498,7 +553,7 @@ class Batiment
     /**
      *
      * @param string $documentOpposable
-     * @return \AppBundle\Entity\Batiment
+     * @return \AppBundle\Entity\BatimentNouveau
      */
     public function setDocumentOpposable($documentOpposable)
     {
@@ -517,7 +572,7 @@ class Batiment
     /**
      *
      * @param string $zonage
-     * @return \AppBundle\Entity\Batiment
+     * @return \AppBundle\Entity\BatimentNouveau
      */
     public function setZonage($zonage)
     {
@@ -543,7 +598,7 @@ class Batiment
 
     /**
      * @param ArrayCollection $toitures
-     * @return \AppBundle\Entity\Batiment
+     * @return \AppBundle\Entity\BatimentNouveau
      */
     public function setToitures(ArrayCollection $toitures)
     {
@@ -557,7 +612,7 @@ class Batiment
     public function addToiture(Toiture $toiture)
     {
         if (!$this->toitures->contains($toiture)) {
-            $toiture->setBatimentExistant($this);
+            $toiture->setBatimentNouveau($this);
             $this->toitures->add($toiture);
         }
     }
@@ -569,22 +624,47 @@ class Batiment
     {
         $this->toitures->removeElement($toiture);
     }
+
+    /**
+     * @return ArrayCollection|Projet[]
+     */
+    public function getProjets()
+    {
+        return $this->projets;
+    }
+
+    /**
+     * @param ArrayCollection $projets
+     * @return \AppBundle\Entity\Projet
+     */
+    public function setProjets(ArrayCollection $projets)
+    {
+        $this->projets = $projets;
+        return $this;
+    }
     
     /**
-     * @return array
+     * @param \AppBundle\Entity\Projet $projet
      */
-    public static function getStructureList()
+    public function addProjet(Projet $projet)
     {
-        return [
-            'verifier' => 'Vérifier',
-            'solide '=> 'Solide',
-            'faible '=> 'Faible'
-        ];
+        if (!$this->projets->contains($projet)) {
+            $projet->setBatimentNouveau($this);
+            $this->projets->add($projet);
+        }
+    }
+
+    /**
+     * @param \AppBundle\Entity\Projet $projet
+     */
+    public function removeProjet(Projet $projet)
+    {
+        $this->projets->removeElement($projet);
     }
 
     /**
      * @param Projet $projet
-     * @return \AppBundle\Entity\Batiment
+     * @return \AppBundle\Entity\BatimentNouveau
      */
     public function setProjet(Projet $projet)
     {

@@ -1,0 +1,129 @@
+{% extends 'base.html.twig' %}
+
+{% set title = 'Modifier ' ~ batiment %}
+{% set item = 'batiment' %}
+
+{% form_theme form 'bootstrap_3_horizontal_sm_layout.html.twig' %}
+
+{% block body %}
+  <div class="container">
+    <a href="{{ path('batiment_index') }}" class="btn btn-default btn-xs pull-right"><i class="fa fa-fw fa-close"></i> Annuler</a>
+    <div class="page-title"><h1><i class="fa fa-fw fa-pencil"></i> {{ title }}</h1></div>
+    <hr>
+    <div class="row">
+      <div class="col-sm-6">
+      {{ form_start(form) }}
+      {{ form_rest(form) }}
+      </div>
+      <div id="main_photo" class="col-sm-6">
+        <img style="width: inherit;" src=""><nav style="margin-left:30%;" aria-label="Page navigation center-text"><ul class="pagination"><li class="page-item disabled"><a id="prev_image" class="page-link" href="#">Précédent</a></li><li class="page-item disabled"><a id="next_image" class="page-link" href="#">Suivant</a></li></ul></nav>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-10 col-sm-offset-2">
+        <button type="submit" class="btn btn-primary"><i class="fa fa-check fa-fw"></i> Valider</button>
+      </div>
+    </div>
+    {{ form_end(form) }}
+  </div>
+{% endblock %}
+
+{% block js %}
+<script>
+  var $collectionHolderDC = $('#batiment_nouveau_toitures');
+  var prototypeDC = $collectionHolderDC.data('prototype');
+
+  $('#batiment_nouveau_toitures_add_entry').click(function () {
+    var length = $collectionHolderDC.children().length;
+    var entry = prototypeDC.replace(/__name__label__/g, length);
+    entry = entry.replace(/__name__/g, length);
+    $collectionHolderDC.append(entry);
+
+  });
+
+  $('#batiment_nouveau_toitures_remove_entry').click(function () {
+      if($('> :last-child', $collectionHolderDC).length) {
+        var id = $('> :last-child', $collectionHolderDC).find('input').attr('id').match(/\d+/);
+        id = parseInt(id) + 1;
+        delete main_images[id];
+        if(current_main_image == id) {
+          current_main_image = current_main_image - 1;
+          if(main_images[current_main_image] !== undefined)
+            $('#main_photo img').attr('src', main_images[current_main_image][0]);
+          else $('#main_photo img').attr('src', '');
+        }
+        updatePrevNextButtons();
+      }
+    $('> :last-child', $collectionHolderDC).remove();
+  });
+  
+  var current_main_image = 0;
+  var main_images = {};
+  {% if form.vars.value.toitures[0].photo is defined and form.vars.value.toitures[0].photo %}
+      {% if form.vars.value.photo is defined and form.vars.value.photo %}
+        main_images[0] = {0: '{{ asset('upload/' ~ form.vars.value.photo) }}'};
+      {% endif %}
+      {% for toiture in form.vars.value.toitures %}
+      main_images[{{ loop.index }}] = {0: '{{ asset('upload/' ~ toiture.photo) }}'};
+      {% endfor %}
+    $('#main_photo img').attr('src', main_images[0][0]);
+    {% if form.vars.value.toitures[1].photo is defined and form.vars.value.toitures[1].photo %}
+    updatePrevNextButtons();
+    {% endif %}
+  {% else %}
+  {% if form.vars.value.photo is defined and form.vars.value.photo %}
+    main_images[0] = {0: '{{ asset('upload/' ~ form.vars.value.photo) }}'};
+    $('#main_photo img').attr('src', '{{ asset('upload/' ~ form.vars.value.photo) }}');
+    updatePrevNextButtons();
+  {% endif %}
+  {% endif %}
+    function updatePrevNextButtons() {
+      prev = -1;
+      next = -1;
+      $.each(main_images, function(i, value) {
+        if(current_main_image > i) prev = 1;
+        if(next == -1 && current_main_image < i) next = 1;
+      });
+      if(prev >= 0) $('#prev_image').parent().removeClass('disabled');
+      else  $('#prev_image').parent().addClass('disabled');
+      if(next >= 0) $('#next_image').parent().removeClass('disabled');
+      else $('#next_image').parent().addClass('disabled');
+    }
+    $('#next_image, #prev_image').click(function(e) {
+      e.preventDefault();
+      prev = -1;
+      next = -1;
+      $.each(main_images, function(i, value) {
+        if(current_main_image > i) prev = i;
+        if(next == -1 && current_main_image < i) next = i;
+      });
+      if(($(this).attr('id') == 'prev_image' && prev >= 0) || ($(this).attr('id') == 'next_image' && next >= 0)) {
+        if($(this).attr('id') == 'next_image') current_main_image = next;
+        else current_main_image = prev;
+        updatePrevNextButtons();
+        $('#main_photo img').attr('src', main_images[current_main_image][0]);
+      }
+    });
+    $('body').on('change', 'input[id*=_photoFile]', function() {
+      if($(this).attr('id')) {
+        var id = $(this).attr('id').match(/\d+/);
+        id = parseInt(id) + 1;
+      } else id = 0;
+      if (this.files && this.files[0]) {
+        var reader = new FileReader();
+        
+        reader.onload = function(e) {
+          $('#main_photo img').attr('src', e.target.result);
+          if(main_images[id] !== undefined) main_images[id][0] = e.target.result;
+          else {
+            main_images[id] = {0: e.target.result};
+          }
+          current_main_image = id;
+          updatePrevNextButtons();
+        }
+        
+        reader.readAsDataURL(this.files[0]); // convert to base64 string
+      }
+    });
+</script>
+{% endblock %}

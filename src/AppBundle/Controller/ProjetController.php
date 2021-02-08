@@ -200,7 +200,7 @@ class ProjetController extends Controller
                         for ($c=0; $c < count($data); $c++) {
                             if(strtolower($data[$c])=='insee_com') $inseeColumn = $c;
                             if(strtolower($data[$c])=='commune') $communeColumn = $c;
-                            elseif(strtolower($data[$c])=='department') $departementColumn = $c;
+                            elseif(strtolower($data[$c])=='departement') $departementColumn = $c;
                             elseif(strtolower($data[$c])=='latitude') $latColumn = $c;
                             elseif(strtolower($data[$c])=='longitude') $lngColumn = $c;
                             elseif(strtolower($data[$c])=='altitude') $altitudeColumn = $c;

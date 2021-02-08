@@ -2,8 +2,13 @@
 
 namespace AppBundle\Form;
 
+use AppBundle\Form\Extension\DatePickerType;
+use AppBundle\Form\Option\MissionType;
+use AppBundle\Form\Option\NiveauType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Validator\Constraints\File;
@@ -13,49 +18,48 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * @author Haffoudhi
  */
-class ToitureType extends AbstractType
+class BatimentNouveauType2 extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('isEnabled', ChoiceType::class, [
+                'label' => 'Statut',
+                'choices' => [
+                    'Actif' => 1,
+                    'Archivé' => 0,
+                ],
+            ])
             ->add('nom', TextType::class, [
-                'label' => 'Désignation',
-                'required' => false,
+                'label' => 'Nom',
+                'required' => true,
             ])
-            ->add('exposition', TextType::class, [
-                'label' => 'Exposition',
-                'required' => false,
-            ])
-            ->add('hautPente', TextType::class, [
-                'label' => 'Haut de pente (m)',
-                'required' => false,
-            ])
-            ->add('basPente', TextType::class, [
-                'label' => 'Bas  de pente (m)',
-                'required' => false,
-            ])
-            ->add('pente', TextType::class, [
-                'label' => 'Pente calculée (%)',
+            ->add('pans', TextType::class, [
+                'label' => 'Pans',
                 'required' => false,
             ])
             ->add('longeur', TextType::class, [
-                'label' => 'Longeur (m)',
+                'label' => 'Longeur',
                 'required' => false,
             ])
             ->add('largeur', TextType::class, [
-                'label' => 'Largeur (m)',
+                'label' => 'Largeur',
                 'required' => false,
             ])
-            ->add('surfaceTotale', TextType::class, [
-                'label' => 'Surface totale (m2)',
+            ->add('faitage', TextType::class, [
+                'label' => 'Faitage',
                 'required' => false,
             ])
-            ->add('surfaceUtile', TextType::class, [
-                'label' => 'Surface utile (m2)',
+            ->add('surfaceSol', TextType::class, [
+                'label' => 'Surface au sol',
                 'required' => false,
             ])
-            ->add('entraxe', TextType::class, [
-                'label' => 'Entraxe',
+            ->add('structure', TextType::class, [
+                'label' => 'Structure',
+                'required' => false,
+            ])
+            ->add('couverture', TextType::class, [
+                'label' => 'Couverture',
                 'required' => false,
             ])
             ->add('photoFile', FileType::class, [
@@ -78,7 +82,7 @@ class ToitureType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => 'AppBundle\Entity\Toiture',
+            'data_class' => 'AppBundle\Entity\Batiment',
         ]);
     }
 }

@@ -231,9 +231,9 @@ class Projet
     private $batimentExistant;
 
     /**
-     * @var string
+     * @var Batiment
      *
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\ManyToOne(targetEntity="BatimentNouveau", inversedBy="projets")
      */
     private $batimentNouveau;
 
@@ -1108,7 +1108,11 @@ class Projet
         return $this->batimentNouveau;
     }
     
-    public function setBatimentNouveau($batimentNouveau)
+    /**
+     * @param BatimentNouveau $batimentNouveau
+     * @return \AppBundle\Entity\Projet
+     */
+    public function setBatimentNouveau(BatimentNouveau $batimentNouveau)
     {
         $this->batimentNouveau = $batimentNouveau;
         return $this;

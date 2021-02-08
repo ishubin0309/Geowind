@@ -2,14 +2,13 @@
 
 namespace AppBundle\Form;
 
-use AppBundle\Form\Extension\DatePickerType;
-use AppBundle\Form\Option\MissionType;
-use AppBundle\Form\Option\NiveauType;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Form\AbstractType;
+use AppBundle\Entity\BatimentNouveau;
+use AppBundle\Entity\Batiment;
+use AppBundle\Entity\Terrain;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\MoneyType;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -23,13 +22,6 @@ class BatimentNouveauType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('isEnabled', ChoiceType::class, [
-                'label' => 'Statut',
-                'choices' => [
-                    'Actif' => 1,
-                    'Archivé' => 0,
-                ],
-            ])
             ->add('nom', TextType::class, [
                 'label' => 'Nom',
                 'required' => true,
@@ -39,23 +31,36 @@ class BatimentNouveauType extends AbstractType
                 'required' => false,
             ])
             ->add('longeur', TextType::class, [
-                'label' => 'Longeur',
+                'label' => 'Longeur (m)',
                 'required' => false,
             ])
             ->add('largeur', TextType::class, [
-                'label' => 'Largeur',
+                'label' => 'Largeur (m)',
                 'required' => false,
             ])
             ->add('faitage', TextType::class, [
-                'label' => 'Faitage',
+                'label' => 'Faitage (m)',
                 'required' => false,
             ])
             ->add('surfaceSol', TextType::class, [
-                'label' => 'Surface au sol',
+                'label' => 'Surface au sol (m2)',
                 'required' => false,
             ])
-            ->add('structure', TextType::class, [
+            ->add('structure', ChoiceType::class, [
                 'label' => 'Structure',
+                'required' => false,
+                'choices' => array_flip(Batiment::getStructureList()),
+            ])
+            ->add('bardage', TextType::class, [
+                'label' => 'Bardage',
+                'required' => false,
+            ])
+            ->add('ossature', TextType::class, [
+                'label' => 'Ossature',
+                'required' => false,
+            ])
+            ->add('charpente', TextType::class, [
+                'label' => 'Charpente',
                 'required' => false,
             ])
             ->add('couverture', TextType::class, [
@@ -76,13 +81,43 @@ class BatimentNouveauType extends AbstractType
                     ])
                 ],
             ])
+            ->add('toitures', CollectionType::class, [
+                'entry_type' => ToitureType::class,
+                'allow_add' => true,
+                'allow_delete' => true,
+                'label' => null,
+                'required' => false,
+                'by_reference' => false,
+            ])
+            ->add('gestionnaire', TextType::class, [
+                'label' => 'Gestionnaire',
+                'required' => false,
+            ])
+            ->add('distanceOnduleur', TextType::class, [
+                'label' => 'Distance onduleur',
+                'required' => false,
+            ])
+            ->add('distanceTranfo', TextType::class, [
+                'label' => 'Distance tranfo',
+                'required' => false,
+            ])
+            ->add('documentOpposable', ChoiceType::class, [
+                'label' => 'Document opposable',
+                'required' => false,
+                'choices' => array_flip(Terrain::getDocumentOpposableList()),
+            ])
+            ->add('zonage', ChoiceType::class, [
+                'label' => 'Zonage',
+                'required' => false,
+                'choices' => array_flip(Terrain::getZonageList()),
+            ])
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => 'AppBundle\Entity\Batiment',
+            'data_class' => 'AppBundle\Entity\BatimentNouveau',
         ]);
     }
 }

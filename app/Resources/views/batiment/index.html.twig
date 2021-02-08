@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% set title = 'Liste des batiments' %}
+{% set item = 'batiment' %}
+
+{% block body %}
+  <div class="container-fluid">
+    <a href="{{ path('batiment_new') }}" class="btn btn-primary btn-xs pull-right"><i class="fa fa-fw fa-plus"></i> Ajouter un batiment</a>
+    <div class="page-title"><h1><i class="fa fa-building fa-fw"></i> {{ title }}</h1></div>
+    <hr>
+    <table id="datatable" class="table table-striped table-middle">
+      <thead>
+        <tr>
+          <th class="column-fit">Modèle</th>
+          <th class="column-fit">Pans</th>
+          <th class="column-fit">Longeur</th>
+          <th class="column-fit">Largeur</th>
+          <th class="column-fit">Faitage</th>
+          <th class="column-fit">Surface au sol</th>
+          <th class="column-fit"></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for batiment in batiments %}
+        <tr>
+          <td class="column-fit">{{ batiment.nom|upper }}</td>
+          <td class="column-fit">{{ batiment.pans }}</td>
+          <td class="column-fit">{{ batiment.longeur }}</td>
+          <td class="column-fit">{{ batiment.largeur }}</td>
+          <td class="column-fit">{{ batiment.faitage }}</td>
+          <td class="column-fit">{{ batiment.surfaceSol }}</td>
+          <td class="column-fit"><a href="{{ path('batiment_edit', { 'id': batiment.id }) }}" class="btn btn-danger btn-xs"><i class="fa fa-fw fa-pencil"></i></a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}
+
+{% block js %}
+  <script>
+    $('#datatable').DataTable({
+      language: dtLang,
+      paging: false,
+      ordering: false,
+      bInfo: false,
+    });
+  </script>
+{% endblock %}
