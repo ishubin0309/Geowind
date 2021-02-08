@@ -10,6 +10,11 @@ class Technologie
     const TECHNOLOGIE_UN = 'photovoltaique';
     const TECHNOLOGIE_DEUX = 'eolienne';
 
+    const EQUIPEMENT_UN = 'type1';
+    const EQUIPEMENT_DEUX = 'type2';
+    const EQUIPEMENT_TROIS = 'type3';
+    const EQUIPEMENT_QUATRE = 'type4';
+
     /**
      * @return array
      */
@@ -18,6 +23,15 @@ class Technologie
         return [
             self::TECHNOLOGIE_UN => 'photovoltaïque',
             self::TECHNOLOGIE_DEUX => 'Eolienne'
+        ];
+    }
+    public static function getEquipementList()
+    {
+        return [
+            self::EQUIPEMENT_UN => 'Type1',
+            self::EQUIPEMENT_DEUX => 'Type2',
+            self::EQUIPEMENT_TROIS => 'Type3',
+            self::EQUIPEMENT_QUATRE => 'Type4'
         ];
     }
 

@@ -152,6 +152,7 @@
         {{ form_row(form.debouche) }}
         <legend>Equipement</legend>
         {{ form_row(form.technologie) }}
+        {{ form_row(form.equipement) }}
         <div class="form-group form-group-sm">
           <div class="col-sm-12">
             <p></p>
@@ -962,12 +963,12 @@
             var technologie_largeur = 0;
             var technologie_longeur = 0;
             var technologie_pu = 0;
-            $('#tab_projet p').append('<div class="form-group form-group-sm"><label class="col-sm-4 control-label">Type:</label><div class="col-sm-8"><select id="equipment_types" class="form-control"></select></div></div>');
+            $('#projet_equipement').html('');
             $.each(technologie['data'], function(field, value) {
-              $('body').find('#equipment_types').append(new Option(field, field.replace(/\(.+?\)/, '').trim()));
+              $('#projet_equipement').append(new Option(field, field.replace(/\(.+?\)/, '').trim()));
             });
-            $('body').find('#equipment_types').val(equipementType);
-            $.each(technologie['data'][$( "#equipment_types option:selected" ).text()], function(field, value) {
+            $('#projet_equipement').val(equipementType);
+            $.each(technologie['data'][$( "#projet_equipement option:selected" ).text()], function(field, value) {
               if(field.match('Longeur')) technologie_longeur = value.replace(/,/, '.').trim();
               else if(field.match('Largeur')) technologie_largeur = value.replace(/,/, '.').trim();
               else if(field.match('Puissance nominale')) {
@@ -990,7 +991,7 @@
         });
       }
     });
-    $('body').on('change', '#equipment_types', function() {
+    $('#projet_equipement').change(function() {
       equipementType = $(this).val();
       $('#projet_technologie').change();
     });

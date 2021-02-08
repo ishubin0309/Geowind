@@ -403,6 +403,13 @@ class Projet
     /**
      * @var string
      *
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $equipement;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(type="integer")
      */
     private $surfaceUtile = 0;
@@ -1703,6 +1710,24 @@ class Projet
     public function setTechnologie($technologie)
     {
         $this->technologie = $technologie;
+        return $this;
+    }
+    
+    /**
+     * @return string
+     */
+    public function getEquipement()
+    {
+        return $this->equipement;
+    }
+
+    /**
+     * @param string $equipement
+     * @return \AppBundle\Entity\Projet
+     */
+    public function setEquipement($equipement)
+    {
+        $this->equipement = $equipement;
         return $this;
     }
 
