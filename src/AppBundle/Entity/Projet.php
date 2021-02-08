@@ -41,9 +41,6 @@ class Projet
 
     const BATIMENT_UN = 'type1';
 
-    const TECHNOLOGIE_UN = 'photovoltaique';
-    const TECHNOLOGIE_DEUX = 'eolienne';
-
     /**
      * @var int
      *
@@ -510,17 +507,6 @@ class Projet
     {
         return [
             self::BATIMENT_UN => 'Type1'
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    public static function getTechnologieList()
-    {
-        return [
-            self::TECHNOLOGIE_UN => 'photovoltaïque',
-            self::TECHNOLOGIE_DEUX => 'Eolienne'
         ];
     }
     

@@ -158,6 +158,7 @@
           </div>
         </div>
         <legend>Installation</legend>
+        <div class="clearfix"></div>
         {{ form_row(form.surfaceUtile) }}
         {{ form_row(form.unite) }}
         {{ form_row(form.puissanceUnitaire) }}
@@ -943,12 +944,14 @@
       $('> :last-child', $collectionHolderNote).remove();
     });
     
+    var equipementType = 'Type1';
     var technologies = {{ grid_helper.getJsonTechnologies|raw }};
     $('#projet_technologie').change(function () {
       if($('#projet_technologie').val() == 'eolienne') {
         $('#projet_surfaceUtile').parents('.form-group').addClass('hide');
       } else {
         $('#projet_surfaceUtile').parents('.form-group').removeClass('hide');
+        equipementType = 'Type1';
       }
       if($(this).val()) {
         var selected_technologie = $(this).val();
@@ -959,11 +962,16 @@
             var technologie_largeur = 0;
             var technologie_longeur = 0;
             var technologie_pu = 0;
+            $('#tab_projet p').append('<div class="form-group form-group-sm"><label class="col-sm-4 control-label">Type:</label><div class="col-sm-8"><select id="equipment_types" class="form-control"></select></div></div>');
             $.each(technologie['data'], function(field, value) {
-              if(field == 'Longeur') technologie_longeur = value.replace(/m/g, '').trim();
-              else if(field == 'Largeur') technologie_largeur = value.replace(/m/g, '').trim();
-              else if(field == 'Puissance nominale') {
-                technologie_pu = value.replace(/(Wc|Mw)/, '').trim();
+              $('body').find('#equipment_types').append(new Option(field, field.replace(/\(.+?\)/, '').trim()));
+            });
+            $('body').find('#equipment_types').val(equipementType);
+            $.each(technologie['data'][$( "#equipment_types option:selected" ).text()], function(field, value) {
+              if(field.match('Longeur')) technologie_longeur = value.replace(/,/, '.').trim();
+              else if(field.match('Largeur')) technologie_largeur = value.replace(/,/, '.').trim();
+              else if(field.match('Puissance nominale')) {
+                technologie_pu = value.replace(/,/, '.').trim();
                 $('#projet_puissanceUnitaire').val(technologie_pu);
               }
               $('#tab_projet p').append('<div class="form-group form-group-sm"><label class="col-sm-4 control-label">'+field+':</label><div class="col-sm-8">' + value + '</div></div>');
@@ -981,6 +989,10 @@
           }
         });
       }
+    });
+    $('body').on('change', '#equipment_types', function() {
+      equipementType = $(this).val();
+      $('#projet_technologie').change();
     });
     $('#projet_surfaceUtile').change(function () {
       $('#projet_technologie').change();

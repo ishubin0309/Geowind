@@ -3,6 +3,7 @@
 namespace AppBundle\Form;
 
 use AppBundle\Entity\Projet;
+use AppBundle\Model\Technologie;
 use AppBundle\Form\EventListener\AddCommuneFieldSubscriber as communeSubscriber;
 use AppBundle\Form\EventListener\AddMairieFieldSubscriber as mairieSubscriber;
 use AppBundle\Form\Extension\DatePickerType;
@@ -217,7 +218,7 @@ class ProjetType extends AbstractType
             ])
             ->add('technologie', ChoiceType::class, [
                 'label' => 'Technologie',
-                'choices' => array_flip(Projet::getTechnologieList()),
+                'choices' => array_flip(Technologie::getTechnologieList()),
                 'required' => true,
             ])
             ->add('surfaceUtile', NumberType::class, [
