@@ -174,7 +174,7 @@ class BatimentNouveau
     /**
      * @var ArrayCollection|Toiture[]
      *
-     * @ORM\OneToMany(targetEntity="Toiture", mappedBy="batimentExistant", cascade={"all"}, orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="Toiture", mappedBy="batimentNouveau", cascade={"all"}, orphanRemoval=true)
      */
     private $toitures;
 

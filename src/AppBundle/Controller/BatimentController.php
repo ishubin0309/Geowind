@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * @Route("/app/batiments")
@@ -81,48 +82,44 @@ class BatimentController extends Controller
             return $this->redirectToRoute('batiment_index');
         }
 
-        $deleteForm = $this->createDeleteForm($batiment);
-
         return $this->render('batiment/edit.html.twig', [
             'batiment' => $batiment,
             'form' => $form->createView(),
-            'delete_form' => $deleteForm->createView(),
         ]);
     }
 
     /**
-     * @Route("/{id}", name="batiment_delete")
+     * @Route("/delete/batiment", name="batiment_delete", options = { "expose" = true })
      * @Method("DELETE")
+     * @Security("has_role('ROLE_EDIT')")
      */
-    public function deleteAction(Request $request, BatimentNouveau $batiment)
+    public function deleteAction(Request $request)
     {
-        throw $this->createAccessDeniedException();
-        
-        $form = $this->createDeleteForm($batiment);
-        $form->handleRequest($request);
+        $id = $request->request->get('id', 0);
+        $csrf = $request->request->get('csrf', null);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $nom = $batiment->getNom();
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($batiment);
-            $em->flush();
-            $batimentManager->removeBatiment($batiment);
-            $this->addFlash('success', 'Batiment « ' . $nom . ' » supprimé avec succès.');
+        if ($this->isCsrfTokenValid('token', $csrf)) {
+            throw $this->createAccessDeniedException();
         }
 
-        return $this->redirectToRoute('batiment_index');
+        $em = $this->getDoctrine()->getManager();
+
+        $response = new JsonResponse();
+        $response->setData(['success' => 0]);
+        if ($this->isGranted('ROLE_EDIT_ALL')) {
+            $em = $this->getDoctrine()->getManager();
+            $batiment = $em->getRepository('AppBundle:BatimentNouveau')->findOneBy(['id' => $id]);
+            if($batiment) {
+                $nom = $batiment->getNom();
+                $em->remove($batiment);
+                $em->flush();
+
+                $this->addFlash('success', 'Batiment « ' . $nom . ' » supprimé avec succès.');
+                $response->setData(['success' => 1]);
+            }
+        }
+
+        return $response;
     }
 
-    /**
-     * @param Batiment $batiment
-     * @return Form The form
-     */
-    private function createDeleteForm(BatimentNouveau $batiment)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('batiment_delete', ['id' => $batiment->getId()]))
-            ->setMethod('DELETE')
-            ->getForm()
-        ;
-    }
 }

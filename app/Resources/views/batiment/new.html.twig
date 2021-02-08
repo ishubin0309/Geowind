@@ -59,24 +59,17 @@
   
   var current_main_image = 0;
   var main_images = {};
-  {% if form.vars.value.toitures[0].photo is defined and form.vars.value.toitures[0].photo %}
-      {% if form.vars.value.photo is defined and form.vars.value.photo %}
-        main_images[0] = {0: '{{ asset('upload/' ~ form.vars.value.photo) }}'};
-      {% endif %}
-      {% for toiture in form.vars.value.toitures %}
-      main_images[{{ loop.index }}] = {0: '{{ asset('upload/' ~ toiture.photo) }}'};
-      {% endfor %}
-    $('#main_photo img').attr('src', main_images[0][0]);
-    {% if form.vars.value.toitures[1].photo is defined and form.vars.value.toitures[1].photo %}
-    updatePrevNextButtons();
-    {% endif %}
-  {% else %}
   {% if form.vars.value.photo is defined and form.vars.value.photo %}
     main_images[0] = {0: '{{ asset('upload/' ~ form.vars.value.photo) }}'};
-    $('#main_photo img').attr('src', '{{ asset('upload/' ~ form.vars.value.photo) }}');
+  {% endif %}
+  {% if form.vars.value.toitures[0].photo is defined and form.vars.value.toitures[0].photo %}
+    {% for toiture in form.vars.value.toitures %}
+    main_images[{{ loop.index }}] = {0: '{{ asset('upload/' ~ toiture.photo) }}'};
+    {% endfor %}
+  {% endif %}
+    if(main_images[0] !== undefined) $('#main_photo img').attr('src', main_images[0][0]);
+    else if(main_images[1] !== undefined) $('#main_photo img').attr('src', main_images[1][0]);
     updatePrevNextButtons();
-  {% endif %}
-  {% endif %}
     function updatePrevNextButtons() {
       prev = -1;
       next = -1;
@@ -105,10 +98,9 @@
       }
     });
     $('body').on('change', 'input[id*=_photoFile]', function() {
-      if($(this).attr('id')) {
-        var id = $(this).attr('id').match(/\d+/);
-        id = parseInt(id) + 1;
-      } else id = 0;
+      var id = $(this).attr('id').match(/\d+/);
+      if(id) id = parseInt(id) + 1;
+      else id = 0;
       if (this.files && this.files[0]) {
         var reader = new FileReader();
         

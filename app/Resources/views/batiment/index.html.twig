@@ -18,6 +18,7 @@
           <th class="column-fit">Faitage</th>
           <th class="column-fit">Surface au sol</th>
           <th class="column-fit"></th>
+          <th class="column-fit"></th>
         </tr>
       </thead>
       <tbody>
@@ -29,7 +30,8 @@
           <td class="column-fit">{{ batiment.largeur }}</td>
           <td class="column-fit">{{ batiment.faitage }}</td>
           <td class="column-fit">{{ batiment.surfaceSol }}</td>
-          <td class="column-fit"><a href="{{ path('batiment_edit', { 'id': batiment.id }) }}" class="btn btn-danger btn-xs"><i class="fa fa-fw fa-pencil"></i></a></td>
+          <td class="column-fit"><a href="{{ path('batiment_edit', { 'id': batiment.id }) }}" class="btn btn-warning btn-xs"><i class="fa fa-fw fa-pencil"></i></a></td>
+          <td class="column-fit"><button id="{{ batiment.id }}" nom="{{ batiment.nom }}" class="btn btn-danger btn-xs button-delete" title="Double click"><i class="fa fa-fw fa-trash"></i></button></td>
         </tr>
         {% endfor %}
       </tbody>
@@ -44,6 +46,44 @@
       paging: false,
       ordering: false,
       bInfo: false,
+    });
+
+    $('.button-delete').dblclick(function() {
+      id = $(this).attr('id');
+      nom = $(this).attr('nom');
+      
+      if (!id) {
+        return;
+      }
+      swal({
+        title: "Supprimer ?",
+        text: "Le modèle « "+nom+" » sera supprimé définitivement.",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Supprimer",
+        cancelButtonText: "Annuler",
+        closeOnConfirm: false,
+        closeOnCancel: true,
+        allowOutsideClick: true,
+        showLoaderOnConfirm: true,
+      },
+      function(isConfirm){
+        if (isConfirm) {
+          var csrf = '{{ csrf_token('token')|e('js') }}';
+          $.ajax({
+            url: Routing.generate('batiment_delete'),
+            type: 'DELETE',
+            data: { id: id, token: csrf  },
+            success: function(result) {
+              location.reload();
+            }
+          });
+        } else {
+
+        }
+      });
+
     });
   </script>
 {% endblock %}

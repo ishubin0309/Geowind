@@ -12,6 +12,7 @@ use AppBundle\Entity\Tache;
 use AppBundle\Entity\Parcelle;
 use AppBundle\Entity\Commune;
 use AppBundle\Model\Environnement;
+use AppBundle\Model\Etat as EtatModel;
 use AppBundle\Form\ProjetEditType;
 use AppBundle\Form\ProjetType;
 use AppBundle\Form\ListeType;
@@ -191,6 +192,7 @@ class ProjetController extends Controller
                 $parcelleColumn = false;
                 $enjeuxColumns = [];
                 $listEnvironnements = Environnement::getEnvironnementList();
+                $listDynamiques = EtatModel::getDynamiqueList();
                 $listTypeProjets = Projet::getTypeProjetList();
                 $listTypeSites = Projet::getTypeSiteList();
                 set_time_limit(600);
@@ -315,7 +317,9 @@ class ProjetController extends Controller
                                     $enjeux = new Enjeux();
                                     $facteurType = $enjeux->getFacteurType($facteur);
                                     $enjeux->setFacteur($facteurType);
-                                    $enjeux->setEnjeux($data[$column]);
+                                    $enj = array_search($data[$column], $listDynamiques);
+                                    if($enj) $enjeux->setEnjeux($enj);
+                                    else $enjeux->setEnjeux('0');
                                     $projet->addEnjeux($enjeux);
                                 }
                             }

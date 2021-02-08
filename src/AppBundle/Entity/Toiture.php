@@ -122,10 +122,17 @@ class Toiture
      * @var Batiment
      *
      * @ORM\ManyToOne(targetEntity="Batiment", inversedBy="toitures")
-     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
-     * @Assert\NotBlank()
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $batimentExistant;
+
+    /**
+     * @var Batiment
+     *
+     * @ORM\ManyToOne(targetEntity="BatimentNouveau", inversedBy="toitures")
+     * @ORM\JoinColumn(onDelete="CASCADE")
+     */
+    private $batimentNouveau;
 
     public function __construct()
     {
@@ -490,6 +497,24 @@ class Toiture
     public function setBatimentExistant(Batiment $batimentExistant)
     {
         $this->batimentExistant = $batimentExistant;
+        return $this;
+    }
+
+    /**
+     * @return Batiment
+     */
+    public function getBatimentNouveau()
+    {
+        return $this->batimentNouveau;
+    }
+
+    /**
+     * @param Batiment $batimentNouveau
+     * @return \AppBundle\Entity\Toiture
+     */
+    public function setBatimentNouveau(BatimentNouveau $batimentNouveau)
+    {
+        $this->batimentNouveau = $batimentNouveau;
         return $this;
     }
 
