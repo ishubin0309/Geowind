@@ -196,8 +196,17 @@ class ProjetController extends Controller
                 $listTypeProjets = Projet::getTypeProjetList();
                 $listTypeSites = Projet::getTypeSiteList();
                 set_time_limit(600);
-                session_write_close();
+                $start_time = microtime(true);
+                $write_close = false;
                 while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+                    if(!$write_close) {
+                        $end_time = microtime(true); 
+                        $execution_time = ($end_time - $start_time); 
+                        if($execution_time > 30) {
+                            session_write_close();
+                            $write_close = true;
+                        }
+                    }
                     if(!$row++) {
                         for ($c=0; $c < count($data); $c++) {
                             if(strtolower($data[$c])=='insee_com') $inseeColumn = $c;
@@ -222,8 +231,8 @@ class ProjetController extends Controller
                     }
                     // if($row > 50) break;
                     $denomination = $liste->getListeOriginalName() . '_' . substr(md5(serialize($data)),16);
-                    $search = $em->getRepository('AppBundle:Projet')->findBy(['denomination' => $denomination]);
-                    if(!$search) {
+                    // $search = $em->getRepository('AppBundle:Projet')->findBy(['denomination' => $denomination, 'liste' => $liste]);
+                    // if(!$search) {
                         $projet = new Projet();
                         $projet->setListe($liste);
                         $projet->setOrigine($this->getUser());
@@ -289,11 +298,6 @@ class ProjetController extends Controller
                                     $parcelle->setNom(trim($value));
                                     $parcelle->setDepartement($departement);
                                     if($commune) $parcelle->setCommune($commune);
-                                    /* if($inseeColumn !== false) {
-                                        if($commune) $parcelle->setCommune($commune->getNom() . ' (' . $commune->getInsee() . ')');
-                                        elseif($communeColumn !== false) $parcelle->setCommune($data[$communeColumn] . ' (' . $data[$inseeColumn] . ')');
-                                        else $parcelle->setCommune($data[$inseeColumn]);
-                                    } else if($communeColumn !== false) $parcelle->setCommune($data[$communeColumn] . ' (' . $data[$inseeColumn] . ')'); */
                                     $projet->addParcelle($parcelle);
                                 }
                             }
@@ -323,11 +327,10 @@ class ProjetController extends Controller
                                     $projet->addEnjeux($enjeux);
                                 }
                             }
-
                             $em->persist($projet);
                             $em->flush();
-                        }  else $this->addFlash('warning', 'Département ('.$data[$departementColumn].') n\'existe pas.');
-                    } else $this->addFlash('warning', 'Projet avec latitude et longitude ('.$data[$latColumn] . ',' . $data[$lngColumn].') déjà existe.');
+                        } else $this->addFlash('warning', 'Département « ' . $data[$departementColumn] . ' » n\'existe pas.');
+                    // } else $this->addFlash('warning', 'Projet avec latitude et longitude « ' . $data[$latColumn] . ',' . $data[$lngColumn] . ' » déjà existe.');
                 }
                 fclose($handle);
             }
