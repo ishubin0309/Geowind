@@ -643,7 +643,7 @@
           if(batiment['id'] == selected_batiment) {
             $.each(batiment, function(field, value) {
               {# if($('#projet_batimentExistant_' + field) && (typeof value === 'string' || value instanceof String)) $('#projet_batimentExistant_' + field).val(value.trim()); #}
-              if(field == 'bardage' || field == 'ossature' || field == 'charpente' || field == 'couverture') {
+              if((field == 'bardage' || field == 'ossature' || field == 'charpente' || field == 'couverture') && value.length) {
                 $('#projet_batimentExistant_'+field).parents('.form-group').removeClass('hide');
                 var select = '<div class="form-group form-group-sm"><label class="col-sm-4 control-label">'+field+':</label><div class="col-sm-8"><select id="'+field.toLowerCase()+'" class="form-control batiment_select_option">';
                 $.each(value, function(i, value2) {
