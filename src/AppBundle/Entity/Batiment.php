@@ -68,7 +68,7 @@ class Batiment
      *
      * @ORM\Column(type="string", nullable=true)
      */
-    private $structure;
+    private $charge;
 
     /**
      * @var string
@@ -277,19 +277,19 @@ class Batiment
     /**
      * @return string
      */
-    public function getStructure()
+    public function getCharge()
     {
-        return $this->structure;
+        return $this->charge;
     }
 
     /**
      *
-     * @param string $structure
+     * @param string $charge
      * @return \AppBundle\Entity\Batiment
      */
-    public function setStructure($structure)
+    public function setCharge($charge)
     {
-        $this->structure = $structure;
+        $this->charge = $charge;
         return $this;
     }
 
@@ -573,7 +573,7 @@ class Batiment
     /**
      * @return array
      */
-    public static function getStructureList()
+    public static function getChargeList()
     {
         return [
             'verifier' => 'Vérifier',

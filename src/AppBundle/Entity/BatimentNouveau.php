@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\File;
+use JsonSerializable;
 
 /**
  * BatimentNouveau entity
@@ -19,7 +20,7 @@ use Symfony\Component\HttpFoundation\File\File;
  * @UniqueEntity("nom")
  * @Vich\Uploadable
  */
-class BatimentNouveau
+class BatimentNouveau implements JsonSerializable
 {
     /**
      * @var int
@@ -78,7 +79,7 @@ class BatimentNouveau
      *
      * @ORM\Column(type="string", nullable=true)
      */
-    private $structure;
+    private $charge;
 
     /**
      * @var string
@@ -139,37 +140,9 @@ class BatimentNouveau
     /**
      * @var string
      *
-     * @ORM\Column(type="string", name="gestionnaire", nullable=true)
+     * @ORM\Column(type="string", name="description", nullable=true)
      */
-    private $gestionnaire;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string", name="distance_onduleur", nullable=true)
-     */
-    private $distanceOnduleur;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string", name="distance_tranfo", nullable=true)
-     */
-    private $distanceTranfo;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string", name="document_opposable", nullable=true)
-     */
-    private $documentOpposable;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string", nullable=true)
-     */
-    private $zonage;
+    private $description;
 
     /**
      * @var ArrayCollection|Toiture[]
@@ -313,19 +286,19 @@ class BatimentNouveau
     /**
      * @return string
      */
-    public function getStructure()
+    public function getCharge()
     {
-        return $this->structure;
+        return $this->charge;
     }
 
     /**
      *
-     * @param string $structure
+     * @param string $charge
      * @return \AppBundle\Entity\BatimentNouveau
      */
-    public function setStructure($structure)
+    public function setCharge($charge)
     {
-        $this->structure = $structure;
+        $this->charge = $charge;
         return $this;
     }
 
@@ -488,104 +461,20 @@ class BatimentNouveau
     /**
      * @return string
      */
-    public function getGestionnaire()
+    public function getDescription()
     {
-        return $this->gestionnaire;
+        return $this->description;
     }
 
     /**
      *
-     * @param string $gestionnaire
+     * @param string $description
      * @return \AppBundle\Entity\BatimentNouveau
      */
-    public function setGestionnaire($gestionnaire)
+    public function setDescription($description)
     {
-        $this->gestionnaire = $gestionnaire;
+        $this->description = $description;
         return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDistanceOnduleur()
-    {
-        return $this->distanceOnduleur;
-    }
-
-    /**
-     *
-     * @param string $distanceOnduleur
-     * @return \AppBundle\Entity\BatimentNouveau
-     */
-    public function setDistanceOnduleur($distanceOnduleur)
-    {
-        $this->distanceOnduleur = $distanceOnduleur;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDistanceTranfo()
-    {
-        return $this->distanceTranfo;
-    }
-
-    /**
-     *
-     * @param string $distanceTranfo
-     * @return \AppBundle\Entity\BatimentNouveau
-     */
-    public function setDistanceTranfo($distanceTranfo)
-    {
-        $this->distanceTranfo = $distanceTranfo;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDocumentOpposable()
-    {
-        return $this->documentOpposable;
-    }
-
-    /**
-     *
-     * @param string $documentOpposable
-     * @return \AppBundle\Entity\BatimentNouveau
-     */
-    public function setDocumentOpposable($documentOpposable)
-    {
-        $this->documentOpposable = $documentOpposable;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getZonage()
-    {
-        return $this->zonage;
-    }
-
-    /**
-     *
-     * @param string $zonage
-     * @return \AppBundle\Entity\BatimentNouveau
-     */
-    public function setZonage($zonage)
-    {
-        $this->zonage = $zonage;
-        return $this;
-    }
-
-    /**
-     * @return Projet
-     */
-    public function getProjet()
-    {
-        return $this->projet;
     }
 
     /**
@@ -663,19 +552,32 @@ class BatimentNouveau
     }
 
     /**
-     * @param Projet $projet
-     * @return \AppBundle\Entity\BatimentNouveau
-     */
-    public function setProjet(Projet $projet)
-    {
-        $this->projet = $projet;
-        return $this;
-    }
-    /**
      * @return string
      */
     public function __toString()
     {
         return $this->nom ? $this->nom : 'Modèle'.$this->id;
+    }
+
+    public function jsonSerialize()
+    {
+        $toitures = [];
+        foreach($this->toitures as $toiture) $toitures[] = $toiture;
+        return array(
+            'id' => $this->id,
+            'nom' => $this->nom,
+            'pans'=> $this->pans,
+            'longeur'=> $this->longeur,
+            'largeur'=> $this->largeur,
+            'faitage'=> $this->faitage,
+            'surfaceSol'=> $this->surfaceSol,
+            'charge'=> $this->charge,
+            'photo'=> $this->photo,
+            'bardage'=> explode(',', $this->bardage),
+            'ossature'=> explode(',', $this->ossature),
+            'charpente'=> explode(',', $this->charpente),
+            'couverture'=> explode(',', $this->couverture),
+            'toitures'=> $toitures,
+        );
     }
 }

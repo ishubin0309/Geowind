@@ -4,7 +4,6 @@ namespace AppBundle\Form;
 
 use AppBundle\Entity\BatimentNouveau;
 use AppBundle\Entity\Batiment;
-use AppBundle\Entity\Terrain;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -46,10 +45,10 @@ class BatimentNouveauType extends AbstractType
                 'label' => 'Surface au sol (m2)',
                 'required' => false,
             ])
-            ->add('structure', ChoiceType::class, [
-                'label' => 'Structure',
+            ->add('charge', ChoiceType::class, [
+                'label' => 'Charge',
                 'required' => false,
-                'choices' => array_flip(Batiment::getStructureList()),
+                'choices' => array_flip(Batiment::getChargeList()),
             ])
             ->add('bardage', TextType::class, [
                 'label' => 'Bardage',
@@ -89,27 +88,9 @@ class BatimentNouveauType extends AbstractType
                 'required' => false,
                 'by_reference' => false,
             ])
-            ->add('gestionnaire', TextType::class, [
-                'label' => 'Gestionnaire',
+            ->add('description', TextType::class, [
+                'label' => 'Description',
                 'required' => false,
-            ])
-            ->add('distanceOnduleur', TextType::class, [
-                'label' => 'Distance onduleur',
-                'required' => false,
-            ])
-            ->add('distanceTranfo', TextType::class, [
-                'label' => 'Distance tranfo',
-                'required' => false,
-            ])
-            ->add('documentOpposable', ChoiceType::class, [
-                'label' => 'Document opposable',
-                'required' => false,
-                'choices' => array_flip(Terrain::getDocumentOpposableList()),
-            ])
-            ->add('zonage', ChoiceType::class, [
-                'label' => 'Zonage',
-                'required' => false,
-                'choices' => array_flip(Terrain::getZonageList()),
             ])
         ;
     }

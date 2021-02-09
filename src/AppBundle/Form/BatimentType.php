@@ -41,10 +41,10 @@ class BatimentType extends AbstractType
                 'label' => 'Surface au sol',
                 'required' => false,
             ])
-            ->add('structure', ChoiceType::class, [
-                'label' => 'Structure',
+            ->add('charge', ChoiceType::class, [
+                'label' => 'Charge',
                 'required' => false,
-                'choices' => array_flip(Batiment::getStructureList()),
+                'choices' => array_flip(Batiment::getChargeList()),
             ])
             ->add('bardage', TextType::class, [
                 'label' => 'Bardage',

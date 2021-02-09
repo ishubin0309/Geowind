@@ -389,11 +389,14 @@ class ProjetController extends Controller
         }
         $em = $this->getDoctrine()->getManager();
         $telephones = $em->getRepository('AppBundle:User')->getFindAllTelephones();
+        $batimentNouveaux = $em->getRepository('AppBundle:BatimentNouveau')->findAll();
+        $batiments = json_encode($batimentNouveaux);
 
         return $this->render('projet/new.html.twig', [
             'form' => $form->createView(),
             'grid_helper' => $gridHelper,
-            'telephones' => json_encode($telephones)
+            'telephones' => json_encode($telephones),
+            'batiments' => json_encode($batiments)
         ]);
     }
 
@@ -433,13 +436,16 @@ class ProjetController extends Controller
         }
         $em = $this->getDoctrine()->getManager();
         $telephones = $em->getRepository('AppBundle:User')->getFindAllTelephones();
+        $batimentNouveaux = $em->getRepository('AppBundle:BatimentNouveau')->findAll();
+        $batiments = json_encode($batimentNouveaux);
 
         return $this->render('projet/edit.html.twig', [
             'form' => $form->createView(),
             'projet' => $projet,
             'show' => $show,
             'grid_helper' => $gridHelper,
-            'telephones' => json_encode($telephones)
+            'telephones' => json_encode($telephones),
+            'batiments' => json_encode($batiments)
         ]);
     }
 

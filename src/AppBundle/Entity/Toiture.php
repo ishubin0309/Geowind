@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\File;
+use JsonSerializable;
 
 /**
  * Toiture entity
@@ -16,7 +17,7 @@ use Symfony\Component\HttpFoundation\File\File;
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ToitureRepository")
  * @Vich\Uploadable
  */
-class Toiture
+class Toiture implements JsonSerializable
 {
     /**
      * @var int
@@ -524,5 +525,22 @@ class Toiture
     public function __toString()
     {
         return $this->nom;
+    }
+
+    public function jsonSerialize()
+    {
+        return array(
+            'nom' => $this->nom,
+            'exposition'=> $this->exposition,
+            'hautPente'=> $this->hautPente,
+            'basPente'=> $this->basPente,
+            'pente'=> $this->pente,
+            'longeur'=> $this->longeur,
+            'largeur'=> $this->largeur,
+            'surfaceTotale'=> $this->surfaceTotale,
+            'surfaceUtile'=> $this->surfaceUtile,
+            'entraxe'=> $this->entraxe,
+            'photo'=> $this->photo,
+        );
     }
 }
