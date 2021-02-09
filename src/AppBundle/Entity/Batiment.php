@@ -577,8 +577,8 @@ class Batiment
     {
         return [
             'verifier' => 'Vérifier',
-            'solide '=> 'Solide',
-            'faible '=> 'Faible'
+            'solide'=> 'Solide',
+            'faible'=> 'Faible'
         ];
     }
 

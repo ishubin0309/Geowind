@@ -664,18 +664,18 @@
     });
 
     var batiments = JSON.parse({{ batiments|raw }});
-    $('#projet_batimentNouveau').change(function () {
+    function updateBatiment(by_user) {
       $('#batimentNouveau_options p').html('');
       $('#projet_batimentExistant_bardage').parents('.form-group').addClass('hide');
       $('#projet_batimentExistant_ossature').parents('.form-group').addClass('hide');
       $('#projet_batimentExistant_charpente').parents('.form-group').addClass('hide');
-      $('#projet_batimentExistant_photoFile').parents('.form-group').removeClass('hide');
-      if($(this).val()) {
-        var selected_batiment = $(this).val();
-        $.each(batiments, function(i, batiment) {console.log(batiment);console.log(batiment['nom']);console.log(selected_batiment);
+      {# $('#projet_batimentExistant_photoFile').parents('.form-group').removeClass('hide'); #}
+      if($('#projet_batimentNouveau').val()) {
+        var selected_batiment = $('#projet_batimentNouveau').val();
+        $.each(batiments, function(i, batiment) {
           if(batiment['id'] == selected_batiment) {
-            $.each(batiment, function(field, value) {console.log(field);console.log(value);
-              if($('#projet_batimentExistant_' + field) && (typeof value === 'string' || value instanceof String)) $('#projet_batimentExistant_' + field).val(value.trim());
+            $.each(batiment, function(field, value) {
+              {# if($('#projet_batimentExistant_' + field) && (typeof value === 'string' || value instanceof String)) $('#projet_batimentExistant_' + field).val(value.trim()); #}
               if(field == 'bardage' || field == 'ossature' || field == 'charpente' || field == 'couverture') {
                 $('#projet_batimentExistant_'+field).parents('.form-group').removeClass('hide');
                 var select = '<div class="form-group form-group-sm"><label class="col-sm-4 control-label">'+field+':</label><div class="col-sm-8"><select id="'+field.toLowerCase()+'" class="form-control batiment_select_option">';
@@ -687,16 +687,29 @@
                 });
                 select += '</select></div></div>';
                 $('#batimentNouveau_options p').append(select);
-              } else if(field != 'photo' && (typeof value === 'string' || value instanceof String) && value.trim())
-                $('#batimentNouveau_options p').append('<div class="form-group form-group-sm"><label class="col-sm-4 control-label">'+field+':</label><div class="col-sm-8">' + value + '</div></div>');
-              else if((typeof value === 'string' || value instanceof String) && value.trim()) {
+              } else if(field == 'photo' && value.trim()) {
                 $('#batimentNouveau_options p').append('<div class="form-group form-group-sm"><img width="300" src="{{ asset('') }}upload/' + value + '"></div>');
-                $('#projet_batimentExistant_photoFile').parents('.form-group').addClass('hide');
+              } else if(by_user && $('#projet_batimentExistant_' + field).length && (typeof value === 'string' || value instanceof String)) 
+                $('#projet_batimentExistant_' + field).val(value.trim());
+              else if((typeof value === 'string' || value instanceof String) && value.trim())
+                $('#batimentNouveau_options p').append('<div class="form-group form-group-sm"><label class="col-sm-4 control-label">'+field+':</label><div class="col-sm-8">' + value + '</div></div>');
+              else if(by_user && field == 'toitures') {
+                $('#projet_batimentExistant_toitures').html('');
+                $.each(value, function(i2, toiture) {
+                  $('#projet_batimentExistant_toitures_add_entry').click();
+                  $.each(toiture, function(field2, value2) {
+                    if($('#projet_batimentExistant_toitures_' + i2 + '_' + field2).length && (typeof value2 === 'string' || value2 instanceof String)) 
+                      $('#projet_batimentExistant_toitures_' + i2 + '_' + field2).val(value2.trim());
+                  });
+                });
               }
             });
           }
         });
       }
+    }
+    $('#projet_batimentNouveau').change(function () {
+      updateBatiment(1);
     });
 
     $('body').on('change', 'select.batiment_select_option', function () {
@@ -1201,7 +1214,7 @@
             $('#batimentNouveau_options').addClass('hide');
           } else if(type_site == 'nouveau_batiment') {
             $('#form_site_batimentNouveau').removeClass('hide');
-            $('#projet_batimentNouveau').change();
+            updateBatiment(0);
             $('#form_site_batimentExistant').removeClass('hide');
             $('#batimentNouveau_options').removeClass('hide');
           }

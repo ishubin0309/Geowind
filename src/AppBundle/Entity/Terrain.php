@@ -256,9 +256,9 @@ class Terrain
         return [
             'montagne' => 'Montagne',
             'plateau' => 'Plateau',
-            'plaine '=> 'Plaine',
-            'valle '=> 'Vallée',
-            'littoral '=> 'Littoral'
+            'plaine' => 'Plaine',
+            'valle' => 'Vallée',
+            'littoral' => 'Littoral'
         ];
     }
     
@@ -270,8 +270,8 @@ class Terrain
         return [
             'plu' => 'PLU',
             'plui' => 'PLUi',
-            'carte '=> 'CARTE',
-            'pos '=> 'POS'
+            'carte'=> 'CARTE',
+            'pos' => 'POS'
         ];
     }
     

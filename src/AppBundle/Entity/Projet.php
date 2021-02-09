@@ -524,8 +524,8 @@ class Projet
     {
         return [
             'location' => 'Location',
-            'investissement '=> 'Investissement',
-            'non_defini '=> 'Non-défini'
+            'investissement' => 'Investissement',
+            'non_defini' => 'Non-défini'
         ];
     }
     
@@ -536,11 +536,11 @@ class Projet
     {
         return [
             'injection' => 'Injection',
-            'autoconso_i '=> 'Autoconso-i',
-            'autoconso_c '=> 'Autoconso-c',
-            'mixte '=> 'Mixte',
+            'autoconso_i' => 'Autoconso-i',
+            'autoconso_c' => 'Autoconso-c',
+            'mixte' => 'Mixte',
             'ct_remuneration'=> 'Ct de rémunération',
-            'non_defini '=> 'Non-défini'
+            'non_defini' => 'Non-défini'
         ];
     }
 
