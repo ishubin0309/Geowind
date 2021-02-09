@@ -26,19 +26,19 @@ class BatimentType extends AbstractType
                 'required' => false,
             ])
             ->add('longeur', TextType::class, [
-                'label' => 'Longeur',
+                'label' => 'Longeur (m)',
                 'required' => false,
             ])
             ->add('largeur', TextType::class, [
-                'label' => 'Largeur',
+                'label' => 'Largeur (m)',
                 'required' => false,
             ])
             ->add('faitage', TextType::class, [
-                'label' => 'Faitage',
+                'label' => 'Faitage (m)',
                 'required' => false,
             ])
             ->add('surfaceSol', TextType::class, [
-                'label' => 'Surface au sol',
+                'label' => 'Surface au sol (m2)',
                 'required' => false,
             ])
             ->add('charge', ChoiceType::class, [
