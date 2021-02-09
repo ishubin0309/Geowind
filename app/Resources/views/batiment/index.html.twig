@@ -17,6 +17,7 @@
           <th class="column-fit">Largeur</th>
           <th class="column-fit">Faitage</th>
           <th class="column-fit">Surface au sol</th>
+          <th class="column-fit">Description</th>
           <th class="column-fit"></th>
           <th class="column-fit"></th>
         </tr>
@@ -30,6 +31,7 @@
           <td class="column-fit">{{ batiment.largeur }}</td>
           <td class="column-fit">{{ batiment.faitage }}</td>
           <td class="column-fit">{{ batiment.surfaceSol }}</td>
+          <td class="column-fit">{{ batiment.description }}</td>
           <td class="column-fit"><a href="{{ path('batiment_edit', { 'id': batiment.id }) }}" class="btn btn-warning btn-xs"><i class="fa fa-fw fa-pencil"></i></a></td>
           <td class="column-fit"><button id="{{ batiment.id }}" nom="{{ batiment.nom }}" class="btn btn-danger btn-xs button-delete" title="Double click"><i class="fa fa-fw fa-trash"></i></button></td>
         </tr>

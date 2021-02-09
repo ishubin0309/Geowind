@@ -30,6 +30,14 @@
 
 {% block js %}
 <script>
+  $('#batiment_nouveau_longeur, #batiment_nouveau_largeur').change(function() {
+    longeur = $('#batiment_nouveau_longeur').val();
+    largeur = $('#batiment_nouveau_largeur').val();
+    if(longeur && largeur) surfaceSol = longeur * largeur;
+    else surfaceSol = 0;
+    $('#batiment_nouveau_surfaceSol').val(surfaceSol);
+  });
+
   var $collectionHolderDC = $('#batiment_nouveau_toitures');
   var prototypeDC = $collectionHolderDC.data('prototype');
 
