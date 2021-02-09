@@ -643,18 +643,20 @@
           if(batiment['id'] == selected_batiment) {
             $.each(batiment, function(field, value) {
               {# if($('#projet_batimentExistant_' + field) && (typeof value === 'string' || value instanceof String)) $('#projet_batimentExistant_' + field).val(value.trim()); #}
-              if((field == 'bardage' || field == 'ossature' || field == 'charpente' || field == 'couverture') && value.length > 0) {
+              if(field == 'bardage' || field == 'ossature' || field == 'charpente' || field == 'couverture') {
                 $('#projet_batimentExistant_'+field).parents('.form-group').removeClass('hide');
                 var select = '<div class="form-group form-group-sm"><label class="col-sm-4 control-label">'+field+':</label><div class="col-sm-8"><select id="'+field.toLowerCase()+'" class="form-control batiment_select_option">';
+                is_empty = 1;
                 $.each(value, function(i, value2) {
                   value2 = value2.trim();
+                  if(value2) is_empty = 0;
                   if((!$('#projet_batimentExistant_'+field).val() && !i) || ($('#projet_batimentExistant_'+field).val() && value2 == $('#projet_batimentExistant_'+field).val())) {
                     $('#projet_batimentExistant_'+field).val(value2);
                     select += '<option selected>'+value2+'</option>';
                   } else select += '<option>'+value2+'</option>';
                 });
                 select += '</select></div></div>';
-                $('#batimentNouveau_options p').append(select);
+                if(!is_empty) $('#batimentNouveau_options p').append(select);
               } else if(field == 'photo' && value.trim()) {
                 $('#batimentNouveau_options p').append('<div class="form-group form-group-sm"><img width="300" src="{{ asset('') }}upload/' + value + '"></div>');
               } else if(by_user && $('#projet_batimentExistant_' + field).length && (typeof value === 'string' || value instanceof String)) 
