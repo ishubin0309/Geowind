@@ -8,7 +8,7 @@
   <div class="container-fluid">
 
     {% if is_granted('ROLE_VIEW_ALL') %}
-      <a href="{{ path('liste_new') }}" class="btn btn-success btn-sm"><i class="fa fa-paperclip"></i> Importer Liste</a>
+      <a href="{{ path('liste_new') }}" class="btn btn-info btn-sm"><i class="fa fa-paperclip"></i> Importer Liste</a>
     {% endif %}
     {% if is_granted('ROLE_CREATE') %}
       <a href="{{ path('projet_new') }}" class="btn btn-success btn-sm"><i class="fa fa-file-o"></i> Nouvelle fiche</a>
