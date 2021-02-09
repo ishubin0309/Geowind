@@ -91,7 +91,6 @@ class BatimentController extends Controller
     /**
      * @Route("/delete/batiment", name="batiment_delete", options = { "expose" = true })
      * @Method("DELETE")
-     * @Security("has_role('ROLE_EDIT')")
      */
     public function deleteAction(Request $request)
     {
@@ -106,17 +105,15 @@ class BatimentController extends Controller
 
         $response = new JsonResponse();
         $response->setData(['success' => 0]);
-        if ($this->isGranted('ROLE_EDIT_ALL')) {
-            $em = $this->getDoctrine()->getManager();
-            $batiment = $em->getRepository('AppBundle:BatimentNouveau')->findOneBy(['id' => $id]);
-            if($batiment) {
-                $nom = $batiment->getNom();
-                $em->remove($batiment);
-                $em->flush();
+        $em = $this->getDoctrine()->getManager();
+        $batiment = $em->getRepository('AppBundle:BatimentNouveau')->findOneBy(['id' => $id]);
+        if($batiment) {
+            $nom = $batiment->getNom();
+            $em->remove($batiment);
+            $em->flush();
 
-                $this->addFlash('success', 'Batiment « ' . $nom . ' » supprimé avec succès.');
-                $response->setData(['success' => 1]);
-            }
+            $this->addFlash('success', 'Batiment « ' . $nom . ' » supprimé avec succès.');
+            $response->setData(['success' => 1]);
         }
 
         return $response;

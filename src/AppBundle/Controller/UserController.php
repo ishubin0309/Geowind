@@ -11,6 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * @Route("/app/utilisateurs")
@@ -76,46 +77,39 @@ class UserController extends Controller
             return $this->redirectToRoute('user_index');
         }
 
-        $deleteForm = $this->createDeleteForm($user);
-
         return $this->render('user/edit.html.twig', [
             'user' => $user,
             'form' => $form->createView(),
-            'delete_form' => $deleteForm->createView(),
         ]);
     }
 
     /**
-     * @Route("/{id}", name="user_delete")
+     * @Route("/delete/user", name="user_delete", options={ "expose": true })
      * @Method("DELETE")
      */
-    public function deleteAction(Request $request, User $user)
+    public function deleteAction(Request $request)
     {
-        throw $this->createAccessDeniedException();
-        
-        $form = $this->createDeleteForm($user);
-        $form->handleRequest($request);
+        $id = $request->request->get('id', 0);
+        $csrf = $request->request->get('csrf', null);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($this->isCsrfTokenValid('token', $csrf)) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $em = $this->getDoctrine()->getManager();
+
+        $response = new JsonResponse();
+        $response->setData(['success' => 0]);
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository('AppBundle:User')->findOneBy(['id' => $id]);
+        if($user) {
             $userManager = $this->get('AppBundle\Manager\UserManager');
             $username = $user->getUsername();
             $userManager->removeUser($user);
             $this->addFlash('success', 'Utilisateur ' . $username . ' supprimé avec succès.');
+            $response->setData(['success' => 1]);
         }
 
-        return $this->redirectToRoute('user_index');
-    }
-
-    /**
-     * @param User $user
-     * @return Form The form
-     */
-    private function createDeleteForm(User $user)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('user_delete', ['id' => $user->getId()]))
-            ->setMethod('DELETE')
-            ->getForm()
-        ;
+        return $response;
     }
 }

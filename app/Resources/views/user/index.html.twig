@@ -20,6 +20,7 @@
           <th class="column-fit">Date de création</th>
           <th class="column-fit">Etat</th>
           <th class="column-fit"></th>
+          <th class="column-fit"></th>
         </tr>
       </thead>
       <tbody>
@@ -37,7 +38,8 @@
           </td>
           <td class="column-fit">{{ user.createdAt is not null ? user.createdAt|date('d/m/Y') }}</td>
           <td class="column-fit">{{ user.enabled ? '<span class="label label-success">Actif</span>' : '<span class="label label-danger">Désactivé</span>' }}</td>
-          <td class="column-fit"><a href="{{ path('user_edit', { 'id': user.id }) }}" class="btn btn-danger btn-xs"><i class="fa fa-fw fa-pencil"></i></a></td>
+          <td class="column-fit"><a href="{{ path('user_edit', { 'id': user.id }) }}" class="btn btn-warning btn-xs"><i class="fa fa-fw fa-pencil"></i></a></td>
+          <td class="column-fit"><button id="{{ user.id }}" username="{{ user.username }}" class="btn btn-danger btn-xs button-delete" title="Double click"><i class="fa fa-fw fa-trash"></i></button></td>
         </tr>
         {% endfor %}
       </tbody>
@@ -52,6 +54,44 @@
       paging: false,
       ordering: false,
       bInfo: false,
+    });
+
+    $('.button-delete').dblclick(function() {
+      id = $(this).attr('id');
+      username = $(this).attr('username');
+      
+      if (!id) {
+        return;
+      }
+      swal({
+        title: "Supprimer ?",
+        text: "L'utilisateur « "+username+" » sera supprimé définitivement.",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Supprimer",
+        cancelButtonText: "Annuler",
+        closeOnConfirm: false,
+        closeOnCancel: true,
+        allowOutsideClick: true,
+        showLoaderOnConfirm: true,
+      },
+      function(isConfirm){
+        if (isConfirm) {
+          var csrf = '{{ csrf_token('token')|e('js') }}';
+          $.ajax({
+            url: Routing.generate('user_delete'),
+            type: 'DELETE',
+            data: { id: id, token: csrf  },
+            success: function(result) {
+              location.reload();
+            }
+          });
+        } else {
+
+        }
+      });
+
     });
   </script>
 {% endblock %}
