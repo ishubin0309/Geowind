@@ -51,16 +51,16 @@ class Progression
             'achats' => '#00CC33',
             'en_travaux' => '#00CC33',
             'en_service' => '#00CC33',
-            'rejet' => '#000000',
-            'abandon' => '#000000',
+            'rejet' => '#FF0000',
+            'abandon' => '#FF0000',
             'retenu' => '#999999',
             'en_attente' => '#FFFFFF',
             'a_negocier' => '#FF99FF',
             'a_developper' => '#00FFFF',
             'a_deposer' => '#0000FF',
             'a_construire' => '#00CC33',
-            'en_recours' => '#FF0000',
-            'refuse' => '#FF0000',
+            'en_recours' => '#000000',
+            'refuse' => '#000000',
         ];
     }
 
