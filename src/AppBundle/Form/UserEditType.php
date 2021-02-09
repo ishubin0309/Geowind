@@ -29,12 +29,12 @@ class UserEditType extends AbstractType
                 'label' => 'Etat du compte',
                 'required' => true,
             ])
-            ->add('nom', TextType::class, [
-                'label' => 'Nom',
-                'required' => true,
-            ])
             ->add('prenom', TextType::class, [
                 'label' => 'Prénom',
+                'required' => true,
+            ])
+            ->add('nom', TextType::class, [
+                'label' => 'Nom',
                 'required' => true,
             ])
             ->add('username', TextType::class, [
