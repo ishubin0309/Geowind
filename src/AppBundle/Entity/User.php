@@ -103,6 +103,13 @@ class User implements AdvancedUserInterface, \Serializable
     private $telephone;
 
     /**
+     * @var Departement
+     *
+     * @ORM\ManyToOne(targetEntity="Departement")
+     */
+    private $departement;
+
+    /**
      * @var string
      *
      * @ORM\Column(type="decimal", precision=20, scale=16)
@@ -389,6 +396,24 @@ class User implements AdvancedUserInterface, \Serializable
     public function setTelephone($telephone)
     {
         $this->telephone = $telephone;
+        return $this;
+    }
+
+    /**
+     * @return Departement
+     */
+    public function getDepartement()
+    {
+        return $this->departement;
+    }
+
+    /**
+     * @param \AppBundle\Entity\Departement $departement
+     * @return \AppBundle\Entity\Projet
+     */
+    public function setDepartement(Departement $departement)
+    {
+        $this->departement = $departement;
         return $this;
     }
 

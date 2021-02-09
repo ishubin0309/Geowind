@@ -37,6 +37,7 @@
 
     var marker = null;
 
+    var default_lat = {{ form.vars.value.latitude }};
     var lat = {{ form.vars.value.latitude }};
     var long = {{ form.vars.value.longitude }};
 
@@ -115,10 +116,77 @@
         $('#user_edit_latitude').val(lat);
         $('#user_edit_longitude').val(long);
         updateMarkerPosition();
+        reverseGeolocalisation(lat + ' ' + long, false);
       } else update_marker = 1;
     });
     
     updateMarkerPosition();
+
+    function reverseGeolocalisation(query, update_marker) {
+      var nominatimUrl = 'https://nominatim.openstreetmap.org/search';
+      $.ajax({
+        type: 'GET',
+        url: nominatimUrl,
+        data: {
+          q: query,
+          extratags: 0,
+          namedetails: 0,
+          polygon_geojson: 0,
+          format: 'json',
+        },
+        dataType: 'json',
+
+      })
+      .done(function(data) {
+
+        if (data.length === 0) {
+          return;
+        }
+
+        var searchLat = data[0]['lat'];
+        var searchLong = data[0]['lon'];
+        var bbox = data[0]['boundingbox'];
+        var adresse = data[0]['display_name'];
+        if(adresse.match('France')) {
+          if(update_marker) {
+            if (bbox != undefined) {
+              map.fitBounds([
+                [bbox[0], bbox[2]],
+                [bbox[1], bbox[3]]
+              ]);
+            } else {
+              map.setView([searchLat, searchLong], 10);
+            }
+            if($('#user_edit_latitude').val() != searchLat && !default_lat) {
+              lat = searchLat;
+              long = searchLong;
+              $('#user_edit_latitude').val(lat);
+              $('#user_edit_longitude').val(long);
+              updateMarkerPosition();
+            }
+          }
+        }
+        
+      });
+  }
+  var last_reverse_search = null;
+  $('#user_edit_departement').change(function() {
+    
+    var nominatimUrl = 'https://nominatim.openstreetmap.org/search';
+    $input = $(this);
+
+    var query = $('#user_edit_departement option:selected').text().trim();
+    if(query && last_reverse_search != query) {
+      last_reverse_search = query;
+      reverseGeolocalisation(query, true);
+    } else if(!query) {
+      map.setView([46,2],5.5);
+    } else {
+      map.setView([lat, long], 10);
+    }
+    
+  });
+  if(!default_lat) $('#user_edit_departement').change();
 
     {# {% if form.vars.value.photo is defined and form.vars.value.photo %}
     $('#main_photo img').attr('src', '{{ asset('upload/' ~ form.vars.value.photo) }}');

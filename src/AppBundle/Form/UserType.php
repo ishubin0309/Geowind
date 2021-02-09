@@ -3,6 +3,8 @@
 namespace AppBundle\Form;
 
 use AppBundle\Entity\User;
+use Doctrine\ORM\EntityRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -44,6 +46,15 @@ class UserType extends AbstractType
             ->add('telephone', TextType::class, [
                 'label' => 'Téléphone',
                 'required' => true,
+            ])
+            ->add('departement', EntityType::class, [
+                'class' => 'AppBundle:Departement',
+                'required' => true,
+                'label' => 'Secteur',
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('d')
+                        ->orderBy('d.nom', 'ASC');
+                },
             ])
             ->add('latitude', NumberType::class, [
                 'label' => 'Latitude',
