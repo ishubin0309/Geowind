@@ -630,8 +630,12 @@
       $('> :last-child', $collectionHolderDC).remove();
     });
 
+    var current_batiment_image = 0;
+    var batiment_images = {};
     var batiments = JSON.parse({{ batiments|raw }});
     function updateBatiment(by_user) {
+      current_batiment_image = 0;
+      batiment_images = {};
       $('#batimentNouveau_options p').html('');
       $('#projet_batimentExistant_bardage').parents('.form-group').addClass('hide');
       $('#projet_batimentExistant_ossature').parents('.form-group').addClass('hide');
@@ -657,8 +661,9 @@
                 });
                 select += '</select></div></div>';
                 if(!is_empty) $('#batimentNouveau_options p').append(select);
-              } else if(field == 'photo' && value.trim()) {
-                $('#batimentNouveau_options p').append('<div class="form-group form-group-sm"><img width="300" src="{{ asset('') }}upload/' + value + '"></div>');
+              } else if(field.match(/photo/) && value && value.trim()) {
+                batiment_images[Object.keys(batiment_images).length] = {0: '{{ asset('') }}upload/' + value};
+                if(!$('#batiment_photo').length) $('#batimentNouveau_options p').append('<div id="batiment_photo" class="form-group form-group-sm"><img width="300" src="{{ asset('') }}upload/' + value + '"><nav style="margin-left:30%;" aria-label="Page navigation center-text"><ul class="pagination"><li class="page-item disabled"><a id="prev_batiment_image" class="page-link" href="#">Précédent</a></li><li class="page-item disabled"><a id="next_batiment_image" class="page-link" href="#">Suivant</a></li></ul></nav></div>');
               } else if(by_user && $('#projet_batimentExistant_' + field).length && (typeof value === 'string' || value instanceof String)) 
                 $('#projet_batimentExistant_' + field).val(value.trim());
               else if((typeof value === 'string' || value instanceof String) && value.trim())
@@ -670,19 +675,50 @@
                   $.each(toiture, function(field2, value2) {
                     if($('#projet_batimentExistant_toitures_' + i2 + '_' + field2).length && (typeof value2 === 'string' || value2 instanceof String)) 
                       $('#projet_batimentExistant_toitures_' + i2 + '_' + field2).val(value2.trim());
-                      else if(field2 == 'photo' && value2.trim()) {
-                        $('#batimentNouveau_options p').append('<div class="form-group form-group-sm"><img width="300" src="{{ asset('') }}upload/' + value2 + '"></div>');
+                      else if(field2 == 'photo' && value2 && value2.trim()) {
+                        batiment_images[Object.keys(batiment_images).length] = {0: '{{ asset('') }}upload/' + value2};
+                        if(!$('#batiment_photo').length) $('#batimentNouveau_options p').append('<div id="batiment_photo" class="form-group form-group-sm"><img width="300" src="{{ asset('') }}upload/' + value2 + '"><nav style="margin-left:30%;" aria-label="Page navigation center-text"><ul class="pagination"><li class="page-item disabled"><a id="prev_batiment_image" class="page-link" href="#">Précédent</a></li><li class="page-item disabled"><a id="next_batiment_image" class="page-link" href="#">Suivant</a></li></ul></nav></div>');
                       }
                   });
                 });
               }
             });
+            if(batiment_images[0] !== undefined) {
+              updatePrevNextBatimentButtons();
+            }
           }
         });
       }
     }
     $('#projet_batimentNouveau').change(function () {
       updateBatiment(1);
+    });
+    function updatePrevNextBatimentButtons() {
+      prev = -1;
+      next = -1;
+      $.each(batiment_images, function(i, value) {
+        if(current_batiment_image > i) prev = 1;
+        if(next == -1 && current_batiment_image < i) next = 1;
+      });
+      if(prev >= 0) $('body').find('#prev_batiment_image').parent().removeClass('disabled');
+      else  $('body').find('#prev_batiment_image').parent().addClass('disabled');
+      if(next >= 0) $('body').find('#next_batiment_image').parent().removeClass('disabled');
+      else $('body').find('#next_batiment_image').parent().addClass('disabled');
+    }
+    $('body').on('click','#next_batiment_image, #prev_batiment_image',function(e) {
+      e.preventDefault();
+      prev = -1;
+      next = -1;
+      $.each(batiment_images, function(i, value) {
+        if(current_batiment_image > i) prev = i;
+        if(next == -1 && current_batiment_image < i) next = i;
+      });
+      if(($(this).attr('id') == 'prev_batiment_image' && prev >= 0) || ($(this).attr('id') == 'next_batiment_image' && next >= 0)) {
+        if($(this).attr('id') == 'next_batiment_image') current_batiment_image = next;
+        else current_batiment_image = prev;
+        updatePrevNextBatimentButtons();
+        $('#batiment_photo img').attr('src', batiment_images[current_batiment_image][0]);
+      }
     });
 
     $('body').on('change', 'select.batiment_select_option', function () {

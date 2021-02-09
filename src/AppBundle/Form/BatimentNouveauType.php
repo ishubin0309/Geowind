@@ -80,6 +80,48 @@ class BatimentNouveauType extends AbstractType
                     ])
                 ],
             ])
+            ->add('photo2File', FileType::class, [
+                'label' => 'Photo',
+                'required' => false,
+                'constraints' => [
+                    new File([
+                        'maxSize' => '20m',
+                        'mimeTypes' => [
+                            'image/jpeg',
+                            'image/png',
+                        ],
+                        'mimeTypesMessage' => 'Please upload a valid Image document',
+                    ])
+                ],
+            ])
+            ->add('photo3File', FileType::class, [
+                'label' => 'Photo',
+                'required' => false,
+                'constraints' => [
+                    new File([
+                        'maxSize' => '20m',
+                        'mimeTypes' => [
+                            'image/jpeg',
+                            'image/png',
+                        ],
+                        'mimeTypesMessage' => 'Please upload a valid Image document',
+                    ])
+                ],
+            ])
+            ->add('photo4File', FileType::class, [
+                'label' => 'Photo',
+                'required' => false,
+                'constraints' => [
+                    new File([
+                        'maxSize' => '20m',
+                        'mimeTypes' => [
+                            'image/jpeg',
+                            'image/png',
+                        ],
+                        'mimeTypesMessage' => 'Please upload a valid Image document',
+                    ])
+                ],
+            ])
             ->add('toitures', CollectionType::class, [
                 'entry_type' => ToitureType::class,
                 'allow_add' => true,

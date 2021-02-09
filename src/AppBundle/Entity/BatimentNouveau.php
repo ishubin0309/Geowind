@@ -140,6 +140,69 @@ class BatimentNouveau implements JsonSerializable
     /**
      * @var string
      *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $photo2;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $photo2OriginalName = 'photo2';
+
+    /**
+     * @var UploadedFile
+     *
+     * @Vich\UploadableField(mapping="geotiff2", fileNameProperty="photo2")
+     */
+    private $photo2File;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $photo3;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $photo3OriginalName = 'photo3';
+
+    /**
+     * @var UploadedFile
+     *
+     * @Vich\UploadableField(mapping="geotiff3", fileNameProperty="photo3")
+     */
+    private $photo3File;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $photo4;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $photo4OriginalName = 'photo4';
+
+    /**
+     * @var UploadedFile
+     *
+     * @Vich\UploadableField(mapping="geotiff4", fileNameProperty="photo4")
+     */
+    private $photo4File;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(type="string", name="description", nullable=true)
      */
     private $description;
@@ -461,6 +524,189 @@ class BatimentNouveau implements JsonSerializable
     /**
      * @return string
      */
+    public function getPhoto2()
+    {
+        return $this->photo2;
+    }
+
+    /**
+     *
+     * @param string $photo2
+     * @return \AppBundle\Entity\BatimentNouveau
+     */
+    public function setPhoto2($photo2)
+    {
+        $this->photo2 = $photo2;
+        return $this;
+    }
+
+    /**
+     * @return File|\Symfony\Component\HttpFoundation\File\UploadedFile|null
+     */
+    public function getPhoto2File()
+    {
+        return $this->photo2File;
+    }
+
+    /**
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $photo2
+     *
+     * @return $this
+     */
+    public function setPhoto2File(File $photo2 = null)
+    {
+        $this->photo2File = $photo2;
+        if ($photo2) {
+            if ($photo2 instanceof UploadedFile) {
+                $this->photo2OriginalName = $photo2->getClientOriginalName();
+            }
+        }
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPhoto2OriginalName()
+    {
+        return $this->photo2OriginalName;
+    }
+
+    /**
+     * @param string $photo2OriginalName
+     * @return \AppBundle\Entity\BatimentNouveau
+     */
+    public function setPhoto2OriginalName($photo2OriginalName)
+    {
+        $this->photo2OriginalName = $photo2OriginalName;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPhoto3()
+    {
+        return $this->photo3;
+    }
+
+    /**
+     *
+     * @param string $photo3
+     * @return \AppBundle\Entity\BatimentNouveau
+     */
+    public function setPhoto3($photo3)
+    {
+        $this->photo3 = $photo3;
+        return $this;
+    }
+
+    /**
+     * @return File|\Symfony\Component\HttpFoundation\File\UploadedFile|null
+     */
+    public function getPhoto3File()
+    {
+        return $this->photo3File;
+    }
+
+    /**
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $photo3
+     *
+     * @return $this
+     */
+    public function setPhoto3File(File $photo3 = null)
+    {
+        $this->photo3File = $photo3;
+        if ($photo3) {
+            if ($photo3 instanceof UploadedFile) {
+                $this->photo3OriginalName = $photo3->getClientOriginalName();
+            }
+        }
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPhoto3OriginalName()
+    {
+        return $this->photo3OriginalName;
+    }
+
+    /**
+     * @param string $photo3OriginalName
+     * @return \AppBundle\Entity\BatimentNouveau
+     */
+    public function setPhoto3OriginalName($photo3OriginalName)
+    {
+        $this->photo3OriginalName = $photo3OriginalName;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPhoto4()
+    {
+        return $this->photo4;
+    }
+
+    /**
+     *
+     * @param string $photo4
+     * @return \AppBundle\Entity\BatimentNouveau
+     */
+    public function setPhoto4($photo4)
+    {
+        $this->photo4 = $photo4;
+        return $this;
+    }
+
+    /**
+     * @return File|\Symfony\Component\HttpFoundation\File\UploadedFile|null
+     */
+    public function getPhoto4File()
+    {
+        return $this->photo4File;
+    }
+
+    /**
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $photo4
+     *
+     * @return $this
+     */
+    public function setPhoto4File(File $photo4 = null)
+    {
+        $this->photo4File = $photo4;
+        if ($photo4) {
+            if ($photo4 instanceof UploadedFile) {
+                $this->photo4OriginalName = $photo4->getClientOriginalName();
+            }
+        }
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPhoto4OriginalName()
+    {
+        return $this->photo4OriginalName;
+    }
+
+    /**
+     * @param string $photo4OriginalName
+     * @return \AppBundle\Entity\BatimentNouveau
+     */
+    public function setPhoto4OriginalName($photo4OriginalName)
+    {
+        $this->photo4OriginalName = $photo4OriginalName;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
     public function getDescription()
     {
         return $this->description;
@@ -573,6 +819,9 @@ class BatimentNouveau implements JsonSerializable
             'surfaceSol'=> $this->surfaceSol,
             'charge'=> $this->charge,
             'photo'=> $this->photo,
+            'photo2'=> $this->photo2,
+            'photo3'=> $this->photo3,
+            'photo4'=> $this->photo4,
             'bardage'=> explode(',', $this->bardage),
             'ossature'=> explode(',', $this->ossature),
             'charpente'=> explode(',', $this->charpente),

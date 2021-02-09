@@ -16,7 +16,7 @@
       {{ form_rest(form) }}
       </div>
       <div id="main_photo" class="col-sm-6">
-        <img style="width: inherit;" src=""><nav style="margin-left:30%;" aria-label="Page navigation center-text"><ul class="pagination"><li class="page-item disabled"><a id="prev_image" class="page-link" href="#">Précédent</a></li><li class="page-item disabled"><a id="next_image" class="page-link" href="#">Suivant</a></li></ul></nav>
+        <img style="max-width: 100%;" src=""><nav style="margin-left:30%;" aria-label="Page navigation center-text"><ul class="pagination"><li class="page-item disabled"><a id="prev_image" class="page-link" href="#">Précédent</a></li><li class="page-item disabled"><a id="next_image" class="page-link" href="#">Suivant</a></li></ul></nav>
       </div>
     </div>
     <div class="form-group">
@@ -52,7 +52,7 @@
   $('#batiment_nouveau_toitures_remove_entry').click(function () {
       if($('> :last-child', $collectionHolderDC).length) {
         var id = $('> :last-child', $collectionHolderDC).find('input').attr('id').match(/\d+/);
-        id = parseInt(id) + 1;
+        id = parseInt(id) + 4;
         delete main_images[id];
         if(current_main_image == id) {
           current_main_image = current_main_image - 1;
@@ -70,13 +70,26 @@
   {% if form.vars.value.photo is defined and form.vars.value.photo %}
     main_images[0] = {0: '{{ asset('upload/' ~ form.vars.value.photo) }}'};
   {% endif %}
+  {% if form.vars.value.photo2 is defined and form.vars.value.photo2 %}
+    main_images[1] = {0: '{{ asset('upload/' ~ form.vars.value.photo2) }}'};
+  {% endif %}
+  {% if form.vars.value.photo3 is defined and form.vars.value.photo3 %}
+    main_images[2] = {0: '{{ asset('upload/' ~ form.vars.value.photo3) }}'};
+  {% endif %}
+  {% if form.vars.value.photo4 is defined and form.vars.value.photo4 %}
+    main_images[3] = {0: '{{ asset('upload/' ~ form.vars.value.photo3) }}'};
+  {% endif %}
   {% if form.vars.value.toitures[0].photo is defined and form.vars.value.toitures[0].photo %}
     {% for toiture in form.vars.value.toitures %}
-    main_images[{{ loop.index }}] = {0: '{{ asset('upload/' ~ toiture.photo) }}'};
+    main_images[{{ loop.index0 + 4 }}] = {0: '{{ asset('upload/' ~ toiture.photo) }}'};
     {% endfor %}
   {% endif %}
     if(main_images[0] !== undefined) $('#main_photo img').attr('src', main_images[0][0]);
     else if(main_images[1] !== undefined) $('#main_photo img').attr('src', main_images[1][0]);
+    else if(main_images[2] !== undefined) $('#main_photo img').attr('src', main_images[2][0]);
+    else if(main_images[3] !== undefined) $('#main_photo img').attr('src', main_images[3][0]);
+    else if(main_images[4] !== undefined) $('#main_photo img').attr('src', main_images[4][0]);
+    else if(main_images[5] !== undefined) $('#main_photo img').attr('src', main_images[5][0]);
     updatePrevNextButtons();
     function updatePrevNextButtons() {
       prev = -1;
@@ -105,10 +118,14 @@
         $('#main_photo img').attr('src', main_images[current_main_image][0]);
       }
     });
-    $('body').on('change', 'input[id*=_photoFile]', function() {
-      var id = $(this).attr('id').match(/\d+/);
-      if(id) id = parseInt(id) + 1;
-      else id = 0;
+    $('body').on('change', 'input[id*=_photoFile],input[id*=_photo2File],input[id*=_photo3File],input[id*=_photo4File]', function() {
+      var id = $(this).attr('id').match(/_(\d+)/);
+      if(id) id = parseInt(id[1]) + 4;
+      else {
+        var id = $(this).attr('id').match(/\d+/);
+        if(id) id = parseInt(id) - 1;
+        else id = 0;
+      }
       if (this.files && this.files[0]) {
         var reader = new FileReader();
         
