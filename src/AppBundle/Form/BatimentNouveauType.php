@@ -51,19 +51,19 @@ class BatimentNouveauType extends AbstractType
                 'choices' => array_flip(Batiment::getChargeList()),
             ])
             ->add('bardage', TextType::class, [
-                'label' => 'Bardage',
+                'label' => 'Bardage (séparé par virgule)',
                 'required' => false,
             ])
             ->add('ossature', TextType::class, [
-                'label' => 'Ossature',
+                'label' => 'Ossature (séparé par virgule)',
                 'required' => false,
             ])
             ->add('charpente', TextType::class, [
-                'label' => 'Charpente',
+                'label' => 'Charpente (séparé par virgule)',
                 'required' => false,
             ])
             ->add('couverture', TextType::class, [
-                'label' => 'Couverture',
+                'label' => 'Couverture (séparé par virgule)',
                 'required' => false,
             ])
             ->add('photoFile', FileType::class, [

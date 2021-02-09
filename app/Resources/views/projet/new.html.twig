@@ -647,6 +647,7 @@
                 $('#projet_batimentExistant_'+field).parents('.form-group').removeClass('hide');
                 var select = '<div class="form-group form-group-sm"><label class="col-sm-4 control-label">'+field+':</label><div class="col-sm-8"><select id="'+field.toLowerCase()+'" class="form-control batiment_select_option">';
                 $.each(value, function(i, value2) {
+                  value2 = value2.trim();
                   if((!$('#projet_batimentExistant_'+field).val() && !i) || ($('#projet_batimentExistant_'+field).val() && value2 == $('#projet_batimentExistant_'+field).val())) {
                     $('#projet_batimentExistant_'+field).val(value2);
                     select += '<option selected>'+value2+'</option>';
@@ -667,6 +668,9 @@
                   $.each(toiture, function(field2, value2) {
                     if($('#projet_batimentExistant_toitures_' + i2 + '_' + field2).length && (typeof value2 === 'string' || value2 instanceof String)) 
                       $('#projet_batimentExistant_toitures_' + i2 + '_' + field2).val(value2.trim());
+                      else if(field2 == 'photo' && value2.trim()) {
+                        $('#batimentNouveau_options p').append('<div class="form-group form-group-sm"><img width="300" src="{{ asset('') }}upload/' + value2 + '"></div>');
+                      }
                   });
                 });
               }
