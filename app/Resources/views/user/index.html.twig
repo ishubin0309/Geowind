@@ -11,9 +11,9 @@
     <table id="datatable" class="table table-striped table-middle">
       <thead>
         <tr>
-          <th class="column-fit">User</th>
-          <th>Nom</th>
           <th>Prenom</th>
+          <th>Nom</th>
+          <th class="column-fit">User</th>
           <th>Email</th>
           <th>Téléphone</th>
           <th>Droits</th>
@@ -25,9 +25,9 @@
       <tbody>
         {% for user in users %}
         <tr>
-          <td class="column-fit">{{ user.username }}</td>
-          <td>{{ user.nom|upper }}</td>
           <td>{{ user.prenom|capitalize }}</td>
+          <td>{{ user.nom|upper }}</td>
+          <td class="column-fit">{{ user.username }}</td>
           <td>{{ user.email }}</td>
           <td>{{ user.telephone }}</td>
           <td class="column-fit">
