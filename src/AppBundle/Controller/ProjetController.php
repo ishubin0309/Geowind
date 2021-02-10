@@ -578,10 +578,10 @@ class ProjetController extends Controller
 //            die();
     
         $dir = $this->getParameter('cartes_upload_dir');
-        $path = $dir . '/' . $projet->getPhotoImplantationOriginalName();
+        $path = $dir . '/' . $projet->getPhotoImplantatio();
         
         $dirDest = $this->getParameter('cartes_fiche_dir');
-        $pathDest = $dirDest . '/' . $projet->getPhotoImplantationOriginalName() . '.jpg';
+        $pathDest = $dirDest . '/' . $projet->getPhotoImplantation() . '.jpg';
         
         if (!file_exists($pathDest)) {
             $image = new Imagick($path);
