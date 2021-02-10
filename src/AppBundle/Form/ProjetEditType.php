@@ -197,17 +197,26 @@ class ProjetEditType extends AbstractType
                     return $er->getFindAllQueryBuilder();
                 },
             ])
-            ->add('photoEsquisseFile', FileType::class, [
+            ->add('typeImplantation', ChoiceType::class, [
+                'label' => 'Type',
                 'required' => false,
-                'label' => 'Esquisse',
+                'choices' => array_flip(Projet::getTypeImplantationList()),
             ])
-            ->add('photoAvantFile', FileType::class, [
+            ->add('titreImplantation', ChoiceType::class, [
+                'label' => 'Type',
                 'required' => false,
-                'label' => 'Avant Projet',
+                'choices' => array_flip(Projet::getTitreImplantationList()),
             ])
-            ->add('photoDefinitifFile', FileType::class, [
+            ->add('photoImplantationFile', FileType::class, [
                 'required' => false,
-                'label' => 'Projet définitif',
+                'label' => 'Fichier',
+            ])
+            ->add('descriptionImplantation', TextareaType::class, [
+                'label' => 'Description',
+                'required' => false,
+                'attr' => [
+                    'rows' => 5,
+                ]
             ])
             ->add('contrat', ChoiceType::class, [
                 'label' => 'Contrat',

@@ -143,10 +143,10 @@
       </fieldset>
 
       <fieldset class="hide" id="tab_projet">
-        <legend>Inplantation</legend>
-        {{ form_row(form.photoEsquisseFile) }}
-        {{ form_row(form.photoAvantFile) }}
-        {{ form_row(form.photoDefinitifFile) }}
+        <legend>Implantation</legend>
+        {{ form_row(form.typeImplantation) }}
+        {{ form_row(form.titreImplantation) }}
+        {{ form_row(form.photoImplantationFile) }}
         <legend>Conventions</legend>
         {{ form_row(form.contrat) }}
         {{ form_row(form.debouche) }}
@@ -521,6 +521,23 @@
     $('#projet_mairie').on('select2:select', function (e) {
       var data = e.params.data;
       $('#projet_mairieTelephone').val(data.telephone);
+    });
+    
+    {% if form.vars.value.photoImplantation is defined and form.vars.value.photoImplantation %}
+      $('<div id="implantation_photo" class="form-group form-group-sm"><img width="300" src="{{ asset('upload/' ~ form.vars.value.photoImplantation) }}"></div>').insertAfter($('#projet_photoImplantationFile').parents('.form-group'));
+    {% endif %}
+    $('#projet_photoImplantationFile').change(function() {
+      if (this.files && this.files[0]) {
+        var reader = new FileReader();
+        
+        reader.onload = function(e) {
+          if($('#implantation_photo').length)
+            $('#implantation_photo img').attr('src', e.target.result);
+          else $('<div id="implantation_photo" class="form-group form-group-sm"><img width="300" src="'+e.target.result+'"></div>').insertAfter($('#projet_photoImplantationFile').parents('.form-group'));
+        }
+        
+        reader.readAsDataURL(this.files[0]); // convert to base64 string
+      }
     });
 
     var $collectionHolder = $('#projet_finances');

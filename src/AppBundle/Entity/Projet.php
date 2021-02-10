@@ -321,63 +321,42 @@ class Projet
      *
      * @ORM\Column(type="string", nullable=true)
      */
-    private $photoEsquisse;
+    private $photoImplantation;
 
     /**
      * @var string
      *
      * @ORM\Column(type="string", nullable=true)
      */
-    private $photoEsquisseOriginalName = 'photoEsquisse';
+    private $photoImplantationOriginalName = 'photoImplantation';
 
     /**
      * @var UploadedFile
      *
-     * @Vich\UploadableField(mapping="geotiff2", fileNameProperty="photoEsquisse")
+     * @Vich\UploadableField(mapping="geotiff", fileNameProperty="photoImplantation")
      */
-    private $photoEsquisseFile;
+    private $photoImplantationFile;
 
     /**
      * @var string
      *
      * @ORM\Column(type="string", nullable=true)
      */
-    private $photoAvant;
+    private $typeImplantation;
 
     /**
      * @var string
      *
      * @ORM\Column(type="string", nullable=true)
      */
-    private $photoAvantOriginalName = 'photoAvant';
-
-    /**
-     * @var UploadedFile
-     *
-     * @Vich\UploadableField(mapping="geotiff3", fileNameProperty="photoAvant")
-     */
-    private $photoAvantFile;
+    private $titreImplantation;
 
     /**
      * @var string
      *
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      */
-    private $photoDefinitif;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string", nullable=true)
-     */
-    private $photoDefinitifOriginalName = 'photoDefinitif';
-
-    /**
-     * @var UploadedFile
-     *
-     * @Vich\UploadableField(mapping="geotiff4", fileNameProperty="photoDefinitif")
-     */
-    private $photoDefinitifFile;
+    private $descriptionImplantation;
 
     /**
      * @var string
@@ -541,6 +520,31 @@ class Projet
             'mixte' => 'Mixte',
             'ct_remuneration'=> 'Ct de rémunération',
             'non_defini' => 'Non-défini'
+        ];
+    }
+    
+    /**
+     * @return array
+     */
+    public static function getTypeImplantationList()
+    {
+        return [
+            'plan_ign' => 'Plan IGN',
+            'plan_cadastre' => 'Plan cadastre',
+            'photo_aerienne' => 'Photo aerienne'
+        ];
+    }
+    
+    /**
+     * @return array
+     */
+    public static function getTitreImplantationList()
+    {
+        return [
+            'zone' => 'Zone',
+            'esquisse' => 'Esquisse',
+            'avant_projet' => 'Avant projet',
+            'projet_definitif' => 'Projet définitif'
         ];
     }
 
@@ -1483,41 +1487,41 @@ class Projet
     /**
      * @return string
      */
-    public function getPhotoEsquisse()
+    public function getPhotoImplantation()
     {
-        return $this->photoEsquisse;
+        return $this->photoImplantation;
     }
 
     /**
      *
-     * @param string $photoEsquisse
+     * @param string $photoImplantation
      * @return \AppBundle\Entity\Projet
      */
-    public function setPhotoEsquisse($photoEsquisse)
+    public function setPhotoImplantation($photoImplantation)
     {
-        $this->photoEsquisse = $photoEsquisse;
+        $this->photoImplantation = $photoImplantation;
         return $this;
     }
 
     /**
      * @return File|\Symfony\Component\HttpFoundation\File\UploadedFile|null
      */
-    public function getPhotoEsquisseFile()
+    public function getPhotoImplantationFile()
     {
-        return $this->photoEsquisseFile;
+        return $this->photoImplantationFile;
     }
 
     /**
-     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $photoEsquisse
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $photoImplantation
      *
      * @return $this
      */
-    public function setPhotoEsquisseFile(File $photoEsquisse = null)
+    public function setPhotoImplantationFile(File $photoImplantation = null)
     {
-        $this->photoEsquisseFile = $photoEsquisse;
-        if ($photoEsquisse) {
-            if ($photoEsquisse instanceof UploadedFile) {
-                $this->photoEsquisseOriginalName = $photoEsquisse->getClientOriginalName();
+        $this->photoImplantationFile = $photoImplantation;
+        if ($photoImplantation) {
+            if ($photoImplantation instanceof UploadedFile) {
+                $this->photoImplantationOriginalName = $photoImplantation->getClientOriginalName();
             }
         }
         return $this;
@@ -1526,140 +1530,75 @@ class Projet
     /**
      * @return string
      */
-    public function getPhotoEsquisseOriginalName()
+    public function getPhotoImplantationOriginalName()
     {
-        return $this->photoEsquisseOriginalName;
+        return $this->photoImplantationOriginalName;
     }
 
     /**
-     * @param string $photoEsquisseOriginalName
+     * @param string $photoImplantationOriginalName
      * @return \AppBundle\Entity\Projet
      */
-    public function setPhotoEsquisseOriginalName($photoEsquisseOriginalName)
+    public function setPhotoImplantationOriginalName($photoImplantationOriginalName)
     {
-        $this->photoEsquisseOriginalName = $photoEsquisseOriginalName;
+        $this->photoImplantationOriginalName = $photoImplantationOriginalName;
+        return $this;
+    }
+
+    /**
+     *
+     * @param string $titreImplantation
+     * @return \AppBundle\Entity\Projet
+     */
+    public function setTitreImplantation($titreImplantation)
+    {
+        $this->titreImplantation = $titreImplantation;
         return $this;
     }
 
     /**
      * @return string
      */
-    public function getPhotoAvant()
+    public function getTitreImplantation()
     {
-        return $this->photoAvant;
+        return $this->titreImplantation;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTypeImplantation()
+    {
+        return $this->typeImplantation;
     }
 
     /**
      *
-     * @param string $photoAvant
+     * @param string $typeImplantation
      * @return \AppBundle\Entity\Projet
      */
-    public function setPhotoAvant($photoAvant)
+    public function setTypeImplantation($typeImplantation)
     {
-        $this->photoAvant = $photoAvant;
-        return $this;
-    }
-
-    /**
-     * @return File|\Symfony\Component\HttpFoundation\File\UploadedFile|null
-     */
-    public function getPhotoAvantFile()
-    {
-        return $this->photoAvantFile;
-    }
-
-    /**
-     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $photoAvant
-     *
-     * @return $this
-     */
-    public function setPhotoAvantFile(File $photoAvant = null)
-    {
-        $this->photoAvantFile = $photoAvant;
-        if ($photoAvant) {
-            if ($photoAvant instanceof UploadedFile) {
-                $this->photoAvantOriginalName = $photoAvant->getClientOriginalName();
-            }
-        }
+        $this->typeImplantation = $typeImplantation;
         return $this;
     }
 
     /**
      * @return string
      */
-    public function getPhotoAvantOriginalName()
+    public function getDescriptionImplantation()
     {
-        return $this->photoAvantOriginalName;
-    }
-
-    /**
-     * @param string $photoAvantOriginalName
-     * @return \AppBundle\Entity\Projet
-     */
-    public function setPhotoAvantOriginalName($photoAvantOriginalName)
-    {
-        $this->photoAvantOriginalName = $photoAvantOriginalName;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPhotoDefinitif()
-    {
-        return $this->photoDefinitif;
+        return $this->descriptionImplantation;
     }
 
     /**
      *
-     * @param string $photoDefinitif
+     * @param string $descriptionImplantation
      * @return \AppBundle\Entity\Projet
      */
-    public function setPhotoDefinitif($photoDefinitif)
+    public function setDescriptionImplantation($descriptionImplantation)
     {
-        $this->photoDefinitif = $photoDefinitif;
-        return $this;
-    }
-
-    /**
-     * @return File|\Symfony\Component\HttpFoundation\File\UploadedFile|null
-     */
-    public function getPhotoDefinitifFile()
-    {
-        return $this->photoDefinitifFile;
-    }
-
-    /**
-     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $photoDefinitif
-     *
-     * @return $this
-     */
-    public function setPhotoDefinitifFile(File $photoDefinitif = null)
-    {
-        $this->photoDefinitifFile = $photoDefinitif;
-        if ($photoDefinitif) {
-            if ($photoDefinitif instanceof UploadedFile) {
-                $this->photoDefinitifOriginalName = $photoDefinitif->getClientOriginalName();
-            }
-        }
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPhotoDefinitifOriginalName()
-    {
-        return $this->photoDefinitifOriginalName;
-    }
-
-    /**
-     * @param string $photoDefinitifOriginalName
-     * @return \AppBundle\Entity\Projet
-     */
-    public function setPhotoDefinitifOriginalName($photoDefinitifOriginalName)
-    {
-        $this->photoDefinitifOriginalName = $photoDefinitifOriginalName;
+        $this->descriptionImplantation = $descriptionImplantation;
         return $this;
     }
     

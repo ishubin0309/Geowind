@@ -203,7 +203,7 @@ class BatimentNouveau implements JsonSerializable
     /**
      * @var string
      *
-     * @ORM\Column(type="string", name="description", nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      */
     private $description;
 
