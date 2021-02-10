@@ -23,7 +23,7 @@ class ToitureType extends AbstractType
                 'required' => false,
             ])
             ->add('exposition', TextType::class, [
-                'label' => 'Exposition',
+                'label' => 'Exposition (deg)',
                 'required' => false,
             ])
             ->add('hautPente', TextType::class, [
@@ -55,7 +55,7 @@ class ToitureType extends AbstractType
                 'required' => false,
             ])
             ->add('entraxe', TextType::class, [
-                'label' => 'Entraxe',
+                'label' => 'Entraxe (m)',
                 'required' => false,
             ])
             ->add('photoFile', FileType::class, [
