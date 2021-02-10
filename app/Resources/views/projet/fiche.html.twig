@@ -140,41 +140,13 @@
       <td>{{ projet.potentiel }}</td>
     </tr>
     <tr>
-      <td>Raccord (km)</td>
-      <td>{{ projet.raccord }}</td>
-    </tr>
-    <tr class="tr-bs">
-      <td>Matériel</td>
-      <td>{{ projet.materiel|nl2br }}</td>
-    </tr>
-    <tr>
       <th colspan="2" class="th-section">Faisabilité</th>
     </tr>
     <tr>
-      <td>Servitudes</td>
-      <td>{{ projet.servitude|servitude_format }}</td>
-    </tr>
-    <tr>
-      <td>Avis Mairie</td>
-      <td>{{ projet.avisMairie|avis_mairie_format }}</td>
-    </tr>
-    <tr>
-      <td>Foncier</td>
-      <td>{{ projet.foncier|foncier_format }}</td>
-    </tr>
-    <tr>
-      <th>Progression</th>
+      <th>Etat</th>
       <td>{{ projet.progression|progression_format }}</td>
     </tr>
-    {#<tr>
-      <td>Date T0</td>
-      <td>{{ projet.dateT0 is not null ? projet.dateT0|date('d/m/Y') }}</td>
-    </tr>
-    <tr>
-      <td>Date T1</td>
-      <td>{{ projet.dateT1 is not null ? projet.dateT1|date('d/m/Y') }}</td>
-    </tr>#}
-    <tr>
+    {# <tr>
       <th>Dates clés</th>
       <td>{{ projet.dateCles is empty ? 'N/A' }}</td>
     </tr>
@@ -183,7 +155,7 @@
       <td>{{ dateCle.date|date('d/m/Y') }}</td>
       <td>{{ dateCle.label }}</td>
     </tr>
-    {% endfor %}
+    {% endfor %} #}
   </tbody>
 </table>
   
