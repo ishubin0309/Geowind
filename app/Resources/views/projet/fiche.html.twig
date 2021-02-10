@@ -43,7 +43,7 @@
 
 
 <div style="text-align: right;">
-  <img src="{{ asset('images/' ~ projet.type ~ '_large.jpg') }}" style="height: 25mm; float: left;">
+  <img src="{{ asset('images/' ~ projet.typeProjet ~ '_large.jpg') }}" style="height: 25mm; float: left;">
   <img src="{{ asset('images/logo.jpg') }}" style="width: 100mm;">
 </div>
 
@@ -79,14 +79,16 @@
     <tr>
       <td>Type</td>
       <td>
-        {% if projet.type == 'EOL' %}
+        {% if projet.typeProjet == 'EOL' %}
           <img src="{{ asset('images/eol.jpg') }}" alt="EOL" style="vertical-align: middle;">
-        {% elseif projet.type == 'PVS' %}
+        {% elseif projet.typeProjet == 'PVS' %}
           <img src="{{ asset('images/pvs.jpg') }}" alt="PVS" style="vertical-align: middle;">
-        {% elseif projet.type == 'BAT' %}
+        {% elseif projet.typeProjet == 'BAT' %}
           <img src="{{ asset('images/pvb.jpg') }}" alt="BAT" style="vertical-align: middle;">
+        {% else %}
+          {{ projet.typeProjet }}
         {% endif %}
-        {{ projet.type }}</td>
+        {{ projet.typeProjet }}</td>
     </tr>
     <tr>
       <td>Origine</td>
