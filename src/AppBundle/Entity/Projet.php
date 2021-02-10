@@ -541,7 +541,7 @@ class Projet
     public static function getTitreImplantationList()
     {
         return [
-            'zone' => 'Zone',
+            'zonage' => 'Zonage',
             'esquisse' => 'Esquisse',
             'avant_projet' => 'Avant projet',
             'projet_definitif' => 'Projet définitif'
