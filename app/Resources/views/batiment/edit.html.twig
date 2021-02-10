@@ -89,19 +89,26 @@
   var main_images = {};
   {% if form.vars.value.photo is defined and form.vars.value.photo %}
     main_images[0] = {0: '{{ asset('upload/' ~ form.vars.value.photo) }}'};
+    $('label[for="batiment_nouveau_photoFile"]').css('color', 'blue').attr('title', '{{ form.vars.value.photoOriginalName }}');
   {% endif %}
   {% if form.vars.value.photo2 is defined and form.vars.value.photo2 %}
     main_images[1] = {0: '{{ asset('upload/' ~ form.vars.value.photo2) }}'};
+    $('label[for="batiment_nouveau_photo2File"]').css('color', 'blue').attr('title', '{{ form.vars.value.photo2OriginalName }}');
   {% endif %}
   {% if form.vars.value.photo3 is defined and form.vars.value.photo3 %}
     main_images[2] = {0: '{{ asset('upload/' ~ form.vars.value.photo3) }}'};
+    $('label[for="batiment_nouveau_photo3File"]').css('color', 'blue').attr('title', '{{ form.vars.value.photo3OriginalName }}');
   {% endif %}
   {% if form.vars.value.photo4 is defined and form.vars.value.photo4 %}
     main_images[3] = {0: '{{ asset('upload/' ~ form.vars.value.photo3) }}'};
+    $('label[for="batiment_nouveau_photo4File"]').css('color', 'blue').attr('title', '{{ form.vars.value.photo4OriginalName }}');
   {% endif %}
-  {% if form.vars.value.toitures[0].photo is defined and form.vars.value.toitures[0].photo %}
+  {% if form.vars.value.toitures[0] is defined %}
     {% for toiture in form.vars.value.toitures %}
-    main_images[{{ loop.index0 + 4 }}] = {0: '{{ asset('upload/' ~ toiture.photo) }}'};
+    {% if toiture.photo %}
+      main_images[{{ loop.index0 + 4 }}] = {0: '{{ asset('upload/' ~ toiture.photo) }}'};
+      $('#batiment_nouveau_toitures tr:eq({{ loop.index0 }}) label:last').css('color', 'blue').attr('title', '{{ toiture.photoOriginalName }}');
+    {% endif %}
     {% endfor %}
   {% endif %}
     if(main_images[0] !== undefined) $('#main_photo img').attr('src', main_images[0][0]);
