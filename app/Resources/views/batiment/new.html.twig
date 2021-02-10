@@ -13,10 +13,29 @@
     <div class="row">
       <div class="col-sm-6">
       {{ form_start(form) }}
-      {{ form_rest(form) }}
+      {{ form_row(form.nom) }}
+      {{ form_row(form.pans) }}
+      {{ form_row(form.longeur) }}
+      {{ form_row(form.largeur) }}
+      {{ form_row(form.faitage) }}
+      {{ form_row(form.surfaceSol) }}
+      {{ form_row(form.charge) }}
+      {{ form_row(form.bardage) }}
+      {{ form_row(form.ossature) }}
+      {{ form_row(form.charpente) }}
+      {{ form_row(form.couverture) }}
+      {{ form_row(form.photoFile) }}
+      {{ form_row(form.photo2File) }}
+      {{ form_row(form.photo3File) }}
+      {{ form_row(form.photo4File) }}
+      {{ form_row(form.toitures) }}
       </div>
       <div id="main_photo" class="col-sm-6">
-        <img style="max-width2: 100%;height:400px;" src=""><nav style="margin-left:30%;" aria-label="Page navigation center-text"><ul class="pagination"><li class="page-item disabled"><a id="prev_image" class="page-link" href="#">Précédent</a></li><li class="page-item disabled"><a id="next_image" class="page-link" href="#">Suivant</a></li></ul></nav>
+        <img style="max-width: 100%;object-fit:contain;" src=""><nav style="margin-left:30%;" aria-label="Page navigation center-text"><ul class="pagination"><li class="page-item disabled"><a id="prev_image" class="page-link" href="#">Précédent</a></li><li class="page-item disabled"><a id="next_image" class="page-link" href="#">Suivant</a></li></ul></nav>
+        <fieldset>
+          <legend>Description</legend>
+          {{ form_widget(form.description) }}
+        </fieldset>
       </div>
     </div>
     <div class="form-group">
@@ -24,6 +43,7 @@
         <button type="submit" class="btn btn-primary"><i class="fa fa-check fa-fw"></i> Valider</button>
       </div>
     </div>
+    {{ form_rest(form) }}
     {{ form_end(form) }}
   </div>
 {% endblock %}

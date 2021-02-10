@@ -211,8 +211,7 @@
     $(function () {
       var data = [];
       {% for projet in projets %}
-        {% set difference = date(projet.dateCreation).diff(date('now')) %}
-        {% set dateDiff = difference.days %}
+        {% set listeDate = false %}
         data.push({
           id: {{ projet.id }},
           typeProjet: '{{ projet.typeProjet }}',
@@ -234,8 +233,6 @@
           {% if not communeFound %}
             commune: '',
           {% endif %}
-          dateCrea: '{{ projet.dateCreation|date('d/m/Y') }}',
-          dateMaj: '{{ projet.dateMaj|date('d/m/Y') }}',
           {% if columnsType == 2 %}
             {% set servitudes = false %}
             {% set foncier = false %}
@@ -257,6 +254,7 @@
               {% elseif not concertation and tache.objet == 'concertation'%}
               {% set concertation = true %}concertation: '{{ tache.etat }}',
               {% endif %}
+              {% set listeDate = tache.date %}
             {% endfor %}
             {% if not servitudes %}servitudes: '',{% endif %}
             {% if not foncier %}foncier: '',{% endif %}
@@ -273,6 +271,7 @@
               {% set phase = etat.phase %}
               {% set etatValue = etat.etat %}
               {% set dynamique = etat.dynamique %}
+              {% set listeDate = etat.date %}
             {% endfor %}
             phase: '{{ phase|e('js') }}',
             progression: '{{ etatValue }}',
@@ -282,7 +281,18 @@
           phase: '{{ projet.phase|e('js') }}',
           progression: '{{ projet.progression }}',
           {% endif %}
+          {% if listeDate %}
+          {% set difference = date(listeDate).diff(date('now')) %}
+          {% set dateDiff = difference.days %}
+          dateCrea: '{{ listeDate|date('d/m/Y') }}',
           dateDiff: '{{ dateDiff }}',
+          {% else %}
+          {% set difference = date(projet.dateCreation).diff(date('now')) %}
+          {% set dateDiff = difference.days %}
+          dateCrea: '{{ projet.dateCreation|date('d/m/Y') }}',
+          dateDiff: '{{ dateDiff }}',
+          {% endif %}
+          dateMaj: '{{ projet.dateMaj|date('d/m/Y') }}',
           progressionIndicateur: '{{ projet.progression }}',
           canEdit: {{ is_granted('edit', projet) ? 1 : 0 }},
         });
