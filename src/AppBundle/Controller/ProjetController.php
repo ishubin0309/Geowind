@@ -584,7 +584,7 @@ class ProjetController extends Controller
         $pathDest = $dirDest . '/' . $projet->getPhotoImplantation() . '.jpg';
         
         if (!file_exists($pathDest)) {
-            $image = new Imagick($path);
+            $image = new \Imagick($path);
             $image->setImageFormat('jpeg');
             $image->setCompressionQuality(70);
             $image->scaleImage(2480, 0);

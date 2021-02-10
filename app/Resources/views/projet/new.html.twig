@@ -144,7 +144,9 @@
         {{ form_row(form.puissanceTotale) }}
         {{ form_row(form.production) }}
         {{ form_row(form.emprise) }}
-        {{ form_row(form.potentiel) }}
+        <div class="form-group form-group-sm"><label class="col-sm-4 control-label required" for="projet_potentiel"><strong>Potentiel (MW)</strong></label><div class="col-sm-8">    
+          {{ form_widget(form.potentiel) }}</div>
+        </div>
       </fieldset>
 
       <fieldset class="hide" id="tab_parcelles">
@@ -1017,6 +1019,7 @@
               }
               var technologie_pt = technologie_unite * technologie_pu;
               $('#projet_puissanceTotale').val(technologie_pt.toFixed(3));
+              $('#projet_potentiel').val(technologie_pt.toFixed(3));
             }
           }
         });
