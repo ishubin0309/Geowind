@@ -578,7 +578,7 @@ class ProjetController extends Controller
 //            die();
     
         $dir = $this->getParameter('cartes_upload_dir');
-        $path = $dir . '/' . $projet->getPhotoImplantatio();
+        $path = $dir . '/' . $projet->getPhotoImplantation();
         
         $dirDest = $this->getParameter('cartes_fiche_dir');
         $pathDest = $dirDest . '/' . $projet->getPhotoImplantation() . '.jpg';
