@@ -524,7 +524,7 @@
     });
     
     {% if form.vars.value.photoImplantation is defined and form.vars.value.photoImplantation %}
-      $('<div id="implantation_photo" class="form-group form-group-sm"><img width="300" src="{{ asset('upload/' ~ form.vars.value.photoImplantation) }}"></div>').insertAfter($('#projet_photoImplantationFile').parents('.form-group'));
+      $('<div id="implantation_photo" class="form-group form-group-sm"><img style="max-width: 100%;" src="{{ asset('upload/' ~ form.vars.value.photoImplantation) }}"></div>').insertAfter($('#projet_photoImplantationFile').parents('.form-group'));
     {% endif %}
     $('#projet_photoImplantationFile').change(function() {
       if (this.files && this.files[0]) {
@@ -533,7 +533,7 @@
         reader.onload = function(e) {
           if($('#implantation_photo').length)
             $('#implantation_photo img').attr('src', e.target.result);
-          else $('<div id="implantation_photo" class="form-group form-group-sm"><img width="300" src="'+e.target.result+'"></div>').insertAfter($('#projet_photoImplantationFile').parents('.form-group'));
+          else $('<div id="implantation_photo" class="form-group form-group-sm"><img style="max-width: 100%;" src="'+e.target.result+'"></div>').insertAfter($('#projet_photoImplantationFile').parents('.form-group'));
         }
         
         reader.readAsDataURL(this.files[0]); // convert to base64 string
@@ -713,7 +713,7 @@
                 if(!is_empty) $('#batimentNouveau_options p').append(select);
               } else if(field.match(/photo/) && value && value.trim()) {
                 batiment_images[Object.keys(batiment_images).length] = {0: '{{ asset('') }}upload/' + value};
-                if(!$('#batiment_photo').length) $('#batimentNouveau_options p').append('<div id="batiment_photo" class="form-group form-group-sm"><img width="300" src="{{ asset('') }}upload/' + value + '"><nav style="margin-left:30%;" aria-label="Page navigation center-text"><ul class="pagination"><li class="page-item disabled"><a id="prev_batiment_image" class="page-link" href="#">Précédent</a></li><li class="page-item disabled"><a id="next_batiment_image" class="page-link" href="#">Suivant</a></li></ul></nav></div>');
+                if(!$('#batiment_photo').length) $('#batimentNouveau_options p').append('<div id="batiment_photo" class="form-group form-group-sm"><img style="max-width: 100%;" src="{{ asset('') }}upload/' + value + '"><nav style="margin-left:30%;" aria-label="Page navigation center-text"><ul class="pagination"><li class="page-item disabled"><a id="prev_batiment_image" class="page-link" href="#">Précédent</a></li><li class="page-item disabled"><a id="next_batiment_image" class="page-link" href="#">Suivant</a></li></ul></nav></div>');
               } else if(by_user && $('#projet_batimentExistant_' + field).length && (typeof value === 'string' || value instanceof String)) 
                 $('#projet_batimentExistant_' + field).val(value.trim());
               else if((typeof value === 'string' || value instanceof String) && value.trim())
@@ -727,7 +727,7 @@
                       $('#projet_batimentExistant_toitures_' + i2 + '_' + field2).val(value2.trim());
                       else if(field2 == 'photo' && value2 && value2.trim()) {
                         batiment_images[Object.keys(batiment_images).length] = {0: '{{ asset('') }}upload/' + value2};
-                        if(!$('#batiment_photo').length) $('#batimentNouveau_options p').append('<div id="batiment_photo" class="form-group form-group-sm"><img width="300" src="{{ asset('') }}upload/' + value2 + '"><nav style="margin-left:30%;" aria-label="Page navigation center-text"><ul class="pagination"><li class="page-item disabled"><a id="prev_batiment_image" class="page-link" href="#">Précédent</a></li><li class="page-item disabled"><a id="next_batiment_image" class="page-link" href="#">Suivant</a></li></ul></nav></div>');
+                        if(!$('#batiment_photo').length) $('#batimentNouveau_options p').append('<div id="batiment_photo" class="form-group form-group-sm"><img style="max-width: 100%;" src="{{ asset('') }}upload/' + value2 + '"><nav style="margin-left:30%;" aria-label="Page navigation center-text"><ul class="pagination"><li class="page-item disabled"><a id="prev_batiment_image" class="page-link" href="#">Précédent</a></li><li class="page-item disabled"><a id="next_batiment_image" class="page-link" href="#">Suivant</a></li></ul></nav></div>');
                       }
                   });
                 });
