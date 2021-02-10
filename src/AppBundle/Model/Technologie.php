@@ -52,12 +52,12 @@ class Technologie
                 ]
             ],
             self::TECHNOLOGIE_DEUX => [
-                'Type1 (100m-0,8Mw)' => [
+                'Type1 (50m-0,8Mw)' => [
                     'Marque' => 'Enercon',  
-                    'Modèle' => '300W', 
+                    'Modèle' => 'E53', 
                     'Puissance nominale (Mw)' => '0,8', 
-                    'Hauteur mat (m)' => '100', 
-                    'Diamètre rotor (m)' => '53', 
+                    'Hauteur mat (m)' => '50', 
+                    'Diamètre rotor (m)' => '52,9', 
                     'Hauteur totale(m)' => ''
                 ],
                 'Type2 (59m-1Mw)' => [
