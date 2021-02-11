@@ -20,8 +20,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class UserEditType extends AbstractType
 {
+    private $user = 0;
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->user = $options['user'];
         $builder
             ->add('enabled', ChoiceType::class, [
                 'choices' => [
@@ -61,7 +63,7 @@ class UserEditType extends AbstractType
                 'multiple' => true,
                 'label' => 'Secteurs',
                 'query_builder' => function (EntityRepository $er) {
-                    $departements = $er->getFindUsersAssignedDepartments();
+                    $departements = $er->getFindUsersAssignedDepartments($this->user);
                     if($departements) return $er->createQueryBuilder('d')
                     ->where('d NOT IN (:departements)')
                     ->orderBy('d.nom', 'ASC')
@@ -92,6 +94,7 @@ class UserEditType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => 'AppBundle\Entity\User',
+            'user' => false
         ]);
     }
 }

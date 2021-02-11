@@ -34,6 +34,19 @@ class UserController extends Controller
             'users' => $users,
         ]);
     }
+    /**
+     * @Route("/secteurs", name="user_secteur")
+     */
+    public function secteurAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $users = $em->getRepository('AppBundle:User')
+                    ->findAll();
+
+        return $this->render('user/secteur.html.twig', [
+            'users' => $users,
+        ]);
+    }
 
     /**
      * @Route("/nouveau", name="user_new")
@@ -68,7 +81,10 @@ class UserController extends Controller
     {
         $userManager = $this->get('AppBundle\Manager\UserManager');
 
-        $form = $this->createForm(UserEditType::class, $user);
+        $form = $this->createForm(UserEditType::class, $user, array(
+            'data_class' => 'AppBundle\Entity\User',
+            'user' => $user->getId(),
+        ));
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

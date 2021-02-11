@@ -53,7 +53,7 @@ class UserType extends AbstractType
                 'multiple' => true,
                 'label' => 'Secteurs',
                 'query_builder' => function (EntityRepository $er) {
-                    $departements = $er->getFindUsersAssignedDepartments();
+                    $departements = $er->getFindUsersAssignedDepartments(0);
                     if($departements) return $er->createQueryBuilder('d')
                     ->where('d NOT IN (:departements)')
                     ->orderBy('d.nom', 'ASC')

@@ -26,15 +26,24 @@ class DepartementRepository extends EntityRepository
         return $query->getQuery()->getResult();
     }
 
-    public function getFindUsersAssignedDepartments()
+    public function getFindUsersAssignedDepartments($user)
     {
+        if($user) {
+            return $this->createQueryBuilder('d')
+                ->select('d')
+                ->join('d.users', 'u')
+                ->where('u.id != :user')
+                ->setParameter('user', $user)
+                ->getQuery()
+                ->getResult();
+            ;
+        }
         return $this->createQueryBuilder('d')
-                    ->select('d')
-                    ->join('d.users', 'u')
-                    // ->where('u.departements IS NOT NULL')
-                    ->getQuery()
-                    ->getResult();
-                ;
+            ->select('d')
+            ->join('d.users', 'u')
+            ->getQuery()
+            ->getResult();
+        ;
 
     }
 }
