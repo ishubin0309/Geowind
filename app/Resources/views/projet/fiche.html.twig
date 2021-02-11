@@ -43,7 +43,7 @@
 
 
 <div style="text-align: right;">
-  <img src="{{ asset('images/' ~ projet.typeProjet ~ '_large.jpg') }}" style="height: 25mm; float: left;">
+  {# <img src="{{ asset('images/' ~ projet.typeProjet ~ '_large.jpg') }}" style="height: 25mm; float: left;"> #}
   <img src="{{ asset('images/logo.jpg') }}" style="width: 100mm;">
 </div>
 
@@ -56,7 +56,9 @@
 </div>
 
 <div style="position: fixed; bottom: 0mm;">
+{% if image_path %}
 <img src="{{ image_path }}" >
+{% endif %}
 <div class="text-center" autosize="1" style="margin-top: 2mm; font-size: 11pt;">Exporté le {{ date|date('m/d/Y') }}</div>
 </div>
 

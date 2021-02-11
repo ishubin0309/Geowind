@@ -583,13 +583,15 @@ class ProjetController extends Controller
         $dirDest = $this->getParameter('cartes_fiche_dir');
         $pathDest = $dirDest . '/' . $projet->getPhotoImplantation() . '.jpg';
         
-        if (!file_exists($pathDest)) {
+        /* if (!file_exists($pathDest)) {
             $image = new Imagick($path);
             $image->setImageFormat('jpeg');
             $image->setCompressionQuality(70);
             $image->scaleImage(2480, 0);
             $image->writeImage($pathDest);
-        }
+        } */
+        if($projet->getPhotoImplantation()) $imagePath = $path;
+        else $imagePath = '';
         
         $date = new DateTime('now');
         $mpdf = new mPDF('utf-8', 'A4', '', '', 10, 10, 10, 10);
@@ -605,7 +607,7 @@ class ProjetController extends Controller
             'projet' => $projet,
             'phases' => $phases,
             'date' => $date,
-            'image_path' => $path,
+            'image_path' => $imagePath,
             'carte_path' => $cartePath,
         ]);
 
