@@ -95,12 +95,18 @@
     </tr>
     <tr>
       <td>Origine</td>
-      <td><strong>{{ projet.origine }}</strong><br><span>{{ projet.origine.telephone }}<br>{{ projet.origine.email }}</span></td>
+      <td><strong>{{ projet.origine }}</strong><br><span>{{ projet.origineTelephone }}<br>{{ projet.origine.email }}</span></td>
     </tr>
     <tr class="tr-bs">
       <td>Chef de projet</td>
-      <td>{{ projet.chefProjet }}<br><span>{{ projet.chefProjet.telephone }}<br>{{ projet.chefProjet.email }}</span></td>
+      <td>{{ projet.chefProjet }}<br><span>{{ projet.chefProjetTelephone }}<br>{{ projet.chefProjet.email }}</span></td>
     </tr>
+    {% if projet.mairie %}
+    <tr class="tr-bs">
+      <td>Mairie</td>
+      <td>{{ projet.mairie }}<br><span>{{ projet.mairie.telephone }}{% if projet.mairie.email1 %}<br>{{ projet.mairie.email1 }}{% endif %}{% if projet.mairie.email2 %}<br>{{ projet.mairie.email2 }}{% endif %}{% if projet.mairie.email3 %}<br>{{ projet.mairie.email3 }}{% endif %}{% if projet.mairie.email4 %}<br>{{ projet.mairie.email4 }}{% endif %}{% if projet.mairie.email5 %}<br>{{ projet.mairie.email5 }}{% endif %}</span></td>
+    </tr>
+    {% endif %}
     <tr>
       <th colspan="2" class="th-section" class="th-section">Situation administrative</th>
     </tr>
