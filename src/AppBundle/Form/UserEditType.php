@@ -62,10 +62,12 @@ class UserEditType extends AbstractType
                 'label' => 'Secteurs',
                 'query_builder' => function (EntityRepository $er) {
                     $departements = $er->getFindUsersAssignedDepartments();
-                    return $er->createQueryBuilder('d')
-                        ->where('d NOT IN (:departements)')
-                        ->orderBy('d.nom', 'ASC')
-                        ->setParameter('departements', $departements);
+                    if($departements) return $er->createQueryBuilder('d')
+                    ->where('d NOT IN (:departements)')
+                    ->orderBy('d.nom', 'ASC')
+                    ->setParameter('departements', $departements);
+                    else return $er->createQueryBuilder('d')
+                    ->orderBy('d.nom', 'ASC');
                 },
             ])
             ->add('latitude', NumberType::class, [
