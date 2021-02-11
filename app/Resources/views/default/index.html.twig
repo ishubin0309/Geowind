@@ -10,14 +10,33 @@
     <link rel="stylesheet" href="{{ asset('css/theme.css') }}?v=201711200000">
   </head>
   <body>
+    {# <nav class="navbar navbar-default primary-navbar">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+            <a class="navbar-brand" href="{{ path('homepage') }}"><img src="" alt=""></a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="{{ path('homepage') }}">Accès pépinière</a></li>
+            <li><a href="{{ path('cartographie') }}">Accès parcs éoliens</a></li>
 
+          </ul>
+        </div>
+      </div>
+    </nav> #}
     <!-- Navigation -->
-    <a id="menu-toggle" href="#" class="btn btn-dark btn-lg toggle"><i class="fa fa-bars"></i></a>
+   <a id="menu-toggle" href="#" class="btn btn-dark btn-lg toggle"><i class="fa fa-bars"></i></a>
     <nav id="sidebar-wrapper">
       <ul class="sidebar-nav">
         <a id="menu-close" href="#" class="btn btn-light btn-lg pull-right toggle"><i class="fa fa-times"></i></a>
         <li class="sidebar-brand">
-          <a href="#top" class="jumpto" onclick=$("#menu-close").click();>Climactif</a>
+          <a href="#missions" class="jumpto" onclick=$("#menu-close").click();>Climactif</a>
         </li>
         <li>
           <a href="#missions" class="jumpto" onclick=$("#menu-close").click();>Nos missions</a>
@@ -38,9 +57,9 @@
     </header> #}
 
 
-
-    <img src="{{ asset('images/background.jpg') }}" style="width: inherit;" alt="Nos missions">
-    <img src="{{ asset('images/mission.jpg') }}" style="width: inherit;" alt="Nos missions">
+    <section id="missions" class="col-sm-12">
+      <img src="{{ asset('images/mission.jpg') }}" style="width: inherit;" alt="Nos missions">
+    </section>
     {# <section id="missions" class="services bg-primary">
       <div class="container">
         
