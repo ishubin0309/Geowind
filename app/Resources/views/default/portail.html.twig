@@ -15,8 +15,9 @@
     {% endif %}
     <a id="button-show" class="btn btn-primary btn-sm disabled"><i class="fa fa-fw fa-eye"></i> Afficher</a>
     <a id="button-export" class="btn btn-primary btn-sm disabled"><i class="fa fa-fw fa-file-excel-o"></i> CSV</a>
-    <button id="button-delete" class="btn btn-danger btn-sm" disabled data-placement="right" title="Double click"><i class="fa fa-fw fa-trash"></i> Supprimer</button>
+    <a id="button-pdf" class="btn btn-primary btn-sm disabled"><i class="fa fa-fw fa-file-excel-o"></i> PDF</a>
     <a id="button-edit" class="btn btn-warning btn-sm disabled"><i class="fa fa-fw fa-pencil"></i> Editer</a>
+    <button id="button-delete" class="btn btn-danger btn-sm" disabled data-placement="right" title="Double click"><i class="fa fa-fw fa-trash"></i> Supprimer</button>
     {% if is_granted('ROLE_EDIT_ALL') and liste.id is defined %}
       <button id="button-liste-delete" class="btn btn-danger btn-sm" title="Double click"><i class="fa fa-fw fa-trash"></i> Supprimer Liste</button>
     {% endif %}
@@ -343,6 +344,7 @@
         if (selected > 1) {
           $('#button-delete').prop('disabled', false);
           $('#button-edit').addClass('disabled');
+          $('#button-pdf').addClass('disabled');
           $('#button-show').removeClass('disabled');
           $('#button-export').removeClass('disabled');
           $('#button-show').attr('href', Routing.generate('projet_index', { show: ids.join() }));
@@ -356,6 +358,8 @@
           if (item.canEdit) {
             $('#button-edit').removeClass('disabled');
             $('#button-edit').attr('href', Routing.generate('projet_edit', { id: id }));
+            $('#button-pdf').removeClass('disabled');
+            $('#button-pdf').attr('href', Routing.generate('projet_pdf', { id: id }));
           }
 
           $('#button-show').removeClass('disabled');
@@ -365,6 +369,7 @@
         } else {
           $('#button-delete').prop('disabled', true);
           $('#button-edit').addClass('disabled');
+          $('#button-pdf').addClass('disabled');
           $('#button-show').addClass('disabled');
           $('#button-export').addClass('disabled');
         }
