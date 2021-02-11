@@ -1,0 +1,275 @@
+<style>
+  
+  body {
+    font-family: DejaVuSans;
+    font-size: 11pt;
+  }
+  
+  table {
+    width: 100%;
+    margin-bottom: 4mm;
+  }
+  
+  th {
+    text-align: left;
+  }
+  
+  td, th {
+    padding-top: 1mm;
+    padding-bottom: 1mm;
+    vertical-align: top;
+  }
+  
+  th.th-section {
+    padding: 2mm;
+    background: #8ca52d;
+    color: #fff;
+  }
+  
+  tr.tr-bs td {
+    padding-bottom: 4mm;
+  }
+  
+  .text-center {
+    text-align: center;
+  }
+
+  .t2 td, .t2 th {
+    vertical-align: middle;
+  }
+
+  
+</style>
+
+
+<div style="text-align: right;">
+  <img src="{{ asset('images/' ~ projet.typeProjet ~ '_large.jpg') }}" style="height: 25mm; float: left;">
+  <img src="{{ asset('images/logo.jpg') }}" style="width: 100mm;">
+</div>
+
+<div style="width: 70%; text-align: center; margin: auto; margin-top: 30mm;">
+<h1 style="text-align: center; font-size: 28pt;">{{ projet.denomination|upper }}</h1>
+<h2>{{ projet.departement }} ({{ projet.departement.code }}), {{ projet.departement.region }}</h2>
+{% if carte_path %}
+<img style="width: 50%;border: 3px solid #007100;" src="{{ carte_path }}" >
+{% endif %}
+</div>
+
+<div style="position: fixed; bottom: 0mm;">
+<img src="{{ image_path }}" >
+<div class="text-center" autosize="1" style="margin-top: 2mm; font-size: 11pt;">Exporté le {{ date|date('m/d/Y') }}</div>
+</div>
+
+<pagebreak>
+
+<table class="table table-super-condensed table-bordered table-hover" autosize="1">
+  <tbody>
+    <tr>
+      <th colspan="2" class="th-section" class="th-section">Information générale</th>
+    </tr>
+    <tr>
+      <td style="width: 50mm">Date de création</td>
+      <td>{{ projet.dateCreation|date('d/m/Y') }}</td>
+    </tr>
+    <tr>
+      <td>Date de mise à jour</td>
+      <td>{{ projet.updatedAt|date('d/m/Y') }}</td>
+    </tr>
+    <tr>
+      <td>Dénomination</td>
+      <td>{{ projet.denomination }}</td>
+    </tr>
+    <tr>
+      <td>Type de projet</td>
+      <td>
+        {% set typeProjets = projet.typeProjetList %}
+        {% if typeProjets[projet.typeProjet] is defined %}{{ typeProjets[projet.typeProjet] }}{% else %}{{ projet.typeProjet }}{% endif %}
+      </td>
+    </tr>
+    <tr>
+      <td>Type de Bien</td>
+      <td>
+      {% set typeSites = projet.typeSiteList %}
+      {% if typeSites[projet.typeSite] is defined %}{{ typeSites[projet.typeSite] }}{% else %}{{ projet.typeSite }}{% endif %}
+      </td>
+    </tr>
+    <tr>
+      <td>Origine</td>
+      <td><strong>{{ projet.origine }}</strong><br><span>{{ projet.origine.telephone }}<br>{{ projet.origine.email }}</span></td>
+    </tr>
+    <tr class="tr-bs">
+      <td>Chef de projet</td>
+      <td>{{ projet.chefProjet }}<br><span>{{ projet.chefProjet.telephone }}<br>{{ projet.chefProjet.email }}</span></td>
+    </tr>
+    <tr>
+      <th colspan="2" class="th-section" class="th-section">Situation administrative</th>
+    </tr>
+    <tr>
+      <td>Région</td>
+      <td>{{ projet.departement.region }}</td>
+    </tr>
+    <tr>
+      <td>Département</td>
+      <td>{{ projet.departement }}</td>
+    </tr>
+    <tr class="tr-bs">
+      <td>Commune(s)</td>
+      <td>
+        {% for commune in projet.communes %}
+          {{ commune }}<br>
+        {% endfor %}
+      </td>
+    </tr>
+    <tr>
+      <th colspan="2" class="th-section">Situation géographique</th>
+    </tr>
+    <tr>
+      <td>Latitude</td>
+      <td>{{ projet.latitude }}</td>
+    </tr>
+    <tr class="tr-bs">
+      <td>Longitude</td>
+      <td>{{ projet.longitude }}</td>
+    </tr>
+    <tr>
+      <th colspan="2" class="th-section"><span class="th-title">Descriptif</span></th>
+    </tr>
+    <tr>
+      <td>Type de milieu</td>
+      <td>{{ projet.environnement|environnement_format }}</td>
+    </tr>
+    <tr>
+      <td>Potentiel (MW)</td>
+      <td>{{ projet.potentiel }}</td>
+    </tr>
+    <tr>
+      <th colspan="2" class="th-section">Avancement</th>
+    </tr>
+    <tr>
+      <th>Phase</th>
+      <td>{% if phases[projet.phase] is defined %}{{ phases[projet.phase] }}{% else %}{{ projet.phase }}{% endif %}</td>
+    </tr>
+    <tr>
+      <th>Etat</th>
+      <td>{{ projet.progression|progression_format }}</td>
+    </tr>
+  </tbody>
+</table>
+<table class="t2" style="page-break-inside: avoid;" autosize="1">
+  <thead>
+    <tr>
+      <th colspan="7" class="th-section">Parcelles</th>
+    </tr>
+    <tr>
+      <th class="column-fit">Parcelle</th>
+      <th class="column-fit">Département</th>
+      <th>Commune</th>
+      <th>Lieu-dit</th>
+      <th>Surface (m²)</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for parcelle in projet.parcelles %}
+    <tr>
+      <td>{{ parcelle.nom }}</td>
+      <td>{{ parcelle.departement }}</td>
+      <td>{{ parcelle.commune }}</td>
+      <td>{{ parcelle.lieuDit }}</td>
+      <td>{{ parcelle.surface }}</td>
+      <td>{{ parcelle.note }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<table style="page-break-inside: avoid;" autosize="1">
+  <tbody>
+    <tr>
+      <th colspan="2" class="th-section">Commentaires</th>
+    </tr>
+    <tr>
+      <td colspan="2">
+        {{ projet.commentaires ? projet.commentaires|nl2br : 'N/A' }}
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+{% if projet.finances is not empty %}
+<table class="t2" style="page-break-inside: avoid;" autosize="1">
+  <thead>
+    <tr>
+      <th colspan="7" class="th-section">Commandes<i class="fa fa-euro"></i></th>
+    </tr>
+    <tr>
+      <th>Phase</th>
+      <th class="column-fit">Engagé (€HT)</th>
+      <th class="column-fit">Payé (€HT)</th>
+      <th>BE</th>
+      <th>Date commande</th>
+      <th>Date d’échéance</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for finance in projet.finances %}
+      <tr>
+        <td colspan="7"><strong>{{ finance.titre }}</strong></td>
+      </tr>
+      <tr>
+        <td>{{ finance.phase|capitalize }}</td>
+        <td class="column-fit">{{ finance.montantEngage }}</td>
+        <td class="column-fit">{{ finance.montantPaye }}</td>
+        <td>{{ finance.bureau }}</td>
+        <td>{{ finance.dateEngmt|date('d/m/Y') }}</td>
+        <td>{{ finance.dateEcheance is not null ? finance.dateEcheance|date('d/m/Y') }}</td>
+      </tr>
+      {% endfor %}
+  </tbody>
+</table>
+{% endif %}
+      
+{% if projet.proprietaires is not empty %}
+<table class="t2" style="page-break-inside: avoid;" autosize="1">
+  <thead>
+    <tr>
+      <th colspan="7" class="th-section">Foncier</th>
+    </tr>
+    <tr>
+      <th></th>
+      <th>Identité</th>
+      <th>Accords</th>
+      <th>Signature</th>
+      <th>Echéance</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    {% for proprietaire in projet.proprietaires %}
+    <tr class="proprietaire_entry">
+      <th>{{ proprietaire.parcelles }}<br>Propriétaire</th>
+      <td>
+        {{ proprietaire.proprietaire }}<br>
+        {{ proprietaire.telephoneProprietaire }}<br>
+        {{ proprietaire.adresseProprietaire }}<br>
+        {{ proprietaire.emailProprietaire }}
+      </td>
+      <td>{{ proprietaire.accordProprietaire }}</td>
+      <td>{{ proprietaire.dateSignatureProprietaire is not null ? proprietaire.dateSignatureProprietaire|date('m/d/Y') }}</td>
+      <td>{{ proprietaire.dateEcheanceProprietaire is not null ? proprietaire.dateEcheanceProprietaire|date('m/d/Y') }}</td>
+    </tr>
+    <tr class="proprietaire_entry">
+      <th>{{ proprietaire.parcelles }}<br>Exploitant</th>
+      <td>
+        {{ proprietaire.exploitant }}<br>
+        {{ proprietaire.telephoneExploitant }}<br>
+        {{ proprietaire.adresseExploitant }}<br>
+        {{ proprietaire.emailExploitant }}
+      </td>
+      <td>{{ proprietaire.accordExploitant }}</td>
+      <td>{{ proprietaire.dateSignatureExploitant is not null ? proprietaire.dateSignatureExploitant|date('m/d/Y') }}</td>
+      <td>{{ proprietaire.dateEcheanceExploitant is not null ? proprietaire.dateEcheanceExploitant|date('m/d/Y') }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+  {% endif %}
