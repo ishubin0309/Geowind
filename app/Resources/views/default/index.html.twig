@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Geowind</title>
+    <title>Climactif</title>
     <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
     <link rel="stylesheet" href="{{ asset('vendor/bootstrap-3.3.7-dist/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('vendor/font-awesome-4.7.0/css/font-awesome.min.css') }}">
@@ -17,7 +17,7 @@
       <ul class="sidebar-nav">
         <a id="menu-close" href="#" class="btn btn-light btn-lg pull-right toggle"><i class="fa fa-times"></i></a>
         <li class="sidebar-brand">
-          <a href="#top" class="jumpto" onclick=$("#menu-close").click();>Geowind</a>
+          <a href="#top" class="jumpto" onclick=$("#menu-close").click();>Climactif</a>
         </li>
         <li>
           <a href="#missions" class="jumpto" onclick=$("#menu-close").click();>Nos missions</a>
@@ -32,18 +32,18 @@
     </nav>
 
     <!-- Header -->
-    <header id="top" class="header">
+    {# <header id="top" class="header">
       <div class="text-vertical-center">
-       {# <a href="#missions" class="jumpto btn btn-dark btn-lg">Nos missions</a>
-        <a href="{{ path('login') }}" class="btn btn-dark btn-lg">Accéder</a>#}
       </div>
-    </header>
+    </header> #}
 
 
 
-
-    <section id="missions" class="services bg-primary">
+    <img src="{{ asset('images/background.jpg') }}" style="width: inherit;" alt="Nos missions">
+    <img src="{{ asset('images/mission.jpg') }}" style="width: inherit;" alt="Nos missions">
+    {# <section id="missions" class="services bg-primary">
       <div class="container">
+        
         <div class="row">
           <div class="col-lg-10 col-lg-offset-1">
             <h2 class="text-center">Nos missions</h2>
@@ -90,7 +90,7 @@
         <!-- /.row -->
       </div>
       <!-- /.container -->
-    </section>
+    </section> #}
 
 
     <!-- Footer -->
