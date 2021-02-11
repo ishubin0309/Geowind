@@ -181,13 +181,14 @@
         
       });
   }
+  $('#user_departements').select2();
   var last_reverse_search = null;
-  $('#user_departement').change(function() {
+  $('#user_departements').change(function() {
     
     var nominatimUrl = 'https://nominatim.openstreetmap.org/search';
     $input = $(this);
 
-    var query = $('#user_departement option:selected').text().trim();
+    var query = $('#user_departements option:selected:last').text().trim();
     if(query && last_reverse_search != query) {
       last_reverse_search = query;
       reverseGeolocalisation(query, true);
@@ -198,7 +199,7 @@
     }
     
   });
-  if(!default_lat) $('#user_departement').change();
+  if(!default_lat) $('#user_departements').change();
 
   $('#user_nom, #user_prenom').keyup(function() {
     prenom = $('#user_prenom').val();

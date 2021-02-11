@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
@@ -103,11 +104,11 @@ class User implements AdvancedUserInterface, \Serializable
     private $telephone;
 
     /**
-     * @var Departement
+     * @var ArrayCollection|Departement[]
      *
-     * @ORM\ManyToOne(targetEntity="Departement")
+     * @ORM\ManyToMany(targetEntity="Departement", inversedBy="users")
      */
-    private $departement;
+    private $departements;
 
     /**
      * @var string
@@ -155,6 +156,7 @@ class User implements AdvancedUserInterface, \Serializable
     public function __toString()
     {
         return strtoupper($this->nom) . ' ' . $this->prenom;
+        $this->departements = new ArrayCollection();
     }
 
     /**
@@ -400,20 +402,32 @@ class User implements AdvancedUserInterface, \Serializable
     }
 
     /**
-     * @return Departement
+     * @return ArrayCollection|Departement[]
      */
-    public function getDepartement()
+    public function getDepartements()
     {
-        return $this->departement;
+        return $this->departements;
     }
 
     /**
      * @param \AppBundle\Entity\Departement $departement
+     */
+    public function addDepartement(Departement $departement)
+    {
+        $this->departements[] = $departement;
+        if (!$this->departements->contains($departement)) {
+            $this->departements[] = $departement;
+        }
+        return $this;
+    }
+
+    /**
+     * @param ArrayCollection $departements
      * @return \AppBundle\Entity\Projet
      */
-    public function setDepartement(Departement $departement)
+    public function setDepartements(ArrayCollection $departements)
     {
-        $this->departement = $departement;
+        $this->departements = $departements;
         return $this;
     }
 

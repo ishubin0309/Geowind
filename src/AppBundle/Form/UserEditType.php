@@ -55,13 +55,17 @@ class UserEditType extends AbstractType
                 'label' => 'Téléphone',
                 'required' => true,
             ])
-            ->add('departement', EntityType::class, [
+            ->add('departements', EntityType::class, [
                 'class' => 'AppBundle:Departement',
                 'required' => true,
+                'multiple' => true,
                 'label' => 'Secteur',
                 'query_builder' => function (EntityRepository $er) {
+                    $departements = $er->getFindUsersAssignedDepartments();
                     return $er->createQueryBuilder('d')
-                        ->orderBy('d.nom', 'ASC');
+                        ->where('d NOT IN (:departements)')
+                        ->orderBy('d.nom', 'ASC')
+                        ->setParameter('departements', $departements);
                 },
             ])
             ->add('latitude', NumberType::class, [

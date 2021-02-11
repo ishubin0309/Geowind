@@ -87,11 +87,13 @@
               <td>Origine</td>
               <td>{{ form_widget(form.origineTelephone) }}</td>
             </tr>
+            {# {% if is_granted('ROLE_ADMIN') %} #}
             <tr>
               <td class="required">{{ form_widget(form.chefProjet, {'attr': {'style': 'width:100%'}}) }}</td>
               <td>Chef projet</td>
               <td>{{ form_widget(form.chefProjetTelephone) }}</td>
             </tr>
+            {# {% endif %} #}
             <tr>
               <td class="required">{{ form_widget(form.partenaire, {'attr': {'style': 'width:100%'}}) }}</td>
               <td>Partenaire</td>

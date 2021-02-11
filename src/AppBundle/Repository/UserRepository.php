@@ -16,17 +16,17 @@ class UserRepository extends EntityRepository
 
     public function getFindAllQueryBuilder()
     {
-        return $this->createQueryBuilder('r')
-                    ->select('r')
-                    ->orderBy('r.nom', 'ASC')
+        return $this->createQueryBuilder('u')
+                    ->select('u')
+                    ->orderBy('u.nom', 'ASC')
                 ;
 
     }
 
     public function getFindAllTelephones()
     {
-        return $this->createQueryBuilder('r')
-                    ->select('r.id, r.telephone')
+        return $this->createQueryBuilder('u')
+                    ->select('u.id, u.telephone')
                     ->getQuery()
                     ->getResult()
                 ;

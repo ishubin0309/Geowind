@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -42,6 +43,18 @@ class Departement
      * @ORM\ManyToOne(targetEntity="Region")
      */
     private $region;
+
+    /**
+     * @var ArrayCollection|User[]
+     *
+     * @ORM\ManyToMany(targetEntity="User", mappedBy="departements")
+     */
+    private $users;
+
+    public function __construct()
+    {
+        $this->users = new ArrayCollection();
+    }
 
     /**
      * @return int
@@ -102,6 +115,24 @@ class Departement
     public function setRegion(Region $region)
     {
         $this->region = $region;
+        return $this;
+    }
+
+    /**
+     * @return ArrayCollection|User[]
+     */
+    public function getUsers()
+    {
+        return $this->users;
+    }
+
+    /**
+     * @param ArrayCollection $users
+     * @return \AppBundle\Entity\Departement
+     */
+    public function setUsers(ArrayCollection $users)
+    {
+        $this->users = $users;
         return $this;
     }
 

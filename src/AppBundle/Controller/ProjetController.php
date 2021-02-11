@@ -357,12 +357,12 @@ class ProjetController extends Controller
 
         $projet = new Projet();
         $projet->setOrigine($this->getUser());
-        $projet->setChefProjet($this->getUser());
-        // $projet->setPartenaire($this->getUser());
         $telephone = $this->getUser()->getTelephone();
         $projet->setOrigineTelephone($telephone);
-        $projet->setChefProjetTelephone($telephone);
-        // $projet->setPartenaireTelephone($telephone);
+        // if ($this->isGranted('ROLE_ADMIN')) {
+            $projet->setChefProjet($this->getUser());
+            $projet->setChefProjetTelephone($telephone);
+        // }
 
         $form = $this->createForm(ProjetType::class, $projet);
         $form->handleRequest($request);
