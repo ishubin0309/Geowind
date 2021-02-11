@@ -51,13 +51,13 @@
 <h1 style="text-align: center; font-size: 28pt;">{{ projet.denomination|upper }}</h1>
 <h2>{{ projet.departement }} ({{ projet.departement.code }}), {{ projet.departement.region }}</h2>
 {% if carte_path %}
-<img style="width: 50%;border: 3px solid #007100;" src="{{ carte_path }}" >
+<img style="width: 40%;border: 3px solid #007100;" src="{{ carte_path }}" >
 {% endif %}
 </div>
 
 <div style="position: fixed; bottom: 0mm;">
 {% if image_path %}
-<img src="{{ image_path }}" >
+<img style="max-height:400px;" src="{{ image_path }}" >
 {% endif %}
 <div class="text-center" autosize="1" style="margin-top: 2mm; font-size: 11pt;">Exporté le {{ date|date('m/d/Y') }}</div>
 </div>
