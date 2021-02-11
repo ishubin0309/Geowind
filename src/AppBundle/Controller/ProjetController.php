@@ -594,11 +594,19 @@ class ProjetController extends Controller
         $date = new DateTime('now');
         $mpdf = new mPDF('utf-8', 'A4', '', '', 10, 10, 10, 10);
 
+        @unlink($dirDest . '/'.$projet->getDenomination().'.png');
+        $this->createMapImage($projet->getLatitude(), $projet->getLongitude(), $projet->getDenomination());
+        if(file_exists($dirDest . '/'.$projet->getDenomination().'.png'))
+            $cartePath = $dirDest . '/'.$projet->getDenomination().'.png';
+        else '';
+        $phases = EtatModel::getPhaseList();
         $html = $this->renderView('projet/fiche.html.twig', [
             'show' => null,
             'projet' => $projet,
+            'phases' => $phases,
             'date' => $date,
-            'image_path' => $pathDest,
+            'image_path' => $path,
+            'carte_path' => $cartePath,
         ]);
 
         $name = str_replace(['\\', '/'], ['', ''], $projet->getDenomination());
@@ -683,5 +691,125 @@ class ProjetController extends Controller
         $response = new JsonResponse();
         $response->setData(['success' => 1]);
         return $response;
+    }
+
+    private function createMapImage($lat1, $lng1, $projetNom)
+    {
+        $dirDest = $this->getParameter('cartes_fiche_dir');
+        $zoom = 6;
+        //from https://wiki.openstreetmap.org/wiki/Slippy_map_tilenames#X_and_Y
+        //convert lat/lng to x/y tile coords
+        $x1 = floor((($lng1 + 180) / 360) * pow(2, $zoom));
+        $y1 = floor((1 - log(tan(deg2rad($lat1)) + 1 / cos(deg2rad($lat1))) / pi()) / 2 * pow(2, $zoom));
+
+        $startX = $x1-1;
+        $startY = $y1-1;
+
+        if($startX<0)
+        {
+            $startX = 0;
+        }
+        if($startY<0)
+        {
+            $startY = 0;
+        }
+
+        $endX = $x1+1;
+        $endY = $y1+1;
+
+        if($endX>(pow(2,$zoom))-1)
+        {
+            $endX = (pow(2,$zoom))-1;
+        }
+        if($endY>(pow(2,$zoom))-1)
+        {
+            $endY = (pow(2,$zoom))-1;
+        }
+
+        if(($endX-$startX+1)*($endY-$startY+1)>=50)
+        {
+            //https://operations.osmfoundation.org/policies/tiles/#bulk-downloading
+            //terms of use state: In particular, downloading an area of over 250 tiles at zoom level 13 or higher for offline or later usage is forbidden
+            //we're going to be a lot more strict here
+            throw new Exception('Zoom level is too high, please reduce');
+        }
+
+        if(!is_dir($dirDest."/tiles"))
+        {
+            mkdir($dirDest."/tiles",0755);
+        }
+
+        for($x=$startX;$x<=$endX;$x++)
+        {
+            for($y=$startY;$y<=$endY;$y++)
+            {
+            $file = $dirDest . "/tiles/${zoom}_${x}_${y}.png";
+            if(!is_file($file) || filemtime($file) < time() - (86400 * 30))
+            {
+                $server = array();
+                $server[] = 'a.tile.openstreetmap.org';
+                $server[] = 'b.tile.openstreetmap.org';
+                $server[] = 'c.tile.openstreetmap.org';
+
+                $url = 'http://'.$server[array_rand($server)];
+                $url .= "/".$zoom."/".$x."/".$y.".png";
+
+                $ch = curl_init($url);
+                $fp = fopen($file, 'wb');
+                curl_setopt($ch, CURLOPT_FILE, $fp);
+                curl_setopt($ch, CURLOPT_HEADER, 0);
+                $userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:85.0) Gecko/20100101 Firefox/85.0';
+                curl_setopt($ch,CURLOPT_USERAGENT,$userAgent);
+                curl_exec($ch);
+                curl_close($ch);
+                fflush($fp);    // need to insert this line for proper output when tile is first requested
+                fclose($fp);
+            }
+            }
+        }
+
+        //now stitch all tiles into 1 image
+        $tileWidth = 0;
+        $tileHeight = 0;
+
+        $map = new Imagick();
+        $cols = array();
+        for($x=$startX;$x<=$endX;$x++)
+        {
+            $col = new Imagick();
+            for($y = $startY; $y <= $endY; $y ++)
+            {
+            $col->readImage($dirDest . "/tiles/${zoom}_${x}_${y}.png");
+            if($tileWidth===0)
+            {
+                $tileWidth = $col->getImageWidth();
+                $tileHeight = $col->getImageHeight();
+            }
+            }
+            $col->resetIterator();
+            $cols[] = $col->appendImages(true);
+        }
+        foreach($cols as $col)
+        {
+            $map->addImage($col);
+        }
+        $map->resetIterator();
+        $map = $map->appendImages(false);
+
+        //calculate the pixel point of the lat lng
+        $x1 = $tileWidth*(((($lng1 + 180) / 360) * pow(2, $zoom))-$startX);
+        $y1 = $tileHeight*(((1 - log(tan(deg2rad($lat1)) + 1 / cos(deg2rad($lat1))) / pi()) / 2 * pow(2, $zoom))-$startY);
+
+        if(file_exists($dirDest . '/../images/map-marker.png'))
+        {
+            $icon = new Imagick($dirDest . '/../images/map-marker.png');
+            $icon->scaleImage(50,50,true);
+            $markerX = $x1-($icon->getImageWidth()/2);
+            $markerY = $y1-$icon->getImageHeight();
+            $map->compositeImage($icon->clone(),$icon::COMPOSITE_DEFAULT,$markerX,$markerY);
+        }
+
+        $map->setImageFormat('png');
+        $map->writeImage($dirDest . '/'.$projetNom.'.png');
     }
 }

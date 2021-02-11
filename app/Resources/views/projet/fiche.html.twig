@@ -50,6 +50,7 @@
 <div style="width: 70%; text-align: center; margin: auto; margin-top: 30mm;">
 <h1 style="text-align: center; font-size: 28pt;">{{ projet.denomination|upper }}</h1>
 <h2>{{ projet.departement }} ({{ projet.departement.code }}), {{ projet.departement.region }}</h2>
+<img style="width: 50%;border: 3px solid #007100;" src="{{ carte_path }}" >
 </div>
 
 <div style="position: fixed; bottom: 0mm;">
@@ -77,18 +78,18 @@
       <td>{{ projet.denomination }}</td>
     </tr>
     <tr>
-      <td>Type</td>
+      <td>Type de projet</td>
       <td>
-        {% if projet.typeProjet == 'EOL' %}
-          <img src="{{ asset('images/eol.jpg') }}" alt="EOL" style="vertical-align: middle;">
-        {% elseif projet.typeProjet == 'PVS' %}
-          <img src="{{ asset('images/pvs.jpg') }}" alt="PVS" style="vertical-align: middle;">
-        {% elseif projet.typeProjet == 'BAT' %}
-          <img src="{{ asset('images/pvb.jpg') }}" alt="BAT" style="vertical-align: middle;">
-        {% else %}
-          {{ projet.typeProjet }}
-        {% endif %}
-        {{ projet.typeProjet }}</td>
+        {% set typeProjets = projet.typeProjetList %}
+        {% if typeProjets[projet.typeProjet] is defined %}{{ typeProjets[projet.typeProjet] }}{% else %}{{ projet.typeProjet }}{% endif %}
+      </td>
+    </tr>
+    <tr>
+      <td>Type de Bien</td>
+      <td>
+      {% set typeSites = projet.typeSiteList %}
+      {% if typeSites[projet.typeSite] is defined %}{{ typeSites[projet.typeSite] }}{% else %}{{ projet.typeSite }}{% endif %}
+      </td>
     </tr>
     <tr>
       <td>Origine</td>
@@ -132,7 +133,7 @@
       <th colspan="2" class="th-section"><span class="th-title">Descriptif</span></th>
     </tr>
     <tr>
-      <td>Environnement</td>
+      <td>Type de milieu</td>
       <td>{{ projet.environnement|environnement_format }}</td>
     </tr>
     <tr>
@@ -140,25 +141,45 @@
       <td>{{ projet.potentiel }}</td>
     </tr>
     <tr>
-      <th colspan="2" class="th-section">Faisabilité</th>
+      <th colspan="2" class="th-section">Avancement</th>
+    </tr>
+    <tr>
+      <th>Phase</th>
+      <td>{% if phases[projet.phase] is defined %}{{ phases[projet.phase] }}{% else %}{{ projet.phase }}{% endif %}</td>
     </tr>
     <tr>
       <th>Etat</th>
       <td>{{ projet.progression|progression_format }}</td>
     </tr>
-    {# <tr>
-      <th>Dates clés</th>
-      <td>{{ projet.dateCles is empty ? 'N/A' }}</td>
-    </tr>
-    {% for dateCle in projet.dateClesInversed %}
-    <tr>
-      <td>{{ dateCle.date|date('d/m/Y') }}</td>
-      <td>{{ dateCle.label }}</td>
-    </tr>
-    {% endfor %} #}
   </tbody>
 </table>
-  
+<table class="t2" style="page-break-inside: avoid;" autosize="1">
+  <thead>
+    <tr>
+      <th colspan="7" class="th-section">Parcelles</th>
+    </tr>
+    <tr>
+      <th class="column-fit">Parcelle</th>
+      <th class="column-fit">Département</th>
+      <th>Commune</th>
+      <th>Lieu-dit</th>
+      <th>Surface (m²)</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for parcelle in projet.parcelles %}
+    <tr>
+      <td>{{ parcelle.nom }}</td>
+      <td>{{ parcelle.departement }}</td>
+      <td>{{ parcelle.commune }}</td>
+      <td>{{ parcelle.lieuDit }}</td>
+      <td>{{ parcelle.surface }}</td>
+      <td>{{ parcelle.note }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
 <table style="page-break-inside: avoid;" autosize="1">
   <tbody>
     <tr>
@@ -176,16 +197,15 @@
 <table class="t2" style="page-break-inside: avoid;" autosize="1">
   <thead>
     <tr>
-      <th colspan="7" class="th-section">Finance<i class="fa fa-euro"></i></th>
+      <th colspan="7" class="th-section">Commandes<i class="fa fa-euro"></i></th>
     </tr>
     <tr>
+      <th>Phase</th>
       <th class="column-fit">Engagé (€HT)</th>
       <th class="column-fit">Payé (€HT)</th>
-      <th>Mission</th>
-      <th>Niveau</th>
       <th>BE</th>
-      <th>Engagement</th>
-      <th>Remise</th>
+      <th>Date commande</th>
+      <th>Date d’échéance</th>
     </tr>
   </thead>
   <tbody>
@@ -194,13 +214,12 @@
         <td colspan="7"><strong>{{ finance.titre }}</strong></td>
       </tr>
       <tr>
+        <td>{{ finance.phase|capitalize }}</td>
         <td class="column-fit">{{ finance.montantEngage }}</td>
         <td class="column-fit">{{ finance.montantPaye }}</td>
-        <td>{{ finance.mission|mission_format }}</td>
-        <td>{{ finance.niveau|niveau_format }}</td>
         <td>{{ finance.bureau }}</td>
         <td>{{ finance.dateEngmt|date('d/m/Y') }}</td>
-        <td>{{ finance.dateRemise is not null ? finance.dateRemise|date('d/m/Y') }}</td>
+        <td>{{ finance.dateEcheance is not null ? finance.dateEcheance|date('d/m/Y') }}</td>
       </tr>
       {% endfor %}
   </tbody>
