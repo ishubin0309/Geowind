@@ -59,7 +59,7 @@ class UserEditType extends AbstractType
                 'class' => 'AppBundle:Departement',
                 'required' => true,
                 'multiple' => true,
-                'label' => 'Secteur',
+                'label' => 'Secteurs',
                 'query_builder' => function (EntityRepository $er) {
                     $departements = $er->getFindUsersAssignedDepartments();
                     return $er->createQueryBuilder('d')
