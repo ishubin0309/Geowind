@@ -2,12 +2,12 @@
   
   body {
     font-family: DejaVuSans;
-    font-size: 11pt;
+    font-size: 8pt;
   }
   
   table {
     width: 100%;
-    margin-bottom: 4mm;
+    margin-bottom: 2mm;
   }
   
   th {
@@ -27,7 +27,7 @@
   }
   
   tr.tr-bs td {
-    padding-bottom: 4mm;
+    padding-bottom: 2mm;
   }
   
   .text-center {
@@ -47,19 +47,19 @@
   <img src="{{ asset('images/logo.jpg') }}" style="width: 100mm;">
 </div>
 
-<div style="width: 70%; text-align: center; margin: auto; margin-top: 30mm;">
-<h1 style="text-align: center; font-size: 28pt;">{{ projet.denomination|upper }}</h1>
-<h2>{{ projet.departement }} ({{ projet.departement.code }}), {{ projet.departement.region }}</h2>
-{% if carte_path %}
-<img style="width: 40%;border: 3px solid #007100;" src="{{ carte_path }}" >
-{% endif %}
+<div style="width: 70%; text-align: center; margin: auto; margin-top: 10mm;">
+  <h1 style="text-align: center; font-size: 28pt;">{{ projet.denomination|upper }}</h1>
+  <h2>{{ projet.departement }} ({{ projet.departement.code }}), {{ projet.departement.region }}</h2>
+  {% if carte_path %}
+  <img style="width: 50%;border: 3px solid #007100;" src="{{ carte_path }}" >
+  {% endif %}
 </div>
 
-<div style="position: fixed; bottom: 0mm;">
+<div class="text-center" style="text-align: center;margin-top: 10mm;">
 {% if image_path %}
-<img style="max-height:400px;" src="{{ image_path }}" >
+<img style="max-height:450px;" src="{{ image_path }}" >
 {% endif %}
-<div class="text-center" autosize="1" style="margin-top: 2mm; font-size: 11pt;">Exporté le {{ date|date('m/d/Y') }}</div>
+<div class="text-center" autosize="1" style="margin-top: 2mm; font-size: 11pt;">Exporté le {{ 'now'|date('m/d/Y') }}</div>
 </div>
 
 <pagebreak>
@@ -265,7 +265,8 @@
       <td>{{ proprietaire.dateSignatureProprietaire is not null ? proprietaire.dateSignatureProprietaire|date('m/d/Y') }}</td>
       <td>{{ proprietaire.dateEcheanceProprietaire is not null ? proprietaire.dateEcheanceProprietaire|date('m/d/Y') }}</td>
     </tr>
-    <tr class="proprietaire_entry">
+    {% if proprietaire.exploitant %}
+    <tr class="exploitant_entry">
       <th>{{ proprietaire.parcelles }}<br>Exploitant</th>
       <td>
         {{ proprietaire.exploitant }}<br>
@@ -277,6 +278,7 @@
       <td>{{ proprietaire.dateSignatureExploitant is not null ? proprietaire.dateSignatureExploitant|date('m/d/Y') }}</td>
       <td>{{ proprietaire.dateEcheanceExploitant is not null ? proprietaire.dateEcheanceExploitant|date('m/d/Y') }}</td>
     </tr>
+    {% endif %}
     {% endfor %}
   </tbody>
 </table>
