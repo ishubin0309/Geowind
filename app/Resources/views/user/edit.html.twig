@@ -31,140 +31,134 @@
 <script>
   var map = L.map('map').setView([46, 2], 5.5);
 
-    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map);
+  L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+  }).addTo(map);
 
-    var marker = null;
+  var customControl =  L.Control.extend({
 
-    var default_lat = {{ form.vars.value.latitude }};
-    var lat = {{ form.vars.value.latitude }};
-    var long = {{ form.vars.value.longitude }};
+    options: {
+      position: 'topleft'
+    },
 
-    var customControl =  L.Control.extend({
+    onAdd: function (map) {
+      var container = L.DomUtil.create('a');
+      container.setAttribute("role", "button");
+      container.title="Center";
+      container.text = "c";
 
-      options: {
-        position: 'topleft'
-      },
-
-      onAdd: function (map) {
-        var container = L.DomUtil.create('a');
-        container.setAttribute("role", "button");
-        container.title="Center";
-        container.text = "c";
-
-        container.style.backgroundColor = 'white';     
-        {# container.style.backgroundImage = "url(https://t1.gstatic.com/images?q=tbn:ANd9GcR6FCUMW5bPn8C4PbKak2BJQQsmC-K9-mbYBeFZm1ZM2w2GRy40Ew)"; #}
-        container.style.backgroundSize = "30px 30px";
-        container.style.width = '32px';
-        container.style.height = '32px';
-        container.style.lineHeight = '24px';
-        container.style.textDecoration = 'none';
-        container.style.cursor = 'pointer';
-        container.style.textAlign = 'center';
-        container.style.color = 'black';
-        container.style.fontSize = '24px';
-        container.style.borderRadius = '4px';
-        container.style.marginTop = '2px';
-        container.style.border = '2px solid rgba(0,0,0,0.2)';
-        
-        container.onmouseover = function(){
-          container.style.backgroundColor = '#f4f4f4'; 
-        }
-        container.onmouseout = function(){
-          container.style.backgroundColor = 'white'; 
-        }
-
-        container.onclick = function() {
-          update_marker = 0;
-          map.setView([46,2],5.5);
-        }
-
-        return container;
+      container.style.backgroundColor = 'white';     
+      {# container.style.backgroundImage = "url(https://t1.gstatic.com/images?q=tbn:ANd9GcR6FCUMW5bPn8C4PbKak2BJQQsmC-K9-mbYBeFZm1ZM2w2GRy40Ew)"; #}
+      container.style.backgroundSize = "30px 30px";
+      container.style.width = '32px';
+      container.style.height = '32px';
+      container.style.lineHeight = '24px';
+      container.style.textDecoration = 'none';
+      container.style.cursor = 'pointer';
+      container.style.textAlign = 'center';
+      container.style.color = 'black';
+      container.style.fontSize = '24px';
+      container.style.borderRadius = '4px';
+      container.style.marginTop = '2px';
+      container.style.border = '2px solid rgba(0,0,0,0.2)';
+      
+      container.onmouseover = function(){
+        container.style.backgroundColor = '#f4f4f4'; 
       }
-    });
+      container.onmouseout = function(){
+        container.style.backgroundColor = 'white'; 
+      }
 
-    map.addControl(new customControl());
+      container.onclick = function() {
+        update_marker = 0;
+        map.setView([46,2],5.5);
+      }
 
-    var users = {};
-    var markers = {};
-    {% if form.vars.value.departements is not empty %}
-      {% for departement in form.vars.value.departements %}
-      users['{{ departement.nom }}'] = {0:'{{ departement.nom }}'};
-      {% endfor %}
-    {% endif %}
-    $.each(users, function(i, user) {
-      reverseGeolocalisation(user[0], 2);
-    });
-    function reverseGeolocalisation(query, update_marker) {
-    console.log(query);console.log(markers);
-      if(markers[query] !== undefined) {
+      return container;
+    }
+  });
+
+  map.addControl(new customControl());
+
+  var users = {};
+  var markers = {};
+  {% if form.vars.value.departements is not empty %}
+    {% for departement in form.vars.value.departements %}
+    users['{{ departement.nom }}'] = {0:'{{ departement.nom }}'};
+    {% endfor %}
+  {% endif %}
+  $.each(users, function(i, user) {
+    reverseGeolocalisation(user[0], 2);
+  });
+  function reverseGeolocalisation(query, update_marker) {
+  console.log(query);console.log(markers);
+    if(markers[query] !== undefined) {
+      return;
+    }
+    var nominatimUrl = 'https://nominatim.openstreetmap.org/search';
+    $.ajax({
+      type: 'GET',
+      url: nominatimUrl,
+      data: {
+        q: query,
+        extratags: 0,
+        namedetails: 0,
+        polygon_geojson: 0,
+        format: 'json',
+      },
+      dataType: 'json',
+
+    })
+    .done(function(data) {
+
+      if (data.length === 0) {
         return;
       }
-      var nominatimUrl = 'https://nominatim.openstreetmap.org/search';
-      $.ajax({
-        type: 'GET',
-        url: nominatimUrl,
-        data: {
-          q: query,
-          extratags: 0,
-          namedetails: 0,
-          polygon_geojson: 0,
-          format: 'json',
-        },
-        dataType: 'json',
 
-      })
-      .done(function(data) {
-
-        if (data.length === 0) {
-          return;
-        }
-
-        var searchLat = data[0]['lat'];
-        var searchLong = data[0]['lon'];
-        var bbox = data[0]['boundingbox'];
-        var adresse = data[0]['display_name'];
-        if(adresse.match('France')) {
-          if(update_marker === true) {
-            if (bbox != undefined) {
-              map.fitBounds([
-                [bbox[0], bbox[2]],
-                [bbox[1], bbox[3]]
-              ]);
-            } else {
-              map.setView([searchLat, searchLong], 10);
-            }
-            markers[query] = L.marker([searchLat, searchLong]).addTo(map).bindTooltip(query).bindPopup(query);
-          } else if(update_marker) {
-            markers[query] = L.marker([searchLat, searchLong]).addTo(map).bindTooltip(query).bindPopup(query);
+      var searchLat = data[0]['lat'];
+      var searchLong = data[0]['lon'];
+      var bbox = data[0]['boundingbox'];
+      var adresse = data[0]['display_name'];
+      if(adresse.match('France')) {
+        if(update_marker === true) {
+          if (bbox != undefined) {
+            map.fitBounds([
+              [bbox[0], bbox[2]],
+              [bbox[1], bbox[3]]
+            ]);
+          } else {
+            map.setView([searchLat, searchLong], 10);
           }
+          markers[query] = L.marker([searchLat, searchLong]).addTo(map).bindTooltip(query).bindPopup(query);
+        } else if(update_marker) {
+          markers[query] = L.marker([searchLat, searchLong]).addTo(map).bindTooltip(query).bindPopup(query);
         }
-        
-      });
-  }
-  $('#user_edit_departements').select2();
-  var last_reverse_search = null;
-  $('#user_edit_departements').change(function() {
-    $.each(markers, function(i, value) {
-      found = false;
-      $('#user_edit_departements option:selected').each(function(i2, value2) {
-        if($(value2).text() == i) found = true;
-      });
-      if(!found) {
-        map.removeLayer(markers[i]);
-        delete markers[i];
       }
+      
     });
-    var query = $('#user_edit_departements option:selected:last').text().trim();
-    if(query) {
-      $('#user_edit_departements option:selected').each(function(item, element) {
-        query = $(element).text().trim();
-        reverseGeolocalisation(query, true);
-      });
+}
+$('#user_edit_departements').select2();
+var last_reverse_search = null;
+$('#user_edit_departements').change(function() {
+  $.each(markers, function(i, value) {
+    found = false;
+    $('#user_edit_departements option:selected').each(function(i2, value2) {
+      if($(value2).text() == i) found = true;
+    });
+    if(!found) {
+      map.removeLayer(markers[i]);
+      delete markers[i];
     }
-    
   });
+  var query = $('#user_edit_departements option:selected:last').text().trim();
+  if(query) {
+    $('#user_edit_departements option:selected').each(function(item, element) {
+      query = $(element).text().trim();
+      reverseGeolocalisation(query, true);
+    });
+  }
+  
+});
   {# if(!default_lat) $('#user_edit_departements').change(); #}
 
     {# {% if form.vars.value.photo is defined and form.vars.value.photo %}

@@ -113,20 +113,6 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * @var string
      *
-     * @ORM\Column(type="decimal", precision=20, scale=16)
-     */
-    private $latitude = 0;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="decimal", precision=20, scale=16)
-     */
-    private $longitude = 0;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(type="string", nullable=true)
      */
     private $photo;
@@ -428,42 +414,6 @@ class User implements AdvancedUserInterface, \Serializable
     public function setDepartements(ArrayCollection $departements)
     {
         $this->departements = $departements;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getLatitude()
-    {
-        return (float) $this->latitude;
-    }
-
-    /**
-     * @param string $latitude
-     * @return \AppBundle\Entity\User
-     */
-    public function setLatitude($latitude)
-    {
-        $this->latitude = $latitude;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getLongitude()
-    {
-        return (float) $this->longitude;
-    }
-
-    /**
-     * @param string $longitude
-     * @return \AppBundle\Entity\User
-     */
-    public function setLongitude($longitude)
-    {
-        $this->longitude = $longitude;
         return $this;
     }
 

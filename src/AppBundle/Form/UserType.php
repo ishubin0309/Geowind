@@ -62,14 +62,6 @@ class UserType extends AbstractType
                     ->orderBy('d.nom', 'ASC');
                 },
             ])
-            ->add('latitude', NumberType::class, [
-                'label' => 'Latitude',
-                'scale' => 10,
-            ])
-            ->add('longitude', NumberType::class, [
-                'label' => 'Longitude',
-                'scale' => 10,
-            ])
             ->add('roles', ChoiceType::class, [
                 'choices' => array_flip(User::getRolesList()),
                 'label' => 'Droits',
