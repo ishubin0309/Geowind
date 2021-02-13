@@ -142,7 +142,7 @@
           var bbox = data[0]['boundingbox'];
           var adresse = data[0]['display_name'];
           if(adresse.match('France')) {console.log();
-            L.marker([searchLat, searchLong], { icon: markers[counter]}).addTo(map).bindTooltip(user).bindPopup(user);
+            L.marker([searchLat, searchLong], { icon: markers[counter]}).addTo(map).bindTooltip(query).bindPopup(user);
           }
           
         });

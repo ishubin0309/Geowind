@@ -41,29 +41,6 @@
     var lat = {{ form.vars.value.latitude }};
     var long = {{ form.vars.value.longitude }};
 
-    $('#user_edit_latitude').change(function() {
-      lat = $(this).val().replace(',', '.');
-      updateMarkerPosition();
-    });
-
-    $('#user_edit_longitude').change(function() {
-      long = $(this).val().replace(',', '.');
-      updateMarkerPosition();
-    });
-
-    function updateMarkerPosition() {
-
-      if ($.isNumeric(lat) && $.isNumeric(long) && marker === null && lat != null && long != null) {
-        marker = L.marker([lat, long]).addTo(map);
-        map.panTo(new L.LatLng(lat, long));
-      }
-
-      if ($.isNumeric(lat) && $.isNumeric(long) && marker != null && lat != null && long != null) {
-        marker.setLatLng([lat, long]);
-        map.panTo(new L.LatLng(lat, long));
-      }
-
-    }
     var customControl =  L.Control.extend({
 
       options: {
@@ -108,21 +85,22 @@
     });
 
     map.addControl(new customControl());
-    var update_marker = 1;
-    map.on('click', function(e) {
-      if(update_marker) {
-        lat = e.latlng.lat;
-        long = e.latlng.lng;
-        $('#user_edit_latitude').val(lat);
-        $('#user_edit_longitude').val(long);
-        updateMarkerPosition();
-        reverseGeolocalisation(lat + ' ' + long, false);
-      } else update_marker = 1;
-    });
-    
-    updateMarkerPosition();
 
+    var users = {};
+    var markers = {};
+    {% if form.vars.value.departements is not empty %}
+      {% for departement in form.vars.value.departements %}
+      users['{{ departement.nom }}'] = {0:'{{ departement.nom }}'};
+      {% endfor %}
+    {% endif %}
+    $.each(users, function(i, user) {
+      reverseGeolocalisation(user[0], 2);
+    });
     function reverseGeolocalisation(query, update_marker) {
+    console.log(query);console.log(markers);
+      if(markers[query] !== undefined) {
+        return;
+      }
       var nominatimUrl = 'https://nominatim.openstreetmap.org/search';
       $.ajax({
         type: 'GET',
@@ -148,7 +126,7 @@
         var bbox = data[0]['boundingbox'];
         var adresse = data[0]['display_name'];
         if(adresse.match('France')) {
-          if(update_marker) {
+          if(update_marker === true) {
             if (bbox != undefined) {
               map.fitBounds([
                 [bbox[0], bbox[2]],
@@ -157,13 +135,9 @@
             } else {
               map.setView([searchLat, searchLong], 10);
             }
-            if($('#user_edit_latitude').val() != searchLat && !default_lat) {
-              lat = searchLat;
-              long = searchLong;
-              $('#user_edit_latitude').val(lat);
-              $('#user_edit_longitude').val(long);
-              updateMarkerPosition();
-            }
+            markers[query] = L.marker([searchLat, searchLong]).addTo(map).bindTooltip(query).bindPopup(query);
+          } else if(update_marker) {
+            markers[query] = L.marker([searchLat, searchLong]).addTo(map).bindTooltip(query).bindPopup(query);
           }
         }
         
@@ -172,22 +146,26 @@
   $('#user_edit_departements').select2();
   var last_reverse_search = null;
   $('#user_edit_departements').change(function() {
-    
-    var nominatimUrl = 'https://nominatim.openstreetmap.org/search';
-    $input = $(this);
-
+    $.each(markers, function(i, value) {
+      found = false;
+      $('#user_edit_departements option:selected').each(function(i2, value2) {
+        if($(value2).text() == i) found = true;
+      });
+      if(!found) {
+        map.removeLayer(markers[i]);
+        delete markers[i];
+      }
+    });
     var query = $('#user_edit_departements option:selected:last').text().trim();
-    if(query && last_reverse_search != query) {
-      last_reverse_search = query;
-      reverseGeolocalisation(query, true);
-    } else if(!query) {
-      map.setView([46,2],5.5);
-    } else {
-      map.setView([lat, long], 10);
+    if(query) {
+      $('#user_edit_departements option:selected').each(function(item, element) {
+        query = $(element).text().trim();
+        reverseGeolocalisation(query, true);
+      });
     }
     
   });
-  if(!default_lat) $('#user_edit_departements').change();
+  {# if(!default_lat) $('#user_edit_departements').change(); #}
 
     {# {% if form.vars.value.photo is defined and form.vars.value.photo %}
     $('#main_photo img').attr('src', '{{ asset('upload/' ~ form.vars.value.photo) }}');
