@@ -242,17 +242,17 @@
             {% set urbanisme = false %}
             {% set concertation = false %}
             {% for tache in projet.taches %}
-              {% if not servitudes and tache.objet == 'servitudes'%}
+              {% if tache.objet == 'servitudes'%}
               {% set servitudes = true %}servitudes: '{{ tache.etat }}',
-              {% elseif not foncier and tache.objet == 'foncier'%}
+              {% elseif tache.objet == 'foncier'%}
               {% set foncier = true %}foncier: '{{ tache.etat }}',
-              {% elseif not mairie and tache.objet == 'mairie'%}
+              {% elseif tache.objet == 'mairie'%}
               {% set mairie = true %}mairie: '{{ tache.etat }}',
-              {% elseif not consultations and tache.objet == 'consultations'%}
+              {% elseif and tache.objet == 'consultations'%}
               {% set consultations = true %}consultations: '{{ tache.etat }}',
-              {% elseif not urbanisme and tache.objet == 'urbanisme'%}
+              {% elseif tache.objet == 'urbanisme'%}
               {% set urbanisme = true %}urbanisme: '{{ tache.etat }}',
-              {% elseif not concertation and tache.objet == 'concertation'%}
+              {% elseif tache.objet == 'concertation'%}
               {% set concertation = true %}concertation: '{{ tache.etat }}',
               {% endif %}
               {% set listeDate = tache.date %}
