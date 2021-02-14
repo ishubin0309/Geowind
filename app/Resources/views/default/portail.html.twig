@@ -248,7 +248,7 @@
               {% set foncier = true %}foncier: '{{ tache.etat }}',
               {% elseif tache.objet == 'mairie'%}
               {% set mairie = true %}mairie: '{{ tache.etat }}',
-              {% elseif and tache.objet == 'consultations'%}
+              {% elseif tache.objet == 'consultations'%}
               {% set consultations = true %}consultations: '{{ tache.etat }}',
               {% elseif tache.objet == 'urbanisme'%}
               {% set urbanisme = true %}urbanisme: '{{ tache.etat }}',
