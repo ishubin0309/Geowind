@@ -59,7 +59,7 @@
 {% if image_path %}
 <img style="max-height:450px;" src="{{ image_path }}" >
 {% endif %}
-<div class="text-center" autosize="1" style="margin-top: 2mm; font-size: 11pt;">Exporté le {{ 'now'|date('m/d/Y') }}</div>
+<div class="text-center" autosize="1" style="margin-top: 2mm; font-size: 11pt;">Exporté le {{ 'now'|date('d/m/Y') }}</div>
 </div>
 
 <pagebreak>
@@ -262,8 +262,8 @@
         {{ proprietaire.emailProprietaire }}
       </td>
       <td>{{ proprietaire.accordProprietaire }}</td>
-      <td>{{ proprietaire.dateSignatureProprietaire is not null ? proprietaire.dateSignatureProprietaire|date('m/d/Y') }}</td>
-      <td>{{ proprietaire.dateEcheanceProprietaire is not null ? proprietaire.dateEcheanceProprietaire|date('m/d/Y') }}</td>
+      <td>{{ proprietaire.dateSignatureProprietaire is not null ? proprietaire.dateSignatureProprietaire|date('d/m/Y') }}</td>
+      <td>{{ proprietaire.dateEcheanceProprietaire is not null ? proprietaire.dateEcheanceProprietaire|date('d/m/Y') }}</td>
     </tr>
     {% if proprietaire.exploitant %}
     <tr class="exploitant_entry">
@@ -275,8 +275,8 @@
         {{ proprietaire.emailExploitant }}
       </td>
       <td>{{ proprietaire.accordExploitant }}</td>
-      <td>{{ proprietaire.dateSignatureExploitant is not null ? proprietaire.dateSignatureExploitant|date('m/d/Y') }}</td>
-      <td>{{ proprietaire.dateEcheanceExploitant is not null ? proprietaire.dateEcheanceExploitant|date('m/d/Y') }}</td>
+      <td>{{ proprietaire.dateSignatureExploitant is not null ? proprietaire.dateSignatureExploitant|date('d/m/Y') }}</td>
+      <td>{{ proprietaire.dateEcheanceExploitant is not null ? proprietaire.dateEcheanceExploitant|date('d/m/Y') }}</td>
     </tr>
     {% endif %}
     {% endfor %}
