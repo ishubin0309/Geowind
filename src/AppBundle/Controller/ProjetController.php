@@ -802,9 +802,9 @@ class ProjetController extends Controller
         $x1 = $tileWidth*(((($lng1 + 180) / 360) * pow(2, $zoom))-$startX);
         $y1 = $tileHeight*(((1 - log(tan(deg2rad($lat1)) + 1 / cos(deg2rad($lat1))) / pi()) / 2 * pow(2, $zoom))-$startY);
 
-        if(file_exists($dirDest . '/../images/map-marker.png'))
+        if(file_exists($dirDest . '/../vendor/leaflet/images/marker-icon.png'))
         {
-            $icon = new Imagick($dirDest . '/../images/map-marker.png');
+            $icon = new Imagick($dirDest . '/../vendor/leaflet/images/marker-icon.png');
             $icon->scaleImage(50,50,true);
             $markerX = $x1-($icon->getImageWidth()/2);
             $markerY = $y1-$icon->getImageHeight();
