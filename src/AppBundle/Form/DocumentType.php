@@ -2,8 +2,10 @@
 
 namespace AppBundle\Form;
 
+use AppBundle\Entity\Projet;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use AppBundle\Form\Extension\DatePickerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -26,9 +28,15 @@ class DocumentType extends AbstractType
                 'html5' => false,
                 'required' => false,
             ])
-            ->add('titre', TextType::class, [
+            ->add('type', ChoiceType::class, [
+                'label' => 'Type',
+                'required' => false,
+                'choices' => array_flip(Projet::getTypeImplantationList()),
+            ])
+            ->add('titre', ChoiceType::class, [
                 'label' => 'Titre',
-                'required' => true,
+                'required' => false,
+                'choices' => array_flip(Projet::getTitreImplantationList()),
             ])
             ->add('documentFile', FileType::class, [
                 'label' => 'Fichier',

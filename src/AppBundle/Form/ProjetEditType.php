@@ -203,7 +203,7 @@ class ProjetEditType extends AbstractType
                 'choices' => array_flip(Projet::getTypeImplantationList()),
             ])
             ->add('titreImplantation', ChoiceType::class, [
-                'label' => 'Type',
+                'label' => 'Titre',
                 'required' => false,
                 'choices' => array_flip(Projet::getTitreImplantationList()),
             ])

@@ -34,6 +34,13 @@ class Document
      *
      * @ORM\Column(type="string")
      */
+    private $type;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string")
+     */
     private $titre;
 
     /**
@@ -104,6 +111,24 @@ class Document
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param string $type
+     * @return \AppBundle\Entity\Document
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+        return $this;
     }
 
     /**

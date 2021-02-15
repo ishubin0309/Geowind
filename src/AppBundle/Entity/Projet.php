@@ -161,6 +161,27 @@ class Projet
     private $mairieTelephone;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $photoImplantation;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $photoImplantationOriginalName = 'photoImplantation';
+
+    /**
+     * @var UploadedFile
+     *
+     * @Vich\UploadableField(mapping="geotiff", fileNameProperty="photoImplantation")
+     */
+    private $photoImplantationFile;
+
+    /**
      * @var ArrayCollection|Commune[]
      *
      * @ORM\ManyToMany(targetEntity="Commune", inversedBy="projets", cascade={"persist"})
@@ -315,27 +336,6 @@ class Projet
      * @ORM\Column(type="date", nullable=true)
      */
     private $dateT1;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string", nullable=true)
-     */
-    private $photoImplantation;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string", nullable=true)
-     */
-    private $photoImplantationOriginalName = 'photoImplantation';
-
-    /**
-     * @var UploadedFile
-     *
-     * @Vich\UploadableField(mapping="geotiff", fileNameProperty="photoImplantation")
-     */
-    private $photoImplantationFile;
 
     /**
      * @var string
@@ -1002,6 +1002,10 @@ class Projet
     public function addDocument(Document $document)
     {
         if (!$this->documents->contains($document)) {
+            if(!$this->documents->count() && !$document->getDocument() && $this->photoImplantation) {
+                $document->setDocument($this->photoImplantation);
+                $document->setDocumentOriginalName($this->photoImplantationOriginalName);
+            }
             $document->setProjet($this);
             $this->documents->add($document);
         }
