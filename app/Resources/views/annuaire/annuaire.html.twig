@@ -149,11 +149,12 @@
               type: 'POST',
               data: { result: option, token: csrf  },
               success: function(result) {
-                location.reload();
+                window.location.href = '{{ path('annuaire_index') }}';
               }
             });
           } else {
             $('select[rel="'+id+'"]').val('('+old_data+')');
+            $('.change_result').change();
           }
         });
       });
