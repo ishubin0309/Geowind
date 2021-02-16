@@ -86,7 +86,7 @@
                 {% endfor %}
               </select>
             </td>
-            <td>{{ message.result ? message.updatedAt|date('d/m/Y') : '' }}</td>
+            <td>{{ message.result is not null and message.result != '?' ? message.updatedAt|date('d/m/Y') : '' }}</td>
             <td></td>
           </tr>
           {% endfor %}
