@@ -80,7 +80,7 @@
             </td>
             <td>
             {% set result = message.result ? message.result : '?' %}
-              <select rel="{{ message.id }}" data="{{ result }}" class="form-control change_result">
+              <select rel="{{ message.id }}" data="{{ result }}" style="width:100%;" class="form-control change_result">
                 {% for option in ['?', '+', '-'] %}
                 <option {% if option == result %}selected{% endif %}>({{ option }})</option>
                 {% endfor %}
@@ -121,7 +121,7 @@
       var data = e.params.data;
       window.location.href = Routing.generate('annuaire_mairie', { insee: data.insee });
     });
-    
+
     $(".change_result").select2();
 
     $('.change_result').change(function() {
