@@ -31,10 +31,10 @@
               <th><i class="fa fa-phone fa-fw"></i> Téléphone</th>
               <td>{{ mairie.telephone }}</td>
             </tr>
-            <tr>
+            {# <tr>
               <th><i class="fa fa-fax fa-fw"></i> Fax</th>
               <td>{{ mairie.fax }}</td>
-            </tr>
+            </tr> #}
             <tr>
               <th>Population 2016</th>
               <td>{{ mairie.population2016 }}</td>
@@ -77,7 +77,7 @@
               <th>Code INSEE</th>
               <td>{{ mairie.insee }}</td>
             </tr>
-            <tr>
+            {# <tr>
               <th>Cantons 2015</th>
               <td>{{ mairie.canton2015 }}</td>
             </tr>
@@ -88,10 +88,14 @@
             <tr>
               <th>Codes SIREN</th>
               <td>{{ mairie.siren }}</td>
-            </tr>
+            </tr> #}
             <tr>
               <th>Région</th>
               <td>{{ mairie.region }}</td>
+            </tr>
+            <tr>
+              <th>Département</th>
+              <td>{{ commune is not null ? commune.departement : '' }}</td>
             </tr>
           </tbody>
         </table>
@@ -111,7 +115,7 @@
               </tr>
             </thead>
             <tbody>
-              {% for message in messages %}
+              {% for message in mairie.messages %}
               <tr>
                 <td>{{ message.createdAt|date('d/m/Y H:i:s') }}</td>
                 <td>{{ message.to }}</td>

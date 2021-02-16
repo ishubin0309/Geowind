@@ -82,6 +82,13 @@ class Message
     private $body;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $result;
+
+    /**
      * @return string
      */
     public function __toString()
@@ -119,6 +126,11 @@ class Message
         return $this->body;
     }
 
+    public function getResult()
+    {
+        return $this->result;
+    }
+
     public function setId($id)
     {
         $this->id = $id;
@@ -152,6 +164,12 @@ class Message
     public function setBody($body)
     {
         $this->body = $body;
+        return $this;
+    }
+
+    public function setResult($result)
+    {
+        $this->result = $result;
         return $this;
     }
     

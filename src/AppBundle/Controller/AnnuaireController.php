@@ -28,9 +28,9 @@ class AnnuaireController extends Controller
      * @Route("/", name="annuaire_index")
      */
     public function annuaireAction(Request $request)
-    {
+    {   
         $em = $this->getDoctrine()->getManager();
-        
+
         $messages = $em->getRepository('AppBundle:Message')
                         ->findAll();
         
@@ -100,17 +100,15 @@ class AnnuaireController extends Controller
             }
         }
         
-        $messages = $em->getRepository('AppBundle:Message')
-                        ->findAll();
-        
         $models = $em->getRepository('AppBundle:MessageModel')
                         ->findBy([], ['name' => 'ASC']);
+        $commune = $em->getRepository('AppBundle:Commune')->findOneBy(['insee' => $mairie->getInsee()]);
 
         return $this->render('annuaire/mairie.html.twig', [
             'form' => $form->createView(),
-            'messages' => $messages,
             'models' => $models,
             'mairie' => $mairie,
+            'commune' => $commune,
         ]);
     }
     
@@ -163,5 +161,34 @@ class AnnuaireController extends Controller
             'model' => $model,
             'form' => $form->createView(),
         ]);
+    }
+    
+    /**
+     * @Route("/message/{id}/modifier", name="message_edit", options={ "expose": true })
+     * @Method({"POST"})
+     * @Security("has_role('ROLE_EDIT')")
+     */
+    public function editMessageAction(Request $request, Message $message)
+    {
+        $result = $request->request->get('result', '?');
+        $csrf = $request->request->get('csrf', null);
+
+        if ($this->isCsrfTokenValid('token', $csrf)) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $response = new JsonResponse();
+        $response->setData(['success' => 0]);
+        if(in_array($result, ['?', '-', '+'])) {
+            $em = $this->getDoctrine()->getManager();
+
+            $message->setResult($result);
+            $em->persist($message);
+            $em->flush();
+
+            $this->addFlash('success', 'Le résultat du message « ' . $message->getObject() . ' » a été modifié.');
+            $response->setData(['success' => 1]);
+        }
+        return $response;
     }
 }
