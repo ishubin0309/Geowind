@@ -141,7 +141,7 @@
           var searchLong = data[0]['lon'];
           var bbox = data[0]['boundingbox'];
           var adresse = data[0]['display_name'];
-          if(adresse.match('France')) {console.log();
+          if(adresse.match('France')) {
             L.marker([searchLat, searchLong], { icon: markers[counter]}).addTo(map).bindTooltip(query).bindPopup(user);
           }
           

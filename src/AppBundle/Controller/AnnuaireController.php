@@ -42,6 +42,20 @@ class AnnuaireController extends Controller
             'models' => $models,
         ]);
     }
+    /**
+     * @Route("/secteurs", name="annuaire_secteur")
+     */
+    public function secteurAction(Request $request)
+    {   
+        $em = $this->getDoctrine()->getManager();
+
+        $messages = $em->getRepository('AppBundle:Message')
+                        ->findAll();
+
+        return $this->render('annuaire/secteur.html.twig', [
+            'messages' => $messages,
+        ]);
+    }
     
     /**
      * @Route("/mairie/search", name="mairie_search", options={ "expose": true })
