@@ -124,7 +124,7 @@
 
     $(".change_result").select2();
 
-    $('.change_result').change(function() {
+    $('.change_result').on('select2:select', function() {
       option = $(this).val().replace(/(\(|\))/g, '').trim();
       id = $(this).attr('rel');
       old_data = $(this).attr('data');
