@@ -132,6 +132,26 @@
         } else if(update_marker) {
           markers[query] = L.marker([searchLat, searchLong]).addTo(map).bindTooltip(query).bindPopup(query);
         }
+      } else if(data.length > 1) {
+        var searchLat = data[1]['lat'];
+        var searchLong = data[1]['lon'];
+        var bbox = data[1]['boundingbox'];
+        var adresse = data[1]['display_name'];
+        if(adresse.match('France')) {
+          if(update_marker === true) {
+            if (bbox != undefined) {
+              map.fitBounds([
+                [bbox[0], bbox[2]],
+                [bbox[1], bbox[3]]
+              ]);
+            } else {
+              map.setView([searchLat, searchLong], 10);
+            }
+            markers[query] = L.marker([searchLat, searchLong]).addTo(map).bindTooltip(query).bindPopup(query);
+          } else if(update_marker) {
+            markers[query] = L.marker([searchLat, searchLong]).addTo(map).bindTooltip(query).bindPopup(query);
+          }
+        }
       }
       
     });

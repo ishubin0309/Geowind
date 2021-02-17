@@ -366,6 +366,12 @@
           var searchLong = data[0]['lon'];
           var bbox = data[0]['boundingbox'];
           var adresse = data[0]['display_name'];
+          if(!adresse.match('France') && data.length > 1) {
+            var searchLat = data[1]['lat'];
+            var searchLong = data[1]['lon'];
+            var bbox = data[1]['boundingbox'];
+            var adresse = data[1]['display_name'];
+          }
           if(adresse.match('France')) {
             $('#projet_adresse').val(adresse);
             if(update_marker) {

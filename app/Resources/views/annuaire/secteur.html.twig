@@ -245,6 +245,12 @@
       var searchLong = data[0]['lon'];
       var bbox = data[0]['boundingbox'];
       var adresse = data[0]['display_name'];
+      if(!adresse.match('France') && data.length > 1) {
+        var searchLat = data[1]['lat'];
+        var searchLong = data[1]['lon'];
+        var bbox = data[1]['boundingbox'];
+        var adresse = data[1]['display_name'];
+      }
       if(adresse.match('France')) {
         marker = new L.DivIcon.SVGIcon({ iconSize: L.point(24, 32), weight: 1, circleWeight: 1, color: '#000000', fillColor: color, fillOpacity: 0.7 });
         L.marker([searchLat, searchLong], { icon: marker}).addTo(map).bindTooltip(marie).bindPopup('Région: ' + query + '<br>Commune: ' + commune);
