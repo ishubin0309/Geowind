@@ -27,6 +27,7 @@
           <tr>
             <th>Intitulé du modèle</th>
             <th class="column-fit"></th>
+            <th class="column-fit"></th>
           </tr>
         </thead>
         <tbody>
@@ -34,7 +35,10 @@
           <tr>
             <td>{{ model }}</td>
             <td class="column-fit">
-              <a href="{{ path('model_edit', { 'id': model.id }) }}" class="btn btn-danger btn-xs"><i class="fa fa-pencil"></i></a>
+              <a href="{{ path('model_edit', { 'id': model.id }) }}" class="btn btn-warning btn-xs"><i class="fa fa-pencil"></i></a>
+            </td>
+            <td class="column-fit">
+              <button id="{{ model.id }}" model="{{ model }}" class="btn btn-danger btn-xs button-delete" title="Double click"><i class="fa fa-fw fa-trash"></i></button>
             </td>
           </tr>
           {% endfor %}
@@ -42,7 +46,7 @@
       </table>
     {% endif %}
     
-    <h3>Mairies contactées <a style="color:red;" class="btn btn-link" href="{{ path('annuaire_secteur') }}">Afficher <i class="fa fa-map-o" aria-hidden="true"></i></a></h3>
+    <h3>Mairies contactées <a style="color:red;" class="btn btn-link" href="{{ path('annuaire_secteur') }}">Carte des contacts <i class="fa fa-map-o" aria-hidden="true"></i></a></h3>
     <hr>
     
     {% if messages is empty %}
@@ -58,7 +62,7 @@
             <th>Destinaire</th>
             <th>Contactée par</th>
             <th>Objet</th>
-            <th>Demande</th>
+            <th>Message</th>
             <th>Résultat</th>
             <th>Date2</th>
           </tr>
@@ -99,6 +103,44 @@
 
 {% block js %}
   <script>
+    $('.button-delete').dblclick(function() {
+      id = $(this).attr('id');
+      model = $(this).attr('model');
+      
+      if (!id) {
+        return;
+      }
+      swal({
+        title: "Supprimer ?",
+        text: "Le modèle « "+model+" » sera supprimé définitivement.",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Supprimer",
+        cancelButtonText: "Annuler",
+        closeOnConfirm: false,
+        closeOnCancel: true,
+        allowOutsideClick: true,
+        showLoaderOnConfirm: true,
+      },
+      function(isConfirm){
+        if (isConfirm) {
+          var csrf = '{{ csrf_token('token')|e('js') }}';
+          $.ajax({
+            url: Routing.generate('model_delete', {id: id}),
+            type: 'DELETE',
+            data: { token: csrf  },
+            success: function(result) {
+              location.reload();
+            }
+          });
+        } else {
+
+        }
+      });
+
+    });
+
     $('#datatable').DataTable({
       language: dtLang,
       paging: false,

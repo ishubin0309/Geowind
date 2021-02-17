@@ -176,6 +176,30 @@ class AnnuaireController extends Controller
             'form' => $form->createView(),
         ]);
     }
+    /**
+     * @Route("/modele/{id}/supprimer", name="model_delete", options={ "expose": true })
+     * @Method("DELETE")
+     */
+    public function deleteAction(Request $request, MessageModel $model)
+    {
+        $id = $request->request->get('id', 0);
+        $csrf = $request->request->get('csrf', null);
+
+        if ($this->isCsrfTokenValid('token', $csrf)) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $em = $this->getDoctrine()->getManager();
+
+        $response = new JsonResponse();
+        $response->setData(['success' => 0]);
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($model);
+        $em->flush();
+        $this->addFlash('success', 'Modèle supprimé.');
+
+        return $response;
+    }
     
     /**
      * @Route("/message/{id}/modifier", name="message_edit", options={ "expose": true })
