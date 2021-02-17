@@ -4,6 +4,7 @@ namespace AppBundle\Twig;
 
 use AppBundle\Entity\Projet;
 use AppBundle\Model\Progression;
+use AppBundle\Model\Etat;
 use AppBundle\Model\Environnement;
 use AppBundle\Model\Mission;
 use AppBundle\Model\Niveau;
@@ -25,6 +26,7 @@ class OptionFormatterExtension extends \Twig_Extension
             new \Twig_SimpleFilter('type_projet_format', [$this, 'typeProjetFormatter']),
             new \Twig_SimpleFilter('type_site_format', [$this, 'typeSiteFormatter']),
             new \Twig_SimpleFilter('servitude_format', [$this, 'servitudeFormatter']),
+            new \Twig_SimpleFilter('phase_format', [$this, 'phaseFormatter']),
             new \Twig_SimpleFilter('progression_format', [$this, 'progressionFormatter']),
             new \Twig_SimpleFilter('foncier_format', [$this, 'foncierFormatter']),
             new \Twig_SimpleFilter('environnement_format', [$this, 'environnementFormatter']),
@@ -97,6 +99,16 @@ class OptionFormatterExtension extends \Twig_Extension
     public function missionFormatter($method)
     {
         return Mission::getName($method);
+    }
+
+    /**
+     * @param string $method
+     * @return string
+     */
+    public function phaseFormatter($method)
+    {
+        $phases = Etat::getPhaseList();
+        return isset($phases[$method]) ? $phases[$method] : '-';
     }
 
     /**

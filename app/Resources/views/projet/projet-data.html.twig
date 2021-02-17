@@ -14,6 +14,9 @@
       </th>
     </tr>
     <tr>
+      <th colspan="2">Références</th>
+    </tr>
+    <tr>
       <td style="width: 170px;">Statut</td>
       <td>{{ projet.archived ? '<i class="fa fa-archive"></i> Archivé' : 'Actif' }} </td>
     </tr>
@@ -21,9 +24,16 @@
       <td style="width: 170px;">Date création</td>
       <td>{{ projet.dateCreation|date('d/m/Y') }}</td>
     </tr>
-    <tr>
+    {# <tr>
       <td>Date de mise à jour</td>
       <td>{{ projet.updatedAt|date('d/m/Y') }}</td>
+    </tr> #}
+    <tr>
+      <td>Dénomination</td>
+      <td>{{ projet.denomination }}</td>
+    </tr>
+    <tr>
+      <th colspan="2">Typologies</th>
     </tr>
     <tr>
       <td>Type de Projet</td>
@@ -31,25 +41,13 @@
         {{ projet.typeProjet|type_projet_format }}</td>
     </tr>
     <tr>
-      <td>Type de Site</td>
+      <td>Type de bien</td>
       <td>
         {{ projet.typeSite|type_site_format }}</td>
     </tr>
     <tr>
-      <td>Origine</td>
-      <td>{{ projet.origine }}</td>
-    </tr>
-    <tr>
-      <td>Chef de projet</td>
-      <td>{{ projet.chefProjet }}</td>
-    </tr>
-    <tr>
-      <td>Partenaire</td>
-      <td>{{ projet.partenaire }}</td>
-    </tr>
-    <tr>
-      <td>Dénomination</td>
-      <td>{{ projet.denomination }}</td>
+      <td>Type de milieu</td>
+      <td>{{ projet.environnement|environnement_format }}</td>
     </tr>
     <tr>
       <th colspan="2">Situation administrative</th>
@@ -82,25 +80,18 @@
       <td>{{ projet.longitude }}</td>
     </tr>
     <tr>
-      <th colspan="2">Descriptif</th>
-    </tr>
-    <tr>
-      <td>Environnement</td>
-      <td>{{ projet.environnement|environnement_format }}</td>
-    </tr>
-    <tr>
-      <td>Potentiel (MW)</td>
-      <td>{{ projet.potentiel }}</td>
+      <td>Adresse postale</td>
+      <td>{{ projet.adresse }}</td>
     </tr>
     <tr>
       <th colspan="2">Faisabilité</th>
     </tr>
     <tr>
-      <th>Phase</th>
-      <td>{{ projet.phase }}</td>
+      <td>Phase</td>
+      <td>{{ projet.phase|phase_format }}</td>
     </tr>
     <tr>
-      <th>État</th>
+      <td>État</td>
       <td>{{ projet.progression|progression_format }}</td>
     </tr>
   </tbody>
@@ -118,94 +109,3 @@
     </tr>
   </tbody>
 </table>
-    
-<div id="fullrow">
-  <table class="table table-condensed table-super-condensed table-bordered table-hover table-striped">
-    <thead>
-      <tr>
-        <th colspan="8">Finances <i class="fa fa-euro"></i></th>
-      </tr>
-      <tr>
-        <th>Phase</th>
-        <th>Titre</th>
-        <th>Total(€HT)<span class="control-label required"></span></th>
-        <th>Engagé(€HT)<span class="control-label required"></span></th>
-        <th>Payé(€HT)<span class="control-label required"></span></th>
-        <th>Restant(€HT)<span class="control-label required"></span></th>
-        <th>BE</th>
-        <th>Date de commande</th>
-        <th>Date d'échéance</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% if projet.finances is empty %}
-        <tr>
-          <td colspan="8">N/A</td>
-        </tr>
-      {% endif %}
-      {% for finance in projet.finances %}
-        <tr>
-          <td>{{ finance.phase }}</td>
-          <td>{{ finance.titre }}</td>
-          <td>{{ finance.montantTotal }}</td>
-          <td>{{ finance.montantEngage }}</td>
-          <td>{{ finance.montantPaye }}</td>
-          <td>{{ finance.montantRestant }}</td>
-          <td>{{ finance.bureau }}</td>
-          <td>{{ finance.dateEngmt|date('d/m/Y') }}</td>
-          <td>{{ finance.dateEcheance is not null ? finance.dateEcheance|date('d/m/Y') }}</td>
-        </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-
-  <table class="table table-condensed table-super-condensed table-bordered table-hover table-striped">
-    <thead>
-      <tr>
-        <th colspan="9">Foncier</th>
-      </tr>
-      <tr>
-        <th></th>
-        <th>Parcelles</th>
-        <th>Identité</th>
-        <th>Accords</th>
-        <th>Téléphone</th>
-        <th>Adresse</th>
-        <th>Email</th>
-        <th>Date signature</th>
-        <th>Echéance</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% if projet.proprietaires is empty %}
-        <tr>
-          <td colspan="9">N/A</td>
-        </tr>
-      {% endif %}
-      {% for proprietaire in projet.proprietaires %}
-      <tr class="proprietaire_entry">
-        <td>Propriétaire</td>
-        <td>{{ proprietaire.parcelles }}</td>
-        <td>{{ proprietaire.proprietaire }}</td>
-        <td>{{ proprietaire.accordProprietaire }}</td>
-        <td>{{ proprietaire.telephoneProprietaire }}</td>
-        <td>{{ proprietaire.adresseProprietaire }}</td>
-        <td>{{ proprietaire.emailProprietaire }}</td>
-        <td>{{ proprietaire.dateSignatureProprietaire is not null ? proprietaire.dateSignatureProprietaire|date('m/d/Y') }}</td>
-        <td>{{ proprietaire.dateEcheanceProprietaire is not null ? proprietaire.dateEcheanceProprietaire|date('m/d/Y') }}</td>
-      </tr>
-      <tr class="exploitant_entry" style="border-bottom: 2px solid darkgrey;">
-        <td>Exploitant</td>
-        <td>{{ proprietaire.parcelles }}</td>
-        <td>{{ proprietaire.exploitant }}</td>
-        <td>{{ proprietaire.accordExploitant }}</td>
-        <td>{{ proprietaire.telephoneExploitant }}</td>
-        <td>{{ proprietaire.adresseExploitant }}</td>
-        <td>{{ proprietaire.emailExploitant }}</td>
-        <td>{{ proprietaire.dateSignatureExploitant is not null ? proprietaire.dateSignatureExploitant|date('m/d/Y') }}</td>
-        <td>{{ proprietaire.dateEcheanceExploitant is not null ? proprietaire.dateEcheanceExploitant|date('m/d/Y') }}</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-</div>
