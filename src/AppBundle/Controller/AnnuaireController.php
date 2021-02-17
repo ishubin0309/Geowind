@@ -51,9 +51,13 @@ class AnnuaireController extends Controller
 
         $messages = $em->getRepository('AppBundle:Message')
                         ->findAll();
+        
+        $models = $em->getRepository('AppBundle:MessageModel')
+                        ->findBy([], ['name' => 'ASC']);
 
         return $this->render('annuaire/secteur.html.twig', [
             'messages' => $messages,
+            'models' => $models,
         ]);
     }
     
