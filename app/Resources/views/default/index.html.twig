@@ -58,7 +58,7 @@
 
 
     <section id="missions" class="col-xs-12 text-center">
-      <img src="{{ asset('images/mission2.jpg') }}" style="width: inherit;" alt="Nos missions">
+      <img src="{{ asset('images/mission.jpg') }}" style="width: inherit;" alt="Nos missions">
       {# <p id="font-size: x-large;color: #5C7046;">
       <strong>Climactif,</strong> des projets d'énergies renouvelables éthiques et esthétiques
       <br>
@@ -77,56 +77,35 @@
       <img src="{{ asset('images/image2.jpg') }}" style="width: inherit;" alt="Image1">
       <img src="{{ asset('images/image3.jpg') }}" style="width: inherit;" alt="Image2">
     </section> #}
-    {# <section id="missions" class="services bg-primary">
-      <div class="container">
-        
-        <div class="row">
-          <div class="col-lg-10 col-lg-offset-1">
-            <h2 class="text-center">Nos missions</h2>
-            <hr class="small">
-            
-            <h2 class="text-left">Prospecter et développer</h2>
-            <ul>
-              <li>prospecter de nouveaux sites adaptés aux projets d'énergies renouvelables</li>
-              <li>les confronter aux contraintes et servitudes</li>
-              <li>concevoir les plans d'implantation et aménagements aux échelles de précision variables</li>
-              <li>élaborer les documents allant du niveau l'esquisse aux documents d’exécution</li>
-              <li>mener les projets jusqu'à l'obtention des autorisations, en apportant les réponses lors des phases d'instruction</li>
-            </ul>
-            
-            <hr class="small">
-
-            <h2 class="text-left">Notre équipe est pluri-disciplinaire</h2>
-            
-            <ul>
-              <li>formée aux métiers de conception et d'aménagement de projet</li>
-              <li>ayant des aptitudes à la concertation publique et administrative et d'animation</li>
-              <li>avec des aptitudes de négociation et de reporting</li>
-              <li>travaillant en réseaux avec des paysagistes, urbanistes, architectes et environnementalistes</li>
-            </ul>
-
-            <hr class="small">
-            
-            <h2 class="text-left">Notre outil facilite le suivi de nos missions</h2>
-            
-            <ul>
-              <li>les sites accessibles sur un site sécurisé</li>
-              <li>constituant un journal de nos actions</li>
-              <li>affichant l'avancement de nos travaux</li>
-            </ul>
-
-              <div class="text-right" style="margin-top: 30px;">Thomas Claudel, Catherine Dollfus, Djalil Mokrane, Barthelemy Affres</div>
-
-
-            
-            <!-- /.row (nested) -->
-          </div>
-          <!-- /.col-lg-10 -->
+    <!-- Carousel
+    ================================================== -->
+    <div id="myCarousel" style="clear:both;" class="carousel slide" data-ride="carousel">
+      <!-- Indicators -->
+      <ol class="carousel-indicators">
+        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+        <li data-target="#myCarousel" data-slide-to="1"></li>
+        <li data-target="#myCarousel" data-slide-to="2"></li>
+      </ol>
+      <div class="carousel-inner" role="listbox">
+        <div class="item active">
+          <img class="first-slide" src="{{ asset('images/image1.jpg') }}" alt="First slide">
         </div>
-        <!-- /.row -->
+        <div class="item">
+          <img class="second-slide" src="{{ asset('images/image2.jpg') }}" alt="Second slide">
+        </div>
+        <div class="item">
+          <img class="third-slide" src="{{ asset('images/image3.jpg') }}" alt="Third slide">
+        </div>
       </div>
-      <!-- /.container -->
-    </section> #}
+      <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div><!-- /.carousel -->
 
 
     <!-- Footer -->
