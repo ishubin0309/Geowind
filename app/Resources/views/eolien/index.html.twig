@@ -15,14 +15,16 @@
     <h2>Cartographie des parcs éoliens construits</h2>
     <div class="row">
       
-      
-      <div class="col-sm-5">
+      <div class="col-sm-4">
         <div class="form-group">
           <input type="number" class="form-control" id="search" placeholder="Chercher un ID">
         </div>
         
         <div id="loading-text" class="loading-text m-t-10"><i class="fa fa-spinner fa-spin fa-fw"></i> Chargement ...</div>
         <div id="projet-data" class="m-t-10"></div>
+      </div>
+      <div class="col-sm-1">
+        <a href="{{ asset('document/eoliens.csv') }}" class="btn btn-success"><i class="fa fa-fw fa-save"></i> Exporter</a>
       </div>
       <div class="col-sm-7">
         <div class="form-group">
