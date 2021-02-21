@@ -42,8 +42,11 @@
   <script>
     
     var parcs = [];
-    
+    {% set nombreParcs = 0 %}
+    {% set puissanceParcs = 0 %}
     {% for parc in parcs %}
+    {% set nombreParcs = nombreParcs + 1 %}
+    {% set puissanceParcs = puissanceParcs + parc.puissanceNominaleUnitaire %}
       parcs.push({
         id: {{ parc.id }},
         longitude: {{ parc.longitude }},
@@ -51,7 +54,9 @@
         denomination: '{{ parc.denomination is not empty ? parc.denomination|e('js') : parc.id }}'
       });
     {% endfor %}
-    
+    var projet_data_default = '<strong>Nombre d\'éoliennes</strong>: {{ nombreParcs }}<br><strong>Puissance installée</strong>: {{ puissanceParcs }}';
+    $('#projet-data').html(projet_data_default);
+
     $('#map').height(function(index, height) {
       return window.innerHeight - $(this).offset().top - 40;
     });
