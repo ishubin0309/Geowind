@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Projet;
 use AppBundle\Entity\Liste;
+use AppBundle\Entity\Rappel;
 use AppBundle\Entity\Terrain;
 use AppBundle\Entity\Batiment;
 use AppBundle\Entity\Etat;
@@ -16,6 +17,7 @@ use AppBundle\Model\Etat as EtatModel;
 use AppBundle\Form\ProjetEditType;
 use AppBundle\Form\ProjetType;
 use AppBundle\Form\ListeType;
+use AppBundle\Form\RappelType;
 use AppBundle\Helper\GridHelper;
 use AppBundle\Model\ExportOption;
 use AppBundle\Service\ProjetExport;
@@ -157,6 +159,19 @@ class ProjetController extends Controller
      */
     public function newListeAction(Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
+
+        $rappel = $em->getRepository('AppBundle:Rappel')->findOneBy(['id' => 1]);
+        if(!$rappel) $rappel = new Rappel();
+        $formRappel = $this->createForm(RappelType::class, $rappel);
+        $formRappel->handleRequest($request);
+
+        if ($formRappel->isSubmitted() && $formRappel->isValid()) {
+            $em->persist($rappel);
+            $em->flush();
+            $this->addFlash('success', 'Rappel a été modifié.');
+        }
+
         $liste = new Liste();
         $form = $this->createForm(ListeType::class, $liste);
         $form->handleRequest($request);
@@ -344,6 +359,7 @@ class ProjetController extends Controller
 
         return $this->render('projet/newListe.html.twig', [
             'form' => $form->createView(),
+            'formRappel' => $formRappel->createView(),
         ]);
     }
 

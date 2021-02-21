@@ -3,13 +3,12 @@
 {% set title = 'Nouvelle liste' %}
 {% set item = 'creer' %}
 
-{% form_theme form 'bootstrap_3_horizontal_sm_layout.html.twig' %}
+{% form_theme formRappel 'bootstrap_3_horizontal_sm_layout.html.twig' %}
 
 {% block body %}
 
-  {{ form_start(form) }}
   <div class="container">
-
+  {{ form_start(form) }}
   <div class="row">
     <div class="col-xs-12">
 
@@ -25,17 +24,55 @@
 
     </div>
   </div>
+  {{ form_rest(form) }}
+  {{ form_end(form) }}
   
+  {{ form_start(formRappel) }}
   <div class="row">
     <div class="col-xs-12">
-    
-      {{ form_rest(form) }}
+
+      <fieldset>
+        <legend>Rappel pour l'import des données</legend>
+        <div class="col-xs-6">
+        {{ form_widget(formRappel.datas) }}
+        </div>
+        <div class="col-xs-2">
+          <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Valider</button>
+        </div>
+      </fieldset>
+
     </div>
   </div>
+  {{ form_rest(formRappel) }}
+  {{ form_end(formRappel) }}
 
 
   </div>
 
-      {{ form_end(form) }}
 
+{% endblock %}
+
+{% block js %}
+  <script>
+    var $collectionHolderDocument = $('#rappel_datas');
+    var prototypeDocument = $collectionHolderDocument.data('prototype');
+
+    $('#rappel_datas_add_entry').click(function () {
+      var length = $collectionHolderDocument.children().length;
+      var entry = prototypeDocument.replace(/__name__label__/g, length);
+      entry = entry.replace(/__name__/g, length);
+      $collectionHolderDocument.append(entry);
+
+      $('#rappel_datas_' + length + '_date').datepicker({
+        format: 'dd/mm/yyyy',
+        autoclose: true,
+        language: 'fr',
+      });
+
+    });
+
+    $('#rappel_datas_remove_entry').click(function () {
+      $('> :last-child', $collectionHolderDocument).remove();
+    });
+  </script>
 {% endblock %}

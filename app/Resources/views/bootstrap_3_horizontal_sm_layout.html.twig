@@ -571,6 +571,47 @@ col-sm-8
   {% endspaceless %}
 {% endblock %}
 
+{% block _rappel_datas_widget %}
+  {% if prototype is defined %}
+      {%- set attr = attr|merge({'data-prototype': form_row(prototype) }) -%}
+  {% endif %}
+
+    <table class="table table-condensed table-form">
+      <thead>
+        <tr>
+          <th>Donnée</th>
+          <th>Type</th>
+          <th>Note</th>
+        </tr>
+      </thead>
+      <tbody {{ block('widget_container_attributes') }}>
+        {% for child in form %}
+          {{- form_row(child) -}}
+        {% endfor %}
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="8">
+            <button type="button" id="{{ id }}_add_entry" class="btn btn-primary btn-xs"><i class="fa fa-plus-circle"></i> Ajouter</button>
+              <button type="button" id="{{ id }}_remove_entry" class="btn btn-danger btn-xs"><i class="fa fa-minus-circle"></i> Supprimer</button>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+    
+
+{% endblock %}
+
+{% block _rappel_datas_entry_row %}
+  {% spaceless %}
+    <tr>
+      <td>{{ form_widget(form.donnee) }}</td>
+      <td>{{ form_widget(form.type) }}</td>
+      <td>{{ form_widget(form.note) }}</td>
+    </tr>
+  {% endspaceless %}
+{% endblock %}
+
 
 {% block _projet_dateCles_widget %}
   {% if prototype is defined %}
