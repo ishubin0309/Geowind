@@ -19,6 +19,7 @@
           <th>Email</th>
           <th class="column-fit">Date création</th>
           <th class="column-fit"></th>
+          <th class="column-fit"></th>
         </tr>
       </thead>
       <tbody>
@@ -30,7 +31,10 @@
           <td>{{ bureau.telephone }}</td>
           <td>{{ bureau.email }}</td>
           <td class="column-fit">{{ bureau.createdAt is not null ? bureau.createdAt|date('d/m/Y') }}</td>
-          <td class="column-fit"><a href="{{ path('bureau_edit', { 'id': bureau.id }) }}" class="btn btn-danger btn-xs"><i class="fa fa-fw fa-pencil"></i></a></td>
+          <td class="column-fit"><a href="{{ path('bureau_edit', { 'id': bureau.id }) }}" class="btn btn-warning btn-xs"><i class="fa fa-fw fa-pencil"></i></a></td>
+              <td class="column-fit">
+                <button id="{{ bureau.id }}" bureau="{{ bureau.nom }}" class="btn btn-danger btn-xs button-delete" title="Double click"><i class="fa fa-fw fa-trash"></i></button>
+              </td>
         </tr>
         {% endfor %}
       </tbody>
@@ -45,6 +49,43 @@
       paging: false,
       ordering: false,
       bInfo: false,
+    });
+    $('.button-delete').dblclick(function() {
+      id = $(this).attr('id');
+      bureau = $(this).attr('bureau');
+      
+      if (!id) {
+        return;
+      }
+      swal({
+        title: "Supprimer ?",
+        text: "Le bureau « "+bureau+" » sera supprimé définitivement.",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Supprimer",
+        cancelButtonText: "Annuler",
+        closeOnConfirm: false,
+        closeOnCancel: true,
+        allowOutsideClick: true,
+        showLoaderOnConfirm: true,
+      },
+      function(isConfirm){
+        if (isConfirm) {
+          var csrf = '{{ csrf_token('token')|e('js') }}';
+          $.ajax({
+            url: Routing.generate('bureau_delete', {id: id}),
+            type: 'DELETE',
+            data: { token: csrf  },
+            success: function(result) {
+              location.reload();
+            }
+          });
+        } else {
+
+        }
+      });
+
     });
   </script>
 {% endblock %}

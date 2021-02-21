@@ -180,13 +180,13 @@ class AnnuaireController extends Controller
             'form' => $form->createView(),
         ]);
     }
+
     /**
      * @Route("/modele/{id}/supprimer", name="model_delete", options={ "expose": true })
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, MessageModel $model)
     {
-        $id = $request->request->get('id', 0);
         $csrf = $request->request->get('csrf', null);
 
         if ($this->isCsrfTokenValid('token', $csrf)) {
@@ -200,7 +200,7 @@ class AnnuaireController extends Controller
         $em = $this->getDoctrine()->getManager();
         $em->remove($model);
         $em->flush();
-        $this->addFlash('success', 'Modèle supprimé.');
+        $this->addFlash('success', 'Modèle a été supprimé.');
 
         return $response;
     }

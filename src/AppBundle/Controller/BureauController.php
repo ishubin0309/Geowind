@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Form;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -75,47 +76,34 @@ class BureauController extends Controller
             return $this->redirectToRoute('bureau_index');
         }
 
-        $deleteForm = $this->createDeleteForm($bureau);
-
         return $this->render('bureau/edit.html.twig', [
             'bureau' => $bureau,
             'form' => $form->createView(),
-            'delete_form' => $deleteForm->createView(),
         ]);
     }
 
     /**
-     * @Route("/{id}", name="bureau_delete")
+     * @Route("/bureau/{id}/supprimer", name="bureau_delete", options={ "expose": true })
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, Bureau $bureau)
     {
-        throw $this->createAccessDeniedException();
+        $csrf = $request->request->get('csrf', null);
 
-        $form = $this->createDeleteForm($bureau);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $name = $bureau->getNom();
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($bureau);
-            $em->flush();
-            $this->addFlash('success', 'Bureau d\'études ' . $name . ' supprimé avec succès.');
+        if ($this->isCsrfTokenValid('token', $csrf)) {
+            throw $this->createAccessDeniedException();
         }
 
-        return $this->redirectToRoute('bureau_index');
-    }
+        $em = $this->getDoctrine()->getManager();
 
-    /**
-     * @param Bureau $bureau
-     * @return Form The form
-     */
-    private function createDeleteForm(Bureau $bureau)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('bureau_delete', ['id' => $bureau->getId()]))
-            ->setMethod('DELETE')
-            ->getForm()
-        ;
+        $response = new JsonResponse();
+        $response->setData(['success' => 0]);
+        $em = $this->getDoctrine()->getManager();
+        $nom = $bureau->getNom();
+        $em->remove($bureau);
+        $em->flush();
+        $this->addFlash('success', 'Bureau « '.$nom.' » a été supprimé.');
+
+        return $response;
     }
 }
