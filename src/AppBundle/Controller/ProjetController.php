@@ -225,18 +225,19 @@ class ProjetController extends Controller
                     }
                     if(!$row++) {
                         for ($c=0; $c < count($data); $c++) {
-                            if(strtolower($data[$c])=='insee_com') $inseeColumn = $c;
-                            if(strtolower($data[$c])=='commune') $communeColumn = $c;
-                            elseif(strtolower($data[$c])=='departement') $departementColumn = $c;
-                            elseif(strtolower($data[$c])=='latitude') $latColumn = $c;
-                            elseif(strtolower($data[$c])=='longitude') $lngColumn = $c;
-                            elseif(strtolower($data[$c])=='altitude') $altitudeColumn = $c;
-                            elseif(strtolower($data[$c])=='environnement' || strtolower($data[$c])=='type de milieu') $environnementColumn = $c;
-                            elseif(strtolower($data[$c])=='topographie') $topographieColumn = $c;
-                            elseif(strtolower($data[$c])=='type de projet') $typeProjetColumn = $c;
-                            elseif(strtolower($data[$c])=='type de site' || strtolower($data[$c])=='type de bien') $typeSiteColumn = $c;
-                            elseif(strtolower($data[$c])=='potentiel (mw)') $potentielColumn = $c;
-                            elseif(strtolower($data[$c])=='parcelle') $parcelleColumn = $c;
+                            $name = trim(strtolower($data[$c]));
+                            if($name=='insee_com' || $name=='insee_com') $inseeColumn = $c;
+                            if($name=='commune') $communeColumn = $c;
+                            elseif($name=='departement') $departementColumn = $c;
+                            elseif($name=='latitude') $latColumn = $c;
+                            elseif($name=='longitude') $lngColumn = $c;
+                            elseif($name=='altitude') $altitudeColumn = $c;
+                            elseif($name=='environnement' || $name=='type de milieu') $environnementColumn = $c;
+                            elseif($name=='topographie') $topographieColumn = $c;
+                            elseif($name=='type de projet') $typeProjetColumn = $c;
+                            elseif($name=='type de site' || $name=='type de bien') $typeSiteColumn = $c;
+                            elseif($name=='potentiel (mw)') $potentielColumn = $c;
+                            elseif($name=='parcelle') $parcelleColumn = $c;
                             elseif(preg_match('%enjeux\-(.+)%i',  $data[$c], $m)) $enjeuxColumns[$m[1]] = $c;
                         }
                         if(false === $departementColumn || false === $latColumn || false === $lngColumn || false === $environnementColumn || false === $typeProjetColumn || false === $typeSiteColumn) {
