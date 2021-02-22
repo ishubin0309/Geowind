@@ -12,27 +12,25 @@
 
 {% block body %}
   <div class="container">
-    <div class="page-title"><h1>Parcs éoliens construits</div>
+    <div class="page-title"><h1><strong>Parcs éoliens construits</strong></div>
     <hr>
     <div class="row">
       
-      <div class="col-sm-3">
-        <div class="form-group">
-          <input type="number" class="form-control" id="search" placeholder="Chercher un ID">
+      <div class="col-sm-5">
+        <div class="form-group row">
+          <div class="col-sm-6">
+            <input type="number" class="form-control" id="search" placeholder="Chercher un ID">
+          </div>
+          <div class="col-sm-3">
+            <a href="{{ path('parc_export') }}" class="btn btn-success btn-sm"><i class="fa fa-fw fa-save"></i> Exporter</a>
+          </div>
+          <div class="col-sm-3">
+            <button id="import" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-paperclip"></i> Importer</a>
+          </div>
         </div>
         
         <div id="loading-text" class="loading-text m-t-10"><i class="fa fa-spinner fa-spin fa-fw"></i> Chargement ...</div>
         <div id="projet-data" class="m-t-10"></div>
-      </div>
-      <div class="col-sm-2">
-        <div class="form-group">
-          <div class="col-sm-6">
-            <a href="{{ path('parc_export') }}" class="btn btn-success btn-sm"><i class="fa fa-fw fa-save"></i> Exporter</a>
-          </div>
-          <div class="col-sm-6">
-            <button id="import" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-paperclip"></i> Importer</a>
-          </div>
-        </div>
       </div>
       <div class="col-sm-7">
         <div class="form-group">
