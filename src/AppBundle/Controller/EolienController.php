@@ -108,8 +108,9 @@ class EolienController extends Controller
                     if($email_contactColumn !== false) $parcEolien->setEmailContact($data[$email_contactColumn]);
                     if($descriptionColumn !== false) $parcEolien->setDescription($data[$descriptionColumn]);
                     $em->persist($parcEolien);
-                    if($row % 20 == 0) $em->flush();
+                    if($row % 50 == 0) $em->flush();
                 }
+                fclose($handle);
                 $em->flush();
             }
         }

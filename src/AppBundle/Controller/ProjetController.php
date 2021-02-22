@@ -347,11 +347,12 @@ class ProjetController extends Controller
                                 }
                             }
                             $em->persist($projet);
-                            $em->flush();
+                            if($row % 50 == 0) $em->flush();
                         } else $this->addFlash('warning', 'Département « ' . $departementVal . ' » n\'existe pas.');
                     // } else $this->addFlash('warning', 'Projet avec latitude et longitude « ' . $data[$latColumn] . ',' . $data[$lngColumn] . ' » déjà existe.');
                 }
                 fclose($handle);
+                $em->flush();
             }
             return $this->redirectToRoute('view_liste', [
                 'liste' => $liste->getId(),
