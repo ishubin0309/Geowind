@@ -88,11 +88,8 @@ class EolienController extends Controller
                     }
                     $data = array_map("utf8_encode", $data);
                     // if($row > 200) break;
-                    $parcEolien = $em->getRepository('AppBundle:ParcEolien')->findOneBy(['id' => $data[$idColumn]]);
-                    if(!$parcEolien) {
-                        $parcEolien = new ParcEolien();
-                        $parcEolien->setId($data[$idColumn]);
-                    }
+                    $parcEolien = new ParcEolien();
+                    $parcEolien->setId($data[$idColumn]);
                     if($denominationColumn !== false) $parcEolien->setDenomination($data[$denominationColumn]);
                     if($regionColumn !== false) $parcEolien->setRegion($data[$regionColumn]);
                     if($departementColumn !== false) $parcEolien->setDepartement($data[$departementColumn]);
