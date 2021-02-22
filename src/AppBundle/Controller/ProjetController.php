@@ -211,7 +211,7 @@ class ProjetController extends Controller
                 $listDynamiques = EtatModel::getDynamiqueList();
                 $listTypeProjets = Projet::getTypeProjetList();
                 $listTypeSites = Projet::getTypeSiteList();
-                set_time_limit(600);
+                set_time_limit(1000);
                 $start_time = microtime(true);
                 $write_close = false;
                 while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {

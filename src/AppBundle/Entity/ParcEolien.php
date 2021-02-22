@@ -418,6 +418,30 @@ class ParcEolien
         return $this;
     }
     
+    public function getRowForExport()
+    {
+        return [
+            $this->id, 
+            $this->denomination, 
+            $this->region, 
+            $this->departement, 
+            $this->commune, 
+            $this->longitude, 
+            $this->latitude, 
+            $this->miseEnService, 
+            $this->typeMachine, 
+            $this->puissanceNominaleUnitaire, 
+            $this->puissanceNominaleTotale, 
+            $this->productibleEstime, 
+            $this->developpeur, 
+            $this->operateur, 
+            $this->nomContact, 
+            $this->telephoneContact, 
+            $this->emailContact, 
+            $this->description
+        ];
+    }
+
     /**
      * @return string
      */

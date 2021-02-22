@@ -3,7 +3,9 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\ParcEolien;
+use AppBundle\Entity\Import;
 use AppBundle\Form\ParcEolienType;
+use AppBundle\Form\ImportType;
 use DateTime;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -11,6 +13,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 /**
  * @Security("has_role('ROLE_ADMIN')")
@@ -23,15 +27,104 @@ class EolienController extends Controller
      */
     public function homeAction(Request $request)
     {
+        $import = new Import();
+        $form = $this->createForm(ImportType::class, $import);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+
+            $file_path = $import->getImportFile();
+            $row = 0;
+            if (($handle = fopen($file_path, "r")) !== FALSE) {
+                $idColumn = false;
+                $denominationColumn = false;
+                $regionColumn = false;
+                $departementColumn = false;
+                $communeColumn = false;
+                $latColumn = false;
+                $lngColumn = false;
+                $mise_en_serviceColumn = false;
+                $type_machineColumn = false;
+                $puissance_nominale_unitaireColumn = false;
+                $productible_estimeColumn = false;
+                $developpeurColumn = false;
+                $operateurColumn = false;
+                $nom_contactColumn = false;
+                $telephone_contactColumn = false;
+                $email_contactColumn = false;
+                $descriptionColumn = false;
+                set_time_limit(1000);
+                while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
+                    if(!$row++) {
+                        for ($c=0; $c < count($data); $c++) {
+                            $name = trim(strtolower($data[$c]));
+                            if($name=='id') $idColumn = $c;
+                            elseif($name=='denomination') $denominationColumn = $c;
+                            elseif($name=='region') $regionColumn = $c;
+                            elseif($name=='departement') $departementColumn = $c;
+                            elseif($name=='commune') $communeColumn = $c;
+                            elseif($name=='latitude') $latColumn = $c;
+                            elseif($name=='longitude') $lngColumn = $c;
+                            elseif($name=='mise_en_service') $mise_en_serviceColumn = $c;
+                            elseif($name=='type_machine') $type_machineColumn = $c;
+                            elseif($name=='puissance_nominale_unitaire') $puissance_nominale_unitaireColumn = $c;
+                            elseif($name=='puissance_nominale_totale') $puissance_nominale_totaleColumn = $c;
+                            elseif($name=='productible_estime') $productible_estimeColumn = $c;
+                            elseif($name=='developpeur') $developpeurColumn = $c;
+                            elseif($name=='operateur') $operateurColumn = $c;
+                            elseif($name=='nom_contact') $nom_contactColumn = $c;
+                            elseif($name=='telephone_contact') $telephone_contactColumn = $c;
+                            elseif($name=='email_contact') $email_contactColumn = $c;
+                            elseif($name=='description') $descriptionColumn = $c;
+                        }
+                        if(false === $idColumn || false === $latColumn || false === $lngColumn || false === $regionColumn || false === $departementColumn || false === $communeColumn) {
+                            $this->addFlash('danger', 'Le fichier manque des colonnes obligatoires.');
+                            break;
+                        }
+                        $parcs = $em->getRepository('AppBundle:ParcEolien')->emptyTable();
+                        session_write_close();
+                        continue;
+                    }
+                    $data = array_map("utf8_encode", $data);
+                    // if($row > 200) break;
+                    $parcEolien = $em->getRepository('AppBundle:ParcEolien')->findOneBy(['id' => $data[$idColumn]]);
+                    if(!$parcEolien) {
+                        $parcEolien = new ParcEolien();
+                        $parcEolien->setId($data[$idColumn]);
+                    }
+                    if($denominationColumn !== false) $parcEolien->setDenomination($data[$denominationColumn]);
+                    if($regionColumn !== false) $parcEolien->setRegion($data[$regionColumn]);
+                    if($departementColumn !== false) $parcEolien->setDepartement($data[$departementColumn]);
+                    if($communeColumn !== false) $parcEolien->setCommune($data[$communeColumn]);
+                    if($latColumn !== false) $parcEolien->setLatitude($data[$latColumn]);
+                    if($lngColumn !== false) $parcEolien->setLongitude($data[$lngColumn]);
+                    if($mise_en_serviceColumn !== false) $parcEolien->setMiseEnService($data[$mise_en_serviceColumn]);
+                    if($type_machineColumn !== false) $parcEolien->setTypeMachine($data[$type_machineColumn]);
+                    if($puissance_nominale_unitaireColumn !== false) $parcEolien->setPuissanceNominaleUnitaire((float) $data[$puissance_nominale_unitaireColumn]);
+                    if($puissance_nominale_totaleColumn !== false) $parcEolien->setPuissanceNominaleTotale((float) $data[$puissance_nominale_totaleColumn]);
+                    if($productible_estimeColumn !== false) $parcEolien->setProductibleEstime((float) $data[$productible_estimeColumn]);
+                    if($developpeurColumn !== false) $parcEolien->setDeveloppeur($data[$developpeurColumn]);
+                    if($operateurColumn !== false) $parcEolien->setOperateur($data[$operateurColumn]);
+                    if($nom_contactColumn !== false) $parcEolien->setNomContact($data[$nom_contactColumn]);
+                    if($telephone_contactColumn !== false) $parcEolien->setTelephoneContact($data[$telephone_contactColumn]);
+                    if($email_contactColumn !== false) $parcEolien->setEmailContact($data[$email_contactColumn]);
+                    if($descriptionColumn !== false) $parcEolien->setDescription($data[$descriptionColumn]);
+                    $em->persist($parcEolien);
+                    $em->flush();
+                }
+            }
+        }
         $focus = $request->query->get('focus', null);
         
         $em = $this->getDoctrine()->getManager();
         $parcs = $em->getRepository('AppBundle:ParcEolien')
-                        ->findAll();
+                        ->findAllAsArray();
         
         return $this->render('eolien/index.html.twig', array(
             'parcs' => $parcs,
             'focus_id' => $focus,
+            'form' => $form->createView(),
         ));
     }
     
@@ -62,6 +155,43 @@ class EolienController extends Controller
             'form' => $form->createView(),
             'parc' => $parcEolien,
         ]);
+    }
+    
+    /**
+     * @Route("/nombre-totale", name="parc_count_all")
+     */
+    public function countAllAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $count = $em->getRepository('AppBundle:ParcEolien')->findAllCount();
+        $response = new Response($count);
+        return $response;
+    }
+
+    /**
+     * @Route("/export-csv", name="parc_export")
+     */
+    public function exportAction(Request $request)
+    {
+
+        $response = new StreamedResponse();
+        $response->setCallback(function() {
+            $handle = fopen('php://output', 'w+');
+
+            $em = $this->getDoctrine()->getManager();
+            $parcs = $em->getRepository('AppBundle:ParcEolien')->findAll();
+            fputcsv($handle, ['ID','denomination','region','departement','commune','longitude','latitude','mise_en_service','type_machine','puissance_nominale_unitaire','puissance_nominale_totale','productible_estime','developpeur','operateur','nom_contact','telephone_contact','email_contact','description'],';');
+            foreach($parcs as $parc) {
+                fputcsv($handle, $parc->getRowForExport(), ';');
+            }
+
+            fclose($handle);
+        });
+        $response->setStatusCode(200);
+        $response->headers->set('Content-Type', 'text/csv; charset=utf-8');
+        $response->headers->set('Content-Disposition', 'attachment; filename="eoliens.csv"');
+
+        return $response;
     }
     
     /**

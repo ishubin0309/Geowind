@@ -16,7 +16,7 @@
     <hr>
     <div class="row">
       
-      <div class="col-sm-4">
+      <div class="col-sm-3">
         <div class="form-group">
           <input type="number" class="form-control" id="search" placeholder="Chercher un ID">
         </div>
@@ -24,9 +24,14 @@
         <div id="loading-text" class="loading-text m-t-10"><i class="fa fa-spinner fa-spin fa-fw"></i> Chargement ...</div>
         <div id="projet-data" class="m-t-10"></div>
       </div>
-      <div class="col-sm-1">
+      <div class="col-sm-2">
         <div class="form-group">
-          <a href="{{ asset('document/eoliens.csv') }}" class="btn btn-success"><i class="fa fa-fw fa-save"></i> Exporter</a>
+          <div class="col-sm-6">
+            <a href="{{ path('parc_export') }}" class="btn btn-success btn-sm"><i class="fa fa-fw fa-save"></i> Exporter</a>
+          </div>
+          <div class="col-sm-6">
+            <button id="import" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-paperclip"></i> Importer</a>
+          </div>
         </div>
       </div>
       <div class="col-sm-7">
@@ -36,8 +41,25 @@
         <div id="map" class="map map-home"></div>
       </div>
     </div>
-  </div>
+    <div class="row hide">
+      <div class="col-xs-12">
         
+        {{ form_start(form) }}
+        <fieldset>
+          <legend>Importer</legend>
+          <div class="col-xs-4">
+          {{ form_row(form.importFile) }}
+          </div>
+          <div class="col-xs-2">
+            <button id="import_submit" type="submit" class="btn btn-primary"><i class="fa fa-paperclip"></i> Importer</button>
+          </div>
+        </fieldset>
+        
+        {{ form_rest(form) }}
+        {{ form_end(form) }}
+      </div>
+    </div>
+  </div>
 {% endblock %}
 
 {% block js %}
@@ -45,11 +67,13 @@
   <script>
     
     var parcs = [];
+    {% set createdAt = 0 %}
     {% set nombreParcs = 0 %}
     {% set puissanceParcs = 0 %}
     {% for parc in parcs %}
     {% set nombreParcs = nombreParcs + 1 %}
     {% set puissanceParcs = puissanceParcs + parc.puissanceNominaleUnitaire %}
+    {% if not createdAt %}{% set createdAt = parc.createdAt %}{% endif %}
       parcs.push({
         id: {{ parc.id }},
         longitude: {{ parc.longitude }},
@@ -57,7 +81,7 @@
         denomination: '{{ parc.denomination is not empty ? parc.denomination|e('js') : parc.id }}'
       });
     {% endfor %}
-    var projet_data_default = '<strong>Nombre d\'éoliennes</strong>: {{ nombreParcs }}<br><strong>Puissance installée</strong>: {{ puissanceParcs }}';
+    var projet_data_default = '<strong>Nombre d\'éoliennes</strong>: {{ nombreParcs }}<br><strong>Puissance installée</strong>: {{ puissanceParcs }}{% if createdAt %}<br><strong>Date d\'import</strong>: {{ createdAt|date("d/m/Y H:i") }}{% endif %}';
     $('#projet-data').html(projet_data_default);
 
     $('#map').height(function(index, height) {
@@ -195,6 +219,42 @@
   {% if focus_id is not null %}
     focusOn({{ focus_id }});
   {% endif %}
-    
+  
+  $('#import').click(function() {
+    $('#import_importFile').click();
+  });
+  var count = 1;
+  
+  $('#import_importFile').change(function() {
+    swal({
+        title: "Importer ce fichier ?",
+        text: "Les parcs anciens seront supprimés définitivement.",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Importer",
+        cancelButtonText: "Annuler",
+        closeOnConfirm: false,
+        closeOnCancel: true,
+        allowOutsideClick: true,
+        showLoaderOnConfirm: true,
+      },
+      function(isConfirm){
+        if (isConfirm) {
+          $('#import_importFile').parents('form').submit();
+          setInterval(function() {
+            if(count) {
+              count = 0;
+              $.get('{{ path('parc_count_all') }}', function( data ) {
+                count = 1;
+                $('body').find('.sweet-alert h2').html(data + ' parcs ajoutés');
+              });
+            }
+          }, 3000);
+        } else {
+
+        }
+    });
+  });
   </script>
 {% endblock %}
