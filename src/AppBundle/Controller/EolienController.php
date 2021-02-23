@@ -78,7 +78,7 @@ class EolienController extends Controller
                             elseif($name=='email_contact') $email_contactColumn = $c;
                             elseif($name=='description') $descriptionColumn = $c;
                         }
-                        if(false === $idColumn || false === $latColumn || false === $lngColumn || false === $departementColumn || false === $communeColumn) {
+                        if(false === $idColumn || false === $latColumn || false === $lngColumn) {
                             $this->addFlash('danger', 'Le fichier manque des colonnes obligatoires.');
                             break;
                         }
