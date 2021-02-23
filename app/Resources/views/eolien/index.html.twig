@@ -85,7 +85,7 @@
         mise_en_service: '{{ parc.miseEnService }}'
       });
     {% endfor %}
-    var projet_data_default = '<strong>Nombre d\'éoliennes</strong>: {{ nombreParcs }}<br><strong>Puissance installée (MW)</strong>: {{ puissanceParcs }}{% if createdAt %}<br><strong>Date d\'import</strong>: {{ createdAt|date("d/m/Y H:i") }}{% endif %}';
+    var projet_data_default = '<strong>Nombre d\'éoliennes</strong>: {{ nombreParcs }}<br><strong>Puissance installée (MW)</strong>: {{ puissanceParcs / 1000 }}{% if createdAt %}<br><strong>Date d\'import</strong>: {{ createdAt|date("d/m/Y H:i") }}{% endif %}';
     $('#projet-data').html(projet_data_default);
 
     $('#map').height(function(index, height) {
