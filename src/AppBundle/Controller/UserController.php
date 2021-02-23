@@ -3,8 +3,10 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\User;
+use AppBundle\Entity\Message;
 use AppBundle\Form\UserType;
 use AppBundle\Form\UserEditType;
+use AppBundle\Service\AnnuaireMailer;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -12,6 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Swift_Mailer;
 
 /**
  * @Route("/app/utilisateurs")
@@ -52,7 +55,7 @@ class UserController extends Controller
      * @Route("/nouveau", name="user_new")
      * @Method({"GET", "POST"})
      */
-    public function newAction(Request $request)
+    public function newAction(Request $request, Swift_Mailer $mailer)
     {
         $userManager = $this->get('AppBundle\Manager\UserManager');
         $user = $userManager->createUser();
@@ -61,6 +64,9 @@ class UserController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if($user->isSendCredentials()) {
+                $this->nouveauMessage($user->getUsername(), $user->getEmail(), $user->getPassword(), $mailer);
+            }
             $userManager->saveUser($user);
             $this->addFlash('success', 'Utilisateur ' . $user->getUsername() . ' créé avec succès.');
 
@@ -73,11 +79,28 @@ class UserController extends Controller
         ]);
     }
 
+    private function nouveauMessage($user, $email, $password, $mailer)
+    {//$email = 'haffoudhimedtaieb@gmail.com';
+        $message = new Message();
+        $from = $this->getParameter('mailer_from');
+        $message->setObject('Vos identifiants climactif');
+        $body = 'Veuillez bien trouver ci-joint vos identifiants de connexion au site climactif.com' . "\n" . 'User: '.$user . "\n" . 'Mot de passe: '.$password;
+        $message->setBody($body);
+        $message->setFrom($from);
+        $message->setReplyTo($from);
+        $message->setTo($email);
+        $annuaireMailer = new AnnuaireMailer($mailer);
+        $errors = [];
+        if ($annuaireMailer->handleMessage($message, $errors)) {
+            $this->addFlash('success', 'Mail envoyé.');
+        } else $this->addFlash('danger', 'Mail non envoyé.');
+    }
+
     /**
      * @Route("/{id}/modifier", name="user_edit")
      * @Method({"GET", "POST"})
      */
-    public function editAction(Request $request, User $user)
+    public function editAction(Request $request, User $user, Swift_Mailer $mailer)
     {
         $userManager = $this->get('AppBundle\Manager\UserManager');
 

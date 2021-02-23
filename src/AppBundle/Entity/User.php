@@ -131,6 +131,11 @@ class User implements AdvancedUserInterface, \Serializable
      */
     private $enabled = true;
 
+    /**
+     * @var bool
+     */
+    private $sendCredentials = false;
+
     public function __construct()
     {
         $this->roles = [];
@@ -311,6 +316,24 @@ class User implements AdvancedUserInterface, \Serializable
     public function setEnabled($enabled)
     {
         $this->enabled = $enabled;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isSendCredentials()
+    {
+        return $this->sendCredentials;
+    }
+
+    /**
+     * @param bool $sendCredentials
+     * @return \AppBundle\Entity\User
+     */
+    public function setSendCredentials($sendCredentials)
+    {
+        $this->sendCredentials = $sendCredentials;
         return $this;
     }
 
