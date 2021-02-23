@@ -113,6 +113,7 @@ class EolienController extends Controller
                 fclose($handle);
                 $em->flush();
             }
+            return $this->redirectToRoute('cartographie');
         }
         $focus = $request->query->get('focus', null);
         
