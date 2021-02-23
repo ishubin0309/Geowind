@@ -75,7 +75,7 @@
     {% set puissanceParcs = 0 %}
     {% for parc in parcs %}
     {% set nombreParcs = nombreParcs + 1 %}
-    {% set puissanceParcs = puissanceParcs + parc.puissanceNominaleUnitaire %}
+    {% set puissanceParcs = puissanceParcs + parc.puissanceNominaleTotale %}
     {% if not createdAt %}{% set createdAt = parc.createdAt %}{% endif %}
       parcs.push({
         id: {{ parc.id }},
@@ -85,7 +85,7 @@
         mise_en_service: '{{ parc.miseEnService }}'
       });
     {% endfor %}
-    var projet_data_default = '<strong>Nombre d\'éoliennes</strong>: {{ nombreParcs }}<br><strong>Puissance installée</strong>: {{ puissanceParcs }}{% if createdAt %}<br><strong>Date d\'import</strong>: {{ createdAt|date("d/m/Y H:i") }}{% endif %}';
+    var projet_data_default = '<strong>Nombre d\'éoliennes</strong>: {{ nombreParcs }}<br><strong>Puissance installée <span style="color:red;">(MW)</span></strong>: {{ puissanceParcs }}{% if createdAt %}<br><strong>Date d\'import</strong>: {{ createdAt|date("d/m/Y H:i") }}{% endif %}';
     $('#projet-data').html(projet_data_default);
 
     $('#map').height(function(index, height) {
@@ -266,7 +266,7 @@
               count = 0;
               $.get('{{ path('parc_count_all') }}', function( data ) {
                 count = 1;
-                $('body').find('.sweet-alert h2').html(data + ' parcs ajoutés');
+                $('body').find('.sweet-alert h2').html(data + ' éoliennes importées');
               });
             }
           }, 3000);
