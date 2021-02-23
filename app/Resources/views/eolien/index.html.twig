@@ -31,7 +31,7 @@
             <input type="number" class="form-control" id="search_id" placeholder="Chercher un ID">
           </div>
           <div class="col-sm-6">
-            <input type="number" class="form-control" id="search_mise_en_service" placeholder="Année de mise en service">
+            <input type="text" class="form-control" id="search_mise_en_service" placeholder="Année de mise en service">
           </div>
         </div>
         
@@ -115,7 +115,7 @@
       markers.clearLayers();
       parcMarkers = {};
       $.each(parcs, function(index, parc) {
-        if(!mise_en_service || mise_en_service == parc.mise_en_service) {
+        if(!mise_en_service || parc.mise_en_service.match(mise_en_service)) {
           var marker = L.marker([parc.latitude, parc.longitude], {
             id: parc.id, 
             icon: markerIcon,
