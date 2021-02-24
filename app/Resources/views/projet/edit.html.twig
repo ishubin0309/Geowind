@@ -140,7 +140,25 @@
           {{ form_row(form.batimentNouveau) }}
         </div>
         <div class="form_site hide" id="form_site_batimentExistant">
-          {{ form_widget(form.batimentExistant) }}
+          {{ form_row(form.batimentExistant.pans) }}
+          {{ form_row(form.batimentExistant.longeur) }}
+          {{ form_row(form.batimentExistant.largeur) }}
+          {{ form_row(form.batimentExistant.faitage) }}
+          {{ form_row(form.batimentExistant.surfaceSol) }}
+          {{ form_row(form.batimentExistant.charge) }}
+          {{ form_row(form.batimentExistant.bardage) }}
+          {{ form_row(form.batimentExistant.ossature) }}
+          {{ form_row(form.batimentExistant.charpente) }}
+          {{ form_row(form.batimentExistant.couverture) }}
+          {{ form_row(form.batimentExistant.photoFile) }}
+          {{ form_row(form.batimentExistant.toitures) }}
+          <legend>Raccordement</legend>
+          {{ form_row(form.batimentExistant.gestionnaire) }}
+          {{ form_row(form.batimentExistant.distanceOnduleur) }}
+          {{ form_row(form.batimentExistant.distanceTranfo) }}
+          <legend>Urbanisme</legend>
+          {{ form_row(form.batimentExistant.documentOpposable) }}
+          {{ form_row(form.batimentExistant.zonage) }}
         </div>
       </fieldset>
 
