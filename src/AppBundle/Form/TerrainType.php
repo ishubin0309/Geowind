@@ -31,16 +31,6 @@ class TerrainType extends AbstractType
                 'label' => 'Exposition',
                 'required' => false,
             ])
-            ->add('documentOpposable', ChoiceType::class, [
-                'label' => 'Document opposable',
-                'required' => false,
-                'choices' => array_flip(Terrain::getDocumentOpposableList()),
-            ])
-            ->add('zonage', ChoiceType::class, [
-                'label' => 'Zonage',
-                'required' => false,
-                'choices' => array_flip(Terrain::getZonageList()),
-            ])
             ->add('gestionnaire', TextType::class, [
                 'label' => 'Gestionnaire',
                 'required' => false,
@@ -52,6 +42,16 @@ class TerrainType extends AbstractType
             ->add('distancePdl', TextType::class, [
                 'label' => 'Distance PDL',
                 'required' => false,
+            ])
+            ->add('documentOpposable', ChoiceType::class, [
+                'label' => 'Document opposable',
+                'required' => false,
+                'choices' => array_flip(Terrain::getDocumentOpposableList()),
+            ])
+            ->add('zonage', ChoiceType::class, [
+                'label' => 'Zonage',
+                'required' => false,
+                'choices' => array_flip(Terrain::getZonageList()),
             ])
         ;
     }
