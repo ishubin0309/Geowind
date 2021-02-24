@@ -505,7 +505,7 @@ class Projet
     {
         return [
             'location' => 'Location',
-            'investissement' => 'Investissement',
+            'autofinancement' => 'Autofinancement',
             'non_defini' => 'Non-défini'
         ];
     }
@@ -513,7 +513,7 @@ class Projet
     /**
      * @return array
      */
-    public static function getDeboucheList()
+    public static function getValorisationList()
     {
         return [
             'injection' => 'Injection',
@@ -521,7 +521,9 @@ class Projet
             'autoconso_c' => 'Autoconso-c',
             'mixte' => 'Mixte',
             'ct_remuneration'=> 'Ct de rémunération',
-            'non_defini' => 'Non-défini'
+            'non_defini' => 'Non-défini',
+            'biodiversite' => 'Biodiversité',
+            'cession' => 'Cession'
         ];
     }
     

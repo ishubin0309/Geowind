@@ -224,9 +224,9 @@ class ProjetEditType extends AbstractType
                 'choices' => array_flip(Projet::getContratList()),
             ])
             ->add('debouche', ChoiceType::class, [
-                'label' => 'Débouché',
+                'label' => 'Valorisation',
                 'required' => false,
-                'choices' => array_flip(Projet::getDeboucheList()),
+                'choices' => array_flip(Projet::getValorisationList()),
             ])
             ->add('technologie', ChoiceType::class, [
                 'label' => 'Technologie',
