@@ -279,7 +279,8 @@ class ProjetController extends Controller
                             if($tProjet=='toiture_solaire') $projet->setDenomination('Ptoit_id');
                             elseif($tProjet=='ferme_solaire') $projet->setDenomination('Psol_id');
                             elseif($tProjet=='ombriere_solaire') $projet->setDenomination('Pomb_id');
-                            elseif($tProjet=='tracker_solaire') $projet->setDenomination('Ptrack_');
+                            elseif($tProjet=='tracker_solaire') $projet->setDenomination('Ptrack_id');
+                            elseif($tProjet=='mesure_enviro') $projet->setDenomination('Menv_id');
                             $projet->setTechnologie('photovoltaique');
                             $projet->setPuissanceUnitaire(300);
                         }

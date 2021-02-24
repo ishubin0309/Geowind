@@ -22,13 +22,15 @@ class Environnement
     const PRAIRIE = 'prairie';
     const MILIEUOUVERT = 'milieu_ouvert';
     const ZONEURBAINE = 'zone_urbaine';
-    const FERME = 'ferme';
+    const EXPLOITATION_AGRICOLE = 'exploitation_agricole';
     const ACTIVITE = 'zone_activite';
     const LOTISSEMENT = 'lotissement';
     const HABITATCOLLECTIF = 'habitat_collectif';
     const ANCIENNECARRIERE = 'ancienne_carriere';
     const SITEPOLLUE = 'site_pollue';
     const DELAISSE = 'delaisse';
+    const TERRE_ELEVAGE = 'terre_elevage';
+    const FRICHE_AGRICOLE = 'friche_agricole';
 
     /**
      * @return array
@@ -52,13 +54,15 @@ class Environnement
                 self::PRAIRIE => 'Prairie',
                 self::MILIEUOUVERT => 'Milieu ouvert',
                 self::ZONEURBAINE => 'Zone urbaine',
-                self::FERME => 'Ferme',
+                self::EXPLOITATION_AGRICOLE => 'Exploitation agricole',
                 self::ACTIVITE => 'Zone d\'activité',
                 self::LOTISSEMENT => 'Lotissement',
                 self::HABITATCOLLECTIF => 'Habitat collectif',
                 self::ANCIENNECARRIERE => 'Ancienne carrière',
                 self::SITEPOLLUE => 'Site pollué',
                 self::DELAISSE => 'Délaissé',
+                self::TERRE_ELEVAGE => 'Terre d\'élevage',
+                self::FRICHE_AGRICOLE => 'Friche agricole',
             ];
         else
             return [
@@ -70,13 +74,15 @@ class Environnement
                 self::PRAIRIE => 'Prairie',
                 self::MILIEUOUVERT => 'Milieu ouvert',
                 self::ZONEURBAINE => 'Zone urbaine',
-                self::FERME => 'Ferme',
+                self::EXPLOITATION_AGRICOLE => 'Exploitation agricole',
                 self::ACTIVITE => 'Zone d\'activité',
                 self::LOTISSEMENT => 'Lotissement',
                 self::HABITATCOLLECTIF => 'Habitat collectif',
                 self::ANCIENNECARRIERE => 'Ancienne carrière',
                 self::SITEPOLLUE => 'Site pollué',
                 self::DELAISSE => 'Délaissé',
+                self::TERRE_ELEVAGE => 'Terre d\'élevage',
+                self::FRICHE_AGRICOLE => 'Friche agricole',
             ];
     }
 

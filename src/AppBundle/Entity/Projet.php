@@ -32,6 +32,7 @@ class Projet
     const TYPE_PROJET_QUATRE = 'tracker_solaire';
     const TYPE_PROJET_CINQ = 'eolienne_isolee';
     const TYPE_PROJET_SIX = 'toiture_solaire';
+    const TYPE_PROJET_SEPT = 'mesure_enviro';
 
     const TYPE_SITE_UN = 'terrain';
     const TYPE_SITE_DEUX = 'batiment_existant';
@@ -468,7 +469,8 @@ class Projet
             self::TYPE_PROJET_TROIS => 'Ombrière solaire',
             self::TYPE_PROJET_QUATRE => 'Tracker solaire',
             self::TYPE_PROJET_CINQ => 'Eolienne isolée',
-            self::TYPE_PROJET_SIX => 'Toiture solaire'
+            self::TYPE_PROJET_SIX => 'Toiture solaire',
+            self::TYPE_PROJET_SEPT => 'Mesure enviro'
         ];
     }
 

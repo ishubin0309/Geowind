@@ -432,6 +432,12 @@
           if($(element).val().match('batiment')) $(element).removeClass('hide');
           else $(element).addClass('hide');
         });
+      } else if(type == 'mesure_enviro') {
+        $('#projet_typeSite').val('terrain');
+        $.each($('#projet_typeSite option'), function(i, element) {
+          if($(element).val() == 'terrain') $(element).removeClass('hide');
+          else $(element).addClass('hide');
+        });
       }
       if(type.match('olien')) {
         $('#projet_technologie').val('eolienne');
@@ -449,6 +455,7 @@
         else if(type == 'ferme_solaire') $('#projet_denomination').val('Psol_'+id);
         else if(type == 'ombriere_solaire') $('#projet_denomination').val('Pomb_'+id);
         else if(type == 'tracker_solaire') $('#projet_denomination').val('Ptrack_'+id);
+        else if(type == 'mesure_enviro') $('#projet_denomination').val('Menv_'+id);
         else $('#projet_denomination').val('Esol_'+id);
       }
     });
