@@ -194,7 +194,6 @@
 
     </div>
     <div class="col-sm-6">
-      <div id="implantation_photo" class="form-group form-group-sm hide"><img id="implantation_photo_close" class="hide" title="Fermer" width="25" height="25" style="position:absolute;right:20px;top:20px;cursor:pointer;" src="{{ asset('images/close.png') }}"><img style="max-width: 100%;padding:3%;" src=""></div>
       <div id="map" class="map map-home" style="height: 500px; margin-bottom: 20px;"></div>
       <div id="main_photo" class="hide col-sm-12"><img style="width: inherit;" src=""><nav style="margin-left:30%;" aria-label="Page navigation center-text"><ul class="pagination"><li class="page-item disabled"><a id="prev_image" class="page-link" href="#">Précédent</a></li><li class="page-item disabled"><a id="next_image" class="page-link" href="#">Suivant</a></li></ul></nav></div>
 
@@ -220,8 +219,17 @@
 
   </div>
 
-      {{ form_end(form) }}
-
+  {{ form_end(form) }}
+  <div class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-labelledby="carteModal">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div id="implantation_photo" class="modal-body">
+          <img id="implantation_photo_close" class="hide" title="Fermer" width="25" height="25" style="position:absolute;right:20px;top:20px;cursor:pointer;" src="{{ asset('images/close.png') }}">
+          <img style="max-width: 100%;padding:3%;" src="">
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}
 
 {% block js %}
@@ -507,7 +515,8 @@
     });
     
     {% if form.vars.value.photoImplantation is defined and form.vars.value.photoImplantation %}
-    $('#implantation_photo img:eq(0)').removeClass('hide');
+      if(!$('#popup_fichier').length) $('<button id="popup_fichier" class="btn btn-info btn-sm" data-toggle="modal" data-target=".bs-modal-lg">Afficher</button>').insertAfter('#projet_photoImplantationFile');
+      {# $('#implantation_photo img:eq(0)').removeClass('hide'); #}
       $('#implantation_photo img:eq(1)').attr('src', '{{ asset('upload/' ~ form.vars.value.photoImplantation) }}');
     {% endif %}
     $('#projet_photoImplantationFile').change(function() {
@@ -515,7 +524,8 @@
         var reader = new FileReader();
         
         reader.onload = function(e) {
-          $('#implantation_photo img:eq(0)').removeClass('hide');
+          if(!$('#popup_fichier').length) $('<button id="popup_fichier" class="btn btn-info btn-sm" data-toggle="modal" data-target=".bs-modal-lg">Afficher</button>').insertAfter('#projet_photoImplantationFile');
+          {# $('#implantation_photo img:eq(0)').removeClass('hide'); #}
           $('#implantation_photo img:eq(1)').attr('src', e.target.result);
           
           if(!$('#projet_documents tr').length) $('#projet_documents_add_entry').click();
@@ -531,8 +541,11 @@
       $('#projet_documents_0_type').val($('#projet_typeImplantation').val());
       $('#projet_documents_0_titre').val($('#projet_titreImplantation').val());
     });
-    $('#implantation_photo_close').click(function() {
-      $('#implantation_photo').addClass('hide');
+    $('body').on('click', '#implantation_photo_close', function() {
+      $('.bs-modal-lg').modal('hide');
+    });
+    $('body').on('click', '#popup_fichier', function(e) {
+      e.preventDefault();
     });
 
     var $collectionHolder = $('#projet_finances');
@@ -1236,7 +1249,7 @@
         if(attr != 'tab_localisation' && attr != 'tab_contacts' && attr != 'tab_site' && attr != 'tab_projet' && attr != 'tab_image') {
           $('#map').addClass('hide');
           $('#main_photo').addClass('hide');
-          $('#implantation_photo').addClass('hide');
+          {# $('#implantation_photo').addClass('hide'); #}
           $('#fields_div').removeClass('col-sm-6');
           $('#fields_div').addClass('col-sm-12');
           $('fieldset#' + attr + ' .col-sm-4').addClass('col-sm-2').removeClass('col-sm-4');
@@ -1244,12 +1257,12 @@
           if(attr != 'tab_image') {
             $('#map').removeClass('hide');
             $('#main_photo').addClass('hide');
-            if(attr == 'tab_projet') $('#implantation_photo').removeClass('hide');
-            else $('#implantation_photo').addClass('hide');
+            {# if(attr == 'tab_projet') $('#implantation_photo').removeClass('hide');
+            else $('#implantation_photo').addClass('hide'); #}
           } else {
             $('#map').addClass('hide');
             $('#main_photo').removeClass('hide');
-            $('#implantation_photo').addClass('hide');
+            {# $('#implantation_photo').addClass('hide'); #}
           }
           $('#fields_div').removeClass('col-sm-12');
           $('#fields_div').addClass('col-sm-6');
