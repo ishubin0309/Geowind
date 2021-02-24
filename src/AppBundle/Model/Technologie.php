@@ -58,7 +58,7 @@ class Technologie
                     'Puissance nominale (Mw)' => '0,8', 
                     'Hauteur mat (m)' => '50', 
                     'Diamètre rotor (m)' => '52,9', 
-                    'Hauteur totale(m)' => ''
+                    'Hauteur totale(m)' => '76,45'
                 ],
                 'Type2 (59m-1Mw)' => [
                     'Marque' => 'EWT',  
