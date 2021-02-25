@@ -226,7 +226,7 @@ class ProjetType extends AbstractType
             ->add('debouche', ChoiceType::class, [
                 'label' => 'Valorisation',
                 'required' => false,
-                'choices' => array_flip(Projet::getDeboucheList()),
+                'choices' => array_flip(Projet::getValorisationList()),
             ])
             ->add('technologie', ChoiceType::class, [
                 'label' => 'Technologie',
