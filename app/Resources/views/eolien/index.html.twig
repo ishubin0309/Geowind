@@ -70,13 +70,17 @@
   <script src="{{ asset('vendor/Leaflet.markercluster-1.1.0/dist/leaflet.markercluster.js') }}"></script>
   <script>
     var parcs = [];
+    var regions = {};
+    {% set regions = [] %}
     {% set createdAt = 0 %}
     {% set nombreParcs = 0 %}
     {% set puissanceParcs = 0 %}
+    {% set region = '-' %}
     {% for parc in parcs %}
     {% set nombreParcs = nombreParcs + 1 %}
     {% set puissanceParcs = puissanceParcs + parc.puissanceNominaleTotale %}
     {% if not createdAt %}{% set createdAt = parc.createdAt %}{% endif %}
+    {% if parc.region %}{% set region = parc.region %}{% endif %}
       parcs.push({
         id: {{ parc.id }},
         longitude: {{ parc.longitude }},
@@ -84,10 +88,16 @@
         denomination: '{{ parc.denomination is not empty ? parc.denomination|e('js') : parc.id }}',
         mise_en_service: '{{ parc.miseEnService }}'
       });
+      if(regions['{{ region }}'] === undefined) regions['{{ region }}'] = {0: 1, 1: {{ parc.puissanceNominaleTotale }}};
+      else regions['{{ region }}'] = {0: (regions['{{ region }}'][0] + 1), 1: (regions['{{ region }}'][1] + {{ parc.puissanceNominaleTotale }})};
     {% endfor %}
     var projet_data_default = '<strong>Nombre d\'éoliennes</strong>: {{ nombreParcs }}<br><strong>Puissance installée (MW)</strong>: {{ puissanceParcs / 1000 }}{% if createdAt %}<br><strong>Date d\'import</strong>: {{ createdAt|date("d/m/Y H:i") }}{% endif %}';
+    projet_data_default += '<br><br><table class="table table-striped"><thead><tr><th>Région</th><th>Nombre de machines</th><th>Puissance installée (MW)</th></tr></thead><tbody>';
+    $.each(regions, function(index, region) {
+      projet_data_default += '<tr><td>'+index+'</td><td>'+region[0]+'</td><td>'+(region[1]/1000)+'</td></tr>';
+    });
+    projet_data_default += '</tbody></table>';
     $('#projet-data').html(projet_data_default);
-
     $('#map').height(function(index, height) {
       return window.innerHeight - $(this).offset().top - 40;
     });
