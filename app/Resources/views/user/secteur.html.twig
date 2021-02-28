@@ -106,7 +106,7 @@
     {% for user in users %}
       {% if user.departements is not empty %}
       {% for departement in user.departements %}console.log('{{ user.prenom ~ ' ' ~ user.nom }}'+'***'+'{{ departement.nom }}');
-        users[{{ counter }}] = {0: {{ general_counter }}, 1:'{{ departement.nom }}', 2:'{{ user.prenom ~ ' ' ~ user.nom }}'};
+        users[{{ counter }}] = {0: {{ general_counter }}, 1:'{{ departement.nom }}', 2:'{{ user.prenom ~ ' ' ~ user.nom }}', 3: {{ departement.latitude }}, 4: {{ departement.longitude }}};
       {% set counter= counter + 1 %}
       {% endfor %}
       if(colors[colors_counter] === undefined) colors_counter = 0;
@@ -154,8 +154,9 @@
         });
     }
     $.each(users, function(i, user) {
-      console.log(user);
-      reverseGeolocalisation(user[1], user[2], user[0]);
+      {# console.log(user); #}
+      if(user[3] && user[4]) L.marker([user[3], user[4]], { icon: markers[user[0]]}).addTo(map).bindTooltip(user[1]).bindPopup(user[2]);
+      else reverseGeolocalisation(user[1], user[2], user[0]);
     });
       {# L.marker([{{ projet.latitude }}, {{ projet.longitude }}], { id: {{ projet.id }}, icon: markers["{{ projet.progression|e('js') }}"]}).addTo(map).bindTooltip("{{ projet.denomination|e('js') }}").bindPopup("{{ projet.denomination|e('js') }}").on('click', onMarkerClick){% if loop.index0 == focus_index %}.openPopup(){% endif %}; #}
 

@@ -38,6 +38,20 @@ class Departement
     private $code;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(type="decimal", precision=20, scale=16)
+     */
+    private $latitude = 0;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="decimal", precision=20, scale=16)
+     */
+    private $longitude = 0;
+
+    /**
      * @var Region
      *
      * @ORM\ManyToOne(targetEntity="Region")
@@ -97,6 +111,42 @@ class Departement
     public function setCode($code)
     {
         $this->code = $code;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLatitude()
+    {
+        return (float) $this->latitude;
+    }
+
+    /**
+     * @param string $latitude
+     * @return \AppBundle\Entity\Projet
+     */
+    public function setLatitude($latitude)
+    {
+        $this->latitude = $latitude;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLongitude()
+    {
+        return (float) $this->longitude;
+    }
+
+    /**
+     * @param string $longitude
+     * @return \AppBundle\Entity\Projet
+     */
+    public function setLongitude($longitude)
+    {
+        $this->longitude = $longitude;
         return $this;
     }
 
