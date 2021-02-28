@@ -57,7 +57,7 @@ class HomeController extends Controller
         curl_setopt($ch, CURLOPT_USERAGENT, $ua);
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
         curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-        $result = curl_exec($ch);exit($result);
+        $result = curl_exec($ch);
         $info = curl_getinfo($ch);
         return ($info['http_code']!=200) ? false : $result;
     }
