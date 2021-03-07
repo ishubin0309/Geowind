@@ -6,7 +6,83 @@
 {% form_theme form 'bootstrap_3_horizontal_sm_layout.html.twig' %}
 
 {% block body %}
-
+  <style>
+  .chat-online {
+    color: #34ce57
+  }
+  .chat-offline {
+    color: #e4606d
+  }
+  .chat-messages {
+    display: flex;
+    flex-direction: column;
+    {# max-height: 800px;
+    overflow-y: scroll #}
+  }
+  .chat-message-left,
+  .chat-message-right {
+    display: flex;
+    flex-shrink: 0
+  }
+  .chat-message-left {
+    margin-right: auto
+  }
+  .chat-message-right {
+    flex-direction: row-reverse;
+    margin-left: auto
+  }
+  .p-4 {
+    padding: 1.5rem !important;
+  }
+  .pb-4, .py-4 {
+    padding-bottom: 1.5rem !important;
+  }
+  .mb-4, .my-4 {
+    margin-bottom: 1.5rem !important;
+  }
+  .font-weight-bold {
+    font-weight: 700 !important;
+  }
+  .mb-1, .my-1 {
+    margin-bottom: .25rem !important;
+  }
+  .pl-3, .px-3 {
+    padding-left: 1rem !important;
+  }
+  .pr-3, .px-3 {
+    padding-right: 1rem !important;
+  }
+  .pb-2, .py-2 {
+    padding-bottom: .5rem !important;
+  }
+  .pt-2, .py-2 {
+    padding-top: .5rem !important;
+  }
+  .mr-3, .mx-3 {
+    margin-right: 1rem !important;
+  }
+  .ml-3, .mx-3 {
+    margin-left: 1rem !important;
+  }
+  .bg-light {
+    background-color: #f8f9fa !important;
+  }
+  .bg-green {
+    background-color: #77ec74 !important;
+  }
+  .border-top {
+    border-top: 1px solid #dee2e6 !important;
+    margin-top: .5rem !important;
+  }
+  .px-4 {
+    padding-right: 1.5rem !important;
+    padding-left: 1.5rem !important;
+  }
+  .py-3 {
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+  }
+  </style>
   {{ form_start(form) }}
   <div class="container">
     <nav class="navbar navbar-default">
@@ -38,6 +114,7 @@
             <li class=""><a href="#" rel="tab_commandes">Commandes</a></li>
             <li class=""><a href="#" rel="tab_documents">Documents</a></li>
             <li class=""><a href="#" rel="tab_image">Image</a></li>
+            <li class=""><a href="#" rel="tab_messagerie">Messagerie</a></li>
           </ul>
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
@@ -208,6 +285,46 @@
           <input type="text" id="projet_notes_recherche" class="form-control hide" placeholder="recherche" autocomplete="off">
         </div>
         {{ form_widget(form.notes) }}
+      </fieldset>
+
+      <fieldset class="hide" id="tab_messagerie">
+        <div class="col-md-12">
+          <div class="chat-messages p-4">
+            {% for message in projet.messages %}
+              {% if message.createdBy is not null and message.createdBy.id == app.user.id %}
+              <div message="{{ message.id }}" class="chat-message-right mb-4">
+								<div>
+									<img src="{{ asset('images/me.jpg') }}" class="rounded-circle mr-1" alt="{{ message.createdBy is not null ? message.createdBy.nom ~ ' ' ~ message.createdBy.prenom : '' }}" width="40" height="40">
+									<div title="{{ message.createdAt|date('Y-m-d') }}" class="text-muted small text-nowrap mt-2">{{ message.createdAt|date('H:i A') }}</div>
+								</div>
+								<div class="flex-shrink-1 bg-green rounded py-2 px-3 mr-3">
+									<div class="font-weight-bold mb-1">You</div>
+									{{ message.body }}
+								</div>
+							</div>
+              {% else %}
+              <div message="{{ message.id }}" class="chat-message-left pb-4">
+								<div>
+									<img src="{{ asset('images/user.jpg') }}" class="rounded-circle mr-1" alt="{{ message.createdBy is not null ? message.createdBy.nom ~ ' ' ~ message.createdBy.prenom : '' }}" width="40" height="40">
+									<div title="{{ message.createdAt|date('Y-m-d') }}" class="text-muted small text-nowrap mt-2">{{ message.createdAt|date('H:i A') }}</div>
+								</div>
+								<div class="flex-shrink-1 bg-light rounded py-2 px-3 ml-3">
+									<div class="font-weight-bold mb-1">{{ message.createdBy is not null ? message.createdBy.nom ~ ' ' ~ message.createdBy.prenom : '' }}</div>
+									{{ message.body }}
+								</div>
+							</div>
+              {% endif %}
+            {% endfor %}
+          </div>
+          <div class="flex-grow-0 py-3 px-4 border-top">
+            <div class="input-group">
+              <input type="text" id="send_body" class="form-control" placeholder="Ajouter un message">
+              <span class="input-group-btn">
+                <button id="send_message" class="btn btn-primary">Envoyer</button>
+              </span>
+            </div>
+          </div>
+        </div>
       </fieldset>
       
       <fieldset class="hide" id="tab_foncier">
@@ -1288,11 +1405,62 @@
       }
       $('<div id="batimentNouveau_options" class="form-group form-group-sm"><label class="col-sm-4 control-label"></label><div class="col-sm-8"><p></p></div></div>').insertAfter($('#projet_batimentExistant_photoFile').parents('div.form-group'));
     });
-
+    var refresh_messagerie = 0;
+    function refreshMessagerie() {
+      if(refresh_messagerie) {
+        var csrf = '{{ csrf_token('token')|e('js') }}';
+        $.ajax({
+          url: Routing.generate('messagerie_list', { id: {{ projet.id }} }),
+          type: 'GET',
+          dataType: "json",
+          data: { token: csrf },
+          beforeSend: function() {
+            $('.chat-messages').find('#loading_messages').remove();
+            $('.chat-messages').append('<span id="loading_messages">chargement..</span>');
+          },
+          success: function(result) {
+            $.each(result, function(index, message) {
+              if(!$('.chat-messages').find('div[message="'+message[0]+'"]').length) {
+                if(message[1] == {{ app.user.id }}) {
+                  $('.chat-messages').append('<div message="'+message[0]+'" class="chat-message-right mb-4"><div><img src="{{ asset('images/me.jpg') }}" class="rounded-circle mr-1" alt="'+message[2]+'" width="40" height="40"><div title="'+message[5]+'" class="text-muted small text-nowrap mt-2">'+message[4]+'</div></div><div class="flex-shrink-1 bg-green rounded py-2 px-3 mr-3"><div class="font-weight-bold mb-1">You</div>'+message[3]+'</div></div>');
+                } else {
+                  $('.chat-messages').append('<div message="'+message[0]+'" class="chat-message-left pb-4"><div><img src="{{ asset('images/user.jpg') }}" class="rounded-circle mr-1" alt="'+message[2]+'" width="40" height="40"><div title="'+message[5]+'" class="text-muted small text-nowrap mt-2">'+message[4]+'</div></div><div class="flex-shrink-1 bg-light rounded py-2 px-3 ml-3"><div class="font-weight-bold mb-1">'+message[2]+'</div>'+message[3]+'</div></div>');
+                }
+                $('html, body').animate({
+                  scrollTop: $("#send_message").offset().top
+                }, 'slow');
+              }
+            });
+            $('.chat-messages').find('#loading_messages').remove();
+          }
+        });
+      }
+    }
+    $('#send_message').click(function(e) {
+      e.preventDefault();
+      var body = $('#send_body').val();
+      if(body) {
+        var csrf = '{{ csrf_token('token')|e('js') }}';
+        $.ajax({
+          url: Routing.generate('messagerie_new', { id: {{ projet.id }} }),
+          type: 'GET',
+          dataType: "json",
+          data: { body: body, token: csrf },
+          success: function(result) {
+            if(result['status']) {
+              $('#send_body').val('');
+              refreshMessagerie();
+            }
+          }
+        });
+      }
+    });
+    setInterval(refreshMessagerie, 10000);
     $('#nouveau_projet_nav a').click(function (e) {
       e.preventDefault();
       var attr = $(this).attr('rel');
       if(typeof attr !== typeof undefined && attr !== false) {
+        refresh_messagerie = 0;
         $('#nouveau_projet_nav li').removeClass('active');
         $(this).parent().addClass('active');
         $('fieldset').addClass('hide');
@@ -1304,6 +1472,12 @@
           $('#fields_div').removeClass('col-sm-6');
           $('#fields_div').addClass('col-sm-12');
           $('fieldset#' + attr + ' .col-sm-4').addClass('col-sm-2').removeClass('col-sm-4');
+          if(attr == 'tab_messagerie') {
+            refresh_messagerie = 1;
+            $('html, body').animate({
+              scrollTop: $("#send_message").offset().top
+            }, 'slow');
+          }
         } else {
           if(attr != 'tab_image') {
             $('#map').removeClass('hide');

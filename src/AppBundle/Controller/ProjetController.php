@@ -12,6 +12,7 @@ use AppBundle\Entity\Enjeux;
 use AppBundle\Entity\Tache;
 use AppBundle\Entity\Parcelle;
 use AppBundle\Entity\Commune;
+use AppBundle\Entity\Messagerie;
 use AppBundle\Model\Environnement;
 use AppBundle\Model\Etat as EtatModel;
 use AppBundle\Form\ProjetEditType;
@@ -251,7 +252,8 @@ class ProjetController extends Controller
                     $denomination = $liste->getListeOriginalName() . '_' . substr(md5(serialize($data)),16);
                     // $search = $em->getRepository('AppBundle:Projet')->findBy(['denomination' => $denomination, 'liste' => $liste]);
                     // if(!$search) {
-                        $projet = new Projet();
+                        $projet = $em->getRepository('AppBundle:Projet')->findBy(['origine' => $this->getUser(), 'latitude' => $data[$latColumn], 'longitude' => $data[$lngColumn]]);
+                        if(!$projet) $projet = new Projet();
                         $projet->setListe($liste);
                         $projet->setOrigine($this->getUser());
                         $projet->setChefProjet($this->getUser());
@@ -483,6 +485,61 @@ class ProjetController extends Controller
         if (!empty($term)) {
             $em = $this->getDoctrine()->getManager();
             $results = $em->getRepository('AppBundle:Commune')->searchTerm($term);
+        }
+
+        $response->setData($results);
+        return $response;
+    }
+    
+    /**
+     * @Route("/{id}/messagerie/new", name="messagerie_new", options={ "expose": true })
+     * @Security("is_granted('edit', projet)")
+     */
+    public function newMessageAction(Request $request, Projet $projet)
+    {
+        $csrf = $request->request->get('token', null);
+
+        if ($this->isCsrfTokenValid('token', $csrf)) {
+            throw $this->createAccessDeniedException();
+        }
+        $response = new JsonResponse();
+
+        $body = $request->query->get('body', '');
+
+        $message = new Messagerie();
+        $message->setBody($body);
+
+        $projet->addMessage($message);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($projet);
+        $em->flush();
+        $results = ['status' => 1];
+
+        $response->setData($results);
+        return $response;
+    }
+    
+    /**
+     * @Route("/{id}/messagerie/list", name="messagerie_list", options={ "expose": true })
+     * @Security("is_granted('edit', projet)")
+     */
+    public function listMessageAction(Request $request, Projet $projet)
+    {
+        $csrf = $request->request->get('token', null);
+
+        if ($this->isCsrfTokenValid('token', $csrf)) {
+            throw $this->createAccessDeniedException();
+        }
+        $response = new JsonResponse();
+
+        $messages = $projet->getMessages();
+        $results = [];
+        foreach($messages as $message) {
+            $fromName = $message->getCreatedBy() ? $message->getCreatedBy()->getNom() . ' ' . $message->getCreatedBy()->getPrenom() : '';
+            $fromId = $message->getCreatedBy() ? $message->getCreatedBy()->getId() : '';
+            // $created_at = 
+            $results[] = [$message->getId(), $fromId, $fromName, $message->getBody(), $message->getCreatedAt()->format('H:i A'), $message->getCreatedAt()->format('Y-m-d')];
         }
 
         $response->setData($results);

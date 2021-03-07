@@ -310,7 +310,15 @@ class Projet
     private $proprietaires;
     
     /**
-     * @var ArrayCollection|Proprietaire[]
+     * @var ArrayCollection|Messagerie[]
+     *
+     * @ORM\OneToMany(targetEntity="Messagerie", mappedBy="projet", cascade={"all"}, orphanRemoval=true)
+     * @ORM\OrderBy({"id" = "ASC" })
+     */
+    private $messages;
+    
+    /**
+     * @var ArrayCollection|DateCle[]
      *
      * @ORM\OneToMany(targetEntity="DateCle", mappedBy="projet", cascade={"all"}, orphanRemoval=true)
      * @ORM\OrderBy({"date" = "ASC" })
@@ -1250,7 +1258,6 @@ class Projet
         $this->finances->removeElement($finance);
     }
     
-    
     /**
      * @return ArrayCollection|Proprietaire[]
      */
@@ -1286,6 +1293,43 @@ class Projet
     public function removeProprietaire(Proprietaire $proprietaire)
     {
         $this->proprietaires->removeElement($proprietaire);
+    }
+    
+    /**
+     * @return ArrayCollection|Messagerie[]
+     */
+    public function getMessages()
+    {
+        return $this->messages;
+    }
+
+    /**
+     * @param ArrayCollection $messages
+     * @return \AppBundle\Entity\Projet
+     */
+    public function setMessages(ArrayCollection $messages)
+    {
+        $this->messages = $messages;
+        return $this;
+    }
+    
+    /**
+     * @param \AppBundle\Entity\Messagerie $message
+     */
+    public function addMessage(Messagerie $message)
+    {
+        if (!$this->messages->contains($message)) {
+            $message->setProjet($this);
+            $this->messages->add($message);
+        }
+    }
+
+    /**
+     * @param \AppBundle\Entity\Messagerie $message
+     */
+    public function removeMessage(Messagerie $message)
+    {
+        $this->messages->removeElement($message);
     }
     
     /**
