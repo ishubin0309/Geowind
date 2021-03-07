@@ -32,7 +32,7 @@
     <div class="col-xs-12">
 
       <fieldset>
-        <legend>Rappel pour l'import des données</legend>
+        <legend>Rappel pour l'import des données &nbsp;<button class="btn btn-warning" id="dispaly_mode">Voir</button></legend>
         <div class="col-xs-10">
         {{ form_widget(formRappel.datas) }}
         </div>
@@ -73,6 +73,20 @@
 
     $('#rappel_datas_remove_entry').click(function () {
       $('> :last-child', $collectionHolderDocument).remove();
+    });
+    $('#dispaly_mode').click(function(e) {
+      e.preventDefault();
+      $.each($('#rappel_datas input'), function() {
+        if($(this).hasClass('hide')) {
+          $('#dispaly_mode').text('Voir');
+          $(this).parent().find('span').remove();
+          $(this).removeClass('hide');
+        } else {
+          $('#dispaly_mode').text('Modifier');
+          $(this).parent().append('<span>' + $(this).val() + '</span>');
+          $(this).addClass('hide');
+        }
+      });
     });
   </script>
 {% endblock %}
