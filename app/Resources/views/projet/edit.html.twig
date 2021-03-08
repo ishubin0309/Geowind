@@ -1436,6 +1436,12 @@
         });
       }
     }
+    $('#send_body').keypress(function (e) {
+      if (e.which == 13) {
+        e.preventDefault();
+        $('#send_message').click();
+      }
+    });
     $('#send_message').click(function(e) {
       e.preventDefault();
       var body = $('#send_body').val();
