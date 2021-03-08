@@ -7,6 +7,14 @@
 
   <div class="container-fluid">
 
+    {% set projetsPageTotal = 0 %}
+    {% set unreadMessages = 0 %}
+    {% for projet in projets %}
+      {% set projetsPageTotal = projetsPageTotal + 1 %}
+      {% for message in projet.messages %}
+        {% if message.createdBy is null or (app.user.id != message.createdBy.id and app.user not in message.viewers) %}{% set unreadMessages = unreadMessages + 1 %}{% endif %}
+      {% endfor %}
+    {% endfor %}
     {% if is_granted('ROLE_VIEW_ALL') %}
       <a href="{{ path('liste_new') }}" class="btn btn-info btn-sm"><i class="fa fa-paperclip"></i> Importer Liste</a>
     {% endif %}
@@ -21,9 +29,8 @@
     {% if is_granted('ROLE_EDIT_ALL') and liste.id is defined %}
       <button id="button-liste-delete" class="btn btn-danger btn-sm" title="Double click"><i class="fa fa-fw fa-trash"></i> Supprimer Liste</button>
     {% endif %}
+    {% if unreadMessages %}<a id="button-unread" class="btn btn-success btn-sm"><i class="fa fa-fw fa-filter"></i> {{ unreadMessages }} Message{% if unreadMessages > 1 %}s{% endif %}</a>{% endif %}
     <br>
-    {% set projetsPageTotal = 0 %}
-    {% for projet in projets %}{% set projetsPageTotal = projetsPageTotal + 1 %}{% endfor %}
     <h4 id="selected-counter">0 site sélectionné sur {{ projetsPageTotal }}</h4>
     <div class="row col-md-12">
       <div class="col-md-3 col-lg-2">
@@ -213,8 +220,13 @@
       var data = [];
       {% for projet in projets %}
         {% set listeDate = false %}
+        {% set unreadMessage = false %}
+        {% for message in projet.messages %}
+          {% if message.createdBy is null or (app.user.id != message.createdBy.id and app.user not in message.viewers) %}{% set unreadMessage = true %}{% endif %}
+        {% endfor %}
         data.push({
           id: {{ projet.id }},
+          unread: {% if unreadMessage %}1{% else %}0{% endif %},
           typeProjet: '{{ projet.typeProjet }}',
           typeSite: '{{ projet.typeSite }}',
           origine: '{{ projet.origine }}',
