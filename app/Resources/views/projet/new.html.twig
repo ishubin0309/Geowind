@@ -6,6 +6,12 @@
 {% form_theme form 'bootstrap_3_horizontal_sm_layout.html.twig' %}
 
 {% block body %}
+  <style>
+  #nouveau_projet_nav > .nav > li > a {
+    padding-right: 10px;
+    padding-left: 10px;
+  }
+  </style>
 
   {{ form_start(form) }}
   <div class="container">
