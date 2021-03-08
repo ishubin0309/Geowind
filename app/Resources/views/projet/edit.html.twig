@@ -1529,6 +1529,7 @@
           $('fieldset#' + attr + ' .col-sm-4').addClass('col-sm-2').removeClass('col-sm-4');
           if(attr == 'tab_messagerie') {
             refresh_messagerie = 1;
+            refreshMessagerie();
             $('html, body').animate({
               scrollTop: $("#send_message").offset().top
             }, 'slow');

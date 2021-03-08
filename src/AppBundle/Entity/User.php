@@ -111,6 +111,13 @@ class User implements AdvancedUserInterface, \Serializable
     private $departements;
 
     /**
+     * @var ArrayCollection|Messagerie[]
+     *
+     * @ORM\ManyToMany(targetEntity="Messagerie", inversedBy="viewers", cascade={"all"}, orphanRemoval=true)
+     */
+    private $messageries;
+
+    /**
      * @var string
      *
      * @ORM\Column(type="string", nullable=true)
@@ -437,6 +444,35 @@ class User implements AdvancedUserInterface, \Serializable
     public function setDepartements(ArrayCollection $departements)
     {
         $this->departements = $departements;
+        return $this;
+    }
+
+    /**
+     * @return ArrayCollection|Messagerie[]
+     */
+    public function getMessageries()
+    {
+        return $this->messageries;
+    }
+
+    /**
+     * @param \AppBundle\Entity\Messagerie $messagerie
+     */
+    public function addMessagerie(Messagerie $messagerie)
+    {
+        if (!$this->messageries->contains($messagerie)) {
+            $this->messageries[] = $messagerie;
+        }
+        return $this;
+    }
+
+    /**
+     * @param ArrayCollection $messageries
+     * @return \AppBundle\Entity\Projet
+     */
+    public function setMessageries(ArrayCollection $messageries)
+    {
+        $this->messageries = $messageries;
         return $this;
     }
 

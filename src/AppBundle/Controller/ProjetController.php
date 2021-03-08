@@ -532,15 +532,21 @@ class ProjetController extends Controller
             throw $this->createAccessDeniedException();
         }
         $response = new JsonResponse();
-
+        
+        $em = $this->getDoctrine()->getManager();
         $messages = $projet->getMessages();
         $results = [];
         foreach($messages as $message) {
+            if(!$message->getCreatedBy() || $message->getCreatedBy() != $this->getUser()) {
+                $message->addViewer($this->getUser());
+                $em->persist($message);
+            }
             $fromName = $message->getCreatedBy() ? $message->getCreatedBy()->getNom() . ' ' . $message->getCreatedBy()->getPrenom() : '';
             $fromId = $message->getCreatedBy() ? $message->getCreatedBy()->getId() : '';
             // $created_at = 
             $results[] = [$message->getId(), $fromId, $fromName, $message->getBody(), $message->getCreatedAt()->format('H:i A'), $message->getCreatedAt()->format('Y-m-d')];
         }
+        $em->flush();
 
         $response->setData($results);
         return $response;

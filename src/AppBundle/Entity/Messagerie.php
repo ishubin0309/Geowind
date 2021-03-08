@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use AppBundle\Entity\Traits\BlameableTrait;
 use AppBundle\Entity\Traits\TimestampableTrait;
@@ -35,6 +36,13 @@ class Messagerie
      * @Assert\NotBlank()
      */
     private $body;
+    
+    /**
+     * @var ArrayCollection|User[]
+     *
+     * @ORM\ManyToMany(targetEntity="User", mappedBy="messageries", cascade={"persist"})
+     */
+    private $viewers;
 
     /**
      * @var Projet
@@ -44,6 +52,11 @@ class Messagerie
      * @Assert\NotBlank()
      */
     private $projet;
+
+    public function __construct()
+    {
+        $this->viewers = new ArrayCollection();
+    }
 
     /**
      * @return string
@@ -90,6 +103,36 @@ class Messagerie
     public function setBody($body)
     {
         $this->body = $body;
+        return $this;
+    }
+
+    /**
+     * @return ArrayCollection|User[]
+     */
+    public function getViewers()
+    {
+        return $this->viewers;
+    }
+
+    /**
+     * @param \AppBundle\Entity\User $viewer
+     */
+    public function addViewer(User $viewer)
+    {
+        if (!$this->viewers->contains($viewer)) {
+            $viewer->addMessagerie($this);
+            $this->viewers[] = $viewer;
+        }
+        return $this;
+    }
+
+    /**
+     * @param ArrayCollection $viewers
+     * @return \AppBundle\Entity\Messagerie
+     */
+    public function setViewers(ArrayCollection $viewers)
+    {
+        $this->viewers = $viewers;
         return $this;
     }
 

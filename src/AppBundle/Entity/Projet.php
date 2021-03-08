@@ -805,7 +805,6 @@ class Projet
      */
     public function addCommune(Commune $commune)
     {
-        $this->communes[] = $commune;
         if (!$this->communes->contains($commune)) {
             $this->communes[] = $commune;
         }
