@@ -293,9 +293,9 @@
             {% for message in projet.messages %}
               {% if message.createdBy is not null and message.createdBy.id == app.user.id %}
               <div message="{{ message.id }}" class="chat-message-right mb-4">
-								<div>
+								<div title="{{ message.createdAt|date('Y-m-d') }}">
 									<img src="{{ asset('images/me.jpg') }}" class="rounded-circle mr-1" alt="{{ message.createdBy is not null ? message.createdBy.nom ~ ' ' ~ message.createdBy.prenom : '' }}" width="40" height="40">
-									<div title="{{ message.createdAt|date('Y-m-d') }}" class="text-muted small text-nowrap mt-2">{{ message.createdAt|date('H:i A') }}</div>
+									<div class="text-muted small text-nowrap mt-2">{{ message.createdAt|date('H:i A') }}</div>
 								</div>
 								<div class="flex-shrink-1 bg-green rounded py-2 px-3 mr-3">
 									<div class="font-weight-bold mb-1">Vous</div>
@@ -304,9 +304,9 @@
 							</div>
               {% else %}
               <div message="{{ message.id }}" class="chat-message-left pb-4">
-								<div>
+								<div title="{{ message.createdAt|date('Y-m-d') }}">
 									<img src="{{ asset('images/user.jpg') }}" class="rounded-circle mr-1" alt="{{ message.createdBy is not null ? message.createdBy.nom ~ ' ' ~ message.createdBy.prenom : '' }}" width="40" height="40">
-									<div title="{{ message.createdAt|date('Y-m-d') }}" class="text-muted small text-nowrap mt-2">{{ message.createdAt|date('H:i A') }}</div>
+									<div class="text-muted small text-nowrap mt-2">{{ message.createdAt|date('H:i A') }}</div>
 								</div>
 								<div class="flex-shrink-1 bg-light rounded py-2 px-3 ml-3">
 									<div class="font-weight-bold mb-1">{{ message.createdBy is not null ? message.createdBy.nom ~ ' ' ~ message.createdBy.prenom : '' }}</div>
@@ -1422,9 +1422,9 @@
             $.each(result, function(index, message) {
               if(!$('.chat-messages').find('div[message="'+message[0]+'"]').length) {
                 if(message[1] == {{ app.user.id }}) {
-                  $('.chat-messages').append('<div message="'+message[0]+'" class="chat-message-right mb-4"><div><img src="{{ asset('images/me.jpg') }}" class="rounded-circle mr-1" alt="'+message[2]+'" width="40" height="40"><div title="'+message[5]+'" class="text-muted small text-nowrap mt-2">'+message[4]+'</div></div><div class="flex-shrink-1 bg-green rounded py-2 px-3 mr-3"><div class="font-weight-bold mb-1">Vous</div>'+message[3]+'</div></div>');
+                  $('.chat-messages').append('<div message="'+message[0]+'" class="chat-message-right mb-4"><div title="'+message[5]+'"><img src="{{ asset('images/me.jpg') }}" class="rounded-circle mr-1" alt="'+message[2]+'" width="40" height="40"><div class="text-muted small text-nowrap mt-2">'+message[4]+'</div></div><div class="flex-shrink-1 bg-green rounded py-2 px-3 mr-3"><div class="font-weight-bold mb-1">Vous</div>'+message[3]+'</div></div>');
                 } else {
-                  $('.chat-messages').append('<div message="'+message[0]+'" class="chat-message-left pb-4"><div><img src="{{ asset('images/user.jpg') }}" class="rounded-circle mr-1" alt="'+message[2]+'" width="40" height="40"><div title="'+message[5]+'" class="text-muted small text-nowrap mt-2">'+message[4]+'</div></div><div class="flex-shrink-1 bg-light rounded py-2 px-3 ml-3"><div class="font-weight-bold mb-1">'+message[2]+'</div>'+message[3]+'</div></div>');
+                  $('.chat-messages').append('<div message="'+message[0]+'" class="chat-message-left pb-4"><div title="'+message[5]+'"><img src="{{ asset('images/user.jpg') }}" class="rounded-circle mr-1" alt="'+message[2]+'" width="40" height="40"><div class="text-muted small text-nowrap mt-2">'+message[4]+'</div></div><div class="flex-shrink-1 bg-light rounded py-2 px-3 ml-3"><div class="font-weight-bold mb-1">'+message[2]+'</div>'+message[3]+'</div></div>');
                 }
                 $('html, body').animate({
                   scrollTop: $("#send_message").offset().top
