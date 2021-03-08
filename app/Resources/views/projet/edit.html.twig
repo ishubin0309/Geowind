@@ -74,6 +74,10 @@
   .bg-gray {
     background-color: gray !important;
   }
+  .border-bottom {
+    border-bottom: 1px solid #dee2e6 !important;
+    margin-bottom: .5rem !important;
+  }
   .border-top {
     border-top: 1px solid #dee2e6 !important;
     margin-top: .5rem !important;
@@ -293,6 +297,12 @@
 
       <fieldset class="hide" id="tab_messagerie">
         <div class="col-md-12">
+          <div class="flex-grow-0 py-3 px-4 border-bottom">
+            <div style="width: 30%;">
+              <input type="text" id="message_search" class="form-control" placeholder="Recherche">
+            </div>
+            <div class="clearfix"></div>
+          </div>
           <div class="chat-messages p-4">
             {% for message in projet.messages %}
               {% if message.createdBy is not null and message.createdBy.id == app.user.id %}
@@ -1410,6 +1420,7 @@
       $('<div id="batimentNouveau_options" class="form-group form-group-sm"><label class="col-sm-4 control-label"></label><div class="col-sm-8"><p></p></div></div>').insertAfter($('#projet_batimentExistant_photoFile').parents('div.form-group'));
     });
     var refresh_messagerie = 0;
+    var last_messagerie = [];
     function refreshMessagerie() {
       if(refresh_messagerie) {
         var csrf = '{{ csrf_token('token')|e('js') }}';
@@ -1423,16 +1434,22 @@
             $('.chat-messages').append('<span id="loading_messages">chargement..</span>');
           },
           success: function(result) {
+            last_messagerie = result;
+            var message_search = $('#message_search').val().trim();
             $.each(result, function(index, message) {
-              if(!$('.chat-messages').find('div[message="'+message[0]+'"]').length) {
-                if(message[1] == {{ app.user.id }}) {
-                  $('.chat-messages').append('<div message="'+message[0]+'" class="chat-message-right mb-4"><div title="'+message[5]+'"><img src="{{ asset('images/me.jpg') }}" class="rounded-circle mr-1" alt="'+message[2]+'" width="40" height="40"><div class="text-muted small text-nowrap mt-2">'+message[4]+'</div></div><div class="flex-shrink-1 bg-gray rounded py-2 px-3 mr-3"><div class="font-weight-bold mb-1">Vous</div>'+message[3]+'</div></div>');
-                } else {
-                  $('.chat-messages').append('<div message="'+message[0]+'" class="chat-message-left pb-4"><div title="'+message[5]+'"><img src="{{ asset('images/user.jpg') }}" class="rounded-circle mr-1" alt="'+message[2]+'" width="40" height="40"><div class="text-muted small text-nowrap mt-2">'+message[4]+'</div></div><div class="flex-shrink-1 bg-light rounded py-2 px-3 ml-3"><div class="font-weight-bold mb-1">'+message[2]+'</div>'+message[3]+'</div></div>');
+              if(!message_search || message[2].match(new RegExp(message_search, 'i')) || message[3].match(new RegExp(message_search, 'i'))) {
+                if(!$('.chat-messages').find('div[message="'+message[0]+'"]').length) {
+                  if(message[1] == {{ app.user.id }}) {
+                    $('.chat-messages').append('<div message="'+message[0]+'" class="chat-message-right mb-4"><div title="'+message[5]+'"><img src="{{ asset('images/me.jpg') }}" class="rounded-circle mr-1" alt="'+message[2]+'" width="40" height="40"><div class="text-muted small text-nowrap mt-2">'+message[4]+'</div></div><div class="flex-shrink-1 bg-gray rounded py-2 px-3 mr-3"><div class="font-weight-bold mb-1">Vous</div>'+message[3]+'</div></div>');
+                  } else {
+                    $('.chat-messages').append('<div message="'+message[0]+'" class="chat-message-left pb-4"><div title="'+message[5]+'"><img src="{{ asset('images/user.jpg') }}" class="rounded-circle mr-1" alt="'+message[2]+'" width="40" height="40"><div class="text-muted small text-nowrap mt-2">'+message[4]+'</div></div><div class="flex-shrink-1 bg-light rounded py-2 px-3 ml-3"><div class="font-weight-bold mb-1">'+message[2]+'</div>'+message[3]+'</div></div>');
+                  }
+                  $('html, body').animate({
+                    scrollTop: $("#send_message").offset().top
+                  }, 'slow');
                 }
-                $('html, body').animate({
-                  scrollTop: $("#send_message").offset().top
-                }, 'slow');
+              } else if($('.chat-messages').find('div[message="'+message[0]+'"]').length) {
+                $('.chat-messages').find('div[message="'+message[0]+'"]').remove();
               }
             });
             $('.chat-messages').find('#loading_messages').remove();
@@ -1461,6 +1478,34 @@
               $('#send_body').val('');
               refreshMessagerie();
             }
+          }
+        });
+      }
+    });
+    $('#message_search').keypress(function (e) {
+      if (e.which == 13) {
+        e.preventDefault();
+        $('#message_search').change();
+      }
+    });
+    $('#message_search').change(function() {
+      if(!last_messagerie.length) refreshMessagerie();
+      else {
+        var message_search = $(this).val().trim();
+        $.each(last_messagerie, function(index, message) {
+          if(!message_search || message[2].match(new RegExp(message_search, 'i')) || message[3].match(new RegExp(message_search, 'i'))) {
+            if(!$('.chat-messages').find('div[message="'+message[0]+'"]').length) {
+              if(message[1] == {{ app.user.id }}) {
+                $('.chat-messages').append('<div message="'+message[0]+'" class="chat-message-right mb-4"><div title="'+message[5]+'"><img src="{{ asset('images/me.jpg') }}" class="rounded-circle mr-1" alt="'+message[2]+'" width="40" height="40"><div class="text-muted small text-nowrap mt-2">'+message[4]+'</div></div><div class="flex-shrink-1 bg-gray rounded py-2 px-3 mr-3"><div class="font-weight-bold mb-1">Vous</div>'+message[3]+'</div></div>');
+              } else {
+                $('.chat-messages').append('<div message="'+message[0]+'" class="chat-message-left pb-4"><div title="'+message[5]+'"><img src="{{ asset('images/user.jpg') }}" class="rounded-circle mr-1" alt="'+message[2]+'" width="40" height="40"><div class="text-muted small text-nowrap mt-2">'+message[4]+'</div></div><div class="flex-shrink-1 bg-light rounded py-2 px-3 ml-3"><div class="font-weight-bold mb-1">'+message[2]+'</div>'+message[3]+'</div></div>');
+              }
+              $('html, body').animate({
+                scrollTop: $("#send_message").offset().top
+              }, 'slow');
+            }
+          } else if($('.chat-messages').find('div[message="'+message[0]+'"]').length) {
+            $('.chat-messages').find('div[message="'+message[0]+'"]').remove();
           }
         });
       }
