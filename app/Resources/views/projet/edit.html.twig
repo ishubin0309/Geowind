@@ -122,7 +122,11 @@
             <li class=""><a href="#" rel="tab_commandes">Commandes</a></li>
             <li class=""><a href="#" rel="tab_documents">Documents</a></li>
             <li class=""><a href="#" rel="tab_image">Image</a></li>
-            <li class=""><a href="#" rel="tab_messagerie">Messagerie</a></li>
+            {% set unreadMessage = false %}
+            {% for message in projet.messages %}
+              {% if message.createdBy is null or (app.user.id != message.createdBy.id and app.user not in message.viewers) %}{% set unreadMessage = true %}{% endif %}
+            {% endfor %}
+            <li class=""><a href="#" rel="tab_messagerie">Messagerie{% if unreadMessage %} <i class="fa fa-circle" style="color:red;"></i>{% endif %}</a></li>
           </ul>
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
@@ -1453,6 +1457,7 @@
               }
             });
             $('.chat-messages').find('#loading_messages').remove();
+            $('a[rel="tab_messagerie"]').html('Messagerie');
           }
         });
       }

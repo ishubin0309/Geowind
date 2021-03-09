@@ -4,7 +4,16 @@
 {% set item = 'portail' %}
 
 {% block body %}
-
+  <style>
+    .btn-outline-success {
+      background-color: white;
+      color: green;
+    }
+    .btn-outline-danger {
+      background-color: white;
+      color: red;
+    }
+  </style>
   <div class="container-fluid">
 
     {% set projetsPageTotal = 0 %}
@@ -29,7 +38,7 @@
     {% if is_granted('ROLE_EDIT_ALL') and liste.id is defined %}
       <button id="button-liste-delete" class="btn btn-danger btn-sm" title="Double click"><i class="fa fa-fw fa-trash"></i> Supprimer Liste</button>
     {% endif %}
-    {% if unreadMessages %}<a id="button-unread" class="btn btn-success btn-sm"><i class="fa fa-fw fa-filter"></i> {{ unreadMessages }} Message{% if unreadMessages > 1 %}s{% endif %}</a>{% endif %}
+    {% if unreadMessages %}<a id="button-unread" class="btn btn-success btn-outline-success btn-sm"><i class="fa fa-fw fa-filter"></i> {{ unreadMessages }} Message{% if unreadMessages > 1 %}s{% endif %}</a>{% endif %}
     <br>
     <h4 id="selected-counter">0 site sélectionné sur {{ projetsPageTotal }}</h4>
     <div class="row col-md-12">
@@ -215,6 +224,13 @@
     {% endif %}
     ];
 
+    function filter(item, args){
+      if (args.unread != "" && item["unread"] !== args.unread) {
+          return false;
+      }
+
+      return true;
+    }
 
     $(function () {
       var data = [];
@@ -226,7 +242,7 @@
         {% endfor %}
         data.push({
           id: {{ projet.id }},
-          unread: {% if unreadMessage %}1{% else %}0{% endif %},
+          unread: {% if unreadMessage %}'1'{% else %}'0'{% endif %},
           typeProjet: '{{ projet.typeProjet }}',
           typeSite: '{{ projet.typeSite }}',
           origine: '{{ projet.origine }}',
@@ -310,8 +326,34 @@
           canEdit: {{ is_granted('edit', projet) ? 1 : 0 }},
         });
       {% endfor %}
+      var filterArgs = {
+        unread: "",
+      };
+      function updateFilter(){
+        dataView.setFilterArgs(filterArgs);
+        dataView.refresh();
+      }
+      $('#button-unread').click(function() {
+        if($(this).hasClass('btn-outline-success')) {
+          filterArgs['unread'] = '1';
+          $(this).removeClass('btn-success').removeClass('btn-outline-success');
+          $(this).addClass('btn-danger').addClass('btn-outline-danger');
+          updateFilter();
+        } else {
+          filterArgs['unread'] = '';
+          $(this).removeClass('btn-danger').removeClass('btn-outline-danger');
+          $(this).addClass('btn-success').addClass('btn-outline-success');
+          updateFilter();
+        }
+      });
+
+      dataView.beginUpdate();
       dataView.setItems(data);
 
+      dataView.setFilterArgs(filterArgs);
+
+      dataView.setFilter(filter);
+      dataView.endUpdate();
 
       grid = new Slick.Grid("#grid", dataView, columns, options);
       grid.registerPlugin( new Slick.AutoTooltips({ enableForHeaderCells: true }) );
@@ -394,6 +436,18 @@
           $('#selected-counter').text(selected + ' site sélectionné sur ' + total);
         }
 
+      });
+
+      dataView.onRowCountChanged.subscribe(function (e, args) {
+
+        grid.setSelectedRows([]);
+        grid.updateRowCount();
+        grid.render();
+      });
+      
+      dataView.onRowsChanged.subscribe(function (e, args) {
+        grid.invalidateRows(args.rows);
+        grid.render();
       });
 
       grid.onSort.subscribe(function(e, args) {
