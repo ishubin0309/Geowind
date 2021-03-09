@@ -38,7 +38,7 @@
     {% if is_granted('ROLE_EDIT_ALL') and liste.id is defined %}
       <button id="button-liste-delete" class="btn btn-danger btn-sm" title="Double click"><i class="fa fa-fw fa-trash"></i> Supprimer Liste</button>
     {% endif %}
-    {% if unreadMessages %}<a id="button-unread" class="btn btn-success btn-outline-success btn-sm"><i class="fa fa-fw fa-filter"></i> {{ unreadMessages }} Message{% if unreadMessages > 1 %}s{% endif %}</a>{% endif %}
+    <a id="button-unread" class="btn btn-success btn-outline-success btn-sm"><i class="fa fa-fw fa-filter"></i> {{ unreadMessages }} Message{% if unreadMessages > 1 %}s{% endif %}</a>
     <br>
     <h4 id="selected-counter">0 site sélectionné sur {{ projetsPageTotal }}</h4>
     <div class="row col-md-12">
