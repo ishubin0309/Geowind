@@ -31,7 +31,7 @@ class AnnuaireMailer
         $this->mailer = $mailer;
     }
     
-    public function handleMessage(Message $message, &$errors)
+    public function handleMessage2(Message $message, &$errors)
     {
         $from = $message->getFrom();
         $to = $message->getTo();
@@ -48,5 +48,30 @@ class AnnuaireMailer
         ;
 
         return $this->mailer->send($mail, $errors);
+    }
+    public function handleMessage(Message $message, &$errors)
+    {
+        $email = new \SendGrid\Mail\Mail();
+        $email->setFrom('climactif@hotmail.com', 'Climactif');
+        $email->setSubject($message->getObject());
+        $email->addTo($message->getTo());
+        $email->addContent("text/plain", strip_tags($message->getBody()));
+        $email->addContent(
+            "text/html", $message->getBody()
+        );
+        $sendgrid = new \SendGrid('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');
+        try {
+            $response = $sendgrid->send($email);
+            $wasSendingSuccessful = true;
+        } catch (Exception $e) {
+            $errors[] = $e->getMessage();
+            $wasSendingSuccessful = false;
+        }
+
+        if ($wasSendingSuccessful) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
