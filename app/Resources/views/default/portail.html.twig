@@ -20,11 +20,11 @@
     {% set unreadMessages = 0 %}
     {% for projet in projets %}
       {% set projetsPageTotal = projetsPageTotal + 1 %}
-      {% if is_granted('edit', projet) %}
+      {# {% if is_granted('edit', projet) %} #}
         {% for message in projet.messages %}
           {% if message.createdBy is null or (app.user.id != message.createdBy.id and app.user not in message.viewers) %}{% set unreadMessages = unreadMessages + 1 %}{% endif %}
         {% endfor %}
-      {% endif %}
+      {# {% endif %} #}
     {% endfor %}
     {% if is_granted('ROLE_VIEW_ALL') %}
       <a href="{{ path('liste_new') }}" class="btn btn-info btn-sm"><i class="fa fa-paperclip"></i> Importer Liste</a>
@@ -239,11 +239,11 @@
       {% for projet in projets %}
         {% set listeDate = false %}
         {% set unreadMessage = false %}
-        {% if is_granted('edit', projet) %}
+        {# {% if is_granted('edit', projet) %} #}
           {% for message in projet.messages %}
             {% if message.createdBy is null or (app.user.id != message.createdBy.id and app.user not in message.viewers) %}{% set unreadMessage = true %}{% endif %}
           {% endfor %}
-        {% endif %}
+        {# {% endif %} #}
         data.push({
           id: {{ projet.id }},
           unread: {% if unreadMessage %}'1'{% else %}'0'{% endif %},

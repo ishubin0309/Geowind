@@ -1,115 +1,304 @@
-
-<table class="table table-super-condensed table-bordered table-hover">
-  <tbody>
-    <tr>
-  
-      <th colspan="2" style="vertical-align: middle;">
-        
-        {% if is_granted('edit', projet) %}
-          <a id="edit-link" href="{{ path('projet_edit', { 'id': projet.id, 'show': show  }) }}" class="btn btn-xs btn-danger pull-right"><i class="fa fa-pencil"></i> Editer</a>
-        {% endif %}
-        <a id="export-pdf" href="{{ path('projet_pdf', { 'id': projet.id }) }}" class="btn btn-xs btn-success pull-right" style="margin-right: 2px;" data-id="{{ projet.id }}"><i class="fa fa-file-pdf-o"></i> PDF</a>
-        <a id="export-projet" href="#" class="btn btn-xs btn-primary pull-right" style="margin-right: 2px;" data-id="{{ projet.id }}"><i class="fa fa-file-excel-o"></i> CSV</a>
-        <div class="projet-title"><i class="fa fa-eye"></i> {{ projet.denomination }}</div>
-      </th>
-    </tr>
-    <tr>
-      <th colspan="2">Références</th>
-    </tr>
-    <tr>
-      <td style="width: 170px;">Statut</td>
-      <td>{{ projet.archived ? '<i class="fa fa-archive"></i> Archivé' : 'Actif' }} </td>
-    </tr>
-    <tr>
-      <td style="width: 170px;">Date création</td>
-      <td>{{ projet.dateCreation|date('d/m/Y') }}</td>
-    </tr>
-    {# <tr>
-      <td>Date de mise à jour</td>
-      <td>{{ projet.updatedAt|date('d/m/Y') }}</td>
-    </tr> #}
-    <tr>
-      <td>Dénomination</td>
-      <td>{{ projet.denomination }}</td>
-    </tr>
-    <tr>
-      <th colspan="2">Typologies</th>
-    </tr>
-    <tr>
-      <td>Type de Projet</td>
-      <td>
-        {{ projet.typeProjet|type_projet_format }}</td>
-    </tr>
-    <tr>
-      <td>Type de bien</td>
-      <td>
-        {{ projet.typeSite|type_site_format }}</td>
-    </tr>
-    <tr>
-      <td>Type de milieu</td>
-      <td>{{ projet.environnement|environnement_format }}</td>
-    </tr>
-    <tr>
-      <th colspan="2">Situation administrative</th>
-    </tr>
-    <tr>
-      <td>Région</td>
-      <td>{{ projet.departement.region }}</td>
-    </tr>
-    <tr>
-      <td>Département</td>
-      <td>{{ projet.departement }}</td>
-    </tr>
-    <tr>
-      <td>Commune(s)</td>
-      <td>
-        {% for commune in projet.communes %}
-          <a href="{{ path('annuaire_mairie', { 'insee': commune.insee }) }}">{{ commune }}</a>{% if not loop.last %}<br>{% endif %}
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nouveau_projet_nav" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">{# <img alt="Brand" width="20"  src="{{ asset('favicon.png') }}"> #}</a>
+    </div>
+    <div class="collapse navbar-collapse" id="nouveau_projet_nav">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#" rel="tab_localisation">Détails</a></li>
+        {% set unreadMessage = false %}
+        {% for message in projet.messages %}
+          {% if message.createdBy is null or (app.user.id != message.createdBy.id and app.user not in message.viewers) %}{% set unreadMessage = true %}{% endif %}
         {% endfor %}
-      </td>
-    </tr>
-    <tr>
-      <th colspan="2">Situation géographique</th>
-    </tr>
-    <tr>
-      <td>Latitude</td>
-      <td>{{ projet.latitude }}</td>
-    </tr>
-    <tr>
-      <td>Longitude</td>
-      <td>{{ projet.longitude }}</td>
-    </tr>
-    <tr>
-      <td>Adresse postale</td>
-      <td>{{ projet.adresse }}</td>
-    </tr>
-    <tr>
-      <th colspan="2">Avancement</th>
-    </tr>
-    <tr>
-      <td>Phase</td>
-      <td>{{ projet.phase|phase_format }}</td>
-    </tr>
-    <tr>
-      <td>État</td>
-      <td>{{ projet.progression|progression_format }}</td>
-    </tr>
-    <tr>
-      <th>Potentiel (MW)</th>
-      <td>{{ projet.potentiel }}</td>
-    </tr>
-  </tbody>
-</table>
+        <li class=""><a href="#" rel="tab_messagerie_{{ projet.id}}">Messagerie{% if unreadMessage %} <i class="fa fa-circle" style="color:red;"></i>{% endif %}</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<fieldset class="" id="tab_localisation">
+  <table class="table table-super-condensed table-bordered table-hover">
+    <tbody>
+      <tr>
+    
+        <th colspan="2" style="vertical-align: middle;">
+          
+          {% if is_granted('edit', projet) %}
+            <a id="edit-link" href="{{ path('projet_edit', { 'id': projet.id, 'show': show  }) }}" class="btn btn-xs btn-danger pull-right"><i class="fa fa-pencil"></i> Editer</a>
+          {% endif %}
+          <a id="export-pdf" href="{{ path('projet_pdf', { 'id': projet.id }) }}" class="btn btn-xs btn-success pull-right" style="margin-right: 2px;" data-id="{{ projet.id }}"><i class="fa fa-file-pdf-o"></i> PDF</a>
+          <a id="export-projet" href="#" class="btn btn-xs btn-primary pull-right" style="margin-right: 2px;" data-id="{{ projet.id }}"><i class="fa fa-file-excel-o"></i> CSV</a>
+          <div class="projet-title"><i class="fa fa-eye"></i> {{ projet.denomination }}</div>
+        </th>
+      </tr>
+      <tr>
+        <th colspan="2">Références</th>
+      </tr>
+      <tr>
+        <td style="width: 170px;">Statut</td>
+        <td>{{ projet.archived ? '<i class="fa fa-archive"></i> Archivé' : 'Actif' }} </td>
+      </tr>
+      <tr>
+        <td style="width: 170px;">Date création</td>
+        <td>{{ projet.dateCreation|date('d/m/Y') }}</td>
+      </tr>
+      {# <tr>
+        <td>Date de mise à jour</td>
+        <td>{{ projet.updatedAt|date('d/m/Y') }}</td>
+      </tr> #}
+      <tr>
+        <td>Dénomination</td>
+        <td>{{ projet.denomination }}</td>
+      </tr>
+      <tr>
+        <th colspan="2">Typologies</th>
+      </tr>
+      <tr>
+        <td>Type de Projet</td>
+        <td>
+          {{ projet.typeProjet|type_projet_format }}</td>
+      </tr>
+      <tr>
+        <td>Type de bien</td>
+        <td>
+          {{ projet.typeSite|type_site_format }}</td>
+      </tr>
+      <tr>
+        <td>Type de milieu</td>
+        <td>{{ projet.environnement|environnement_format }}</td>
+      </tr>
+      <tr>
+        <th colspan="2">Situation administrative</th>
+      </tr>
+      <tr>
+        <td>Région</td>
+        <td>{{ projet.departement.region }}</td>
+      </tr>
+      <tr>
+        <td>Département</td>
+        <td>{{ projet.departement }}</td>
+      </tr>
+      <tr>
+        <td>Commune(s)</td>
+        <td>
+          {% for commune in projet.communes %}
+            <a href="{{ path('annuaire_mairie', { 'insee': commune.insee }) }}">{{ commune }}</a>{% if not loop.last %}<br>{% endif %}
+          {% endfor %}
+        </td>
+      </tr>
+      <tr>
+        <th colspan="2">Situation géographique</th>
+      </tr>
+      <tr>
+        <td>Latitude</td>
+        <td>{{ projet.latitude }}</td>
+      </tr>
+      <tr>
+        <td>Longitude</td>
+        <td>{{ projet.longitude }}</td>
+      </tr>
+      <tr>
+        <td>Adresse postale</td>
+        <td>{{ projet.adresse }}</td>
+      </tr>
+      <tr>
+        <th colspan="2">Avancement</th>
+      </tr>
+      <tr>
+        <td>Phase</td>
+        <td>{{ projet.phase|phase_format }}</td>
+      </tr>
+      <tr>
+        <td>État</td>
+        <td>{{ projet.progression|progression_format }}</td>
+      </tr>
+      <tr>
+        <th>Potentiel (MW)</th>
+        <td>{{ projet.potentiel }}</td>
+      </tr>
+    </tbody>
+  </table>
 
-<table class="table table-condensed table-super-condensed table-bordered table-hover">
-  <thead>
-    <tr>
-      <th>Commentaires</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>{{ projet.commentaires ? projet.commentaires|nl2br : 'N/A' }}</td>
-    </tr>
-  </tbody>
-</table>
+  <table class="table table-condensed table-super-condensed table-bordered table-hover">
+    <thead>
+      <tr>
+        <th>Commentaires</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{ projet.commentaires ? projet.commentaires|nl2br : 'N/A' }}</td>
+      </tr>
+    </tbody>
+  </table>
+</fieldset>
+<fieldset class="hide" id="tab_messagerie_{{ projet.id}}">
+  <div class="col-md-12">
+    <div class="flex-grow-0 py-3 px-4 border-bottom">
+      <div class="col-md-offset-6 col-md-6">
+        <input type="text" id="message_search" class="form-control" placeholder="Rechercher">
+      </div>
+      <div class="clearfix"></div>
+    </div>
+    <div class="chat-messages p-4">
+      {% for message in projet.messages %}
+        {% if message.createdBy is not null and message.createdBy.id == app.user.id %}
+        <div message="{{ message.id }}" class="chat-message-right mb-4">
+          <div title="{{ message.createdAt|date('Y-m-d') }}">
+            <img src="{{ asset('images/me.jpg') }}" class="rounded-circle mr-1" alt="{{ message.createdBy is not null ? message.createdBy.nom ~ ' ' ~ message.createdBy.prenom : '' }}" width="40" height="40">
+            <div class="text-muted small text-nowrap mt-2">{{ message.createdAt|date('H:i A') }}</div>
+          </div>
+          <div class="flex-shrink-1 bg-gray rounded py-2 px-3 mr-3">
+            <div class="font-weight-bold mb-1">Vous</div>
+            {{ message.body }}
+          </div>
+        </div>
+        {% else %}
+        <div message="{{ message.id }}" class="chat-message-left pb-4">
+          <div title="{{ message.createdAt|date('Y-m-d') }}">
+            <img src="{{ asset('images/user.jpg') }}" class="rounded-circle mr-1" alt="{{ message.createdBy is not null ? message.createdBy.nom ~ ' ' ~ message.createdBy.prenom : '' }}" width="40" height="40">
+            <div class="text-muted small text-nowrap mt-2">{{ message.createdAt|date('H:i A') }}</div>
+          </div>
+          <div class="flex-shrink-1 bg-light rounded py-2 px-3 ml-3">
+            <div class="font-weight-bold mb-1">{{ message.createdBy is not null ? message.createdBy.nom ~ ' ' ~ message.createdBy.prenom : '' }}</div>
+            {{ message.body }}
+          </div>
+        </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+    <div class="flex-grow-0 py-3 px-4 border-top">
+      <div class="input-group">
+        <input type="text" id="send_body" class="form-control" placeholder="Ajouter un message">
+        <span class="input-group-btn">
+          <button id="send_message" class="btn btn-primary">Envoyer</button>
+        </span>
+      </div>
+    </div>
+  </div>
+</fieldset>
+{% block js %}
+  <script>
+    var refresh_messagerie = 0;
+    var last_messagerie = [];
+    function refreshMessagerie() {
+      if($('body').find('a[rel="tab_messagerie_{{ projet.id}}"]').length) {
+        if(refresh_messagerie) {
+          var csrf = '{{ csrf_token('token')|e('js') }}';
+          $.ajax({
+            url: Routing.generate('messagerie_list', { id: {{ projet.id }} }),
+            type: 'GET',
+            dataType: "json",
+            data: { token: csrf },
+            beforeSend: function() {
+              $('.chat-messages').find('#loading_messages').remove();
+              $('.chat-messages').append('<span id="loading_messages">chargement..</span>');
+            },
+            success: function(result) {
+              last_messagerie = result;
+              var message_search = $('#message_search').val().trim();
+              $.each(result, function(index, message) {
+                if(!message_search || message[2].match(new RegExp(message_search, 'i')) || message[3].match(new RegExp(message_search, 'i'))) {
+                  if(!$('.chat-messages').find('div[message="'+message[0]+'"]').length) {
+                    if(message[1] == {{ app.user.id }}) {
+                      $('.chat-messages').append('<div message="'+message[0]+'" class="chat-message-right mb-4"><div title="'+message[5]+'"><img src="{{ asset('images/me.jpg') }}" class="rounded-circle mr-1" alt="'+message[2]+'" width="40" height="40"><div class="text-muted small text-nowrap mt-2">'+message[4]+'</div></div><div class="flex-shrink-1 bg-gray rounded py-2 px-3 mr-3"><div class="font-weight-bold mb-1">Vous</div>'+message[3]+'</div></div>');
+                    } else {
+                      $('.chat-messages').append('<div message="'+message[0]+'" class="chat-message-left pb-4"><div title="'+message[5]+'"><img src="{{ asset('images/user.jpg') }}" class="rounded-circle mr-1" alt="'+message[2]+'" width="40" height="40"><div class="text-muted small text-nowrap mt-2">'+message[4]+'</div></div><div class="flex-shrink-1 bg-light rounded py-2 px-3 ml-3"><div class="font-weight-bold mb-1">'+message[2]+'</div>'+message[3]+'</div></div>');
+                    }
+                    $('html, body').animate({
+                      scrollTop: $("#send_message").offset().top
+                    }, 'slow');
+                  }
+                } else if($('.chat-messages').find('div[message="'+message[0]+'"]').length) {
+                  $('.chat-messages').find('div[message="'+message[0]+'"]').remove();
+                }
+              });
+              $('.chat-messages').find('#loading_messages').remove();
+              $('a[rel="tab_messagerie_{{ projet.id}}"]').html('Messagerie');
+            }
+          });
+        } else {
+          clearInterval('interval__{{ projet.id}}');
+        }
+      }
+    }
+    $('#send_body').keypress(function (e) {
+      if (e.which == 13) {
+        e.preventDefault();
+        $('#send_message').click();
+      }
+    });
+    $('#send_message').click(function(e) {
+      e.preventDefault();
+      var body = $('#send_body').val();
+      if(body) {
+        var csrf = '{{ csrf_token('token')|e('js') }}';
+        $.ajax({
+          url: Routing.generate('messagerie_new', { id: {{ projet.id }} }),
+          type: 'GET',
+          dataType: "json",
+          data: { body: body, token: csrf },
+          success: function(result) {
+            if(result['status']) {
+              $('#send_body').val('');
+              refreshMessagerie();
+            }
+          }
+        });
+      }
+    });
+    $('#message_search').keypress(function (e) {
+      if (e.which == 13) {
+        e.preventDefault();
+        $('#message_search').change();
+      }
+    });
+    $('#message_search').change(function() {
+      if(!last_messagerie.length) refreshMessagerie();
+      else {
+        var message_search = $(this).val().trim();
+        $.each(last_messagerie, function(index, message) {
+          if(!message_search || message[2].match(new RegExp(message_search, 'i')) || message[3].match(new RegExp(message_search, 'i'))) {
+            if(!$('.chat-messages').find('div[message="'+message[0]+'"]').length) {
+              if(message[1] == {{ app.user.id }}) {
+                $('.chat-messages').append('<div message="'+message[0]+'" class="chat-message-right mb-4"><div title="'+message[5]+'"><img src="{{ asset('images/me.jpg') }}" class="rounded-circle mr-1" alt="'+message[2]+'" width="40" height="40"><div class="text-muted small text-nowrap mt-2">'+message[4]+'</div></div><div class="flex-shrink-1 bg-gray rounded py-2 px-3 mr-3"><div class="font-weight-bold mb-1">Vous</div>'+message[3]+'</div></div>');
+              } else {
+                $('.chat-messages').append('<div message="'+message[0]+'" class="chat-message-left pb-4"><div title="'+message[5]+'"><img src="{{ asset('images/user.jpg') }}" class="rounded-circle mr-1" alt="'+message[2]+'" width="40" height="40"><div class="text-muted small text-nowrap mt-2">'+message[4]+'</div></div><div class="flex-shrink-1 bg-light rounded py-2 px-3 ml-3"><div class="font-weight-bold mb-1">'+message[2]+'</div>'+message[3]+'</div></div>');
+              }
+              $('html, body').animate({
+                scrollTop: $("#send_message").offset().top
+              }, 'slow');
+            }
+          } else if($('.chat-messages').find('div[message="'+message[0]+'"]').length) {
+            $('.chat-messages').find('div[message="'+message[0]+'"]').remove();
+          }
+        });
+      }
+    });
+    var interval__{{ projet.id}} = setInterval(refreshMessagerie, 10000);
+    $('#nouveau_projet_nav a').click(function (e) {
+      e.preventDefault();
+      var attr = $(this).attr('rel');
+      if(typeof attr !== typeof undefined && attr !== false) {
+        refresh_messagerie = 0;
+        $('#nouveau_projet_nav li').removeClass('active');
+        $(this).parent().addClass('active');
+        $('fieldset').addClass('hide');
+        $('fieldset#' + attr).removeClass('hide');
+        if(attr == 'tab_messagerie_{{ projet.id}}') {
+          refresh_messagerie = 1;
+          refreshMessagerie();
+          $('html, body').animate({
+            scrollTop: $("#send_message").offset().top
+          }, 'slow');
+        }
+      }
+    });
+  </script>
+{% endblock %}
