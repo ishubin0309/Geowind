@@ -1190,6 +1190,18 @@
       updatePrevNextButtons();
     });
 
+    function countParcelles() {
+      var parcelles_count = $('#projet_parcelles tr').length;console.log(parcelles_count);
+      var accords_count = $('#projet_proprietaires tr.proprietaire_entry').length;console.log(accords_count);
+      if(parcelles_count) {
+        if(!$('#tab_foncier legend span').length) $('#tab_foncier legend').append(' <span style="color:red;">'+accords_count+'/'+parcelles_count+'</span>');
+        else $('#tab_foncier legend span').text(accords_count+'/'+parcelles_count);
+      }
+    }
+    $('#tab_parcelles .btn, #tab_foncier .btn').on('click', function() {
+      countParcelles();
+    });
+
     function commandeUpdate() {
       var engage = 0;
       var paye = 0;
@@ -1235,6 +1247,7 @@
       $('#projet_batimentExistant_bardage').parents('.form-group').addClass('hide');
       $('#projet_batimentExistant_ossature').parents('.form-group').addClass('hide');
       $('#projet_batimentExistant_charpente').parents('.form-group').addClass('hide');
+      countParcelles();
       commandeUpdate();
       $('#projet_typeProjet').change();
       $('#projet_technologie').change();
