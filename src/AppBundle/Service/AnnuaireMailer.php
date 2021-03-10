@@ -17,7 +17,7 @@ class AnnuaireMailer
     }
     
     public function handleMessage(Message $message, &$errors)
-    {exit(str_replace("\n", '<br>', $message->getBody()));
+    {
         $email = new \SendGrid\Mail\Mail();
         $email->setFrom('climactif@hotmail.com', 'Climactif');
         $email->setSubject($message->getObject());
