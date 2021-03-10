@@ -1,54 +1,21 @@
 <?php
 
-/*
- * (c) Stéphane Ear <stephaneear@gmail.com>
- * 
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace AppBundle\Service;
 
 use AppBundle\Entity\Message;
-use Swift_Mailer;
-use Swift_Message;
 
 /**
- * @author Stéphane Ear <stephaneear@gmail.com>
+ * Haffoudhi
  */
 class AnnuaireMailer
 {
-    /**
-     * @var Swift_Mailer
-     */
-    private $mailer;
+    private $api_key;
 
-    /**
-     * @param Swift_Mailer $mailer
-     */
-    public function __construct(Swift_Mailer $mailer)
+    public function __construct($api_key)
     {
-        $this->mailer = $mailer;
+        $this->api_key = $api_key;
     }
     
-    public function handleMessage2(Message $message, &$errors)
-    {
-        $from = $message->getFrom();
-        $to = $message->getTo();
-        $body = $message->getBody();
-        $object = $message->getObject();
-        $replyTo = $message->getReplyTo();
-        
-        $mail = Swift_Message::newInstance()
-            ->setSubject($object)
-            ->setFrom($from)
-            ->setTo($to)
-            ->setReplyTo($replyTo)
-            ->setBody($body, 'text/plain')
-        ;
-
-        return $this->mailer->send($mail, $errors);
-    }
     public function handleMessage(Message $message, &$errors)
     {
         $email = new \SendGrid\Mail\Mail();
@@ -59,7 +26,7 @@ class AnnuaireMailer
         $email->addContent(
             "text/html", $message->getBody()
         );
-        $sendgrid = new \SendGrid('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');
+        $sendgrid = new \SendGrid($this->api_key);
         try {
             $response = $sendgrid->send($email);
             $wasSendingSuccessful = true;

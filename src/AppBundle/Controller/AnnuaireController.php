@@ -13,7 +13,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Swift_Mailer;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -87,7 +86,7 @@ class AnnuaireController extends Controller
      * @ParamConverter("mairie", options={"mapping": {"insee": "insee"}})
      * @Method({"GET", "POST"})
      */
-    public function mairieAction(Request $request, Mairie $mairie, UserInterface $user, Swift_Mailer $mailer)
+    public function mairieAction(Request $request, Mairie $mairie, UserInterface $user)
     {
         /* @var $user User */
         
@@ -104,7 +103,7 @@ class AnnuaireController extends Controller
         
         if ($form->isSubmitted() && $form->isValid()) {
             
-            $annuaireMailer = new AnnuaireMailer($mailer);
+            $annuaireMailer = new AnnuaireMailer($this->getParameter('mailer_api_key'));
             
             $errors = [];
             if ($annuaireMailer->handleMessage($message, $errors)) {
