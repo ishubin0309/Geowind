@@ -22,7 +22,7 @@ class AnnuaireMailer
         $email->setFrom('climactif@hotmail.com', 'Climactif');
         $email->setSubject($message->getObject());
         $email->addTo($message->getTo());
-        $email->addContent("text/plain", strip_tags(str_replace("\n", '<br>', $message->getBody())));
+        $email->addContent("text/plain", strip_tags($message->getBody()));
         $email->addContent(
             "text/html", str_replace("\n", '<br>', $message->getBody())
         );
