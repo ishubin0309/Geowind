@@ -1192,7 +1192,7 @@
 
     function countParcelles() {
       var parcelles_count = $('#projet_parcelles tr').length;
-      var accords_count = $('#projet_proprietaires tr.proprietaire_entry').length;console.log(accords_count);
+      var accords_count = $('#projet_proprietaires tr.proprietaire_entry').length;
       if(accords_count) {
         accords_count = 0;
         $('#projet_proprietaires tr.proprietaire_entry').each(function(i,element) {
@@ -1205,6 +1205,9 @@
         else $('#tab_foncier legend span').text(accords_count+'/'+parcelles_count);
       }
     }
+    $('#tab_parcelles .btn').on('click', function() {
+      countParcelles();
+    });
     $('body').on('change', 'select[id*="_accord"]', function() {
       countParcelles();
     });
