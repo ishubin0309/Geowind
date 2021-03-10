@@ -17,14 +17,14 @@ class AnnuaireMailer
     }
     
     public function handleMessage(Message $message, &$errors)
-    {
+    {exit(str_replace("\n", '<br>', $message->getBody()));
         $email = new \SendGrid\Mail\Mail();
         $email->setFrom('climactif@hotmail.com', 'Climactif');
         $email->setSubject($message->getObject());
         $email->addTo($message->getTo());
         $email->addContent("text/plain", strip_tags(str_replace("\n", '<br>', $message->getBody())));
         $email->addContent(
-            "text/html", $message->getBody()
+            "text/html", str_replace("\n", '<br>', $message->getBody())
         );
         $sendgrid = new \SendGrid($this->api_key);
         try {
