@@ -17,11 +17,11 @@ class AppelType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('from', EmailType::class, [
+            ->add('from', TextType::class, [
                 'label' => 'Demandeur',
                 'disabled' => true,
             ])
-            ->add('to', EmailType::class, [
+            ->add('to', TextType::class, [
                 'label' => 'Interlocuteur',
                 'required' => true,
             ])

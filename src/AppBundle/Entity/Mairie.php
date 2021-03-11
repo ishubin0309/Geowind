@@ -192,6 +192,14 @@ class Mairie
      * @ORM\OrderBy({"createdAt" = "ASC"})
      */
     private $messages;
+    
+    /**
+     * @var ArrayCollection|Appel[]
+     * 
+     * @ORM\OneToMany(targetEntity="Appel", mappedBy="mairie")
+     * @ORM\OrderBy({"createdAt" = "ASC"})
+     */
+    private $appels;
 
     /**
      * @var ArrayCollection|Projet[]
@@ -203,6 +211,7 @@ class Mairie
     public function __construct()
     {
         $this->messages = new ArrayCollection();
+        $this->appels = new ArrayCollection();
         $this->projets = new ArrayCollection();
     }
     
@@ -475,6 +484,17 @@ class Mairie
     public function setMessages(ArrayCollection $messages)
     {
         $this->messages = $messages;
+        return $this;
+    }
+    
+    public function getAppels()
+    {
+        return $this->appels;
+    }
+
+    public function setAppels(ArrayCollection $appels)
+    {
+        $this->appels = $appels;
         return $this;
     }
 

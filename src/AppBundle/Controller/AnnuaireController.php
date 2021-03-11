@@ -6,8 +6,10 @@ use AppBundle\Entity\Mairie;
 use AppBundle\Entity\Message;
 use AppBundle\Entity\MessageModel;
 use AppBundle\Entity\User;
+use AppBundle\Entity\Appel;
 use AppBundle\Form\MessageModelType;
 use AppBundle\Form\MessageType;
+use AppBundle\Form\AppelType;
 use AppBundle\Service\AnnuaireMailer;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -79,10 +81,13 @@ class AnnuaireController extends Controller
         $message = new Message();
         $from = $this->getParameter('mailer_from');
         $message->setFrom($from);
-        $message->setReplyTo($user->getEmail());
+        // $message->setReplyTo($user->getEmail());
         $message->setMairie($mairie);
         
-        $form = $this->createForm(MessageType::class, $message);
+        $form = $this->createForm(MessageType::class, $message, [
+            'action' => $this->generateUrl('annuaire_mairie', ['insee' => $mairie->getInsee()]),
+            'method' => 'POST',
+        ]);
         $form->handleRequest($request);
         
         $em = $this->getDoctrine()->getManager();
@@ -101,6 +106,45 @@ class AnnuaireController extends Controller
             } else {
                 $this->addFlash('error', 'Erreur');
             }
+        }
+        
+        $models = $em->getRepository('AppBundle:MessageModel')
+                        ->findBy([], ['name' => 'ASC']);
+        $commune = $em->getRepository('AppBundle:Commune')->findOneBy(['insee' => $mairie->getInsee()]);
+
+        return $this->render('annuaire/mairie.html.twig', [
+            'form' => $form->createView(),
+            'models' => $models,
+            'mairie' => $mairie,
+            'commune' => $commune,
+        ]);
+    }
+    
+    /**
+     * @Route("/mairie/appel/{insee}/contact", name="annuaire_mairie_appel", options={"expose": true})
+     * @ParamConverter("mairie", options={"mapping": {"insee": "insee"}})
+     * @Method({"GET", "POST"})
+     */
+    public function mairieAppelAction(Request $request, Mairie $mairie, UserInterface $user)
+    {
+        /* @var $user User */
+        
+        $appel = new Appel();
+        $from = $this->getParameter('mailer_from');
+        $appel->setMairie($mairie);
+        
+        $form = $this->createForm(AppelType::class, $appel, [
+            'action' => $this->generateUrl('annuaire_mairie_appel', ['insee' => $mairie->getInsee()]),
+            'method' => 'POST',
+        ]);
+        $form->handleRequest($request);
+        
+        $em = $this->getDoctrine()->getManager();
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->persist($appel);
+            $em->flush();
+            return $this->redirectToRoute('annuaire_mairie_appel', ['insee' => $mairie->getInsee()]);
         }
         
         $models = $em->getRepository('AppBundle:MessageModel')
