@@ -10,19 +10,19 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * @author Stéphane Ear <stephaneear@gmail.com>
+ * @author Haffoudhi
  */
-class MessageType extends AbstractType
+class AppelType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('from', EmailType::class, [
-                'label' => 'Expéditeur',
+                'label' => 'Demandeur',
                 'disabled' => true,
             ])
             ->add('to', EmailType::class, [
-                'label' => 'Destinataire',
+                'label' => 'Interlocuteur',
                 'required' => true,
             ])
             /* ->add('replyTo', EmailType::class, [
@@ -46,7 +46,7 @@ class MessageType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => 'AppBundle\Entity\Message',
+            'data_class' => 'AppBundle\Entity\Appel',
         ]);
     }
 }
