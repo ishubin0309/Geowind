@@ -54,7 +54,7 @@ class Message
      * @Assert\NotBlank()
      * @Assert\Email()
      */
-    private $replyTo;
+    private $replyTo = 'climactif@hotmail.com';
     
     /**
      * @var string

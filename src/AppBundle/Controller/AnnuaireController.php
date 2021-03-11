@@ -45,28 +45,6 @@ class AnnuaireController extends Controller
             'regions' => $regions,
         ]);
     }
-    /**
-     * @Route("/secteurs", name="annuaire_secteur")
-     */
-    public function secteurAction(Request $request)
-    {   
-        $em = $this->getDoctrine()->getManager();
-
-        $messages = $em->getRepository('AppBundle:Message')
-                        ->findAll();
-        
-        $models = $em->getRepository('AppBundle:MessageModel')
-                        ->findBy([], ['name' => 'ASC']);
-
-        $regions = $em->getRepository('AppBundle:Region')
-                        ->findAll();
-
-        return $this->render('annuaire/secteur.html.twig', [
-            'messages' => $messages,
-            'models' => $models,
-            'regions' => $regions,
-        ]);
-    }
     
     /**
      * @Route("/mairie/search", name="mairie_search", options={ "expose": true })

@@ -18,17 +18,17 @@ class MessageType extends AbstractType
     {
         $builder
             ->add('from', EmailType::class, [
-                'label' => 'Expéditeur',
+                'label' => 'Demandeur',
                 'disabled' => true,
             ])
             ->add('to', EmailType::class, [
-                'label' => 'Destinataire',
+                'label' => 'Interlocuteur',
                 'required' => true,
             ])
-            ->add('replyTo', EmailType::class, [
+            /* ->add('replyTo', EmailType::class, [
                 'label' => 'Répondre à',
                 'required' => true,
-            ])
+            ]) */
             ->add('object', TextType::class, [
                 'label' => 'Sujet',
                 'required' => true,
