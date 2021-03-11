@@ -4,9 +4,6 @@
 {% set item = 'annuaire' %}
 
 {% block body %}
-  <style>
-  @media (min-width:1292px){.modal-lg{width:1200px}}
-  </style>
   <div class="container">
     <nav class="navbar navbar-default">
       <div class="container-fluid">
@@ -62,11 +59,8 @@
               <td>{{ message.createdBy }}</td>
               <td class="column-fit">{{ message.object }}</td>
               <td>
-              {% if message.body|length > 20 %}
-              <span title="{{ message.body }}">{{ message.body|slice(0, 20) }}</span>
-              {% else %}
-              {{ message.body }}
-              {% endif %}
+              <button class="btn btn_message">Afficher</button>
+              <span class="hide">{{ message.body }}</span>
               </td>
               <td>
               {% set result = message.result ? message.result : '?' %}
@@ -162,10 +156,10 @@
 
   </div>
   
-  <div class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-labelledby="emailModal">
+  <div class="modal fade bs-modal" tabindex="-1" role="dialog" aria-labelledby="emailModal">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content text-center">
-        <div id="new_mail" class="modal-body">
+        <div id="new_mail" style="padding: 20px;text-align: left;" class="modal-body">
         </div>
       </div>
     </div>
@@ -347,21 +341,13 @@
   
   $('#input-mairie').on('select2:select', function (e) {
     var data = e.params.data;
-    var csrf = '{{ csrf_token('token')|e('js') }}';
-    $.ajax({
-      url: Routing.generate('annuaire_mairie', { insee: data.insee }),
-      type: 'GET',
-      data: { token: csrf },
-      beforeSend: function() {
-        $('#new_mail').html('');
-      },
-      success: function(result) {
-        $('.bs-modal-lg').modal('show');
-        $('#new_mail').html(result);
-      }
-    });
-    {# window.location.href = Routing.generate('annuaire_mairie', { insee: data.insee }); #}
-    {# $('#new_mail').html(); #}
+    window.location.href = Routing.generate('annuaire_mairie', { insee: data.insee });
+  });
+
+  $('.btn_message').click(function() {
+    var message = $(this).parent().find('span').text().replace(/\n/, '<br>');
+    $('.bs-modal').modal('show');
+    $('#new_mail').html(message);
   });
   $('#mairie_nav a').click(function (e) {
     var attr = $(this).attr('rel');

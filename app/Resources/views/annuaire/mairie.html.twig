@@ -1,14 +1,14 @@
-{# {% extends 'base.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% set title = mairie %}
 {% set item = 'annuaire' %}
 
-{% block body %} #}
+{% block body %}
 
   <div class="container-fluid">
 
     <div class="row">
-      <div class="col-md-5">
+      <div class="col-md-6">
         <h3>{{ mairie }}</h3>
         <hr>
         
@@ -121,7 +121,7 @@
         
       </div>
 
-      <div class="col-md-7">
+      <div class="col-md-6">
 
         <h3>Entretien</h3>
         <hr>
@@ -163,9 +163,9 @@
 
 
   </div>
-{# {% endblock %}
+{% endblock %}
 
-{% block js %} #}
+{% block js %}
   <script>
     
     var models = [];
@@ -187,4 +187,4 @@
     });
     
   </script>
-{# {% endblock %} #}
+{% endblock %}
