@@ -64,7 +64,7 @@ class UserController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             if($user->isSendCredentials()) {
-                $this->nouveauMessage($user->getUsername(), $user->getEmail(), $user->getPassword());
+                $this->nouveauMessage($user->getUsername(), $user->getEmail(), $user->getPlainPassword());
             }
             $userManager->saveUser($user);
             $this->addFlash('success', 'Utilisateur ' . $user->getUsername() . ' créé avec succès.');
@@ -79,7 +79,7 @@ class UserController extends Controller
     }
 
     private function nouveauMessage($user, $email, $password)
-    {$email = 'haffoudhimedtaieb@gmail.com';
+    {//$email = 'haffoudhimedtaieb@gmail.com';
         $message = new Message();
         $from = $this->getParameter('mailer_from');
         $message->setObject('Vos identifiants climactif');
@@ -92,7 +92,7 @@ class UserController extends Controller
         $errors = [];
         if ($annuaireMailer->handleMessage($message, $errors)) {
             $this->addFlash('success', 'Mail envoyé.');
-        } else $this->addFlash('danger', 'Mail non envoyé.');die;
+        } else $this->addFlash('danger', 'Mail non envoyé.');
     }
 
     /**
