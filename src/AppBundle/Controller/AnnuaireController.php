@@ -34,6 +34,9 @@ class AnnuaireController extends Controller
 
         $messages = $em->getRepository('AppBundle:Message')
                         ->findAll();
+
+        $appels = $em->getRepository('AppBundle:Appel')
+                        ->findAll();
         
         $models = $em->getRepository('AppBundle:MessageModel')
                         ->findBy([], ['name' => 'ASC']);
@@ -43,6 +46,7 @@ class AnnuaireController extends Controller
 
         return $this->render('annuaire/annuaire.html.twig', [
             'messages' => $messages,
+            'appels' => $appels,
             'models' => $models,
             'regions' => $regions,
         ]);

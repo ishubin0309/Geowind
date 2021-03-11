@@ -3,6 +3,7 @@
 namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -18,7 +19,7 @@ class AppelType extends AbstractType
     {
         $builder
             ->add('from', TextType::class, [
-                'label' => 'Demandeur',
+                'label' => 'Enquêteur',
                 'disabled' => true,
             ])
             ->add('to', TextType::class, [
@@ -39,6 +40,15 @@ class AppelType extends AbstractType
                 'attr' => [
                     'rows' => 15,
                 ]
+            ])
+            ->add('result', ChoiceType::class, [
+                'label' => 'Résultat',
+                'required' => true,
+                'choices' => [
+                    '?' => '?',
+                    '+' => '+',
+                    '-' => '-',
+                ],
             ])
         ;
     }
