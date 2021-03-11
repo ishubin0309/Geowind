@@ -45,7 +45,7 @@ class Appel
     /**
      * @var string
      * 
-     * @ORM\Column(type="string", name="to")
+     * @ORM\Column(type="string", name="to_phone")
      * @Assert\NotBlank()
      */
     private $to;

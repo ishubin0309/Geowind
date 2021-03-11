@@ -101,6 +101,7 @@ class AnnuaireController extends Controller
                 $em->persist($message);
                 $em->flush();
                 $this->addFlash('success', 'Mail envoyé.');
+                return $this->redirectToRoute('annuaire_index');
                 return $this->redirectToRoute('annuaire_mairie', ['insee' => $mairie->getInsee()]);
             
             } else {
@@ -144,6 +145,7 @@ class AnnuaireController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($appel);
             $em->flush();
+            return $this->redirectToRoute('annuaire_index');
             return $this->redirectToRoute('annuaire_mairie_appel', ['insee' => $mairie->getInsee()]);
         }
         
