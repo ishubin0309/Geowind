@@ -178,6 +178,7 @@
       body: "{{ model.body|e('js') }}",
     };
   {% endfor %}
+    if(!$('#form_{{ date }} #message_to').length) $('#form_{{ date }} .btn-primary').text('Enregistrer');
     
     $('.select-mail').click(function() {
       $('#form_{{ date }} #message_to').val($(this).data('mail'));
