@@ -79,6 +79,14 @@ class UserEditType extends AbstractType
                 'expanded' => true,
                 'required' => true,
             ])
+            ->add('sendCredentials', ChoiceType::class, [
+                'choices' => [
+                    'Oui' => true,
+                    'Non' => false,
+                ],
+                'label' => 'Envoyer les identifiants',
+                'required' => true,
+            ])
         ;
     }
 
