@@ -1,14 +1,14 @@
-{% extends 'base.html.twig' %}
+{# {% extends 'base.html.twig' %}
 
 {% set title = mairie %}
 {% set item = 'annuaire' %}
 
-{% block body %}
+{% block body %} #}
 
   <div class="container-fluid">
 
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-5">
         <h3>{{ mairie }}</h3>
         <hr>
         
@@ -69,26 +69,10 @@
                 <button type="button" data-mail="{{ mairie.email5 }}" class="select-mail btn btn-xs btn-primary pull-right"><i class="fa fa-mail-forward"></i></button>
               </td>
             </tr>
-            {# <tr>
-              <th><i class="fa fa-globe"></i> Site internet</th>
-              <td>{{ mairie.siteInternet }}</td>
-            </tr> #}
             <tr>
               <th>Code INSEE</th>
               <td>{{ mairie.insee }}</td>
             </tr>
-            {# <tr>
-              <th>Cantons 2015</th>
-              <td>{{ mairie.canton2015 }}</td>
-            </tr>
-            <tr>
-              <th>Cantons 2014</th>
-              <td>{{ mairie.canton2014 }}</td>
-            </tr>
-            <tr>
-              <th>Codes SIREN</th>
-              <td>{{ mairie.siren }}</td>
-            </tr> #}
             <tr>
               <th>Région</th>
               <td>{{ mairie.region }}</td>
@@ -129,7 +113,7 @@
         
       </div>
 
-      <div class="col-md-6">
+      <div class="col-md-7">
 
         <h3>Entretien</h3>
         <hr>
@@ -137,7 +121,7 @@
         
         {{ form_row(form.from) }}
         {{ form_row(form.to) }}
-        {{ form_row(form.replyTo) }}
+        {# {{ form_row(form.replyTo) }} #}
         
         <hr>
         
@@ -171,9 +155,9 @@
 
 
   </div>
-{% endblock %}
+{# {% endblock %}
 
-{% block js %}
+{% block js %} #}
   <script>
     
     var models = [];
@@ -195,4 +179,4 @@
     });
     
   </script>
-{% endblock %}
+{# {% endblock %} #}

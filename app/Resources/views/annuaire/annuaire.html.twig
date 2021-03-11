@@ -4,7 +4,9 @@
 {% set item = 'annuaire' %}
 
 {% block body %}
-
+  <style>
+  @media (min-width:1292px){.modal-lg{width:1200px}}
+  </style>
   <div class="container">
     <nav class="navbar navbar-default">
       <div class="container-fluid">
@@ -159,7 +161,15 @@
     </fieldset>
 
   </div>
-        
+  
+  <div class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-labelledby="emailModal">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content text-center">
+        <div id="new_mail" class="modal-body">
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}
 
 {% block js %}
@@ -337,7 +347,21 @@
   
   $('#input-mairie').on('select2:select', function (e) {
     var data = e.params.data;
-    window.location.href = Routing.generate('annuaire_mairie', { insee: data.insee });
+    var csrf = '{{ csrf_token('token')|e('js') }}';
+    $.ajax({
+      url: Routing.generate('annuaire_mairie', { insee: data.insee }),
+      type: 'GET',
+      data: { token: csrf },
+      beforeSend: function() {
+        $('#new_mail').html('');
+      },
+      success: function(result) {
+        $('.bs-modal-lg').modal('show');
+        $('#new_mail').html(result);
+      }
+    });
+    {# window.location.href = Routing.generate('annuaire_mairie', { insee: data.insee }); #}
+    {# $('#new_mail').html(); #}
   });
   $('#mairie_nav a').click(function (e) {
     var attr = $(this).attr('rel');
