@@ -23,8 +23,9 @@ class AnnuaireMailer
         $email->setSubject($message->getObject());
         $email->addTo($message->getTo());
         $email->addContent("text/plain", strip_tags($message->getBody()));
+        $logo = '<br><br><img width="200" src="https://www.climactif.com/images/logo.jpg">';
         $email->addContent(
-            "text/html", str_replace("\n", '<br>', $message->getBody())
+            "text/html", str_replace("\n", '<br>', $message->getBody()).$logo
         );
         $sendgrid = new \SendGrid($this->api_key);
         try {
