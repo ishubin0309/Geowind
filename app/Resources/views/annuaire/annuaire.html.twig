@@ -22,16 +22,16 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="mairie_nav">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#" rel="tab_list">Mairies contactées</a></li>
-            <li><a href="{{ path('annuaire_secteur') }}">Carte des contacts <i style="color:red;" class="fa fa-map-o" aria-hidden="true"></i></a></li>
+            <li class="active"><a href="{{ path('annuaire_index') }}" rel="tab_list">Journal</a></li>
+            <li><a href="#" rel="tab_carte">Afficher <i style="color:red;" class="fa fa-map-o" aria-hidden="true"></i></a></li>
             <li class=""><a href="#" rel="tab_model">Modèles</a></li>
-            <li class=""><a href="#" rel="tab_search">Recherche</a></li>
+            <li class=""><a href="#" rel="tab_search">Email</a></li>
           </ul>
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
     </nav>
     <fieldset id="tab_list">
-      <legend>Mairies contactées</legend>
+      <legend>Journal</legend>
       {% if messages is empty %}
         <div class="alert alert-info mt0">
           Aucune mairie contactée
@@ -44,7 +44,7 @@
               <th>Mairie</th>
               <th>Destinaire</th>
               <th>Contactée par</th>
-              <th>Objet</th>
+              <th class="column-fit">Objet</th>
               <th>Message</th>
               <th>Résultat</th>
               <th>Date2</th>
@@ -57,7 +57,7 @@
               <td><a href="{{ path('annuaire_mairie', { 'insee': message.mairie.insee }) }}">{{ message.mairie }}</a></td>
               <td>{{ message.to }}</td>
               <td>{{ message.createdBy }}</td>
-              <td>{{ message.object }}</td>
+              <td class="column-fit">{{ message.object }}</td>
               <td>
               {% if message.body|length > 20 %}
               <span title="{{ message.body }}">{{ message.body|slice(0, 20) }}</span>
@@ -78,6 +78,44 @@
             {% endfor %}
           </tbody>
         </table>
+      {% endif %}
+    </fieldset>
+    <fieldset id="tab_carte" class="hide">
+      <legend>Afficher</legend>
+      
+      {% if messages is empty %}
+        <div class="alert alert-info mt0">
+          Aucune mairie contactée
+        </div>
+      {% else %}
+        <div class="row">
+          <div class="col-sm-6">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Mairie</th>
+                  <th>Résultat</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for message in messages %}
+                <tr>
+                  <td>{{ message.createdAt|date('d/m/Y') }}</td>
+                  <td>{{ message.mairie }}</td>
+                  <td>
+                  {% set result = message.result ? message.result : '?' %}
+                  {{ message.result ? '(' ~ message.result ~ ')' : '(?)' }} <i style="color:{% if result == '+' %}green{% elseif result == '-'%}red{% else %}gray{% endif %};" class="fa fa-map-marker" aria-hidden="true"></i>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          <div class="col-sm-6">
+            <div id="map" class="map map-home " style="height: 500px; margin-bottom: 20px;"></div>
+          </div>
+        </div>
       {% endif %}
     </fieldset>
     <fieldset id="tab_model" class="hide">
@@ -115,123 +153,198 @@
       <legend>Chercher une mairie</legend>
       <select id="input-mairie" style="width:50%" type="text" class="form-control"></select>
     </fieldset>
+
   </div>
         
 {% endblock %}
 
 {% block js %}
   <script>
-    $('.button-delete').dblclick(function() {
-      id = $(this).attr('id');
-      model = $(this).attr('model');
+  var map = L.map('map').setView([46, 2], 5.5);
+
+  L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+  }).addTo(map);
+
+  var customControl =  L.Control.extend({
+
+    options: {
+      position: 'topleft'
+    },
+
+    onAdd: function (map) {
+      var container = L.DomUtil.create('a');
+      container.setAttribute("role", "button");
+      container.title="Center";
+      container.text = "c";
+
+      container.style.backgroundColor = 'white';     
+      {# container.style.backgroundImage = "url(https://t1.gstatic.com/images?q=tbn:ANd9GcR6FCUMW5bPn8C4PbKak2BJQQsmC-K9-mbYBeFZm1ZM2w2GRy40Ew)"; #}
+      container.style.backgroundSize = "30px 30px";
+      container.style.width = '32px';
+      container.style.height = '32px';
+      container.style.lineHeight = '24px';
+      container.style.textDecoration = 'none';
+      container.style.cursor = 'pointer';
+      container.style.textAlign = 'center';
+      container.style.color = 'black';
+      container.style.fontSize = '24px';
+      container.style.borderRadius = '4px';
+      container.style.marginTop = '2px';
+      container.style.border = '2px solid rgba(0,0,0,0.2)';
       
-      if (!id) {
+      container.onmouseover = function(){
+        container.style.backgroundColor = '#f4f4f4'; 
+      }
+      container.onmouseout = function(){
+        container.style.backgroundColor = 'white'; 
+      }
+
+      container.onclick = function() {
+        update_marker = 0;
+        map.setView([46,2],5.5);
+      }
+
+      return container;
+    }
+  });
+
+  map.addControl(new customControl());
+  {% if messages is not empty %}
+  var messages = {};
+  var markers = {};
+  {% for message in messages %}
+    {% set lat = 0 %}
+    {% set lng = 0 %}
+    {% set break = 0 %}
+    {% for region in regions if not break %}
+      {% if region.nom == message.mairie.region or region.nom in message.mairie.region or message.mairie.region in region.nom %}
+        {% set lat = region.latitude %}
+        {% set lng = region.longitude %}
+        {% set break = 1 %}
+      {% endif %}
+    {% endfor %}
+    {% set result = message.result ? message.result : '?' %}
+    messages[{{ loop.index0 }}] = {0:'{{ message.mairie.region }}', 1:'{{ message.mairie.commune }}', 2:'{{ message.mairie }}', 3:'{% if result == '+' %}green{% elseif result == '-'%}red{% else %}gray{% endif %}', 4: {{ lat }},5: {{ lng }}};
+  {% endfor %}console.log(messages);
+  $.each(messages, function(i, message) {
+    if(message[4] && message[5]) {
+      marker = new L.DivIcon.SVGIcon({ iconSize: L.point(24, 32), weight: 1, circleWeight: 1, color: '#000000', fillColor: message[3], fillOpacity: 0.7 });
+      L.marker([message[4], message[5]], { icon: marker}).addTo(map).bindTooltip(message[2]).bindPopup('Région: ' + message[0] + '<br>Commune: ' + message[1]);
+    } else reverseGeolocalisation(message[0], message[1], message[2], message[3]);
+  });
+  function reverseGeolocalisation(query, commune, marie, color) {
+    var nominatimUrl = 'https://nominatim.openstreetmap.org/search';
+    $.ajax({
+      type: 'GET',
+      url: nominatimUrl,
+      data: {
+        q: query,
+        extratags: 0,
+        namedetails: 0,
+        polygon_geojson: 0,
+        format: 'json',
+      },
+      dataType: 'json',
+
+    })
+    .done(function(data) {
+
+      if (data.length === 0) {
         return;
       }
-      swal({
-        title: "Supprimer ?",
-        text: "Le modèle « "+model+" » sera supprimé définitivement.",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#DD6B55",
-        confirmButtonText: "Supprimer",
-        cancelButtonText: "Annuler",
-        closeOnConfirm: false,
-        closeOnCancel: true,
-        allowOutsideClick: true,
-        showLoaderOnConfirm: true,
-      },
-      function(isConfirm){
-        if (isConfirm) {
-          var csrf = '{{ csrf_token('token')|e('js') }}';
-          $.ajax({
-            url: Routing.generate('model_delete', {id: id}),
-            type: 'DELETE',
-            data: { token: csrf  },
-            success: function(result) {
-              location.reload();
-            }
-          });
-        } else {
 
-        }
-      });
-
+      var searchLat = data[0]['lat'];
+      var searchLong = data[0]['lon'];
+      var bbox = data[0]['boundingbox'];
+      var adresse = data[0]['display_name'];
+      if(!adresse.match('France') && data.length > 1) {
+        var searchLat = data[1]['lat'];
+        var searchLong = data[1]['lon'];
+        var bbox = data[1]['boundingbox'];
+        var adresse = data[1]['display_name'];
+      }
+      if(adresse.match('France')) {
+        marker = new L.DivIcon.SVGIcon({ iconSize: L.point(24, 32), weight: 1, circleWeight: 1, color: '#000000', fillColor: color, fillOpacity: 0.7 });
+        L.marker([searchLat, searchLong], { icon: marker}).addTo(map).bindTooltip(marie).bindPopup('RÃ©gion: ' + query + '<br>Commune: ' + commune);
+      }
+      
     });
-
-    $('#datatable').DataTable({
-      language: dtLang,
-      paging: false,
-      ordering: false,
-      bInfo: false,
-    });
+  }
+  {% endif %}
+  $('.button-delete').dblclick(function() {
+    id = $(this).attr('id');
+    model = $(this).attr('model');
     
-    $("#input-mairie").select2({
-      ajax: {
-        url: Routing.generate('mairie_search'),
-        dataType: 'json',
-        delay: 500,
-        processResults: function (data) {
-          return {
-            results: data
-          };
-        }
-      },
-      escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
-      minimumInputLength: 1,
-    });
-    
-    $('#input-mairie').on('select2:select', function (e) {
-      var data = e.params.data;
-      window.location.href = Routing.generate('annuaire_mairie', { insee: data.insee });
-    });
-
-    $(".change_result").select2();
-
-    $('.change_result').on('select2:select', function() {
-      option = $(this).val().replace(/(\(|\))/g, '').trim();
-      id = $(this).attr('rel');
-      old_data = $(this).attr('data');
-      swal({
-          title: "êtes-vous sûr ?",
-          text: "Le résultat de message va être changé",
-          type: "warning",
-          showCancelButton: true,
-          confirmButtonColor: "#DD6B55",
-          confirmButtonText: "Changer",
-          cancelButtonText: "Annuler",
-          closeOnConfirm: false,
-          closeOnCancel: true,
-          allowOutsideClick: true,
-          showLoaderOnConfirm: true,
-        },
-        function(isConfirm){
-          if (isConfirm) {
-            var csrf = '{{ csrf_token('token')|e('js') }}';
-            $.ajax({
-              url: Routing.generate('message_edit', {id: id}),
-              type: 'POST',
-              data: { result: option, token: csrf  },
-              success: function(result) {
-                window.location.href = '{{ path('annuaire_index') }}';
-              }
-            });
-          } else {
-            $('select[rel="'+id+'"]').val('('+old_data+')');
-            $('.change_result').change();
+    if (!id) {
+      return;
+    }
+    swal({
+      title: "Supprimer ?",
+      text: "Le modèle « "+model+" » sera supprimé définitivement.",
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#DD6B55",
+      confirmButtonText: "Supprimer",
+      cancelButtonText: "Annuler",
+      closeOnConfirm: false,
+      closeOnCancel: true,
+      allowOutsideClick: true,
+      showLoaderOnConfirm: true,
+    },
+    function(isConfirm){
+      if (isConfirm) {
+        var csrf = '{{ csrf_token('token')|e('js') }}';
+        $.ajax({
+          url: Routing.generate('model_delete', {id: id}),
+          type: 'DELETE',
+          data: { token: csrf  },
+          success: function(result) {
+            location.reload();
           }
         });
-      });
+      } else {
 
-      $('#mairie_nav a').click(function (e) {
-        var attr = $(this).attr('rel');
-        if(typeof attr !== typeof undefined && attr !== false) {
-          e.preventDefault();
-          $('#mairie_nav li').removeClass('active');
-          $(this).parent().addClass('active');
-          $('fieldset').addClass('hide');
-          $('fieldset#' + attr).removeClass('hide');
-        }
-      });
+      }
+    });
+
+  });
+
+  $('#datatable').DataTable({
+    language: dtLang,
+    paging: false,
+    ordering: false,
+    bInfo: false,
+  });
+  $("#input-mairie").select2({
+    ajax: {
+      url: Routing.generate('mairie_search'),
+      dataType: 'json',
+      delay: 500,
+      processResults: function (data) {
+        return {
+          results: data
+        };
+      }
+    },
+    escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+    minimumInputLength: 1,
+  });
+  
+  $('#input-mairie').on('select2:select', function (e) {
+    var data = e.params.data;
+    window.location.href = Routing.generate('annuaire_mairie', { insee: data.insee });
+  });
+  $('#mairie_nav a').click(function (e) {
+    var attr = $(this).attr('rel');
+    if(typeof attr !== typeof undefined && attr !== false) {
+      e.preventDefault();
+      $('#mairie_nav li').removeClass('active');
+      $(this).parent().addClass('active');
+      $('fieldset').addClass('hide');
+      $('fieldset#' + attr).removeClass('hide');
+      if(attr == 'tab_carte') map.invalidateSize();
+    }
+  });
   </script>
 {% endblock %}

@@ -22,16 +22,16 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="mairie_nav">
           <ul class="nav navbar-nav">
-            <li><a href="{{ path('annuaire_index') }}" rel="tab_list">Mairies contactées</a></li>
-            <li class="active"><a href="#" rel="tab_carte">Carte des contacts <i style="color:red;" class="fa fa-map-o" aria-hidden="true"></i></a></li>
+            <li><a href="{{ path('annuaire_index') }}" rel="tab_list">Journal</a></li>
+            <li class="active"><a href="#" rel="tab_carte">Afficher <i style="color:red;" class="fa fa-map-o" aria-hidden="true"></i></a></li>
             <li class=""><a href="#" rel="tab_model">Modèles</a></li>
-            <li class=""><a href="#" rel="tab_search">Recherche</a></li>
+            <li class=""><a href="#" rel="tab_search">Email</a></li>
           </ul>
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
     </nav>
     <fieldset id="tab_list" class="hide">
-      <legend>Mairies contactées</legend>
+      <legend>Journal</legend>
       {% if messages is empty %}
         <div class="alert alert-info mt0">
           Aucune mairie contactée
@@ -81,7 +81,7 @@
       {% endif %}
     </fieldset>
     <fieldset id="tab_carte">
-      <legend>Carte des contacts</legend>
+      <legend>Afficher</legend>
       
       {% if messages is empty %}
         <div class="alert alert-info mt0">
@@ -214,11 +214,24 @@
   var messages = {};
   var markers = {};
   {% for message in messages %}
+    {% set lat = 0 %}
+    {% set lng = 0 %}
+    {% set break = 0 %}
+    {% for region in regions if not break %}
+      {% if region.nom == message.mairie.region or region.nom in message.mairie.region or message.mairie.region in region.nom %}
+        {% set lat = region.latitude %}
+        {% set lng = region.longitude %}
+        {% set break = 1 %}
+      {% endif %}
+    {% endfor %}
     {% set result = message.result ? message.result : '?' %}
-    messages[{{ loop.index0 }}] = {0:'{{ message.mairie.region }}', 1:'{{ message.mairie.commune }}', 2:'{{ message.mairie }}', 3:'{% if result == '+' %}green{% elseif result == '-'%}red{% else %}gray{% endif %}'};
+    messages[{{ loop.index0 }}] = {0:'{{ message.mairie.region }}', 1:'{{ message.mairie.commune }}', 2:'{{ message.mairie }}', 3:'{% if result == '+' %}green{% elseif result == '-'%}red{% else %}gray{% endif %}', 4: {{ lat }},5: {{ lng }}};
   {% endfor %}console.log(messages);
   $.each(messages, function(i, message) {
-    reverseGeolocalisation(message[0], message[1], message[2], message[3]);
+    if(message[4] && message[5]) {
+      marker = new L.DivIcon.SVGIcon({ iconSize: L.point(24, 32), weight: 1, circleWeight: 1, color: '#000000', fillColor: message[3], fillOpacity: 0.7 });
+      L.marker([message[4], message[5]], { icon: marker}).addTo(map).bindTooltip(message[2]).bindPopup('Région: ' + message[0] + '<br>Commune: ' + message[1]);
+    } else reverseGeolocalisation(message[0], message[1], message[2], message[3]);
   });
   function reverseGeolocalisation(query, commune, marie, color) {
     var nominatimUrl = 'https://nominatim.openstreetmap.org/search';
@@ -253,7 +266,7 @@
       }
       if(adresse.match('France')) {
         marker = new L.DivIcon.SVGIcon({ iconSize: L.point(24, 32), weight: 1, circleWeight: 1, color: '#000000', fillColor: color, fillOpacity: 0.7 });
-        L.marker([searchLat, searchLong], { icon: marker}).addTo(map).bindTooltip(marie).bindPopup('Région: ' + query + '<br>Commune: ' + commune);
+        L.marker([searchLat, searchLong], { icon: marker}).addTo(map).bindTooltip(marie).bindPopup('RÃ©gion: ' + query + '<br>Commune: ' + commune);
       }
       
     });
@@ -330,6 +343,7 @@
       $(this).parent().addClass('active');
       $('fieldset').addClass('hide');
       $('fieldset#' + attr).removeClass('hide');
+      if(attr == 'tab_carte') map.invalidateSize();
     }
   });
   </script>

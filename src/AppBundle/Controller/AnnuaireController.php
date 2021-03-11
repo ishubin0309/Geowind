@@ -36,9 +36,13 @@ class AnnuaireController extends Controller
         $models = $em->getRepository('AppBundle:MessageModel')
                         ->findBy([], ['name' => 'ASC']);
 
+        $regions = $em->getRepository('AppBundle:Region')
+                        ->findAll();
+
         return $this->render('annuaire/annuaire.html.twig', [
             'messages' => $messages,
             'models' => $models,
+            'regions' => $regions,
         ]);
     }
     /**
@@ -54,9 +58,13 @@ class AnnuaireController extends Controller
         $models = $em->getRepository('AppBundle:MessageModel')
                         ->findBy([], ['name' => 'ASC']);
 
+        $regions = $em->getRepository('AppBundle:Region')
+                        ->findAll();
+
         return $this->render('annuaire/secteur.html.twig', [
             'messages' => $messages,
             'models' => $models,
+            'regions' => $regions,
         ]);
     }
     

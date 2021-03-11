@@ -44,6 +44,34 @@ class HomeController extends Controller
         $em->flush();
         exit('Done');
     }
+    /**
+     * @Route("/region-cordinates", name="region_cordinates")
+     */
+    public function regionCordinatesAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $regions = $em->getRepository('AppBundle:Region')->findAll();
+        foreach($regions as $region) {
+            if($region->getLatitude() && $region->getLongitude()) continue;
+            $url = 'https://nominatim.openstreetmap.org/search?q=' .$region->getNom(). '&extratags=0&namedetails=0&polygon_geojson=0&format=json';
+            $content = $this->gCurl($url);
+            if($content) {
+                $data = json_decode($content, 1);
+                if(is_array($data)) {
+                    foreach($data as $coordinate) {
+                        if(preg_match('%France%', $coordinate['display_name'])) {
+                            $region->setLatitude($coordinate['lat']);
+                            $region->setLongitude($coordinate['lon']);
+                            $em->persist($region);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        $em->flush();
+        exit('Done');
+    }
     private function gCurl($url)
     {
         $ua = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:86.0) Gecko/20100101 Firefox/86.0";
