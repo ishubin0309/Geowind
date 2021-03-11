@@ -45,30 +45,38 @@
                 <button type="button" data-mail="{{ mairie.email1 }}" class="select-mail btn btn-xs btn-primary pull-right"><i class="fa fa-mail-forward"></i></button>
               </td>
             </tr>
+            {% if mairie.email2 %}
             <tr>
               <th><i class="fa fa-envelope-o"></i> EMAIL 2</th>
               <td>{{ mairie.email2 }}
               <button type="button" data-mail="{{ mairie.email2 }}" class="select-mail btn btn-xs btn-primary pull-right"><i class="fa fa-mail-forward"></i></button>
               </td>
             </tr>
+            {% endif %}
+            {% if mairie.email3 %}
             <tr>
               <th><i class="fa fa-envelope-o"></i> EMAIL 3</th>
               <td>{{ mairie.email3 }}
               <button type="button" data-mail="{{ mairie.email3 }}" class="select-mail btn btn-xs btn-primary pull-right"><i class="fa fa-mail-forward"></i></button>
               </td>
             </tr>
+            {% endif %}
+            {% if mairie.email4 %}
             <tr>
               <th><i class="fa fa-envelope-o"></i> EMAIL 4</th>
               <td>{{ mairie.email4 }}
               <button type="button" data-mail="{{ mairie.email4 }}" class="select-mail btn btn-xs btn-primary pull-right"><i class="fa fa-mail-forward"></i></button>
               </td>
             </tr>
+            {% endif %}
+            {% if mairie.email5 %}
             <tr>
               <th><i class="fa fa-envelope-o"></i> EMAIL 5</th>
               <td>{{ mairie.email5 }}
                 <button type="button" data-mail="{{ mairie.email5 }}" class="select-mail btn btn-xs btn-primary pull-right"><i class="fa fa-mail-forward"></i></button>
               </td>
             </tr>
+            {% endif %}
             <tr>
               <th>Code INSEE</th>
               <td>{{ mairie.insee }}</td>
