@@ -110,9 +110,9 @@ class UserController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if($user->isSendCredentials()) {
+            if($user->isSendCredentials() && $user->getPlainPassword()) {
                 $this->nouveauMessage($user->getUsername(), $user->getEmail(), $user->getPlainPassword());
-            }
+            } elseif($user->isSendCredentials()) if($user->isSendCredentials()) $this->addFlash('danger', 'Entrez un mot de passe pour envoyé le mail.');
             $userManager->saveUser($user);
             $this->addFlash('success', 'Utilisateur ' . $user->getUsername() . ' modifié avec succès.');
             return $this->redirectToRoute('user_index');
