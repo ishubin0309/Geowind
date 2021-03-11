@@ -32,7 +32,7 @@ class Appel
      * @var string
      * 
      */
-    private $from = 'Demandeur';
+    private $from = 'Enquêteur';
 
     /**
      * @var Mairie
