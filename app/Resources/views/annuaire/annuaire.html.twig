@@ -149,6 +149,7 @@
     <fieldset id="tab_search" class="hide">
       <legend>Chercher une mairie</legend>
       <select id="input-mairie" style="width:50%" type="text" class="form-control"></select>
+      <div id="new_mail"></div>
     </fieldset>
     <fieldset id="tab_appel" class="hide">
       <legend>Appel</legend>
@@ -159,7 +160,7 @@
   <div class="modal fade bs-modal" tabindex="-1" role="dialog" aria-labelledby="emailModal">
     <div class="modal-dialog" role="document">
       <div class="modal-content text-center">
-        <div id="new_mail" style="padding: 20px;text-align: left;" class="modal-body">
+        <div id="show_message" style="padding: 20px;text-align: left;" class="modal-body">
         </div>
       </div>
     </div>
@@ -338,16 +339,32 @@
     escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
     minimumInputLength: 1,
   });
-  
   $('#input-mairie').on('select2:select', function (e) {
+
+    var data = e.params.data;
+    var csrf = '{{ csrf_token('token')|e('js') }}';
+    $.ajax({
+      url: Routing.generate('annuaire_mairie', { insee: data.insee }),
+      type: 'GET',
+      data: { token: csrf },
+      beforeSend: function() {
+        $('#new_mail').html('');
+      },
+      success: function(result) {
+        $('#new_mail').html(result);
+      }
+    });
+  });
+
+  {# $('#input-mairie').on('select2:select', function (e) {
     var data = e.params.data;
     window.location.href = Routing.generate('annuaire_mairie', { insee: data.insee });
-  });
+  }); #}
 
   $('.btn_message').click(function() {
     var message = $(this).parent().find('span').text().replace(/\n/, '<br>');
     $('.bs-modal').modal('show');
-    $('#new_mail').html(message);
+    $('#show_message').html(message);
   });
   $('#mairie_nav a').click(function (e) {
     var attr = $(this).attr('rel');
