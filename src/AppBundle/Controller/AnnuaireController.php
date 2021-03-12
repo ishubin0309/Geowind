@@ -298,4 +298,54 @@ class AnnuaireController extends Controller
         }
         return $response;
     }
+
+    /**
+     * @Route("/message/{id}/supprimer", name="message_delete", options={ "expose": true })
+     * @Method("DELETE")
+     */
+    public function messageAction(Request $request, Message $message)
+    {
+        $csrf = $request->request->get('csrf', null);
+
+        if ($this->isCsrfTokenValid('token', $csrf)) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $em = $this->getDoctrine()->getManager();
+
+        $response = new JsonResponse();
+        $response->setData(['success' => 0]);
+        $em = $this->getDoctrine()->getManager();
+        $sujet = $message->getSujet();
+        $em->remove($message);
+        $em->flush();
+        $this->addFlash('success', 'Message « '.$sujet.' » a été supprimé.');
+
+        return $response;
+    }
+
+    /**
+     * @Route("/appel/{id}/supprimer", name="appel_delete", options={ "expose": true })
+     * @Method("DELETE")
+     */
+    public function appelAction(Request $request, Appel $appel)
+    {
+        $csrf = $request->request->get('csrf', null);
+
+        if ($this->isCsrfTokenValid('token', $csrf)) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $em = $this->getDoctrine()->getManager();
+
+        $response = new JsonResponse();
+        $response->setData(['success' => 0]);
+        $em = $this->getDoctrine()->getManager();
+        $sujet = $appel->getSujet();
+        $em->remove($appel);
+        $em->flush();
+        $this->addFlash('success', 'Appel « '.$sujet.' » a été supprimé.');
+
+        return $response;
+    }
 }
