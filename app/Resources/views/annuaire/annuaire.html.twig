@@ -122,7 +122,7 @@
     <fieldset id="tab_carte" class="hide">
       <legend>Afficher</legend>
       
-      {% if messages is empty %}
+      {% if messages is empty and appels is empty %}
         <div class="alert alert-info mt0">
           Aucune mairie contactée
         </div>
@@ -138,6 +138,11 @@
                 </tr>
               </thead>
               <tbody>
+                <tr>
+                  <td><strong>Messges</strong></td>
+                  <td></td>
+                  <td></td>
+                </tr>
                 {% for message in messages %}
                 <tr>
                   <td>{{ message.createdAt|date('d/m/Y') }}</td>
@@ -148,6 +153,11 @@
                   </td>
                 </tr>
                 {% endfor %}
+                <tr>
+                  <td><strong>Appels</strong></td>
+                  <td></td>
+                  <td></td>
+                </tr>
                 {% for appel in appels %}
                 <tr>
                   <td>{{ appel.createdAt|date('d/m/Y') }}</td>
@@ -276,44 +286,47 @@
   });
 
   map.addControl(new customControl());
-  {% if messages is not empty %}
+  {% if messages is not empty or appels is not empty %}
   var messages = {};
   var markers = {};
+  {% set loop_index = 0 %}
   {% for message in messages %}
     {% set lat = 0 %}
     {% set lng = 0 %}
     {% set break = 0 %}
     {% for region in regions if not break %}
-      {% if region.nom == message.mairie.region or region.nom in message.mairie.region or message.mairie.region in region.nom %}
-        {% set lat = region.latitude %}
-        {% set lng = region.longitude %}
+      {% if region.nom == message.mairie.region|replace({'Î':'I'}) or region.nom in message.mairie.region or message.mairie.region in region.nom %}
+        {% set lat = region.latitude + 0.4 * loop_index %}
+        {% set lng = region.longitude + 0.4 * loop_index %}
         {% set break = 1 %}
       {% endif %}
     {% endfor %}
     {% set result = message.result ? message.result : '?' %}
-    messages[{{ loop.index0 }}] = {0:'{{ message.mairie.region }}', 1:'{{ message.mairie.commune }}', 2:'{{ message.mairie }}', 3:'{% if result == '+' %}green{% elseif result == '-'%}red{% else %}gray{% endif %}', 4: {{ lat }},5: {{ lng }}};
+    messages[{{ loop_index }}] = {0:'{{ message.mairie.region }}', 1:'{{ message.mairie.commune }}', 2:'{{ message.mairie }}', 3:'{% if result == '+' %}green{% elseif result == '-'%}red{% else %}gray{% endif %}', 4: {{ lat }},5: {{ lng }}};
+    {% set loop_index = loop_index + 1 %}
   {% endfor %}
   {% for appel in appels %}
     {% set lat = 0 %}
     {% set lng = 0 %}
     {% set break = 0 %}
     {% for region in regions if not break %}
-      {% if region.nom == appel.mairie.region or region.nom in appel.mairie.region or appel.mairie.region in region.nom %}
-        {% set lat = region.latitude %}
-        {% set lng = region.longitude %}
+      {% if region.nom == appel.mairie.region|replace({'Î':'I'}) or region.nom in appel.mairie.region or appel.mairie.region in region.nom %}
+        {% set lat = region.latitude + 0.4 * loop_index %}
+        {% set lng = region.longitude + 0.4 * loop_index %}
         {% set break = 1 %}
       {% endif %}
     {% endfor %}
     {% set result = appel.result ? appel.result : '?' %}
-    messages[{{ loop.index0 }}] = {0:'{{ appel.mairie.region }}', 1:'{{ appel.mairie.commune }}', 2:'{{ appel.mairie }}', 3:'{% if result == '+' %}green{% elseif result == '-'%}red{% else %}gray{% endif %}', 4: {{ lat }},5: {{ lng }}};
+    messages[{{ loop_index }}] = {0:'{{ appel.mairie.region }}', 1:'{{ appel.mairie.commune }}', 2:'{{ appel.mairie }}', 3:'{% if result == '+' %}green{% elseif result == '-'%}red{% else %}gray{% endif %}', 4: {{ lat }},5: {{ lng }}};
+    {% set loop_index = loop_index + 1 %}
   {% endfor %}
   $.each(messages, function(i, message) {
-    if(message[4] && message[5]) {
+    /*if(message[4] && message[5]) {console.log({4: message[4],5: message[5]});
       marker = new L.DivIcon.SVGIcon({ iconSize: L.point(24, 32), weight: 1, circleWeight: 1, color: '#000000', fillColor: message[3], fillOpacity: 0.7 });
       L.marker([message[4], message[5]], { icon: marker}).addTo(map).bindTooltip(message[2]).bindPopup('Région: ' + message[0] + '<br>Commune: ' + message[1]);
-    } else reverseGeolocalisation(message[0], message[1], message[2], message[3]);
+    } else */reverseGeolocalisation(message[0], message[1], message[2], message[3], i);
   });
-  function reverseGeolocalisation(query, commune, marie, color) {
+  function reverseGeolocalisation(query, commune, marie, color, index) {
     var nominatimUrl = 'https://nominatim.openstreetmap.org/search';
     $.ajax({
       type: 'GET',
@@ -345,8 +358,11 @@
         var adresse = data[1]['display_name'];
       }
       if(adresse.match('France')) {
+        searchLat = searchLat*1+0.4*index;
+        searchLong = searchLong*1+0.4*index;
+        console.log({2: searchLat, 1: searchLong});
         marker = new L.DivIcon.SVGIcon({ iconSize: L.point(24, 32), weight: 1, circleWeight: 1, color: '#000000', fillColor: color, fillOpacity: 0.7 });
-        L.marker([searchLat, searchLong], { icon: marker}).addTo(map).bindTooltip(marie).bindPopup('RÃ©gion: ' + query + '<br>Commune: ' + commune);
+        L.marker([searchLat, searchLong], { icon: marker}).addTo(map).bindTooltip(marie).bindPopup('Région: ' + query + '<br>Commune: ' + commune);
       }
       
     });
