@@ -515,9 +515,9 @@
       if (isConfirm) {
         var csrf = '{{ csrf_token('token')|e('js') }}';
         $.ajax({
-          url: Routing.generate(type + '_delete'),
+          url: Routing.generate(type + '_delete', {id: id}),
           type: 'DELETE',
-          data: {id: id, csrf: csrf},
+          data: {token: csrf},
           success: function(result) {
             location.reload();
           }

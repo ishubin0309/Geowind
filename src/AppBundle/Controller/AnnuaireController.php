@@ -300,55 +300,53 @@ class AnnuaireController extends Controller
     }
 
     /**
-     * @Route("/message/supprimer", name="message_delete", options={ "expose": true })
+     * @Route("/message/{id}/supprimer", name="message_delete", options={ "expose": true })
      * @Method("DELETE")
+     * @Security("has_role('ROLE_ADMIN')")
      */
-    public function messageAction(Request $request)
+    public function messageAction(Request $request, Message $message)
     {
-        $id = $request->request->get('id', 0);
         $csrf = $request->request->get('csrf', null);
 
         if ($this->isCsrfTokenValid('token', $csrf)) {
             throw $this->createAccessDeniedException();
         }
 
+        $em = $this->getDoctrine()->getManager();
+
         $response = new JsonResponse();
         $response->setData(['success' => 0]);
         $em = $this->getDoctrine()->getManager();
-        $message = $em->getRepository('AppBundle:Message')->findOneBy(['id' => $id]);
-        if($message) {
-            $sujet = $message->getSujet();
-            $em->remove($message);
-            $em->flush();
-            $this->addFlash('success', 'Message « '.$sujet.' » a été supprimé.');
-        }
+        $sujet = $message->getSujet();
+        $em->remove($message);
+        $em->flush();
+        $this->addFlash('success', 'Message « '.$sujet.' » a été supprimé.');
 
         return $response;
     }
 
     /**
-     * @Route("/appel/supprimer", name="appel_delete", options={ "expose": true })
+     * @Route("/appel/{id}/supprimer", name="appel_delete", options={ "expose": true })
      * @Method("DELETE")
+     * @Security("has_role('ROLE_EDIT')")
      */
-    public function appelAction(Request $request)
+    public function appelAction(Request $request, Appel $appel)
     {
-        $id = $request->request->get('id', 0);
         $csrf = $request->request->get('csrf', null);
 
         if ($this->isCsrfTokenValid('token', $csrf)) {
             throw $this->createAccessDeniedException();
         }
 
+        $em = $this->getDoctrine()->getManager();
+
         $response = new JsonResponse();
         $response->setData(['success' => 0]);
         $em = $this->getDoctrine()->getManager();
-        $appel = $em->getRepository('AppBundle:Appel')->findOneBy(['id' => $id]);
-        if($appel) {
-            $sujet = $appel->getSujet();
-            $em->remove($appel);
-            $em->flush();
-            $this->addFlash('success', 'Appel « '.$sujet.' » a été supprimé.');
-        }
+        $sujet = $appel->getSujet();
+        $em->remove($appel);
+        $em->flush();
+        $this->addFlash('success', 'Appel « '.$sujet.' » a été supprimé.');
 
         return $response;
     }
