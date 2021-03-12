@@ -1365,11 +1365,15 @@
 
     function countParcelles() {
       var parcelles_count = $('#projet_parcelles tr').length;
+      var parcelles = ',';
+      $('#projet_parcelles tr').each(function(i,element) {
+        parcelles += $(element).find('td:eq(0) input').val().trim() + ',';
+      });
       var accords_count = $('#projet_proprietaires tr.proprietaire_entry').length;
       if(accords_count) {
         accords_count = 0;
         $('#projet_proprietaires tr.proprietaire_entry').each(function(i,element) {
-          if($(element).find('td:eq(2) select').val() == 'OUI' && $('#projet_proprietaires tr.exploitant_entry:eq('+i+')').find('td:eq(2) select').val() != 'NON' && $(element).find('.exploitant_entry td:eq(2) select').val() != 'NEGO')
+          if(parcelles.includes($(element).find('td:eq(0) input').val().trim()) && $(element).find('td:eq(2) select').val() == 'OUI' && $('#projet_proprietaires tr.exploitant_entry:eq('+i+')').find('td:eq(2) select').val() != 'NON' && $(element).find('.exploitant_entry td:eq(2) select').val() != 'NEGO')
             accords_count++;
         });
       }
