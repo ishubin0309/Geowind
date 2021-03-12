@@ -272,12 +272,12 @@
   var messages = {};
   var markers = {};
   {% set loop_index = 0 %}
-  {% for message in messages %}
+  {% for message in messages if message.result != 'R' %}
     {% set lat = 0 %}
     {% set lng = 0 %}
     {% set break = 0 %}
     {% for region in regions if not break %}
-      {% if region.nom == message.mairie.region|replace({'Î':'I'}) or region.nom in message.mairie.region or message.mairie.region in region.nom %}
+      {% if region.nom == message.mairie.region|replace({'Î':'I'}) %}
         {% set lat = region.latitude + 0.02 *loop_index %}
         {% set lng = region.longitude + 0.02 *loop_index %}
         {% set break = 1 %}
@@ -287,12 +287,12 @@
     messages[{{ loop_index }}] = {0:'{{ message.mairie.region }}', 1:'{{ message.mairie.commune }}', 2:'{{ message.mairie }}', 3:'{% if result == '+' %}green{% elseif result == '-'%}red{% else %}gray{% endif %}', 4: {{ lat }},5: {{ lng }}};
     {% set loop_index = loop_index + 1 %}
   {% endfor %}
-  {% for appel in appels %}
+  {% for appel in appels if appel.result != 'R' %}
     {% set lat = 0 %}
     {% set lng = 0 %}
     {% set break = 0 %}
     {% for region in regions if not break %}
-      {% if region.nom == appel.mairie.region|replace({'Î':'I'}) or region.nom in appel.mairie.region or appel.mairie.region in region.nom %}
+      {% if region.nom == appel.mairie.region|replace({'Î':'I'}) %}
         {% set lat = region.latitude + 0.02 *loop_index %}
         {% set lng = region.longitude + 0.02 *loop_index %}
         {% set break = 1 %}
