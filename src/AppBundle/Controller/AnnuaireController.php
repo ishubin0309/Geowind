@@ -317,7 +317,7 @@ class AnnuaireController extends Controller
         $response = new JsonResponse();
         $response->setData(['success' => 0]);
         $em = $this->getDoctrine()->getManager();
-        $sujet = $message->getSujet();
+        $sujet = $message->getObject();
         $em->remove($message);
         $em->flush();
         $this->addFlash('success', 'Message « '.$sujet.' » a été supprimé.');
@@ -343,7 +343,7 @@ class AnnuaireController extends Controller
         $response = new JsonResponse();
         $response->setData(['success' => 0]);
         $em = $this->getDoctrine()->getManager();
-        $sujet = $appel->getSujet();
+        $sujet = $appel->getObject();
         $em->remove($appel);
         $em->flush();
         $this->addFlash('success', 'Appel « '.$sujet.' » a été supprimé.');
