@@ -296,8 +296,9 @@
     {% set break = 0 %}
     {% for region in regions if not break %}
       {% if region.nom == message.mairie.region|replace({'Î':'I'}) or region.nom in message.mairie.region or message.mairie.region in region.nom %}
-        {% set lat = region.latitude + 0.1 *loop_index %}
-        {% set lng = region.longitude + 0.1 *loop_index %}
+        {% set slide = not loop_index%2 ? 0.1 : -0.1 %}
+        {% set lat = region.latitude + slide *loop_index %}
+        {% set lng = region.longitude + slide *loop_index %}
         {% set break = 1 %}
       {% endif %}
     {% endfor %}
@@ -311,8 +312,9 @@
     {% set break = 0 %}
     {% for region in regions if not break %}
       {% if region.nom == appel.mairie.region|replace({'Î':'I'}) or region.nom in appel.mairie.region or appel.mairie.region in region.nom %}
-        {% set lat = region.latitude + 0.1 *loop_index %}
-        {% set lng = region.longitude + 0.1 *loop_index %}
+        {% set slide = not loop_index%2 ? 0.1 : -0.1 %}
+        {% set lat = region.latitude + slide *loop_index %}
+        {% set lng = region.longitude + slide *loop_index %}
         {% set break = 1 %}
       {% endif %}
     {% endfor %}
@@ -321,10 +323,10 @@
     {% set loop_index = loop_index + 1 %}
   {% endfor %}
   $.each(messages, function(i, message) {
-    /*if(message[4] && message[5]) {console.log({4: message[4],5: message[5]});
+    if(message[4] && message[5]) {console.log({4: message[4],5: message[5]});
       marker = new L.DivIcon.SVGIcon({ iconSize: L.point(24, 32), weight: 1, circleWeight: 1, color: '#000000', fillColor: message[3], fillOpacity: 0.7 });
       L.marker([message[4], message[5]], { icon: marker}).addTo(map).bindTooltip(message[2]).bindPopup('Région: ' + message[0] + '<br>Commune: ' + message[1]);
-    } else */reverseGeolocalisation(message[0], message[1], message[2], message[3], i);
+    } else reverseGeolocalisation(message[0], message[1], message[2], message[3], i);
   });
   function reverseGeolocalisation(query, commune, marie, color, index) {
     var nominatimUrl = 'https://nominatim.openstreetmap.org/search';
