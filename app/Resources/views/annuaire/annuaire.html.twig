@@ -71,8 +71,8 @@
               </td>
               <td>
               {% set result = message.result ? message.result : '?' %}
-                <select rel="{{ message.id }}" data="{{ result }}" style="width:100%;" class="form-control change_result">
-                  {% for option in ['?', '+', '-'] %}
+                <select rel="{{ message.id }}" type="message" data="{{ result }}" style="width:100%;" class="form-control change_result">
+                  {% for option in ['?', '+', '-', 'R'] %}
                   <option {% if option == result %}selected{% endif %}>({{ option }})</option>
                   {% endfor %}
                 </select>
@@ -92,7 +92,14 @@
               <button class="btn btn-info btn-sm btn_message">Afficher</button>
               <span class="hide">{{ appel.body }}</span>
               </td>
-              <td>{{ appel.result }}</td>
+              <td>
+              {% set result = appel.result ? appel.result : '?' %}
+                <select rel="{{ appel.id }}" type="appel" data="{{ result }}" style="width:100%;" class="form-control change_result">
+                  {% for option in ['?', '+', '-', 'R'] %}
+                  <option {% if option == result %}selected{% endif %}>({{ option }})</option>
+                  {% endfor %}
+                </select>
+              </td>
               <td>{{ appel.updatedAt|date('d/m/Y') }}</td>
               <td>Appel</td>
             </tr>
@@ -121,7 +128,7 @@
                 </tr>
               </thead>
               <tbody>
-                {% for message in messages %}
+                {% for message in messages if message.result != 'R' %}
                 <tr>
                   <td>{{ message.createdAt|date('d/m/Y') }}</td>
                   <td>{{ message.mairie }}</td>
@@ -132,7 +139,7 @@
                   </td>
                 </tr>
                 {% endfor %}
-                {% for appel in appels %}
+                {% for appel in appels if appel.result != 'R' %}
                 <tr>
                   <td>{{ appel.createdAt|date('d/m/Y') }}</td>
                   <td>{{ appel.mairie }}</td>
@@ -448,6 +455,7 @@
   $('.change_result').on('select2:select', function() {
     option = $(this).val().replace(/(\(|\))/g, '').trim();
     id = $(this).attr('rel');
+    type = $(this).attr('type');
     old_data = $(this).attr('data');
     swal({
         title: "êtes-vous sûr ?",
@@ -466,7 +474,7 @@
         if (isConfirm) {
           var csrf = '{{ csrf_token('token')|e('js') }}';
           $.ajax({
-            url: Routing.generate('message_edit', {id: id}),
+            url: Routing.generate(type + '_edit', {id: id}),
             type: 'POST',
             data: { result: option, token: csrf  },
             success: function(result) {

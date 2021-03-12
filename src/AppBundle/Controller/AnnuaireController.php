@@ -269,4 +269,33 @@ class AnnuaireController extends Controller
         }
         return $response;
     }
+    
+    /**
+     * @Route("/appel/{id}/modifier", name="appel_edit", options={ "expose": true })
+     * @Method({"POST"})
+     * @Security("has_role('ROLE_EDIT')")
+     */
+    public function editAppelAction(Request $request, Appel $appel)
+    {
+        $result = $request->request->get('result', '?');
+        $csrf = $request->request->get('csrf', null);
+
+        if ($this->isCsrfTokenValid('token', $csrf)) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $response = new JsonResponse();
+        $response->setData(['success' => 0]);
+        if(in_array($result, ['?', '-', '+'])) {
+            $em = $this->getDoctrine()->getManager();
+
+            $appel->setResult($result);
+            $em->persist($appel);
+            $em->flush();
+
+            $this->addFlash('success', 'Le résultat d\'appel « ' . $appel->getObject() . ' » a été modifié.');
+            $response->setData(['success' => 1]);
+        }
+        return $response;
+    }
 }
