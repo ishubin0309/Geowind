@@ -1365,9 +1365,9 @@
 
     function countParcelles() {
       var parcelles_count = $('#projet_parcelles tr').length;
-      var parcelles = ',';
+      var parcelles = [];
       $('#projet_parcelles tr').each(function(i,element) {
-        parcelles += $(element).find('td:eq(0) input').val().trim() + ',';
+        parcelles.push($(element).find('td:eq(0) input').val().trim());
       });
       var accords_count = $('#projet_proprietaires tr.proprietaire_entry').length;
       if(accords_count) {
