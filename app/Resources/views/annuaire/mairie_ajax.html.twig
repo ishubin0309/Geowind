@@ -25,7 +25,9 @@
             </tr>
             <tr>
               <th><i class="fa fa-user fa-fw"></i> Maire</th>
-              <td>{{ mairie.civiliteMaire }} {{ mairie.prenomMaire }} {{ mairie.nomMaire|upper }}</td>
+              <td>{{ mairie.civiliteMaire }} {{ mairie.prenomMaire }} {{ mairie.nomMaire|upper }}
+              <button type="button" data-telephone="{{ mairie.civiliteMaire }} {{ mairie.prenomMaire }} {{ mairie.nomMaire|upper }}" class="select-telephone btn btn-xs btn-primary pull-right"><i class="fa fa-mail-forward"></i></button>
+              </td>
             </tr>
             <tr>
               <th><i class="fa fa-phone fa-fw"></i> Téléphone</th>
