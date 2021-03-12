@@ -302,6 +302,7 @@ class AnnuaireController extends Controller
     /**
      * @Route("/message/{id}/supprimer", name="message_delete", options={ "expose": true })
      * @Method("DELETE")
+     * @Security("has_role('ROLE_EDIT')")
      */
     public function messageAction(Request $request, Message $message)
     {
@@ -327,6 +328,7 @@ class AnnuaireController extends Controller
     /**
      * @Route("/appel/{id}/supprimer", name="appel_delete", options={ "expose": true })
      * @Method("DELETE")
+     * @Security("has_role('ROLE_EDIT')")
      */
     public function appelAction(Request $request, Appel $appel)
     {
