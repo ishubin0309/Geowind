@@ -257,7 +257,7 @@ class AnnuaireController extends Controller
 
         $response = new JsonResponse();
         $response->setData(['success' => 0]);
-        if(in_array($result, ['?', '-', '+'])) {
+        if(in_array($result, ['?', '-', '+', 'R'])) {
             $em = $this->getDoctrine()->getManager();
 
             $message->setResult($result);
@@ -286,7 +286,7 @@ class AnnuaireController extends Controller
 
         $response = new JsonResponse();
         $response->setData(['success' => 0]);
-        if(in_array($result, ['?', '-', '+'])) {
+        if(in_array($result, ['?', '-', '+', 'R'])) {
             $em = $this->getDoctrine()->getManager();
 
             $appel->setResult($result);
