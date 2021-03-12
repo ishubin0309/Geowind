@@ -296,8 +296,8 @@
     {% set break = 0 %}
     {% for region in regions if not break %}
       {% if region.nom == message.mairie.region|replace({'Î':'I'}) or region.nom in message.mairie.region or message.mairie.region in region.nom %}
-        {% set lat = region.latitude + 0.4 * loop_index %}
-        {% set lng = region.longitude + 0.4 * loop_index %}
+        {% set lat = region.latitude + 0.1 *loop_index %}
+        {% set lng = region.longitude + 0.1 *loop_index %}
         {% set break = 1 %}
       {% endif %}
     {% endfor %}
@@ -311,8 +311,8 @@
     {% set break = 0 %}
     {% for region in regions if not break %}
       {% if region.nom == appel.mairie.region|replace({'Î':'I'}) or region.nom in appel.mairie.region or appel.mairie.region in region.nom %}
-        {% set lat = region.latitude + 0.4 * loop_index %}
-        {% set lng = region.longitude + 0.4 * loop_index %}
+        {% set lat = region.latitude + 0.1 *loop_index %}
+        {% set lng = region.longitude + 0.1 *loop_index %}
         {% set break = 1 %}
       {% endif %}
     {% endfor %}
@@ -358,8 +358,8 @@
         var adresse = data[1]['display_name'];
       }
       if(adresse.match('France')) {
-        searchLat = searchLat*1+0.4*index;
-        searchLong = searchLong*1+0.4*index;
+        searchLat = searchLat*1+0.1 *index;
+        searchLong = searchLong*1+0.1 *index;
         console.log({2: searchLat, 1: searchLong});
         marker = new L.DivIcon.SVGIcon({ iconSize: L.point(24, 32), weight: 1, circleWeight: 1, color: '#000000', fillColor: color, fillOpacity: 0.7 });
         L.marker([searchLat, searchLong], { icon: marker}).addTo(map).bindTooltip(marie).bindPopup('Région: ' + query + '<br>Commune: ' + commune);
