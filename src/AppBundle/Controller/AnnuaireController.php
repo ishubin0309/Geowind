@@ -116,8 +116,9 @@ class AnnuaireController extends Controller
         $models = $em->getRepository('AppBundle:MessageModel')
                         ->findBy([], ['name' => 'ASC']);
         $commune = $em->getRepository('AppBundle:Commune')->findOneBy(['insee' => $mairie->getInsee()]);
-
-        return $this->render('annuaire/mairie.html.twig', [
+        if($request->isXmlHttpRequest()) $page = 'mairie_ajax';
+        else $page = 'mairie';
+        return $this->render('annuaire/'.$page.'.html.twig', [
             'form' => $form->createView(),
             'models' => $models,
             'mairie' => $mairie,
