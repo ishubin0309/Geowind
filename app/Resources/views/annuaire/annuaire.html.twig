@@ -456,10 +456,11 @@
     option = $(this).val().replace(/(\(|\))/g, '').trim();
     id = $(this).attr('rel');
     type = $(this).attr('type');
+    title = type=='message' ? "Le résultat de message va être changé" : "Le résultat d'appel va être changé";
     old_data = $(this).attr('data');
     swal({
         title: "êtes-vous sûr ?",
-        text: "Le résultat de message va être changé",
+        text: title,
         type: "warning",
         showCancelButton: true,
         confirmButtonColor: "#DD6B55",
