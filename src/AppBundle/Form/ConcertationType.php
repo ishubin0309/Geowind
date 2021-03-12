@@ -37,10 +37,10 @@ class ConcertationType extends AbstractType
                 'required' => false,
                 'choices' => array_flip(Concertation::getDestinataireList()),
             ])
-            ->add('dynamique', ChoiceType::class, [
+            /* ->add('dynamique', ChoiceType::class, [
                 'label' => 'Dynamique',
                 'choices' => array_flip(Etat::getDynamiqueList()),
-            ])
+            ]) */
             ->add('note', TextType::class, [
                 'label' => 'Note',
                 'required' => false,

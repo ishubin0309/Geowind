@@ -37,10 +37,10 @@ class TacheType extends AbstractType
                 'required' => true,
                 'choices' => array_flip(Tache::getTacheList()),
             ])
-            ->add('dynamique', ChoiceType::class, [
+            /* ->add('dynamique', ChoiceType::class, [
                 'label' => 'Dynamique',
                 'choices' => array_flip(Etat::getDynamiqueList()),
-            ])
+            ]) */
             ->add('note', TextType::class, [
                 'label' => 'Note',
                 'required' => false,
