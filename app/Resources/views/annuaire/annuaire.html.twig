@@ -148,6 +148,16 @@
                   </td>
                 </tr>
                 {% endfor %}
+                {% for appel in appels %}
+                <tr>
+                  <td>{{ appel.createdAt|date('d/m/Y') }}</td>
+                  <td>{{ appel.mairie }}</td>
+                  <td>
+                  {% set result = appel.result ? appel.result : '?' %}
+                  {{ appel.result ? '(' ~ appel.result ~ ')' : '(?)' }} <i style="color:{% if result == '+' %}green{% elseif result == '-'%}red{% else %}gray{% endif %};" class="fa fa-map-marker" aria-hidden="true"></i>
+                  </td>
+                </tr>
+                {% endfor %}
               </tbody>
             </table>
           </div>
@@ -282,7 +292,21 @@
     {% endfor %}
     {% set result = message.result ? message.result : '?' %}
     messages[{{ loop.index0 }}] = {0:'{{ message.mairie.region }}', 1:'{{ message.mairie.commune }}', 2:'{{ message.mairie }}', 3:'{% if result == '+' %}green{% elseif result == '-'%}red{% else %}gray{% endif %}', 4: {{ lat }},5: {{ lng }}};
-  {% endfor %}console.log(messages);
+  {% endfor %}
+  {% for appel in appels %}
+    {% set lat = 0 %}
+    {% set lng = 0 %}
+    {% set break = 0 %}
+    {% for region in regions if not break %}
+      {% if region.nom == appel.mairie.region or region.nom in appel.mairie.region or appel.mairie.region in region.nom %}
+        {% set lat = region.latitude %}
+        {% set lng = region.longitude %}
+        {% set break = 1 %}
+      {% endif %}
+    {% endfor %}
+    {% set result = appel.result ? appel.result : '?' %}
+    messages[{{ loop.index0 }}] = {0:'{{ appel.mairie.region }}', 1:'{{ appel.mairie.commune }}', 2:'{{ appel.mairie }}', 3:'{% if result == '+' %}green{% elseif result == '-'%}red{% else %}gray{% endif %}', 4: {{ lat }},5: {{ lng }}};
+  {% endfor %}
   $.each(messages, function(i, message) {
     if(message[4] && message[5]) {
       marker = new L.DivIcon.SVGIcon({ iconSize: L.point(24, 32), weight: 1, circleWeight: 1, color: '#000000', fillColor: message[3], fillOpacity: 0.7 });
