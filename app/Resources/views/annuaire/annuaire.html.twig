@@ -277,7 +277,7 @@
     {% set lng = 0 %}
     {% set break = 0 %}
     {% for region in regions if not break %}
-      {% if region.nom == message.mairie.region|replace({'Î':'I'}) %}
+      {% if region.nom == message.mairie.region|replace({'Î':'I'}) or region.nom in message.mairie.region or message.mairie.region in region.nom %}
         {% set lat = region.latitude + 0.02 *loop_index %}
         {% set lng = region.longitude + 0.02 *loop_index %}
         {% set break = 1 %}
@@ -292,7 +292,7 @@
     {% set lng = 0 %}
     {% set break = 0 %}
     {% for region in regions if not break %}
-      {% if region.nom == appel.mairie.region|replace({'Î':'I'}) %}
+      {% if region.nom == appel.mairie.region|replace({'Î':'I'}) or region.nom in appel.mairie.region or appel.mairie.region in region.nom %}
         {% set lat = region.latitude + 0.02 *loop_index %}
         {% set lng = region.longitude + 0.02 *loop_index %}
         {% set break = 1 %}
