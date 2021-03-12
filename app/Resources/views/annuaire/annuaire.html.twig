@@ -321,7 +321,7 @@
     {% set loop_index = loop_index + 1 %}
   {% endfor %}
   $.each(messages, function(i, message) {
-    if(message[4] && message[5]) {console.log({4: message[4],5: message[5]});
+    if(message[4] && message[5]) {
       marker = new L.DivIcon.SVGIcon({ iconSize: L.point(24, 32), weight: 1, circleWeight: 1, color: '#000000', fillColor: message[3], fillOpacity: 0.7 });
       L.marker([message[4], message[5]], { icon: marker}).addTo(map).bindTooltip(message[2]).bindPopup('Région: ' + message[0] + '<br>Commune: ' + message[1]);
     } else reverseGeolocalisation(message[0], message[1], message[2], message[3], i);
@@ -360,7 +360,6 @@
       if(adresse.match('France')) {
         searchLat = searchLat*1+0.02 *index;
         searchLong = searchLong*1+0.02 *index;
-        console.log({2: searchLat, 1: searchLong});
         marker = new L.DivIcon.SVGIcon({ iconSize: L.point(24, 32), weight: 1, circleWeight: 1, color: '#000000', fillColor: color, fillOpacity: 0.7 });
         L.marker([searchLat, searchLong], { icon: marker}).addTo(map).bindTooltip(marie).bindPopup('Région: ' + query + '<br>Commune: ' + commune);
       }
@@ -469,6 +468,42 @@
     $('.bs-modal').modal('show');
     $('#show_message').html(message);
   });
+  $(".change_result").select2();
+
+  $('.change_result').on('select2:select', function() {
+    option = $(this).val().replace(/(\(|\))/g, '').trim();
+    id = $(this).attr('rel');
+    old_data = $(this).attr('data');
+    swal({
+        title: "êtes-vous sûr ?",
+        text: "Le résultat de message va être changé",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Changer",
+        cancelButtonText: "Annuler",
+        closeOnConfirm: false,
+        closeOnCancel: true,
+        allowOutsideClick: true,
+        showLoaderOnConfirm: true,
+      },
+      function(isConfirm){
+        if (isConfirm) {
+          var csrf = '{{ csrf_token('token')|e('js') }}';
+          $.ajax({
+            url: Routing.generate('message_edit', {id: id}),
+            type: 'POST',
+            data: { result: option, token: csrf  },
+            success: function(result) {
+              window.location.href = '{{ path('annuaire_index') }}';
+            }
+          });
+        } else {
+          $('select[rel="'+id+'"]').val('('+old_data+')');
+          $('.change_result').change();
+        }
+      });
+    });
   $('#mairie_nav a').click(function (e) {
     var attr = $(this).attr('rel');
     if(typeof attr !== typeof undefined && attr !== false) {
