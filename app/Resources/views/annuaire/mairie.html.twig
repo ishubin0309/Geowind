@@ -182,6 +182,9 @@
     if(!$('#form_date #message_to').length) {
       $('#form_date h1').text('Entretien');
       $('#form_date .btn-primary').html('<i class="fa fa-save fa-fw"></i> Enregistrer');
+      $('.select-mail').remove();
+    } else {
+      $('.select-telephone').remove();
     }
     
     $('.select-mail').click(function() {
