@@ -340,7 +340,7 @@ col-sm-8
       <td>{% if form.vars.value.date is defined %}{{ form_widget(form.date) }}{% else %}{{ form_widget(form.date, {'value' : "now"|date("d/m/Y")}) }}{% endif %}</td>
       <td>{{ form_widget(form.phase) }}</td>
       <td>{{ form_widget(form.etat) }}{{ form_errors(form.etat) }}</td>
-      <td>{{ form_widget(form.dynamique) }}</td>
+      {# <td>{{ form_widget(form.dynamique) }}</td> #}
       <td>{{ form_widget(form.note) }}</td>
     </tr>
   {% endspaceless %}
@@ -385,7 +385,7 @@ col-sm-8
       <td>{% if form.vars.value.date is defined %}{{ form_widget(form.date) }}{% else %}{{ form_widget(form.date, {'value' : "now"|date("d/m/Y")}) }}{% endif %}</td>
       <td>{{ form_widget(form.objet) }}</td>
       <td>{{ form_widget(form.etat) }}</td>
-      <td>{{ form_widget(form.dynamique) }}</td>
+      {# <td>{{ form_widget(form.dynamique) }}</td> #}
       <td>{{ form_widget(form.note) }}</td>
     </tr>
   {% endspaceless %}
@@ -475,7 +475,7 @@ col-sm-8
       <td>{% if form.vars.value.date is defined %}{{ form_widget(form.date) }}{% else %}{{ form_widget(form.date, {'value' : "now"|date("d/m/Y")}) }}{% endif %}</td>
       <td>{{ form_widget(form.objet) }}</td>
       <td>{{ form_widget(form.destinataire) }}</td>
-      <td>{{ form_widget(form.dynamique) }}</td>
+      {# <td>{{ form_widget(form.dynamique) }}</td> #}
       <td>{{ form_widget(form.note) }}</td>
     </tr>
   {% endspaceless %}
