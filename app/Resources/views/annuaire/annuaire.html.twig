@@ -55,7 +55,9 @@
               <th>Résultat</th>
               <th>Date2</th>
               <th>Mode contact</th>
+              {% if is_granted('ROLE_ADMIN') %}
               <th class="column-fit"></th>
+              {% endif %}
             </tr>
           </thead>
           <tbody>
@@ -80,7 +82,9 @@
               </td>
               <td>{{ message.result is not null and message.result != '?' ? message.updatedAt|date('d/m/Y') : '' }}</td>
               <td>Email</td>
+              {% if is_granted('ROLE_ADMIN') %}
               <td class="column-fit"><button id="{{ message.id }}" type="message" class="btn btn-danger btn-xs button-delete" title="Double click"><i class="fa fa-fw fa-trash"></i></button></td>
+              {% endif %}
             </tr>
             {% endfor %}
             {% for appel in appels %}
@@ -104,7 +108,9 @@
               </td>
               <td>{{ appel.updatedAt|date('d/m/Y') }}</td>
               <td>Appel</td>
+              {% if is_granted('ROLE_ADMIN') %}
               <td class="column-fit"><button id="{{ appel.id }}" type="appel" class="btn btn-danger btn-xs button-delete" title="Double click"><i class="fa fa-fw fa-trash"></i></button></td>
+              {% endif %}
             </tr>
             {% endfor %}
           </tbody>
@@ -185,7 +191,7 @@
                 <a href="{{ path('model_edit', { 'id': model.id }) }}" class="btn btn-warning btn-xs"><i class="fa fa-pencil"></i></a>
               </td>
               <td class="column-fit">
-                <button id="{{ model.id }}" model="{{ model }}" class="btn btn-danger btn-xs button-delete" title="Double click"><i class="fa fa-fw fa-trash"></i></button>
+                <button id="{{ model.id }}" model="{{ model }}" class="btn btn-danger btn-xs button-delete-model" title="Double click"><i class="fa fa-fw fa-trash"></i></button>
               </td>
             </tr>
             {% endfor %}
@@ -352,7 +358,7 @@
     });
   }
   {% endif %}
-  $('.button-delete').dblclick(function() {
+  $('.button-delete-model').dblclick(function() {
     id = $(this).attr('id');
     model = $(this).attr('model');
     
@@ -491,6 +497,7 @@
         }
     });
   });
+  {% if is_granted('ROLE_ADMIN') %}
   $('.button-delete').dblclick(function() {
     id = $(this).attr('id');
     type = $(this).attr('type');
@@ -528,6 +535,7 @@
     });
 
   });
+  {% endif %}
 
   $('#mairie_nav a').click(function (e) {
     var attr = $(this).attr('rel');
