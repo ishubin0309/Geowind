@@ -99,7 +99,7 @@ class AnnuaireController extends Controller
         
         if ($form->isSubmitted() && $form->isValid()) {
             
-            $annuaireMailer = new AnnuaireMailer($this->getParameter('mailer_api_key'));
+            $annuaireMailer = new AnnuaireMailer($this->getParameter('mailer_password'));
             
             $errors = [];
             if ($annuaireMailer->handleMessage($message, $errors)) {

@@ -205,7 +205,7 @@ class DefaultController extends Controller
     {
         $data = $request->request->all();
         $em = $this->getDoctrine()->getManager();
-        $annuaireMailer = new AnnuaireMailer($this->getParameter('mailer_api_key'));
+        $annuaireMailer = new AnnuaireMailer($this->getParameter('mailer_password'));
         foreach($data['proprietaire'] as $key => $id) {
             if($id > 0) {
                 $id = $id * 1;

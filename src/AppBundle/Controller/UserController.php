@@ -88,7 +88,7 @@ class UserController extends Controller
         $message->setFrom($from);
         $message->setReplyTo($from);
         $message->setTo($email);
-        $annuaireMailer = new AnnuaireMailer($this->getParameter('mailer_api_key'));
+        $annuaireMailer = new AnnuaireMailer($this->getParameter('mailer_password'));
         $errors = [];
         if ($annuaireMailer->handleMessage($message, $errors)) {
             $this->addFlash('success', 'Mail envoyé.');
