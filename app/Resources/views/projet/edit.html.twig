@@ -113,7 +113,7 @@
             <li class=""><a href="#" rel="tab_contacts">Contacts</a></li>
             <li class=""><a href="#" rel="tab_site">Site</a></li>
             <li class=""><a href="#" rel="tab_projet">Projet</a></li>
-            <li class=""><a href="#" rel="tab_parcelles">Parcelle</a></li>
+            <li class=""><a href="#" rel="tab_parcelles">Parcelle<s/a></li>
             <li class=""><a href="#" rel="tab_foncier">Foncier</a></li>
             <li class=""><a href="#" rel="tab_etat">Etat</a></li>
             <li class=""><a href="#" rel="tab_enjeux">Enjeux</a></li>
@@ -121,7 +121,7 @@
             <li class=""><a href="#" rel="tab_concertation">Concertation</a></li>
             <li class=""><a href="#" rel="tab_commandes">Commandes</a></li>
             <li class=""><a href="#" rel="tab_documents">Documents</a></li>
-            <li class=""><a href="#" rel="tab_image">Image</a></li>
+            <li class=""><a href="#" rel="tab_images">Images</a></li>
             {% set unreadMessage = false %}
             {% for message in projet.messages %}
               {% if message.createdBy is null or (app.user.id != message.createdBy.id and app.user not in message.viewers) %}{% set unreadMessage = true %}{% endif %}
@@ -292,7 +292,7 @@
         {{ form_widget(form.documents) }}
       </fieldset>
 
-      <fieldset class="hide" id="tab_image">
+      <fieldset class="hide" id="tab_images">
         <div class="col-md-6">
           <input type="text" id="projet_notes_recherche" class="form-control hide" placeholder="recherche" autocomplete="off">
         </div>
@@ -1305,7 +1305,7 @@
         $('#main_photo img').attr('src', main_images[current_main_image][2]);
       }
     });
-    $('body').on('change', '#tab_image input[id*=_photoFile]', function() {
+    $('body').on('change', '#tab_images input[id*=_photoFile]', function() {
       var id = $(this).attr('id').match(/\d+/);
       id = parseInt(id);
       if (this.files && this.files[0]) {
@@ -1327,17 +1327,17 @@
         reader.readAsDataURL(this.files[0]); // convert to base64 string
       }
     });
-    $('body').on('change', '#tab_image input[id*=_date]', function() {
+    $('body').on('change', '#tab_images input[id*=_date]', function() {
       var id = $(this).attr('id').match(/\d+/);
       id = parseInt(id);
       if(main_images[id] !== undefined) main_images[id][3] = $(this).val();
     });
-    $('body').on('change', '#tab_image input[id*=_titre]', function() {
+    $('body').on('change', '#tab_images input[id*=_titre]', function() {
       var id = $(this).attr('id').match(/\d+/);
       id = parseInt(id);
       if(main_images[id] !== undefined) main_images[id][0] = $(this).val();
     });
-    $('body').on('change', '#tab_image input[id*=_note]', function() {
+    $('body').on('change', '#tab_images input[id*=_note]', function() {
       var id = $(this).attr('id').match(/\d+/);
       id = parseInt(id);
       if(main_images[id] !== undefined) main_images[id][1] = $(this).val();
@@ -1552,7 +1552,7 @@
         $(this).parent().addClass('active');
         $('fieldset').addClass('hide');
         $('fieldset#' + attr).removeClass('hide');
-        if(attr != 'tab_localisation' && attr != 'tab_contacts' && attr != 'tab_site' && attr != 'tab_projet' && attr != 'tab_image') {
+        if(attr != 'tab_localisation' && attr != 'tab_contacts' && attr != 'tab_site' && attr != 'tab_projet' && attr != 'tab_images') {
           $('#map').addClass('hide');
           $('#main_photo').addClass('hide');
           {# $('#implantation_photo').addClass('hide'); #}
@@ -1567,7 +1567,7 @@
             }, 'slow');
           }
         } else {
-          if(attr != 'tab_image') {
+          if(attr != 'tab_images') {
             $('#map').removeClass('hide');
             $('#main_photo').addClass('hide');
             {# if(attr == 'tab_projet') $('#implantation_photo').removeClass('hide');

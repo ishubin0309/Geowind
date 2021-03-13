@@ -46,7 +46,7 @@ class Etat
         return [
             '-2' => 'Très faible',
             '-1' => 'Faible',
-            '0' => 'Modérés',
+            '0' => 'Modéré',
             '1' => 'Fort',
             '2' => 'Très fort',
         ];
@@ -77,7 +77,7 @@ class Etat
             'dossier_depose' => 'Dossier déposé',
             'completude' => 'Complétude',
             'a_lenquete' => 'A l\'enquête',
-            'replique' => 'Réplique',
+            'memoire' => 'Mémoire',
             'soutenance' => 'Soutenance',
             'autorise' => 'Autorisé',
             'purge' => 'Purgé',

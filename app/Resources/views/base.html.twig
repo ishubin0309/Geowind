@@ -45,7 +45,7 @@
             <li{{ item is defined and item == 'recherche' ? ' class="active"' }}><a href="{{ path('search_index') }}"{{ item is defined and item == 'portail' ? 'target="_blank"' }}><i class="fa fa-search"></i> Recherche</a></li>
             <li{{ item is defined and item == 'finance' ? ' class="active"' }}><a href="{{ path('finance_index') }}"><i class="fa fa-euro"></i> Finances</a></li>
             <li{{ item is defined and item == 'archives' ? ' class="active"' }}><a href="{{ path('projet_archive') }}"><i class="fa fa-archive"></i> Archives</a></li>
-            <li{{ item is defined and item == 'annuaire' ? ' class="active"' }}><a href="{{ path('annuaire_index') }}"><i class="fa fa-institution"></i> Mairie</a></li>
+            <li{{ item is defined and item == 'annuaire' ? ' class="active"' }}><a href="{{ path('annuaire_index') }}"><i class="fa fa-institution"></i> Mairies</a></li>
             <li{{ item is defined and item == 'proprietaires' ? ' class="active"' }}><a href="{{ path('proprietaires') }}"><i class="fa fa-users"></i> Propriétaires</a></li>
             <li{{ item is defined and item == 'bureau' ? ' class="active"' }}><a href="{{ path('bureau_index') }}"><i class="fa fa-book"></i> BE</a></li>
             {% if is_granted('ROLE_ADMIN') %}
