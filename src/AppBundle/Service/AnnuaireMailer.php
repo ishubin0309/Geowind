@@ -3,6 +3,7 @@
 namespace AppBundle\Service;
 
 use AppBundle\Entity\Message;
+use AppBundle\Entity\MessageProprietaire;
 
 /**
  * Haffoudhi
@@ -17,6 +18,16 @@ class AnnuaireMailer
     }
     
     public function handleMessage(Message $message, &$errors)
+    {
+        return $this->sendMail($message, $errors);
+    }
+    
+    public function handleMessageProprietaire(MessageProprietaire $message, &$errors)
+    {
+        return $this->sendMail($message, $errors);
+    }
+
+    private function sendMail($message, &$errors)
     {
         $email = new \SendGrid\Mail\Mail();
         $email->setFrom('climactif@hotmail.com', 'Climactif');

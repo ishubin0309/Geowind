@@ -24,7 +24,7 @@ use AppBundle\Model\ExportOption;
 use AppBundle\Service\ProjetExport;
 use DateTime;
 use Imagick;
-use mPDF;
+use Mpdf\Mpdf;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -676,7 +676,8 @@ class ProjetController extends Controller
         else $imagePath = '';
         
         $date = new DateTime('now');
-        $mpdf = new mPDF('utf-8', 'A4', '', '', 10, 10, 10, 10);
+        $conf = ['mode' => 'utf-8','format' => 'A4','default_font_size' => 0,'default_font' => '','margin_left' => 10,'margin_right' => 10,'margin_top' => 10,'margin_bottom' => 10,'margin_header' => 10,'margin_footer' => 10,'orientation' => 'P'];
+        $mpdf = new mPDF($conf);
 
         @unlink($dirDest . '/'.$projet->getDenomination().'.png');
         $this->createMapImage($projet->getLatitude(), $projet->getLongitude(), $projet->getDenomination());

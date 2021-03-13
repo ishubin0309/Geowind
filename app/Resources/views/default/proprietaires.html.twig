@@ -6,13 +6,108 @@
 {% block body %}
 
   <div class="container-fluid">
-    <h1> <i class="fa fa-users fa-fw"></i> Propriétaires</h1>
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#mairie_nav" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">{# <img alt="Brand" width="20"  src="{{ asset('favicon.png') }}"> #}</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="mairie_nav">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#" rel="tab_proprietaires">Proprietaires</a></li>
+            <li><a href="#" rel="tab_list">Journal</a></li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+    <fieldset id="tab_proprietaires">
+      <legend>Propriétaires</legend>
+      <button id="button-send" class="btn btn-success btn-sm" data-toggle="modal" data-target=".bs-modal-lg" disabled><i class="fa fa-fw fa-paperclip"></i> Envoyer message</button>
+      <br>
+      {% set proprietairesTotal = 0 %}
+      {% for projet in projets %}
+        {% if is_granted('edit', projet) %}
+          {% for proprietaire in projet.proprietaires %}
+            {% set proprietairesTotal = proprietairesTotal + 2 %}
+          {% endfor %}
+        {% endif %}
+      {% endfor %}
+      <h4 id="selected-counter">0 site sélectionné sur {{ proprietairesTotal }}</h4>
+
+      <div id="start-grid"></div>
+      <div id="grid" class="excel-grid"></div>
+      <div class="clearfix"></div>
+    </fieldset>
+    <fieldset id="tab_list" class="hide">
+      <legend>Journal</legend>
+      {% if messages is empty and appels is empty %}
+        <div class="alert alert-info mt0">
+          Aucune mairie contactée
+        </div>
+      {% else %}
+        <table id="datatable" class="table table-striped table-middle">
+          <thead>
+            <tr>
+              <th>Date1</th>
+              <th>Projet</th>
+              <th>Propriétaire/Exploitant</th>
+              <th>Destinaire</th>
+              <th>Contactée par</th>
+              <th class="column-fit">Objet</th>
+              <th>Message</th>
+              <th class="column-fit"></th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for message in messages %}
+            <tr>
+              <td>{{ message.createdAt|date('d/m/Y') }}</td>
+              <td><a href="{{ path('projet_index', {'focus': message.proprietaire.projet.id}) }}">{{ message.proprietaire.projet.id }}</a></td>
+              <td>{{ message.exploitant ? 'Exploitant' : 'Propriétaire' }}</td>
+              <td>{{ message.to }}</td>
+              <td>{{ message.createdBy }}</td>
+              <td class="column-fit">{{ message.object }}</td>
+              <td>
+              <button class="btn btn-info btn-sm btn_message">Afficher</button>
+              <span class="hide">{{ message.body }}</span>
+              </td>
+              <td>
+              <td class="column-fit">
+              &nbsp;&nbsp;<button id="{{ message.id }}" type="message" class="btn btn-danger btn-xs button-delete" title="Double click"><i class="fa fa-fw fa-trash"></i></button>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% endif %}
+    </fieldset>
   </div>
 
-  <div id="start-grid"></div>
-  <div id="grid" class="excel-grid"></div>
-
-
+  <div class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-labelledby="sendModal">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content text-center">
+        <div id="new_mail" class="modal-body">
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="modal fade bs-modal" tabindex="-1" role="dialog" aria-labelledby="emailModal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content text-center">
+        <div id="show_message" style="padding: 20px;text-align: left;" class="modal-body">
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}
 
 {% block js %}
@@ -56,6 +151,7 @@
     var dataView = new Slick.Data.DataView();
 
     var columns = [
+      checkboxColumn,
       { id: "projetId", name: "ID", field: "projetId", width: 100, maxWidth: 100, sortable: true, formatter: projetFormatter, sorter: numericSorter, },
       { id: "parcelles", name: "Parcelles", field: "parcelles", sortable: true, sorter: stringSorter },
       { id: "type", name: 'Propriétaire/Exploitant', field: "type", sortable: true, sorter: stringSorter },
@@ -73,7 +169,8 @@
     $(function () {
       var data = [];
       {% for projet in projets %}
-        {% for proprietaire in projet.proprietaires %}
+        {% if is_granted('edit', projet) %}
+          {% for proprietaire in projet.proprietaires %}
           data.push({
             id: {{ proprietaire.id }},
             projetId: {{ projet.id }},
@@ -100,7 +197,8 @@
             dateSignature: '{{ proprietaire.dateSignatureExploitant is not null ? proprietaire.dateSignatureExploitant|date('d/m/Y') }}',
             dateEcheance: '{{ proprietaire.dateEcheanceExploitant is not null ? proprietaire.dateEcheanceExploitant|date('d/m/Y') }}',
           });
-        {% endfor %}
+          {% endfor %}
+        {% endif %}
       {% endfor %}
 
       dataView.setItems(data);
@@ -113,6 +211,40 @@
       grid.autosizeColumns();
 
       dataView.syncGridSelection(grid, true);
+
+      grid.onSelectedRowsChanged.subscribe(function() {
+        selectedRows = grid.getSelectedRows();
+        var selected = selectedRows.length;
+        var total = grid.getDataLength();
+
+        var ids = [];
+        var emails = [];
+        var destination = '';
+        for (var i = 0, len = selectedRows.length; i < len; ++i) {
+          var item = dataView.getItem(selectedRows[i]);
+          ids.push([item.id, item.type]);
+          emails.push(item.email);
+          destination += '<input type="hidden" name="proprietaire[]" value="'+item.id+'"><div class="form-group"><label class="col-sm-2 control-label required" for="message_to">'+item.type+'</label><div class="col-sm-10"><input type="email" id="message_to" name="message_to[]" required="required" class="form-control" placeholder="Destinataire" value="'+item.email+'"><span class="help-block">Id: '+item.projetId+', Parcelle: '+item.parcelles+'</span>  </div></div>'
+        }
+
+        if (selected) {
+          $('#button-send').prop('disabled', false);
+
+          var csrf = '{{ csrf_token('token')|e('js') }}';
+          $('#new_mail').html('<form name="message" method="post" action="{{ path('proprietaire_send') }}" class="form-horizontal"><div class="form-group"><label class="col-sm-2 control-label required" for="message_from">Expéditeur</label><div class="col-sm-10"><input type="email" id="message_from" name="message_from" disabled="disabled" required="required" class="form-control" placeholder="Expéditeur" value="climactif@hotmail.com"></div></div>'+destination+'<div class="form-group"><label class="col-sm-2 control-label required" for="message_object">Sujet</label><div class="col-sm-10"><input type="text" id="message_object" name="message_object" required="required" class="form-control" placeholder="Sujet"></div></div><div class="form-group"><label class="col-sm-2 control-label required" for="message_body">Message</label><div class="col-sm-10"><textarea id="message_body" name="message_body" required="required" rows="15" class="form-control"></textarea></div></div><input type="hidden" id="csrf" name="csrf" value="'+csrf+'"><div class="form-group"><div class="col-sm-10 col-sm-offset-2"><button type="submit" class="btn btn-primary"><i class="fa fa-send fa-fw"></i> Envoyer</button></div></div></form>');
+        } else {
+          $('#button-send').prop('disabled', true);
+
+          $('#new_mail').html('');
+        }
+
+        if (selected > 1) {
+          $('#selected-counter').text(selected + ' propriétaire sélectionnés sur ' + total);
+        } else {
+          $('#selected-counter').text(selected + ' propriétaire sélectionné sur ' + total);
+        }
+
+      });
 
       grid.onSort.subscribe(function(e, args) {
         sortdir = args.sortAsc ? 1 : -1;
@@ -128,6 +260,59 @@
       });
 
     });
+
+    $('.btn_message').click(function() {
+      var message = $(this).parent().find('span').text().replace(/\n/, '<br>');
+      $('.bs-modal').modal('show');
+      $('#show_message').html(message);
+    });
+    $('.button-delete').dblclick(function() {
+      id = $(this).attr('id');
+      title = 'Le message sera supprimé définitivement.';
+      if (!id) {
+        return;
+      }
+      swal({
+        title: "Supprimer ?",
+        text: title,
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Supprimer",
+        cancelButtonText: "Annuler",
+        closeOnConfirm: false,
+        closeOnCancel: true,
+        allowOutsideClick: true,
+        showLoaderOnConfirm: true,
+      },
+      function(isConfirm){
+        if (isConfirm) {
+          var csrf = '{{ csrf_token('token')|e('js') }}';
+          $.ajax({
+            url: Routing.generate('proprietaire_message_delete', {id: id}),
+            type: 'DELETE',
+            data: {token: csrf},
+            success: function(result) {
+              location.reload();
+            }
+          });
+        } else {
+
+        }
+      });
+
+    });
+    $('#mairie_nav a').click(function (e) {
+    var attr = $(this).attr('rel');
+    if(typeof attr !== typeof undefined && attr !== false) {
+      e.preventDefault();
+      $('#mairie_nav li').removeClass('active');
+      $(this).parent().addClass('active');
+      $('fieldset').addClass('hide');
+      $('fieldset#' + attr).removeClass('hide');
+      if(attr == 'tab_carte') map.invalidateSize();
+    }
+  });
   </script>
 
 {% endblock %}

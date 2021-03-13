@@ -50,7 +50,7 @@ class Tache
             'signe_totalite' => 'Signé en totalité (+)',
             'deja_pris' => 'Déjà pris (-)',
             'inadapte' => 'Inadapté (-)',
-            'a_contacter' => 'A contacter (?)',
+            'a_contacter' => 'A contacter',
             'reunion' => 'Réunion (+)',
             'deliberation_plus' => 'Délibération (+)',
             'deliberation_minus' => 'Délibération (-)',
@@ -67,7 +67,8 @@ class Tache
             'pour_la_forme' => 'Pour la fome (+)',
             'avis_favorable' => 'Avis favorable (+)',
             'avis_defavorable' => 'Avis défavorable (-)',
-            'avis_reserve' => 'Avis réservé (+)'
+            'avis_reserve' => 'Avis réservé (+)',
+            'a_preparer' => 'A préparer (?)',
         ];
     }
 
@@ -78,7 +79,7 @@ class Tache
     {
         return [
             self::OBJET_UN => [
-                'a_letude' => 'A l\'étude',
+                'a_letude' => 'A l\'étude (?)',
                 'verif_positive' => 'Vérif positive (+)',
                 'verif_negative' => 'Vérif négative (-)',
                 'avec_requis' => 'Avis requis (-)',
@@ -87,7 +88,7 @@ class Tache
                 'neant_superflu' => 'Néant/Superflu (+)'
             ],
             self::OBJET_DEUX => [
-                'a_identifier' => 'A identifier',
+                'a_identifier' => 'A identifier (?)',
                 'contact_plus' => 'Contact (+)',
                 'contact_minus' => 'Contact (-)',
                 'visites' => 'Visites (+)',
@@ -106,7 +107,7 @@ class Tache
                 'superflu' => 'Superflu (+)'
             ],
             self::OBJET_QUATRE => [
-                'a_renseigner' => 'A renseigner',
+                'a_renseigner' => 'A renseigner (?)',
                 'compatible' => 'Compatible (+)',
                 'incompatible' => 'Incompatible (-)',
                 'majour_requise' => 'Majour requise (-)',
@@ -120,7 +121,8 @@ class Tache
                 'pour_la_forme' => 'Pour la fome (+)',
                 'avis_favorable' => 'Avis favorable (+)',
                 'avis_defavorable' => 'Avis défavorable (-)',
-                'avis_reserve' => 'Avis réservé (+)'
+                'avis_reserve' => 'Avis réservé (+)',
+                'a_preparer' => 'A préparer (?)'
             ],
             /* self::OBJET_SIX => [
             ] */

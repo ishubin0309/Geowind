@@ -333,7 +333,7 @@ class AnnuaireController extends Controller
      * @Method("DELETE")
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function messageAction(Request $request, Message $message)
+    public function messageDeleteAction(Request $request, Message $message)
     {
         $csrf = $request->request->get('csrf', null);
 
@@ -359,7 +359,7 @@ class AnnuaireController extends Controller
      * @Method("DELETE")
      * @Security("has_role('ROLE_EDIT')")
      */
-    public function appelAction(Request $request, Appel $appel)
+    public function appelDeleteAction(Request $request, Appel $appel)
     {
         $csrf = $request->request->get('csrf', null);
 

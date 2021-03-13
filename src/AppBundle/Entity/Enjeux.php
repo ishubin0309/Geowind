@@ -160,14 +160,14 @@ class Enjeux
             'consultation' => 'Consultation',
             'urbanisme' => 'Urbanisme',
             'epci' => 'EPCI',
-            'habitations' => 'Habitations',
+            'habitat' => 'Habitat',
             'paysages' => 'Paysages',
             'saturation' => 'Saturation',
             'raccordement' => 'Raccordement',
-            'structure' => 'Structure',
+            'population' => 'Population',
             'potentiel' => 'Potentiel',
             'gisement' => 'Gisement',
-            'echeance' => 'Echéances'
+            'echeance' => 'Echéances',
         ];
     }
     public static function getFacteurType($facteur)

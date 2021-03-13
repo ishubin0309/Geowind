@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Projet;
 use AppBundle\Entity\Liste;
+use AppBundle\Entity\MessageProprietaire;
 use AppBundle\Helper\GridHelper;
 use AppBundle\Model\AvisMairie;
 use AppBundle\Model\ExportOption;
@@ -11,9 +12,13 @@ use AppBundle\Model\Foncier;
 use AppBundle\Model\Etat;
 use AppBundle\Model\Progression;
 use AppBundle\Model\Servitude;
+use AppBundle\Service\AnnuaireMailer;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * @Route("/app")
@@ -173,16 +178,92 @@ class DefaultController extends Controller
         if ($this->isGranted('ROLE_VIEW_ALL')) {
             $projets = $em->getRepository('AppBundle:Projet')
                         ->findAll();
+            $messages = $em->getRepository('AppBundle:MessageProprietaire')
+                        ->findAll();
         } else {
             $projets = $em->getRepository('AppBundle:Projet')
                         ->findUserProjets($this->getUser());
+            $messages = $em->getRepository('AppBundle:MessageProprietaire')
+                        ->findBy(['createdBy' => $this->getUser()]);
         }
 
         $gridHelper = new GridHelper();
 
         return $this->render('default/proprietaires.html.twig', [
             'projets' => $projets,
+            'messages' => $messages,
             'grid_helper' => $gridHelper,
         ]);
+    }
+    
+    /**
+     * @Route("/proprietaire/envoyer", name="proprietaire_send")
+     * @Method({"POST"})
+     * @Security("has_role('ROLE_EDIT')")
+     */
+    public function proprietaireSendAction(Request $request)
+    {
+        $data = $request->request->all();
+        $em = $this->getDoctrine()->getManager();
+        $annuaireMailer = new AnnuaireMailer($this->getParameter('mailer_api_key'));
+        foreach($data['proprietaire'] as $key => $id) {
+            if($id > 0) {
+                $id = $id * 1;
+                $type = 'proprietaire';
+            } else {
+                $id = $id * -1;
+                $type = 'exploitant';
+            }
+            $proprietaire = $em->getRepository('AppBundle:Proprietaire')->findOneBy(['id' => $id]);
+            $message_to = $data['message_to'][$key];
+            $message_to_array = explode(',', $message_to);
+            foreach($message_to_array as $to) {
+                if(trim($to)) {
+                    $messageProprietaire = new MessageProprietaire();
+                    $messageProprietaire->setProprietaire($proprietaire);
+                    if($type != 'proprietaire') $messageProprietaire->setExploitant(true);
+                    $messageProprietaire->setTo(trim($to));
+                    $messageProprietaire->setObject($data['message_object']);
+                    $messageProprietaire->setBody($data['message_body']);
+                    $errors = [];
+                    if ($annuaireMailer->handleMessageProprietaire($messageProprietaire, $errors)) {
+                        $em->persist($messageProprietaire);
+                        $em->flush();
+                        $this->addFlash('success', 'Mail envoyé à '.trim($to).'.');
+                    } else {
+                        $this->addFlash('error', 'Erreur: Mail non envoyé à '.trim($to).'.');
+                    }
+                }
+            }
+        }
+        // echo '<pre>';print_r($data);die;
+
+        return $this->redirectToRoute('proprietaires');
+    }
+
+    /**
+     * @Route("/proprietaire/message/{id}/supprimer", name="proprietaire_message_delete", options={ "expose": true })
+     * @Method("DELETE")
+     * @Security("has_role('ROLE_ADMIN')")
+     */
+    public function proprietaireMessageDeleteAction(Request $request, MessageProprietaire $messageProprietaire)
+    {
+        $csrf = $request->request->get('csrf', null);
+
+        if ($this->isCsrfTokenValid('token', $csrf)) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $em = $this->getDoctrine()->getManager();
+
+        $response = new JsonResponse();
+        $response->setData(['success' => 0]);
+        $em = $this->getDoctrine()->getManager();
+        $sujet = $messageProprietaire->getObject();
+        $em->remove($messageProprietaire);
+        $em->flush();
+        $this->addFlash('success', 'Message « '.$sujet.' » a été supprimé.');
+
+        return $response;
     }
 }

@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use AppBundle\Entity\Traits\BlameableTrait;
 use AppBundle\Entity\Traits\TimestampableTrait;
@@ -139,12 +140,25 @@ class Proprietaire
     private $dateEcheanceExploitant;
     
     /**
+     * @var ArrayCollection|Message[]
+     * 
+     * @ORM\OneToMany(targetEntity="MessageProprietaire", mappedBy="proprietaire")
+     * @ORM\OrderBy({"createdAt" = "ASC"})
+     */
+    private $messages;
+    
+    /**
      * @var Projet
      *
      * @ORM\ManyToOne(targetEntity="Projet", inversedBy="proprietaires")
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
     private $projet;
+        
+    public function __construct()
+    {
+        $this->messages = new ArrayCollection();
+    }
 
     /**
      * @return int
@@ -197,6 +211,11 @@ class Proprietaire
     public function getEmailExploitant()
     {
         return $this->emailExploitant;
+    }
+    
+    public function getMessages()
+    {
+        return $this->messages;
     }
 
     public function getProjet()
@@ -277,6 +296,12 @@ class Proprietaire
     public function setAccordExploitant($accordExploitant)
     {
         $this->accordExploitant = $accordExploitant;
+        return $this;
+    }
+
+    public function setMessages(ArrayCollection $messages)
+    {
+        $this->messages = $messages;
         return $this;
     }
     
