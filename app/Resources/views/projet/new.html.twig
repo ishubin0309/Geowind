@@ -883,9 +883,13 @@
         $.each(taches, function(code, tache) {
           if(code == selected_objet) {
             var selected_data = [];
+            var already_selected_data = [];
+            $('#projet_taches tr').each(function(field, element) {
+              if($(element).index() != tache_selector.parents('tr').index() && !already_selected_data.includes($(element).find('select:eq(1)').val()))already_selected_data.push($(element).find('select:eq(1)').val());
+            });
             $.each(tache['data'], function(field, value) {
-              if(!tache_selector.find('option[value="'+field+'"]').length) tache_selector.append(new Option(value, field));
-              selected_data.push(field);
+              if(!already_selected_data.includes(field) && !tache_selector.find('option[value="'+field+'"]').length) tache_selector.append(new Option(value, field));
+              if(!already_selected_data.includes(field)) selected_data.push(field);
             });
             $(tache_selector.find('option')).each(function(index,element) {
               if(!selected_data.includes($(element).attr('value'))) $(element).remove();
