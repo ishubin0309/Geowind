@@ -104,6 +104,7 @@ class Etat
             'a_construire' => 'A construire',
             'en_recours' => 'En recours',
             'refuse' => 'Refusé',
+            'cession' => 'Cession',
         ];
     }
 
@@ -122,7 +123,8 @@ class Etat
             'a_deposer' => 'A déposer',
             'a_construire' => 'A construire',
             'en_recours' => 'En recours',
-            'refuse' => 'Refusé'
+            'refuse' => 'Refusé',
+            'cession' => 'Cession'
         ];
         return [
             self::PHASE_UN => [
