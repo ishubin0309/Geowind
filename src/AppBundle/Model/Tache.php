@@ -25,7 +25,7 @@ class Tache
             self::OBJET_TROIS => 'Mairie',
             self::OBJET_QUATRE => 'Urbanisme',
             self::OBJET_CINQ => 'Consultations',
-            self::OBJET_SIX => 'Concertation'
+            // self::OBJET_SIX => 'Concertation'
         ];
     }
 
@@ -122,8 +122,8 @@ class Tache
                 'avis_defavorable' => 'Avis défavorable (-)',
                 'avis_reserve' => 'Avis réservé (+)'
             ],
-            self::OBJET_SIX => [
-            ]
+            /* self::OBJET_SIX => [
+            ] */
         ];
     }
 
