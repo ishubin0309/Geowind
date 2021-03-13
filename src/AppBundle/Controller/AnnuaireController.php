@@ -11,6 +11,7 @@ use AppBundle\Form\MessageModelType;
 use AppBundle\Form\MessageType;
 use AppBundle\Form\AppelType;
 use AppBundle\Service\AnnuaireMailer;
+use DateTime;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -251,6 +252,7 @@ class AnnuaireController extends Controller
     public function editMessageAction(Request $request, Message $message)
     {
         $result = $request->request->get('result', '?');
+        $dateReminder = $request->request->get('dateReminder', null);
         $csrf = $request->request->get('csrf', null);
 
         if ($this->isCsrfTokenValid('token', $csrf)) {
@@ -259,7 +261,19 @@ class AnnuaireController extends Controller
 
         $response = new JsonResponse();
         $response->setData(['success' => 0]);
-        if(in_array($result, ['?', '-', '+', 'R'])) {
+        if($dateReminder) {
+            if($dateReminder >= date('d/m/Y')) {
+                $em = $this->getDoctrine()->getManager();
+
+                $dateReminder = new DateTime(str_replace('/', '-', $dateReminder));
+                $message->setDateReminder($dateReminder);
+                $em->persist($message);
+                $em->flush();
+
+                $this->addFlash('success', 'La date de rappel du message « ' . $message->getObject() . ' » a été modifié.');
+                $response->setData(['success' => 1]);
+            }
+        } elseif(in_array($result, ['?', '-', '+', 'R'])) {
             $em = $this->getDoctrine()->getManager();
 
             $message->setResult($result);
@@ -280,6 +294,7 @@ class AnnuaireController extends Controller
     public function editAppelAction(Request $request, Appel $appel)
     {
         $result = $request->request->get('result', '?');
+        $dateReminder = $request->request->get('dateReminder', null);
         $csrf = $request->request->get('csrf', null);
 
         if ($this->isCsrfTokenValid('token', $csrf)) {
@@ -288,7 +303,19 @@ class AnnuaireController extends Controller
 
         $response = new JsonResponse();
         $response->setData(['success' => 0]);
-        if(in_array($result, ['?', '-', '+', 'R'])) {
+        if($dateReminder) {
+            if($dateReminder >= date('d/m/Y')) {
+                $em = $this->getDoctrine()->getManager();
+
+                $dateReminder = new DateTime(str_replace('/', '-', $dateReminder));
+                $appel->setDateReminder($dateReminder);
+                $em->persist($appel);
+                $em->flush();
+
+                $this->addFlash('success', 'La date de rappel d\'appel « ' . $appel->getObject() . ' » a été modifié.');
+                $response->setData(['success' => 1]);
+            }
+        } elseif(in_array($result, ['?', '-', '+', 'R'])) {
             $em = $this->getDoctrine()->getManager();
 
             $appel->setResult($result);

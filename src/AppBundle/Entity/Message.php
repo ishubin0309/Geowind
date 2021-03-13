@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use AppBundle\Entity\Traits\BlameableTrait;
 use AppBundle\Entity\Traits\TimestampableTrait;
 use Symfony\Component\Validator\Constraints as Assert;
+use DateTime;
 
 /**
  * Entité Message
@@ -87,6 +88,13 @@ class Message
      * @ORM\Column(type="string", nullable=true)
      */
     private $result;
+    
+    /**
+     * @var DateTime
+     * 
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $dateReminder;
 
     /**
      * @return string
@@ -170,6 +178,24 @@ class Message
     public function setResult($result)
     {
         $this->result = $result;
+        return $this;
+    }
+
+    /**
+     * @return DateTime|null
+     */
+    public function getDateReminder()
+    {
+        return $this->dateReminder;
+    }
+    
+    /**
+     * @param DateTime|null $dateReminder
+     * @return $this
+     */
+    public function setDateReminder(DateTime $dateReminder = null)
+    {
+        $this->dateReminder = $dateReminder;
         return $this;
     }
     

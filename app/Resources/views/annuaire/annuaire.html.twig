@@ -31,6 +31,7 @@
             <li class=""><a href="#" rel="tab_model">Modèles</a></li>
             <li class=""><a href="#" rel="tab_search">Email</a></li>
             <li class=""><a href="#" rel="tab_appel">Appel</a></li>
+            <li class=""><a href="#" rel="tab_reminder">Rappel</a></li>
             <li class="hide"><a href="#" rel="tab_annuaire">Annuaire</a></li>
           </ul>
         </div><!-- /.navbar-collapse -->
@@ -54,10 +55,7 @@
               <th>Message</th>
               <th>Résultat</th>
               <th>Date2</th>
-              <th>Mode contact</th>
-              {% if is_granted('ROLE_ADMIN') %}
-              <th class="column-fit"></th>
-              {% endif %}
+              <th class="column-fit">Mode contact</th>
             </tr>
           </thead>
           <tbody>
@@ -82,10 +80,10 @@
                 </select>
               </td>
               <td>{{ message.result is not null and message.result != '?' ? message.updatedAt|date('d/m/Y') : '' }}</td>
-              <td>Email</td>
+              <td class="column-fit">Email
               {% if is_granted('ROLE_ADMIN') %}
-              <td class="column-fit"><button id="{{ message.id }}" type="message" class="btn btn-danger btn-xs button-delete" title="Double click"><i class="fa fa-fw fa-trash"></i></button></td>
-              {% endif %}
+              &nbsp;&nbsp;<button id="{{ message.id }}" type="message" class="btn btn-danger btn-xs button-delete" title="Double click"><i class="fa fa-fw fa-trash"></i></button>
+              {% endif %}</td>
             </tr>
             {% endfor %}
             {% for appel in appels %}
@@ -109,10 +107,11 @@
                 </select>
               </td>
               <td>{{ appel.updatedAt|date('d/m/Y') }}</td>
-              <td>Appel</td>
+              <td class="column-fit">Appel
               {% if is_granted('ROLE_ADMIN') %}
-              <td class="column-fit"><button id="{{ appel.id }}" type="appel" class="btn btn-danger btn-xs button-delete" title="Double click"><i class="fa fa-fw fa-trash"></i></button></td>
+              &nbsp;&nbsp;<button id="{{ appel.id }}" type="appel" class="btn btn-danger btn-xs button-delete" title="Double click"><i class="fa fa-fw fa-trash"></i></button>
               {% endif %}
+              </td>
             </tr>
             {% endfor %}
           </tbody>
@@ -210,6 +209,67 @@
       <legend>Appel</legend>
       <select id="input-mairie-appel" style="width:50%" type="text" class="form-control"></select>
       <div style="margin-top:20px;" id="new_call"></div>
+    </fieldset>
+    <fieldset id="tab_reminder" class="hide">
+      <legend>Rappel</legend>
+      {% if messages is empty and appels is empty %}
+        <div class="alert alert-info mt0">
+          Aucune mairie contactée
+        </div>
+      {% else %}
+        <table id="datatable2" class="table table-striped table-middle">
+          <thead>
+            <tr>
+              <th>Date1</th>
+              <th>Mairie</th>
+              <th>Destinaire</th>
+              <th>Contactée par</th>
+              <th class="column-fit">Objet</th>
+              <th>Message</th>
+              <th class="column-fit">Date de rappel</th>
+              <th>Mode contact</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for message in messages if message.result == 'R' %}
+            <tr>
+              <td>{{ message.createdAt|date('d/m/Y') }}</td>
+              <td>{{ message.mairie }}</td>
+              <td>{{ message.to }}</td>
+              <td>{{ message.createdBy }}</td>
+              <td class="column-fit">{{ message.object }}</td>
+              <td>
+              <button class="btn btn-info btn-sm btn_message">Afficher</button>
+              <span class="hide">{{ message.body }}</span>
+              </td>
+              <td class="column-fit">
+              <span class="hide">{{ message.dateReminder is not null ? message.dateReminder|date('d/m/Y') : 'now'|date('d/m/Y') }}</span>
+              <input class="form-control reminder-datepicker" rel="{{ message.id }}" type="message" data="{{ message.dateReminder is not null ? message.dateReminder|date('d/m/Y') : 'now'|date('d/m/Y') }}" value="{{ message.dateReminder is not null ? message.dateReminder|date('d/m/Y') : 'now'|date('d/m/Y') }}">
+              </td>
+              <td class="column-fit">Email</td>
+            </tr>
+            {% endfor %}
+            {% for appel in appels if appel.result == 'R' %}
+            <tr>
+              <td>{{ appel.createdAt|date('d/m/Y') }}</td>
+              <td>{{ appel.mairie }}</td>
+              <td>{{ appel.to }}</td>
+              <td>{{ appel.createdBy }}</td>
+              <td class="column-fit">{{ appel.object }}</td>
+              <td>
+              <button class="btn btn-info btn-sm btn_message">Afficher</button>
+              <span class="hide">{{ appel.body }}</span>
+              </td>
+              <td class="column-fit">
+              <span class="hide">{{ appel.dateReminder is not null ? appel.dateReminder|date('d/m/Y') : 'now'|date('d/m/Y') }}</span>
+              <input class="form-control reminder-datepicker" rel="{{ appel.id }}" type="appel" data="{{ appel.dateReminder is not null ? appel.dateReminder|date('d/m/Y') : 'now'|date('d/m/Y') }}" value="{{ appel.dateReminder is not null ? appel.dateReminder|date('d/m/Y') : 'now'|date('d/m/Y') }}">
+              </td>
+              <td class="column-fit">Appel</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% endif %}
     </fieldset>
     <fieldset id="tab_annuaire" class="hide">
       <legend>Annuaire</legend>
@@ -397,7 +457,13 @@
     });
 
   });
-
+  $('#datatable2').DataTable({
+    language: dtLang,
+    "order": [[ 6, "asc" ]],
+    searching: false,
+    paging: false,
+    bInfo: false,
+  });
   var oTable = $('#datatable').DataTable({
     language: dtLang,
     "order": [[ 0, "asc" ]],
@@ -410,8 +476,7 @@
         { targets: 5, searchable: false, orderable: false },
         { targets: 6, orderable: false },
         { targets: 7, searchable: false },
-        { targets: 8, searchable: false },
-        { targets: 9, searchable: false, orderable: false }
+        { targets: 8, searchable: false }
     ],
     paging: false,
     bInfo: false,
@@ -488,7 +553,7 @@
     option = $(this).val().replace(/(\(|\))/g, '').trim();
     id = $(this).attr('rel');
     type = $(this).attr('type');
-    title = type=='message' ? "Le résultat de message va être changé" : "Le résultat d'appel va être changé";
+    title = type=='message' ? "Le résultat du message va être changé" : "Le résultat d'appel va être changé";
     old_data = $(this).attr('data');
     swal({
         title: "êtes-vous sûr ?",
@@ -559,7 +624,49 @@
 
   });
   {% endif %}
-
+  $('.reminder-datepicker').datepicker({
+    format: 'dd/mm/yyyy',
+    autoclose: true,
+    language: 'fr',
+    clearBtn: true,
+  });
+  $('.reminder-datepicker').change(function() {
+    option = $(this).val().trim();
+    id = $(this).attr('rel');
+    type = $(this).attr('type');
+    title = type=='message' ? "La date de rappel du message va être changée" : "La date de rappel d'appel va être changée";
+    old_data = $(this).attr('data');
+    if(option > '{{ 'now'|date('d/m/Y') }}') {
+      swal({
+          title: "êtes-vous sûr ?",
+          text: title,
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#DD6B55",
+          confirmButtonText: "Changer",
+          cancelButtonText: "Annuler",
+          closeOnConfirm: false,
+          closeOnCancel: true,
+          allowOutsideClick: true,
+          showLoaderOnConfirm: true,
+        },
+        function(isConfirm){
+          if (isConfirm) {
+            var csrf = '{{ csrf_token('token')|e('js') }}';
+            $.ajax({
+              url: Routing.generate(type + '_edit', {id: id}),
+              type: 'POST',
+              data: { dateReminder: option, token: csrf  },
+              success: function(result) {
+                window.location.href = '{{ path('annuaire_index') }}';
+              }
+            });
+          } else {
+            $('input[type="'+type+'"][rel="'+id+'"]').val(old_data);
+          }
+      });
+    } else $('input[type="'+type+'"][rel="'+id+'"]').val(old_data);
+  });
   $('#mairie_nav a').click(function (e) {
     var attr = $(this).attr('rel');
     if(typeof attr !== typeof undefined && attr !== false) {
