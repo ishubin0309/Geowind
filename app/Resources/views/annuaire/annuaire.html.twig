@@ -74,6 +74,7 @@
               </td>
               <td>
               {% set result = message.result ? message.result : '?' %}
+                <span class="hide">{% if result == '+' %}plus{% elseif result == '-' %}moins{% elseif result == 'R' %}rappel{% else %}interrogation{% endif %}</span>
                 <select rel="{{ message.id }}" type="message" data="{{ result }}" style="width:100%;" class="form-control change_result">
                   {% for option in ['?', '+', '-', 'R'] %}
                   <option {% if option == result %}selected{% endif %}>({{ option }})</option>
@@ -100,6 +101,7 @@
               </td>
               <td>
               {% set result = appel.result ? appel.result : '?' %}
+                <span class="hide">{% if result == '+' %}plus{% elseif result == '-' %}moins{% elseif result == 'R' %}rappel{% else %}interrogation{% endif %}</span>
                 <select rel="{{ appel.id }}" type="appel" data="{{ result }}" style="width:100%;" class="form-control change_result">
                   {% for option in ['?', '+', '-', 'R'] %}
                   <option {% if option == result %}selected{% endif %}>({{ option }})</option>
@@ -396,11 +398,32 @@
 
   });
 
-  $('#datatable').DataTable({
+  var oTable = $('#datatable').DataTable({
     language: dtLang,
     "order": [[ 0, "asc" ]],
+    columnDefs: [
+        { targets: 0, searchable: false },
+        { targets: 1, searchable: false },
+        { targets: 2, searchable: false },
+        { targets: 3, searchable: false },
+        { targets: 4, searchable: false },
+        { targets: 5, searchable: false, orderable: false },
+        { targets: 6 },
+        { targets: 7, searchable: false },
+        { targets: 8, searchable: false },
+        { targets: 9, searchable: false, orderable: false }
+    ],
     paging: false,
     bInfo: false,
+  });
+  $('body').on('keyup change', '#datatable_filter input', function (e) {
+    e.preventDefault();
+    if($(this).val() == '+') keyword = 'plus';
+    else if($(this).val() == '-') keyword = 'moins';
+    else if($(this).val().toLowerCase() == 'r') keyword = 'rappel';
+    else if($(this).val() == '?') keyword = 'interrogation';
+    else keyword = '';
+    oTable.column(6).search(keyword).draw();
   });
   $("#input-mairie, #input-mairie-appel").select2({
     ajax: {
