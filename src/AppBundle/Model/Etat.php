@@ -77,7 +77,7 @@ class Etat
             'dossier_depose' => 'Dossier déposé',
             'completude' => 'Complétude',
             'a_lenquete' => 'A l\'enquête',
-            'memoire' => 'Mémoire',
+            'replique' => 'Réplique',
             'soutenance' => 'Soutenance',
             'autorise' => 'Autorisé',
             'purge' => 'Purgé',

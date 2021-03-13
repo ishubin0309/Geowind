@@ -12,7 +12,7 @@ class Concertation
     const OBJET_TROIS = 'infomation';
     const OBJET_QUATRE = 'etude';
     const OBJET_CINQ = 'soutenance';
-    const OBJET_SIX = 'replique';
+    const OBJET_SIX = 'memoire';
     const OBJET_SEPT = 'reunion';
     const OBJET_HUIT = 'porte_ouverte';
 
@@ -27,7 +27,7 @@ class Concertation
             self::OBJET_TROIS => 'Infomation',
             self::OBJET_QUATRE => 'Etude',
             self::OBJET_CINQ => 'Soutenance',
-            self::OBJET_SIX => 'Réplique',
+            self::OBJET_SIX => 'Mémoire',
             self::OBJET_SEPT => 'Réunion',
             self::OBJET_HUIT => 'Porte ouverte'
         ];
