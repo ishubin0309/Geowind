@@ -34,13 +34,6 @@ class AppelType extends AbstractType
                 'label' => 'Sujet',
                 'required' => true,
             ])
-            ->add('body', TextareaType::class, [
-                'label' => 'Message',
-                'required' => true,
-                'attr' => [
-                    'rows' => 15,
-                ]
-            ])
             ->add('result', ChoiceType::class, [
                 'label' => 'Résultat',
                 'required' => true,
@@ -48,7 +41,15 @@ class AppelType extends AbstractType
                     '?' => '?',
                     '+' => '+',
                     '-' => '-',
+                    'R' => 'R',
                 ],
+            ])
+            ->add('body', TextareaType::class, [
+                'label' => 'Message',
+                'required' => true,
+                'attr' => [
+                    'rows' => 15,
+                ]
             ])
         ;
     }
