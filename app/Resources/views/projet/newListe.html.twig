@@ -53,6 +53,7 @@
 {% endblock %}
 
 {% block js %}
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
   <script>
     var $collectionHolderDocument = $('#rappel_datas');
     var prototypeDocument = $collectionHolderDocument.data('prototype');
@@ -88,5 +89,6 @@
         }
       });
     });
+    $('#rappel_datas').sortable({ handle:'.sort_row' });
   </script>
 {% endblock %}

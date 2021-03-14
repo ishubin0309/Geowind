@@ -579,6 +579,7 @@ col-sm-8
     <table class="table table-condensed table-form">
       <thead>
         <tr>
+          <th></th>
           <th>Donnée</th>
           <th>Valeur</th>
           <th>Note</th>
@@ -605,6 +606,7 @@ col-sm-8
 {% block _rappel_datas_entry_row %}
   {% spaceless %}
     <tr>
+      <td class="sort_row"><i class="fa fa-arrows-v" aria-hidden="true"></i></td>
       <td>{{ form_widget(form.donnee) }}</td>
       <td>{{ form_widget(form.type) }}</td>
       <td>{{ form_widget(form.note) }}</td>
