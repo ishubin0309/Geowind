@@ -49,7 +49,7 @@
 
 <div style="width: 70%; text-align: center; margin: auto; margin-top: 10mm;">
   <h1 style="text-align: center; font-size: 28pt;">{{ projet.denomination|upper }}</h1>
-  <h2>{{ projet.departement }} ({{ projet.departement.code }}), {{ projet.departement.region }}</h2>
+  <h2>{{ projet.departement }}, {{ projet.departement.region }}</h2>
   {% if carte_path %}
   <img style="width: 50%;border: 3px solid #007100;" src="{{ carte_path }}" >
   {% endif %}
@@ -59,7 +59,7 @@
 {% if image_path %}
 <img style="max-height:450px;" src="{{ image_path }}" >
 {% endif %}
-<div class="text-center" autosize="1" style="margin-top: 2mm; font-size: 11pt;">Exporté le {{ 'now'|date('d/m/Y') }}</div>
+<div class="text-center" autosize="1" style="margin-top: 2mm; font-size: 11pt;">Exporté le {{ 'now'|date('d/m/Y') }} par {{ app.user.prenom != 'Admin' ? app.user.prenom ~ ' ' ~ app.user.nom : 'Admin' }}</div>
 </div>
 
 <pagebreak>
@@ -78,10 +78,6 @@
       <td>{{ projet.updatedAt|date('d/m/Y') }}</td>
     </tr>
     <tr>
-      <td>Dénomination</td>
-      <td>{{ projet.denomination }}</td>
-    </tr>
-    <tr>
       <td>Type de projet</td>
       <td>
         {% set typeProjets = projet.typeProjetList %}
@@ -89,11 +85,26 @@
       </td>
     </tr>
     <tr>
-      <td>Type de Bien</td>
-      <td>
-      {% set typeSites = projet.typeSiteList %}
-      {% if typeSites[projet.typeSite] is defined %}{{ typeSites[projet.typeSite] }}{% else %}{{ projet.typeSite }}{% endif %}
-      </td>
+      <td>Dénomination</td>
+      <td>{{ projet.denomination }}</td>
+    </tr>
+    <tr>
+      <td>Potentiel (MW)</td>
+      <td>{{ projet.potentiel }}</td>
+    </tr>
+    <tr>
+      <th colspan="2" class="th-section">Avancement</th>
+    </tr>
+    <tr>
+      <th>Phase</th>
+      <td>{% if phases[projet.phase] is defined %}{{ phases[projet.phase] }}{% else %}{{ projet.phase }}{% endif %}</td>
+    </tr>
+    <tr>
+      <th>Etat</th>
+      <td>{{ projet.progression|progression_format }}</td>
+    </tr>
+    <tr>
+      <th colspan="2" class="th-section" class="th-section">Contacts</th>
     </tr>
     <tr>
       <td>Origine</td>
@@ -140,26 +151,18 @@
       <td>{{ projet.longitude }}</td>
     </tr>
     <tr>
-      <th colspan="2" class="th-section"><span class="th-title">Descriptif</span></th>
+      <th colspan="2" class="th-section"><span class="th-title">Typologies</span></th>
+    </tr>
+    <tr>
+      <td>Type de Bien</td>
+      <td>
+      {% set typeSites = projet.typeSiteList %}
+      {% if typeSites[projet.typeSite] is defined %}{{ typeSites[projet.typeSite] }}{% else %}{{ projet.typeSite }}{% endif %}
+      </td>
     </tr>
     <tr>
       <td>Type de milieu</td>
       <td>{{ projet.environnement|environnement_format }}</td>
-    </tr>
-    <tr>
-      <td>Potentiel (MW)</td>
-      <td>{{ projet.potentiel }}</td>
-    </tr>
-    <tr>
-      <th colspan="2" class="th-section">Avancement</th>
-    </tr>
-    <tr>
-      <th>Phase</th>
-      <td>{% if phases[projet.phase] is defined %}{{ phases[projet.phase] }}{% else %}{{ projet.phase }}{% endif %}</td>
-    </tr>
-    <tr>
-      <th>Etat</th>
-      <td>{{ projet.progression|progression_format }}</td>
     </tr>
   </tbody>
 </table>
@@ -181,7 +184,7 @@
     {% for parcelle in projet.parcelles %}
     <tr>
       <td>{{ parcelle.nom }}</td>
-      <td>{{ parcelle.departement }}</td>
+      <td>({{ parcelle.departement.code }})</td>
       <td>{{ parcelle.commune }}</td>
       <td>{{ parcelle.lieuDit }}</td>
       <td>{{ parcelle.surface }}</td>
