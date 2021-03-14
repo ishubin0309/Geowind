@@ -383,7 +383,9 @@
       <div class="modal-content text-center">
         <div id="implantation_photo" class="modal-body">
           <img id="implantation_photo_close" title="Fermer" width="25" height="25" style="position:absolute;right:20px;top:20px;cursor:pointer;" src="{{ asset('images/close.png') }}">
-          <img style="max-width: 100%;padding:3%;" src="">
+          <a download="" href="#" title="Télécharger">
+            <img style="max-width: 100%;padding:3%;" src="">
+          </a>
         </div>
       </div>
     </div>
@@ -689,6 +691,8 @@
     {% if form.vars.value.photoImplantation is defined and form.vars.value.photoImplantation %}
       if(!$('#popup_fichier').length) $('<button id="popup_fichier" class="btn btn-info btn-sm" data-toggle="modal" data-target=".bs-modal-lg">Afficher</button>').insertAfter('#projet_photoImplantationFile');
       {# $('#implantation_photo img:eq(0)').removeClass('hide'); #}
+      $('#implantation_photo a').attr('href', '{{ asset('upload/' ~ form.vars.value.photoImplantation) }}');
+      $('#implantation_photo a').attr('download', '{{ form.vars.value.photoImplantation }}');
       $('#implantation_photo img:eq(1)').attr('src', '{{ asset('upload/' ~ form.vars.value.photoImplantation) }}');
     {% endif %}
     $('#projet_photoImplantationFile').change(function() {
@@ -698,6 +702,8 @@
         reader.onload = function(e) {
           if(!$('#popup_fichier').length) $('<button id="popup_fichier" class="btn btn-info btn-sm" data-toggle="modal" data-target=".bs-modal-lg">Afficher</button>').insertAfter('#projet_photoImplantationFile');
           {# $('#implantation_photo img:eq(0)').removeClass('hide'); #}
+          $('#implantation_photo a').attr('href', '#');
+          $('#implantation_photo a').removeAttribute('download');
           $('#implantation_photo img:eq(1)').attr('src', e.target.result);
         
           if(!$('#projet_documents tr').length) $('#projet_documents_add_entry').click();
