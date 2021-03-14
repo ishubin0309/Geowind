@@ -50,7 +50,7 @@ class Tache
             'signe_totalite' => 'Signé en totalité (+)',
             'deja_pris' => 'Déjà pris (-)',
             'inadapte' => 'Inadapté (-)',
-            'a_contacter' => 'A contacter',
+            'a_contacter' => 'A contacter (?)',
             'reunion' => 'Réunion (+)',
             'deliberation_plus' => 'Délibération (+)',
             'deliberation_minus' => 'Délibération (-)',
@@ -62,8 +62,8 @@ class Tache
             'majour_refusee' => 'Majour refusée (-)',
             'majour_en_cours' => 'Majour en cours (+)',
             'majour_achevee' => 'Majour achevée (+)',
-            'avis_sollicites' => 'Avis sollicités',
-            'non_requises' => 'Non requises(+)',
+            'avis_sollicites' => 'Avis sollicités (?)',
+            'non_requises' => 'Non requises (+)',
             'pour_la_forme' => 'Pour la fome (+)',
             'avis_favorable' => 'Avis favorable (+)',
             'avis_defavorable' => 'Avis défavorable (-)',
@@ -98,7 +98,7 @@ class Tache
                 'inadapte' => 'Inadapté (-)'
             ],
             self::OBJET_TROIS => [
-                'a_contacter' => 'A contacter',
+                'a_contacter' => 'A contacter (?)',
                 'contact_plus' => 'Contact (+)',
                 'contact_minus' => 'Contact (-)',
                 'reunion' => 'Réunion (+)',
@@ -116,8 +116,8 @@ class Tache
                 'majour_achevee' => 'Majour achevée (+)'
             ],
             self::OBJET_CINQ => [
-                'avis_sollicites' => 'Avis sollicités',
-                'non_requises' => 'Non requises(+)',
+                'avis_sollicites' => 'Avis sollicités (?)',
+                'non_requises' => 'Non requises (+)',
                 'pour_la_forme' => 'Pour la fome (+)',
                 'avis_favorable' => 'Avis favorable (+)',
                 'avis_defavorable' => 'Avis défavorable (-)',
