@@ -583,7 +583,7 @@ col-sm-8
           <th>Donnée</th>
           <th>Valeur</th>
           <th>Note</th>
-          <th class="hide">Order</th>
+          <th class="hide">Ordre</th>
         </tr>
       </thead>
       <tbody {{ block('widget_container_attributes') }}>
@@ -611,7 +611,7 @@ col-sm-8
       <td>{{ form_widget(form.donnee) }}</td>
       <td>{{ form_widget(form.type) }}</td>
       <td>{{ form_widget(form.note) }}</td>
-      <td class="hide">{{ form_widget(form.order) }}</td>
+      <td class="hide">{{ form_widget(form.sort) }}</td>
     </tr>
   {% endspaceless %}
 {% endblock %}

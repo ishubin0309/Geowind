@@ -51,7 +51,7 @@ class RappelData
      *
      * @ORM\Column(type="integer", options={"default" : 0})
      */
-    private $order;
+    private $sort;
 
     /**
      * @var Rappel
@@ -128,19 +128,19 @@ class RappelData
     /**
      * @return int
      */
-    public function getOrder()
+    public function getSort()
     {
-        return $this->order;
+        return $this->sort;
     }
 
     /**
      *
-     * @param int $order
+     * @param int $sort
      * @return \AppBundle\Entity\RappelData
      */
-    public function setOrder($order)
+    public function setSort($sort)
     {
-        $this->order = $order;
+        $this->sort = $sort;
         return $this;
     }
 

@@ -29,8 +29,8 @@ class RappelDataType extends AbstractType
                 'label' => 'Note',
                 'required' => false,
             ])
-            ->add('order', NumberType::class, [
-                'label' => 'Order',
+            ->add('sort', NumberType::class, [
+                'label' => 'Ordre',
                 'required' => false,
             ])
         ;
