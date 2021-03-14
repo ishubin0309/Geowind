@@ -70,6 +70,7 @@
               {#<li{{ item is defined and item == 'cartographie' ? ' class="active"' }}><a href="{{ path('cartographie') }}"{{ item is defined and item == 'portail' ? 'target="_blank"' }}>
                   <i class="fa fa-map-o"></i> Cartographie des parcs éoliens construits</a></li>#}
             {% endif %}
+            <li{{ item is defined and item == 'graphique' ? ' class="active"' }}><a href="{{ path('graphique') }}"><i class="fa fa-bar-chart"></i> Graphique</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">

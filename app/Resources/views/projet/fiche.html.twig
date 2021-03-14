@@ -103,39 +103,68 @@
       <th>Etat</th>
       <td>{{ projet.progression|progression_format }}</td>
     </tr>
+    {% set servitudes = false %}
+    {% set foncier = false %}
+    {% set mairie = false %}
+    {% set consultations = false %}
+    {% set urbanisme = false %}
+    {% set concertation = false %}
     {% for tache in projet.taches %}
-      {% if tache.objet == 'servitudes'%}
-    <tr>
-      <th>Servitudes</th>
-      <td>{{ tache.etat|replace({'a_letude': 'A l\'étude (?)', 'verif_positive': 'Vérif positive (+)', 'verif_negative': 'Vérif négative (-)', 'avec_requis': 'Avis requis (-)', 'compatible': 'Compatible (+)', 'incompatible': 'Incompatible (-)', 'neant_superflu': 'Néant/Superflu (+)', 'a_identifier': 'A identifier (?)', 'contact_plus': 'Contact (+)', 'contact_minus': 'Contact (-)', 'visites': 'Visites (+)', 'signe_partie': 'Signé en partie (+)', 'signe_totalite': 'Signé en totalité (+)', 'deja_pris': 'Déjà pris (-)', 'inadapte': 'Inadapté (-)', 'a_contacter': 'A contacter', 'reunion': 'Réunion (+)', 'deliberation_plus': 'Délibération (+)', 'deliberation_minus': 'Délibération (-)', 'superflu': 'Superflu (+)', 'a_renseigner': 'A renseigner (?)', 'compatible': 'Compatible (+)', 'incompatible': 'Incompatible (-)', 'majour_requise': 'Majour requise (-)', 'majour_refusee': 'Majour refusée (-)', 'majour_en_cours': 'Majour en cours (+)', 'majour_achevee': 'Majour achevée (+)', 'avis_sollicites': 'Avis sollicités', 'non_requises': 'Non requises(+)', 'pour_la_forme': 'Pour la fome (+)', 'avis_favorable': 'Avis favorable (+)', 'avis_defavorable': 'Avis défavorable (-)', 'avis_reserve': 'Avis réservé (+)', 'a_preparer': 'A préparer (?)'}) }}</td>
-    </tr>
-      {% elseif tache.objet == 'foncier'%}
-    <tr>
-      <th>Foncier</th>
-      <td>{{ tache.etat|replace({'a_letude': 'A l\'étude (?)', 'verif_positive': 'Vérif positive (+)', 'verif_negative': 'Vérif négative (-)', 'avec_requis': 'Avis requis (-)', 'compatible': 'Compatible (+)', 'incompatible': 'Incompatible (-)', 'neant_superflu': 'Néant/Superflu (+)', 'a_identifier': 'A identifier (?)', 'contact_plus': 'Contact (+)', 'contact_minus': 'Contact (-)', 'visites': 'Visites (+)', 'signe_partie': 'Signé en partie (+)', 'signe_totalite': 'Signé en totalité (+)', 'deja_pris': 'Déjà pris (-)', 'inadapte': 'Inadapté (-)', 'a_contacter': 'A contacter', 'reunion': 'Réunion (+)', 'deliberation_plus': 'Délibération (+)', 'deliberation_minus': 'Délibération (-)', 'superflu': 'Superflu (+)', 'a_renseigner': 'A renseigner (?)', 'compatible': 'Compatible (+)', 'incompatible': 'Incompatible (-)', 'majour_requise': 'Majour requise (-)', 'majour_refusee': 'Majour refusée (-)', 'majour_en_cours': 'Majour en cours (+)', 'majour_achevee': 'Majour achevée (+)', 'avis_sollicites': 'Avis sollicités', 'non_requises': 'Non requises(+)', 'pour_la_forme': 'Pour la fome (+)', 'avis_favorable': 'Avis favorable (+)', 'avis_defavorable': 'Avis défavorable (-)', 'avis_reserve': 'Avis réservé (+)', 'a_preparer': 'A préparer (?)'}) }}</td>
-    </tr>
-      {% elseif tache.objet == 'mairie'%}
-    <tr>
-      <th>Mairie</th>
-      <td>{{ tache.etat|replace({'a_letude': 'A l\'étude (?)', 'verif_positive': 'Vérif positive (+)', 'verif_negative': 'Vérif négative (-)', 'avec_requis': 'Avis requis (-)', 'compatible': 'Compatible (+)', 'incompatible': 'Incompatible (-)', 'neant_superflu': 'Néant/Superflu (+)', 'a_identifier': 'A identifier (?)', 'contact_plus': 'Contact (+)', 'contact_minus': 'Contact (-)', 'visites': 'Visites (+)', 'signe_partie': 'Signé en partie (+)', 'signe_totalite': 'Signé en totalité (+)', 'deja_pris': 'Déjà pris (-)', 'inadapte': 'Inadapté (-)', 'a_contacter': 'A contacter', 'reunion': 'Réunion (+)', 'deliberation_plus': 'Délibération (+)', 'deliberation_minus': 'Délibération (-)', 'superflu': 'Superflu (+)', 'a_renseigner': 'A renseigner (?)', 'compatible': 'Compatible (+)', 'incompatible': 'Incompatible (-)', 'majour_requise': 'Majour requise (-)', 'majour_refusee': 'Majour refusée (-)', 'majour_en_cours': 'Majour en cours (+)', 'majour_achevee': 'Majour achevée (+)', 'avis_sollicites': 'Avis sollicités', 'non_requises': 'Non requises(+)', 'pour_la_forme': 'Pour la fome (+)', 'avis_favorable': 'Avis favorable (+)', 'avis_defavorable': 'Avis défavorable (-)', 'avis_reserve': 'Avis réservé (+)', 'a_preparer': 'A préparer (?)'}) }}</td>
-    </tr>
-      {% elseif tache.objet == 'consultations'%}
-    <tr>
-      <th>Consultations</th>
-      <td>{{ tache.etat|replace({'a_letude': 'A l\'étude (?)', 'verif_positive': 'Vérif positive (+)', 'verif_negative': 'Vérif négative (-)', 'avec_requis': 'Avis requis (-)', 'compatible': 'Compatible (+)', 'incompatible': 'Incompatible (-)', 'neant_superflu': 'Néant/Superflu (+)', 'a_identifier': 'A identifier (?)', 'contact_plus': 'Contact (+)', 'contact_minus': 'Contact (-)', 'visites': 'Visites (+)', 'signe_partie': 'Signé en partie (+)', 'signe_totalite': 'Signé en totalité (+)', 'deja_pris': 'Déjà pris (-)', 'inadapte': 'Inadapté (-)', 'a_contacter': 'A contacter', 'reunion': 'Réunion (+)', 'deliberation_plus': 'Délibération (+)', 'deliberation_minus': 'Délibération (-)', 'superflu': 'Superflu (+)', 'a_renseigner': 'A renseigner (?)', 'compatible': 'Compatible (+)', 'incompatible': 'Incompatible (-)', 'majour_requise': 'Majour requise (-)', 'majour_refusee': 'Majour refusée (-)', 'majour_en_cours': 'Majour en cours (+)', 'majour_achevee': 'Majour achevée (+)', 'avis_sollicites': 'Avis sollicités', 'non_requises': 'Non requises(+)', 'pour_la_forme': 'Pour la fome (+)', 'avis_favorable': 'Avis favorable (+)', 'avis_defavorable': 'Avis défavorable (-)', 'avis_reserve': 'Avis réservé (+)', 'a_preparer': 'A préparer (?)'}) }}</td>
-    </tr>
-      {% elseif tache.objet == 'urbanisme'%}
-    <tr>
-      <th>Urbanisme</th>
-      <td>{{ tache.etat|replace({'a_letude': 'A l\'étude (?)', 'verif_positive': 'Vérif positive (+)', 'verif_negative': 'Vérif négative (-)', 'avec_requis': 'Avis requis (-)', 'compatible': 'Compatible (+)', 'incompatible': 'Incompatible (-)', 'neant_superflu': 'Néant/Superflu (+)', 'a_identifier': 'A identifier (?)', 'contact_plus': 'Contact (+)', 'contact_minus': 'Contact (-)', 'visites': 'Visites (+)', 'signe_partie': 'Signé en partie (+)', 'signe_totalite': 'Signé en totalité (+)', 'deja_pris': 'Déjà pris (-)', 'inadapte': 'Inadapté (-)', 'a_contacter': 'A contacter', 'reunion': 'Réunion (+)', 'deliberation_plus': 'Délibération (+)', 'deliberation_minus': 'Délibération (-)', 'superflu': 'Superflu (+)', 'a_renseigner': 'A renseigner (?)', 'compatible': 'Compatible (+)', 'incompatible': 'Incompatible (-)', 'majour_requise': 'Majour requise (-)', 'majour_refusee': 'Majour refusée (-)', 'majour_en_cours': 'Majour en cours (+)', 'majour_achevee': 'Majour achevée (+)', 'avis_sollicites': 'Avis sollicités', 'non_requises': 'Non requises(+)', 'pour_la_forme': 'Pour la fome (+)', 'avis_favorable': 'Avis favorable (+)', 'avis_defavorable': 'Avis défavorable (-)', 'avis_reserve': 'Avis réservé (+)', 'a_preparer': 'A préparer (?)'}) }}</td>
-    </tr>
-      {% elseif tache.objet == 'concertation'%}
-    <tr>
-      <th>Concertation</th>
-      <td>{{ tache.etat|replace({'a_letude': 'A l\'étude (?)', 'verif_positive': 'Vérif positive (+)', 'verif_negative': 'Vérif négative (-)', 'avec_requis': 'Avis requis (-)', 'compatible': 'Compatible (+)', 'incompatible': 'Incompatible (-)', 'neant_superflu': 'Néant/Superflu (+)', 'a_identifier': 'A identifier (?)', 'contact_plus': 'Contact (+)', 'contact_minus': 'Contact (-)', 'visites': 'Visites (+)', 'signe_partie': 'Signé en partie (+)', 'signe_totalite': 'Signé en totalité (+)', 'deja_pris': 'Déjà pris (-)', 'inadapte': 'Inadapté (-)', 'a_contacter': 'A contacter', 'reunion': 'Réunion (+)', 'deliberation_plus': 'Délibération (+)', 'deliberation_minus': 'Délibération (-)', 'superflu': 'Superflu (+)', 'a_renseigner': 'A renseigner (?)', 'compatible': 'Compatible (+)', 'incompatible': 'Incompatible (-)', 'majour_requise': 'Majour requise (-)', 'majour_refusee': 'Majour refusée (-)', 'majour_en_cours': 'Majour en cours (+)', 'majour_achevee': 'Majour achevée (+)', 'avis_sollicites': 'Avis sollicités', 'non_requises': 'Non requises(+)', 'pour_la_forme': 'Pour la fome (+)', 'avis_favorable': 'Avis favorable (+)', 'avis_defavorable': 'Avis défavorable (-)', 'avis_reserve': 'Avis réservé (+)', 'a_preparer': 'A préparer (?)'}) }}</td>
-    </tr>
+      {% if tache.objet == 'servitudes' %}
+        {% set servitudes = tache.etat %}
+      {% elseif tache.objet == 'foncier' %}
+        {% set foncier = tache.etat %}
+      {% elseif tache.objet == 'mairie' %}
+        {% set mairie = tache.etat %}
+      {% elseif tache.objet == 'consultations' %}
+        {% set consultations = tache.etat %}
+      {% elseif tache.objet == 'urbanisme' %}
+        {% set urbanisme = tache.etat %}
+      {% elseif tache.objet == 'concertation' %}
+        {% set concertation = tache.etat %}
       {% endif %}
     {% endfor %}
+    {% if servitudes %}
+    <tr>
+      <th>Servitudes</th>
+      <td>{{ servitudes|replace({'a_letude': 'A l\'étude (?)', 'verif_positive': 'Vérif positive (+)', 'verif_negative': 'Vérif négative (-)', 'avec_requis': 'Avis requis (-)', 'compatible': 'Compatible (+)', 'incompatible': 'Incompatible (-)', 'neant_superflu': 'Néant/Superflu (+)', 'a_identifier': 'A identifier (?)', 'contact_plus': 'Contact (+)', 'contact_minus': 'Contact (-)', 'visites': 'Visites (+)', 'signe_partie': 'Signé en partie (+)', 'signe_totalite': 'Signé en totalité (+)', 'deja_pris': 'Déjà pris (-)', 'inadapte': 'Inadapté (-)', 'a_contacter': 'A contacter', 'reunion': 'Réunion (+)', 'deliberation_plus': 'Délibération (+)', 'deliberation_minus': 'Délibération (-)', 'superflu': 'Superflu (+)', 'a_renseigner': 'A renseigner (?)', 'compatible': 'Compatible (+)', 'incompatible': 'Incompatible (-)', 'majour_requise': 'Majour requise (-)', 'majour_refusee': 'Majour refusée (-)', 'majour_en_cours': 'Majour en cours (+)', 'majour_achevee': 'Majour achevée (+)', 'avis_sollicites': 'Avis sollicités', 'non_requises': 'Non requises(+)', 'pour_la_forme': 'Pour la fome (+)', 'avis_favorable': 'Avis favorable (+)', 'avis_defavorable': 'Avis défavorable (-)', 'avis_reserve': 'Avis réservé (+)', 'a_preparer': 'A préparer (?)'}) }}</td>
+    </tr>
+    {% endif %}
+    {% if foncier %}
+    <tr>
+      <th>Foncier</th>
+      <td>{{ foncier|replace({'a_letude': 'A l\'étude (?)', 'verif_positive': 'Vérif positive (+)', 'verif_negative': 'Vérif négative (-)', 'avec_requis': 'Avis requis (-)', 'compatible': 'Compatible (+)', 'incompatible': 'Incompatible (-)', 'neant_superflu': 'Néant/Superflu (+)', 'a_identifier': 'A identifier (?)', 'contact_plus': 'Contact (+)', 'contact_minus': 'Contact (-)', 'visites': 'Visites (+)', 'signe_partie': 'Signé en partie (+)', 'signe_totalite': 'Signé en totalité (+)', 'deja_pris': 'Déjà pris (-)', 'inadapte': 'Inadapté (-)', 'a_contacter': 'A contacter', 'reunion': 'Réunion (+)', 'deliberation_plus': 'Délibération (+)', 'deliberation_minus': 'Délibération (-)', 'superflu': 'Superflu (+)', 'a_renseigner': 'A renseigner (?)', 'compatible': 'Compatible (+)', 'incompatible': 'Incompatible (-)', 'majour_requise': 'Majour requise (-)', 'majour_refusee': 'Majour refusée (-)', 'majour_en_cours': 'Majour en cours (+)', 'majour_achevee': 'Majour achevée (+)', 'avis_sollicites': 'Avis sollicités', 'non_requises': 'Non requises(+)', 'pour_la_forme': 'Pour la fome (+)', 'avis_favorable': 'Avis favorable (+)', 'avis_defavorable': 'Avis défavorable (-)', 'avis_reserve': 'Avis réservé (+)', 'a_preparer': 'A préparer (?)'}) }}</td>
+    </tr>
+    {% else %}
+    <tr>
+      <th>Foncier</th>
+      <td></td>
+    </tr>
+    {% endif %}
+    {% if mairie %}
+    <tr>
+      <th>Mairie</th>
+      <td>{{ mairie|replace({'a_letude': 'A l\'étude (?)', 'verif_positive': 'Vérif positive (+)', 'verif_negative': 'Vérif négative (-)', 'avec_requis': 'Avis requis (-)', 'compatible': 'Compatible (+)', 'incompatible': 'Incompatible (-)', 'neant_superflu': 'Néant/Superflu (+)', 'a_identifier': 'A identifier (?)', 'contact_plus': 'Contact (+)', 'contact_minus': 'Contact (-)', 'visites': 'Visites (+)', 'signe_partie': 'Signé en partie (+)', 'signe_totalite': 'Signé en totalité (+)', 'deja_pris': 'Déjà pris (-)', 'inadapte': 'Inadapté (-)', 'a_contacter': 'A contacter', 'reunion': 'Réunion (+)', 'deliberation_plus': 'Délibération (+)', 'deliberation_minus': 'Délibération (-)', 'superflu': 'Superflu (+)', 'a_renseigner': 'A renseigner (?)', 'compatible': 'Compatible (+)', 'incompatible': 'Incompatible (-)', 'majour_requise': 'Majour requise (-)', 'majour_refusee': 'Majour refusée (-)', 'majour_en_cours': 'Majour en cours (+)', 'majour_achevee': 'Majour achevée (+)', 'avis_sollicites': 'Avis sollicités', 'non_requises': 'Non requises(+)', 'pour_la_forme': 'Pour la fome (+)', 'avis_favorable': 'Avis favorable (+)', 'avis_defavorable': 'Avis défavorable (-)', 'avis_reserve': 'Avis réservé (+)', 'a_preparer': 'A préparer (?)'}) }}</td>
+    </tr>
+    {% endif %}
+    {% if consultations %}
+    <tr>
+      <th>Consultations</th>
+      <td>{{ consultations|replace({'a_letude': 'A l\'étude (?)', 'verif_positive': 'Vérif positive (+)', 'verif_negative': 'Vérif négative (-)', 'avec_requis': 'Avis requis (-)', 'compatible': 'Compatible (+)', 'incompatible': 'Incompatible (-)', 'neant_superflu': 'Néant/Superflu (+)', 'a_identifier': 'A identifier (?)', 'contact_plus': 'Contact (+)', 'contact_minus': 'Contact (-)', 'visites': 'Visites (+)', 'signe_partie': 'Signé en partie (+)', 'signe_totalite': 'Signé en totalité (+)', 'deja_pris': 'Déjà pris (-)', 'inadapte': 'Inadapté (-)', 'a_contacter': 'A contacter', 'reunion': 'Réunion (+)', 'deliberation_plus': 'Délibération (+)', 'deliberation_minus': 'Délibération (-)', 'superflu': 'Superflu (+)', 'a_renseigner': 'A renseigner (?)', 'compatible': 'Compatible (+)', 'incompatible': 'Incompatible (-)', 'majour_requise': 'Majour requise (-)', 'majour_refusee': 'Majour refusée (-)', 'majour_en_cours': 'Majour en cours (+)', 'majour_achevee': 'Majour achevée (+)', 'avis_sollicites': 'Avis sollicités', 'non_requises': 'Non requises(+)', 'pour_la_forme': 'Pour la fome (+)', 'avis_favorable': 'Avis favorable (+)', 'avis_defavorable': 'Avis défavorable (-)', 'avis_reserve': 'Avis réservé (+)', 'a_preparer': 'A préparer (?)'}) }}</td>
+    </tr>
+    {% endif %}
+    {% if urbanisme %}
+    <tr>
+      <th>Urbanisme</th>
+      <td>{{ urbanisme|replace({'a_letude': 'A l\'étude (?)', 'verif_positive': 'Vérif positive (+)', 'verif_negative': 'Vérif négative (-)', 'avec_requis': 'Avis requis (-)', 'compatible': 'Compatible (+)', 'incompatible': 'Incompatible (-)', 'neant_superflu': 'Néant/Superflu (+)', 'a_identifier': 'A identifier (?)', 'contact_plus': 'Contact (+)', 'contact_minus': 'Contact (-)', 'visites': 'Visites (+)', 'signe_partie': 'Signé en partie (+)', 'signe_totalite': 'Signé en totalité (+)', 'deja_pris': 'Déjà pris (-)', 'inadapte': 'Inadapté (-)', 'a_contacter': 'A contacter', 'reunion': 'Réunion (+)', 'deliberation_plus': 'Délibération (+)', 'deliberation_minus': 'Délibération (-)', 'superflu': 'Superflu (+)', 'a_renseigner': 'A renseigner (?)', 'compatible': 'Compatible (+)', 'incompatible': 'Incompatible (-)', 'majour_requise': 'Majour requise (-)', 'majour_refusee': 'Majour refusée (-)', 'majour_en_cours': 'Majour en cours (+)', 'majour_achevee': 'Majour achevée (+)', 'avis_sollicites': 'Avis sollicités', 'non_requises': 'Non requises(+)', 'pour_la_forme': 'Pour la fome (+)', 'avis_favorable': 'Avis favorable (+)', 'avis_defavorable': 'Avis défavorable (-)', 'avis_reserve': 'Avis réservé (+)', 'a_preparer': 'A préparer (?)'}) }}</td>
+    </tr>
+    {% endif %}
+    {% if concertation %}
+    <tr>
+      <th>Concertation</th>
+      <td>{{ concertation|replace({'a_letude': 'A l\'étude (?)', 'verif_positive': 'Vérif positive (+)', 'verif_negative': 'Vérif négative (-)', 'avec_requis': 'Avis requis (-)', 'compatible': 'Compatible (+)', 'incompatible': 'Incompatible (-)', 'neant_superflu': 'Néant/Superflu (+)', 'a_identifier': 'A identifier (?)', 'contact_plus': 'Contact (+)', 'contact_minus': 'Contact (-)', 'visites': 'Visites (+)', 'signe_partie': 'Signé en partie (+)', 'signe_totalite': 'Signé en totalité (+)', 'deja_pris': 'Déjà pris (-)', 'inadapte': 'Inadapté (-)', 'a_contacter': 'A contacter', 'reunion': 'Réunion (+)', 'deliberation_plus': 'Délibération (+)', 'deliberation_minus': 'Délibération (-)', 'superflu': 'Superflu (+)', 'a_renseigner': 'A renseigner (?)', 'compatible': 'Compatible (+)', 'incompatible': 'Incompatible (-)', 'majour_requise': 'Majour requise (-)', 'majour_refusee': 'Majour refusée (-)', 'majour_en_cours': 'Majour en cours (+)', 'majour_achevee': 'Majour achevée (+)', 'avis_sollicites': 'Avis sollicités', 'non_requises': 'Non requises(+)', 'pour_la_forme': 'Pour la fome (+)', 'avis_favorable': 'Avis favorable (+)', 'avis_defavorable': 'Avis défavorable (-)', 'avis_reserve': 'Avis réservé (+)', 'a_preparer': 'A préparer (?)'}) }}</td>
+    </tr>
+    {% endif %}
     <tr>
       <th colspan="2" class="th-section" class="th-section">Contacts</th>
     </tr>
@@ -226,51 +255,6 @@
     {% endfor %}
   </tbody>
 </table>
-<table style="page-break-inside: avoid;" autosize="1">
-  <tbody>
-    <tr>
-      <th colspan="2" class="th-section">Commentaires</th>
-    </tr>
-    <tr>
-      <td colspan="2">
-        {{ projet.commentaires ? projet.commentaires|nl2br : 'N/A' }}
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-{% if projet.finances is not empty %}
-<table class="t2" style="page-break-inside: avoid;" autosize="1">
-  <thead>
-    <tr>
-      <th colspan="7" class="th-section">Commandes<i class="fa fa-euro"></i></th>
-    </tr>
-    <tr>
-      <th>Phase</th>
-      <th class="column-fit">Engagé (€HT)</th>
-      <th class="column-fit">Payé (€HT)</th>
-      <th>Prestataire</th>
-      <th>Date commande</th>
-      <th>Date d’échéance</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for finance in projet.finances %}
-      <tr>
-        <td colspan="7"><strong>{{ finance.titre }}</strong></td>
-      </tr>
-      <tr>
-        <td>{{ finance.phase|capitalize }}</td>
-        <td class="column-fit">{{ finance.montantEngage }}</td>
-        <td class="column-fit">{{ finance.montantPaye }}</td>
-        <td>{{ finance.bureau }}</td>
-        <td>{{ finance.dateEngmt|date('d/m/Y') }}</td>
-        <td>{{ finance.dateEcheance is not null ? finance.dateEcheance|date('d/m/Y') }}</td>
-      </tr>
-      {% endfor %}
-  </tbody>
-</table>
-{% endif %}
       
 {% if projet.proprietaires is not empty %}
 <table class="t2" style="page-break-inside: avoid;" autosize="1">
@@ -319,3 +303,48 @@
   </tbody>
 </table>
   {% endif %}
+
+{% if projet.finances is not empty %}
+<table class="t2" style="page-break-inside: avoid;" autosize="1">
+  <thead>
+    <tr>
+      <th colspan="7" class="th-section">Commandes<i class="fa fa-euro"></i></th>
+    </tr>
+    <tr>
+      <th>Phase</th>
+      <th class="column-fit">Engagé (€HT)</th>
+      <th class="column-fit">Payé (€HT)</th>
+      <th>Prestataire</th>
+      <th>Date commande</th>
+      <th>Date d’échéance</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for finance in projet.finances %}
+      <tr>
+        <td colspan="7"><strong>{{ finance.titre }}</strong></td>
+      </tr>
+      <tr>
+        <td>{{ finance.phase|capitalize }}</td>
+        <td class="column-fit">{{ finance.montantEngage }}</td>
+        <td class="column-fit">{{ finance.montantPaye }}</td>
+        <td>{{ finance.bureau }}</td>
+        <td>{{ finance.dateEngmt|date('d/m/Y') }}</td>
+        <td>{{ finance.dateEcheance is not null ? finance.dateEcheance|date('d/m/Y') }}</td>
+      </tr>
+      {% endfor %}
+  </tbody>
+</table>
+{% endif %}
+<table style="page-break-inside: avoid;" autosize="1">
+  <tbody>
+    <tr>
+      <th colspan="2" class="th-section">Commentaires</th>
+    </tr>
+    <tr>
+      <td colspan="2">
+        {{ projet.commentaires ? projet.commentaires|nl2br : 'N/A' }}
+      </td>
+    </tr>
+  </tbody>
+</table>

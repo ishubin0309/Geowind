@@ -862,18 +862,20 @@ class ProjetController extends Controller
         $cols = array();
         for($x=$startX;$x<=$endX;$x++)
         {
-            $col = new Imagick();
-            for($y = $startY; $y <= $endY; $y ++)
-            {
-            $col->readImage($dirDest . "/tiles/${zoom}_${x}_${y}.png");
-            if($tileWidth===0)
-            {
-                $tileWidth = $col->getImageWidth();
-                $tileHeight = $col->getImageHeight();
-            }
-            }
-            $col->resetIterator();
-            $cols[] = $col->appendImages(true);
+            try{
+                $col = new Imagick();
+                for($y = $startY; $y <= $endY; $y ++)
+                {
+                $col->readImage($dirDest . "/tiles/${zoom}_${x}_${y}.png");
+                if($tileWidth===0)
+                {
+                    $tileWidth = $col->getImageWidth();
+                    $tileHeight = $col->getImageHeight();
+                }
+                }
+                $col->resetIterator();
+                $cols[] = $col->appendImages(true);
+            } catch(\Exception $e) {}
         }
         foreach($cols as $col)
         {

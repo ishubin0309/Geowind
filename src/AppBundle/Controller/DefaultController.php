@@ -144,6 +144,29 @@ class DefaultController extends Controller
     }
 
     /**
+     * @Route("/graphique", name="graphique")
+     */
+    public function graphiqueAction(Request $request)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+
+        $page = isset($_GET['page']) && $_GET['page'] >= 1 ? trim($_GET['page']) : 1;
+        $limit = isset($_GET['limit']) && $_GET['limit'] >= 5 && $_GET['limit'] <= 200 ? trim($_GET['limit']) : 10000;
+        $offset = ($page - 1) * $limit;
+        if ($this->isGranted('ROLE_VIEW_ALL')) {
+            $projets = $em->getRepository('AppBundle:Projet')->findAllPaginator(false, $offset, $limit);
+        } else {
+            $projets = $em->getRepository('AppBundle:Projet')->findUserProjets($this->getUser(), false, $offset, $limit);
+        }
+
+        return $this->render('default/graphique.html.twig', [
+            'projets' => $projets,
+            'grid_helper' => $gridHelper,
+        ]);
+    }
+
+    /**
      * @Route("/finance", name="finance_index")
      */
     public function financeAction(Request $request)

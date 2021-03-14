@@ -28,15 +28,13 @@ class DocumentType extends AbstractType
                 'html5' => false,
                 'required' => false,
             ])
-            ->add('type', ChoiceType::class, [
+            ->add('type', TextType::class, [
                 'label' => 'Type',
                 'required' => false,
-                'choices' => array_flip(Projet::getTypeImplantationList()),
             ])
-            ->add('titre', ChoiceType::class, [
+            ->add('titre', TextType::class, [
                 'label' => 'Titre',
                 'required' => false,
-                'choices' => array_flip(Projet::getTitreImplantationList()),
             ])
             ->add('documentFile', FileType::class, [
                 'label' => 'Fichier',
