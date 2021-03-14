@@ -159,6 +159,7 @@ class DefaultController extends Controller
         } else {
             $projets = $em->getRepository('AppBundle:Projet')->findUserProjets($this->getUser(), false, $offset, $limit);
         }
+        $gridHelper = new GridHelper();
 
         return $this->render('default/graphique.html.twig', [
             'projets' => $projets,
