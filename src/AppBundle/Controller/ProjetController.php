@@ -171,6 +171,7 @@ class ProjetController extends Controller
             $em->persist($rappel);
             $em->flush();
             $this->addFlash('success', 'Rappel a été modifié.');
+            return $this->redirectToRoute('liste_new');
         }
 
         $liste = new Liste();
