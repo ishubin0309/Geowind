@@ -544,7 +544,7 @@
           if(!$('#popup_fichier').length) $('<button id="popup_fichier" class="btn btn-info btn-sm" data-toggle="modal" data-target=".bs-modal-lg">Afficher</button>').insertAfter('#projet_photoImplantationFile');
           {# $('#implantation_photo img:eq(0)').removeClass('hide'); #}
           $('#implantation_photo a').attr('href', '#');
-          $('#implantation_photo a').removeAttribute('download');
+          $('#implantation_photo a').SortremoveAttr('download');
           $('#implantation_photo img:eq(1)').attr('src', e.target.result);
           
           if(!$('#projet_documents tr').length) $('#projet_documents_add_entry').click();
