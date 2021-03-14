@@ -135,11 +135,6 @@
       <th>Foncier</th>
       <td>{{ foncier|replace({'a_letude': 'A l\'étude (?)', 'verif_positive': 'Vérif positive (+)', 'verif_negative': 'Vérif négative (-)', 'avec_requis': 'Avis requis (-)', 'compatible': 'Compatible (+)', 'incompatible': 'Incompatible (-)', 'neant_superflu': 'Néant/Superflu (+)', 'a_identifier': 'A identifier (?)', 'contact_plus': 'Contact (+)', 'contact_minus': 'Contact (-)', 'visites': 'Visites (+)', 'signe_partie': 'Signé en partie (+)', 'signe_totalite': 'Signé en totalité (+)', 'deja_pris': 'Déjà pris (-)', 'inadapte': 'Inadapté (-)', 'a_contacter': 'A contacter', 'reunion': 'Réunion (+)', 'deliberation_plus': 'Délibération (+)', 'deliberation_minus': 'Délibération (-)', 'superflu': 'Superflu (+)', 'a_renseigner': 'A renseigner (?)', 'compatible': 'Compatible (+)', 'incompatible': 'Incompatible (-)', 'majour_requise': 'Majour requise (-)', 'majour_refusee': 'Majour refusée (-)', 'majour_en_cours': 'Majour en cours (+)', 'majour_achevee': 'Majour achevée (+)', 'avis_sollicites': 'Avis sollicités', 'non_requises': 'Non requises(+)', 'pour_la_forme': 'Pour la fome (+)', 'avis_favorable': 'Avis favorable (+)', 'avis_defavorable': 'Avis défavorable (-)', 'avis_reserve': 'Avis réservé (+)', 'a_preparer': 'A préparer (?)'}) }}</td>
     </tr>
-    {% else %}
-    <tr>
-      <th>Foncier</th>
-      <td></td>
-    </tr>
     {% endif %}
     {% if mairie %}
     <tr>
@@ -228,6 +223,7 @@
     </tr>
   </tbody>
 </table>
+{% if projet.parcelles is not empty %}
 <table class="t2" style="page-break-inside: avoid;" autosize="1">
   <thead>
     <tr>
@@ -255,6 +251,7 @@
     {% endfor %}
   </tbody>
 </table>
+{% endif %}
       
 {% if projet.proprietaires is not empty %}
 <table class="t2" style="page-break-inside: avoid;" autosize="1">
