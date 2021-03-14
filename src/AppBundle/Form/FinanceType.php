@@ -50,7 +50,7 @@ class FinanceType extends AbstractType
             ->add('bureau', EntityType::class, [
                 'class' => 'AppBundle:Bureau',
                 'required' => true,
-                'label' => 'BE',
+                'label' => 'Prestataire',
             ])
             ->add('dateEngmt', DatePickerType::class, [
                 'label' => 'Date de commande',
