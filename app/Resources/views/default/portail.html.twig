@@ -49,7 +49,8 @@
           <option value="1">Liste-par défaut</option>
           <option value="2" {% if columnsType == 2 %}selected{% endif %}>Liste-taches</option>
           <option value="3" {% if columnsType == 3 %}selected{% endif %}>Liste-tendance</option>
-          <option value="4" {% if columnsType == 4 %}selected{% endif %}>Liste-accords fonciers</option>
+          <option value="4" {% if columnsType == 4 %}selected{% endif %}>Liste-accords-fonciers</option>
+          <option value="5" {% if columnsType == 5 %}selected{% endif %}>Liste-risques</option>
         </select>
       </div>
       <div class="col-md-9 col-lg-10">
@@ -243,6 +244,24 @@
       { id: "dateMaj", name: '<strong>Date majour</strong>', field: "dateMaj", sortable: true, sorter: dateSorter, width: 100, maxWidth: 250},
       { id: "dateDiff", name: "<strong>J+</strong>", field: "dateDiff", sortable: true, sorter: stringSorter, formatter: progressionFormatter, width: 40, maxWidth: 150 },
       { id: "progressionIndicateur", name: "", field: "progressionIndicateur", width: 26, maxWidth: 26, cssClass: 'column-progression-indicateur', formatter: progressionIndicateurFormatter },
+    {% elseif columnsType == 5 %}
+      checkboxColumn,
+      { id: "id", name: "ID", field: "id", width: 70, maxWidth: 100, sortable: true, sorter: numericSorter, },
+      { id: "typeProjet", name: "Type de projet", field: "typeProjet", width: 70, maxWidth: 250, formatter: typeProjetFormatter, sortable: true, sorter: stringSorter, },
+      { id: "typeSite", name: "Type de Bien", field: "typeSite", width: 70, maxWidth: 250, formatter: typeSiteFormatter, sortable: true, sorter: stringSorter, },
+      { id: "departement", name: "Département", field: "departement", sortable: true, sorter: stringSorter, maxWidth: 250 },
+      { id: "potentiel", name: "Potentiel (MW)", field: "potentiel", sortable: true, cssClass: 'text-right', sorter: numericSorter, width: 100, maxWidth: 100 },
+      { id: "phase", name: "Phase", field: "phase", sortable: true, sorter: stringSorter, formatter: phaseFormatter, width: 110, maxWidth: 110 },
+      { id: "progression", name: "Etat", field: "progression", sortable: true, sorter: stringSorter, formatter: progressionFormatter, width: 110, maxWidth: 110 },
+      { id: "servitudes", name: "Servitudes", field: "servitudes", sortable: true, sorter: stringSorter, formatter: tacheFormatter, maxWidth: 250 },
+      { id: "environnement", name: "Environnement", field: "environnement", sortable: true, sorter: stringSorter, formatter: tacheFormatter, maxWidth: 250 },
+      { id: "monuments", name: "Monuments", field: "monuments", sortable: true, sorter: stringSorter, formatter: tacheFormatter, maxWidth: 250 },
+      { id: "paysage", name: "Paysage", field: "paysage", sortable: true, sorter: stringSorter, formatter: tacheFormatter, maxWidth: 250 },
+      { id: "urbanisme", name: "Urbanisme", field: "urbanisme", sortable: true, sorter: stringSorter, formatter: tacheFormatter, maxWidth: 250 },
+      { id: "dateCrea", name: '<strong>Date création</strong>', field: "dateCrea", sortable: true, sorter: dateSorter, width: 100, maxWidth: 250},
+      { id: "dateMaj", name: '<strong>Date majour</strong>', field: "dateMaj", sortable: true, sorter: dateSorter, width: 100, maxWidth: 250},
+      { id: "dateDiff", name: "<strong>J+</strong>", field: "dateDiff", sortable: true, sorter: stringSorter, formatter: progressionFormatter, width: 40, maxWidth: 100 },
+      { id: "progressionIndicateur", name: "", field: "progressionIndicateur", width: 26, maxWidth: 26, cssClass: 'column-progression-indicateur', formatter: progressionIndicateurFormatter },
     {% endif %}
     ];
 
@@ -352,6 +371,31 @@
               {% endfor %}
             {% endfor %}
             accords: '{{ proprietaires }}/{{ parcelles }}',
+          {% endif %}
+          {% if columnsType == 5 %}
+            {% set servitudes = false %}
+            {% set environnement = false %}
+            {% set monuments = false %}
+            {% set paysage = false %}
+            {% set urbanisme = false %}
+            {% for enjeux in projet.enjeuxs %}
+              {% if enjeux.facteur == 'servitudes'%}
+              {% set servitudes = true %}servitudes: '{{ enjeux.risque }}',
+              {% elseif enjeux.facteur == 'environnement'%}
+              {% set environnement = true %}environnement: '{{ enjeux.risque }}',
+              {% elseif enjeux.facteur == 'monuments'%}
+              {% set monuments = true %}monuments: '{{ enjeux.risque }}',
+              {% elseif enjeux.facteur == 'paysage'%}
+              {% set paysage = true %}paysage: '{{ enjeux.risque }}',
+              {% elseif enjeux.facteur == 'urbanisme'%}
+              {% set urbanisme = true %}urbanisme: '{{ enjeux.risque }}',
+              {% endif %}
+            {% endfor %}
+            {% if not servitudes %}servitudes: '',{% endif %}
+            {% if not environnement %}environnement: '',{% endif %}
+            {% if not monuments %}monuments: '',{% endif %}
+            {% if not paysage %}paysage: '',{% endif %}
+            {% if not urbanisme %}urbanisme: '',{% endif %}
           {% endif %}
           {% if columnsType != 3 %}
           phase: '{{ projet.phase|e('js') }}',
