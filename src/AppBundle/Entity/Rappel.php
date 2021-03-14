@@ -29,6 +29,7 @@ class Rappel
      * @var ArrayCollection|RappelData[]
      *
      * @ORM\OneToMany(targetEntity="RappelData", mappedBy="rappel", cascade={"all"}, orphanRemoval=true)
+     * @ORM\OrderBy({"order" = "ASC"})
      */
     private $datas;
 

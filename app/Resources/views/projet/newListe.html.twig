@@ -89,6 +89,11 @@
         }
       });
     });
-    $('#rappel_datas').sortable({ handle:'.sort_row' });
+    function refreshOrder() {
+      $('#rappel_datas tr').each(function(index, element) {
+        $(element).find('input[id*="_order"]').val((index + 1));
+      });
+    }
+    $('#rappel_datas').sortable({ handle:'.sort_row', start: function(event, row){}, update: function(event, row){refreshOrder();} });
   </script>
 {% endblock %}

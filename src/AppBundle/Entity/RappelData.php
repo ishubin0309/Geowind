@@ -47,6 +47,13 @@ class RappelData
     private $note;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(type="integer", options={"default" : 0})
+     */
+    private $order;
+
+    /**
      * @var Rappel
      *
      * @ORM\ManyToOne(targetEntity="Rappel", inversedBy="datas")
@@ -115,6 +122,25 @@ class RappelData
     public function setNote($note)
     {
         $this->note = $note;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getOrder()
+    {
+        return $this->order;
+    }
+
+    /**
+     *
+     * @param int $order
+     * @return \AppBundle\Entity\RappelData
+     */
+    public function setOrder($order)
+    {
+        $this->order = $order;
         return $this;
     }
 
