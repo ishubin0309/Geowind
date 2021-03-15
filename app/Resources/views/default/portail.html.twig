@@ -189,6 +189,7 @@
       { id: "region", name: "Région", field: "region", sortable: true, sorter: stringSorter, maxWidth: 250 },
       { id: "departement", name: "Département", field: "departement", sortable: true, sorter: stringSorter, width: 130, maxWidth: 250 },
       { id: "commune", name: "Commune", field: "commune", sortable: true, sorter: stringSorter, maxWidth: 250 },
+      { id: "plan", name: "Plan", field: "plan", sortable: true, sorter: stringSorter, maxWidth: 100 },
       { id: "potentiel", name: "Potentiel (MW)", field: "potentiel", sortable: true, cssClass: 'text-right', sorter: numericSorter, width: 100, maxWidth: 100 },
       { id: "phase", name: "Phase", field: "phase", sortable: true, sorter: stringSorter, formatter: phaseFormatter, width: 110, maxWidth: 110 },
       { id: "progression", name: "Etat", field: "progression", sortable: true, sorter: stringSorter, formatter: progressionFormatter, width: 110, maxWidth: 110 },
@@ -304,6 +305,9 @@
           {% endfor %}
           {% if not communeFound %}
             commune: '',
+          {% endif %}
+          {% if columnsType == 1 %}
+          plan: {% if projet.photoImplantation %}'Oui'{% else %}'Non'{% endif %},
           {% endif %}
           {% if columnsType == 2 %}
             {% set servitudes = false %}
