@@ -4,6 +4,37 @@
 {% set item = 'graphique' %}
 
 {% block body %}
+  <style>
+    .done {
+      background-color:#00CC33;
+    }
+    .refused {
+      background-color:#FF0000;
+    }
+    .in_progress {
+      animation-duration: 1000ms;
+      animation-name: blink;
+      animation-iteration-count: infinite;
+      animation-direction: alternate;
+      -webkit-animation:blink 1000ms infinite;
+    }
+    @keyframes blink {
+      from {
+        background-color:white;
+      }
+      to {
+        background-color:#007826;
+      }
+    }
+    @-webkit-keyframes blink {
+      from {
+        background-color:white;
+      }
+      to {
+        background-color:#007826;
+      }
+    }
+  </style>
   <div class="container-fluid">
     <h4 id="selected-counter">{{ projets|length }} sites</h4>
     <table class="table">
@@ -47,64 +78,64 @@
           id: {{ projet.id }},
           typeProjet: '{{ projet.typeProjet }}',
           {% set column = 0 %}
-          {% set color = '#00CC33' %}
+          {% set class = 'done' %}
           {% set en_attente = 0 %}
           {% if projet.phase == 'decision1' %}
             {% set column = 4 %}
             {% if projet.progression == 'rejet' %}
-              {% set color = '#FF0000' %}
+              {% set class = 'refused' %}
             {% elseif projet.progression == 'en_attente' %}
               {% set en_attente = 1 %}
-              {% set color = '#007826' %}
+              {% set class = 'in_progress' %}
             {% endif %}
           {% elseif projet.phase == 'decision2' %}
             {% set column = 10 %}
             {% if projet.progression == 'rejet' %}
-              {% set color = '#FF0000' %}
+              {% set class = 'refused' %}
             {% elseif projet.progression == 'en_attente' %}
               {% set en_attente = 1 %}
-              {% set color = '#007826' %}
+              {% set class = 'in_progress' %}
             {% endif %}
           {% elseif projet.phase == 'decision3' %}
             {% set column = 18 %}
             {% if projet.progression == 'rejet' %}
-              {% set color = '#FF0000' %}
+              {% set class = 'refused' %}
             {% elseif projet.progression == 'en_attente' %}
               {% set en_attente = 1 %}
-              {% set color = '#007826' %}
+              {% set class = 'in_progress' %}
             {% endif %}
           {% elseif projet.phase == 'decision4' %}
             {% set column = 26 %}
             {% if projet.progression == 'rejet' %}
-              {% set color = '#FF0000' %}
+              {% set class = 'refused' %}
             {% elseif projet.progression == 'en_attente' %}
               {% set en_attente = 1 %}
-              {% set color = '#007826' %}
+              {% set class = 'in_progress' %}
             {% endif %}
           {% elseif projet.phase == 'decision5' %}
             {% set column = 33 %}
             {% if projet.progression == 'rejet' %}
-              {% set color = '#FF0000' %}
+              {% set class = 'refused' %}
             {% elseif projet.progression == 'en_attente' %}
               {% set en_attente = 1 %}
-              {% set color = '#007826' %}
+              {% set class = 'in_progress' %}
             {% endif %}
           {% else %}
             {% set column = projet.progression|replace({'nouveau':0,'verification':1,'identification':2,'contacts':3,'visites':5,'pourpalers':6,'signatures':7,'sous_promesse':8,'accord_municipal':9,'devis_etude':11,'budgete':12,'a_letude':13,'avant_projet':14,'prerapport':15,'projet_fige':16,'etudes_boucles':17,'dossier_depose':19,'completude':20,'a_lenquete':21,'replique':22,'soutenance':23,'autorise':24,'purge':25,'bornage':27,'plan_exe':28,'baux_signe':29,'etude_geo':30,'contrat_rac':31,'contrat_achat':32,'chiffrage':34,'data_room':35,'audits':36,'finance':37,'achats':38,'en_travaux':39,'en_service':40}) %}
           {% endif %}
           column: {{ column }},
           {% if column %}
-            color: '{{ color }}',
+            class: '{{ class }}',
           {% else %}
-            color: '',
+            class: '',
           {% endif %}
       });
     {% endfor %}
     $.each(data, function(index, row) {
       var rest = '';
       for (var i = 1; i <= 40; i++) {
-        if(row['column'] > i) rest += '<td style="background-color:#00CC33;"></td>';
-        else if(row['column'] == i) rest += '<td style="background-color:'+row['color']+';"></td>';
+        if(row['column'] > i) rest += '<td class="done"></td>';
+        else if(row['column'] == i) rest += '<td class="'+row['class']+'"></td>';
         else rest += '<td></td>';
       }
       var found = 0;
