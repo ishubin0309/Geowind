@@ -131,6 +131,12 @@
           {% endif %}
       });
     {% endfor %}
+    var typeProjet = {{ grid_helper.getJsontypeProjets|raw }};
+
+    function typeProjetFormatter(value) {
+      return typeProjet[value] !== undefined ? typeProjet[value]['name'] : value;
+    }
+
     $.each(data, function(index, row) {
       var rest = '';
       for (var i = 1; i <= 40; i++) {
@@ -141,11 +147,11 @@
       var found = 0;
       $('#graphique tr').each(function(index2, row2) {
         if(!found && $(row2).attr('rel') < row['column']) {
-          $('<tr rel="'+row['column']+'"><td>'+row['id']+'</td><td>'+row['typeProjet']+'</td>'+rest+'</tr>').insertBefore($(row2));
+          $('<tr rel="'+row['column']+'"><td>'+row['id']+'</td><td>'+typeProjetFormatter(row['typeProjet'])+'</td>'+rest+'</tr>').insertBefore($(row2));
           found = true;
         }
       });
-      if(!found) $('#graphique').append('<tr rel="'+row['column']+'"><td>'+row['id']+'</td><td>'+row['typeProjet']+'</td>'+rest+'</tr>');
+      if(!found) $('#graphique').append('<tr rel="'+row['column']+'"><td>'+row['id']+'</td><td>'+typeProjetFormatter(row['typeProjet'])+'</td>'+rest+'</tr>');
     })
   </script>
 
