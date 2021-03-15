@@ -6,7 +6,34 @@
 {% block body %}
   <div class="container-fluid">
     <h4 id="selected-counter">{{ projets|length }} sites</h4>
-    
+    <table class="table">
+      <thead>
+        <tr>
+          <th></th>
+          <th></th>
+          <th colspan="3">Exploration</th>
+          <th>D1</th>
+          <th colspan="5">Négociation</th>
+          <th>D2</th>
+          <th colspan="7">Développement</th>
+          <th>D3</th>
+          <th colspan="7">Instruction</th>
+          <th>D4</th>
+          <th colspan="6">Pré-construction</th>
+          <th>D5</th>
+          <th colspan="7">Construction</th>
+        </tr>
+        <tr>
+          <th>ID</th>
+          <th>Type de projet</th>
+          {% for i in 1..40 %}
+          <th>{{ i }}</th>
+          {% endfor %}
+        </tr>
+      </thead>
+      <tbody id="graphique">
+      </tbody>
+    </table>
   </div>
 
 {% endblock %}
@@ -14,6 +41,81 @@
 {% block js %}
   
   <script>
+    var data = [];
+    {% for projet in projets %}
+      data.push({
+          id: {{ projet.id }},
+          typeProjet: '{{ projet.typeProjet }}',
+          {% set column = 0 %}
+          {% set color = '#00CC33' %}
+          {% set en_attente = 0 %}
+          {% if projet.phase == 'decision1' %}
+            {% set column = 4 %}
+            {% if projet.progression == 'rejet' %}
+              {% set color = '#FF0000' %}
+            {% elseif projet.progression == 'en_attente' %}
+              {% set en_attente = 1 %}
+              {% set color = '#007826' %}
+            {% endif %}
+          {% elseif projet.phase == 'decision2' %}
+            {% set column = 10 %}
+            {% if projet.progression == 'rejet' %}
+              {% set color = '#FF0000' %}
+            {% elseif projet.progression == 'en_attente' %}
+              {% set en_attente = 1 %}
+              {% set color = '#007826' %}
+            {% endif %}
+          {% elseif projet.phase == 'decision3' %}
+            {% set column = 18 %}
+            {% if projet.progression == 'rejet' %}
+              {% set color = '#FF0000' %}
+            {% elseif projet.progression == 'en_attente' %}
+              {% set en_attente = 1 %}
+              {% set color = '#007826' %}
+            {% endif %}
+          {% elseif projet.phase == 'decision4' %}
+            {% set column = 26 %}
+            {% if projet.progression == 'rejet' %}
+              {% set color = '#FF0000' %}
+            {% elseif projet.progression == 'en_attente' %}
+              {% set en_attente = 1 %}
+              {% set color = '#007826' %}
+            {% endif %}
+          {% elseif projet.phase == 'decision5' %}
+            {% set column = 33 %}
+            {% if projet.progression == 'rejet' %}
+              {% set color = '#FF0000' %}
+            {% elseif projet.progression == 'en_attente' %}
+              {% set en_attente = 1 %}
+              {% set color = '#007826' %}
+            {% endif %}
+          {% else %}
+            {% set column = projet.progression|replace({'nouveau':0,'verification':1,'identification':2,'contacts':3,'visites':5,'pourpalers':6,'signatures':7,'sous_promesse':8,'accord_municipal':9,'devis_etude':11,'budgete':12,'a_letude':13,'avant_projet':14,'prerapport':15,'projet_fige':16,'etudes_boucles':17,'dossier_depose':19,'completude':20,'a_lenquete':21,'replique':22,'soutenance':23,'autorise':24,'purge':25,'bornage':27,'plan_exe':28,'baux_signe':29,'etude_geo':30,'contrat_rac':31,'contrat_achat':32,'chiffrage':34,'data_room':35,'audits':36,'finance':37,'achats':38,'en_travaux':39,'en_service':40}) %}
+          {% endif %}
+          column: {{ column }},
+          {% if column %}
+            color: '{{ color }}',
+          {% else %}
+            color: '',
+          {% endif %}
+      });
+    {% endfor %}
+    $.each(data, function(index, row) {
+      var rest = '';
+      for (var i = 1; i <= 40; i++) {
+        if(row['column'] > i) rest += '<td style="background-color:#00CC33;"></td>';
+        else if(row['column'] == i) rest += '<td style="background-color:'+row['color']+';"></td>';
+        else rest += '<td></td>';
+      }
+      var found = 0;
+      $('#graphique tr').each(function(index2, row2) {
+        if(!found && $(row2).attr('rel') < row['column']) {
+          $('<tr rel="'+row['column']+'"><td>'+row['id']+'</td><td>'+row['typeProjet']+'</td>'+rest+'</tr>').insertBefore($(row2));
+          found = true;
+        }
+      });
+      if(!found) $('#graphique').append('<tr rel="'+row['column']+'"><td>'+row['id']+'</td><td>'+row['typeProjet']+'</td>'+rest+'</tr>');
+    })
   </script>
 
 {% endblock %}
