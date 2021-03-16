@@ -381,8 +381,8 @@
   <div class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-labelledby="carteModal">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content text-center">
-        <div id="implantation_photo" class="modal-body">
-          <img id="implantation_photo_close" title="Fermer" width="25" height="25" style="position:absolute;right:20px;top:20px;cursor:pointer;" src="{{ asset('images/close.png') }}">
+        <div id="popup_photo" class="modal-body">
+          <img id="popup_photo_close" title="Fermer" width="25" height="25" style="position:absolute;right:20px;top:20px;cursor:pointer;" src="{{ asset('images/close.png') }}">
           <a download="" href="#" title="Télécharger">
             <img style="max-width: 100%;padding:3%;" src="">
           </a>
@@ -689,23 +689,42 @@
     });
     
     {% if form.vars.value.photoImplantation is defined and form.vars.value.photoImplantation %}
-      if(!$('#popup_fichier').length) $('<button id="popup_fichier" class="btn btn-info btn-sm" data-toggle="modal" data-target=".bs-modal-lg">Afficher</button>').insertAfter('#projet_photoImplantationFile');
-      {# $('#implantation_photo img:eq(0)').removeClass('hide'); #}
-      $('#implantation_photo a').attr('href', '{{ asset('upload/' ~ form.vars.value.photoImplantation) }}');
-      $('#implantation_photo a').attr('download', '{{ form.vars.value.photoImplantation }}');
-      $('#implantation_photo img:eq(1)').attr('src', '{{ asset('upload/' ~ form.vars.value.photoImplantation) }}');
+      if(!$('#implantation_photo').length) $('<button id="implantation_photo" class="btn btn-info btn-sm popup_fichier" data-toggle="modal" data-target=".bs-modal-lg">Afficher</button>').insertAfter('#projet_photoImplantationFile');
+
+      $('#implantation_photo').attr('data-href', '{{ asset('upload/' ~ form.vars.value.photoImplantation) }}');
+      $('#implantation_photo').attr('data-download', '{{ form.vars.value.photoImplantation }}');
+      $('#implantation_photo').attr('data-src', '{{ asset('upload/' ~ form.vars.value.photoImplantation) }}');
     {% endif %}
+
+    {% if form.vars.value.documents is defined and form.vars.value.documents is not empty %}
+      {% for document in form.vars.value.documents %}
+        {% if document.plan or 'jpeg' in document.document|lower or 'jpg' in document.document|lower or 'png' in document.document|lower %}
+          if(!$('#documents_{{ loop.index0 }}_photo').length) $('<button id="documents_{{ loop.index0 }}_photo" class="btn btn-info btn-sm popup_fichier" data-toggle="modal" data-target=".bs-modal-lg">Afficher</button>').insertAfter('#projet_documents_{{ loop.index0 }}_documentFile');
+
+          $('#documents_{{ loop.index0 }}_photo').attr('data-href', '{{ asset('upload/' ~ document.document) }}');
+          $('#documents_{{ loop.index0 }}_photo').attr('data-download', '{{ document.document }}');
+          $('#documents_{{ loop.index0 }}_photo').attr('data-src', '{{ asset('upload/' ~ document.document) }}');
+        {% else %}
+          if(!$('#documents_{{ loop.index0 }}_photo').length) $('<a id="documents_{{ loop.index0 }}_photo" class="btn btn-info btn-sm" download="{{ document.document }}" href="{{ asset('upload/' ~ document.document) }}">Télécharger</a>').insertAfter('#projet_documents_{{ loop.index0 }}_documentFile');
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+    
     var next_document_id = $('#projet_documents tr').length;
     $('#projet_photoImplantationFile').change(function() {
       if (this.files && this.files[0]) {
         var reader = new FileReader();
         
         reader.onload = function(e) {
-          if(!$('#popup_fichier').length) $('<button id="popup_fichier" class="btn btn-info btn-sm" data-toggle="modal" data-target=".bs-modal-lg">Afficher</button>').insertAfter('#projet_photoImplantationFile');
-          {# $('#implantation_photo img:eq(0)').removeClass('hide'); #}
-          $('#implantation_photo a').attr('href', '#');
-          $('#implantation_photo a').removeAttr('download');
-          $('#implantation_photo img:eq(1)').attr('src', e.target.result);
+          if(!$('#implantation_photo').length) $('<button id="implantation_photo" class="btn btn-info btn-sm popup_fichier" data-toggle="modal" data-target=".bs-modal-lg">Afficher</button>').insertAfter('#projet_photoImplantationFile');
+
+          $('#implantation_photo').attr('data-href', '#');
+          $('#implantation_photo').removeAttr('data-download');
+          $('#implantation_photo').attr('data-src', e.target.result);
+          $('#popup_photo a').attr('href', '#');
+          $('#popup_photo a').removeAttr('download');
+          $('#popup_photo img:eq(1)').attr('src', e.target.result);
+
           if($('#projet_documents_'+next_document_id+'_plan').length && !$('#projet_documents_'+next_document_id+'_plan').prop('checked')) 
             next_document_id =$('#projet_documents tr').length;
           if(!$('#projet_documents_'+next_document_id+'_type').length) $('#projet_documents_add_entry').click();
@@ -725,11 +744,14 @@
       $('#projet_documents_'+next_document_id+'_titre').val($('#projet_titreImplantation option:selected').text());
           $('#projet_documents_'+next_document_id+'_plan').prop('checked', true);;
     });
-    $('body').on('click', '#implantation_photo_close', function() {
+    $('body').on('click', '#popup_photo_close', function() {
       $('.bs-modal-lg').modal('hide');
     });
-    $('body').on('click', '#popup_fichier', function(e) {
+    $('body').on('click', '.popup_fichier', function(e) {
       e.preventDefault();
+      $('#popup_photo a').attr('href', $(this).attr('data-href'));
+      $('#popup_photo a').attr('download', $(this).attr('data-download'));
+      $('#popup_photo img:eq(1)').attr('src', $(this).attr('data-src'));
     });
 
     var $collectionHolder = $('#projet_finances');
@@ -1576,7 +1598,6 @@
         if(attr != 'tab_localisation' && attr != 'tab_contacts' && attr != 'tab_site' && attr != 'tab_projet' && attr != 'tab_images') {
           $('#map').addClass('hide');
           $('#main_photo').addClass('hide');
-          {# $('#implantation_photo').addClass('hide'); #}
           $('#fields_div').removeClass('col-sm-6');
           $('#fields_div').addClass('col-sm-12');
           $('fieldset#' + attr + ' .col-sm-4').addClass('col-sm-2').removeClass('col-sm-4');
@@ -1591,12 +1612,9 @@
           if(attr != 'tab_images') {
             $('#map').removeClass('hide');
             $('#main_photo').addClass('hide');
-            {# if(attr == 'tab_projet') $('#implantation_photo').removeClass('hide');
-            else $('#implantation_photo').addClass('hide'); #}
           } else {
             $('#map').addClass('hide');
             $('#main_photo').removeClass('hide');
-            {# $('#implantation_photo').addClass('hide'); #}
           }
           $('#fields_div').removeClass('col-sm-12');
           $('#fields_div').addClass('col-sm-6');
