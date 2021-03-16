@@ -536,7 +536,7 @@
       $('#implantation_photo').attr('data-download', '{{ form.vars.value.photoImplantation }}');
       $('#implantation_photo').attr('data-src', '{{ asset('upload/' ~ form.vars.value.photoImplantation) }}');
     {% endif %}
-    
+
     {% if form.vars.value.documents is defined and form.vars.value.documents is not empty %}
       {% for document in form.vars.value.documents %}
         {% if document.plan or 'jpeg' in document.document|lower or 'jpg' in document.document|lower or 'png' in document.document|lower %}
@@ -551,8 +551,9 @@
       {% endfor %}
     {% endif %}
 
-    var next_document_id = $('#projet_documents tr').length;
+    var next_document_id = -1;
     $('#projet_photoImplantationFile').change(function() {
+      if(next_document_id == -1) next_document_id = $('#projet_documents tr').length;
       if (this.files && this.files[0]) {
         var reader = new FileReader();
         
@@ -578,12 +579,12 @@
       }
     });
     $('#projet_typeImplantation, #projet_titreImplantation').change(function() {
-      if($('#projet_documents_'+next_document_id+'_plan').length && !$('#projet_documents_'+next_document_id+'_plan').prop('checked')) 
-        next_document_id =$('#projet_documents tr').length;
-      if(!$('#projet_documents_'+next_document_id+'_type').length) $('#projet_documents_add_entry').click();
-      $('#projet_documents_'+next_document_id+'_type').val($('#projet_typeImplantation option:selected').text());
-      $('#projet_documents_'+next_document_id+'_titre').val($('#projet_titreImplantation option:selected').text());
-      $('#projet_documents_'+next_document_id+'_plan').prop('checked', true);
+      if(next_document_id != -1) {
+        if(!$('#projet_documents_'+next_document_id+'_type').length) $('#projet_documents_add_entry').click();
+        $('#projet_documents_'+next_document_id+'_type').val($('#projet_typeImplantation option:selected').text());
+        $('#projet_documents_'+next_document_id+'_titre').val($('#projet_titreImplantation option:selected').text());
+        $('#projet_documents_'+next_document_id+'_plan').prop('checked', true);
+      }
     });
     $('body').on('click', '#popup_photo_close', function() {
       $('.bs-modal-lg').modal('hide');
