@@ -404,6 +404,7 @@ col-sm-8
           <th>Titre</th>
           <th>Fichier</th>
           <th>Description</th>
+          <th class="hide2">Plan (?)</th>
         </tr>
       </thead>
       <tbody {{ block('widget_container_attributes') }}>
@@ -432,6 +433,7 @@ col-sm-8
       <td>{{ form_widget(form.titre) }}</td>
       <td>{{ form_widget(form.documentFile) }}</td>
       <td>{{ form_widget(form.description) }}</td>
+      <td class="hide2">{{ form_widget(form.plan) }}</td>
     </tr>
   {% endspaceless %}
 {% endblock %}

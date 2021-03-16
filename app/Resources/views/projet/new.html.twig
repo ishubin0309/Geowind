@@ -536,6 +536,7 @@
       $('#implantation_photo a').attr('download', '{{ form.vars.value.photoImplantation }}');
       $('#implantation_photo img:eq(1)').attr('src', '{{ asset('upload/' ~ form.vars.value.photoImplantation) }}');
     {% endif %}
+    var next_document_id = $('#projet_documents tr').length;
     $('#projet_photoImplantationFile').change(function() {
       if (this.files && this.files[0]) {
         var reader = new FileReader();
@@ -547,18 +548,24 @@
           $('#implantation_photo a').removeAttr('download');
           $('#implantation_photo img:eq(1)').attr('src', e.target.result);
           
-          if(!$('#projet_documents tr').length) $('#projet_documents_add_entry').click();
-          $('#projet_documents_0_type').val($('#projet_typeImplantation').val());
-          $('#projet_documents_0_titre').val($('#projet_titreImplantation').val());
+          if($('#projet_documents_'+next_document_id+'_plan').length && !$('#projet_documents_'+next_document_id+'_plan').prop('checked')) 
+            next_document_id =$('#projet_documents tr').length;
+          if(!$('#projet_documents_'+next_document_id+'_type').length) $('#projet_documents_add_entry').click();
+          $('#projet_documents_'+next_document_id+'_type').val($('#projet_typeImplantation option:selected').text());
+          $('#projet_documents_'+next_document_id+'_titre').val($('#projet_titreImplantation option:selected').text());
+          $('#projet_documents_'+next_document_id+'_plan').prop('checked', true);
         }
         
         reader.readAsDataURL(this.files[0]); // convert to base64 string
       }
     });
     $('#projet_typeImplantation, #projet_titreImplantation').change(function() {
-      if(!$('#projet_documents tr').length) $('#projet_documents_add_entry').click();
-      $('#projet_documents_0_type').val($('#projet_typeImplantation').val());
-      $('#projet_documents_0_titre').val($('#projet_titreImplantation').val());
+      if($('#projet_documents_'+next_document_id+'_plan').length && !$('#projet_documents_'+next_document_id+'_plan').prop('checked')) 
+        next_document_id =$('#projet_documents tr').length;
+      if(!$('#projet_documents_'+next_document_id+'_type').length) $('#projet_documents_add_entry').click();
+      $('#projet_documents_'+next_document_id+'_type').val($('#projet_typeImplantation option:selected').text());
+      $('#projet_documents_'+next_document_id+'_titre').val($('#projet_titreImplantation option:selected').text());
+      $('#projet_documents_'+next_document_id+'_plan').prop('checked', true);
     });
     $('body').on('click', '#implantation_photo_close', function() {
       $('.bs-modal-lg').modal('hide');
@@ -945,7 +952,11 @@
     });
 
     $('#projet_documents_remove_entry').click(function () {
-      $('> :last-child', $collectionHolderDocument).remove();
+      var documents_remove_index = -1;
+      $.each($collectionHolderDocument.children(), function(index, element) {
+        if(!$(element).find('td input[id*="plan"]').prop('checked')) documents_remove_index = index;
+      });
+      if(documents_remove_index >= 0) $('> :eq('+documents_remove_index+')', $collectionHolderDocument).remove();
     });
 
     var $collectionHolderParcelle = $('#projet_parcelles');

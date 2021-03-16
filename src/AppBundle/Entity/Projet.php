@@ -228,6 +228,7 @@ class Projet
      * @var ArrayCollection|Document[]
      *
      * @ORM\OneToMany(targetEntity="Document", mappedBy="projet", cascade={"all"}, orphanRemoval=true)
+     * @ORM\OrderBy({"plan" = "DESC"})
      */
     private $documents;
 
@@ -1013,7 +1014,7 @@ class Projet
     public function addDocument(Document $document)
     {
         if (!$this->documents->contains($document)) {
-            if(!$this->documents->count() && !$document->getDocument() && $this->photoImplantation) {
+            if(/*!$this->documents->count() && */!$document->getDocument() && $document->isPlan() && $this->photoImplantation) {
                 $document->setDocument($this->photoImplantation);
                 $document->setDocumentOriginalName($this->photoImplantationOriginalName);
             }

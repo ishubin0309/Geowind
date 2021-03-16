@@ -101,6 +101,13 @@ class Document
      */
     private $projet;
 
+    /**
+     * @var bool
+     *
+     * @ORM\Column(type="boolean")
+     */
+    private $plan = false;
+
     public function __construct()
     {
     }
@@ -230,6 +237,14 @@ class Document
     }
 
     /**
+     * @return bool
+     */
+    public function isPlan()
+    {
+        return $this->plan;
+    }
+
+    /**
      * @return Projet
      */
     public function getProjet()
@@ -252,6 +267,16 @@ class Document
     public function setDate(DateTime $date = null)
     {
         $this->date = $date;
+        return $this;
+    }
+
+    /**
+     * @param bool $plan
+     * @return \AppBundle\Entity\Document
+     */
+    public function setPlan($plan)
+    {
+        $this->plan = $plan;
         return $this;
     }
 
