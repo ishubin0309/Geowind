@@ -261,6 +261,7 @@
         if($(this).attr('id') == 'next_image') current_main_image = next;
         else current_main_image = prev;
         updatePrevNextButtons();
+        $('#main_photo img').attr('src', '');
         $('#main_photo img').attr('src', main_images[current_main_image][2]);
       }
     });
