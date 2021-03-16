@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
 
 {% set title = isNew ? 'Ajouter doc' : 'Editer doc' %}
-{% set item = 'graphique' %}
+{% set item = 'batiment' %}
 
 
 {% block body %}
   <div class="container">
-    <a href="{{ path('graphique') }}" class="btn btn-default btn-xs pull-right"><i class="fa fa-fw fa-close"></i> Annuler</a>
+    <a href="{{ path('batiment_index') }}" class="btn btn-default btn-xs pull-right"><i class="fa fa-fw fa-close"></i> Annuler</a>
     <div class="page-title"><h1>{{ title }}</h1></div>
     <hr>
     {{ form_start(form) }}

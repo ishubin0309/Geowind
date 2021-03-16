@@ -72,7 +72,7 @@
           </table>
         </div>
         <div class="col-md-6">
-          <div id="main_photo" class="col-sm-12"><img style="width: inherit;" src=""><nav style="margin-left:30%;" aria-label="Page navigation center-text"><ul class="pagination"><li class="page-item disabled"><a id="prev_image" class="page-link" href="#">Précédent</a></li><li class="page-item disabled"><a id="next_image" class="page-link" href="#">Suivant</a></li></ul></nav></div>
+          <div id="main_photo" class="col-sm-12"><nav style="margin-left:30%;" aria-label="Page navigation center-text"><ul class="pagination"><li class="page-item disabled"><a id="prev_image" class="page-link" href="#">Précédent</a></li><li class="page-item disabled"><a id="next_image" class="page-link" href="#">Suivant</a></li></ul></nav><img style="width: inherit;" src=""></div>
         </div>
       </div>
       {% endif %}
@@ -218,18 +218,19 @@
   <script>
   var current_main_image = 0;
     {% if docs[0].photo is defined and docs[0].photo %}
-    var main_images = {
-      {% for doc in docs %}
-      {{ loop.index0 }}:{0:'{{ doc.titre }}', 1:'{{ doc.note }}', 2:'{{ asset('upload/' ~ doc.photo) }}', 3:'{{ doc.date|date('d/m/Y') }}', 4: true}
-      {% if not loop.last %},{% endif %}{% endfor %}
-      };
-    $('#main_photo img').attr('src', main_images[0][2]);
-    {% if docs[1].photo is defined and docs[1].photo %}
-    updatePrevNextButtons();
-    {% endif %}
+      var main_images = {
+        {% for doc in docs %}
+        {{ loop.index0 }}:{0:'{{ doc.titre }}', 1:'{{ doc.note }}', 2:'{{ asset('upload/' ~ doc.photo) }}', 3:'{{ doc.date|date('d/m/Y') }}', 4: true}
+        {% if not loop.last %},{% endif %}{% endfor %}
+        };
+      $('#main_photo img').attr('src', main_images[0][2]);
+      {% if docs[1].photo is defined and docs[1].photo %}
+      updatePrevNextButtons();
+      {% endif %}
     {% else %}
-    var main_images = {};
+      var main_images = {};
     {% endif %}
+    console.log(main_images);
     function updatePrevNextButtons() {
       $('#docs tr.info').removeClass('info');
       if(main_images[current_main_image][4]) $('#docs tr:eq('+current_main_image+')').removeClass('success2').addClass('info');
@@ -237,8 +238,8 @@
       prev = -1;
       next = -1;
       $.each(main_images, function(i, value) {
-        if(current_main_image > i && value[4]) prev = 1;
-        if(next == -1 && current_main_image < i && value[4]) next = 1;
+        if(current_main_image > parseInt(i) && value[4]) prev = 1;
+        if(next == -1 && current_main_image < parseInt(i) && value[4]) next = 1;
       });
       if(prev >= 0) $('#prev_image').parent().removeClass('disabled');
       else  $('#prev_image').parent().addClass('disabled');
@@ -254,8 +255,8 @@
       prev = -1;
       next = -1;
       $.each(main_images, function(i, value) {
-        if(current_main_image > i && value[4]) prev = i;
-        if(next == -1 && current_main_image < i && value[4]) next = i;
+        if(current_main_image > parseInt(i) && value[4]) prev = i;
+        if(next == -1 && current_main_image < parseInt(i) && value[4]) next = i;
       });
       if(($(this).attr('id') == 'prev_image' && prev >= 0) || ($(this).attr('id') == 'next_image' && next >= 0)) {
         if($(this).attr('id') == 'next_image') current_main_image = next;
@@ -266,17 +267,17 @@
       }
     });
     $('#docs_recherche').change(function() {
-      var search = $(this).val();
+      var search = $(this).val().trim();
       $('#main_photo img').attr('src', '');
       found = 0;
       $.each(main_images, function(i, value) {
         if(value[0].match(new RegExp(search, 'gi')) || value[1].match(new RegExp(search, 'gi')) || value[3].match(new RegExp(search, 'gi'))) {
+          main_images[i][4] = true;
           if(!found) {
             $('#docs tr:eq('+i+')').addClass('info');
             found = 1;
             current_main_image = i;
             $('#main_photo img').attr('src', value[2]);
-            main_images[i][4] = true;
           } else $('#docs tr:eq('+i+')').addClass('success2');
         } else {
           main_images[i][4] = false;

@@ -162,7 +162,8 @@ class BatimentController extends Controller
             if($isNew) $this->addFlash('success', 'News crée avec succès.');
             else $this->addFlash('success', 'News modifié avec succès.');
 
-            return $this->redirectToRoute('graphique');
+            if($isNew) return $this->redirectToRoute('news_new');
+            else return $this->redirectToRoute('batiment_index');
         }
 
         return $this->render('batiment/news.html.twig', [
@@ -202,8 +203,8 @@ class BatimentController extends Controller
             $em->flush();
             if($isNew) $this->addFlash('success', 'Docs crée avec succès.');
             else $this->addFlash('success', 'Docs modifié avec succès.');
-
-            return $this->redirectToRoute('graphique');
+            if($isNew) return $this->redirectToRoute('docs_new');
+            else return $this->redirectToRoute('batiment_index');
         }
 
         return $this->render('batiment/docs.html.twig', [

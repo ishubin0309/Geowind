@@ -1148,8 +1148,8 @@
       prev = -1;
       next = -1;
       $.each(main_images, function(i, value) {
-        if(current_main_image > i && value[4]) prev = 1;
-        if(next == -1 && current_main_image < i && value[4]) next = 1;
+        if(current_main_image > parseInt(i) && value[4]) prev = 1;
+        if(next == -1 && current_main_image < parseInt(i) && value[4]) next = 1;
       });
       if(prev >= 0) $('#prev_image').parent().removeClass('disabled');
       else  $('#prev_image').parent().addClass('disabled');
@@ -1165,8 +1165,8 @@
       prev = -1;
       next = -1;
       $.each(main_images, function(i, value) {
-        if(current_main_image > i && value[4]) prev = i;
-        if(next == -1 && current_main_image < i && value[4]) next = i;
+        if(current_main_image > parseInt(i) && value[4]) prev = i;
+        if(next == -1 && current_main_image < parseInt(i) && value[4]) next = i;
       });
       if(($(this).attr('id') == 'prev_image' && prev >= 0) || ($(this).attr('id') == 'next_image' && next >= 0)) {
         if($(this).attr('id') == 'next_image') current_main_image = next;
@@ -1219,12 +1219,12 @@
       found = 0;
       $.each(main_images, function(i, value) {
         if(value[0].match(new RegExp(search, 'gi')) || value[1].match(new RegExp(search, 'gi')) || value[3].match(new RegExp(search, 'gi'))) {
+          main_images[i][4] = true;
           if(!found) {
             $('#projet_notes tr:eq('+i+')').addClass('info');
             found = 1;
-            current_main_image = i;
+            current_main_image = parseInt(i);
             $('#main_photo img').attr('src', value[2]);
-            main_images[i][4] = true;
           } else $('#projet_notes tr:eq('+i+')').addClass('success2');
         } else {
           main_images[i][4] = false;
