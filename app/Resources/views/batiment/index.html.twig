@@ -57,7 +57,7 @@
                 <td>{{ item.date|date('d/m/Y') }}</td>
                 <td class="column-fit">{{ item.titre }}</td>
                 <td>
-                <button class="btn btn-info btn-sm btn_note">Afficher</button>
+                {% if item.note %}<button class="btn btn-info btn-sm btn_note">Afficher</button>{% endif %}
                 <span class="hide">{{ item.note }}</span>
                 </td>
                 <td>{{ item.photoOriginalName }}</td>
@@ -141,7 +141,7 @@
               <td>{{ item.filiere }}</td>
               <td class="column-fit">{{ item.titre }}</td>
               <td>
-              <button class="btn btn-info btn-sm btn_note">Afficher</button>
+              {% if item.note %}<button class="btn btn-info btn-sm btn_note">Afficher</button>{% endif %}
               <span class="hide">{{ item.note }}</span>
               </td>
               <td>{{ item.url }}</td>
