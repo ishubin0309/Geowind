@@ -1015,7 +1015,9 @@ class Projet
     {
         if (!$this->documents->contains($document)) {
             if(/*!$this->documents->count() && */!$document->getDocument() && $document->isPlan() && $this->photoImplantation) {
-                $document->setDocument($this->photoImplantation);
+                $target_file = uniqid() . '_' . $this->photoImplantationOriginalName;
+                copy('upload/'.$this->photoImplantation, 'upload/'.$target_file);
+                $document->setDocument($target_file);
                 $document->setDocumentOriginalName($this->photoImplantationOriginalName);
             }
             $document->setProjet($this);
