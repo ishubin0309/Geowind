@@ -65,7 +65,7 @@ class ProjetVoter extends Voter
             return true;
         }
 
-        return $projet->getOrigine() == $token->getUser();
+        return $projet->getOrigine() == $token->getUser() || $projet->getChefProjet() == $token->getUser();
     }
 
     private function canEdit(Projet $projet, TokenInterface $token)
@@ -76,6 +76,6 @@ class ProjetVoter extends Voter
             return true;
         }
 
-        return $projet->getOrigine() == $token->getUser();
+        return $projet->getOrigine() == $token->getUser() || $projet->getChefProjet() == $token->getUser();
     }
 }
