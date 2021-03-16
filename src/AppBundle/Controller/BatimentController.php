@@ -3,7 +3,11 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\BatimentNouveau;
+use AppBundle\Entity\News;
+use AppBundle\Entity\Docs;
 use AppBundle\Form\BatimentNouveauType;
+use AppBundle\Form\NewsType;
+use AppBundle\Form\DocsType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -29,8 +33,16 @@ class BatimentController extends Controller
         $batiments = $em->getRepository('AppBundle:BatimentNouveau')
                     ->findAll();
 
+        $news = $em->getRepository('AppBundle:News')
+                    ->findAll();
+
+        $docs = $em->getRepository('AppBundle:Docs')
+                    ->findAll();
+
         return $this->render('batiment/index.html.twig', [
             'batiments' => $batiments,
+            'news' => $news,
+            'docs' => $docs,
         ]);
     }
 
@@ -115,6 +127,140 @@ class BatimentController extends Controller
             $this->addFlash('success', 'Batiment « ' . $nom . ' » supprimé avec succès.');
             $response->setData(['success' => 1]);
         }
+
+        return $response;
+    }
+
+    /**
+     * @Route("/news/nouveau", name="news_new")
+     * @Method({"GET", "POST"})
+     */
+    public function newNewsAction(Request $request)
+    {
+        $news = new News();
+        return $this->news($request, $news, 1);
+    }
+
+    /**
+     * @Route("/{id}/news/modifier", name="news_edit")
+     * @Method({"GET", "POST"})
+     */
+    public function editNewsAction(Request $request, News $news)
+    {
+        return $this->news($request, $news, 0);
+    }
+    private function news($request, $news, $isNew=1)
+    {
+        $form = $this->createForm(NewsType::class, $news);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($news);
+            $em->flush();
+            if($isNew) $this->addFlash('success', 'News crée avec succès.');
+            else $this->addFlash('success', 'News modifié avec succès.');
+
+            return $this->redirectToRoute('graphique');
+        }
+
+        return $this->render('batiment/news.html.twig', [
+            'news' => $news,
+            'isNew' => $isNew,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/docs/nouveau", name="docs_new")
+     * @Method({"GET", "POST"})
+     */
+    public function newDocsAction(Request $request)
+    {
+        $docs = new Docs();
+        return $this->docs($request, $docs, 1);
+    }
+
+    /**
+     * @Route("/{id}/docs/modifier", name="docs_edit")
+     * @Method({"GET", "POST"})
+     */
+    public function editDocsAction(Request $request, Docs $docs)
+    {
+        return $this->docs($request, $docs, 0);
+    }
+    private function docs($request, $docs, $isNew=1)
+    {
+        $form = $this->createForm(DocsType::class, $docs);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($docs);
+            $em->flush();
+            if($isNew) $this->addFlash('success', 'Docs crée avec succès.');
+            else $this->addFlash('success', 'Docs modifié avec succès.');
+
+            return $this->redirectToRoute('graphique');
+        }
+
+        return $this->render('batiment/docs.html.twig', [
+            'docs' => $docs,
+            'isNew' => $isNew,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/news/{id}/supprimer", name="news_delete", options={ "expose": true })
+     * @Method("DELETE")
+     * @Security("has_role('ROLE_ADMIN')")
+     */
+    public function newsDeleteAction(Request $request, News $news)
+    {
+        $csrf = $request->request->get('csrf', null);
+
+        if ($this->isCsrfTokenValid('token', $csrf)) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $em = $this->getDoctrine()->getManager();
+
+        $response = new JsonResponse();
+        $response->setData(['success' => 0]);
+        $em = $this->getDoctrine()->getManager();
+        $titre = $news->getTitre();
+        $em->remove($news);
+        $em->flush();
+        $this->addFlash('success', 'News « '.$titre.' » a été supprimé.');
+
+        return $response;
+    }
+
+    /**
+     * @Route("/docs/{id}/supprimer", name="docs_delete", options={ "expose": true })
+     * @Method("DELETE")
+     * @Security("has_role('ROLE_ADMIN')")
+     */
+    public function docsDeleteAction(Request $request, Docs $docs)
+    {
+        $csrf = $request->request->get('csrf', null);
+
+        if ($this->isCsrfTokenValid('token', $csrf)) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $em = $this->getDoctrine()->getManager();
+
+        $response = new JsonResponse();
+        $response->setData(['success' => 0]);
+        $em = $this->getDoctrine()->getManager();
+        $titre = $docs->getTitre();
+        $em->remove($docs);
+        $em->flush();
+        $this->addFlash('success', 'Doc « '.$titre.' » a été supprimé.');
 
         return $response;
     }

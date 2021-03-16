@@ -5,10 +5,6 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Projet;
 use AppBundle\Entity\Liste;
 use AppBundle\Entity\MessageProprietaire;
-use AppBundle\Entity\News;
-use AppBundle\Entity\Docs;
-use AppBundle\Form\NewsType;
-use AppBundle\Form\DocsType;
 use AppBundle\Helper\GridHelper;
 use AppBundle\Model\AvisMairie;
 use AppBundle\Model\ExportOption;
@@ -163,151 +159,13 @@ class DefaultController extends Controller
         } else {
             $projets = $em->getRepository('AppBundle:Projet')->findUserProjets($this->getUser(), false, $offset, $limit);
         }
-        $news = $em->getRepository('AppBundle:News')->findAll();
-        $docs = $em->getRepository('AppBundle:Docs')->findAll();
 
         $gridHelper = new GridHelper();
 
         return $this->render('default/graphique.html.twig', [
             'projets' => $projets,
-            'news' => $news,
-            'docs' => $docs,
             'grid_helper' => $gridHelper,
         ]);
-    }
-
-    /**
-     * @Route("/news/nouveau", name="news_new")
-     * @Method({"GET", "POST"})
-     */
-    public function newNewsAction(Request $request)
-    {
-        $news = new News();
-        return $this->news($request, $news, 1);
-    }
-
-    /**
-     * @Route("/{id}/news/editer", name="news_edit")
-     * @Method({"GET", "POST"})
-     */
-    public function editNewsAction(Request $request, News $news)
-    {
-        return $this->news($request, $news, 0);
-    }
-    private function news($request, $news, $isNew=1)
-    {
-        $form = $this->createForm(NewsType::class, $news);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($news);
-            $em->flush();
-            if($isNew) $this->addFlash('success', 'News crée avec succès.');
-            else $this->addFlash('success', 'News modifié avec succès.');
-
-            return $this->redirectToRoute('graphique');
-        }
-
-        return $this->render('default/news.html.twig', [
-            'news' => $news,
-            'isNew' => $isNew,
-            'form' => $form->createView(),
-        ]);
-    }
-
-    /**
-     * @Route("/docs/nouveau", name="docs_new")
-     * @Method({"GET", "POST"})
-     */
-    public function newDocsAction(Request $request)
-    {
-        $docs = new Docs();
-        return $this->docs($request, $docs, 1);
-    }
-
-    /**
-     * @Route("/{id}/docs/editer", name="docs_edit")
-     * @Method({"GET", "POST"})
-     */
-    public function editDocsAction(Request $request, Docs $docs)
-    {
-        return $this->docs($request, $docs, 0);
-    }
-    private function docs($request, $docs, $isNew=1)
-    {
-        $form = $this->createForm(DocsType::class, $docs);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($docs);
-            $em->flush();
-            if($isNew) $this->addFlash('success', 'Docs crée avec succès.');
-            else $this->addFlash('success', 'Docs modifié avec succès.');
-
-            return $this->redirectToRoute('graphique');
-        }
-
-        return $this->render('default/docs.html.twig', [
-            'docs' => $docs,
-            'isNew' => $isNew,
-            'form' => $form->createView(),
-        ]);
-    }
-
-    /**
-     * @Route("/news/{id}/supprimer", name="news_delete", options={ "expose": true })
-     * @Method("DELETE")
-     * @Security("has_role('ROLE_ADMIN')")
-     */
-    public function newsDeleteAction(Request $request, News $news)
-    {
-        $csrf = $request->request->get('csrf', null);
-
-        if ($this->isCsrfTokenValid('token', $csrf)) {
-            throw $this->createAccessDeniedException();
-        }
-
-        $em = $this->getDoctrine()->getManager();
-
-        $response = new JsonResponse();
-        $response->setData(['success' => 0]);
-        $em = $this->getDoctrine()->getManager();
-        $titre = $news->getTitre();
-        $em->remove($news);
-        $em->flush();
-        $this->addFlash('success', 'News « '.$titre.' » a été supprimé.');
-
-        return $response;
-    }
-
-    /**
-     * @Route("/docs/{id}/supprimer", name="docs_delete", options={ "expose": true })
-     * @Method("DELETE")
-     * @Security("has_role('ROLE_ADMIN')")
-     */
-    public function docsDeleteAction(Request $request, Docs $docs)
-    {
-        $csrf = $request->request->get('csrf', null);
-
-        if ($this->isCsrfTokenValid('token', $csrf)) {
-            throw $this->createAccessDeniedException();
-        }
-
-        $em = $this->getDoctrine()->getManager();
-
-        $response = new JsonResponse();
-        $response->setData(['success' => 0]);
-        $em = $this->getDoctrine()->getManager();
-        $titre = $docs->getTitre();
-        $em->remove($docs);
-        $em->flush();
-        $this->addFlash('success', 'Doc « '.$titre.' » a été supprimé.');
-
-        return $response;
     }
 
     /**
