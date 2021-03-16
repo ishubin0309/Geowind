@@ -47,7 +47,7 @@
                 <th>Date</th>
                 <th class="column-fit">Titre</th>
                 <th>Note</th>
-                <th>Photo</th>
+                <th>Doc</th>
                 <th class="column-fit"></th>
               </tr>
             </thead>
@@ -72,7 +72,7 @@
           </table>
         </div>
         <div class="col-md-6">
-          <div id="main_photo" class="col-sm-12"><nav style="margin-left:30%;" aria-label="Page navigation center-text"><ul class="pagination"><li class="page-item disabled"><a id="prev_image" class="page-link" href="#">Précédent</a></li><li class="page-item disabled"><a id="next_image" class="page-link" href="#">Suivant</a></li></ul></nav><img style="width: inherit;" src=""></div>
+          <div id="main_photo" class="col-sm-12"><nav style="margin-left:30%;" aria-label="Page navigation center-text"><ul class="pagination"><li class="page-item disabled"><a id="prev_image" class="page-link" href="#">Précédent</a></li><li class="page-item disabled"><a id="next_image" class="page-link" href="#">Suivant</a></li></ul></nav><a style="width: inherit;" href="#"><img style="width: inherit;" src="" alt="Télécharger"></a></div>
         </div>
       </div>
       {% endif %}
@@ -220,10 +220,12 @@
     {% if docs[0].photo is defined and docs[0].photo %}
       var main_images = {
         {% for doc in docs %}
-        {{ loop.index0 }}:{0:'{{ doc.titre }}', 1:'{{ doc.note }}', 2:'{{ asset('upload/' ~ doc.photo) }}', 3:'{{ doc.date|date('d/m/Y') }}', 4: true}
+        {{ loop.index0 }}:{0:'{{ doc.titre }}', 1:'{{ doc.note }}', 2:'{{ asset('upload/' ~ doc.photo) }}', 3:'{{ doc.date|date('d/m/Y') }}', 4: true, 5: '{{ doc.photo }}'}
         {% if not loop.last %},{% endif %}{% endfor %}
         };
       $('#main_photo img').attr('src', main_images[0][2]);
+        $('#main_photo img').parent().attr('href', main_images[0][2]);
+        $('#main_photo img').parent().attr('download', main_images[0][5]);
       {% if docs[1].photo is defined and docs[1].photo %}
       updatePrevNextButtons();
       {% endif %}
@@ -264,6 +266,8 @@
         updatePrevNextButtons();
         $('#main_photo img').attr('src', '');
         $('#main_photo img').attr('src', main_images[current_main_image][2]);
+        $('#main_photo img').parent().attr('href', main_images[current_main_image][2]);
+        $('#main_photo img').parent().attr('download', main_images[current_main_image][5]);
       }
     });
     $('#docs_recherche').change(function() {
@@ -278,6 +282,8 @@
             found = 1;
             current_main_image = i;
             $('#main_photo img').attr('src', value[2]);
+            $('#main_photo img').parent().attr('href', value[2]);
+            $('#main_photo img').parent().attr('download', value[5]);
           } else $('#docs tr:eq('+i+')').addClass('success2');
         } else {
           main_images[i][4] = false;

@@ -37,16 +37,6 @@ class DocsType extends AbstractType
             ->add('photoFile', FileType::class, [
                 'label' => 'Photo',
                 'required' => false,
-                'constraints' => [
-                    new File([
-                        'maxSize' => '20m',
-                        'mimeTypes' => [
-                            'image/jpeg',
-                            'image/png',
-                        ],
-                        'mimeTypesMessage' => 'Please upload a valid Image document',
-                    ])
-                ],
             ])
         ;
     }
