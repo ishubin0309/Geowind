@@ -736,6 +736,51 @@ class ProjetController extends Controller
     }
 
     /**
+     * @Route("/archive/batch", name="projet_batch_archive", options = { "expose" = true })
+     * @Method("POST")
+     * @Security("has_role('ROLE_EDIT')")
+     */
+    public function archiveProjetsAction(Request $request)
+    {
+        $ids = $request->request->get('ids', []);
+        $csrf = $request->request->get('csrf', null);
+
+        if ($this->isCsrfTokenValid('token', $csrf)) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $em = $this->getDoctrine()->getManager();
+
+        if ($this->isGranted('ROLE_EDIT_ALL')) {
+            $projets = $em->getRepository('AppBundle:Projet')
+                        ->findById($ids);
+        } else {
+            $projets = $em->getRepository('AppBundle:Projet')
+                        ->findUserProjetsById($this->getUser(), $ids);
+        }
+
+        $total = count($ids);
+        $archived = count($projets);
+
+        foreach ($projets as $projet) {
+            $projet->setArchived(true);
+            $em->persist($projet);
+        }
+
+        $em->flush();
+
+        if ($archived > 1) {
+            $this->addFlash('success', $archived . ' entrées archivées sur ' . $total . '.');
+        } else {
+            $this->addFlash('success', $archived . ' entrée archivée sur ' . $total . '.');
+        }
+
+        $response = new JsonResponse();
+        $response->setData(['success' => 1]);
+        return $response;
+    }
+
+    /**
      * @Route("/delete/batch", name="projet_batch_delete", options = { "expose" = true })
      * @Method("DELETE")
      * @Security("has_role('ROLE_EDIT')")

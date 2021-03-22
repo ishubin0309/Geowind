@@ -82,7 +82,13 @@
     })
 
     {% for projet in projets %}
-      L.marker([{{ projet.latitude }}, {{ projet.longitude }}], { id: {{ projet.id }}, icon: markers["{{ projet.progression|e('js') }}"]}).addTo(map).bindTooltip("{{ projet.denomination|e('js') }}").bindPopup("{{ projet.denomination|e('js') }}").on('click', onMarkerClick){% if loop.index0 == focus_index %}.openPopup(){% endif %};
+      if({{ projet.latitude }})
+        L.marker([{{ projet.latitude }}, {{ projet.longitude }}], { id: {{ projet.id }}, icon: markers["{{ projet.progression|e('js') }}"]}).addTo(map).bindTooltip("{{ projet.denomination|e('js') }}").bindPopup("{{ projet.denomination|e('js') }}").on('click', onMarkerClick){% if loop.index0 == focus_index %}.openPopup(){% endif %};
+        else {
+          lat = Math.floor(Math.random() * 7) + 42;
+          lng = Math.floor(Math.random() * 6);
+          L.marker([lat, lng], { id: {{ projet.id }}, icon: markers["{{ projet.progression|e('js') }}"]}).addTo(map).bindTooltip("{{ projet.denomination|e('js') }}").bindPopup("{{ projet.denomination|e('js') }}").on('click', onMarkerClick){% if loop.index0 == focus_index %}.openPopup(){% endif %};
+        }
     {% endfor %}
 
 
