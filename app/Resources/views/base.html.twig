@@ -19,6 +19,12 @@
     <link rel="stylesheet" href="{{ asset('vendor/SlickGrid-master/slick.grid.css') }}">
     <link rel="stylesheet" href="{{ asset('css/slickgrid.css') }}">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}?version=1.2">
+    <style>
+      #navbar > .navbar-nav > li > a {
+        padding-right: 6px;
+        padding-left: 6px;
+      }
+    </style>
     {% block css %}{% endblock %}
   </head>
   <body>
@@ -71,6 +77,7 @@
                   <i class="fa fa-map-o"></i> Cartographie des parcs éoliens construits</a></li>#}
             {% endif %}
             <li{{ item is defined and item == 'graphique' ? ' class="active"' }}><a href="{{ path('graphique') }}"><i class="fa fa-bar-chart"></i> Stats</a></li>
+            <li{{ item is defined and item == 'tableaux' ? ' class="active"' }}><a href="{{ path('tableaux') }}"><i class="fa fa-table"></i> Tableaux</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">

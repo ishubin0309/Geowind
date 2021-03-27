@@ -67,6 +67,21 @@ class ProjetRepository extends EntityRepository
         return new Paginator($query->getQuery()->setFirstResult($offset)->setMaxResults($limit));
     }
 
+    public function findAllForStatsPaginator($archived = false, $offset=0, $limit=100)
+    {
+        $query = $this->createQueryBuilder('p')
+                ->select(['p', 'u', 'd', 'r'])
+                ->leftJoin('p.origine', 'u')
+                ->leftJoin('p.departement', 'd')
+                ->leftJoin('d.region', 'r')
+                ->where('p.archived = :archived')
+                // ->orderBy('p.dateCreation', 'ASC')
+                ->setParameter('archived', $archived)
+        ;
+
+        return new Paginator($query->getQuery()->setFirstResult($offset)->setMaxResults($limit));
+    }
+
     public function findAllCount($archived = false)
     {
         $query = $this->createQueryBuilder('p')
@@ -131,6 +146,23 @@ class ProjetRepository extends EntityRepository
         ;
 
         return $query->getQuery()->getResult();
+    }
+
+    public function findUserForStatsProjets(User $user, $archived = false, $offset=0, $limit=100)
+    {
+        $query = $this->createQueryBuilder('p')
+                ->select(['p', 'u', 'd', 'r'])
+                ->leftJoin('p.origine', 'u')
+                ->leftJoin('p.departement', 'd')
+                ->leftJoin('d.region', 'r')
+                ->where('p.origine = :user')
+                ->andWhere('p.archived = :archived')
+                // ->orderBy('p.dateCreation', 'ASC')
+                ->setParameter('user', $user)
+                ->setParameter('archived', $archived)
+        ;
+
+        return new Paginator($query->getQuery()->setFirstResult($offset)->setMaxResults($limit));
     }
 
     public function findUserProjets(User $user, $archived = false, $offset=0, $limit=100)
