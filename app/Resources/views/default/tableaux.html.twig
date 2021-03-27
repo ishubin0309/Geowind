@@ -138,22 +138,6 @@
       url = '{{ path('projet_edit', {id: 0}) }}';
       return url.replace(/0/, value);
     }
-    {# $.each(data, function(index, row) {
-      var rest = '';
-      for (var i = 1; i <= 40; i++) {
-        if(row['column'] > i) rest += '<td class="done"></td>';
-        else if(row['column'] == i) rest += '<td class="'+row['class']+'"></td>';
-        else rest += '<td></td>';
-      }
-      var found = 0;
-      $('#tableaux tr').each(function(index2, row2) {
-        if(!found && $(row2).attr('rel') < row['column']) {
-          $('<tr rel="'+row['column']+'"><td><a href="'+formatProjetLink(row['id'])+'">'+row['id']+'</a></td><td>'+typeProjetFormatter(row['typeProjet'])+'</td>'+rest+'</tr>').insertBefore($(row2));
-          found = true;
-        }
-      });
-      if(!found) $('#tableaux').append('<tr rel="'+row['column']+'"><td><a href="'+formatProjetLink(row['id'])+'">'+row['id']+'</a></td><td>'+typeProjetFormatter(row['typeProjet'])+'</td>'+rest+'</tr>');
-    }) #}
     $.each(byType, function(index, row) {
       var total = 0;
       var type = index;
@@ -185,7 +169,7 @@
       else rest += '<td>0</td>';
       var found = 0;
       $('#tableaux_by_type tr').each(function(index2, row2) {
-        if(!found && $(row2).attr('rel') < total) {
+        if(!found && $(row2).attr('rel') > total) {
           $('<tr rel="'+total+'"><td>'+typeProjetFormatter(index)+'</td>'+rest+'</tr>').insertBefore($(row2));
           found = true;
         }
@@ -223,7 +207,7 @@
       else rest += '<td>0</td>';
       var found = 0;
       $('#tableaux_by_region tr').each(function(index2, row2) {
-        if(!found && $(row2).attr('rel') < total) {
+        if(!found && $(row2).attr('rel') > total) {
           $('<tr rel="'+total+'"><td>'+index+'</td>'+rest+'</tr>').insertBefore($(row2));
           found = true;
         }
@@ -261,7 +245,7 @@
       else rest += '<td>0</td>';
       var found = 0;
       $('#tableaux_by_user tr').each(function(index2, row2) {
-        if(!found && $(row2).attr('rel') < total) {
+        if(!found && $(row2).attr('rel') > total) {
           $('<tr rel="'+total+'"><td>'+users[index]+'</td>'+rest+'</tr>').insertBefore($(row2));
           found = true;
         }
