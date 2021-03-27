@@ -77,7 +77,6 @@
                   <i class="fa fa-map-o"></i> Cartographie des parcs éoliens construits</a></li>#}
             {% endif %}
             <li{{ item is defined and item == 'graphique' ? ' class="active"' }}><a href="{{ path('graphique') }}"><i class="fa fa-bar-chart"></i> Stats</a></li>
-            <li{{ item is defined and item == 'tableaux' ? ' class="active"' }}><a href="{{ path('tableaux') }}"><i class="fa fa-table"></i> Tableaux</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
