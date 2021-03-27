@@ -82,37 +82,37 @@
         <table class="table table-condensed table-form">
           <thead>
             <tr>
+              <th>Fonction</th>
               <th>Utilisateur</th>
-              <th>Profil</th>
               <th>Téléphone</th>
             </tr>
           </thead>
           <tbody>
             <tr>
+              <td>Sourceur</td>
               <td class="required">{{ form_widget(form.origine, {'attr': {'style': 'width:100%'}}) }}</td>
-              <td>Origine</td>
               <td>{{ form_widget(form.origineTelephone) }}</td>
             </tr>
             <tr>
-              <td>{{ form_widget(form.chargeFoncier, {'attr': {'style': 'width:100%'}}) }}</td>
               <td>chargé de foncier</td>
+              <td>{{ form_widget(form.chargeFoncier, {'attr': {'style': 'width:100%'}}) }}</td>
               <td>{{ form_widget(form.chargeFoncierTelephone) }}</td>
             </tr>
             {# {% if is_granted('ROLE_ADMIN') %} #}
             <tr>
-              <td class="required">{{ form_widget(form.chefProjet, {'attr': {'style': 'width:100%'}}) }}</td>
               <td>Chef projet</td>
+              <td class="required">{{ form_widget(form.chefProjet, {'attr': {'style': 'width:100%'}}) }}</td>
               <td>{{ form_widget(form.chefProjetTelephone) }}</td>
             </tr>
             {# {% endif %} #}
             <tr>
-              <td class="required">{{ form_widget(form.partenaire, {'attr': {'style': 'width:100%'}}) }}</td>
               <td>Partenaire</td>
+              <td class="required">{{ form_widget(form.partenaire, {'attr': {'style': 'width:100%'}}) }}</td>
               <td>{{ form_widget(form.partenaireTelephone) }}</td>
             <tr>
             <tr>
-              <td class="required">{{ form_widget(form.mairie, {'attr': {'style': 'width:100%'}}) }}</td>
               <td>Mairie</td>
+              <td class="required">{{ form_widget(form.mairie, {'attr': {'style': 'width:100%'}}) }}</td>
               <td>{{ form_widget(form.mairieTelephone) }}</td>
             <tr>
           </tbody>
