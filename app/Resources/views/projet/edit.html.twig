@@ -178,6 +178,11 @@
             </tr>
             {# {% if is_granted('ROLE_ADMIN') %} #}
             <tr>
+              <td>{{ form_widget(form.chargeFoncier, {'attr': {'style': 'width:100%'}}) }}</td>
+              <td>chargé de foncier</td>
+              <td>{{ form_widget(form.chargeFoncierTelephone) }}</td>
+            </tr>
+            <tr>
               <td class="required">{{ form_widget(form.chefProjet, {'attr': {'style': 'width:100%'}}) }}</td>
               <td>Chef projet</td>
               <td>{{ form_widget(form.chefProjetTelephone) }}</td>
@@ -666,7 +671,7 @@
       minimumInputLength: 1,
     });
 
-    $("#projet_origine, #projet_chefProjet, #projet_partenaire").select2();
+    $("#projet_origine, #projet_chargeFoncier, #projet_chefProjet, #projet_partenaire").select2();
     var queryMairieUrl = "{{ path('mairie_search') }}";
     
     $("#projet_mairie").select2({
