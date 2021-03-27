@@ -110,7 +110,7 @@
         <div class="collapse navbar-collapse" id="nouveau_projet_nav">
           <ul class="nav navbar-nav">
             <li class="active"><a href="#" rel="tab_localisation">Localisation</a></li>
-            <li class=""><a href="#" rel="tab_contacts">Contacts</a></li>
+            <li class="{% if not is_granted('ROLE_ADMIN') %}hide{% endif %}"><a href="#" rel="tab_contacts">Contacts</a></li>
             <li class=""><a href="#" rel="tab_site">Site</a></li>
             <li class=""><a href="#" rel="tab_projet">Projet</a></li>
             <li class=""><a href="#" rel="tab_parcelles">Parcelles</a></li>
