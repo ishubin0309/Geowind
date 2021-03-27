@@ -82,6 +82,18 @@ class ProjetType extends AbstractType
                 'label' => 'Téléphone',
                 'required' => false,
             ])
+            ->add('chargeFoncier', EntityType::class, [
+                'class' => 'AppBundle:User',
+                'required' => false,
+                'label' => 'Chargé du foncier',
+                'query_builder' => function (UserRepository $er) {
+                    return $er->getFindAllQueryBuilder();
+                },
+            ])
+            ->add('chargeFoncierTelephone', TextType::class, [
+                'label' => 'Téléphone',
+                'required' => false,
+            ])
             ->add('chefProjet', EntityType::class, [
                 'class' => 'AppBundle:User',
                 'required' => false,

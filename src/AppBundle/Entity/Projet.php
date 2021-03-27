@@ -116,6 +116,21 @@ class Projet
      * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      */
+    private $chargeFoncier;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", name="charge_foncier_telephone", nullable=true)
+     */
+    private $chargeFoncierTelephone;
+
+    /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
+     */
     private $chefProjet;
 
     /**
@@ -674,6 +689,24 @@ class Projet
     public function setOrigine(User $origine)
     {
         $this->origine = $origine;
+        return $this;
+    }
+
+    /**
+     * @return User
+     */
+    public function getChargeFoncier()
+    {
+        return $this->chargeFoncier;
+    }
+
+    /**
+     * @param User $chargeFoncier
+     * @return \AppBundle\Entity\Projet
+     */
+    public function setChargeFoncier(User $chargeFoncier)
+    {
+        $this->chargeFoncier = $chargeFoncier;
         return $this;
     }
 

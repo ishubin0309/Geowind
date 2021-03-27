@@ -73,12 +73,24 @@ class ProjetEditType extends AbstractType
             ->add('origine', EntityType::class, [
                 'class' => 'AppBundle:User',
                 'required' => true,
-                'label' => 'Origine',
+                'label' => 'Sourceur',
                 'query_builder' => function (UserRepository $er) {
                     return $er->getFindAllQueryBuilder();
                 },
             ])
             ->add('origineTelephone', TextType::class, [
+                'label' => 'Téléphone',
+                'required' => false,
+            ])
+            ->add('chargeFoncier', EntityType::class, [
+                'class' => 'AppBundle:User',
+                'required' => false,
+                'label' => 'Chargé du foncier',
+                'query_builder' => function (UserRepository $er) {
+                    return $er->getFindAllQueryBuilder();
+                },
+            ])
+            ->add('chargeFoncierTelephone', TextType::class, [
                 'label' => 'Téléphone',
                 'required' => false,
             ])
