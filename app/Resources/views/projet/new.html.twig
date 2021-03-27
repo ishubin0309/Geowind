@@ -512,7 +512,7 @@
       minimumInputLength: 1,
     });
 
-    $("#projet_origine, #projet_chargeFoncier, #projet_chefProjet, #projet_partenaire").select2();
+    $("#projet_origine, #projet_chargeFoncier, #projet_chefProjet, #projet_partenaire").select2({placeholder: "Non désigné"});
     var queryMairieUrl = "{{ path('mairie_search') }}";
     
     $("#projet_mairie").select2({
