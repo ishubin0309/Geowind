@@ -757,6 +757,17 @@ class Projet
         return $this;
     }
 
+    public function getChargeFoncierTelephone()
+    {
+        return $this->chargeFoncierTelephone;
+    }
+
+    public function setChargeFoncierTelephone($chargeFoncierTelephone)
+    {
+        $this->chargeFoncierTelephone = $chargeFoncierTelephone;
+        return $this;
+    }
+
     public function getChefProjetTelephone()
     {
         return $this->chefProjetTelephone;
