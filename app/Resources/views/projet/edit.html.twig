@@ -675,6 +675,7 @@
     var queryMairieUrl = "{{ path('mairie_search') }}";
     
     $("#projet_mairie").select2({
+      placeholder: "Non désigné",
       ajax: {
         url: queryMairieUrl,
         dataType: 'json',
