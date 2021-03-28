@@ -63,7 +63,7 @@
 
       <table class="table">
         <thead>
-          <tr>
+          <tr class="info">
             <th></th>
             <th></th>
             <th colspan="3">Exploration</th>
@@ -95,7 +95,7 @@
 
       <table class="table">
         <thead>
-          <tr>
+          <tr class="info">
             <th style="width:250px;">Type de projet</th>
             <th>exploratoire</th>
             <th>D1</th>
@@ -115,7 +115,7 @@
       </table>
       <table class="table">
         <thead>
-          <tr>
+          <tr class="info">
             <th style="width:250px;">Region</th>
             <th>exploratoire</th>
             <th>D1</th>
@@ -135,7 +135,7 @@
       </table>
       <table class="table">
         <thead>
-          <tr>
+          <tr class="info">
             <th style="width:250px;">Utilisateur</th>
             <th>exploratoire</th>
             <th>D1</th>
@@ -265,6 +265,11 @@
       });
       if(!found) $('#graphique').append('<tr rel="'+row['column']+'"><td><a href="'+formatProjetLink(row['id'])+'">'+row['id']+'</a></td><td>'+typeProjetFormatter(row['typeProjet'])+'</td>'+rest+'</tr>');
     });
+
+    var phases = {{ grid_helper.getJsonPhases|raw }};
+    function phaseFormatter(value) {
+      return phases[value] !== undefined ? phases[value]['name'] : value;
+    }
     $.each(byType, function(index, row) {
       var total = 0;
       var type = index;
@@ -272,27 +277,27 @@
         total += row3;
       });
       var rest = '';
-      if('exploratoire' in row) rest += '<td>'+row['exploratoire']+'</td>';
+      if('exploratoire' in row) rest += '<td>'+phaseFormatter(row['exploratoire'])+'</td>';
       else rest += '<td>0</td>';
-      if('decision1' in row) rest += '<td>'+row['decision1']+'</td>';
+      if('decision1' in row) rest += '<td>'+phaseFormatter(row['decision1'])+'</td>';
       else rest += '<td>0</td>';
-      if('negociation' in row) rest += '<td>'+row['negociation']+'</td>';
+      if('negociation' in row) rest += '<td>'+phaseFormatter(row['negociation'])+'</td>';
       else rest += '<td>0</td>';
-      if('decision2' in row) rest += '<td>'+row['decision2']+'</td>';
+      if('decision2' in row) rest += '<td>'+phaseFormatter(row['decision2'])+'</td>';
       else rest += '<td>0</td>';
-      if('developpement' in row) rest += '<td>'+row['developpement']+'</td>';
+      if('developpement' in row) rest += '<td>'+phaseFormatter(row['developpement'])+'</td>';
       else rest += '<td>0</td>';
-      if('decision3' in row) rest += '<td>'+row['decision3']+'</td>';
+      if('decision3' in row) rest += '<td>'+phaseFormatter(row['decision3'])+'</td>';
       else rest += '<td>0</td>';
-      if('instruction' in row) rest += '<td>'+row['instruction']+'</td>';
+      if('instruction' in row) rest += '<td>'+phaseFormatter(row['instruction'])+'</td>';
       else rest += '<td>0</td>';
-      if('decision4' in row) rest += '<td>'+row['decision4']+'</td>';
+      if('decision4' in row) rest += '<td>'+phaseFormatter(row['decision4'])+'</td>';
       else rest += '<td>0</td>';
-      if('preconstruction' in row) rest += '<td>'+row['preconstruction']+'</td>';
+      if('preconstruction' in row) rest += '<td>'+phaseFormatter(row['preconstruction'])+'</td>';
       else rest += '<td>0</td>';
-      if('decision5' in row) rest += '<td>'+row['decision5']+'</td>';
+      if('decision5' in row) rest += '<td>'+phaseFormatter(row['decision5'])+'</td>';
       else rest += '<td>0</td>';
-      if('construction' in row) rest += '<td>'+row['construction']+'</td>';
+      if('construction' in row) rest += '<td>'+phaseFormatter(row['construction'])+'</td>';
       else rest += '<td>0</td>';
       var found = 0;
       $('#tableaux_by_type tr').each(function(index2, row2) {
@@ -310,27 +315,27 @@
         total += row3;
       });
       var rest = '';
-      if('exploratoire' in row) rest += '<td>'+row['exploratoire']+'</td>';
+      if('exploratoire' in row) rest += '<td>'+phaseFormatter(row['exploratoire'])+'</td>';
       else rest += '<td>0</td>';
-      if('decision1' in row) rest += '<td>'+row['decision1']+'</td>';
+      if('decision1' in row) rest += '<td>'+phaseFormatter(row['decision1'])+'</td>';
       else rest += '<td>0</td>';
-      if('negociation' in row) rest += '<td>'+row['negociation']+'</td>';
+      if('negociation' in row) rest += '<td>'+phaseFormatter(row['negociation'])+'</td>';
       else rest += '<td>0</td>';
-      if('decision2' in row) rest += '<td>'+row['decision2']+'</td>';
+      if('decision2' in row) rest += '<td>'+phaseFormatter(row['decision2'])+'</td>';
       else rest += '<td>0</td>';
-      if('developpement' in row) rest += '<td>'+row['developpement']+'</td>';
+      if('developpement' in row) rest += '<td>'+phaseFormatter(row['developpement'])+'</td>';
       else rest += '<td>0</td>';
-      if('decision3' in row) rest += '<td>'+row['decision3']+'</td>';
+      if('decision3' in row) rest += '<td>'+phaseFormatter(row['decision3'])+'</td>';
       else rest += '<td>0</td>';
-      if('instruction' in row) rest += '<td>'+row['instruction']+'</td>';
+      if('instruction' in row) rest += '<td>'+phaseFormatter(row['instruction'])+'</td>';
       else rest += '<td>0</td>';
-      if('decision4' in row) rest += '<td>'+row['decision4']+'</td>';
+      if('decision4' in row) rest += '<td>'+phaseFormatter(row['decision4'])+'</td>';
       else rest += '<td>0</td>';
-      if('preconstruction' in row) rest += '<td>'+row['preconstruction']+'</td>';
+      if('preconstruction' in row) rest += '<td>'+phaseFormatter(row['preconstruction'])+'</td>';
       else rest += '<td>0</td>';
-      if('decision5' in row) rest += '<td>'+row['decision5']+'</td>';
+      if('decision5' in row) rest += '<td>'+phaseFormatter(row['decision5'])+'</td>';
       else rest += '<td>0</td>';
-      if('construction' in row) rest += '<td>'+row['construction']+'</td>';
+      if('construction' in row) rest += '<td>'+phaseFormatter(row['construction'])+'</td>';
       else rest += '<td>0</td>';
       var found = 0;
       $('#tableaux_by_region tr').each(function(index2, row2) {
@@ -348,27 +353,27 @@
         total += row3;
       });
       var rest = '';
-      if('exploratoire' in row) rest += '<td>'+row['exploratoire']+'</td>';
+      if('exploratoire' in row) rest += '<td>'+phaseFormatter(row['exploratoire'])+'</td>';
       else rest += '<td>0</td>';
-      if('decision1' in row) rest += '<td>'+row['decision1']+'</td>';
+      if('decision1' in row) rest += '<td>'+phaseFormatter(row['decision1'])+'</td>';
       else rest += '<td>0</td>';
-      if('negociation' in row) rest += '<td>'+row['negociation']+'</td>';
+      if('negociation' in row) rest += '<td>'+phaseFormatter(row['negociation'])+'</td>';
       else rest += '<td>0</td>';
-      if('decision2' in row) rest += '<td>'+row['decision2']+'</td>';
+      if('decision2' in row) rest += '<td>'+phaseFormatter(row['decision2'])+'</td>';
       else rest += '<td>0</td>';
-      if('developpement' in row) rest += '<td>'+row['developpement']+'</td>';
+      if('developpement' in row) rest += '<td>'+phaseFormatter(row['developpement'])+'</td>';
       else rest += '<td>0</td>';
-      if('decision3' in row) rest += '<td>'+row['decision3']+'</td>';
+      if('decision3' in row) rest += '<td>'+phaseFormatter(row['decision3'])+'</td>';
       else rest += '<td>0</td>';
-      if('instruction' in row) rest += '<td>'+row['instruction']+'</td>';
+      if('instruction' in row) rest += '<td>'+phaseFormatter(row['instruction'])+'</td>';
       else rest += '<td>0</td>';
-      if('decision4' in row) rest += '<td>'+row['decision4']+'</td>';
+      if('decision4' in row) rest += '<td>'+phaseFormatter(row['decision4'])+'</td>';
       else rest += '<td>0</td>';
-      if('preconstruction' in row) rest += '<td>'+row['preconstruction']+'</td>';
+      if('preconstruction' in row) rest += '<td>'+phaseFormatter(row['preconstruction'])+'</td>';
       else rest += '<td>0</td>';
-      if('decision5' in row) rest += '<td>'+row['decision5']+'</td>';
+      if('decision5' in row) rest += '<td>'+phaseFormatter(row['decision5'])+'</td>';
       else rest += '<td>0</td>';
-      if('construction' in row) rest += '<td>'+row['construction']+'</td>';
+      if('construction' in row) rest += '<td>'+phaseFormatter(row['construction'])+'</td>';
       else rest += '<td>0</td>';
       var found = 0;
       $('#tableaux_by_user tr').each(function(index2, row2) {
