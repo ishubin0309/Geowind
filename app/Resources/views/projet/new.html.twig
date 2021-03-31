@@ -892,6 +892,26 @@
           }
         });
     });
+    $('body').on('change', 'select[id*="_phase"]', function () {
+        var selected_phase = $(this).val();
+        var etat_selector = $(this).parents('tr').find('select:eq(1)');
+        $.each(etats, function(code, etat) {
+          if(code == selected_phase) {
+            var selected_data = [];
+            var already_selected_data = [];
+            $('#projet_etats tr').each(function(field, element) {
+              if($(element).index() != etat_selector.parents('tr').index() && !already_selected_data.includes($(element).find('select:eq(1)').val()))already_selected_data.push($(element).find('select:eq(1)').val());
+            });
+            $.each(etat['data'], function(field, value) {
+              if(!already_selected_data.includes(field) && !etat_selector.find('option[value="'+field+'"]').length) etat_selector.append(new Option(value, field));
+              if(!already_selected_data.includes(field)) selected_data.push(field);
+            });
+            $(etat_selector.find('option')).each(function(index,element) {
+              if(!selected_data.includes($(element).attr('value'))) $(element).remove();
+            });
+          }
+        });
+    });
 
     var $collectionHolderTache = $('#projet_taches');
     var prototypeTache = $collectionHolderTache.data('prototype');
