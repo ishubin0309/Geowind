@@ -852,7 +852,7 @@
 
       {# $('#projet_etats_' + length + '_dynamique').val('0'); #}
       
-      $('select[id*="projet_etats"][id*="_phase"]').change();
+      $('#projet_etats_' + length + '_phase').change();
     });
 
     $('#projet_etats_remove_entry').click(function () {
@@ -892,7 +892,7 @@
           }
         });
     });
-    $('body').on('change', 'select[id*="_phase"]', function () {
+    $('#projet_etats').on('change', 'select[id*="_phase"]', function () {
         var selected_phase = $(this).val();
         var etat_selector = $(this).parents('tr').find('select:eq(1)');
         $.each(etats, function(code, etat) {
