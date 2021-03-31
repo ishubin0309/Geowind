@@ -1292,11 +1292,19 @@
       $.each($('[id*="_montantEngage"]'), function(i, element) {
         if($(element).val().trim()) {
           engage += parseInt($(element).val().trim());
+          total = $(element).parents('tr').find('[id*="_montantTotal"]').val().trim();
+          if(total) {
+            $(element).parents('tr').find('[id*="_montantRestant"]').val(parseInt(total) - parseInt($(element).val().trim()));
+          }
         }
       });
       $.each($('[id*="_montantPaye"]'), function(i, element) {
         if($(element).val().trim()) {
           paye += parseInt($(element).val().trim());
+          total = $(element).parents('tr').find('[id*="_montantTotal"]').val().trim();
+          if(total && !$(element).parents('tr').find('[id*="_montantEngage"]').val().trim()) {
+            $(element).parents('tr').find('[id*="_montantRestant"]').val(parseInt(total) - parseInt($(element).val().trim()));
+          }
         }
       });
 
