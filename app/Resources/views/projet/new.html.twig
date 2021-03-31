@@ -1303,28 +1303,34 @@
     });
 
     function commandeUpdate() {
+      var total = 0;
       var engage = 0;
       var paye = 0;
+      $.each($('[id*="_montantTotal"]'), function(i, element) {
+        if($(element).val().trim()) {
+          total += parseInt($(element).val().trim());
+        }
+      });
       $.each($('[id*="_montantEngage"]'), function(i, element) {
         if($(element).val().trim()) {
           engage += parseInt($(element).val().trim());
-          total = $(element).parents('tr').find('[id*="_montantTotal"]').val().trim();
-          if(total) {
-            $(element).parents('tr').find('[id*="_montantRestant"]').val(parseInt(total) - parseInt($(element).val().trim()));
+          row_total = $(element).parents('tr').find('[id*="_montantTotal"]').val().trim();
+          if(row_total) {
+            $(element).parents('tr').find('[id*="_montantRestant"]').val(parseInt(row_total) - parseInt($(element).val().trim()));
           }
         }
       });
       $.each($('[id*="_montantPaye"]'), function(i, element) {
         if($(element).val().trim()) {
           paye += parseInt($(element).val().trim());
-          total = $(element).parents('tr').find('[id*="_montantTotal"]').val().trim();
-          if(total && !$(element).parents('tr').find('[id*="_montantEngage"]').val().trim()) {
-            $(element).parents('tr').find('[id*="_montantRestant"]').val(parseInt(total) - parseInt($(element).val().trim()));
+          row_total = $(element).parents('tr').find('[id*="_montantTotal"]').val().trim();
+          if(row_total && !$(element).parents('tr').find('[id*="_montantEngage"]').val().trim()) {
+            $(element).parents('tr').find('[id*="_montantRestant"]').val(parseInt(row_total) - parseInt($(element).val().trim()));
           }
         }
       });
 
-      var somme = 'Total engagé: ' + engage + '€ HT | Total payé: ' + paye + '€ HT';
+      var somme = 'Total: ' + total + '€ HT | Total engagé: ' + engage + '€ HT | Total payé: ' + paye + '€ HT';
       $('#selected-counter').text(somme);
 
       $.each($('#projet_finances [id*="_dateEngmt"]'), function(i, element) {

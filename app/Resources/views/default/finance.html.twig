@@ -8,7 +8,7 @@
   <div class="container-fluid">
 
     <h1>Finances <i class="fa fa-euro"></i></h1>
-    <h4 id="selected-counter">Total engagé: 0€ HT | Total payé: 0€ HT</h4>
+    <h4 id="selected-counter">Total: 0€ HT | Total engagé: 0€ HT | Total payé: 0€ HT</h4>
 
   </div>
 
@@ -104,15 +104,17 @@
         var selected = selectedRows.length;
         var total = grid.getDataLength();
 
+        var montant_total = 0;
         var paye = 0;
         var engage = 0;
         for (var i = 0, len = selectedRows.length; i < len; ++i) {
           var item = dataView.getItem(selectedRows[i]);
+          montant_total += item.total;
           paye += item.paye;
           engage += item.engage;
         }
 
-        var somme = 'Total engagé: ' + engage + '€ HT | Total payé: ' + paye + '€ HT';
+        var somme = 'Total: ' + total + '€ HT | Total engagé: ' + engage + '€ HT | Total payé: ' + paye + '€ HT';
         $('#selected-counter').text(somme);
 
       });
