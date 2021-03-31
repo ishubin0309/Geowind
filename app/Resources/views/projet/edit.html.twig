@@ -790,8 +790,24 @@
       commandeUpdate();
     });
 
+    $('#projet_finances_duplicate_entry').click(function () {
+      if(!$(this).hasClass('disabled') && $collectionHolder.find('tr.info:eq(0)').length) {
+        var clone = $collectionHolder.find('tr.info:eq(0)').clone();
+        $(clone).insertAfter($collectionHolder.find('tr.info:eq(0)'));
+        $collectionHolder.children().removeClass('info');
+        $('#projet_finances_duplicate_entry').addClass('disabled');
+        commandeUpdate();
+      }
+    });
+
     $('#projet_finances_remove_entry').click(function () {
       $('> :last-child', $collectionHolder).remove();
+    });
+    
+    $($collectionHolder).on('click', 'tr', function() {
+      $collectionHolder.children().removeClass('info');
+      $(this).addClass('info');
+      if($collectionHolder.children().length) $('#projet_finances_duplicate_entry').removeClass('disabled');
     });
     
     var $collectionHolderProprietaire = $('#projet_proprietaires');

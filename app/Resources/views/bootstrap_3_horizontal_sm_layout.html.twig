@@ -118,7 +118,9 @@ col-sm-8
         </tr>
       </thead>
       <tbody {{ block('widget_container_attributes') }}>
+        {% set duplicate_commande = false %}
         {% for child in form %}
+          {% set duplicate_commande = true %}
           {{- form_row(child) -}}
         {% endfor %}
       </tbody>
@@ -127,6 +129,7 @@ col-sm-8
           <td colspan="8">
             <button type="button" id="{{ id }}_add_entry" class="btn btn-primary btn-xs"><i class="fa fa-plus-circle"></i> Ajouter</button>
               <button type="button" id="{{ id }}_remove_entry" class="btn btn-danger btn-xs"><i class="fa fa-minus-circle"></i> Supprimer</button>
+            <button type="button" id="{{ id }}_duplicate_entry" class="btn btn-success {% if not duplicate_commande %}disabled{% endif %} btn-xs"><i class="fa fa-plus-circle"></i> Dupliquer</button>
           </td>
         </tr>
       </tfoot>
