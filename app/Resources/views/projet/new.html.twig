@@ -1385,7 +1385,7 @@
       var somme = 'Total: ' + total + '€ HT | Total engagé: ' + engage + '€ HT | Total payé: ' + paye + '€ HT';
       $('#selected-counter').text(somme);
 
-      var last_index = 0;
+      var last_index = 1;
       $.each($('#projet_finances [id*="_dateEngmt"]'), function(i, element) {
         var row = $(element).parents('tr');
         var id = (row.find('[id*="_duplique"]').val() && row.find('[id*="_duplique"]').val()) >= 0 ? row.find('[id*="_duplique"]').val() : (row.index() + 1);
