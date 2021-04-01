@@ -633,9 +633,9 @@
 
     $('#projet_finances_duplicate_entry').click(function () {
       if(!$(this).hasClass('disabled') && $collectionHolder.find('tr.info:eq(0)').length) {
-        var clone = $collectionHolder.find('tr.info:eq(0)').clone();
+        var clone = $collectionHolder.find('tr.info:eq(0)').html().replace(/class="info"/, 'duplicate="'+$collectionHolder.find('tr.info:eq(0)').index+'"');
         $(clone).insertAfter($collectionHolder.find('tr.info:eq(0)'));
-        $collectionHolder.children().removeClass('info');
+        {# $collectionHolder.children().removeClass('info'); #}
         $('#projet_finances_duplicate_entry').addClass('disabled');
         commandeUpdate();
       }
