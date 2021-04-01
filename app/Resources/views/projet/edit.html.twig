@@ -1494,7 +1494,7 @@
               $(element).parents('tr').find('[id*="_montantRestant"]').val(parseInt(row_total) - parseInt($(element).val().trim()));
             }
           } else {
-            row_total = $(element).parents('tbody').find('tr:eq('+$(element).parents('tr').hasAttr('duplicate')+')').find('[id*="_montantRestant"]').val().trim();
+            row_total = $(element).parents('tbody').find('tr:eq('+$(element).parents('tr').attr('duplicate')+')').find('[id*="_montantRestant"]').val().trim();
             if(row_total) {
               $(element).parents('tr').find('[id*="_montantRestant"]').val(parseInt(row_total) - parseInt($(element).val().trim()));
             }
@@ -1511,7 +1511,7 @@
               $(element).parents('tr').find('[id*="_montantRestant"]').val(parseInt(row_total) - parseInt($(element).val().trim()));
             }
           } else {
-            row_total = $(element).parents('tbody').find('tr:eq('+$(element).parents('tr').hasAttr('duplicate')+')').find('[id*="_montantRestant"]').val().trim();
+            row_total = $(element).parents('tbody').find('tr:eq('+$(element).parents('tr').attr('duplicate')+')').find('[id*="_montantRestant"]').val().trim();
             if(row_total) {
               $(element).parents('tr').find('[id*="_montantRestant"]').val(parseInt(row_total) - parseInt($(element).val().trim()));
             }

@@ -1307,25 +1307,41 @@
       var engage = 0;
       var paye = 0;
       $.each($('[id*="_montantTotal"]'), function(i, element) {
-        if($(element).val().trim()) {
+        if($(element).val().trim() && !$(element).parents('tr').hasAttr('duplicate')) {
           total += parseInt($(element).val().trim());
         }
       });
       $.each($('[id*="_montantEngage"]'), function(i, element) {
         if($(element).val().trim()) {
           engage += parseInt($(element).val().trim());
-          row_total = $(element).parents('tr').find('[id*="_montantTotal"]').val().trim();
-          if(row_total) {
-            $(element).parents('tr').find('[id*="_montantRestant"]').val(parseInt(row_total) - parseInt($(element).val().trim()));
+          var attr = $(element).parents('tr').attr('duplicate');
+          if(typeof attr === 'undefined' || attr === false) {
+            row_total = $(element).parents('tr').find('[id*="_montantTotal"]').val().trim();
+            if(row_total) {
+              $(element).parents('tr').find('[id*="_montantRestant"]').val(parseInt(row_total) - parseInt($(element).val().trim()));
+            }
+          } else {
+            row_total = $(element).parents('tbody').find('tr:eq('+$(element).parents('tr').attr('duplicate')+')').find('[id*="_montantRestant"]').val().trim();
+            if(row_total) {
+              $(element).parents('tr').find('[id*="_montantRestant"]').val(parseInt(row_total) - parseInt($(element).val().trim()));
+            }
           }
         }
       });
       $.each($('[id*="_montantPaye"]'), function(i, element) {
         if($(element).val().trim()) {
           paye += parseInt($(element).val().trim());
-          row_total = $(element).parents('tr').find('[id*="_montantTotal"]').val().trim();
-          if(row_total && !$(element).parents('tr').find('[id*="_montantEngage"]').val().trim()) {
-            $(element).parents('tr').find('[id*="_montantRestant"]').val(parseInt(row_total) - parseInt($(element).val().trim()));
+          var attr = $(element).parents('tr').attr('duplicate');
+          if(typeof attr === 'undefined' || attr === false) {
+            row_total = $(element).parents('tr').find('[id*="_montantTotal"]').val().trim();
+            if(row_total && !$(element).parents('tr').find('[id*="_montantEngage"]').val().trim()) {
+              $(element).parents('tr').find('[id*="_montantRestant"]').val(parseInt(row_total) - parseInt($(element).val().trim()));
+            }
+          } else {
+            row_total = $(element).parents('tbody').find('tr:eq('+$(element).parents('tr').attr('duplicate')+')').find('[id*="_montantRestant"]').val().trim();
+            if(row_total) {
+              $(element).parents('tr').find('[id*="_montantRestant"]').val(parseInt(row_total) - parseInt($(element).val().trim()));
+            }
           }
         }
       });
