@@ -1388,7 +1388,7 @@
       var last_index = 1;
       $.each($('#projet_finances [id*="_dateEngmt"]'), function(i, element) {
         var row = $(element).parents('tr');
-        var id = (row.find('[id*="_duplique"]').val() && row.find('[id*="_duplique"]').val()) >= 0 ? row.find('[id*="_duplique"]').val() : (row.index() + 1);
+        var id = (row.find('[id*="_duplique"]').val() && row.find('[id*="_duplique"]').val()) >= 0 ? (row.find('[id*="_duplique"]').val()+1) : (row.index() + 1);
         if(last_index < id) last_index = id;
         else id = last_index;
         row.find('td:eq(0)').text(id);
