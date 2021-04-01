@@ -1559,10 +1559,9 @@
       $('#selected-counter').text(somme);
 
       $.each($('#projet_finances [id*="_dateEngmt"]'), function(i, element) {
-        var id = $(element).attr('id').match(/\d+/);
-        id = parseInt(id);
         var row = $(element).parents('tr');
-        row.find('td:eq(0)').text((id + 1));
+        var id = row.find('[id*="_duplique"]').val().trim() != '' && row.find('[id*="_duplique"]').val().trim() != 0 ? (row.index() + 1)+'* ' : row.find('[id*="_duplique"]').val()+'**';
+        row.find('td:eq(0)').text(id);
         var dateEngmt = row.find('[id*="_dateEngmt"]').val().match(/(\d+)\/(\d+)\/(\d+)/);
         var dateEcheance = row.find('[id*="_dateEcheance"]').val().match(/(\d+)\/(\d+)\/(\d+)/);
         if(dateEngmt && dateEcheance) {
