@@ -792,7 +792,7 @@
 
     $('#projet_finances_duplicate_entry').click(function () {
       if(!$(this).hasClass('disabled') && $collectionHolder.find('tr.info:eq(0)').length) {
-        var clone = $collectionHolder.find('tr.info:eq(0)').html().replace(/class="info"/, 'duplicate="'+$collectionHolder.find('tr.info:eq(0)').index+'"');
+        var clone = '<tr duplicate="'+$collectionHolder.find('tr.info:eq(0)').index+'">' + $collectionHolder.find('tr.info:eq(0)').html() + '</tr>';
         $(clone).insertAfter($collectionHolder.find('tr.info:eq(0)'));
         {# $collectionHolder.children().removeClass('info'); #}
         $('#projet_finances_duplicate_entry').addClass('disabled');
