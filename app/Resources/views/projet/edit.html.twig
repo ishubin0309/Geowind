@@ -178,16 +178,16 @@
             </tr>
             {# {% if is_granted('ROLE_ADMIN') %} #}
             <tr>
-              <td>Chargé du foncier</td>
-              <td>{{ form_widget(form.chargeFoncier, {'attr': {'style': 'width:100%'}}) }}</td>
-              <td>{{ form_widget(form.chargeFoncierTelephone) }}</td>
-            </tr>
-            <tr>
               <td>Chef projet</td>
               <td class="required">{{ form_widget(form.chefProjet, {'attr': {'style': 'width:100%'}}) }}</td>
               <td>{{ form_widget(form.chefProjetTelephone) }}</td>
             </tr>
             {# {% endif %} #}
+            <tr>
+              <td>Chargé du foncier</td>
+              <td>{{ form_widget(form.chargeFoncier, {'attr': {'style': 'width:100%'}}) }}</td>
+              <td>{{ form_widget(form.chargeFoncierTelephone) }}</td>
+            </tr>
             <tr>
               <td>Partenaire</td>
               <td class="required">{{ form_widget(form.partenaire, {'attr': {'style': 'width:100%'}}) }}</td>
