@@ -792,7 +792,7 @@
 
     $('#projet_finances_duplicate_entry').click(function () {
       if(!$(this).hasClass('disabled') && $collectionHolder.find('tr.info:eq(0)').length) {
-        var clone = '<tr duplicate="'+$collectionHolder.find('tr.info:eq(0)').index+'">' + $collectionHolder.find('tr.info:eq(0)').html() + '</tr>';
+        var clone = '<tr duplicate="'+$collectionHolder.find('tr.info:eq(0)').index()+'">' + $collectionHolder.find('tr.info:eq(0)').html() + '</tr>';
         $(clone).insertAfter($collectionHolder.find('tr.info:eq(0)'));
         {# $collectionHolder.children().removeClass('info'); #}
         $('#projet_finances_duplicate_entry').addClass('disabled');
@@ -1495,7 +1495,7 @@
               $(element).parents('tr').find('[id*="_montantRestant"]').val(parseInt(row_total) - parseInt($(element).val().trim()));
             }
           } else {
-            row_total = $(element).parents('tbody').find('tr:eq('+$(element).parents('tr').attr('duplicate')+')').find('[id*="_montantRestant"]').val().trim();
+            row_total = $(element).parents('tbody').find('tr:eq('+attr+')').find('[id*="_montantRestant"]').val().trim();
             if(row_total) {
               $(element).parents('tr').find('[id*="_montantRestant"]').val(parseInt(row_total) - parseInt($(element).val().trim()));
             }
@@ -1512,7 +1512,7 @@
               $(element).parents('tr').find('[id*="_montantRestant"]').val(parseInt(row_total) - parseInt($(element).val().trim()));
             }
           } else {
-            row_total = $(element).parents('tbody').find('tr:eq('+$(element).parents('tr').attr('duplicate')+')').find('[id*="_montantRestant"]').val().trim();
+            row_total = $(element).parents('tbody').find('tr:eq('+attr+')').find('[id*="_montantRestant"]').val().trim();
             if(row_total) {
               $(element).parents('tr').find('[id*="_montantRestant"]').val(parseInt(row_total) - parseInt($(element).val().trim()));
             }
