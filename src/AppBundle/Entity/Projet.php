@@ -314,6 +314,7 @@ class Projet
      * @var ArrayCollection|Finance[]
      *
      * @ORM\OneToMany(targetEntity="Finance", mappedBy="projet", cascade={"all"}, orphanRemoval=true)
+     * @ORM\OrderBy({"id" = "ASC" })
      */
     private $finances;
     
