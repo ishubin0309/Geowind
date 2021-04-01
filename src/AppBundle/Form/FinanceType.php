@@ -66,6 +66,10 @@ class FinanceType extends AbstractType
                 'html5' => false,
                 'required' => false,
             ])
+            ->add('duplique', CheckboxType::class, [
+                'label' => 'Dupliquée',
+                'required' => false,
+            ])
             /* ->add('note', TextType::class, [
                 'label' => 'Note',
                 'required' => false,

@@ -97,6 +97,13 @@ class Finance
     private $note;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(type="integer", options={"default" : 0})
+     */
+    private $duplique = 0;
+
+    /**
      * @var DateTime
      *
      * @ORM\Column(type="date")
@@ -246,6 +253,24 @@ class Finance
     {
         $this->note = $note;
         return $this;
+    }
+
+    /**
+     * @param bool $duplique
+     * @return \AppBundle\Entity\Document
+     */
+    public function setDuplique($duplique)
+    {
+        $this->duplique = $duplique;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getDuplique()
+    {
+        return $this->duplique;
     }
 
     /**

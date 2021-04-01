@@ -115,6 +115,7 @@ col-sm-8
           <th>Date commande</th>
           <th>Date d'échéance</th>
           <th>J (-)</th>
+          <th class="d-none2">Dupliquée</th>
         </tr>
       </thead>
       <tbody {{ block('widget_container_attributes') }}>
@@ -138,7 +139,7 @@ col-sm-8
 
 {% block _projet_finances_entry_row %}
   {% spaceless %}
-    <tr>
+    <tr {% if form.vars.value.duplique %}duplique="{{ form.vars.value.duplique }}"{% endif %}>
       <td></td>
       <td>{{ form_widget(form.phase) }}</td>
       <td>{{ form_widget(form.titre) }}</td>
@@ -150,6 +151,7 @@ col-sm-8
       <td>{% if form.vars.value.dateEngmt is defined %}{{ form_widget(form.dateEngmt) }}{% else %}{{ form_widget(form.dateEngmt, {'value' : "now"|date("d/m/Y")}) }}{% endif %}</td>
       <td>{% if form.vars.value.dateEcheance is defined %}{{ form_widget(form.dateEcheance) }}{% else %}{{ form_widget(form.dateEcheance, {'value' : "now"|date("d/m/Y")}) }}{% endif %}</td>
       <td></td>
+      <td class="d-none2">{{ form_widget(form.duplique) }}</td>
     </tr>
   {% endspaceless %}
 {% endblock %}

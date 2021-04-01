@@ -643,6 +643,7 @@
               $collectionHolder.find('tr:eq('+tr_index+')').find('[id*="_montantEngage"]').val('');
               $collectionHolder.find('tr:eq('+tr_index+')').find('[id*="_montantPaye"]').val('');
               $collectionHolder.find('tr:eq('+tr_index+')').find('[id*="_montantRestant"]').val('');
+              $collectionHolder.find('tr:eq('+tr_index+')').find('[id*="_duplique"]').val($collectionHolder.find('tr.info:eq(0)').index());
               cloned = 1;
             } else {
               if(!$collectionHolder.find('tr:eq('+tr_index+')').length) cloned = 1;
