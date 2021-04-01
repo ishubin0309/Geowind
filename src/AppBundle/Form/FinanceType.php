@@ -5,7 +5,6 @@ namespace AppBundle\Form;
 use AppBundle\Model\Etat;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use AppBundle\Form\Extension\DatePickerType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
@@ -65,7 +64,7 @@ class FinanceType extends AbstractType
                 'html5' => false,
                 'required' => false,
             ])
-            ->add('duplique', CheckboxType::class, [
+            ->add('duplique', TextType::class, [
                 'label' => 'Dupliquée',
                 'required' => false,
             ])
