@@ -653,6 +653,23 @@
             }
           }
         }
+        if(cloned) {
+          $collectionHolder.children().each(function() {
+            tr_index = $(this).index();
+            $(this).find('input').each(function() {
+              name = $(this).attr('name').replace(/\[\d+\]/, '['+tr_index+']');
+              $(this).attr('name', name);
+              id = $(this).attr('id').replace(/_\d+_/, '_'+tr_index+'_');
+              $(this).attr('id', id);
+            });
+            $(this).find('select').each(function() {
+              name = $(this).attr('name').replace(/\[\d+\]/, '['+tr_index+']');
+              $(this).attr('name', name);
+              id = $(this).attr('id').replace(/_\d+_/, '_'+tr_index+'_');
+              $(this).attr('id', id);
+            });
+          });
+        }
         {# $collectionHolder.children().removeClass('info');
         $('#projet_finances_duplicate_entry').addClass('disabled'); #}
         commandeUpdate();
