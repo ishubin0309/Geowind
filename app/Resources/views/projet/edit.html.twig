@@ -1055,7 +1055,7 @@
     });
 
     var etats = {{ grid_helper.getJsonEtats|raw }};
-    $('body').on('change', 'select[id*="projet_etats"][id*="_phase"]', function () {
+   {#  $('body').on('change', 'select[id*="projet_etats"][id*="_phase"]', function () {
         var selected_phase = $(this).val();
         var etat_selector = $(this).parents('tr').find('select:eq(1)');
         $.each(etats, function(code, etat) {
@@ -1070,7 +1070,7 @@
             });
           }
         });
-    });
+    }); #}
     $('body').on('change', 'select[id="projet_phase"]', function () {
         var selected_phase = $(this).val();
         var etat_selector = $('select[id="projet_progression"]');
@@ -1087,7 +1087,7 @@
           }
         });
     });
-    $('body').on('change', 'select[id*="_phase"]', function () {
+    $('#projet_etats').on('change', 'select[id*="_phase"]', function () {
         var selected_phase = $(this).val();
         var etat_selector = $(this).parents('tr').find('select:eq(1)');
         $.each(etats, function(code, etat) {
