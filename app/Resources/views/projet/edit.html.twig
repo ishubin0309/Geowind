@@ -1480,7 +1480,8 @@
       var engage = 0;
       var paye = 0;
       $.each($('[id*="_montantTotal"]'), function(i, element) {
-        if($(element).val().trim() && !$(element).parents('tr').hasAttr('duplicate')) {
+        var attr = $(element).parents('tr').attr('duplicate');
+        if($(element).val().trim() && (typeof attr === 'undefined' || attr === false)) {
           total += parseInt($(element).val().trim());
         }
       });
