@@ -115,7 +115,7 @@ col-sm-8
           <th>Date commande</th>
           <th>Date d'échéance</th>
           <th>J (-)</th>
-          <th class="d-none2">Dupliquée</th>
+          <th class="hide">Dupliquée</th>
         </tr>
       </thead>
       <tbody {{ block('widget_container_attributes') }}>
@@ -151,7 +151,7 @@ col-sm-8
       <td>{% if form.vars.value.dateEngmt is defined %}{{ form_widget(form.dateEngmt) }}{% else %}{{ form_widget(form.dateEngmt, {'value' : "now"|date("d/m/Y")}) }}{% endif %}</td>
       <td>{% if form.vars.value.dateEcheance is defined %}{{ form_widget(form.dateEcheance) }}{% else %}{{ form_widget(form.dateEcheance, {'value' : "now"|date("d/m/Y")}) }}{% endif %}</td>
       <td></td>
-      <td class="d-none2">{{ form_widget(form.duplique) }}</td>
+      <td class="hide">{{ form_widget(form.duplique) }}</td>
     </tr>
   {% endspaceless %}
 {% endblock %}
