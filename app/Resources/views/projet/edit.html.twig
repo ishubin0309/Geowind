@@ -1557,10 +1557,12 @@
 
       var somme = 'Total: ' + total + '€ HT | Total engagé: ' + engage + '€ HT | Total payé: ' + paye + '€ HT';
       $('#selected-counter').text(somme);
-
+      var last_index = 0;
       $.each($('#projet_finances [id*="_dateEngmt"]'), function(i, element) {
         var row = $(element).parents('tr');
-        var id = row.find('[id*="_duplique"]').val() > 0 ? row.find('[id*="_duplique"]').val() : (row.index() + 1);
+        var id = (row.find('[id*="_duplique"]').val() && row.find('[id*="_duplique"]').val()) >= 0 ? row.find('[id*="_duplique"]').val() : (row.index() + 1);
+        if(last_index < id) last_index = id;
+        else id = last_index;
         row.find('td:eq(0)').text(id);
         var dateEngmt = row.find('[id*="_dateEngmt"]').val().match(/(\d+)\/(\d+)\/(\d+)/);
         var dateEcheance = row.find('[id*="_dateEcheance"]').val().match(/(\d+)\/(\d+)\/(\d+)/);
