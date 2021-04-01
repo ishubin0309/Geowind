@@ -639,10 +639,10 @@
         for(i=0; i<20; i++) {
           if(!cloned) {
             if(!$collectionHolder.find('tr:eq('+tr_index+')').length || typeof $collectionHolder.find('tr:eq('+tr_index+')').attr('duplicate') === 'undefined' || $collectionHolder.find('tr:eq('+tr_index+')').attr('duplicate') === false) {
-              $(clone).insertAfter($collectionHolder.find('tr.info:eq('+(tr_index-1)+')'));
-              $collectionHolder.find('tr.info:eq('+tr_index+')').find('[id*="_montantEngage"]').val('');
-              $collectionHolder.find('tr.info:eq('+tr_index+')').find('[id*="_montantPaye"]').val('');
-              $collectionHolder.find('tr.info:eq('+tr_index+')').find('[id*="_montantRestant"]').val('');
+              $(clone).insertAfter($collectionHolder.find('tr:eq('+(tr_index-1)+')'));
+              $collectionHolder.find('tr:eq('+tr_index+')').find('[id*="_montantEngage"]').val('');
+              $collectionHolder.find('tr:eq('+tr_index+')').find('[id*="_montantPaye"]').val('');
+              $collectionHolder.find('tr:eq('+tr_index+')').find('[id*="_montantRestant"]').val('');
               cloned = 1;
             } else {
               if($collectionHolder.find('tr:eq('+tr_index+')').length) cloned = 1;
