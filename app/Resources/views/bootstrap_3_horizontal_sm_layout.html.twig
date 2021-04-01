@@ -139,7 +139,7 @@ col-sm-8
 
 {% block _projet_finances_entry_row %}
   {% spaceless %}
-    <tr {% if form.vars.value.duplique %}duplique="{{ form.vars.value.duplique }}"{% endif %}>
+    <tr {% if form.vars.value.duplique is defined and form.vars.value.duplique %}duplique="{{ form.vars.value.duplique }}"{% endif %}>
       <td></td>
       <td>{{ form_widget(form.phase) }}</td>
       <td>{{ form_widget(form.titre) }}</td>
