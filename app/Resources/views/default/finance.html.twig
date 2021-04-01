@@ -82,6 +82,7 @@
             paye: {{ finance.montantPaye }},
             restant: {{ finance.montantRestant }},
             bureau: '{{ finance.bureau.nom|e('js') }}',
+            duplique: {{ finance.duplique is not null ? finance.duplique : '-1' }},
             dateEngmt: '{{ finance.dateEngmt|date('d/m/Y') }}',
             dateEcheance: '{{ finance.dateEcheance is not null ? finance.dateEcheance|date('d/m/Y') : '' }}',
           });
@@ -109,7 +110,7 @@
         var engage = 0;
         for (var i = 0, len = selectedRows.length; i < len; ++i) {
           var item = dataView.getItem(selectedRows[i]);
-          montant_total += item.total;
+          if(item.duplique >= 0) montant_total += item.total;
           paye += item.paye;
           engage += item.engage;
         }
