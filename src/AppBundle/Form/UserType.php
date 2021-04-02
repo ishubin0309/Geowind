@@ -64,7 +64,7 @@ class UserType extends AbstractType
             ])
             ->add('departementsChefProjet', EntityType::class, [
                 'class' => 'AppBundle:Departement',
-                'required' => true,
+                'required' => false,
                 'multiple' => true,
                 'label' => 'Secteurs (Chef projet)',
                 'query_builder' => function (EntityRepository $er) {
@@ -74,7 +74,7 @@ class UserType extends AbstractType
             ])
             ->add('departementsChargeFoncier', EntityType::class, [
                 'class' => 'AppBundle:Departement',
-                'required' => true,
+                'required' => false,
                 'multiple' => true,
                 'label' => 'Secteurs (Chargé foncier)',
                 'query_builder' => function (EntityRepository $er) {
