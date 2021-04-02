@@ -471,7 +471,7 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * @param \AppBundle\Entity\Departement $departement
      */
-    public function addDepartement(Departement $departement)
+    public function addDepartementChefProjet(Departement $departement)
     {
         $this->departementsChefProjet[] = $departement;
         if (!$this->departementsChefProjet->contains($departement)) {
@@ -501,7 +501,7 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * @param \AppBundle\Entity\Departement $departement
      */
-    public function addDepartement(Departement $departement)
+    public function addDepartementChargeFoncier(Departement $departement)
     {
         $this->departementsChargeFoncier[] = $departement;
         if (!$this->departementsChargeFoncier->contains($departement)) {
