@@ -49,7 +49,7 @@ class UserType extends AbstractType
             ])
             ->add('departements', EntityType::class, [
                 'class' => 'AppBundle:Departement',
-                'required' => true,
+                'required' => false,
                 'multiple' => true,
                 'label' => 'Secteurs (Partenaire)',
                 'query_builder' => function (EntityRepository $er) {
