@@ -111,6 +111,20 @@ class User implements AdvancedUserInterface, \Serializable
     private $departements;
 
     /**
+     * @var ArrayCollection|Departement[]
+     *
+     * @ORM\ManyToMany(targetEntity="Departement", inversedBy="users")
+     */
+    private $departementsChefProjet;
+
+    /**
+     * @var ArrayCollection|Departement[]
+     *
+     * @ORM\ManyToMany(targetEntity="Departement", inversedBy="users")
+     */
+    private $departementsChargeFoncier;
+
+    /**
      * @var ArrayCollection|Messagerie[]
      *
      * @ORM\ManyToMany(targetEntity="Messagerie", inversedBy="viewers", cascade={"all"}, orphanRemoval=true)
@@ -154,7 +168,6 @@ class User implements AdvancedUserInterface, \Serializable
     public function __toString()
     {
         return strtoupper($this->nom) . ' ' . $this->prenom;
-        $this->departements = new ArrayCollection();
     }
 
     /**
@@ -444,6 +457,66 @@ class User implements AdvancedUserInterface, \Serializable
     public function setDepartements(ArrayCollection $departements)
     {
         $this->departements = $departements;
+        return $this;
+    }
+
+    /**
+     * @return ArrayCollection|Departement[]
+     */
+    public function getDepartementsChefProjet()
+    {
+        return $this->departementsChefProjet;
+    }
+
+    /**
+     * @param \AppBundle\Entity\Departement $departement
+     */
+    public function addDepartement(Departement $departement)
+    {
+        $this->departementsChefProjet[] = $departement;
+        if (!$this->departementsChefProjet->contains($departement)) {
+            $this->departementsChefProjet[] = $departement;
+        }
+        return $this;
+    }
+
+    /**
+     * @param ArrayCollection $departementsChefProjet
+     * @return \AppBundle\Entity\Projet
+     */
+    public function setDepartementsChefProjet(ArrayCollection $departementsChefProjet)
+    {
+        $this->departementsChefProjet = $departementsChefProjet;
+        return $this;
+    }
+
+    /**
+     * @return ArrayCollection|Departement[]
+     */
+    public function getDepartementsChargeFoncier()
+    {
+        return $this->departementsChargeFoncier;
+    }
+
+    /**
+     * @param \AppBundle\Entity\Departement $departement
+     */
+    public function addDepartement(Departement $departement)
+    {
+        $this->departementsChargeFoncier[] = $departement;
+        if (!$this->departementsChargeFoncier->contains($departement)) {
+            $this->departementsChargeFoncier[] = $departement;
+        }
+        return $this;
+    }
+
+    /**
+     * @param ArrayCollection $departementsChargeFoncier
+     * @return \AppBundle\Entity\Projet
+     */
+    public function setDepartementsChargeFoncier(ArrayCollection $departementsChargeFoncier)
+    {
+        $this->departementsChargeFoncier = $departementsChargeFoncier;
         return $this;
     }
 

@@ -51,14 +51,34 @@ class UserType extends AbstractType
                 'class' => 'AppBundle:Departement',
                 'required' => true,
                 'multiple' => true,
-                'label' => 'Secteurs',
+                'label' => 'Secteurs (Partenaire)',
                 'query_builder' => function (EntityRepository $er) {
-                    $departements = $er->getFindUsersAssignedDepartments(0);
+                    $departements = $er->getFindUsersAssignedDepartments($this->user);
                     if($departements) return $er->createQueryBuilder('d')
                     ->where('d NOT IN (:departements)')
                     ->orderBy('d.nom', 'ASC')
                     ->setParameter('departements', $departements);
                     else return $er->createQueryBuilder('d')
+                    ->orderBy('d.nom', 'ASC');
+                },
+            ])
+            ->add('departementsChefProjet', EntityType::class, [
+                'class' => 'AppBundle:Departement',
+                'required' => true,
+                'multiple' => true,
+                'label' => 'Secteurs (Chef projet)',
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('d')
+                    ->orderBy('d.nom', 'ASC');
+                },
+            ])
+            ->add('departementsChargeFoncier', EntityType::class, [
+                'class' => 'AppBundle:Departement',
+                'required' => true,
+                'multiple' => true,
+                'label' => 'Secteurs (Chargé foncier)',
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('d')
                     ->orderBy('d.nom', 'ASC');
                 },
             ])
