@@ -655,6 +655,7 @@
                 $('#projet_chefProjet').append(newOption);
               });
               if(first_option) $('#projet_chefProjet').val(first_option);
+              else $('#projet_chefProjetTelephone').val('');
               $('#projet_chefProjet').trigger('change');
 
               var projet_chargeFoncier = $('#projet_chargeFoncier').val();
@@ -667,6 +668,7 @@
                 $('#projet_chargeFoncier').append(newOption);
               });
               if(first_option) $('#projet_chargeFoncier').val(first_option);
+              else $('#projet_chargeFoncierTelephone').val('');
               $('#projet_chargeFoncier').trigger('change');
 
               var projet_partenaire = $('#projet_partenaire').val();
@@ -679,6 +681,7 @@
                 $('#projet_partenaire').append(newOption);
               });
               if(first_option) $('#projet_partenaire').val(first_option);
+              else $('#projet_partenaireTelephone').val('');
               $('#projet_partenaire').trigger('change');
           }, error: function () {
           }
