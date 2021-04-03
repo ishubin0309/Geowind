@@ -110,7 +110,7 @@
         <div class="collapse navbar-collapse" id="nouveau_projet_nav">
           <ul class="nav navbar-nav">
             <li class="active"><a href="#" rel="tab_localisation">Localisation</a></li>
-            <li class="{% if not is_granted('ROLE_ADMIN') and projet.origine.id != app.user.id %}hide{% endif %}"><a href="#" rel="tab_contacts">Contacts</a></li>
+            <li><a href="#" rel="tab_contacts">Contacts</a></li>
             <li class=""><a href="#" rel="tab_site">Site</a></li>
             <li class=""><a href="#" rel="tab_projet">Projet</a></li>
             <li class=""><a href="#" rel="tab_parcelles">Parcelles</a></li>
@@ -173,30 +173,30 @@
           <tbody>
             <tr>
               <td>Sourceur</td>
-              <td class="required">{{ form_widget(form.origine, {'attr': {'style': 'width:100%'}}) }}</td>
-              <td>{{ form_widget(form.origineTelephone) }}</td>
+              <td class="required">{% if is_granted('ROLE_ADMIN') or projet.origine.id == app.user.id %}{{ form_widget(form.origine, {'attr': {'style': 'width:100%'}}) }}{% else %}{{ form.vars.value.origine }}{{ form_widget(form.origine, {'attr': {'class': 'hide','style': 'width:100%'}}) }}{% endif %}</td>
+              <td>{% if is_granted('ROLE_ADMIN') or projet.origineTelephone.id == app.user.id %}{{ form_widget(form.origineTelephone) }}{% else %}{{ form.vars.value.origineTelephone }}{{ form_widget(form.origineTelephone, {'attr': {'class': 'hide'}}) }}{% endif %}</td>
             </tr>
             {# {% if is_granted('ROLE_ADMIN') %} #}
             <tr>
               <td>Chef projet</td>
-              <td class="required">{{ form_widget(form.chefProjet, {'attr': {'style': 'width:100%'}}) }}</td>
-              <td>{{ form_widget(form.chefProjetTelephone) }}</td>
+              <td class="required">{% if is_granted('ROLE_ADMIN') or projet.chefProjet.id == app.user.id %}{{ form_widget(form.chefProjet, {'attr': {'style': 'width:100%'}}) }}{% else %}{{ form.vars.value.chefProjet }}{{ form_widget(form.chefProjet, {'attr': {'class': 'hide','style': 'width:100%'}}) }}{% endif %}</td>
+              <td>{% if is_granted('ROLE_ADMIN') or projet.chefProjetTelephone.id == app.user.id %}{{ form_widget(form.chefProjetTelephone) }}{% else %}{{ form.vars.value.chefProjetTelephone }}{{ form_widget(form.chefProjetTelephone, {'attr': {'class': 'hide'}}) }}{% endif %}</td>
             </tr>
             {# {% endif %} #}
             <tr>
               <td>Chargé foncier</td>
-              <td>{{ form_widget(form.chargeFoncier, {'attr': {'style': 'width:100%'}}) }}</td>
-              <td>{{ form_widget(form.chargeFoncierTelephone) }}</td>
+              <td>{% if is_granted('ROLE_ADMIN') or projet.chargeFoncier.id == app.user.id %}{{ form_widget(form.chargeFoncier, {'attr': {'style': 'width:100%'}}) }}{% else %}{{ form.vars.value.chargeFoncier }}{{ form_widget(form.chargeFoncier, {'attr': {'class': 'hide','style': 'width:100%'}}) }}{% endif %}</td>
+              <td>{% if is_granted('ROLE_ADMIN') or projet.chargeFoncierTelephone.id == app.user.id %}{{ form_widget(form.chargeFoncierTelephone) }}{% else %}{{ form.vars.value.chargeFoncierTelephone }}{{ form_widget(form.chargeFoncierTelephone, {'attr': {'class': 'hide'}}) }}{% endif %}</td>
             </tr>
             <tr>
               <td>Partenaire</td>
               <td class="required">{{ form_widget(form.partenaire, {'attr': {'style': 'width:100%'}}) }}</td>
-              <td>{{ form_widget(form.partenaireTelephone) }}</td>
+              <td>{% if is_granted('ROLE_ADMIN') or projet.partenaireTelephone.id == app.user.id %}{{ form_widget(form.partenaireTelephone) }}{% else %}{{ form.vars.value.partenaireTelephone }}{{ form_widget(form.partenaireTelephone, {'attr': {'class': 'hide'}}) }}{% endif %}</td>
             <tr>
             <tr>
               <td>Mairie</td>
-              <td class="required">{{ form_widget(form.mairie, {'attr': {'style': 'width:100%'}}) }}</td>
-              <td>{{ form_widget(form.mairieTelephone) }}</td>
+              <td class="required">{% if is_granted('ROLE_ADMIN') or projet.mairie.id == app.user.id %}{{ form_widget(form.mairie, {'attr': {'style': 'width:100%'}}) }}{% else %}{{ form.vars.value.mairie }}{{ form_widget(form.mairie, {'attr': {'class': 'hide','style': 'width:100%'}}) }}{% endif %}</td>
+              <td>{% if is_granted('ROLE_ADMIN') or projet.mairieTelephone.id == app.user.id %}{{ form_widget(form.mairieTelephone) }}{% else %}{{ form.vars.value.mairieTelephone }}{{ form_widget(form.mairieTelephone, {'attr': {'class': 'hide'}}) }}{% endif %}</td>
             <tr>
             {% if form.vars.value.proprietaires[0] is defined %}
               {% for proprietaire in form.vars.value.proprietaires %}
@@ -556,7 +556,9 @@
         var query = $('#projet_communes option:selected').text().replace(/\(.+/, '').trim();
       else {
         var query = $('#projet_departement option:selected').text().trim();
+        {% if is_granted('ROLE_ADMIN') or projet.origine.id == app.user.id %}
         updateContacts();
+        {% endif %}
       }
       if(query && last_reverse_search != query) {
         last_reverse_search = query;
@@ -634,7 +636,7 @@
         else $('#projet_denomination').val('Esol_'+id);
       }
     });
-
+    {% if is_granted('ROLE_ADMIN') or projet.origine.id == app.user.id %}
     var contactsUrl = "{{ path('contacts_search') }}";
     function updateContacts() {
       var id = $('#projet_departement').val();
@@ -688,6 +690,7 @@
       });
     }
     updateContacts();
+    {% endif %}
 
     var queryCommuneUrl = "{{ path('commune_search') }}";
 
@@ -727,7 +730,7 @@
       escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
       minimumInputLength: 1,
     });
-
+    {% if is_granted('ROLE_ADMIN') or projet.origine.id == app.user.id %}
     $("#projet_origine, #projet_chargeFoncier, #projet_chefProjet, #projet_partenaire").select2({placeholder: "Non désigné"});
     var queryMairieUrl = "{{ path('mairie_search') }}";
     
@@ -750,6 +753,7 @@
       var data = e.params.data;
       $('#projet_mairieTelephone').val(data.telephone);
     });
+    {% endif %}
     
     {% if form.vars.value.photoImplantation is defined and form.vars.value.photoImplantation %}
       if(!$('#implantation_photo').length) $('<button id="implantation_photo" class="btn btn-info btn-sm popup_fichier" data-toggle="modal" data-target=".bs-modal-lg">Afficher</button>').insertAfter('#projet_photoImplantationFile');
