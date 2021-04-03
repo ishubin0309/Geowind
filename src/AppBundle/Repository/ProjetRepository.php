@@ -189,7 +189,7 @@ class ProjetRepository extends EntityRepository
     {
         $query = $this->createQueryBuilder('p')
                 ->select('COUNT(p)')
-                ->where('(p.origine = :user OR p.chefProjet = :user OR p.chargeFoncier OR p.partenaire = :user) AND p.archived = :archived')
+                ->where('(p.origine = :user OR p.chefProjet = :user OR p.chargeFoncier = :user OR p.partenaire = :user) AND p.archived = :archived')
                 ->setParameter('user', $user)
                 ->setParameter('archived', $archived)
         ;
