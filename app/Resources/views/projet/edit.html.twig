@@ -731,18 +731,18 @@
       minimumInputLength: 1,
     });
     {% if is_granted('ROLE_ADMIN') or projet.origine.id == app.user.id %}
-    $("#projet_chargeFoncier, #projet_chefProjet, #projet_partenaire").dblclick(function() {
-      if($(this).attr('id') == 'projet_partenaire') {
+    $("#tab_contacts .select2").dblclick(function() {
+      if($(this).parents('td').find('select').attr('id') == 'projet_partenaire') {
         var projet_partenaire = $('#projet_partenaire').val();
         $('#projet_partenaire').html($('#projet_origine').html());
         if(projet_partenaire) $('#projet_partenaire').val(projet_partenaire);
         $('#projet_partenaire').trigger('change');
-      } else if($(this).attr('id') == 'projet_chefProjet') {
+      } else if($(this).parents('td').find('select').attr('id') == 'projet_chefProjet') {
         var projet_chefProjet = $('#projet_chefProjet').val();
         $('#projet_chefProjet').html($('#projet_origine').html());
         if(projet_chefProjet) $('#projet_chefProjet').val(projet_chefProjet);
         $('#projet_chefProjet').trigger('change');
-      } else if($(this).attr('id') == 'projet_chargeFoncier') {
+      } else if($(this).parents('td').find('select').attr('id') == 'projet_chargeFoncier') {
         var projet_chargeFoncier = $('#projet_chargeFoncier').val();
         $('#projet_chargeFoncier').html($('#projet_origine').html());
         if(projet_chargeFoncier) $('#projet_chargeFoncier').val(projet_chargeFoncier);
