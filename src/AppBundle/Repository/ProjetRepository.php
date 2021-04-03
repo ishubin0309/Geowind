@@ -175,10 +175,9 @@ class ProjetRepository extends EntityRepository
                 ->leftJoin('f.bureau', 'b')
                 ->leftJoin('p.departement', 'd')
                 ->leftJoin('d.region', 'r')
-                ->where('(p.origine = :user OR p.chefProjet = :user OR p.chargeFoncier = :user OR p.partenaire = :partenaire) AND p.archived = :archived')
+                ->where('(p.origine = :user OR p.chefProjet = :user OR p.chargeFoncier = :user OR p.partenaire = :user) AND p.archived = :archived')
                 // ->orderBy('p.dateCreation', 'ASC')
                 ->setParameter('user', $user)
-                ->setParameter('partenaire', $user)
                 ->setParameter('archived', $archived)
         ;
 
@@ -189,9 +188,8 @@ class ProjetRepository extends EntityRepository
     {
         $query = $this->createQueryBuilder('p')
                 ->select('COUNT(p)')
-                ->where('(p.origine = :user OR p.chefProjet = :user OR p.chargeFoncier = :user OR p.partenaire = :partenaire) AND p.archived = :archived')
+                ->where('(p.origine = :user OR p.chefProjet = :user OR p.chargeFoncier = :user OR p.partenaire = :user) AND p.archived = :archived')
                 ->setParameter('user', $user)
-                ->setParameter('partenaire', $user)
                 ->setParameter('archived', $archived)
         ;
 
