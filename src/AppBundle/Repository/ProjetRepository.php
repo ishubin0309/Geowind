@@ -191,7 +191,7 @@ class ProjetRepository extends EntityRepository
                 ->select('COUNT(p)')
                 ->where('(p.origine = :user OR p.chefProjet = :user OR p.chargeFoncier = :user OR p.partenaire = :partenaire) AND p.archived = :archived')
                 ->setParameter('user', $user)
-                ->setParameter('partenaire', $partenaire)
+                ->setParameter('partenaire', $user)
                 ->setParameter('archived', $archived)
         ;
 
