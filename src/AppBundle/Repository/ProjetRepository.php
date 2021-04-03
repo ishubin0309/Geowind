@@ -201,7 +201,7 @@ class ProjetRepository extends EntityRepository
                 ->setParameter('archived', $archived)
         ;
 
-        return new $query->getQuery()->getResult();
+        return $query->getQuery()->getResult();
     }
 
     public function findUserProjetsCount(User $user, $archived = false)
