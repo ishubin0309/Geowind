@@ -554,7 +554,10 @@
 
       if($(this).attr('id') == 'projet_communes')
         var query = $('#projet_communes option:selected').text().replace(/\(.+/, '').trim();
-      else var query = $('#projet_departement option:selected').text().trim();
+      else {
+        var query = $('#projet_departement option:selected').text().trim();
+        updateContacts();
+      }
       if(query && last_reverse_search != query) {
         last_reverse_search = query;
         reverseGeolocalisation(query, true);
@@ -631,6 +634,57 @@
         else $('#projet_denomination').val('Esol_'+id);
       }
     });
+
+    var contactsUrl = "{{ path('contacts_search') }}";
+    function updateContacts() {
+      var id = $('#projet_departement').val();
+      jQuery.ajax({
+          url: contactsUrl,
+          method: "POST",
+          data: {id: id, confirm: 1},
+          dataType: "json",
+          success: function (response) {
+              {# console.log(response); #}
+              var projet_chefProjet = $('#projet_chefProjet').val();
+              $('#projet_chefProjet').html('');
+              var first_option = false;
+              jQuery.each(response.chef_projets, function(index, data) {
+                if(!first_option) first_option = data.id;
+                first_option = data.id != projet_chefProjet ? first_option : data.id
+                var newOption = new Option(data.text, data.id, false, false);
+                $('#projet_chefProjet').append(newOption);
+              });
+              if(first_option) $('#projet_chefProjet').val(first_option);
+              $('#projet_chefProjet').trigger('change');
+
+              var projet_chargeFoncier = $('#projet_chargeFoncier').val();
+              $('#projet_chargeFoncier').html('');
+              var first_option = false;
+              jQuery.each(response.chef_projets, function(index, data) {
+                if(!first_option) first_option = data.id;
+                first_option = data.id != projet_chargeFoncier ? first_option : data.id
+                var newOption = new Option(data.text, data.id, false, false);
+                $('#projet_chargeFoncier').append(newOption);
+              });
+              if(first_option) $('#projet_chargeFoncier').val(first_option);
+              $('#projet_chargeFoncier').trigger('change');
+
+              var projet_partenaire = $('#projet_partenaire').val();
+              $('#projet_partenaire').html('');
+              var first_option = false;
+              jQuery.each(response.partenaires, function(index, data) {
+                if(!first_option) first_option = data.id;
+                first_option = data.id != projet_partenaire ? first_option : data.id
+                var newOption = new Option(data.text, data.id, false, false);
+                $('#projet_partenaire').append(newOption);
+              });
+              if(first_option) $('#projet_partenaire').val(first_option);
+              $('#projet_partenaire').trigger('change');
+          }, error: function () {
+          }
+      });
+    }
+    updateContacts();
 
     var queryCommuneUrl = "{{ path('commune_search') }}";
 

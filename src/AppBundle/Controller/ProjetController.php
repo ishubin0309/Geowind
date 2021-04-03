@@ -472,6 +472,29 @@ class ProjetController extends Controller
     }
 
     /**
+     * @Route("/contacts/search", name="contacts_search")
+     * @Security("has_role('ROLE_VIEW')")
+     */
+    public function contactsAction(Request $request)
+    {
+        $response = new JsonResponse();
+
+        $id = $request->request->get('id', null);
+
+        $results = ['partenaires'=>[],'chef_projets'=>[],'charge_fonciers'=>[]];
+
+        if (!empty($id)) {
+            $em = $this->getDoctrine()->getManager();
+            $results['partenaires'] = $em->getRepository('AppBundle:User')->getFindPartenaires($id);
+            $results['chef_projets'] = $em->getRepository('AppBundle:User')->getFindChefProjets($id);
+            $results['charge_fonciers'] = $em->getRepository('AppBundle:User')->getFindChargeFonciers($id);
+        }
+
+        $response->setData($results);
+        return $response;
+    }
+
+    /**
      * @Route("/communes/search", name="commune_search", options={ "expose": true })
      * @Security("has_role('ROLE_VIEW')")
      */
