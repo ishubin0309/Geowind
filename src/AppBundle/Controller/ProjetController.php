@@ -77,7 +77,7 @@ class ProjetController extends Controller
                         ->findUserProjetsById($this->getUser(), $showIds);
             } else {
                 $projets = $em->getRepository('AppBundle:Projet')
-                        ->findUserProjets($this->getUser());
+                        ->findAllUserProjets($this->getUser());
             }
         }
 
@@ -119,7 +119,7 @@ class ProjetController extends Controller
                     ->findAll(true);
         } else {
             $projets = $em->getRepository('AppBundle:Projet')
-                    ->findUserProjets($this->getUser(), true);
+                    ->findAllUserProjets($this->getUser(), true);
         }
 
         $focusIndex = 0;

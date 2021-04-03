@@ -184,6 +184,26 @@ class ProjetRepository extends EntityRepository
         return new Paginator($query->getQuery()->setFirstResult($offset)->setMaxResults($limit));
     }
 
+    public function findAllUserProjets(User $user, $archived = false=)
+    {
+        $query = $this->createQueryBuilder('p')
+                ->select(['p', 'f', 'pr', 't', 'b', 'c', 'd', 'r'])
+                ->leftJoin('p.finances', 'f')
+                ->leftJoin('p.proprietaires', 'pr')
+                ->leftJoin('p.taches', 't')
+                ->leftJoin('p.communes', 'c')
+                ->leftJoin('f.bureau', 'b')
+                ->leftJoin('p.departement', 'd')
+                ->leftJoin('d.region', 'r')
+                ->where('(p.origine = :user OR p.chefProjet = :user OR p.chargeFoncier = :user OR p.partenaire = :user) AND p.archived = :archived')
+                // ->orderBy('p.dateCreation', 'ASC')
+                ->setParameter('user', $user)
+                ->setParameter('archived', $archived)
+        ;
+
+        return new $query->getQuery()->getResult();
+    }
+
     public function findUserProjetsCount(User $user, $archived = false)
     {
         $query = $this->createQueryBuilder('p')

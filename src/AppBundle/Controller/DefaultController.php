@@ -181,7 +181,7 @@ class DefaultController extends Controller
                         ->findAll();
         } else {
             $projets = $em->getRepository('AppBundle:Projet')
-                        ->findUserProjets($this->getUser());
+                        ->findAllUserProjets($this->getUser());
         }
 
         $gridHelper = new GridHelper();
@@ -207,7 +207,7 @@ class DefaultController extends Controller
                         ->findAll();
         } else {
             $projets = $em->getRepository('AppBundle:Projet')
-                        ->findUserProjets($this->getUser());
+                        ->findAllUserProjets($this->getUser());
             $messages = $em->getRepository('AppBundle:MessageProprietaire')
                         ->findBy(['createdBy' => $this->getUser()]);
         }
