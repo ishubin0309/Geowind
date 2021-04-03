@@ -245,7 +245,7 @@ class ProjetRepository extends EntityRepository
                 ->leftJoin('f.bureau', 'b')
                 ->leftJoin('p.departement', 'd')
                 ->leftJoin('d.region', 'r')
-                ->where('p.origine = :user')
+                ->where('(p.origine = :user OR p.chefProjet = :user OR p.chargeFoncier = :user OR p.partenaire = :user)')
                 ->andWhere('p.id IN (:ids)')
                 ->andWhere('p.archived = :archived')
                 ->orderBy('p.dateCreation', 'ASC')
