@@ -731,7 +731,7 @@
       minimumInputLength: 1,
     });
     {% if is_granted('ROLE_ADMIN') or projet.origine.id == app.user.id %}
-    $("#tab_contacts .select2").dblclick(function() {
+    $("#tab_contacts .select2").dblclick(function() {alert('test');
       if($(this).parents('td').find('select').attr('id') == 'projet_partenaire') {
         var projet_partenaire = $('#projet_partenaire').val();
         $('#projet_partenaire').html($('#projet_origine').html());
