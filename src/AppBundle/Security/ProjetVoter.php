@@ -76,6 +76,6 @@ class ProjetVoter extends Voter
             return true;
         }
 
-        return $projet->getOrigine() == $token->getUser() || $projet->getChefProjet() == $token->getUser();
+        return $projet->getOrigine() == $token->getUser() || $projet->getChefProjet() == $token->getUser() || $projet->getChargeFoncier() == $token->getUser() || $projet->getPartenaire() == $token->getUser();
     }
 }
