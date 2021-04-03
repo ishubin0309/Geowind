@@ -517,7 +517,7 @@ class ProjetController extends Controller
     
     /**
      * @Route("/{id}/messagerie/new", name="messagerie_new", options={ "expose": true })
-     * @Security("is_granted('edit', projet)")
+     * @Security("is_granted('view', projet)")
      */
     public function newMessageAction(Request $request, Projet $projet)
     {
@@ -546,7 +546,7 @@ class ProjetController extends Controller
     
     /**
      * @Route("/{id}/messagerie/list", name="messagerie_list", options={ "expose": true })
-     * @Security("is_granted('edit', projet)")
+     * @Security("is_granted('view', projet)")
      */
     public function listMessageAction(Request $request, Projet $projet)
     {
