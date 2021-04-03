@@ -184,7 +184,7 @@ class ProjetRepository extends EntityRepository
         return new Paginator($query->getQuery()->setFirstResult($offset)->setMaxResults($limit));
     }
 
-    public function findAllUserProjets(User $user, $archived = false=)
+    public function findAllUserProjets(User $user, $archived = false)
     {
         $query = $this->createQueryBuilder('p')
                 ->select(['p', 'f', 'pr', 't', 'b', 'c', 'd', 'r'])
