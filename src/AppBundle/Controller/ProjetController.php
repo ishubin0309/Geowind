@@ -257,10 +257,10 @@ class ProjetController extends Controller
                         if(!$projet) $projet = new Projet();
                         $projet->setListe($liste);
                         $projet->setOrigine($this->getUser());
-                        $projet->setChefProjet($this->getUser());
+                        // $projet->setChefProjet($this->getUser());
                         $telephone = $this->getUser()->getTelephone();
                         $projet->setOrigineTelephone($telephone);
-                        $projet->setChefProjetTelephone($telephone);
+                        // $projet->setChefProjetTelephone($telephone);
                         $projet->setDenomination($denomination);
                         $projet->setLatitude($data[$latColumn]);
                         $projet->setLongitude($data[$lngColumn]);
