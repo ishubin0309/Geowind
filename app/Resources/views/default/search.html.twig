@@ -20,7 +20,7 @@
       <table class="table">
         <tbody>
           <tr>
-            <td>
+            <td style="white-space: nowrap;">
               <div class="form-group">
                 <label for="select-origine">Sourceur</label>
                 <select id="select-origine" class="form-control input-sm input-filter" data-attr="origine">
@@ -31,7 +31,7 @@
                 </select>
               </div>
             </td>
-            <td>
+            <td style="white-space: nowrap;">
               <div class="form-group">
                 <label for="select-chefProjet">Chef projet</label>
                 <select id="select-chefProjet" class="form-control input-sm input-filter" data-attr="chefProjet">
@@ -42,7 +42,7 @@
                 </select>
               </div>
             </td>
-            <td>
+            <td style="white-space: nowrap;">
               <div class="form-group">
                 <label for="select-chargeFoncier">Chargé foncier</label>
                 <select id="select-chargeFoncier" class="form-control input-sm input-filter" data-attr="chargeFoncier">
@@ -53,7 +53,7 @@
                 </select>
               </div>
             </td>
-            <td>
+            <td style="white-space: nowrap;">
               <div class="form-group">
                 <label for="select-partenaire">Partenaire</label>
                 <select id="select-partenaire" class="form-control input-sm input-filter" data-attr="partenaire">
@@ -64,7 +64,7 @@
                 </select>
               </div>
             </td>
-            <td>
+            <td style="white-space: nowrap;">
               <div class="form-group">
                 <label for="select-regions">Région</label>
                 <select id="select-regions" class="form-control input-sm input-filter" data-attr="region">
@@ -75,7 +75,9 @@
                 </select>
               </div>
             </td>
-            <td>
+          </tr>
+          <tr>
+            <td style="white-space: nowrap;">
               <div class="form-group">
                 <label for="select-departements">Département</label>
                 <select id="select-departements" class="form-control input-sm input-filter" data-attr="departement">
@@ -86,12 +88,10 @@
                 </select>
               </div>
             </td>
-          </tr>
-          <tr>
-            <td>
+            <td style="white-space: nowrap;">
               <div class="form-group">
-                <label for="select-types">Type de Projet</label>
-                <select id="select-types" class="form-control input-sm input-filter" data-attr="typeProjet">
+                <label for="select-typeProjet">Type de Projet</label>
+                <select id="select-typeProjet" class="form-control input-sm input-filter" data-attr="typeProjet">
                   <option value=""></option>
                   {% for code, type in typesProjet %}
                     <option value="{{ code }}">{{ type }}</option>
@@ -99,10 +99,10 @@
                 </select>
               </div>
             </td>
-            {# <td>
+            {# <td style="white-space: nowrap;">
               <div class="form-group">
-                <label for="select-types">Type de Bien</label>
-                <select id="select-types" class="form-control input-sm input-filter" data-attr="typeSite">
+                <label for="select-typeSite">Type de Bien</label>
+                <select id="select-typeSite" class="form-control input-sm input-filter" data-attr="typeSite">
                   <option value=""></option>
                   {% for code, type in typesSite %}
                     <option value="{{ code }}">{{ type }}</option>
@@ -110,10 +110,10 @@
                 </select>
               </div>
             </td> #}
-            <td>
+            <td style="white-space: nowrap;">
               <div class="form-group">
-                <label for="select-types">Phase</label>
-                <select id="select-types" class="form-control input-sm input-filter" data-attr="phase">
+                <label for="select-phase">Phase</label>
+                <select id="select-phase" class="form-control input-sm input-filter" data-attr="phase">
                   <option value=""></option>
                   {% for code, phase in phases %}
                     <option value="{{ code }}">{{ phase }}</option>
@@ -121,10 +121,10 @@
                 </select>
               </div>
             </td>
-            <td>
+            <td style="white-space: nowrap;">
               <div class="form-group">
-                <label for="select-types">Etat</label>
-                <select id="select-types" class="form-control input-sm input-filter" data-attr="progression">
+                <label for="select-progression">Etat</label>
+                <select id="select-progression" class="form-control input-sm input-filter" data-attr="progression">
                   <option value=""></option>
                   {% for code, progression in progressions %}
                     <option value="{{ code }}">{{ progression }}</option>
@@ -132,11 +132,11 @@
                 </select>
               </div>
             </td>
-            <td>
+            <td style="white-space: nowrap;">
               <div class="form-group">
                 <button id="form-clear" class="btn btn-default btn-sm" type="reset" value="Clear">Clear</button>
               </div>
-            <td>
+            </td>
           </tr>
         </tbody>
       </table>
