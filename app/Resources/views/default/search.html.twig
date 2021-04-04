@@ -186,7 +186,7 @@
     var typeSite = {{ grid_helper.getJsontypeSites|raw }};
 
     function idFormatter(row, cell, value, columnDef, dataContext) {
-      return row.canEdit ? '<a href="'+Routing.generate('projet_edit', { id: value })+'">'+value+'</a>' : value;
+      return dataContext.canEdit ? '<a href="'+Routing.generate('projet_edit', { id: value })+'">'+value+'</a>' : value;
     }
 
     function typeProjetFormatter(row, cell, value, columnDef, dataContext) {
