@@ -1963,6 +1963,7 @@ class Projet
         if(!$this->notes->isEmpty()) $this->completude++;
         
         $this->completude = round($this->completude * 100 / 13);
+        return $this->completude;
     }
     
     /**
