@@ -18,8 +18,26 @@
     <div class="search-fields">
     <form class="form-inline">
       <div class="form-group">
-        <label for="select-origine">Sourceur</label>
-        <select id="select-origine" class="form-control input-sm input-filter" data-attr="origine">
+        <label for="select-chefProjet">Chef projet</label>
+        <select id="select-chefProjet" class="form-control input-sm input-filter" data-attr="chefProjet">
+          <option value=""></option>
+          {% for user in users %}
+            <option value="{{ user }}">{{ user }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="select-chargeFoncier">Chargé foncier</label>
+        <select id="select-chargeFoncier" class="form-control input-sm input-filter" data-attr="chargeFoncier">
+          <option value=""></option>
+          {% for user in users %}
+            <option value="{{ user }}">{{ user }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="select-partenaire">Partenaire</label>
+        <select id="select-partenaire" class="form-control input-sm input-filter" data-attr="partenaire">
           <option value=""></option>
           {% for user in users %}
             <option value="{{ user }}">{{ user }}</option>
@@ -58,7 +76,7 @@
         <select id="select-departements" class="form-control input-sm input-filter" data-attr="departement">
           <option value=""></option>
           {% for departement in departements %}
-            <option value="{{ departement.nom }}">{{ departement.nom }}</option>
+            <option value="{{ departement.nom }}">{{ departement.nom }} ({{ departement.code }})</option>
           {% endfor %}
         </select>
       </div>
@@ -195,9 +213,10 @@
       { id: "typeProjet", name: "Type de projet", field: "typeProjet", width: 70, maxWidth: 250, formatter: typeProjetFormatter, sortable: true, sorter: stringSorter, },
       { id: "typeSite", name: "Type de Bien", field: "typeSite", width: 70, maxWidth: 250, formatter: typeSiteFormatter, sortable: true, sorter: stringSorter, },
       { id: "environnement", name: "Type de milieu", field: "environnement", sortable: true, sorter: stringSorter, formatter: environnementFormatter },
-      { id: "origine", name: "Sourceur", field: "origine", sortable: true, sorter: stringSorter, width: 130, },
-      {# { id: "chefProjet", name: "Chef de projet", field: "chefProjet", sortable: true, sorter: stringSorter, width: 130, }, #}
-      {# { id: "partenaire", name: "Partenaire", field: "partenaire", sortable: true, sorter: stringSorter, width: 130, maxWidth: 250 }, #}
+      {# { id: "origine", name: "Sourceur", field: "origine", sortable: true, sorter: stringSorter, width: 130, }, #}
+      { id: "chefProjet", name: "Chef de projet", field: "chefProjet", sortable: true, sorter: stringSorter, width: 130, },
+      { id: "chargeFoncier", name: "Chargé du foncier", field: "chargeFoncier", sortable: true, sorter: stringSorter, width: 130, maxWidth: 250 },
+      { id: "partenaire", name: "Partenaire", field: "partenaire", sortable: true, sorter: stringSorter, width: 130, maxWidth: 250 },
       { id: "potentiel", name: "Potentiel (MW)", field: "potentiel", sortable: true, sorter: numericSorter, width: 130, maxWidth: 100 },
       { id: "region", name: "Région", field: "region", sortable: true, sorter: stringSorter, },
       { id: "departement", name: "Département", field: "departement", sortable: true, sorter: stringSorter },
@@ -224,6 +243,10 @@
       }
 
       if (args.chefProjet != "" && item["chefProjet"] !== args.chefProjet) {
+          return false;
+      }
+
+      if (args.chargeFoncier != "" && item["chargeFoncier"] !== args.chargeFoncier) {
           return false;
       }
 
@@ -260,6 +283,7 @@
           typeSite: '{{ projet.typeSite }}',
           origine: '{{ projet.origine }}',
           chefProjet: '{{ projet.chefProjet }}',
+          chargeFoncier: '{{ projet.chargeFoncier }}',
           partenaire: '{{ projet.partenaire }}',
           potentiel: {{ projet.potentiel }},
           denomination: '{{ projet.denomination|e('js') }}',
@@ -282,6 +306,7 @@
         typeSite: "",
         origine: "",
         chefProjet: "",
+        chargeFoncier: "",
         partenaire: "",
         region: "",
         departement: "",
@@ -300,6 +325,7 @@
           typeSite: "",
           origine: "",
           chefProjet: "",
+          chargeFoncier: "",
           partenaire: "",
           region: "",
           departement: "",
