@@ -591,6 +591,14 @@ class Batiment
         $this->projet = $projet;
         return $this;
     }
+
+    public function isNotEmpty()
+    {
+        if($this->pans || $this->longeur || $this->largeur || $this->faitage || $this->surfaceSol || $this->charge || $this->zonage || $this->documentOpposable || !$this->toitures->isEmpty())
+            return true;
+        else return false;
+    }
+
     /**
      * @return string
      */

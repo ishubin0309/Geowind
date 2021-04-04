@@ -309,10 +309,17 @@ class Terrain
         return $this;
     }
 
+    public function isNotEmpty()
+    {
+        if($this->topographie || $this->altitude || $this->exposition || $this->gestionnaire || $this->nomPoste || $this->distancePdl || $this->zonage || $this->documentOpposable)
+            return true;
+        else return false;
+    }
+
     /**
      * @return string
      */
-    /* public function __toString()
+    public function __toString()
     {
         return $this->topographie;
         return $this->altitude;
@@ -322,5 +329,5 @@ class Terrain
         return $this->distancePdl;
         return $this->documentOpposable;
         return $this->zonage;
-    } */
+    }
 }

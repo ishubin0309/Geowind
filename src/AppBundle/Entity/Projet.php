@@ -1950,17 +1950,18 @@ class Projet
     public function calculeCompletude()
     {
         $this->completude = 2; // locatisation + contact
-        if($this->terrain || $this->batimentExistant || $this->batimentNouveau) $this->completude++;
+        if(($this->terrain && $this->terrain->isNotEmpty()) || ($this->batimentExistant && $this->batimentExistant->isNotEmpty())) $this->completude++;
         if($this->typeImplantation || $this->titreImplantation || $this->contrat || $this->potentiel) $this->completude++;
-        if($this->parcelles) $this->completude++;
-        if($this->proprietaires) $this->completude++;
-        if($this->etats) $this->completude++;
-        if($this->enjeuxs) $this->completude++;
-        if($this->taches) $this->completude++;
-        if(!empty($this->concertations)) $this->completude++;
-        if($this->finances) $this->completude++;
-        if($this->documents) $this->completude++;
-        if($this->notes) $this->completude++;
+        if(!$this->parcelles->isEmpty()) $this->completude++;
+        if(!$this->proprietaires->isEmpty()) $this->completude++;
+        if(!$this->etats->isEmpty()) $this->completude++;
+        if(!$this->enjeuxs->isEmpty()) $this->completude++;
+        if(!$this->taches->isEmpty()) $this->completude++;
+        if(!$this->concertations->isEmpty()) $this->completude++;
+        if(!$this->finances->isEmpty()) $this->completude++;
+        if(!$this->documents->isEmpty()) $this->completude++;
+        if(!$this->notes->isEmpty()) $this->completude++;
+        
         $this->completude = round($this->completude * 100 / 13);
     }
     
