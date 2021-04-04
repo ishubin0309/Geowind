@@ -64,14 +64,14 @@ class DefaultController extends Controller
     public function fixAction(Request $request)
     {
 
-        $em = $this->getDoctrine()->getManager();
+        /* $em = $this->getDoctrine()->getManager();
 
         $projets = $em->getRepository('AppBundle:Projet')->findAll();
         foreach($projets as $projet) {
             echo $projet->getId() . ': ' . $projet->calculeCompletude() . '%<br>';
             $em->persist($projet);
         }
-        $em->flush();
+        $em->flush(); */
         return new Response('done');
     }
     /**
