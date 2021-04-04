@@ -414,7 +414,7 @@ class Projet
     private $equipement;
 
     /**
-     * @var string
+     * @var int
      *
      * @ORM\Column(type="integer")
      */
@@ -456,7 +456,7 @@ class Projet
     private $emprise = 0;
 
     /**
-     * @var string
+     * @var int
      *
      * @ORM\Column(type="integer", options={"default" : 15})
      */
@@ -1886,6 +1886,24 @@ class Projet
     public function setEmprise($emprise)
     {
         $this->emprise = $emprise;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCompletude()
+    {
+        return $this->completude;
+    }
+
+    /**
+     * @param int $completude
+     * @return \AppBundle\Entity\Projet
+     */
+    public function setCompletude($completude)
+    {
+        $this->completude = $completude;
         return $this;
     }
 
