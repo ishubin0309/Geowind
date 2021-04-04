@@ -18,6 +18,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
@@ -56,6 +57,22 @@ class DefaultController extends Controller
             'grid_helper' => $gridHelper,
             'export_option' => new ExportOption(),
         ]);
+    }
+    /**
+     * @Route("/fix-projets", name="fixprojets")
+     */
+    public function fixAction(Request $request)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+
+        $projets = $em->getRepository('AppBundle:Projet')->findAll();
+        foreach($projets as $projet) {
+            echo $projet->getId() . ': ' . $projet->calculeCompletude() . '%<br>';
+            $em->persist($projet);
+        }
+        // $em->flush();
+        return new Response('done');
     }
     /**
      * @Route("/liste/{liste}", name="view_liste", requirements={"liste"="\d+"})
