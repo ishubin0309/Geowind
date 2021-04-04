@@ -1955,7 +1955,7 @@ class Projet
         if($this->parcelles) $this->completude++;
         if($this->proprietaires) $this->completude++;
         if($this->etats) $this->completude++;
-        if($this->enjeux) $this->completude++;
+        if($this->enjeuxs) $this->completude++;
         if($this->taches) $this->completude++;
         if($this->concertations) $this->completude++;
         if($this->finances) $this->completude++;
