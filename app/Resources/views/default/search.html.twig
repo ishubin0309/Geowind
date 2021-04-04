@@ -185,6 +185,10 @@
     var typeProjet = {{ grid_helper.getJsontypeProjets|raw }};
     var typeSite = {{ grid_helper.getJsontypeSites|raw }};
 
+    function idFormatter(row, cell, value, columnDef, dataContext) {
+      return row.canEdit ? '<a href="'+Routing.generate('projet_edit', { id: value })+'">'+value+'</a>' : value;
+    }
+
     function typeProjetFormatter(row, cell, value, columnDef, dataContext) {
       return typeProjet[value] !== undefined ? typeProjet[value]['name'] : value;
     }
@@ -230,7 +234,7 @@
 
     var columns = [
       checkboxColumn,
-      { id: "id", name: "ID", field: "id", width: 70, maxWidth: 70, sortable: true, sorter: numericSorter, },
+      { id: "id", name: "ID", field: "id", width: 70, maxWidth: 70, sortable: true, sorter: numericSorter, formatter: idFormatter },
       { id: "typeProjet", name: "Type de projet", field: "typeProjet", width: 70, maxWidth: 250, formatter: typeProjetFormatter, sortable: true, sorter: stringSorter, },
       {# { id: "typeSite", name: "Type de Bien", field: "typeSite", width: 70, maxWidth: 250, formatter: typeSiteFormatter, sortable: true, sorter: stringSorter, }, #}
       { id: "environnement", name: "Type de milieu", field: "environnement", sortable: true, sorter: stringSorter, formatter: environnementFormatter },
@@ -319,6 +323,7 @@
           phase: '{{ projet.phase|e('js') }}',
           progression: '{{ projet.progression }}',
           progressionIndicateur: '{{ projet.progression }}',
+          canEdit: {{ is_granted('edit', projet) ? 1 : 0 }},
         });
       {% endfor %}
 
