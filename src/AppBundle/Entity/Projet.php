@@ -1957,7 +1957,7 @@ class Projet
         if($this->etats) $this->completude++;
         if($this->enjeuxs) $this->completude++;
         if($this->taches) $this->completude++;
-        if($this->concertations) $this->completude++;
+        if(!empty($this->concertations)) $this->completude++;
         if($this->finances) $this->completude++;
         if($this->documents) $this->completude++;
         if($this->notes) $this->completude++;
