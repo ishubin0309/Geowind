@@ -71,7 +71,7 @@ class DefaultController extends Controller
             echo $projet->getId() . ': ' . $projet->calculeCompletude() . '%<br>';
             $em->persist($projet);
         }
-        // $em->flush();
+        $em->flush();
         return new Response('done');
     }
     /**
