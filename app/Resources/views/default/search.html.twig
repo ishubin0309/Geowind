@@ -17,108 +17,122 @@
 
     <div class="search-fields">
     <form class="form-inline">
-      <div class="form-group">
-        <label for="select-chefProjet">Chef projet</label>
-        <select id="select-chefProjet" class="form-control input-sm input-filter" data-attr="chefProjet">
-          <option value=""></option>
-          {% for user in users %}
-            <option value="{{ user }}">{{ user }}</option>
-          {% endfor %}
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="select-chargeFoncier">Chargé foncier</label>
-        <select id="select-chargeFoncier" class="form-control input-sm input-filter" data-attr="chargeFoncier">
-          <option value=""></option>
-          {% for user in users %}
-            <option value="{{ user }}">{{ user }}</option>
-          {% endfor %}
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="select-partenaire">Partenaire</label>
-        <select id="select-partenaire" class="form-control input-sm input-filter" data-attr="partenaire">
-          <option value=""></option>
-          {% for user in users %}
-            <option value="{{ user }}">{{ user }}</option>
-          {% endfor %}
-        </select>
-      </div>
-      {# <div class="form-group">
-        <label for="select-chef">Chef de projet</label>
-        <select id="select-chef" class="form-control input-sm input-filter" data-attr="chefProjet">
-          <option value=""></option>
-          {% for user in users %}
-            <option value="{{ user }}">{{ user }}</option>
-          {% endfor %}
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="partenaire">Partenaire</label>
-        <select id="partenaire" class="form-control input-sm input-filter" data-attr="partenaire">
-          <option value=""></option>
-          {% for user in users %}
-            <option value="{{ user }}">{{ user }}</option>
-          {% endfor %}
-        </select>
-      </div> #}
-      <div class="form-group">
-        <label for="select-regions">Région</label>
-        <select id="select-regions" class="form-control input-sm input-filter" data-attr="region">
-          <option value=""></option>
-          {% for region in regions %}
-            <option value="{{ region.nom }}">{{ region.nom }}</option>
-          {% endfor %}
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="select-departements">Département</label>
-        <select id="select-departements" class="form-control input-sm input-filter" data-attr="departement">
-          <option value=""></option>
-          {% for departement in departements %}
-            <option value="{{ departement.nom }} ({{ departement.code }})">{{ departement.nom }}</option>
-          {% endfor %}
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="select-types">Type de Projet</label>
-        <select id="select-types" class="form-control input-sm input-filter" data-attr="typeProjet">
-          <option value=""></option>
-          {% for code, type in typesProjet %}
-            <option value="{{ code }}">{{ type }}</option>
-          {% endfor %}
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="select-types">Type de Bien</label>
-        <select id="select-types" class="form-control input-sm input-filter" data-attr="typeSite">
-          <option value=""></option>
-          {% for code, type in typesSite %}
-            <option value="{{ code }}">{{ type }}</option>
-          {% endfor %}
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="select-types">Phase</label>
-        <select id="select-types" class="form-control input-sm input-filter" data-attr="phase">
-          <option value=""></option>
-          {% for code, phase in phases %}
-            <option value="{{ code }}">{{ phase }}</option>
-          {% endfor %}
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="select-types">Etat</label>
-        <select id="select-types" class="form-control input-sm input-filter" data-attr="progression">
-          <option value=""></option>
-          {% for code, progression in progressions %}
-            <option value="{{ code }}">{{ progression }}</option>
-          {% endfor %}
-        </select>
-      </div>
-      <div class="form-group">
-        <button id="form-clear" class="btn btn-default btn-sm" type="reset" value="Clear">Clear</button>
-      </div>
+      <table class="table">
+        <tbody>
+          <tr>
+            <td>
+              <div class="form-group">
+                <label for="select-chefProjet">Chef projet</label>
+                <select id="select-chefProjet" class="form-control input-sm input-filter" data-attr="chefProjet">
+                  <option value=""></option>
+                  {% for user in users %}
+                    <option value="{{ user }}">{{ user }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </td>
+            <td>
+              <div class="form-group">
+                <label for="select-chargeFoncier">Chargé foncier</label>
+                <select id="select-chargeFoncier" class="form-control input-sm input-filter" data-attr="chargeFoncier">
+                  <option value=""></option>
+                  {% for user in users %}
+                    <option value="{{ user }}">{{ user }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </td>
+            <td>
+              <div class="form-group">
+                <label for="select-partenaire">Partenaire</label>
+                <select id="select-partenaire" class="form-control input-sm input-filter" data-attr="partenaire">
+                  <option value=""></option>
+                  {% for user in users %}
+                    <option value="{{ user }}">{{ user }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="form-group">
+                <label for="select-regions">Région</label>
+                <select id="select-regions" class="form-control input-sm input-filter" data-attr="region">
+                  <option value=""></option>
+                  {% for region in regions %}
+                    <option value="{{ region.nom }}">{{ region.nom }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </td>
+            <td>
+              <div class="form-group">
+                <label for="select-departements">Département</label>
+                <select id="select-departements" class="form-control input-sm input-filter" data-attr="departement">
+                  <option value=""></option>
+                  {% for departement in departements %}
+                    <option value="{{ departement.nom }} ({{ departement.code }})">{{ departement.nom }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </td>
+            <td>
+              <div class="form-group">
+                <label for="select-types">Type de Projet</label>
+                <select id="select-types" class="form-control input-sm input-filter" data-attr="typeProjet">
+                  <option value=""></option>
+                  {% for code, type in typesProjet %}
+                    <option value="{{ code }}">{{ type }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="form-group">
+                <label for="select-types">Type de Bien</label>
+                <select id="select-types" class="form-control input-sm input-filter" data-attr="typeSite">
+                  <option value=""></option>
+                  {% for code, type in typesSite %}
+                    <option value="{{ code }}">{{ type }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </td>
+            <td>
+              <div class="form-group">
+                <label for="select-types">Phase</label>
+                <select id="select-types" class="form-control input-sm input-filter" data-attr="phase">
+                  <option value=""></option>
+                  {% for code, phase in phases %}
+                    <option value="{{ code }}">{{ phase }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </td>
+            <td>
+              <div class="form-group">
+                <label for="select-types">Etat</label>
+                <select id="select-types" class="form-control input-sm input-filter" data-attr="progression">
+                  <option value=""></option>
+                  {% for code, progression in progressions %}
+                    <option value="{{ code }}">{{ progression }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="form-group">
+                <button id="form-clear" class="btn btn-default btn-sm" type="reset" value="Clear">Clear</button>
+              </div>
+            <td>
+          </tr>
+        </tbody>
+      </table>
   </form>
 
   </div>
