@@ -375,11 +375,13 @@
             {% if not foncier %}foncier: '',{% endif %}
             {% set parcelles = 0 %}
             {% set proprietaires = 0 %}
+            {% set chekedParcelles = [] %}
             {% for parcelle in projet.parcelles %}
               {% set parcelles = parcelles + 1 %}
               {% set break = false %}
               {% for proprietaire in projet.proprietaires if not break %}
-                {% if proprietaire.parcelles|lower == parcelle.nom|lower and proprietaire.accordProprietaire == 'OUI' %}
+                {% if proprietaire.parcelles|lower not in chekedParcelles and proprietaire.parcelles|lower == parcelle.nom|lower and proprietaire.accordProprietaire == 'OUI' %}
+                  {% set chekedParcelles = chekedParcelles|merge([proprietaire.parcelles|lower]) %}
                   {% set proprietaires = proprietaires + 1 %}
                   {% set break = true %}
                 {% endif %}
