@@ -19,6 +19,7 @@ use AppBundle\Entity\User;
  * @author Stéphane Ear <stephaneear@gmail.com>
  *
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ProjetRepository")
+ * @ORM\HasLifecycleCallbacks()
  * @Vich\Uploadable
  */
 class Projet
@@ -453,6 +454,13 @@ class Projet
      * @ORM\Column(type="decimal", precision=12, scale=6)
      */
     private $emprise = 0;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="integer", options={"default" : 15})
+     */
+    private $completude = 0;
 
     /**
      * @var Liste
@@ -1915,6 +1923,27 @@ class Projet
     {
         $this->archived = $archived;
         return $this;
+    }
+
+    /**
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     */
+    public function calculeCompletude()
+    {
+        $this->completude = 2; // locatisation + contact
+        if($this->terrain || $this->batimentExistant || $this->batimentNouveau) $this->completude++;
+        if($this->typeImplantation || $this->titreImplantation || $this->contrat || $this->potentiel) $this->completude++;
+        if($this->parcelles) $this->completude++;
+        if($this->proprietaires) $this->completude++;
+        if($this->etats) $this->completude++;
+        if($this->enjeux) $this->completude++;
+        if($this->taches) $this->completude++;
+        if($this->concertations) $this->completude++;
+        if($this->finances) $this->completude++;
+        if($this->documents) $this->completude++;
+        if($this->notes) $this->completude++;
+        $this->completude = round($this->completude * 100 / 13);
     }
     
     /**
