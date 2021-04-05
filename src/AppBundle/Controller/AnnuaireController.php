@@ -7,6 +7,7 @@ use AppBundle\Entity\Message;
 use AppBundle\Entity\MessageModel;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Appel;
+use AppBundle\Entity\Commune;
 use AppBundle\Form\MessageModelType;
 use AppBundle\Form\MessageType;
 use AppBundle\Form\AppelType;
@@ -75,18 +76,23 @@ class AnnuaireController extends Controller
     }
     
     /**
-     * @Route("/mairie/{id}/insee/search", name="mairie_insee_search", options={ "expose": true })
-     * @ParamConverter("mairie", options={"mapping": {"id": "id"}})
+     * @Route("/{id}/search-by-commune", name="mairie_search_by_commune", options={ "expose": true })
+     * @ParamConverter("commune", options={"mapping": {"id": "id"}})
      * @Method({"POST"})
      * @Security("has_role('ROLE_VIEW')")
      */
-    public function mairieInseeSearchAction(Request $request, Mairie $mairie)
+    public function mairieSearchByCommuneAction(Request $request, Commune $commune)
     {
         $response = new JsonResponse();
 
-        $results = ['insee' => ''];
-
-        if($mairie) $results['insee'] = $mairie->getInsee();
+        $results = ['mairie' => []];
+        $em = $this->getDoctrine()->getManager();
+        $mairie = $em->getRepository('AppBundle:Mairie')->findOneBy(['insee' => $commune->getInsee()]);
+        if($mairie) {
+            $results['mairie']['id'] = $mairie->getId();
+            $results['mairie']['text'] = $mairie->getMairie() . ' (' . $mairie->getInsee() . ')';
+            $results['mairie']['telephone'] = $mairie->getTelephone();
+        }
 
         $response->setData($results);
         return $response;
