@@ -802,7 +802,7 @@
         });
       }
     }
-    {% if form.vars.value.mairie is null and form.vars.value.communes[0].id is not defined %}
+    {% if form.vars.value.mairie is null and form.vars.value.communes[0].id is defined %}
       updateMairie();
     {% endif %}
     
