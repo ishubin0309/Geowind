@@ -76,6 +76,8 @@ class AnnuaireController extends Controller
     
     /**
      * @Route("/mairie/{id}/insee/search", name="mairie_insee_search", options={ "expose": true })
+     * @ParamConverter("mairie", options={"mapping": {"id": "id"}})
+     * @Method({"POST"})
      * @Security("has_role('ROLE_VIEW')")
      */
     public function mairieInseeSearchAction(Request $request, Mairie $mairie)
