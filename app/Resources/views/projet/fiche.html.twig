@@ -167,10 +167,12 @@
       <td>Origine</td>
       <td><strong>{{ projet.origine }}</strong><br><span>{{ projet.origineTelephone }}<br>{{ projet.origine.email }}</span></td>
     </tr>
+    {% if projet.chefProjet %}
     <tr class="tr-bs">
       <td>Chef de projet</td>
       <td>{{ projet.chefProjet }}<br><span>{{ projet.chefProjetTelephone }}<br>{{ projet.chefProjet.email }}</span></td>
     </tr>
+    {% endif %}
     {% if projet.mairie %}
     <tr class="tr-bs">
       <td>Mairie</td>
