@@ -1952,13 +1952,48 @@ class Projet
         $this->completude = 2; // locatisation + contact
         if(($this->terrain && $this->terrain->isNotEmpty()) || ($this->batimentExistant && $this->batimentExistant->isNotEmpty())) $this->completude++;
         if($this->typeImplantation || $this->titreImplantation || $this->contrat || $this->potentiel) $this->completude++;
-        if(!$this->parcelles->isEmpty()) $this->completude++;
-        if(!$this->proprietaires->isEmpty()) $this->completude++;
+        if(!$this->parcelles->isEmpty()) {
+            foreach($this->parcelles as $parcelle) {
+                if($parcelle->getNom()) {
+                    $this->completude++;
+                    break;
+                }
+            }
+        }
+        if(!$this->proprietaires->isEmpty()) {
+            foreach($this->proprietaires as $proprietaire) {
+                if($proprietaire->getParcelles()) {
+                    $this->completude++;
+                    break;
+                }
+            }
+        }
         if(!$this->etats->isEmpty()) $this->completude++;
-        if(!$this->enjeuxs->isEmpty()) $this->completude++;
+        if(!$this->enjeuxs->isEmpty()) {
+            foreach($this->enjeuxs as $enjeux) {
+                if($enjeux->getEnjeux()) {
+                    $this->completude++;
+                    break;
+                }
+            }
+        }
         if(!$this->taches->isEmpty()) $this->completude++;
-        if(!$this->concertations->isEmpty()) $this->completude++;
-        if(!$this->finances->isEmpty()) $this->completude++;
+        if(!$this->concertations->isEmpty()) {
+            foreach($this->concertations as $concertation) {
+                if($concertation->getObjet()) {
+                    $this->completude++;
+                    break;
+                }
+            }
+        }
+        if(!$this->finances->isEmpty()) {
+            foreach($this->finances as $finance) {
+                if($finance->getTitre()) {
+                    $this->completude++;
+                    break;
+                }
+            }
+        }
         if(!$this->documents->isEmpty()) $this->completude++;
         if(!$this->notes->isEmpty()) $this->completude++;
         
