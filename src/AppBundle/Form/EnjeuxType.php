@@ -26,7 +26,7 @@ class EnjeuxType extends AbstractType
             ])
             ->add('enjeux', ChoiceType::class, [
                 'label' => 'Enjeux',
-                'required' => false,
+                'required' => true,
                 'choices' => array_flip(Etat::getDynamiqueList()),
             ])
             ->add('risque', ChoiceType::class, [
