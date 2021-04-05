@@ -75,6 +75,24 @@ class AnnuaireController extends Controller
     }
     
     /**
+     * @Route("/mairie/{id}/insee/search", name="mairie_insee_search", options={ "expose": true })
+     * @Security("has_role('ROLE_VIEW')")
+     */
+    public function mairieInseeSearchAction(Request $request, Mairie $mairie)
+    {
+        $response = new JsonResponse();
+
+        $results = ['insee' => ''];
+
+        if (!empty($term)) {
+            if($mairie) $results['insee'] = $mairie->getInsee();
+        }
+
+        $response->setData($results);
+        return $response;
+    }
+    
+    /**
      * @Route("/mairie/{insee}/contact", name="annuaire_mairie", options={"expose": true})
      * @ParamConverter("mairie", options={"mapping": {"insee": "insee"}})
      * @Method({"GET", "POST"})

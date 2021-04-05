@@ -115,6 +115,11 @@
               <td class="required">{{ form_widget(form.mairie, {'attr': {'style': 'width:100%'}}) }}</td>
               <td>{{ form_widget(form.mairieTelephone) }}</td>
             <tr>
+            <tr id="contacts_mairie_insee" class="hide">
+              <td>Code INSEE</td>
+              <td></td>
+              <td></td>
+            <tr>
           </tbody>
         </table>
       </fieldset>
@@ -590,7 +595,25 @@
     $('#projet_mairie').on('select2:select', function (e) {
       var data = e.params.data;
       $('#projet_mairieTelephone').val(data.telephone);
+      getMairieCodeInsee();
     });
+    function getMairieCodeInsee() {
+      var mairie_id = $("#projet_mairie").val();
+      if(mairie_id) {
+        jQuery.ajax({
+          url: Routing.generate('mairie_insee_search', { id: mairie_id }),
+          method: "POST",
+          dataType: "json",
+          success: function (response) {
+            if(response['insee']) $('#contacts_mairie_insee').removeClass('hide');
+            $('#contacts_mairie_insee').find('td:eq(1)').text(response['insee']);
+          }
+        });
+      }
+    }
+    {% if form.vars.value.mairie is not null %}
+      getMairieCodeInsee();
+    {% endif %}
     
     {% if form.vars.value.photoImplantation is defined and form.vars.value.photoImplantation %}
       if(!$('#implantation_photo').length) $('<button id="implantation_photo" class="btn btn-info btn-sm popup_fichier" data-toggle="modal" data-target=".bs-modal-lg">Afficher</button>').insertAfter('#projet_photoImplantationFile');
