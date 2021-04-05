@@ -86,9 +86,7 @@ class AnnuaireController extends Controller
 
         $results = ['insee' => ''];
 
-        if (!empty($term)) {
-            if($mairie) $results['insee'] = $mairie->getInsee();
-        }
+        if($mairie) $results['insee'] = $mairie->getInsee();
 
         $response->setData($results);
         return $response;

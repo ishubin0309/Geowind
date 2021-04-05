@@ -790,6 +790,8 @@
           success: function (response) {
             if(response['insee']) $('#contacts_mairie_insee').removeClass('hide');
             $('#contacts_mairie_insee').find('td:eq(1)').text(response['insee']);
+          }, error: function () {
+            $('#contacts_mairie_insee').find('td:eq(1)').text('');
           }
         });
       }
