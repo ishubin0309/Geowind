@@ -198,11 +198,6 @@
               <td class="required">{% if is_granted('ROLE_ADMIN') or projet.origine.id == app.user.id %}{{ form_widget(form.mairie, {'attr': {'style': 'width:100%'}}) }}{% else %}{{ form.vars.value.mairie }}{{ form_widget(form.mairie, {'attr': {'class': 'hide','style': 'width:100%'}}) }}{% endif %}</td>
               <td>{% if is_granted('ROLE_ADMIN') or projet.origine.id == app.user.id %}{{ form_widget(form.mairieTelephone) }}{% else %}{{ form.vars.value.mairieTelephone }}{{ form_widget(form.mairieTelephone, {'attr': {'class': 'hide'}}) }}{% endif %}</td>
             <tr>
-            <tr id="contacts_mairie_insee" class="hide">
-              <td>Code INSEE</td>
-              <td></td>
-              <td></td>
-            <tr>
             {% if form.vars.value.proprietaires[0] is defined %}
               {% for proprietaire in form.vars.value.proprietaires %}
                 <tr rel="{{ loop.index0 }}" class="{% if not proprietaire.proprietaire %}hide{% endif %}">
