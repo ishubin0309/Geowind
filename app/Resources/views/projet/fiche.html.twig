@@ -50,6 +50,9 @@
 <div style="width: 70%; text-align: center; margin: auto; margin-top: 10mm;">
   <h1 style="text-align: center; font-size: 28pt;">{{ projet.denomination|upper }}</h1>
   <h2>{{ projet.departement }}, {{ projet.departement.region }}</h2>
+  {% if carte_path %}
+  <img style="width: 50%;border: 3px solid #007100;max-height:400px;" height="400" src="{{ carte_path }}" >
+  {% endif %}
 </div>
 
 <div class="text-center" style="text-align: center;margin-top: 10mm;">
