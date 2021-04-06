@@ -64,7 +64,11 @@
                 </select>
               </div>
             </td>
-            <td></td>
+            <td style="white-space: nowrap;">
+              <div class="form-group">
+                <button id="form-clear" class="btn btn-default btn-sm" type="reset" value="Clear">Clear</button>
+              </div>
+            </td>
           </tr>
           <tr>
             <td style="white-space: nowrap;">
@@ -131,11 +135,6 @@
                     <option value="{{ code }}">{{ progression }}</option>
                   {% endfor %}
                 </select>
-              </div>
-            </td>
-            <td style="white-space: nowrap;">
-              <div class="form-group">
-                <button id="form-clear" class="btn btn-default btn-sm" type="reset" value="Clear">Clear</button>
               </div>
             </td>
           </tr>
