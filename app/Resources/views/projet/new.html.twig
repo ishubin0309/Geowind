@@ -725,6 +725,8 @@
               $(clone).insertAfter($collectionHolder.find('tr:eq('+(tr_index-1)+')'));
               $collectionHolder.find('tr:eq('+tr_index+')').removeClass('info');
               $collectionHolder.find('tr:eq('+tr_index+')').attr('duplicate', $collectionHolder.find('tr.info:eq(0)').index());
+              $collectionHolder.find('tr:eq('+tr_index+')').find('[id*="_phase"]').val($collectionHolder.find('tr:eq('+(tr_index-1)+')').find('[id*="_phase"]').val());
+              $collectionHolder.find('tr:eq('+tr_index+')').find('[id*="_bureau"]').val($collectionHolder.find('tr:eq('+(tr_index-1)+')').find('[id*="_bureau"]').val());
               $collectionHolder.find('tr:eq('+tr_index+')').find('[id*="_montantEngage"]').val('0');
               $collectionHolder.find('tr:eq('+tr_index+')').find('[id*="_montantPaye"]').val('0');
               $collectionHolder.find('tr:eq('+tr_index+')').find('[id*="_montantRestant"]').val('');
