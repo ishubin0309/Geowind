@@ -64,14 +64,21 @@ class FinanceType extends AbstractType
                 'html5' => false,
                 'required' => false,
             ])
+            ->add('dateFacture', DatePickerType::class, [
+                'label' => 'Date facture',
+                'widget' => 'single_text',
+                'format' => 'dd/MM/yyyy',
+                'html5' => false,
+                'required' => false,
+            ])
             ->add('duplique', TextType::class, [
                 'label' => 'Dupliquée',
                 'required' => false,
             ])
-            /* ->add('note', TextType::class, [
+            ->add('note', TextType::class, [
                 'label' => 'Note',
                 'required' => false,
-            ]) */
+            ])
         ;
     }
 

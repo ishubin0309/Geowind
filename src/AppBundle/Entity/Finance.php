@@ -119,6 +119,14 @@ class Finance
      * @Assert\Date()
      */
     private $dateEcheance;
+    
+    /**
+     * @var DateTime
+     *
+     * @ORM\Column(type="date", nullable=true)
+     * @Assert\Date()
+     */
+    private $dateFacture;
 
     /**
      * @return int
@@ -306,6 +314,24 @@ class Finance
     public function setDateEcheance(DateTime $dateEcheance = null)
     {
         $this->dateEcheance = $dateEcheance;
+        return $this;
+    }
+    
+    /**
+     * @return DateTime|null
+     */
+    public function getDateFacture()
+    {
+        return $this->dateFacture;
+    }
+
+    /**
+     * @param DateTime|null $dateFacture
+     * @return $this
+     */
+    public function setDateFacture(DateTime $dateFacture = null)
+    {
+        $this->dateFacture = $dateFacture;
         return $this;
     }
 

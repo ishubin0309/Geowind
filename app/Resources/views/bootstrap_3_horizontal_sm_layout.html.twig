@@ -107,13 +107,15 @@ col-sm-8
           <th>#</th>
           <th class="col-sm-2">Phase</th>
           <th class="col-sm-2">Titre<span class="control-label required"></span></th>
+          <th class="col-sm-2">Note<span class="control-label"></span></th>
           <th>Total(€HT)<span class="control-label required"></span></th>
           <th>Engagé(€HT)<span class="control-label required"></span></th>
-          <th>Payé(€HT)<span class="control-label required"></span></th>
           <th>Restant(€HT)<span class="control-label required"></span></th>
+          <th>Payé(€HT)<span class="control-label required"></span></th>
           <th>Prestataire</th>
           <th>Date commande</th>
           <th>Date d'échéance</th>
+          <th>Date facture</th>
           <th>J (-)</th>
           <th class="hide">Dupliquée</th>
         </tr>
@@ -143,13 +145,15 @@ col-sm-8
       <td></td>
       <td>{{ form_widget(form.phase) }}</td>
       <td>{{ form_widget(form.titre) }}</td>
+      <td>{{ form_widget(form.note) }}</td>
       <td>{{ form_widget(form.montantTotal) }}</td>
       <td>{{ form_widget(form.montantEngage) }}</td>
-      <td>{{ form_widget(form.montantPaye) }}</td>
       <td>{{ form_widget(form.montantRestant) }}</td>
+      <td>{{ form_widget(form.montantPaye) }}</td>
       <td>{{ form_widget(form.bureau) }}</td>
       <td>{% if form.vars.value.dateEngmt is defined %}{{ form_widget(form.dateEngmt) }}{% else %}{{ form_widget(form.dateEngmt, {'value' : "now"|date("d/m/Y")}) }}{% endif %}</td>
       <td>{% if form.vars.value.dateEcheance is defined %}{{ form_widget(form.dateEcheance) }}{% else %}{{ form_widget(form.dateEcheance, {'value' : "now"|date("d/m/Y")}) }}{% endif %}</td>
+      <td>{% if form.vars.value.dateFacture is defined %}{{ form_widget(form.dateFacture) }}{% else %}{{ form_widget(form.dateFacture, {'value' : "now"|date("d/m/Y")}) }}{% endif %}</td>
       <td></td>
       <td class="hide">{{ form_widget(form.duplique) }}</td>
     </tr>
