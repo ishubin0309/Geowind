@@ -22,6 +22,12 @@
           <tr>
             <td style="white-space: nowrap;">
               <div class="form-group">
+                <label for="select-id">ID</label>
+                <input id="select-id" class="form-control input-sm input-filter" data-attr="id">
+              </div>
+            </td>
+            <td style="white-space: nowrap;">
+              <div class="form-group">
                 <label for="select-origine">Sourceur</label>
                 <select id="select-origine" class="form-control input-sm input-filter" data-attr="origine">
                   <option value=""></option>
@@ -64,11 +70,7 @@
                 </select>
               </div>
             </td>
-            <td style="white-space: nowrap;">
-              <div class="form-group">
-                <button id="form-clear" class="btn btn-default btn-sm" type="reset" value="Clear">Clear</button>
-              </div>
-            </td>
+            <td></td>
           </tr>
           <tr>
             <td style="white-space: nowrap;">
@@ -135,6 +137,11 @@
                     <option value="{{ code }}">{{ progression }}</option>
                   {% endfor %}
                 </select>
+              </div>
+            </td>
+            <td style="white-space: nowrap;">
+              <div class="form-group">
+                <button id="form-clear" class="btn btn-default btn-sm" type="reset" value="Clear">Clear</button>
               </div>
             </td>
           </tr>
@@ -255,6 +262,10 @@
     ];
 
     function filter(item, args){
+      if (args.id != "" && !String(item["id"]).match(args.id)) {
+          return false;
+      }
+
       if (args.origine != "" && item["origine"] !== args.origine) {
           return false;
       }
@@ -328,6 +339,7 @@
       {% endfor %}
 
       var filterArgs = {
+        id: "",
         typeProjet: "",
         typeSite: "",
         origine: "",
@@ -347,6 +359,7 @@
 
       $('#form-clear').click(function() {
         filterArgs = {
+          id: "",
           typeProjet: "",
           typeSite: "",
           origine: "",
