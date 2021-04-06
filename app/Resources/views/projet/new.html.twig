@@ -1489,8 +1489,8 @@
           var date2 = new Date(dateEngmt[2] + '/' + dateEngmt[1] + '/' + dateEngmt[3]);
           var diffTime = date2 - date1;
           var diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-          row.find('td:eq(10)').text(diffDays);
-        } else row.find('td:eq(10)').text(0);
+          row.find('td.difference').text(diffDays);
+        } else row.find('td.difference').text(0);
       });
     }
     $('#tab_commandes').on('change', 'input', function() {

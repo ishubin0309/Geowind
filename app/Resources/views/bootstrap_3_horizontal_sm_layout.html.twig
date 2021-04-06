@@ -154,7 +154,7 @@ col-sm-8
       <td>{% if form.vars.value.dateEngmt is defined %}{{ form_widget(form.dateEngmt) }}{% else %}{{ form_widget(form.dateEngmt, {'value' : "now"|date("d/m/Y")}) }}{% endif %}</td>
       <td>{% if form.vars.value.dateEcheance is defined %}{{ form_widget(form.dateEcheance) }}{% else %}{{ form_widget(form.dateEcheance, {'value' : "now"|date("d/m/Y")}) }}{% endif %}</td>
       <td>{% if form.vars.value.dateFacture is defined %}{{ form_widget(form.dateFacture) }}{% else %}{{ form_widget(form.dateFacture, {'value' : "now"|date("d/m/Y")}) }}{% endif %}</td>
-      <td></td>
+      <td class="difference"></td>
       <td class="hide">{{ form_widget(form.duplique) }}</td>
     </tr>
   {% endspaceless %}
