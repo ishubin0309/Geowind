@@ -75,6 +75,14 @@ class Bureau
     private $details;
 
     /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
+     */
+    private $partenaire;
+
+    /**
      * @var ArrayCollection|Finance[]
      *
      * @ORM\OneToMany(targetEntity="Finance", mappedBy="bureau")
@@ -199,6 +207,24 @@ class Bureau
     public function setEmail($email)
     {
         $this->email = $email;
+        return $this;
+    }
+
+    /**
+     * @return User
+     */
+    public function getPartenaire()
+    {
+        return $this->partenaire;
+    }
+
+    /**
+     * @param User $partenaire
+     * @return \AppBundle\Entity\Projet
+     */
+    public function setPartenaire($partenaire)
+    {
+        $this->partenaire = $partenaire;
         return $this;
     }
 
