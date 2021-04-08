@@ -28,6 +28,17 @@ class BureauType extends AbstractType
                 'label' => 'Chargé d\'études',
                 'required' => false,
             ])
+            ->add('partenaires', EntityType::class, [
+                'class' => 'AppBundle:User',
+                'required' => false,
+                'multiple' => true,
+                'label' => 'Partenaires',
+                'query_builder' => function (EntityRepository $er) {
+                    // return $er->createQueryBuilder('u');
+                    return $er->createQueryBuilder('u')
+                    ->join('u.departements', 'd');
+                },
+            ])
             ->add('adresse', TextType::class, [
                 'label' => 'Adresse',
                 'required' => false,
@@ -39,17 +50,6 @@ class BureauType extends AbstractType
             ->add('email', EmailType::class, [
                 'label' => 'Adresse email',
                 'required' => false,
-            ])
-            ->add('partenaires', EntityType::class, [
-                'class' => 'AppBundle:User',
-                'required' => false,
-                'multiple' => true,
-                'label' => 'Partenaires',
-                'query_builder' => function (EntityRepository $er) {
-                    // return $er->createQueryBuilder('u');
-                    return $er->createQueryBuilder('u')
-                    ->join('u.departements', 'd');
-                },
             ])
             ->add('details', TextareaType::class, [
                 'label' => 'Détails',
