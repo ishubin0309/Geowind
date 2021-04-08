@@ -31,7 +31,7 @@
           <td>{{ bureau.adresse }}</td>
           <td>{{ bureau.telephone }}</td>
           <td>{{ bureau.email }}</td>
-          <td>{{ bureau.partenaire ? bureau.partenaires|join(', ') : '' }}</td>
+          <td>{{ bureau.partenaires|length ? bureau.partenaires|join(', ') : '' }}</td>
           <td class="column-fit">{{ bureau.createdAt is not null ? bureau.createdAt|date('d/m/Y') }}</td>
           <td class="column-fit"><a href="{{ path('bureau_edit', { 'id': bureau.id }) }}" class="btn btn-warning btn-xs"><i class="fa fa-fw fa-pencil"></i></a></td>
               <td class="column-fit">
