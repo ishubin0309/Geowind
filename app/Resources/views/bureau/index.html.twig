@@ -14,10 +14,10 @@
         <tr>
           <th>Dénomination</th>
           <th>Chargé d'études</th>
+          <th>Partenaires</th>
           <th>Adresse</th>
           <th>Téléphone</th>
           <th>Email</th>
-          <th>Partenaires</th>
           <th class="column-fit">Date création</th>
           <th class="column-fit"></th>
           <th class="column-fit"></th>
@@ -28,10 +28,10 @@
         <tr>
           <td>{{ bureau.nom }}</td>
           <td>{{ bureau.representant }}</td>
+          <td>{{ bureau.partenaires is not empty ? ('<span class="label label-primary">' ~ bureau.partenaires|join('</span> <span class="label label-primary">') ~ '</span>')|raw : '' }}</td>
           <td>{{ bureau.adresse }}</td>
           <td>{{ bureau.telephone }}</td>
           <td>{{ bureau.email }}</td>
-          <td>{{ bureau.partenaires is not empty ? ('<span class="label label-primary">' ~ bureau.partenaires|join('</span> <span class="label label-primary">') ~ '</span>')|raw : '' }}</td>
           <td class="column-fit">{{ bureau.createdAt is not null ? bureau.createdAt|date('d/m/Y') }}</td>
           <td class="column-fit"><a href="{{ path('bureau_edit', { 'id': bureau.id }) }}" class="btn btn-warning btn-xs"><i class="fa fa-fw fa-pencil"></i></a></td>
               <td class="column-fit">

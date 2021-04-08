@@ -3,6 +3,7 @@
 namespace AppBundle\Form;
 
 use AppBundle\Repository\UserRepository;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -44,8 +45,10 @@ class BureauType extends AbstractType
                 'required' => false,
                 'multiple' => true,
                 'label' => 'Partenaires',
-                'query_builder' => function (UserRepository $er) {
-                    return $er->getFindAllQueryBuilder();
+                'query_builder' => function (EntityRepository $er) {
+                    // return $er->createQueryBuilder('u');
+                    return $er->createQueryBuilder('u')
+                    ->join('u.departements', 'd');
                 },
             ])
             ->add('details', TextareaType::class, [
