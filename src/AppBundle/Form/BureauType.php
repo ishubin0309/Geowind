@@ -39,10 +39,11 @@ class BureauType extends AbstractType
                 'label' => 'Adresse email',
                 'required' => false,
             ])
-            ->add('partenaire', EntityType::class, [
+            ->add('partenaires', EntityType::class, [
                 'class' => 'AppBundle:User',
                 'required' => false,
-                'label' => 'Partenaire',
+                'multiple' => true,
+                'label' => 'Partenaires',
                 'query_builder' => function (UserRepository $er) {
                     return $er->getFindAllQueryBuilder();
                 },

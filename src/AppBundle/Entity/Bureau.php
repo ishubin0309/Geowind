@@ -75,12 +75,11 @@ class Bureau
     private $details;
 
     /**
-     * @var User
+     * @var ArrayCollection|User[]
      *
-     * @ORM\ManyToOne(targetEntity="User")
-     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
+     * @ORM\ManyToMany(targetEntity="User", cascade={"persist"})
      */
-    private $partenaire;
+    private $partenaires;
 
     /**
      * @var ArrayCollection|Finance[]
@@ -95,6 +94,7 @@ class Bureau
      */
     public function __construct()
     {
+        $this->partenaires = new ArrayCollection();
         $this->finances = new ArrayCollection();
     }
 
@@ -211,20 +211,31 @@ class Bureau
     }
 
     /**
-     * @return User
+     * @return ArrayCollection|Partenaire[]
      */
-    public function getPartenaire()
+    public function getPartenaires()
     {
-        return $this->partenaire;
+        return $this->partenaires;
     }
 
     /**
-     * @param User $partenaire
+     * @param \AppBundle\Entity\User $partenaire
+     */
+    public function addPartenaire(User $partenaire)
+    {
+        if (!$this->partenaires->contains($partenaire)) {
+            $this->partenaires[] = $partenaire;
+        }
+        return $this;
+    }
+
+    /**
+     * @param ArrayCollection $partenaires
      * @return \AppBundle\Entity\Projet
      */
-    public function setPartenaire($partenaire)
+    public function setPartenaires(ArrayCollection $partenaires)
     {
-        $this->partenaire = $partenaire;
+        $this->partenaires = $partenaires;
         return $this;
     }
 
