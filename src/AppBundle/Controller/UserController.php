@@ -67,7 +67,9 @@ class UserController extends Controller
                 $secteurs = '';
                 if($user->isSendSecteurs()) {
                     $array = [];
-                    foreach($user->departements as $departement) if(!in_array($departement->getNom(), $array)) $array[] = $departement->getNom();
+                    foreach($user->getDepartements() as $departement) if(!in_array($departement->getNom(), $array)) $array[] = $departement->getNom();
+                    foreach($user->getDepartementsChefProjet() as $departement) if(!in_array($departement->getNom(), $array)) $array[] = $departement->getNom();
+                    foreach($user->getDepartementsChargeFoncier() as $departement) if(!in_array($departement->getNom(), $array)) $array[] = $departement->getNom();
                     $secteurs = implode(', ', $array);
                 }
                 $this->nouveauMessage($user->getUsername(), $user->getEmail(), $user->getPlainPassword(), $secteurs);
@@ -121,7 +123,9 @@ class UserController extends Controller
                 $secteurs = '';
                 if($user->isSendSecteurs()) {
                     $array = [];
-                    foreach($user->departements as $departement) if(!in_array($departement->getNom(), $array)) $array[] = $departement->getNom();
+                    foreach($user->getDepartements() as $departement) if(!in_array($departement->getNom(), $array)) $array[] = $departement->getNom();
+                    foreach($user->getDepartementsChefProjet() as $departement) if(!in_array($departement->getNom(), $array)) $array[] = $departement->getNom();
+                    foreach($user->getDepartementsChargeFoncier() as $departement) if(!in_array($departement->getNom(), $array)) $array[] = $departement->getNom();
                     $secteurs = implode(', ', $array);
                 }
                 $this->nouveauMessage($user->getUsername(), $user->getEmail(), $user->getPlainPassword(), $secteurs);
