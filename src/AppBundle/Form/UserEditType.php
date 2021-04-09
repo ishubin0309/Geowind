@@ -107,6 +107,14 @@ class UserEditType extends AbstractType
                 'label' => 'Envoyer les identifiants',
                 'required' => true,
             ])
+            ->add('sendSecteurs', ChoiceType::class, [
+                'choices' => [
+                    'Oui' => true,
+                    'Non' => false,
+                ],
+                'label' => 'Inclure secteurs',
+                'required' => true,
+            ])
         ;
     }
 

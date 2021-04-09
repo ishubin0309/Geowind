@@ -53,12 +53,7 @@ class UserType extends AbstractType
                 'multiple' => true,
                 'label' => 'Secteurs (Partenaire)',
                 'query_builder' => function (EntityRepository $er) {
-                    $departements = $er->getFindUsersAssignedDepartments($this->user);
-                    if($departements) return $er->createQueryBuilder('d')
-                    ->where('d NOT IN (:departements)')
-                    ->orderBy('d.nom', 'ASC')
-                    ->setParameter('departements', $departements);
-                    else return $er->createQueryBuilder('d')
+                    return $er->createQueryBuilder('d')
                     ->orderBy('d.nom', 'ASC');
                 },
             ])
@@ -95,6 +90,14 @@ class UserType extends AbstractType
                     'Non' => false,
                 ],
                 'label' => 'Envoyer les identifiants',
+                'required' => true,
+            ])
+            ->add('sendSecteurs', ChoiceType::class, [
+                'choices' => [
+                    'Oui' => true,
+                    'Non' => false,
+                ],
+                'label' => 'Inclure secteurs',
                 'required' => true,
             ])
         ;

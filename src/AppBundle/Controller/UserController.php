@@ -64,7 +64,13 @@ class UserController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             if($user->isSendCredentials()) {
-                $this->nouveauMessage($user->getUsername(), $user->getEmail(), $user->getPlainPassword());
+                $secteurs = '';
+                if($user->isSendSecteurs()) {
+                    $array = [];
+                    foreach($user->departements as $departement) if(!in_array($departement->getNom(), $array)) $array[] = $departement->getNom();
+                    $secteurs = implode(', ', $array);
+                }
+                $this->nouveauMessage($user->getUsername(), $user->getEmail(), $user->getPlainPassword(), $secteurs);
             }
             $userManager->saveUser($user);
             $this->addFlash('success', 'Utilisateur ' . $user->getUsername() . ' créé avec succès.');
@@ -78,12 +84,13 @@ class UserController extends Controller
         ]);
     }
 
-    private function nouveauMessage($user, $email, $password)
+    private function nouveauMessage($user, $email, $password, $secteurs)
     {//$email = 'haffoudhimedtaieb@gmail.com';
         $message = new Message();
         $from = $this->getParameter('mailer_from');
         $message->setObject('Vos identifiants climactif');
         $body = 'Veuillez bien trouver ci-joint vos identifiants de connexion au site climactif.com' . "\n" . 'User: '.$user . "\n" . 'Mot de passe: '.$password;
+        if($secteurs) $body .= "\n" . 'Secteurs: ' . $secteurs;
         $message->setBody($body);
         $message->setFrom($from);
         $message->setReplyTo($from);
@@ -111,7 +118,13 @@ class UserController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             if($user->isSendCredentials() && $user->getPlainPassword()) {
-                $this->nouveauMessage($user->getUsername(), $user->getEmail(), $user->getPlainPassword());
+                $secteurs = '';
+                if($user->isSendSecteurs()) {
+                    $array = [];
+                    foreach($user->departements as $departement) if(!in_array($departement->getNom(), $array)) $array[] = $departement->getNom();
+                    $secteurs = implode(', ', $array);
+                }
+                $this->nouveauMessage($user->getUsername(), $user->getEmail(), $user->getPlainPassword(), $secteurs);
             } elseif($user->isSendCredentials()) if($user->isSendCredentials()) $this->addFlash('danger', 'Entrez un mot de passe pour envoyé le mail.');
             $userManager->saveUser($user);
             $this->addFlash('success', 'Utilisateur ' . $user->getUsername() . ' modifié avec succès.');

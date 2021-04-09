@@ -159,6 +159,11 @@ class User implements AdvancedUserInterface, \Serializable
      */
     private $sendCredentials = false;
 
+    /**
+     * @var bool
+     */
+    private $sendSecteurs = false;
+
     public function __construct()
     {
         $this->roles = [];
@@ -356,6 +361,24 @@ class User implements AdvancedUserInterface, \Serializable
     public function setSendCredentials($sendCredentials)
     {
         $this->sendCredentials = $sendCredentials;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isSendSecteurs()
+    {
+        return $this->sendSecteurs;
+    }
+
+    /**
+     * @param bool $sendSecteurs
+     * @return \AppBundle\Entity\User
+     */
+    public function setSendSecteurs($sendSecteurs)
+    {
+        $this->sendSecteurs = $sendSecteurs;
         return $this;
     }
 
