@@ -538,8 +538,9 @@ class Projet
     {
         return [
             'location' => 'Location',
-            'autofinancement' => 'Autofinancement',
-            'non_defini' => 'Non-défini'
+            'investissement' => 'Investissement',
+            'vente' => 'Vente',
+            'non_defini' => 'Non-défini',
         ];
     }
     
