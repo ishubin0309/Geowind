@@ -180,6 +180,10 @@ $('#user_edit_departements').change(function() {
   }
   
 });
+
+  $('#user_edit_sendSecteurs').change(function() {
+    if(!$('#user_edit_sendCredentials').val()) $('#user_edit_sendSecteurs').val(0);
+  });
   {# if(!default_lat) $('#user_edit_departements').change(); #}
 
     {# {% if form.vars.value.photo is defined and form.vars.value.photo %}

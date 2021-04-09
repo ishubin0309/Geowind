@@ -190,5 +190,9 @@ $('#user_departements').change(function() {
     if(nom) user_name += nom.substring(0, 2);
     if(current_user_name != user_name) $('#user_username').val(user_name.toUpperCase());
   });
+
+  $('#user_sendSecteurs').change(function() {
+    if(!$('#user_sendCredentials').val()) $('#user_sendSecteurs').val(0);
+  });
 </script>
 {% endblock %}
