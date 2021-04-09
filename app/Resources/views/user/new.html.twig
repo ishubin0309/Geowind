@@ -192,7 +192,7 @@ $('#user_departements').change(function() {
   });
 
   $('#user_sendSecteurs').change(function() {
-    if(!$('#user_sendCredentials').val()) $('#user_sendSecteurs').val(0);
+    if($('#user_sendCredentials').val() == '0') $('#user_sendSecteurs').val(0);
   });
 </script>
 {% endblock %}
