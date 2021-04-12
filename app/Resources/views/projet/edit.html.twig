@@ -1676,12 +1676,12 @@
       $.each($('#projet_finances [id*="_dateEngmt"]'), function(i, element) {
         var row = $(element).parents('tr');
         var id = (row.find('[id*="_duplique"]').val() && row.find('[id*="_duplique"]').val() >= 0) ? (parseInt(row.find('[id*="_duplique"]').val().trim())+1) : (row.index() + 1);
-        if(last_index <= id) {
+        if(last_index < id) {console.log('id: '+id);
           id = last_index + 1;
           last_index = id;
           second_id = 0;
         } else id = last_index;
-        second_id++;
+        second_id++;console.log('second_id: '+second_id);console.log('last_index: '+last_index);
         row.find('td:eq(0)').text({% if projet is defined and projet.id is not null %}'{{ projet.id }}.' + {% endif %}id + '.' + second_id);
         var dateFacture = row.find('[id*="_dateFacture"]').val().match(/(\d+)\/(\d+)\/(\d+)/);
         var dateEngmt = row.find('[id*="_dateEngmt"]').val().match(/(\d+)\/(\d+)\/(\d+)/);
