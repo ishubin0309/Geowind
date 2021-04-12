@@ -1676,7 +1676,7 @@
       $.each($('#projet_finances [id*="_dateEngmt"]'), function(i, element) {
         var row = $(element).parents('tr');
         var id = (row.find('[id*="_duplique"]').val() && row.find('[id*="_duplique"]').val() >= 0) ? (parseInt(row.find('[id*="_duplique"]').val().trim())+1) : (row.index() + 1);
-        if(last_index < id) {
+        if(last_index <= id) {
           id = last_index + 1;
           last_index = id;
           second_id = 0;
