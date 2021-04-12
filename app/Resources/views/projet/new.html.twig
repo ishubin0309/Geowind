@@ -1486,7 +1486,7 @@
           second_id = 0;
         } else id = last_index;
         second_id++;
-        row.find('td:eq(0)').text({% if projet.id is not null %}'{{ projet.id }}.' + {% endif %}id + '.' + second_id);
+        row.find('td:eq(0)').text({% if projet is defined and projet.id is not null %}'{{ projet.id }}.' + {% endif %}id + '.' + second_id);
         var dateFacture = row.find('[id*="_dateFacture"]').val().match(/(\d+)\/(\d+)\/(\d+)/);
         var dateEngmt = row.find('[id*="_dateEngmt"]').val().match(/(\d+)\/(\d+)\/(\d+)/);
         var dateEcheance = row.find('[id*="_dateEcheance"]').val().match(/(\d+)\/(\d+)\/(\d+)/);
