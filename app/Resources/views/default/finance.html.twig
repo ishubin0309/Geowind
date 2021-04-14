@@ -136,7 +136,10 @@
         if (args.any != "") {
           var found = false;
           $.each(item, function(index, element) {
-            if(String(element).match(args.any)) found = true;
+            if(String(element).match(args.any)) {
+              console.log(element + ': found word ' +args.any);
+              found = true;
+            }
           });
           return found;
         } else return true;
