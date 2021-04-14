@@ -94,7 +94,17 @@
       { id: "difference", name: "J(-)", field: "difference", sortable: true, sorter: numericSorter, width: 50, maxWidth: 100 },
     ];
 
-    var dateMajColumn = { id: "dateMaj", name: "Date maj", field: "dateMaj", sortable: true };
+    function filter(item, args){
+      if (args.any != "") {
+        var found = false;
+        $.each(item, function(index, element) {
+          if(String(element).match(args.any)) {
+            found = true;
+          }
+        });
+        return found;
+      } else return true;
+    }
 
     $(function () {
       var data = [];
@@ -131,18 +141,6 @@
           });
         {% endfor %}
       {% endfor %}
-
-      function filter(item, args){
-        if (args.any != "") {
-          var found = false;
-          $.each(item, function(index, element) {
-            if(String(element).match(args.any)) {
-              found = true;
-            }
-          });
-          return found;
-        } else return true;
-      }
 
       var filterArgs = {
         any: "",
@@ -181,9 +179,7 @@
       grid.registerPlugin( new Slick.AutoTooltips({ enableForHeaderCells: true }) );
       grid.registerPlugin(checkboxSelector);
       grid.setSelectionModel(new Slick.RowSelectionModel({selectActiveRow: false}));
-
       grid.autosizeColumns();
-
       dataView.syncGridSelection(grid, true);
 
       grid.onSelectedRowsChanged.subscribe(function() {
