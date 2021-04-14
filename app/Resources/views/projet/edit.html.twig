@@ -1731,7 +1731,7 @@
             search_found = true;
           } else col.css('background-color', 'white');
         });
-        if(search_found) row.removeClass('hide');
+        if(!search || search_found) row.removeClass('hide');
         else row.addClass('hide');
       });
     });
