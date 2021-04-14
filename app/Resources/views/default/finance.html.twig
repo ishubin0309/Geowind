@@ -84,6 +84,7 @@
       { id: "restant", name: "Restant(€HT)", field: "restant", sortable: true, sorter: numericSorter, cssClass: 'text-right', width: 100, maxWidth: 100 },
       { id: "dateEngmt", name: "Date commande", field: "dateEngmt", sortable: true, sorter: dateSorter, width: 100, maxWidth: 100 },
       { id: "dateEcheance", name: "Date d'échéance", field: "dateEcheance", sortable: true, sorter: dateSorter, width: 100, maxWidth: 100 },
+      { id: "dateFacture", name: "Date facture", field: "dateFacture", sortable: true, sorter: dateSorter, width: 100, maxWidth: 100 },
     ];
 
     var dateMajColumn = { id: "dateMaj", name: "Date maj", field: "dateMaj", sortable: true };
@@ -107,6 +108,7 @@
             duplique: {{ finance.duplique is not null ? finance.duplique : '-1' }},
             dateEngmt: '{{ finance.dateEngmt|date('d/m/Y') }}',
             dateEcheance: '{{ finance.dateEcheance is not null ? finance.dateEcheance|date('d/m/Y') : '' }}',
+            dateFacture: '{{ finance.dateFacture is not null ? finance.dateFacture|date('d/m/Y') : '' }}',
             canEdit: {{ is_granted('edit', projet) ? 1 : 0 }},
           });
         {% endfor %}
