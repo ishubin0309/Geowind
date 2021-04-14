@@ -41,6 +41,20 @@
         return '<a href="'+url.replace(/0/, value)+'">'+value+'</a>';
       }
     }
+    var last_id_projet = 0;
+    var last_index = 0;
+    var second_id = 0;
+    function refFormatter(row, cell, value, columnDef, dataContext) {
+      if(last_id_projet != dataContext['idProjet']) {
+        last_id_projet = dataContext['idProjet'];
+        last_index = 0;
+      }
+      if(dataContext['duplique'] >= 0) last_index = dataContext['duplique'];
+      else second_id = 0;
+      last_index++;
+      second_id++;
+      return dataContext['idProjet'] + '.' + last_index + '.' + second_id;
+    }
 
     var phases = {{ grid_helper.getJsonPhases|raw }};
     function phaseFormatter(row, cell, value, columnDef, dataContext) {
@@ -58,6 +72,7 @@
     var columns = [
       checkboxColumn,
       { id: "idProjet", name: "ID", field: "idProjet", width: 100, maxWidth: 100, sortable: true, sorter: numericSorter, formatter: idFormatter },
+      { id: "duplique", name: "Ref", field: "duplique", width: 100, maxWidth: 100, sortable: true, sorter: stringSorter, formatter: refFormatter },
       { id: "denomination", name: "Dénomination", field: "denomination", sortable: true, sorter: stringSorter },
       {# { id: "departement", name: "Département", field: "departement", sortable: true, sorter: stringSorter }, #}
       { id: "phase", name: "Phase", field: "phase", sortable: true, sorter: stringSorter, formatter: phaseFormatter },
