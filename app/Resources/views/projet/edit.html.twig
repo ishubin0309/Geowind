@@ -1723,7 +1723,7 @@
           if(search && col.find('input').length && col.find('input').val().match(new RegExp(search, 'gi'))) {
             col.css('background-color', 'rgb(255, 153, 0)');
             search_found = true;
-          } else if(search && col.find('select').length && col.find('select option:selected').text().match(new RegExp(search, 'gi'))) {
+          } else if(search && col.find('select').length && (col.find('select option:selected').text().match(new RegExp(search, 'gi')) || (col.find('select').val().length > 1 && col.find('select').val().match(new RegExp(search, 'gi'))))) {
             col.css('background-color', 'rgb(255, 153, 0)');
             search_found = true;
           } else if(search && !col.find('input').length && !col.find('select').length && col.text().match(new RegExp(search, 'gi'))) {
