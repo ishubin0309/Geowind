@@ -110,11 +110,11 @@
             dateEngmt: '{{ finance.dateEngmt|date('d/m/Y') }}',
             dateEcheance: '{{ finance.dateEcheance is not null ? finance.dateEcheance|date('d/m/Y') : '' }}',
             dateFacture: '{{ finance.dateFacture is not null ? finance.dateFacture|date('d/m/Y') : '' }}',
-            {% if dateFacture is not null %}
-              {% set difference = date().diff(date(dateFacture)) %}
+            {% if finance.dateFacture is not null %}
+              {% set difference = date().diff(date(finance.dateFacture)) %}
               {% set leftDays = difference.days %}
-            {% elseif dateEcheance is not null and dateEngmt is not null %}
-              {% set difference = date(dateEcheance).diff(date(dateEngmt)) %}
+            {% elseif finance.dateEcheance is not null and finance.dateEngmt is not null %}
+              {% set difference = date(finance.dateEcheance).diff(date(finance.dateEngmt)) %}
               {% set leftDays = difference.days %}
             {% else %}
               {% set leftDays = 0 %}
