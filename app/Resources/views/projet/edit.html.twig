@@ -1722,9 +1722,18 @@
           row.find('td')
           $.each(row.find('td'), function(i, td) {
             var col = $(td);
-            if(col.find('input').length && col.find('input').val().match(new RegExp(search, 'gi'))) search_found = true;
-            else if(col.find('select').length && col.find('select option:selected').text().match(new RegExp(search, 'gi'))) search_found = true;
-            else if(col.text().match(new RegExp(search, 'gi'))) search_found = true;
+            if(col.find('input').length && col.find('input').val().match(new RegExp(search, 'gi'))) {
+              col.css('background-color', 'rgb(255, 153, 0)');
+              search_found = true;
+            } else col.css('background-color', 'white');
+            else if(col.find('select').length && col.find('select option:selected').text().match(new RegExp(search, 'gi'))) {
+              col.css('background-color', 'rgb(255, 153, 0)');
+              search_found = true;
+            } else col.css('background-color', 'white');
+            else if(col.text().match(new RegExp(search, 'gi'))) {
+              col.css('background-color', 'rgb(255, 153, 0)');
+              search_found = true;
+            } else col.css('background-color', 'white');
           });
           if(search_found) row.removeClass('hide');
           else row.addClass('hide');
