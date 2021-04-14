@@ -38,7 +38,7 @@
       if(!dataContext['canEdit']) return value;
       else {
         url = '{{ path('projet_edit', {id: 0}) }}';
-        return url.replace(/0/, value);
+        return '<a href="'+url.replace(/0/, value)+'">'+value+'</a>';
       }
     }
 
