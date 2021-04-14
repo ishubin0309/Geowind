@@ -7,9 +7,15 @@
 
   <div class="container-fluid">
 
-    <h1>Finances <i class="fa fa-euro"></i></h1>
+    <h1><i class="fa fa-euro"></i> Finances</h1>
     <h4 id="selected-counter">Total: 0€ HT | Total engagé: 0€ HT | Total payé: 0€ HT</h4>
-
+    <div class="form-group">
+      <label for="input-all">Recherche</label>
+      <input id="finances_recherche" class="form-control input-sm input-filter" data-attr="any">
+    </div>
+    <div class="form-group">
+      <button id="form-clear" class="btn btn-default btn-sm" type="reset" value="Clear">Clear</button>
+    </div>
   </div>
 
   <div id="start-grid"></div>
@@ -126,7 +132,55 @@
         {% endfor %}
       {% endfor %}
 
+      function filter(item, args){
+        if (args.any != "") {
+          var found = false;
+          item.forEach(function(value, index) {
+            if(String(value).match(args.any)) found = true;
+          });
+          return found;
+        } else return true;
+      }
+
+      var filterArgs = {
+        id: "",
+        typeProjet: "",
+        typeSite: "",
+        origine: "",
+        chefProjet: "",
+        chargeFoncier: "",
+        partenaire: "",
+        region: "",
+        departement: "",
+        phase: "",
+        progression: "",
+      };
+
+      function updateFilter(){
+        dataView.setFilterArgs(filterArgs);
+        dataView.refresh();
+      }
+
+      $("#form-clear").click(function() {
+        filterArgs = {
+          any: "",
+        };
+        $("#finances_recherche").val("");
+        updateFilter();
+      });
+
+      $("#finances_recherche").change(function (e) {
+        filterArgs[$(this).data('attr')] = this.value;
+        updateFilter();
+      });
+
+      dataView.beginUpdate();
       dataView.setItems(data);
+
+      dataView.setFilterArgs(filterArgs);
+
+      dataView.setFilter(filter);
+      dataView.endUpdate();
 
       grid = new Slick.Grid("#grid", dataView, columns, options);
       grid.registerPlugin( new Slick.AutoTooltips({ enableForHeaderCells: true }) );
