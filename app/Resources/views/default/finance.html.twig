@@ -34,6 +34,13 @@
     var checkboxSelector = new Slick.CheckboxSelectColumn({
       cssClass: "slick-cell-checkboxsel"
     });
+    function idFormatter(row, cell, value, columnDef, dataContext) {
+      if(!dataContext['canEdit']) return value;
+      else {
+        url = '{{ path('projet_edit', {id: 0}) }}';
+        return url.replace(/0/, value);
+      }
+    }
 
     var phases = {{ grid_helper.getJsonPhases|raw }};
     function phaseFormatter(row, cell, value, columnDef, dataContext) {
@@ -50,7 +57,7 @@
 
     var columns = [
       checkboxColumn,
-      { id: "idProjet", name: "ID", field: "idProjet", width: 100, maxWidth: 100, sortable: true, sorter: numericSorter, },
+      { id: "idProjet", name: "ID", field: "idProjet", width: 100, maxWidth: 100, sortable: true, sorter: numericSorter, formatter: idFormatter },
       { id: "denomination", name: "Dénomination", field: "denomination", sortable: true, sorter: stringSorter },
       {# { id: "departement", name: "Département", field: "departement", sortable: true, sorter: stringSorter }, #}
       { id: "phase", name: "Phase", field: "phase", sortable: true, sorter: stringSorter, formatter: phaseFormatter },
@@ -85,6 +92,7 @@
             duplique: {{ finance.duplique is not null ? finance.duplique : '-1' }},
             dateEngmt: '{{ finance.dateEngmt|date('d/m/Y') }}',
             dateEcheance: '{{ finance.dateEcheance is not null ? finance.dateEcheance|date('d/m/Y') : '' }}',
+            canEdit: {{ is_granted('edit', projet) ? 1 : 0 }},
           });
         {% endfor %}
       {% endfor %}
