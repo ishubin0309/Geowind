@@ -1532,7 +1532,7 @@
             } else if(col.find('select').length && col.find('select option:selected').text().match(new RegExp(search, 'gi'))) {
               col.css('background-color', 'rgb(255, 153, 0)');
               search_found = true;
-            } else if(col.text().match(new RegExp(search, 'gi'))) {
+            } else if(!col.find('input').length && !col.find('select').length && col.text().match(new RegExp(search, 'gi'))) {
               col.css('background-color', 'rgb(255, 153, 0)');
               search_found = true;
             } else col.css('background-color', 'white');
