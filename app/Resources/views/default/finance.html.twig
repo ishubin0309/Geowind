@@ -114,7 +114,7 @@
               {% set difference = date().diff(date(finance.dateFacture)) %}
               {% set leftDays = difference.days %}
             {% elseif finance.dateEcheance is not null and finance.dateEngmt is not null %}
-              {% set difference = date(finance.dateEngmt).diff(date(finance.dateEcheance)) %}
+              {% set difference = date(finance.dateEcheance).diff(date(finance.dateEngmt)) %}
               {% set leftDays = difference.days %}
             {% else %}
               {% set leftDays = 0 %}
