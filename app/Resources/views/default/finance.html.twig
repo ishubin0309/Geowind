@@ -85,6 +85,7 @@
       { id: "dateEngmt", name: "Date commande", field: "dateEngmt", sortable: true, sorter: dateSorter, width: 100, maxWidth: 100 },
       { id: "dateEcheance", name: "Date d'échéance", field: "dateEcheance", sortable: true, sorter: dateSorter, width: 100, maxWidth: 100 },
       { id: "dateFacture", name: "Date facture", field: "dateFacture", sortable: true, sorter: dateSorter, width: 100, maxWidth: 100 },
+      { id: "difference", name: "J(-)", field: "difference", sortable: true, sorter: numericSorter, width: 50, maxWidth: 100 },
     ];
 
     var dateMajColumn = { id: "dateMaj", name: "Date maj", field: "dateMaj", sortable: true };
@@ -109,6 +110,17 @@
             dateEngmt: '{{ finance.dateEngmt|date('d/m/Y') }}',
             dateEcheance: '{{ finance.dateEcheance is not null ? finance.dateEcheance|date('d/m/Y') : '' }}',
             dateFacture: '{{ finance.dateFacture is not null ? finance.dateFacture|date('d/m/Y') : '' }}',
+            {% if dateFacture is not null %}
+              {% set difference = date().diff(date(dateFacture)) %}
+              {% set leftDays = difference.days %}
+            {% elseif dateEcheance is not null and dateEngmt is not null %}
+              {% set difference = date(dateEcheance).diff(date(dateEngmt)) %}
+              {% set leftDays = difference.days %}
+            {% else %}
+              {% set leftDays = 0 %}
+            {% endif %}
+            {% set leftDays = difference.days %}
+            difference: {{ leftDays }},
             canEdit: {{ is_granted('edit', projet) ? 1 : 0 }},
           });
         {% endfor %}
