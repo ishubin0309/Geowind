@@ -1,0 +1,256 @@
+{% extends 'base.html.twig' %}
+
+{% set title = 'Finance' %}
+{% set item = 'finance' %}
+
+{% block body %}
+
+  <div class="container-fluid">
+
+    <h1><i class="fa fa-euro"></i> Finances</h1>
+    <h4 id="selected-counter">Total: 0€ HT | Total engagé: 0€ HT | Total payé: 0€ HT</h4>
+    <div class="form-group">
+      <label for="input-all">Recherche</label>
+      <input id="finances_recherche" class="form-control input-sm input-filter" data-attr="any">
+    </div>
+    <div class="form-group">
+      <button id="form-clear" class="btn btn-default btn-sm" type="reset" value="Clear">Clear</button>
+    </div>
+  </div>
+
+  <div id="start-grid"></div>
+  <div id="grid" class="excel-grid"></div>
+
+
+{% endblock %}
+
+{% block js %}
+
+  <script>
+
+    $("#grid").css({ top: $('#start-grid').position().top + 'px' });
+
+    var options = {
+      enableCellNavigation: true,
+      enableColumnReorder: false,
+      enableTextSelectionOnCells: true,
+      forceFitColumns: false
+    };
+
+    var checkboxSelector = new Slick.CheckboxSelectColumn({
+      cssClass: "slick-cell-checkboxsel"
+    });
+    function idFormatter(row, cell, value, columnDef, dataContext) {
+      if(!dataContext['canEdit']) return value;
+      else {
+        url = '{{ path('projet_edit', {id: 0}) }}';
+        return '<a href="'+url.replace(/0/, value)+'">'+value+'</a>';
+      }
+    }
+    var last_id_projet = 0;
+    var last_index = 0;
+    var second_id = 0;
+    function refFormatter(row, cell, value, columnDef, dataContext) {
+      if(last_id_projet != dataContext['idProjet']) {
+        last_id_projet = dataContext['idProjet'];
+        last_index = 0;
+      }
+      if(dataContext['duplique'] >= 0) last_index = dataContext['duplique'];
+      else second_id = 0;
+      last_index++;
+      second_id++;
+      return dataContext['idProjet'] + '.' + last_index + '.' + second_id;
+    }
+
+    var phases = {{ grid_helper.getJsonPhases|raw }};
+    function phaseFormatter(row, cell, value, columnDef, dataContext) {
+      return phases[value] !== undefined ? phases[value]['name'] : value;
+    }
+
+    var checkboxColumn = checkboxSelector.getColumnDefinition();
+    checkboxColumn.maxWidth = 25;
+    checkboxColumn.width = 25;
+    checkboxColumn.headerCssClass = 'slick-header-column-checkboxsel';
+
+    var grid;
+    var dataView = new Slick.Data.DataView();
+
+    var columns = [
+      checkboxColumn,
+      { id: "idProjet", name: "ID", field: "idProjet", width: 100, maxWidth: 100, sortable: true, sorter: numericSorter, formatter: idFormatter },
+      { id: "duplique", name: "Ref", field: "duplique", width: 100, maxWidth: 100, sortable: true, sorter: stringSorter, formatter: refFormatter },
+      { id: "denomination", name: "Dénomination", field: "denomination", sortable: true, sorter: stringSorter },
+      {# { id: "departement", name: "Département", field: "departement", sortable: true, sorter: stringSorter }, #}
+      { id: "phase", name: "Phase", field: "phase", sortable: true, sorter: stringSorter, formatter: phaseFormatter },
+      { id: "titre", name: "Titre", field: "titre", sortable: true, sorter: stringSorter },
+      { id: "bureau", name: "BE", field: "bureau", sortable: true, sorter: stringSorter },
+      { id: "total", name: "Total(€HT)", field: "total", sortable: true, sorter: numericSorter, cssClass: 'text-right', width: 100, maxWidth: 100 },
+      { id: "engage", name: "Engagé(€HT)", field: "engage", sortable: true, sorter: numericSorter, cssClass: 'text-right', width: 100, maxWidth: 100 },
+      { id: "paye", name: "Payé(€HT)", field: "paye", sortable: true, sorter: numericSorter, cssClass: 'text-right', width: 100, maxWidth: 100 },
+      { id: "restant", name: "Restant(€HT)", field: "restant", sortable: true, sorter: numericSorter, cssClass: 'text-right', width: 100, maxWidth: 100 },
+      { id: "dateEngmt", name: "Date commande", field: "dateEngmt", sortable: true, sorter: dateSorter, width: 100, maxWidth: 100 },
+      { id: "dateEcheance", name: "Date d'échéance", field: "dateEcheance", sortable: true, sorter: dateSorter, width: 100, maxWidth: 100 },
+      { id: "dateFacture", name: "Date facture", field: "dateFacture", sortable: true, sorter: dateSorter, width: 100, maxWidth: 100 },
+      { id: "difference", name: "J(-)", field: "difference", sortable: true, sorter: numericSorter, width: 50, maxWidth: 100 },
+    ];
+
+    function filter(item, args){
+      if (args.any != "") {
+        var found = false;
+        $.each(item, function(index, element) {
+          if(String(element).match(new RegExp(args.any, 'gi'))) {
+            found = true;
+          }
+        });
+        return found;
+      } else return true;
+    }
+
+    $(function () {
+      var data = [];
+      {% for projet in projets %}
+        {% for finance in projet.finances %}
+          data.push({
+            id: {{ finance.id }},
+            idProjet: {{ projet.id }},
+            denomination: '{{ finance.projet.denomination|e('js') }}',
+            phase: '{{ finance.phase }}',
+            titre: '{{ finance.titre|e('js') }}',
+            departement: '{{ finance.projet.departement|e('js') }}',
+            total: {{ finance.montantTotal }},
+            engage: {{ finance.montantEngage }},
+            paye: {{ finance.montantPaye }},
+            restant: {{ finance.montantRestant }},
+            bureau: '{{ finance.bureau.nom|e('js') }}',
+            duplique: {{ finance.duplique is not null ? finance.duplique : '-1' }},
+            dateEngmt: '{{ finance.dateEngmt|date('d/m/Y') }}',
+            dateEcheance: '{{ finance.dateEcheance is not null ? finance.dateEcheance|date('d/m/Y') : '' }}',
+            dateFacture: '{{ finance.dateFacture is not null ? finance.dateFacture|date('d/m/Y') : '' }}',
+            {% if finance.dateFacture is not null %}
+              {% set difference = date().diff(date(finance.dateFacture)) %}
+              {% set leftDays = difference.days %}
+            {% elseif finance.dateEcheance is not null and finance.dateEngmt is not null %}
+              {% set difference = date(finance.dateEcheance).diff(date(finance.dateEngmt)) %}
+              {% set leftDays = difference.days %}
+            {% else %}
+              {% set leftDays = 0 %}
+            {% endif %}
+            {% set leftDays = difference.days %}
+            difference: {{ leftDays }},
+            canEdit: {{ is_granted('edit', projet) ? 1 : 0 }},
+          });
+        {% endfor %}
+      {% endfor %}
+
+      var filterArgs = {
+        any: "",
+      };
+
+      function updateFilter(){
+        last_id_projet = 0;
+        last_index = 0;
+        second_id = 0;
+        dataView.setFilterArgs(filterArgs);
+        dataView.refresh();
+      }
+
+      $("#form-clear").click(function() {
+        filterArgs = {
+          any: "",
+        };
+        $("#finances_recherche").val("");
+        updateFilter();
+      });
+
+      $("#finances_recherche").change(function (e) {
+        filterArgs[$(this).data('attr')] = this.value;
+        updateFilter();
+      });
+
+      dataView.beginUpdate();
+      dataView.setItems(data);
+
+      dataView.setFilterArgs(filterArgs);
+
+      dataView.setFilter(filter);
+      dataView.endUpdate();
+
+      grid = new Slick.Grid("#grid", dataView, columns, options);
+      grid.registerPlugin( new Slick.AutoTooltips({ enableForHeaderCells: true }) );
+      grid.registerPlugin(checkboxSelector);
+      grid.setSelectionModel(new Slick.RowSelectionModel({selectActiveRow: false}));
+      grid.autosizeColumns();
+      dataView.syncGridSelection(grid, true);
+
+      grid.onSelectedRowsChanged.subscribe(function() {
+        selectedRows = grid.getSelectedRows();
+        var selected = selectedRows.length;
+        var total = grid.getDataLength();
+
+        var montant_total = 0;
+        var paye = 0;
+        var engage = 0;
+        for (var i = 0, len = selectedRows.length; i < len; ++i) {
+          var item = dataView.getItem(selectedRows[i]);
+          if(item.duplique >= 0) montant_total += item.total;
+          paye += item.paye;
+          engage += item.engage;
+        }
+
+        var somme = 'Total: ' + montant_total + '€ HT | Total engagé: ' + engage + '€ HT | Total payé: ' + paye + '€ HT';
+        $('#selected-counter').text(somme);
+
+        grid.setSelectedRows([]);
+        grid.updateRowCount();
+        grid.render();
+      });
+      dataView.onRowsChanged.subscribe(function (e, args) {
+        grid.invalidateRows(args.rows);
+        grid.render();
+      });
+
+      grid.onSort.subscribe(function(e, args) {
+        sortdir = args.sortAsc ? 1 : -1;
+        sortcol = args.sortCol.field;
+        dataView.sort(args.sortCol.sorter, sortdir);
+        args.grid.invalidateAllRows();
+        args.grid.render();
+      });
+
+      $(window).resize(function(){
+          grid.resizeCanvas();
+          grid.autosizeColumns();
+      });
+
+      $('input[type=radio][name=montant]').change(function() {
+        var index = 13;
+        if (this.value === 'paye') {
+          columns[index].field = 'paye';
+          columns[index].name = 'Payé(€)';
+          grid.setColumns(columns);
+        }
+        else if (this.value === 'engage') {
+          columns[index].field = 'engage';
+          columns[index].name = 'Engagé(€)';
+          grid.setColumns(columns);
+        }
+      });
+
+      $('input[type=radio][name=date]').change(function() {
+        var index = 14;
+        if (this.value === 'cre') {
+          columns[index].field = 'dateCrea';
+          columns[index].name = 'Date cre';
+          grid.setColumns(columns);
+        }
+        else if (this.value === 'maj') {
+          columns[index].field = 'dateMaj';
+          columns[index].name = 'Date maj';
+          grid.setColumns(columns);
+        }
+      });
+
+    });
+  </script>
+
+{% endblock %}
