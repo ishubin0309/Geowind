@@ -135,8 +135,8 @@
       function filter(item, args){console.log(item);
         if (args.any != "") {
           var found = false;
-          item.forEach(function(value, index) {
-            if(String(value).match(args.any)) found = true;
+          $.each(item, function(index, element) {
+            if(String(element).match(args.any)) found = true;
           });
           return found;
         } else return true;
