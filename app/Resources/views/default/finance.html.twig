@@ -141,6 +141,7 @@
       function updateFilter() {
         dataView.setFilterArgs(filterArgs);
         dataView.refresh();
+        grid.render();
       }
 
       $("#form-clear").click(function() {
