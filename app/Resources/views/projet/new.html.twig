@@ -1236,14 +1236,14 @@
       $('> :last-child', $collectionHolderNote).remove();
     });
 
-    var equipementType = '{{ form.vars.value.equipement is defined and form.vars.value.equipement ? form.vars.value.equipement : "Type1" }}';
+    var equipementType = '{{ form.vars.value.equipement is defined and form.vars.value.equipement ? form.vars.value.equipement : "type1" }}';
     var technologies = {{ grid_helper.getJsonTechnologies|raw }};
     $('#projet_technologie').change(function () {
       if($('#projet_technologie').val() == 'eolienne') {
         $('#projet_surfaceUtile').parents('.form-group').addClass('hide');
       } else {
         $('#projet_surfaceUtile').parents('.form-group').removeClass('hide');
-        equipementType = 'Type1';
+        equipementType = 'type1';
       }
       if($(this).val()) {
         var selected_technologie = $(this).val();
