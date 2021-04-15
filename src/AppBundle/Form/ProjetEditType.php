@@ -246,7 +246,7 @@ class ProjetEditType extends AbstractType
                 'required' => true,
             ])
             ->add('equipement', ChoiceType::class, [
-                'label' => 'Equipement',
+                'label' => 'Modèle',
                 'choices' => array_flip(Technologie::getEquipementList()),
                 'required' => true,
             ])
