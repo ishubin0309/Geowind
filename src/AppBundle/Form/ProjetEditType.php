@@ -50,7 +50,7 @@ class ProjetEditType extends AbstractType
                 'label' => 'Statut',
                 'choices' => [
                     'Actif' => 0,
-                    'Archivé' => 1,
+                    'Archive' => 1,
                 ],
             ])
             ->add('dateCreation', DatePickerType::class, [
