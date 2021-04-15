@@ -104,7 +104,7 @@
             {% set last_index = last_index + 1 %}
             {% if finance.duplique is not null %}{% set second_id = 0 %}{% endif %}
             {% set second_id = second_id + 1 %}
-            reference: {{ projet.id ~ '.' ~ last_index ~ '.' ~ second_id }},
+            reference: '{{ projet.id ~ '.' ~ last_index ~ '.' ~ second_id }}',
             denomination: '{{ finance.projet.denomination|e('js') }}',
             phase: '{{ finance.phase }}',
             titre: '{{ finance.titre|e('js') }}',
