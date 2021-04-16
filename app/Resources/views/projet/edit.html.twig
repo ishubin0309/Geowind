@@ -1737,7 +1737,7 @@
     });
 
     $('document').ready(function() {
-      $('#projet_terrain_documentEnergie').select2();
+      $('#projet_terrain_documentEnergie').css('width', '100%').select2();
       $('<legend>Raccordement</legend>').insertBefore($('#projet_batimentExistant_gestionnaire').parents('.form-group'));
       $('<legend>Urbanisme</legend>').insertBefore($('#projet_batimentExistant_documentUrbanisme').parents('.form-group'));
       $('<legend>Energie</legend>').insertBefore($('#projet_batimentExistant_documentEnergie').parents('.form-group'));
