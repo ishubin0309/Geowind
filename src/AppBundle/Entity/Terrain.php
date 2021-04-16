@@ -68,9 +68,30 @@ class Terrain
     /**
      * @var string
      *
-     * @ORM\Column(type="string", name="document_opposable", nullable=true)
+     * @ORM\Column(type="string", name="document_urbanisme", nullable=true)
      */
-    private $documentOpposable;
+    private $documentUrbanisme;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", name="etat_urbanisme", nullable=true)
+     */
+    private $etatUrbanisme;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", name="document_energie", nullable=true)
+     */
+    private $documentEnergie;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", name="etat_energie", nullable=true)
+     */
+    private $etatEnergie;
 
     /**
      * @var string
@@ -213,19 +234,76 @@ class Terrain
     /**
      * @return string
      */
-    public function getDocumentOpposable()
+    public function getDocumentUrbanisme()
     {
-        return $this->documentOpposable;
+        return $this->documentUrbanisme;
     }
 
     /**
      *
-     * @param string $documentOpposable
+     * @param string $documentUrbanisme
      * @return \AppBundle\Entity\Terrain
      */
-    public function setDocumentOpposable($documentOpposable)
+    public function setDocumentUrbanisme($documentUrbanisme)
     {
-        $this->documentOpposable = $documentOpposable;
+        $this->documentUrbanisme = $documentUrbanisme;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEtatUrbanisme()
+    {
+        return $this->etatUrbanisme;
+    }
+
+    /**
+     *
+     * @param string $etatUrbanisme
+     * @return \AppBundle\Entity\Terrain
+     */
+    public function setEtatUrbanisme($etatUrbanisme)
+    {
+        $this->etatUrbanisme = $etatUrbanisme;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDocumentEnergie()
+    {
+        return $this->documentEnergie;
+    }
+
+    /**
+     *
+     * @param string $documentEnergie
+     * @return \AppBundle\Entity\Terrain
+     */
+    public function setDocumentEnergie($documentEnergie)
+    {
+        $this->documentEnergie = $documentEnergie;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEtatEnergie()
+    {
+        return $this->etatEnergie;
+    }
+
+    /**
+     *
+     * @param string $etatEnergie
+     * @return \AppBundle\Entity\Terrain
+     */
+    public function setEtatEnergie($etatEnergie)
+    {
+        $this->etatEnergie = $etatEnergie;
         return $this;
     }
 
@@ -265,13 +343,38 @@ class Terrain
     /**
      * @return array
      */
-    public static function getDocumentOpposableList()
+    public static function getDocumentUrbanismeList()
     {
         return [
             'plu' => 'PLU',
             'plui' => 'PLUi',
             'carte'=> 'CARTE',
             'pos' => 'POS'
+        ];
+    }
+    
+    /**
+     * @return array
+     */
+    public static function getDocumentEnergieList()
+    {
+        return [
+            'pcaet' => 'PCAET',
+            'sraddet' => 'SRADDET',
+            'srb' => 'SRB'
+        ];
+    }
+    
+    /**
+     * @return array
+     */
+    public static function getEtatList()
+    {
+        return [
+            'sans' => 'Sans',
+            'prescrit' => 'Prescrit',
+            'en_cours' => 'En cours',
+            'en_projet' => 'En projet'
         ];
     }
     
@@ -311,7 +414,7 @@ class Terrain
 
     public function isNotEmpty()
     {
-        if($this->topographie || $this->altitude || $this->exposition || $this->gestionnaire || $this->nomPoste || $this->distancePdl || $this->zonage || $this->documentOpposable)
+        if($this->topographie || $this->altitude || $this->exposition || $this->gestionnaire || $this->nomPoste || $this->distancePdl || $this->zonage || $this->documentUrbanisme)
             return true;
         else return false;
     }
@@ -322,12 +425,5 @@ class Terrain
     public function __toString()
     {
         return $this->topographie;
-        return $this->altitude;
-        return $this->exposition;
-        return $this->gestionnaire;
-        return $this->nomPoste;
-        return $this->distancePdl;
-        return $this->documentOpposable;
-        return $this->zonage;
     }
 }

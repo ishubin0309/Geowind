@@ -43,15 +43,31 @@ class TerrainType extends AbstractType
                 'label' => 'Distance PDL',
                 'required' => false,
             ])
-            ->add('documentOpposable', ChoiceType::class, [
-                'label' => 'Document opposable',
+            ->add('documentUrbanisme', ChoiceType::class, [
+                'label' => 'Document',
                 'required' => false,
-                'choices' => array_flip(Terrain::getDocumentOpposableList()),
+                'choices' => array_flip(Terrain::getDocumentUrbanismeList()),
             ])
             ->add('zonage', ChoiceType::class, [
                 'label' => 'Zonage',
                 'required' => false,
                 'choices' => array_flip(Terrain::getZonageList()),
+            ])
+            ->add('etatUrbanisme', ChoiceType::class, [
+                'label' => 'Etat',
+                'required' => false,
+                'choices' => array_flip(Terrain::getEtatList()),
+            ])
+            ->add('documentEnergie', ChoiceType::class, [
+                'label' => 'Etat',
+                'required' => false,
+                'multiple' => true,
+                'choices' => array_flip(Terrain::getDocumentEnergieList()),
+            ])
+            ->add('etatEnergie', ChoiceType::class, [
+                'label' => 'Etat',
+                'required' => false,
+                'choices' => array_flip(Terrain::getEtatList()),
             ])
         ;
     }

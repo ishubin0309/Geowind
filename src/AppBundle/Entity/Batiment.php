@@ -143,9 +143,30 @@ class Batiment
     /**
      * @var string
      *
-     * @ORM\Column(type="string", name="document_opposable", nullable=true)
+     * @ORM\Column(type="string", name="document_urbanisme", nullable=true)
      */
-    private $documentOpposable;
+    private $documentUrbanisme;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", name="etat_urbanisme", nullable=true)
+     */
+    private $etatUrbanisme;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", name="document_energie", nullable=true)
+     */
+    private $documentEnergie;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", name="etat_energie", nullable=true)
+     */
+    private $etatEnergie;
 
     /**
      * @var string
@@ -490,19 +511,76 @@ class Batiment
     /**
      * @return string
      */
-    public function getDocumentOpposable()
+    public function getDocumentUrbanisme()
     {
-        return $this->documentOpposable;
+        return $this->documentUrbanisme;
     }
 
     /**
      *
-     * @param string $documentOpposable
+     * @param string $documentUrbanisme
      * @return \AppBundle\Entity\Batiment
      */
-    public function setDocumentOpposable($documentOpposable)
+    public function setDocumentUrbanisme($documentUrbanisme)
     {
-        $this->documentOpposable = $documentOpposable;
+        $this->documentUrbanisme = $documentUrbanisme;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEtatUrbanisme()
+    {
+        return $this->etatUrbanisme;
+    }
+
+    /**
+     *
+     * @param string $etatUrbanisme
+     * @return \AppBundle\Entity\Terrain
+     */
+    public function setEtatUrbanisme($etatUrbanisme)
+    {
+        $this->etatUrbanisme = $etatUrbanisme;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDocumentEnergie()
+    {
+        return $this->documentEnergie;
+    }
+
+    /**
+     *
+     * @param string $documentEnergie
+     * @return \AppBundle\Entity\Terrain
+     */
+    public function setDocumentEnergie($documentEnergie)
+    {
+        $this->documentEnergie = $documentEnergie;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEtatEnergie()
+    {
+        return $this->etatEnergie;
+    }
+
+    /**
+     *
+     * @param string $etatEnergie
+     * @return \AppBundle\Entity\Terrain
+     */
+    public function setEtatEnergie($etatEnergie)
+    {
+        $this->etatEnergie = $etatEnergie;
         return $this;
     }
 
@@ -594,7 +672,7 @@ class Batiment
 
     public function isNotEmpty()
     {
-        if($this->pans || $this->longeur || $this->largeur || $this->faitage || $this->surfaceSol || $this->charge || $this->zonage || $this->documentOpposable || !$this->toitures->isEmpty())
+        if($this->pans || $this->longeur || $this->largeur || $this->faitage || $this->surfaceSol || $this->charge || $this->zonage || $this->documentUrbanisme || !$this->toitures->isEmpty())
             return true;
         else return false;
     }

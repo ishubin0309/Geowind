@@ -1541,10 +1541,13 @@
     });
 
     $('document').ready(function() {
+      $('#projet_terrain_documentEnergie').select2();
       $('<legend>Raccordement</legend>').insertBefore($('#projet_batimentExistant_gestionnaire').parents('.form-group'));
-      $('<legend>Urbanisme</legend>').insertBefore($('#projet_batimentExistant_documentOpposable').parents('.form-group'));
+      $('<legend>Urbanisme</legend>').insertBefore($('#projet_batimentExistant_documentUrbanisme').parents('.form-group'));
+      $('<legend>Energie</legend>').insertBefore($('#projet_batimentExistant_documentEnergie').parents('.form-group'));
       $('<legend>Raccordement</legend>').insertBefore($('#projet_terrain_gestionnaire').parents('.form-group'));
-      $('<legend>Urbanisme</legend>').insertBefore($('#projet_terrain_documentOpposable').parents('.form-group'));
+      $('<legend>Urbanisme</legend>').insertBefore($('#projet_terrain_documentUrbanisme').parents('.form-group'));
+      $('<legend>Energie</legend>').insertBefore($('#projet_terrain_documentEnergie').parents('.form-group'));
       $('#projet_batimentExistant_bardage').parents('.form-group').addClass('hide');
       $('#projet_batimentExistant_ossature').parents('.form-group').addClass('hide');
       $('#projet_batimentExistant_charpente').parents('.form-group').addClass('hide');
