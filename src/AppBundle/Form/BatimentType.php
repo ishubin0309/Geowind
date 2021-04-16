@@ -112,7 +112,7 @@ class BatimentType extends AbstractType
                 'choices' => array_flip(Terrain::getEtatList()),
             ])
             ->add('documentEnergie', ChoiceType::class, [
-                'label' => 'Etat',
+                'label' => 'Document',
                 'required' => false,
                 'multiple' => true,
                 'choices' => array_flip(Terrain::getDocumentEnergieList()),
