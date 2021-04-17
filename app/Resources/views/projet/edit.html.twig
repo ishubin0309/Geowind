@@ -804,6 +804,33 @@
       updateMairie();
     {% endif %}
     
+    {% if form.vars.value.batimentExistant.photo is defined and form.vars.value.batimentExistant.photo %}
+      if(!$('#batiment_photo').length) $('<button id="batiment_photo" class="btn btn-info btn-sm popup_fichier" data-toggle="modal" data-target=".bs-modal-lg">Afficher</button>').insertAfter('#projet_batimentExistant_photoFile');
+
+      $('#batiment_photo').attr('data-href', '{{ asset('upload/' ~ form.vars.value.batimentExistant.photo) }}');
+      $('#batiment_photo').attr('data-download', '{{ form.vars.value.batimentExistant.photo }}');
+      $('#batiment_photo').attr('data-src', '{{ asset('upload/' ~ form.vars.value.batimentExistant.photo) }}');
+    {% endif %}
+    
+    $('#projet_batimentExistant_photoFile').change(function() {
+      if (this.files && this.files[0]) {
+        var reader = new FileReader();
+        
+        reader.onload = function(e) {
+          if(!$('#batiment_photo').length) $('<button id="batiment_photo" class="btn btn-info btn-sm popup_fichier" data-toggle="modal" data-target=".bs-modal-lg">Afficher</button>').insertAfter('#projet_batimentExistant_photoFile');
+
+          $('#batiment_photo').attr('data-href', '#');
+          $('#batiment_photo').removeAttr('data-download');
+          $('#batiment_photo').attr('data-src', e.target.result);
+          $('#popup_photo a').attr('href', '#');
+          $('#popup_photo a').removeAttr('download');
+          $('#popup_photo img:eq(1)').attr('src', e.target.result);
+        }
+        
+        reader.readAsDataURL(this.files[0]); // convert to base64 string
+      }
+    });
+    
     {% if form.vars.value.photoImplantation is defined and form.vars.value.photoImplantation %}
       if(!$('#implantation_photo').length) $('<button id="implantation_photo" class="btn btn-info btn-sm popup_fichier" data-toggle="modal" data-target=".bs-modal-lg">Afficher</button>').insertAfter('#projet_photoImplantationFile');
 
