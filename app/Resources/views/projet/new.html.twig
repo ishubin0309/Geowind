@@ -628,6 +628,27 @@
       $('#batiment_photo').attr('data-download', '{{ form.vars.value.batimentExistant.photo }}');
       $('#batiment_photo').attr('data-src', '{{ asset('upload/' ~ form.vars.value.batimentExistant.photo) }}');
     {% endif %}
+
+    $('#projet_batimentExistant_longeur, #projet_batimentExistant_largeur').change(function() {
+      var longeur = $('#projet_batimentExistant_longeur').val().trim();
+      var largeur = $('#projet_batimentExistant_largeur').val().trim())
+      if(!longeur || !largeur) $('#projet_batimentExistant_surfaceSol').val(0);
+      else {
+        longeur = parseInt(longeur);
+        largeur = parseInt(largeur);
+        $('#projet_batimentExistant_surfaceSol').val(longeur * largeur);
+      }
+    });
+    $('#projet_batimentExistant_toitures').on('change', '[id*="_longeur"],[id*="_largeur"]', function() {
+      var longeur = $(this).parents('tr').find('[id*="_longeur"]').val().trim();
+      var largeur = $(this).parents('tr').find('[id*="_largeur"]').val().trim();
+      if(!longeur || !largeur) $(this).parents('tr').find('[id*="_surfaceTotale"]').val(0);
+      else {
+        longeur = parseInt(longeur);
+        largeur = parseInt(largeur);
+        $(this).parents('tr').find('[id*="_surfaceTotale"]').val(longeur * largeur);
+      }
+    });
     
     $('#projet_batimentExistant_photoFile').change(function() {
       if (this.files && this.files[0]) {
