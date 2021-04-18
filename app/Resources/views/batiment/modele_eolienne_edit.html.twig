@@ -39,7 +39,7 @@
     var diametre_rotor = $('#modele_eolienne_diametreRotor').val().trim();
     if(!hauteur_max || !diametre_rotor) $('#modele_eolienne_hauteurTotale').val(0);
     else {
-      var hauteur_totale = (hauteur_max + (diametre_rotor / 2));
+      var hauteur_totale = (parseFloat(hauteur_max) + (parseFloat(diametre_rotor) / 2));
       $('#modele_eolienne_hauteurTotale').val(hauteur_totale);
     }
   });
