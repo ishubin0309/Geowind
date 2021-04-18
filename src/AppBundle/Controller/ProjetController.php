@@ -470,6 +470,15 @@ class ProjetController extends Controller
         $telephones = $em->getRepository('AppBundle:User')->getFindAllTelephones();
         $batimentNouveaux = $em->getRepository('AppBundle:BatimentNouveau')->findAll();
         $batiments = json_encode($batimentNouveaux);
+        $modelesPanneaux = $em->getRepository('AppBundle:ModelePanneau')->findAll();
+        $modelesEoliennes = $em->getRepository('AppBundle:ModeleEolienne')->findAll();
+        $technologies = ['photovoltaique' => [], 'eolienne' => []];
+        foreach($modelesPanneaux as $modele) {
+            $technologies['photovoltaique'][$modele->getModele()] = $modele->jsonSerialize();
+        }
+        foreach($modelesEoliennes as $modele) {
+            $technologies['eolienne'][$modele->getModele()] = $modele->jsonSerialize();
+        }
 
         return $this->render('projet/edit.html.twig', [
             'form' => $form->createView(),
@@ -477,7 +486,8 @@ class ProjetController extends Controller
             'show' => $show,
             'grid_helper' => $gridHelper,
             'telephones' => json_encode($telephones),
-            'batiments' => json_encode($batiments)
+            'batiments' => json_encode($batiments),
+            'technologies' => json_encode($technologies)
         ]);
     }
 
