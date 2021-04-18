@@ -151,16 +151,16 @@ class BatimentController extends Controller
     {
         $modelePanneau = new ModelePanneau();
 
-        $form = $this->createForm(ModelePanneauType::class, $batiment);
+        $form = $this->createForm(ModelePanneauType::class, $modelePanneau);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             
             $em = $this->getDoctrine()->getManager();
-            $em->persist($batiment);
+            $em->persist($modelePanneau);
             $em->flush();
 
-            $this->addFlash('success', 'Modèle Panneau « ' . $batiment->getNom() . ' » créé avec succès.');
+            $this->addFlash('success', 'Modèle Panneau « ' . $modelePanneau->getNom() . ' » créé avec succès.');
 
             return $this->redirectToRoute('batiment_index');
         }
@@ -187,7 +187,7 @@ class BatimentController extends Controller
             $em->persist($modelePanneau);
             $em->flush();
 
-            $this->addFlash('success', 'Modèle Panneau « ' . $batiment->getNom() . ' » modifié avec succès.');
+            $this->addFlash('success', 'Modèle Panneau « ' . $modelePanneau->getNom() . ' » modifié avec succès.');
             return $this->redirectToRoute('batiment_index');
         }
 
@@ -236,16 +236,16 @@ class BatimentController extends Controller
     {
         $modeleEolienne = new ModeleEolienne();
 
-        $form = $this->createForm(ModeleEolienneType::class, $batiment);
+        $form = $this->createForm(ModeleEolienneType::class, $modeleEolienne);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             
             $em = $this->getDoctrine()->getManager();
-            $em->persist($batiment);
+            $em->persist($modeleEolienne);
             $em->flush();
 
-            $this->addFlash('success', 'Modèle Eolienne « ' . $batiment->getNom() . ' » créé avec succès.');
+            $this->addFlash('success', 'Modèle Eolienne « ' . $modeleEolienne->getNom() . ' » créé avec succès.');
 
             return $this->redirectToRoute('batiment_index');
         }
@@ -272,7 +272,7 @@ class BatimentController extends Controller
             $em->persist($modeleEolienne);
             $em->flush();
 
-            $this->addFlash('success', 'Modèle Eolienne « ' . $batiment->getNom() . ' » modifié avec succès.');
+            $this->addFlash('success', 'Modèle Eolienne « ' . $modeleEolienne->getNom() . ' » modifié avec succès.');
             return $this->redirectToRoute('batiment_index');
         }
 
