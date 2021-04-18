@@ -5,7 +5,11 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\BatimentNouveau;
 use AppBundle\Entity\News;
 use AppBundle\Entity\Docs;
+use AppBundle\Entity\ModelePanneau;
+use AppBundle\Entity\ModeleEolienne;
 use AppBundle\Form\BatimentNouveauType;
+use AppBundle\Form\ModelePanneauType;
+use AppBundle\Form\ModeleEolienneType;
 use AppBundle\Form\NewsType;
 use AppBundle\Form\DocsType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -39,10 +43,18 @@ class BatimentController extends Controller
         $docs = $em->getRepository('AppBundle:Docs')
                     ->findAll();
 
+        $modelesPanneaux = $em->getRepository('AppBundle:ModelePanneau')
+                    ->findAll();
+
+        $modelesEoliennes = $em->getRepository('AppBundle:ModeleEolienne')
+                    ->findAll();
+
         return $this->render('batiment/index.html.twig', [
             'batiments' => $batiments,
             'news' => $news,
             'docs' => $docs,
+            'modelesPanneaux' => $modelesPanneaux,
+            'modelesEoliennes' => $modelesEoliennes,
         ]);
     }
 
@@ -125,6 +137,176 @@ class BatimentController extends Controller
             $em->flush();
 
             $this->addFlash('success', 'Batiment « ' . $nom . ' » supprimé avec succès.');
+            $response->setData(['success' => 1]);
+        }
+
+        return $response;
+    }
+
+    /**
+     * @Route("/modele-panneau/nouveau", name="modele_panneau_new")
+     * @Method({"GET", "POST"})
+     */
+    public function newAction(Request $request)
+    {
+        $modelePanneau = new ModelePanneau();
+
+        $form = $this->createForm(ModelePanneauType::class, $batiment);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($batiment);
+            $em->flush();
+
+            $this->addFlash('success', 'Modèle Panneau « ' . $batiment->getNom() . ' » créé avec succès.');
+
+            return $this->redirectToRoute('batiment_index');
+        }
+
+        return $this->render('batiment/modele_panneau_new.html.twig', [
+            'modelePanneau' => $modelePanneau,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/{id}/modele-panneau/modifier", name="modele_panneau_edit")
+     * @Method({"GET", "POST"})
+     */
+    public function editAction(Request $request, ModelePanneau $modelePanneau)
+    {
+
+        $form = $this->createForm(ModelePanneauType::class, $modelePanneau);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($modelePanneau);
+            $em->flush();
+
+            $this->addFlash('success', 'Modèle Panneau « ' . $batiment->getNom() . ' » modifié avec succès.');
+            return $this->redirectToRoute('batiment_index');
+        }
+
+        return $this->render('batiment/modele_panneau_edit.html.twig', [
+            'modelePanneau' => $modelePanneau,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/delete/modele-panneau", name="modele_panneau_delete", options = { "expose" = true })
+     * @Method("DELETE")
+     */
+    public function deleteAction(Request $request)
+    {
+        $id = $request->request->get('id', 0);
+        $csrf = $request->request->get('csrf', null);
+
+        if ($this->isCsrfTokenValid('token', $csrf)) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $em = $this->getDoctrine()->getManager();
+
+        $response = new JsonResponse();
+        $response->setData(['success' => 0]);
+        $em = $this->getDoctrine()->getManager();
+        $modelePanneau = $em->getRepository('AppBundle:ModelePanneau')->findOneBy(['id' => $id]);
+        if($modelePanneau) {
+            $nom = $modelePanneau->getNom();
+            $em->remove($modelePanneau);
+            $em->flush();
+
+            $this->addFlash('success', 'Modèle Panneau « ' . $nom . ' » supprimé avec succès.');
+            $response->setData(['success' => 1]);
+        }
+
+        return $response;
+    }
+
+    /**
+     * @Route("/modele-eolienne/nouveau", name="modele_eolienne_new")
+     * @Method({"GET", "POST"})
+     */
+    public function newAction(Request $request)
+    {
+        $modeleEolienne = new ModeleEolienne();
+
+        $form = $this->createForm(ModeleEolienneType::class, $batiment);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($batiment);
+            $em->flush();
+
+            $this->addFlash('success', 'Modèle Eolienne « ' . $batiment->getNom() . ' » créé avec succès.');
+
+            return $this->redirectToRoute('batiment_index');
+        }
+
+        return $this->render('batiment/modele_eolienne_new.html.twig', [
+            'modeleEolienne' => $modeleEolienne,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/{id}/modele-eolienne/modifier", name="modele_eolienne_edit")
+     * @Method({"GET", "POST"})
+     */
+    public function editAction(Request $request, ModeleEolienne $modeleEolienne)
+    {
+
+        $form = $this->createForm(ModeleEolienneType::class, $modeleEolienne);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($modeleEolienne);
+            $em->flush();
+
+            $this->addFlash('success', 'Modèle Eolienne « ' . $batiment->getNom() . ' » modifié avec succès.');
+            return $this->redirectToRoute('batiment_index');
+        }
+
+        return $this->render('batiment/modele_eolienne_edit.html.twig', [
+            'modeleEolienne' => $modeleEolienne,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/delete/modele-eolienne", name="modele_eolienne_delete", options = { "expose" = true })
+     * @Method("DELETE")
+     */
+    public function deleteAction(Request $request)
+    {
+        $id = $request->request->get('id', 0);
+        $csrf = $request->request->get('csrf', null);
+
+        if ($this->isCsrfTokenValid('token', $csrf)) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $em = $this->getDoctrine()->getManager();
+
+        $response = new JsonResponse();
+        $response->setData(['success' => 0]);
+        $em = $this->getDoctrine()->getManager();
+        $modeleEolienne = $em->getRepository('AppBundle:ModeleEolienne')->findOneBy(['id' => $id]);
+        if($modeleEolienne) {
+            $nom = $modeleEolienne->getNom();
+            $em->remove($modeleEolienne);
+            $em->flush();
+
+            $this->addFlash('success', 'Modèle Eolienne « ' . $nom . ' » supprimé avec succès.');
             $response->setData(['success' => 1]);
         }
 
