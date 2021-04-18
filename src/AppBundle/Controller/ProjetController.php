@@ -415,12 +415,12 @@ class ProjetController extends Controller
         $batiments = json_encode($batimentNouveaux);
         $modelesPanneaux = $em->getRepository('AppBundle:ModelePanneau')->findAll();
         $modelesEoliennes = $em->getRepository('AppBundle:ModeleEolienne')->findAll();
-        $technologies = ['photovoltaique' => [], 'eolienne' => []];
+        $technologies = ['photovoltaique' => ['name'=> 'photovoltaique', 'data' => []], 'eolienne' => ['name'=> 'eolienne', 'data' => []]];
         foreach($modelesPanneaux as $modele) {
-            $technologies['photovoltaique'][$modele->getNom()] = $modele->jsonSerialize();
+            $technologies['photovoltaique']['data'][$modele->getNom()] = $modele->jsonSerialize();
         }
         foreach($modelesEoliennes as $modele) {
-            $technologies['eolienne'][$modele->getNom()] = $modele->jsonSerialize();
+            $technologies['eolienne']['data'][$modele->getNom()] = $modele->jsonSerialize();
         }
 
         return $this->render('projet/new.html.twig', [
@@ -472,12 +472,12 @@ class ProjetController extends Controller
         $batiments = json_encode($batimentNouveaux);
         $modelesPanneaux = $em->getRepository('AppBundle:ModelePanneau')->findAll();
         $modelesEoliennes = $em->getRepository('AppBundle:ModeleEolienne')->findAll();
-        $technologies = ['photovoltaique' => [], 'eolienne' => []];
+        $technologies = ['photovoltaique' => ['name'=> 'photovoltaique', 'data' => []], 'eolienne' => ['name'=> 'eolienne', 'data' => []]];
         foreach($modelesPanneaux as $modele) {
-            $technologies['photovoltaique'][$modele->getNom()] = $modele->jsonSerialize();
+            $technologies['photovoltaique']['data'][$modele->getNom()] = $modele->jsonSerialize();
         }
         foreach($modelesEoliennes as $modele) {
-            $technologies['eolienne'][$modele->getNom()] = $modele->jsonSerialize();
+            $technologies['eolienne']['data'][$modele->getNom()] = $modele->jsonSerialize();
         }
 
         return $this->render('projet/edit.html.twig', [
