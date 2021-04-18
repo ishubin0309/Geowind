@@ -271,7 +271,7 @@ class ModeleEolienne implements JsonSerializable
     /**
      * @return string
      */
-    public function getEpaisseur()
+    public function getDiametreRotor()
     {
         return $this->diametreRotor;
     }
@@ -281,7 +281,7 @@ class ModeleEolienne implements JsonSerializable
      * @param string $diametreRotor
      * @return \AppBundle\Entity\ModeleEolienne
      */
-    public function setEpaisseur($diametreRotor)
+    public function setDiametreRotor($diametreRotor)
     {
         $this->diametreRotor = $diametreRotor;
         return $this;
