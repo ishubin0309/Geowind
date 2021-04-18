@@ -353,19 +353,17 @@ class ModelePanneau implements JsonSerializable
 
     public function jsonSerialize()
     {
-        $toitures = [];
-        foreach($this->toitures as $toiture) $toitures[] = $toiture;
         return array(
-            'id' => $this->id,
-            'nom' => $this->nom,
-            'marque'=> $this->marque,
-            'pays'=> $this->pays,
-            'technique'=> $this->technique,
-            'puissanceMin'=> $this->puissanceMin,
-            'puissanceMax'=> $this->puissanceMax,
-            'longeur'=> $this->longeur,
-            'epaisseur'=> $this->epaisseur,
-            'poids'=> $this->poids,
+            // 'id' => $this->id,
+            'Modèle' => $this->nom,
+            'Marque'=> $this->marque,
+            'Pays'=> $this->pays,
+            'Technique'=> $this->technique,
+            'PuissanceMin (Mw)'=> $this->puissanceMin,
+            'PuissanceMax (Mw)'=> $this->puissanceMax,
+            'Longeur (mm)'=> $this->longeur,
+            'Epaisseur (mm)'=> $this->epaisseur,
+            'Poids (kg)'=> $this->poids,
         );
     }
 }

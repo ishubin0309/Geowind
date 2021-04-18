@@ -261,6 +261,7 @@
       id = $(this).attr('id');
       nom = $(this).attr('nom');
       type = $(this).attr('type');
+      
       if(type=='news' || type=='docs')
         title = type=='news' ? 'News sera supprimé définitivement.' : 'Doc sera supprimé définitivement.';
       else title = "Le modèle « "+nom+" » sera supprimé définitivement.";

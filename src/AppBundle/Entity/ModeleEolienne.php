@@ -53,13 +53,6 @@ class ModeleEolienne implements JsonSerializable
     /**
      * @var string
      *
-     * @ORM\Column(type="string", nullable=true)
-     */
-    private $technique;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(type="string", name="puissance_min", nullable=true)
      */
     private $puissanceMin;
@@ -170,25 +163,6 @@ class ModeleEolienne implements JsonSerializable
     public function setPays($pays)
     {
         $this->pays = $pays;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTechnique()
-    {
-        return $this->technique;
-    }
-
-    /**
-     *
-     * @param string $technique
-     * @return \AppBundle\Entity\ModeleEolienne
-     */
-    public function setTechnique($technique)
-    {
-        $this->technique = $technique;
         return $this;
     }
 
@@ -353,19 +327,17 @@ class ModeleEolienne implements JsonSerializable
 
     public function jsonSerialize()
     {
-        $toitures = [];
-        foreach($this->toitures as $toiture) $toitures[] = $toiture;
         return array(
-            'id' => $this->id,
-            'nom' => $this->nom,
-            'marque'=> $this->marque,
-            'pays'=> $this->pays,
-            'technique'=> $this->technique,
-            'puissanceMin'=> $this->puissanceMin,
-            'puissanceMax'=> $this->puissanceMax,
-            'hauteurMatMin'=> $this->hauteurMatMin,
-            'diametreRotor'=> $this->diametreRotor,
-            'hauteurTotale'=> $this->hauteurTotale,
+            // 'id' => $this->id,
+            'Modèle' => $this->nom,
+            'Fabriquant'=> $this->marque,
+            'Origine'=> $this->pays,
+            'PuissanceMin (Mw)'=> $this->puissanceMin,
+            'PuissanceMax (Mw)'=> $this->puissanceMax,
+            'HauteurMatMin (m)'=> $this->hauteurMatMin,
+            'HauteurMatMax (m)'=> $this->hauteurMatMax,
+            'DiametreRotor (m)'=> $this->diametreRotor,
+            'HauteurTotale (m)'=> $this->hauteurTotale,
         );
     }
 }

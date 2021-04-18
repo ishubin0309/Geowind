@@ -247,7 +247,7 @@ class ProjetType extends AbstractType
             ])
             ->add('equipement', ChoiceType::class, [
                 'label' => 'Modèle',
-                'choices' => array_flip(Technologie::getEquipementList()),
+                // 'choices' => array_flip(Technologie::getEquipementList()),
                 'required' => true,
             ])
             ->add('surfaceUtile', NumberType::class, [
