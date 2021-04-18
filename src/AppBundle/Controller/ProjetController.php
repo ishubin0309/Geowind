@@ -417,10 +417,10 @@ class ProjetController extends Controller
         $modelesEoliennes = $em->getRepository('AppBundle:ModeleEolienne')->findAll();
         $technologies = ['photovoltaique' => [], 'eolienne' => []];
         foreach($modelesPanneaux as $modele) {
-            $technologies['photovoltaique'][$modele->getModele()] = $modele->jsonSerialize();
+            $technologies['photovoltaique'][$modele->getNom()] = $modele->jsonSerialize();
         }
         foreach($modelesEoliennes as $modele) {
-            $technologies['eolienne'][$modele->getModele()] = $modele->jsonSerialize();
+            $technologies['eolienne'][$modele->getNom()] = $modele->jsonSerialize();
         }
 
         return $this->render('projet/new.html.twig', [
@@ -474,10 +474,10 @@ class ProjetController extends Controller
         $modelesEoliennes = $em->getRepository('AppBundle:ModeleEolienne')->findAll();
         $technologies = ['photovoltaique' => [], 'eolienne' => []];
         foreach($modelesPanneaux as $modele) {
-            $technologies['photovoltaique'][$modele->getModele()] = $modele->jsonSerialize();
+            $technologies['photovoltaique'][$modele->getNom()] = $modele->jsonSerialize();
         }
         foreach($modelesEoliennes as $modele) {
-            $technologies['eolienne'][$modele->getModele()] = $modele->jsonSerialize();
+            $technologies['eolienne'][$modele->getNom()] = $modele->jsonSerialize();
         }
 
         return $this->render('projet/edit.html.twig', [
