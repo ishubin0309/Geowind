@@ -104,7 +104,7 @@
 
 {% block js %}
   
-    <script>$('#change_type').change(function() {window.location = '{{ liste.id is defined ? path('view_liste', {'liste' : liste.id}) : path('homepage') }}' + '?type=' + $(this).val() + '&page={{ page }}';});</script>
+    <script>$('#change_type').change(function() {window.location = '{{ liste.id is defined ? path('view_liste', {'liste' : liste.id}) : path('homepage') }}' + '?page={{ page }}&type=' + $(this).val();});</script>
   <script>
 
     $("#grid").css({ top: $('#start-grid').position().top + 'px' });
