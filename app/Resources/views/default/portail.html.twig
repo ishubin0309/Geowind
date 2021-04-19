@@ -64,8 +64,8 @@
             {% for i in 1..totalPages %}
               <li class="page-item {% if page == i %}active{% endif %}"><a class="page-link" href="{{ route_path ~ '?page=' ~ i }}{% if columnsType > 1 %}&type={{ columnsType }}{% endif %}">{{ i }}</a></li>
             {% endfor %}
-            {% endif %}
             <li class="page-item {% if page >= totalPages %}disabled{% endif %}"><a class="page-link" href="{% if page < totalPages %}{{ route_path ~ '?page=' ~ (page + 1) }}{% if columnsType > 1 %}&type={{ columnsType }}{% endif %}{% else %}#{% endif %}">Suivant</a></li>
+            {% endif %}
           </ul>
         </nav>
       </div>
