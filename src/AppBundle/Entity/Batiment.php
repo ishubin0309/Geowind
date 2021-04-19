@@ -155,9 +155,9 @@ class Batiment
     private $etatUrbanisme;
 
     /**
-     * @var string
+     * @var array
      *
-     * @ORM\Column(type="string", name="document_energie", nullable=true)
+     * @ORM\Column(type="array", name="document_energie", nullable=true)
      */
     private $documentEnergie;
 

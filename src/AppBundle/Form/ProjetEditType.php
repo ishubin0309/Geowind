@@ -6,6 +6,7 @@ use AppBundle\Entity\Projet;
 use AppBundle\Model\Technologie;
 use AppBundle\Form\EventListener\AddCommuneFieldSubscriber as communeSubscriber;
 use AppBundle\Form\EventListener\AddMairieFieldSubscriber as mairieSubscriber;
+use AppBundle\Form\EventListener\AddEquipementFieldSubscriber as equipementSubscriber;
 use AppBundle\Form\Extension\DatePickerType;
 use AppBundle\Form\Option\AvisMairieType;
 use AppBundle\Form\Option\EnvironnementType;
@@ -44,6 +45,7 @@ class ProjetEditType extends AbstractType
     {
         $builder->addEventSubscriber(new communeSubscriber($this->entityManager));
         $builder->addEventSubscriber(new mairieSubscriber($this->entityManager));
+        $builder->addEventSubscriber(new equipementSubscriber($this->entityManager));
 
         $builder
             ->add('archived', ChoiceType::class, [
@@ -248,6 +250,7 @@ class ProjetEditType extends AbstractType
             ->add('equipement', ChoiceType::class, [
                 'label' => 'Modèle',
                 // 'choices' => array_flip(Technologie::getEquipementList()),
+                'choices' => array(),
                 'required' => true,
             ])
             ->add('surfaceUtile', NumberType::class, [
