@@ -31,7 +31,7 @@ class ModelePanneau implements JsonSerializable
     /**
      * @var string
      *
-     * @ORM\Column(type="string", unique=true)
+     * @ORM\Column(type="string")
      * @Assert\NotBlank()
      */
     private $nom;
@@ -53,7 +53,7 @@ class ModelePanneau implements JsonSerializable
     /**
      * @var string
      *
-     * @ORM\Column(type="string", nullable=true, unique=true)
+     * @ORM\Column(type="string", nullable=true)
      */
     private $technique;
 
