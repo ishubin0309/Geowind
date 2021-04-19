@@ -53,7 +53,7 @@ class ModelePanneau implements JsonSerializable
     /**
      * @var string
      *
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="string", nullable=true, unique=true)
      */
     private $technique;
 
