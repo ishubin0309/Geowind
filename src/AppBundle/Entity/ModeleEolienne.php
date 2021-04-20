@@ -334,8 +334,7 @@ class ModeleEolienne implements JsonSerializable
             'Origine'=> $this->pays,
             'Puissance min (Mw)'=> $this->puissanceMin,
             'Puissance max (Mw)'=> $this->puissanceMax,
-            'Hauteur mât min (m)'=> $this->hauteurMatMin,
-            'Hauteur mât max (m)'=> $this->hauteurMatMax,
+            'Hauteur mât (m)'=> $this->hauteurMatMin . ', ' . $this->hauteurMatMax,
             'Diamètre rotor (m)'=> $this->diametreRotor,
             'Hauteur totale (m)'=> $this->hauteurTotale,
         );

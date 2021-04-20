@@ -209,8 +209,7 @@
             <th class="column-fit">Origine</th>
             <th class="column-fit">Puissance min <span style="color:red;">(Mw)</span></th>
             <th class="column-fit">Puissance max <span style="color:red;">(Mw)</span></th>
-            <th class="column-fit">Hauteur mât min <span style="color:red;">(m)</span></th>
-            <th class="column-fit">Hauteur mât max <span style="color:red;">(m)</span></th>
+            <th class="column-fit">Hauteur mât <span style="color:red;">(m)</span></th>
             <th class="column-fit">Diamètre rotor <span style="color:red;">(m)</span></th>
             <th class="column-fit">Hauteur totale <span style="color:red;">(m)</span></th>
             <th class="column-fit"></th>
@@ -225,8 +224,7 @@
             <td class="column-fit">{{ modele.pays }}</td>
             <td class="column-fit">{{ modele.puissanceMin }}</td>
             <td class="column-fit">{{ modele.puissanceMax }}</td>
-            <td class="column-fit">{{ modele.hauteurMatMin }}</td>
-            <td class="column-fit">{{ modele.hauteurMatMax }}</td>
+            <td class="column-fit">{{ modele.hauteurMatMin }}, {{ modele.hauteurMatMax }}</td>
             <td class="column-fit">{{ modele.diametreRotor }}</td>
             <td class="column-fit">{{ modele.hauteurTotale }}</td>
             <td class="column-fit"><a href="{{ path('modele_eolienne_edit', { 'id': modele.id }) }}" class="btn btn-warning btn-xs"><i class="fa fa-fw fa-pencil"></i></a></td>
