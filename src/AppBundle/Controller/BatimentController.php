@@ -287,7 +287,7 @@ class BatimentController extends Controller
      * @Route("/modele-eolienne/clone", name="modele_eolienne_clone")
      * @Method({"GET", "POST"})
      */
-    public function newModeleEolienneAction(Request $request, ModeleEolienne $modeleEolienne)
+    public function cloneModeleEolienneAction(Request $request, ModeleEolienne $modeleEolienne)
     {
         $modeleEolienne->setId(null);
 
