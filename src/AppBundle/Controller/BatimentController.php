@@ -175,9 +175,10 @@ class BatimentController extends Controller
      * @Route("/{id}/modele-panneau/clone", name="modele_panneau_clone")
      * @Method({"GET", "POST"})
      */
-    public function cloneModelePanneauAction(Request $request, ModelePanneau $modelePanneau)
+    public function cloneModelePanneauAction(Request $request, ModelePanneau $modelePanneau2)
     {
-        $modelePanneau->setId(null);
+        $modelePanneau = new ModelePanneau();
+        $modelePanneau->clone($modelePanneau2);
         $form = $this->createForm(ModelePanneauType::class, $modelePanneau);
         $form->handleRequest($request);
 
@@ -287,9 +288,10 @@ class BatimentController extends Controller
      * @Route("/{id}/modele-eolienne/clone", name="modele_eolienne_clone")
      * @Method({"GET", "POST"})
      */
-    public function cloneModeleEolienneAction(Request $request, ModeleEolienne $modeleEolienne)
+    public function cloneModeleEolienneAction(Request $request, ModeleEolienne $modeleEolienne2)
     {
-        $modeleEolienne->setId(null);
+        $modeleEolienne = new ModeleEolienne();
+        $modeleEolienne->clone($modeleEolienne2);
 
         $form = $this->createForm(ModeleEolienneType::class, $modeleEolienne);
         $form->handleRequest($request);

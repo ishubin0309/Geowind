@@ -119,12 +119,6 @@ class ModelePanneau implements JsonSerializable
         return $this->id;
     }
 
-    public function setId($id)
-    {
-        $this->id = $id;
-        return $this;
-    }
-
     /**
      * @return string
      */
@@ -355,6 +349,19 @@ class ModelePanneau implements JsonSerializable
     public function __toString()
     {
         return $this->nom ? $this->nom : 'Modèle'.$this->id;
+    }
+
+    public function clone(ModelePanneau $modelePanneau)
+    {
+        $this->nom = $modelePanneau->getNom();
+        $this->marque = $modelePanneau->getMarque();
+        $this->Technique = $modelePanneau->getTechnique();
+        $this->puissanceMin = $modelePanneau->getPuissanceMin();
+        $this->puissanceMax = $modelePanneau->getPuissanceMax();
+        $this->longeur = $modelePanneau->getLongeur();
+        $this->largeur = $modelePanneau->getLargeur();
+        $this->epaisseur = $modelePanneau->getEpaisseur();
+        $this->poids = $modelePanneau->getPoids();
     }
 
     public function jsonSerialize()

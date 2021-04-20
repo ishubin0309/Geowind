@@ -112,12 +112,6 @@ class ModeleEolienne implements JsonSerializable
         return $this->id;
     }
 
-    public function setId($id)
-    {
-        $this->id = $id;
-        return $this;
-    }
-
     /**
      * @return string
      */
@@ -329,6 +323,18 @@ class ModeleEolienne implements JsonSerializable
     public function __toString()
     {
         return $this->nom ? $this->nom : 'Modèle'.$this->id;
+    }
+
+    public function clone(ModeleEolienne $modeleEolienne)
+    {
+        $this->nom = $modeleEolienne->getNom();
+        $this->marque = $modeleEolienne->getMarque();
+        $this->puissanceMin = $modeleEolienne->getPuissanceMin();
+        $this->puissanceMax = $modeleEolienne->getPuissanceMax();
+        $this->hauteurMatMin = $modeleEolienne->getHauteurMatMin();
+        $this->hauteurMatMax = $modeleEolienne->getHauteurMatMax();
+        $this->diametreRotor = $modeleEolienne->getDiametreRotor();
+        $this->hauteurTotale = $modeleEolienne->getHauteurTotale();
     }
 
     public function jsonSerialize()
