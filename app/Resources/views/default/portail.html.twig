@@ -156,11 +156,11 @@
     }
 
     function accordsFormatter(row, cell, value, columnDef, dataContext) {
-      return '<b>'+value+'</b>';
+      return '<b>' + value + '</b>';
     }
 
     function completudeFormatter(row, cell, value, columnDef, dataContext) {
-      return value + '%';
+      return '<b>' + value + '%</b>';
     }
 
     var flashCircle = '{{ asset('images/circle-flash.gif')|e('js') }}';
