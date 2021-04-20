@@ -119,6 +119,12 @@ class ModelePanneau implements JsonSerializable
         return $this->id;
     }
 
+    public function setId($id)
+    {
+        $this->id = $id;
+        return $this;
+    }
+
     /**
      * @return string
      */
@@ -359,8 +365,8 @@ class ModelePanneau implements JsonSerializable
             'Marque'=> $this->marque,
             'Pays'=> $this->pays,
             'Technique'=> $this->technique,
-            'Puissance min (Wc)'=> $this->puissanceMin,
-            'Puissance max (Wc)'=> $this->puissanceMax,
+            'Puissance (Wc)'=> $this->puissanceMin . ',' . $this->puissanceMax,
+            // 'Puissance max (Wc)'=> $this->puissanceMax,
             'Longeur (mm)'=> $this->longeur,
             'Epaisseur (mm)'=> $this->epaisseur,
             'Poids (kg)'=> $this->poids,

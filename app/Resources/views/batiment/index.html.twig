@@ -168,12 +168,12 @@
             <th class="column-fit">Pays</th>
             <th class="column-fit">Technique</th>
             <th class="column-fit">Modèle</th>
-            <th class="column-fit">Puissance min <span style="color:red;">(Wc)</span></th>
-            <th class="column-fit">Puissance max <span style="color:red;">(Wc)</span></th>
+            <th class="column-fit">Puissance <span style="color:red;">(Wc)</span></th>
             <th class="column-fit">Longeur <span style="color:red;">(mm)</span></th>
             <th class="column-fit">Largeur <span style="color:red;">(mm)</span></th>
             <th class="column-fit">Epaisseur <span style="color:red;">(mm)</span></th>
             <th class="column-fit">Poids <span style="color:red;">(kg)</span></th>
+            <th class="column-fit"></th>
             <th class="column-fit"></th>
             <th class="column-fit"></th>
           </tr>
@@ -185,13 +185,13 @@
             <td class="column-fit">{{ modele.pays }}</td>
             <td class="column-fit">{{ modele.technique }}</td>
             <td class="column-fit">{{ modele.nom|upper }}</td>
-            <td class="column-fit">{{ modele.puissanceMin }}</td>
-            <td class="column-fit">{{ modele.puissanceMax }}</td>
+            <td class="column-fit">{{ modele.puissanceMin }},{{ modele.puissanceMax }}</td>
             <td class="column-fit">{{ modele.longeur }}</td>
             <td class="column-fit">{{ modele.largeur }}</td>
             <td class="column-fit">{{ modele.epaisseur }}</td>
             <td class="column-fit">{{ modele.poids }}</td>
-            <td class="column-fit"><a href="{{ path('modele_panneau_edit', { 'id': modele.id }) }}" class="btn btn-warning btn-xs"><i class="fa fa-fw fa-pencil"></i></a></td>
+            <td class="column-fit"><a title="Dupliquer" href="{{ path('modele_panneau_clone', { 'id': modele.id }) }}" class="btn btn-success btn-xs"><i class="fa fa-fw fa-save"></i></a></td>
+            <td class="column-fit"><a title="Modifier" href="{{ path('modele_panneau_edit', { 'id': modele.id }) }}" class="btn btn-warning btn-xs"><i class="fa fa-fw fa-pencil"></i></a></td>
             <td class="column-fit"><button id="{{ modele.id }}" type="modele_panneau" nom="{{ modele.nom }}" class="btn btn-danger btn-xs button-delete" title="Double click"><i class="fa fa-fw fa-trash"></i></button></td>
           </tr>
           {% endfor %}
@@ -214,6 +214,7 @@
             <th class="column-fit">Hauteur totale <span style="color:red;">(m)</span></th>
             <th class="column-fit"></th>
             <th class="column-fit"></th>
+            <th class="column-fit"></th>
           </tr>
         </thead>
         <tbody>
@@ -227,7 +228,8 @@
             <td class="column-fit">{{ modele.hauteurMatMin }},{{ modele.hauteurMatMax }}</td>
             <td class="column-fit">{{ modele.diametreRotor }}</td>
             <td class="column-fit">{{ modele.hauteurTotale }}</td>
-            <td class="column-fit"><a href="{{ path('modele_eolienne_edit', { 'id': modele.id }) }}" class="btn btn-warning btn-xs"><i class="fa fa-fw fa-pencil"></i></a></td>
+            <td class="column-fit"><a title="Dupliquer" href="{{ path('modele_eolienne_clone', { 'id': modele.id }) }}" class="btn btn-warning btn-xs"><i class="fa fa-fw fa-save"></i></a></td>
+            <td class="column-fit"><a title="Modifier" href="{{ path('modele_eolienne_edit', { 'id': modele.id }) }}" class="btn btn-warning btn-xs"><i class="fa fa-fw fa-pencil"></i></a></td>
             <td class="column-fit"><button id="{{ modele.id }}" type="modele_eolienne" nom="{{ modele.nom }}" class="btn btn-danger btn-xs button-delete" title="Double click"><i class="fa fa-fw fa-trash"></i></button></td>
           </tr>
           {% endfor %}

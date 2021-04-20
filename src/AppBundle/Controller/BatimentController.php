@@ -172,6 +172,33 @@ class BatimentController extends Controller
     }
 
     /**
+     * @Route("/modele-panneau/clone", name="modele_panneau_clone")
+     * @Method({"GET", "POST"})
+     */
+    public function cloneModelePanneauAction(Request $request, ModelePanneau $modelePanneau)
+    {
+        $modelePanneau->setId(null);
+        $form = $this->createForm(ModelePanneauType::class, $modelePanneau);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($modelePanneau);
+            $em->flush();
+
+            $this->addFlash('success', 'Modèle Panneau « ' . $modelePanneau->getNom() . ' » créé avec succès.');
+
+            return $this->redirectToRoute('modele_panneau_new');
+        }
+
+        return $this->render('batiment/modele_panneau_new.html.twig', [
+            'modelePanneau' => $modelePanneau,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
      * @Route("/{id}/modele-panneau/modifier", name="modele_panneau_edit")
      * @Method({"GET", "POST"})
      */
@@ -235,6 +262,34 @@ class BatimentController extends Controller
     public function newModeleEolienneAction(Request $request)
     {
         $modeleEolienne = new ModeleEolienne();
+
+        $form = $this->createForm(ModeleEolienneType::class, $modeleEolienne);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($modeleEolienne);
+            $em->flush();
+
+            $this->addFlash('success', 'Modèle Eolienne « ' . $modeleEolienne->getNom() . ' » créé avec succès.');
+
+            return $this->redirectToRoute('modele_eolienne_new');
+        }
+
+        return $this->render('batiment/modele_eolienne_new.html.twig', [
+            'modeleEolienne' => $modeleEolienne,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/modele-eolienne/clone", name="modele_eolienne_clone")
+     * @Method({"GET", "POST"})
+     */
+    public function newModeleEolienneAction(Request $request, ModeleEolienne $modeleEolienne)
+    {
+        $modeleEolienne->setId(null);
 
         $form = $this->createForm(ModeleEolienneType::class, $modeleEolienne);
         $form->handleRequest($request);

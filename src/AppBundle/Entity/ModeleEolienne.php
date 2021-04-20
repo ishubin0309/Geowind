@@ -112,6 +112,12 @@ class ModeleEolienne implements JsonSerializable
         return $this->id;
     }
 
+    public function setId($id)
+    {
+        $this->id = $id;
+        return $this;
+    }
+
     /**
      * @return string
      */
