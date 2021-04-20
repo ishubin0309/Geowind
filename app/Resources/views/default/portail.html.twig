@@ -404,7 +404,7 @@
               {% endfor %}
             {% endfor %}
             accords: '{{ proprietaires }}/{{ parcelles }}',
-            accordsPourcentage: {% if proprietaires and parcelles %}{{ proprietaires }} * 100/{{ parcelles }}|round{% else %}0{% endif %},
+            accordsPourcentage: {% if proprietaires and parcelles %}{{ (proprietaires * 100 / parcelles)|round }}{% else %}0{% endif %},
           {% endif %}
           {% if columnsType == 5 %}
             {% set servitudes = false %}
