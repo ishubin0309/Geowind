@@ -190,7 +190,7 @@ class BatimentController extends Controller
 
             $this->addFlash('success', 'Modèle Panneau « ' . $modelePanneau->getNom() . ' » créé avec succès.');
 
-            return $this->redirectToRoute('modele_panneau_new');
+            return $this->redirectToRoute('batiment_index');
         }
 
         return $this->render('batiment/modele_panneau_new.html.twig', [
@@ -304,7 +304,7 @@ class BatimentController extends Controller
 
             $this->addFlash('success', 'Modèle Eolienne « ' . $modeleEolienne->getNom() . ' » créé avec succès.');
 
-            return $this->redirectToRoute('modele_eolienne_new');
+            return $this->redirectToRoute('batiment_index');
         }
 
         return $this->render('batiment/modele_eolienne_new.html.twig', [
