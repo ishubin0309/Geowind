@@ -3,6 +3,7 @@
 namespace AppBundle\Form;
 
 use AppBundle\Model\Concertation;
+use AppBundle\Model\Etat;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use AppBundle\Form\Extension\DatePickerType;
@@ -25,9 +26,10 @@ class ConcertationType extends AbstractType
                 'html5' => false,
                 'required' => false,
             ])
-            ->add('phase', TextType::class, [
+            ->add('phase', ChoiceType::class, [
                 'label' => 'Phase',
-                'required' => false,
+                'required' => true,
+                'choices' => array_flip(Etat::getPhaseList()),
             ])
             ->add('objet', ChoiceType::class, [
                 'label' => 'Objet',
