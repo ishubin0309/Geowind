@@ -329,6 +329,7 @@ class ModeleEolienne implements JsonSerializable
     {
         $this->nom = $modeleEolienne->getNom();
         $this->marque = $modeleEolienne->getMarque();
+        $this->pays = $modelePanneau->getPays();
         $this->puissanceMin = $modeleEolienne->getPuissanceMin();
         $this->puissanceMax = $modeleEolienne->getPuissanceMax();
         $this->hauteurMatMin = $modeleEolienne->getHauteurMatMin();

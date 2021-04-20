@@ -355,7 +355,8 @@ class ModelePanneau implements JsonSerializable
     {
         $this->nom = $modelePanneau->getNom();
         $this->marque = $modelePanneau->getMarque();
-        $this->Technique = $modelePanneau->getTechnique();
+        $this->technique = $modelePanneau->getTechnique();
+        $this->pays = $modelePanneau->getPays();
         $this->puissanceMin = $modelePanneau->getPuissanceMin();
         $this->puissanceMax = $modelePanneau->getPuissanceMax();
         $this->longeur = $modelePanneau->getLongeur();
