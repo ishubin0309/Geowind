@@ -172,7 +172,7 @@ class BatimentController extends Controller
     }
 
     /**
-     * @Route("/{id}/modele-panneau/clone", name="modele_panneau_clone")
+     * @Route("/{id}/modele-panneau/dupliquer", name="modele_panneau_clone")
      * @Method({"GET", "POST"})
      */
     public function cloneModelePanneauAction(Request $request, ModelePanneau $modelePanneau2)
@@ -285,7 +285,7 @@ class BatimentController extends Controller
     }
 
     /**
-     * @Route("/{id}/modele-eolienne/clone", name="modele_eolienne_clone")
+     * @Route("/{id}/modele-eolienne/dupliquer", name="modele_eolienne_clone")
      * @Method({"GET", "POST"})
      */
     public function cloneModeleEolienneAction(Request $request, ModeleEolienne $modeleEolienne2)
