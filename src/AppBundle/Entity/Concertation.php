@@ -31,6 +31,13 @@ class Concertation
      *
      * @ORM\Column(type="string", nullable=true)
      */
+    private $phase;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
     private $objet;
 
     /**
@@ -80,6 +87,24 @@ class Concertation
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPhase()
+    {
+        return $this->phase;
+    }
+
+    /**
+     * @param string $phase
+     * @return \AppBundle\Entity\Concertation
+     */
+    public function setPhase($phase)
+    {
+        $this->phase = $phase;
+        return $this;
     }
 
     /**

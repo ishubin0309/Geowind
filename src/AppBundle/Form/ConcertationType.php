@@ -3,8 +3,6 @@
 namespace AppBundle\Form;
 
 use AppBundle\Model\Concertation;
-use AppBundle\Model\Etat;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use AppBundle\Form\Extension\DatePickerType;
@@ -25,6 +23,10 @@ class ConcertationType extends AbstractType
                 'widget' => 'single_text',
                 'format' => 'dd/MM/yyyy',
                 'html5' => false,
+                'required' => false,
+            ])
+            ->add('phase', TextType::class, [
+                'label' => 'Phase',
                 'required' => false,
             ])
             ->add('objet', ChoiceType::class, [
