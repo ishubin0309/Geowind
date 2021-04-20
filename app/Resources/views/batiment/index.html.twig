@@ -184,7 +184,7 @@
             <td class="column-fit">{{ modele.marque }}</td>
             <td class="column-fit">{{ modele.pays }}</td>
             <td class="column-fit">{{ modele.technique }}</td>
-            <td class="column-fit">{{ modele.nom|upper }}</td>
+            <td class="column-fit">{{ modele.nom }} ({{ modele.puissanceMin }})</td>
             <td class="column-fit">{{ modele.puissanceMin }},{{ modele.puissanceMax }}</td>
             <td class="column-fit">{{ modele.longeur }}</td>
             <td class="column-fit">{{ modele.largeur }}</td>
@@ -221,7 +221,7 @@
           {% for modele in modelesEoliennes %}
           <tr>
             <td class="column-fit">{{ modele.marque }}</td>
-            <td class="column-fit">{{ modele.nom|upper }}</td>
+            <td class="column-fit">{{ modele.nom }} ({{ modele.hauteurMatMin }})</td>
             <td class="column-fit">{{ modele.pays }}</td>
             <td class="column-fit">{{ modele.puissanceMin }}</td>
             <td class="column-fit">{{ modele.puissanceMax }}</td>

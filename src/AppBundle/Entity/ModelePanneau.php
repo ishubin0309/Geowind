@@ -369,7 +369,7 @@ class ModelePanneau implements JsonSerializable
     {
         return array(
             // 'id' => $this->id,
-            'Modèle' => $this->nom,
+            'Modèle' => $this->nom . '('.$this->puissanceMin.')',
             'Marque'=> $this->marque,
             'Pays'=> $this->pays,
             'Technique'=> $this->technique,
