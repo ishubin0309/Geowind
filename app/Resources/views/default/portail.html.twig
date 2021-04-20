@@ -156,7 +156,7 @@
     }
 
     function accordsFormatter(row, cell, value, columnDef, dataContext) {
-      return '<div style="color:red;">'+value+'</div>';
+      return '<b>'+value+'</b>';
     }
 
     function completudeFormatter(row, cell, value, columnDef, dataContext) {
@@ -247,7 +247,7 @@
       { id: "progression", name: "Etat", field: "progression", sortable: true, sorter: stringSorter, formatter: progressionFormatter, width: 110, maxWidth: 150 },
       { id: "foncier", name: "Foncier", field: "foncier", sortable: true, sorter: stringSorter, formatter: tacheFormatter, width: 150, maxWidth: 250 },
       { id: "accords", name: "Accords", field: "accords", sortable: true, sorter: stringSorter, formatter: accordsFormatter, width: 100, maxWidth: 250 },
-      { id: "completude", name: "Etat fiche", field: "completude", sortable: true, cssClass: 'text-right', sorter: numericSorter, formatter: completudeFormatter, width: 60, maxWidth: 100 },
+      { id: "accordsPourcentage", name: "Accords %", field: "accordsPourcentage", sortable: true, cssClass: 'text-right', sorter: numericSorter, formatter: completudeFormatter, width: 60, maxWidth: 100 },
       { id: "dateCrea", name: '<strong>Date création</strong>', field: "dateCrea", sortable: true, sorter: dateSorter, width: 100, maxWidth: 250},
       { id: "dateMaj", name: '<strong>Date majour</strong>', field: "dateMaj", sortable: true, sorter: dateSorter, width: 100, maxWidth: 250},
       { id: "dateDiff", name: "<strong>J+</strong>", field: "dateDiff", sortable: true, sorter: stringSorter, formatter: progressionFormatter, width: 40, maxWidth: 150 },
@@ -404,6 +404,7 @@
               {% endfor %}
             {% endfor %}
             accords: '{{ proprietaires }}/{{ parcelles }}',
+            accordsPourcentage: {% if proprietaires and parcelles %}{{ proprietaires }} * 100/{{ parcelles }}{% else %}0{% endif %},
           {% endif %}
           {% if columnsType == 5 %}
             {% set servitudes = false %}
