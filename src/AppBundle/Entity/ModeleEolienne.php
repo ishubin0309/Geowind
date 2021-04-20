@@ -325,7 +325,7 @@ class ModeleEolienne implements JsonSerializable
         return $this->nom ? $this->nom : 'Modèle'.$this->id;
     }
 
-    public function clone(ModeleEolienne $modeleEolienne)
+    public function cloneThis(ModeleEolienne $modeleEolienne)
     {
         $this->nom = $modeleEolienne->getNom();
         $this->marque = $modeleEolienne->getMarque();

@@ -178,7 +178,7 @@ class BatimentController extends Controller
     public function cloneModelePanneauAction(Request $request, ModelePanneau $modelePanneau2)
     {
         $modelePanneau = new ModelePanneau();
-        $modelePanneau->clone($modelePanneau2);
+        $modelePanneau->cloneThis($modelePanneau2);
         $form = $this->createForm(ModelePanneauType::class, $modelePanneau);
         $form->handleRequest($request);
 
@@ -291,7 +291,7 @@ class BatimentController extends Controller
     public function cloneModeleEolienneAction(Request $request, ModeleEolienne $modeleEolienne2)
     {
         $modeleEolienne = new ModeleEolienne();
-        $modeleEolienne->clone($modeleEolienne2);
+        $modeleEolienne->cloneThis($modeleEolienne2);
 
         $form = $this->createForm(ModeleEolienneType::class, $modeleEolienne);
         $form->handleRequest($request);

@@ -351,7 +351,7 @@ class ModelePanneau implements JsonSerializable
         return $this->nom ? $this->nom : 'Modèle'.$this->id;
     }
 
-    public function clone(ModelePanneau $modelePanneau)
+    public function cloneThis(ModelePanneau $modelePanneau)
     {
         $this->nom = $modelePanneau->getNom();
         $this->marque = $modelePanneau->getMarque();
