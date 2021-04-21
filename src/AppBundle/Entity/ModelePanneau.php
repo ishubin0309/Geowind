@@ -373,11 +373,11 @@ class ModelePanneau implements JsonSerializable
             'Marque'=> $this->marque,
             'Pays'=> $this->pays,
             'Technique'=> $this->technique,
-            'Puissance (Wc)'=> $this->puissanceMin . ',' . $this->puissanceMax,
-            // 'Puissance max (Wc)'=> $this->puissanceMax,
-            'Longeur (mm)'=> $this->longeur,
-            'Epaisseur (mm)'=> $this->epaisseur,
-            'Poids (kg)'=> $this->poids,
+            'Puissance <span style="color:red;">(Wc)</span>'=> $this->puissanceMin . ',' . $this->puissanceMax,
+            // 'Puissance max <span style="color:red;">(Wc)</span>'=> $this->puissanceMax,
+            'Longeur <span style="color:red;">(mm)</span>'=> $this->longeur,
+            'Epaisseur <span style="color:red;">(mm)</span>'=> $this->epaisseur,
+            'Poids <span style="color:red;">(kg)</span>'=> $this->poids,
         );
     }
 }
