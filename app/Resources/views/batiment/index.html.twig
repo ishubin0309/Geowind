@@ -190,7 +190,7 @@
             <td class="column-fit">{{ modele.largeur }}</td>
             <td class="column-fit">{{ modele.epaisseur }}</td>
             <td class="column-fit">{{ modele.poids }}</td>
-            <td class="column-fit"><a title="Dupliquer" href="{{ path('modele_panneau_clone', { 'id': modele.id }) }}" class="btn btn-success btn-xs"><i class="fa fa-fw fa-save"></i></a></td>
+            <td class="column-fit"><a title="Dupliquer" href="{{ path('modele_panneau_clone', { 'id': modele.id }) }}" class="btn btn-default btn-xs"><i class="fa fa-fw fa-clone"></i></a></td>
             <td class="column-fit"><a title="Modifier" href="{{ path('modele_panneau_edit', { 'id': modele.id }) }}" class="btn btn-warning btn-xs"><i class="fa fa-fw fa-pencil"></i></a></td>
             <td class="column-fit"><button id="{{ modele.id }}" type="modele_panneau" nom="{{ modele.nom }}" class="btn btn-danger btn-xs button-delete" title="Double click"><i class="fa fa-fw fa-trash"></i></button></td>
           </tr>
@@ -228,7 +228,7 @@
             <td class="column-fit">{{ modele.hauteurMatMin }},{{ modele.hauteurMatMax }}</td>
             <td class="column-fit">{{ modele.diametreRotor }}</td>
             <td class="column-fit">{{ modele.hauteurTotale }}</td>
-            <td class="column-fit"><a title="Dupliquer" href="{{ path('modele_eolienne_clone', { 'id': modele.id }) }}" class="btn btn-success btn-xs"><i class="fa fa-fw fa-save"></i></a></td>
+            <td class="column-fit"><a title="Dupliquer" href="{{ path('modele_eolienne_clone', { 'id': modele.id }) }}" class="btn btn-default btn-xs"><i class="fa fa-fw fa-clone"></i></a></td>
             <td class="column-fit"><a title="Modifier" href="{{ path('modele_eolienne_edit', { 'id': modele.id }) }}" class="btn btn-warning btn-xs"><i class="fa fa-fw fa-pencil"></i></a></td>
             <td class="column-fit"><button id="{{ modele.id }}" type="modele_eolienne" nom="{{ modele.nom }}" class="btn btn-danger btn-xs button-delete" title="Double click"><i class="fa fa-fw fa-trash"></i></button></td>
           </tr>
