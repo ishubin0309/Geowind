@@ -1506,10 +1506,10 @@
             if(equipementType) $('#projet_equipement').val(equipementType);
             else $('#projet_equipement').val($('#projet_equipement option:first').val());
             $.each(technologie['data'][$( "#projet_equipement option:selected" ).text()], function(field, value) {
-              if(field.match('Longeur')) technologie_longeur = value.replace(/,/, '.').trim();
-              else if(field.match('Largeur')) technologie_largeur = value.replace(/,/, '.').trim();
+              if(field.match('Longeur')) technologie_longeur = value.replace(/'/, '.').trim();
+              else if(field.match('Largeur')) technologie_largeur = value.replace(/'/, '.').trim();
               else if(field.match('Puissance nominale')) {
-                technologie_pu = value.replace(/,/, '.').trim();
+                technologie_pu = value.replace(/'/, '.').trim();
                 $('#projet_puissanceUnitaire').val(technologie_pu);
               }
               $('#tab_projet p').append('<div class="form-group form-group-sm"><label class="col-sm-4 control-label">'+field+':</label><div class="col-sm-8">' + value + '</div></div>');
