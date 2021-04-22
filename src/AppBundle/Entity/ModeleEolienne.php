@@ -55,7 +55,7 @@ class ModeleEolienne implements JsonSerializable
      *
      * @ORM\Column(type="string", name="puissance_max", nullable=true)
      */
-    private $puissanceMax;
+    private $puissance;
 
     /**
      * @var string
@@ -162,19 +162,19 @@ class ModeleEolienne implements JsonSerializable
     /**
      * @return string
      */
-    public function getPuissanceMax()
+    public function getPuissance()
     {
-        return $this->puissanceMax;
+        return $this->puissance;
     }
 
     /**
      *
-     * @param string $puissanceMax
+     * @param string $puissance
      * @return \AppBundle\Entity\ModeleEolienne
      */
-    public function setPuissanceMax($puissanceMax)
+    public function setPuissance($puissance)
     {
-        $this->puissanceMax = $puissanceMax;
+        $this->puissance = $puissance;
         return $this;
     }
 
@@ -304,7 +304,7 @@ class ModeleEolienne implements JsonSerializable
         $this->nom = $modeleEolienne->getNom();
         $this->marque = $modeleEolienne->getMarque();
         $this->pays = $modeleEolienne->getPays();
-        $this->puissanceMax = $modeleEolienne->getPuissanceMax();
+        $this->puissance = $modeleEolienne->getPuissance();
         $this->hauteurMatMin = $modeleEolienne->getHauteurMatMin();
         $this->hauteurMatMax = $modeleEolienne->getHauteurMatMax();
         $this->diametreRotor = $modeleEolienne->getDiametreRotor();
@@ -318,7 +318,7 @@ class ModeleEolienne implements JsonSerializable
             'Modèle' => $this->nom . ' ('.$this->hauteurMatMin.'m)',
             'Fabriquant'=> $this->marque,
             'Origine'=> $this->pays,
-            'Puissance <span style="color:red;">(Mw)</span>'=> $this->puissanceMax,
+            'Puissance <span style="color:red;">(Mw)</span>'=> $this->puissance,
             'Hauteur mât <span style="color:red;">(m)</span>'=> $this->hauteurMatMin . ',' . $this->hauteurMatMax,
             'Diamètre rotor <span style="color:red;">(m)</span>'=> $this->diametreRotor,
             'Hauteur totale <span style="color:red;">(m)</span>'=> $this->hauteurTotale,
