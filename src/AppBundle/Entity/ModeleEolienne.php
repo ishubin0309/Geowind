@@ -15,7 +15,7 @@ use JsonSerializable;
  * @author Haffoudhi
  *
  * @ORM\Entity()
- * @UniqueEntity("nom")
+ * @UniqueEntity(fields={"nom", "hauteurMatMin"})
  */
 class ModeleEolienne implements JsonSerializable
 {
@@ -31,7 +31,7 @@ class ModeleEolienne implements JsonSerializable
     /**
      * @var string
      *
-     * @ORM\Column(type="string", unique=true)
+     * @ORM\Column(type="string")
      * @Assert\NotBlank()
      */
     private $nom;
