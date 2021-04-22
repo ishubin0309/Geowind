@@ -1304,7 +1304,7 @@
             var technologie_pu = 0;
             $('#projet_equipement').html('');
             $.each(technologie['data'], function(field, value) {
-              $('#projet_equipement').append(new Option(field, field.replace(/\(.+?\)/, '').trim().toLowerCase()));
+              $('#projet_equipement').append(new Option(field, field.trim().toLowerCase()));
             });
             if(equipementType) $('#projet_equipement').val(equipementType);
             else $('#projet_equipement').val($('#projet_equipement option:first').val());
