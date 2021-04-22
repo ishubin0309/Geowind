@@ -29,12 +29,8 @@ class ModeleEolienneType extends AbstractType
                 'label' => 'Origine',
                 'required' => false,
             ])
-            ->add('puissanceMin', TextType::class, [
-                'label' => 'Puissance min (Mw)',
-                'required' => false,
-            ])
-            ->add('puissanceMax', TextType::class, [
-                'label' => 'Puissance max (Mw)',
+            ->add('puissance', TextType::class, [
+                'label' => 'Puissance (Mw)',
                 'required' => false,
             ])
             ->add('hauteurMatMin', TextType::class, [
