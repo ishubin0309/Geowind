@@ -319,7 +319,8 @@ class ModeleEolienne implements JsonSerializable
             'Fabriquant'=> $this->marque,
             'Origine'=> $this->pays,
             'Puissance <span style="color:red;">(Mw)</span>'=> $this->puissance,
-            'Hauteur mât <span style="color:red;">(m)</span>'=> $this->hauteurMatMin . ',' . $this->hauteurMatMax,
+            'Hauteur mât min <span style="color:red;">(m)</span>'=> $this->hauteurMatMin,
+            'Hauteur mât max <span style="color:red;">(m)</span>'=> $this->hauteurMatMax,
             'Diamètre rotor <span style="color:red;">(m)</span>'=> $this->diametreRotor,
             'Hauteur totale <span style="color:red;">(m)</span>'=> $this->hauteurTotale,
         );
