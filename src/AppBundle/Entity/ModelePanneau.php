@@ -342,12 +342,13 @@ class ModelePanneau implements JsonSerializable
     {
         return array(
             // 'id' => $this->id,
-            'Modèle' => $this->nom . ' ('.$this->puissance.'Wc)',
-            'Marque'=> $this->marque,
-            'Pays'=> $this->pays,
+            // 'Modèle' => $this->nom . ' ('.$this->puissance.'Wc)',
+            // 'Marque'=> $this->marque,
+            // 'Origine'=> $this->pays,
             'Technique'=> $this->technique,
             'Puissance <span style="color:red;">(Wc)</span>'=> $this->puissance,
             'Longeur <span style="color:red;">(mm)</span>'=> $this->longeur,
+            'Largeur <span style="color:red;">(mm)</span>'=> $this->largeur,
             'Epaisseur <span style="color:red;">(mm)</span>'=> $this->epaisseur,
             'Poids <span style="color:red;">(kg)</span>'=> $this->poids,
         );
