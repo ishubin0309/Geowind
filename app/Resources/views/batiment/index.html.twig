@@ -165,7 +165,7 @@
         <thead>
           <tr>
             <th class="column-fit">Marque</th>
-            <th class="column-fit">Pays</th>
+            <th class="column-fit">Origine</th>
             <th class="column-fit">Technique</th>
             <th class="column-fit">Modèle</th>
             <th class="column-fit">Puissance <span style="color:red;">(Wc)</span></th>
@@ -185,7 +185,7 @@
             <td class="column-fit">{{ modele.pays }}</td>
             <td class="column-fit">{{ modele.technique }}</td>
             <td class="column-fit">{{ modele.nom }} <span style="color:red;">({{ modele.puissanceMin }}Wc)</span></td>
-            <td class="column-fit">{{ modele.puissanceMin }},{{ modele.puissanceMax }}</td>
+            <td class="column-fit">{{ modele.puissance }}</td>
             <td class="column-fit">{{ modele.longeur }}</td>
             <td class="column-fit">{{ modele.largeur }}</td>
             <td class="column-fit">{{ modele.epaisseur }}</td>
@@ -204,12 +204,11 @@
       <table id="datatable" class="table table-striped table-middle">
         <thead>
           <tr>
-            <th class="column-fit">Fabriquant</th>
+            <th class="column-fit">Marque</th>
             <th class="column-fit">Modèle</th>
             <th class="column-fit">Origine</th>
             <th class="column-fit">Puissance <span style="color:red;">(Mw)</span></th>
-            <th class="column-fit">Hauteur mât min <span style="color:red;">(m)</span></th>
-            <th class="column-fit">Hauteur mât max <span style="color:red;">(m)</span></th>
+            <th class="column-fit">Hauteur mât <span style="color:red;">(m)</span></th>
             <th class="column-fit">Diamètre rotor <span style="color:red;">(m)</span></th>
             <th class="column-fit">Hauteur totale <span style="color:red;">(m)</span></th>
             <th class="column-fit"></th>
@@ -224,8 +223,7 @@
             <td class="column-fit">{{ modele.nom }} <span style="color:red;">({{ modele.hauteurMatMin }}m)</span></td>
             <td class="column-fit">{{ modele.pays }}</td>
             <td class="column-fit">{{ modele.puissance }}</td>
-            <td class="column-fit">{{ modele.hauteurMatMin }}</td>
-            <td class="column-fit">{{ modele.hauteurMatMax }}</td>
+            <td class="column-fit">{{ modele.hauteurMat }}</td>
             <td class="column-fit">{{ modele.diametreRotor }}</td>
             <td class="column-fit">{{ modele.hauteurTotale }}</td>
             <td class="column-fit"><a title="Dupliquer" href="{{ path('modele_eolienne_clone', { 'id': modele.id }) }}" class="btn btn-default btn-xs"><i class="fa fa-fw fa-clone"></i></a></td>
