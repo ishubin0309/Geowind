@@ -60,7 +60,7 @@ class ModelePanneau implements JsonSerializable
     /**
      * @var string
      *
-     * @ORM\Column(type="string", name="puissance_max", nullable=true)
+     * @ORM\Column(type="string", name="puissance", nullable=true)
      */
     private $puissance;
 

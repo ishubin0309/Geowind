@@ -53,14 +53,14 @@ class ModeleEolienne implements JsonSerializable
     /**
      * @var string
      *
-     * @ORM\Column(type="string", name="puissance_max", nullable=true)
+     * @ORM\Column(type="string", name="puissance", nullable=true)
      */
     private $puissance;
 
     /**
      * @var string
      *
-     * @ORM\Column(type="string", name="hauteur_mat_max", nullable=true)
+     * @ORM\Column(type="string", name="hauteur_mat", nullable=true)
      */
     private $hauteurMat;
 
@@ -292,7 +292,7 @@ class ModeleEolienne implements JsonSerializable
             'Fabriquant'=> $this->marque,
             'Origine'=> $this->pays,
             'Puissance <span style="color:red;">(Mw)</span>'=> $this->puissance,
-            'Hauteur mât max <span style="color:red;">(m)</span>'=> $this->hauteurMat,
+            'Hauteur mât <span style="color:red;">(m)</span>'=> $this->hauteurMat,
             'Diamètre rotor <span style="color:red;">(m)</span>'=> $this->diametreRotor,
             'Hauteur totale <span style="color:red;">(m)</span>'=> $this->hauteurTotale,
         );
