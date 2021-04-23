@@ -225,13 +225,6 @@ class ProjetType extends AbstractType
                 'required' => false,
                 'label' => 'Fichier',
             ])
-            ->add('descriptionImplantation', TextareaType::class, [
-                'label' => 'Description',
-                'required' => false,
-                'attr' => [
-                    'rows' => 5,
-                ]
-            ])
             ->add('contrat', ChoiceType::class, [
                 'label' => 'Contrat',
                 'required' => false,

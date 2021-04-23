@@ -383,13 +383,6 @@ class Projet
      *
      * @ORM\Column(type="text", nullable=true)
      */
-    private $descriptionImplantation;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="text", nullable=true)
-     */
     private $contrat;
 
     /**
@@ -1688,25 +1681,6 @@ class Projet
     public function setTypeImplantation($typeImplantation)
     {
         $this->typeImplantation = $typeImplantation;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDescriptionImplantation()
-    {
-        return $this->descriptionImplantation;
-    }
-
-    /**
-     *
-     * @param string $descriptionImplantation
-     * @return \AppBundle\Entity\Projet
-     */
-    public function setDescriptionImplantation($descriptionImplantation)
-    {
-        $this->descriptionImplantation = $descriptionImplantation;
         return $this;
     }
     
