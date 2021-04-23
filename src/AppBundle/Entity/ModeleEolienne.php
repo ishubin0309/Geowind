@@ -288,12 +288,12 @@ class ModeleEolienne implements JsonSerializable
     {
         return array(
             // 'id' => $this->id,
-            // 'Modèle' => $this->nom . ' ('.$this->hauteurMat.'m)',
+            'Modèle' => $this->nom,
             // 'Marque'=> $this->marque,
             // 'Origine'=> $this->pays,
             'Puissance <span style="color:black;">(Mw)</span>'=> $this->puissance,
-            'Hauteur mât <span style="color:black;">(m)</span>'=> $this->hauteurMat,
             'Diamètre rotor <span style="color:black;">(m)</span>'=> $this->diametreRotor,
+            'Hauteur mât <span style="color:black;">(m)</span>'=> $this->hauteurMat,
             'Hauteur totale <span style="color:black;">(m)</span>'=> $this->hauteurTotale,
         );
     }
