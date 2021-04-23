@@ -15,7 +15,7 @@ use JsonSerializable;
  * @author Haffoudhi
  *
  * @ORM\Entity()
- * @UniqueEntity(fields={"nom", "hauteurMatMin"})
+ * @UniqueEntity(fields={"nom", "hauteurMatMax"})
  */
 class ModeleEolienne implements JsonSerializable
 {
@@ -56,13 +56,6 @@ class ModeleEolienne implements JsonSerializable
      * @ORM\Column(type="string", name="puissance_max", nullable=true)
      */
     private $puissance;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string", name="hauteur_mat_min", nullable=true)
-     */
-    private $hauteurMatMin;
 
     /**
      * @var string
@@ -181,25 +174,6 @@ class ModeleEolienne implements JsonSerializable
     /**
      * @return string
      */
-    public function getHauteurMatMin()
-    {
-        return $this->hauteurMatMin;
-    }
-
-    /**
-     *
-     * @param string $hauteurMatMin
-     * @return \AppBundle\Entity\ModeleEolienne
-     */
-    public function setHauteurMatMin($hauteurMatMin)
-    {
-        $this->hauteurMatMin = $hauteurMatMin;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
     public function getHauteurMatMax()
     {
         return $this->hauteurMatMax;
@@ -305,7 +279,6 @@ class ModeleEolienne implements JsonSerializable
         $this->marque = $modeleEolienne->getMarque();
         $this->pays = $modeleEolienne->getPays();
         $this->puissance = $modeleEolienne->getPuissance();
-        $this->hauteurMatMin = $modeleEolienne->getHauteurMatMin();
         $this->hauteurMatMax = $modeleEolienne->getHauteurMatMax();
         $this->diametreRotor = $modeleEolienne->getDiametreRotor();
         $this->hauteurTotale = $modeleEolienne->getHauteurTotale();
@@ -315,11 +288,10 @@ class ModeleEolienne implements JsonSerializable
     {
         return array(
             // 'id' => $this->id,
-            'Modèle' => $this->nom . ' ('.$this->hauteurMatMin.'m)',
+            'Modèle' => $this->nom . ' ('.$this->hauteurMatMax.'m)',
             'Fabriquant'=> $this->marque,
             'Origine'=> $this->pays,
             'Puissance <span style="color:red;">(Mw)</span>'=> $this->puissance,
-            'Hauteur mât min <span style="color:red;">(m)</span>'=> $this->hauteurMatMin,
             'Hauteur mât max <span style="color:red;">(m)</span>'=> $this->hauteurMatMax,
             'Diamètre rotor <span style="color:red;">(m)</span>'=> $this->diametreRotor,
             'Hauteur totale <span style="color:red;">(m)</span>'=> $this->hauteurTotale,

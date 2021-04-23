@@ -60,13 +60,6 @@ class ModelePanneau implements JsonSerializable
     /**
      * @var string
      *
-     * @ORM\Column(type="string", name="puissance_min", nullable=true)
-     */
-    private $puissanceMin;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(type="string", name="puissance_max", nullable=true)
      */
     private $puissanceMax;
@@ -189,25 +182,6 @@ class ModelePanneau implements JsonSerializable
     public function setTechnique($technique)
     {
         $this->technique = $technique;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPuissanceMin()
-    {
-        return $this->puissanceMin;
-    }
-
-    /**
-     *
-     * @param string $puissanceMin
-     * @return \AppBundle\Entity\ModelePanneau
-     */
-    public function setPuissanceMin($puissanceMin)
-    {
-        $this->puissanceMin = $puissanceMin;
         return $this;
     }
 
@@ -357,7 +331,6 @@ class ModelePanneau implements JsonSerializable
         $this->marque = $modelePanneau->getMarque();
         $this->technique = $modelePanneau->getTechnique();
         $this->pays = $modelePanneau->getPays();
-        $this->puissanceMin = $modelePanneau->getPuissanceMin();
         $this->puissanceMax = $modelePanneau->getPuissanceMax();
         $this->longeur = $modelePanneau->getLongeur();
         $this->largeur = $modelePanneau->getLargeur();
@@ -369,12 +342,11 @@ class ModelePanneau implements JsonSerializable
     {
         return array(
             // 'id' => $this->id,
-            'Modèle' => $this->nom . ' ('.$this->puissanceMin.'Wc)',
+            'Modèle' => $this->nom . ' ('.$this->puissanceMax.'Wc)',
             'Marque'=> $this->marque,
             'Pays'=> $this->pays,
             'Technique'=> $this->technique,
-            'Puissance <span style="color:red;">(Wc)</span>'=> $this->puissanceMin . ',' . $this->puissanceMax,
-            // 'Puissance max <span style="color:red;">(Wc)</span>'=> $this->puissanceMax,
+            'Puissance <span style="color:red;">(Wc)</span>'=> $this->puissanceMax,
             'Longeur <span style="color:red;">(mm)</span>'=> $this->longeur,
             'Epaisseur <span style="color:red;">(mm)</span>'=> $this->epaisseur,
             'Poids <span style="color:red;">(kg)</span>'=> $this->poids,
