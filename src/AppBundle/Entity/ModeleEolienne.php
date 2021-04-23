@@ -15,7 +15,7 @@ use JsonSerializable;
  * @author Haffoudhi
  *
  * @ORM\Entity()
- * @UniqueEntity(fields={"nom", "hauteurMatMax"})
+ * @UniqueEntity(fields={"nom", "hauteurMat"})
  */
 class ModeleEolienne implements JsonSerializable
 {
@@ -62,7 +62,7 @@ class ModeleEolienne implements JsonSerializable
      *
      * @ORM\Column(type="string", name="hauteur_mat_max", nullable=true)
      */
-    private $hauteurMatMax;
+    private $hauteurMat;
 
     /**
      * @var string
@@ -174,19 +174,19 @@ class ModeleEolienne implements JsonSerializable
     /**
      * @return string
      */
-    public function getHauteurMatMax()
+    public function getHauteurMat()
     {
-        return $this->hauteurMatMax;
+        return $this->hauteurMat;
     }
 
     /**
      *
-     * @param string $hauteurMatMax
+     * @param string $hauteurMat
      * @return \AppBundle\Entity\ModeleEolienne
      */
-    public function setHauteurMatMax($hauteurMatMax)
+    public function setHauteurMat($hauteurMat)
     {
-        $this->hauteurMatMax = $hauteurMatMax;
+        $this->hauteurMat = $hauteurMat;
         return $this;
     }
 
@@ -279,7 +279,7 @@ class ModeleEolienne implements JsonSerializable
         $this->marque = $modeleEolienne->getMarque();
         $this->pays = $modeleEolienne->getPays();
         $this->puissance = $modeleEolienne->getPuissance();
-        $this->hauteurMatMax = $modeleEolienne->getHauteurMatMax();
+        $this->hauteurMat = $modeleEolienne->getHauteurMat();
         $this->diametreRotor = $modeleEolienne->getDiametreRotor();
         $this->hauteurTotale = $modeleEolienne->getHauteurTotale();
     }
@@ -288,11 +288,11 @@ class ModeleEolienne implements JsonSerializable
     {
         return array(
             // 'id' => $this->id,
-            'Modèle' => $this->nom . ' ('.$this->hauteurMatMax.'m)',
+            'Modèle' => $this->nom . ' ('.$this->hauteurMat.'m)',
             'Fabriquant'=> $this->marque,
             'Origine'=> $this->pays,
             'Puissance <span style="color:red;">(Mw)</span>'=> $this->puissance,
-            'Hauteur mât max <span style="color:red;">(m)</span>'=> $this->hauteurMatMax,
+            'Hauteur mât max <span style="color:red;">(m)</span>'=> $this->hauteurMat,
             'Diamètre rotor <span style="color:red;">(m)</span>'=> $this->diametreRotor,
             'Hauteur totale <span style="color:red;">(m)</span>'=> $this->hauteurTotale,
         );

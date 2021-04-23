@@ -15,8 +15,7 @@
       {{ form_row(form.nom) }}
       {{ form_row(form.pays) }}
       {{ form_row(form.puissance) }}
-      {{ form_row(form.hauteurMatMin) }}
-      {{ form_row(form.hauteurMatMax) }}
+      {{ form_row(form.hauteurMat) }}
       {{ form_row(form.diametreRotor) }}
       {{ form_row(form.hauteurTotale) }}
       </div>
@@ -33,13 +32,13 @@
 
 {% block js %}
 <script>
-  $('#modele_eolienne_hauteurMatMax ,#modele_eolienne_diametreRotor').change(function() {
-    var hauteur_max = $('#modele_eolienne_hauteurMatMax').val().trim().replace(/'/, '.');
+  $('#modele_eolienne_hauteurMat ,#modele_eolienne_diametreRotor').change(function() {
+    var hauteur = $('#modele_eolienne_hauteurMat').val().trim().replace(/'/, '.');
     var diametre_rotor = $('#modele_eolienne_diametreRotor').val().trim().replace(/'/, '.');
-    if(!hauteur_max || !diametre_rotor) $('#modele_eolienne_hauteurTotale').val(0);
+    if(!hauteur || !diametre_rotor) $('#modele_eolienne_hauteurTotale').val(0);
     else {
-      var hauteur_totale = (parseFloat(hauteur_max) + (parseFloat(diametre_rotor) / 2));
-      $('#modele_eolienne_hauteurTotale').val(hauteur_totale.toString().replace(/\./, '\''));
+      var hauteur_totale = (parseFloat(hauteur) + (parseFloat(diametre_rotor) / 2));
+      $('#modele_eolienne_hauteurTotale').val(hauteur_totale);
     }
   });
 </script>

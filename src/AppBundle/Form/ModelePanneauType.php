@@ -22,7 +22,7 @@ class ModelePanneauType extends AbstractType
                 'required' => false,
             ])
             ->add('pays', TextType::class, [
-                'label' => 'Pays',
+                'label' => 'Origine',
                 'required' => false,
             ])
             ->add('technique', TextType::class, [
@@ -33,12 +33,8 @@ class ModelePanneauType extends AbstractType
                 'label' => 'Modèle',
                 'required' => true,
             ])
-            ->add('puissanceMin', TextType::class, [
-                'label' => 'Puissance min (Wc)',
-                'required' => false,
-            ])
-            ->add('puissanceMax', TextType::class, [
-                'label' => 'Puissance max (Wc)',
+            ->add('puissance', TextType::class, [
+                'label' => 'Puissance (Wc)',
                 'required' => false,
             ])
             ->add('longeur', TextType::class, [

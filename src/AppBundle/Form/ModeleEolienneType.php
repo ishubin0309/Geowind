@@ -18,7 +18,7 @@ class ModeleEolienneType extends AbstractType
     {
         $builder
             ->add('marque', TextType::class, [
-                'label' => 'Fabriquant',
+                'label' => 'Marque',
                 'required' => false,
             ])
             ->add('nom', TextType::class, [
@@ -33,12 +33,8 @@ class ModeleEolienneType extends AbstractType
                 'label' => 'Puissance (Mw)',
                 'required' => false,
             ])
-            ->add('hauteurMatMin', TextType::class, [
-                'label' => 'Hauteur mât min (m)',
-                'required' => false,
-            ])
-            ->add('hauteurMatMax', TextType::class, [
-                'label' => 'Hauteur mât max (m)',
+            ->add('hauteurMat', TextType::class, [
+                'label' => 'Hauteur mât (m)',
                 'required' => false,
             ])
             ->add('diametreRotor', TextType::class, [
