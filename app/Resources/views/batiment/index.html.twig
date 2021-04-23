@@ -82,7 +82,7 @@
     <fieldset id="tab_batiments" class="hide">
       <legend>Batiments <a href="{{ path('batiment_new') }}" class="btn btn-primary btn-xs pull-right"><i class="fa fa-fw fa-plus"></i> Ajouter un batiment</a></legend>
 
-      <table id="datatable" class="table table-striped table-middle">
+      <table id="datatable" class="table table-striped table-middle datatable">
         <thead>
           <tr>
             <th class="column-fit">Modèle</th>
@@ -161,7 +161,7 @@
     <fieldset id="tab_modeles_panneaux" class="hide">
       <legend>Modèles de panneaux pv <a href="{{ path('modele_panneau_new') }}" class="btn btn-primary btn-xs pull-right"><i class="fa fa-fw fa-plus"></i> Ajouter un modèle</a></legend>
 
-      <table id="datatable" class="table table-striped table-middle">
+      <table id="datatable" class="table table-striped table-middle datatable">
         <thead>
           <tr>
             <th class="column-fit">Marque</th>
@@ -201,7 +201,7 @@
     <fieldset id="tab_modeles_eoliennes" class="hide">
       <legend>Modèles d'éoliennes <a href="{{ path('modele_eolienne_new') }}" class="btn btn-primary btn-xs pull-right"><i class="fa fa-fw fa-plus"></i> Ajouter un modèle</a></legend>
 
-      <table id="datatable" class="table table-striped table-middle">
+      <table id="datatable" class="table table-striped table-middle datatable">
         <thead>
           <tr>
             <th class="column-fit">Marque</th>
@@ -248,7 +248,7 @@
 
 {% block js %}
   <script>
-    $('#datatable').DataTable({
+    $('.datatable').DataTable({
       language: dtLang,
       paging: false,
       ordering: false,
