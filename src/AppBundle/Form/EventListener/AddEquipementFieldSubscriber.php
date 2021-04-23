@@ -38,7 +38,7 @@ class AddEquipementFieldSubscriber implements EventSubscriberInterface
 
         $form->add('equipement', ChoiceType::class, [
             'choices' => $choices,
-            'label' => 'Equipement',
+            'label' => 'Modèle',
             'required' => false,
         ]);
     }
@@ -55,7 +55,7 @@ class AddEquipementFieldSubscriber implements EventSubscriberInterface
 
         $form->add('equipement', ChoiceType::class, [
             'choices' => $choices,
-            'label' => 'Equipement',
+            'label' => 'Modèle',
             'required' => false,
         ]);
     }
