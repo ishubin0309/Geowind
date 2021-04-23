@@ -21,7 +21,7 @@ class Technologie
     public static function getTechnologieList()
     {
         return [
-            self::TECHNOLOGIE_UN => 'photovoltaïque',
+            self::TECHNOLOGIE_UN => 'Photovoltaïque',
             self::TECHNOLOGIE_DEUX => 'Eolienne'
         ];
     }
