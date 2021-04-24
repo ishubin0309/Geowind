@@ -1507,7 +1507,7 @@
             $.each(technologie['data'][$( "#projet_equipement option:selected" ).text()], function(field, value) {
               if(field.match('Longeur')) technologie_longeur = value.replace(/'/, '.').trim();
               else if(field.match('Largeur')) technologie_largeur = value.replace(/'/, '.').trim();
-              else if(field.match('Puissance nominale')) {
+              else if(field.match('Puissance')) {
                 technologie_pu = value.replace(/'/, '.').trim();
                 $('#projet_puissanceUnitaire').val(technologie_pu);
               }
@@ -1520,7 +1520,7 @@
                 var technologie_unite = (technologie_su * 1000) / (technologie_largeur * technologie_longeur);
                 $('#projet_unite').val(technologie_unite.toFixed(3));
               }
-              var technologie_pt = technologie_unite * technologie_pu;
+              var technologie_pt = technologie_unite * technologie_pu;console.log('potential: ' + technologie_pt);
               $('#projet_puissanceTotale').val(technologie_pt.toFixed(3));
               $('#projet_potentiel').val(technologie_pt.toFixed(3));
             }

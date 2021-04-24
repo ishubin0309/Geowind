@@ -1310,7 +1310,7 @@
             $.each(technologie['data'][$( "#projet_equipement option:selected" ).text()], function(field, value) {
               if(field.match('Longeur')) technologie_longeur = value.replace(/'/, '.').trim();
               else if(field.match('Largeur')) technologie_largeur = value.replace(/'/, '.').trim();
-              else if(field.match('Puissance nominale')) {
+              else if(field.match('Puissance')) {
                 technologie_pu = value.replace(/'/, '.').trim();
                 $('#projet_puissanceUnitaire').val(technologie_pu);
               }
