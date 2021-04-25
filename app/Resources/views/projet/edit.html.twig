@@ -963,7 +963,7 @@
               $collectionHolder.find('tr:eq('+tr_index+')').find('[id*="_montantEngage"]').val('0');
               $collectionHolder.find('tr:eq('+tr_index+')').find('[id*="_montantPaye"]').val('0');
               $collectionHolder.find('tr:eq('+tr_index+')').find('[id*="_montantRestant"]').val('');
-              $collectionHolder.find('tr:eq('+tr_index+')').find('[id*="_dateFacture"]').val('');
+              {# $collectionHolder.find('tr:eq('+tr_index+')').find('[id*="_dateFacture"]').val(''); #}
               $collectionHolder.find('tr:eq('+tr_index+')').find('[id*="_duplique"]').val($collectionHolder.find('tr.info:eq(0)').index());
               cloned = 1;
             } else {
