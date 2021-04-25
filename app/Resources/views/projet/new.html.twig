@@ -920,8 +920,8 @@
     $($collectionHolderProprietaire).on('click', 'tr', function() {
       $collectionHolderProprietaire.children().removeClass('info');
       $(this).addClass('info');
-      second_tr_index = $(this).attr('class') == 'proprietaire_entry' ? $(this).index() + 1 : $(this).index() - 1;
-      $('#projet_proprietaires tr:eq('+second_tr_index+')').addClass('info');
+      second_tr_index = $(this).attr('class').match('proprietaire_entry') ? $(this).index() + 1 : $(this).index() - 1;
+      $($collectionHolderProprietaire).find('tr:eq('+second_tr_index+')').addClass('info');
       if($collectionHolderProprietaire.children().length) $('#projet_proprietaires_duplicate_entry').removeClass('disabled');
     });
 
