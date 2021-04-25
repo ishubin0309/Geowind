@@ -1042,6 +1042,39 @@
       $('#tab_contacts tbody').append('<tr rel="'+length+'" class="hide"><td>-</td><td>Propriétaire</td><td>-</td></tr><tr rel="'+length+'" class="hide"><td>-</td><td>Exploitant</td><td>-</td></tr>');
     });
 
+    $('#projet_proprietaires_duplicate_entry').click(function () {
+      if(!$(this).hasClass('disabled') && $collectionHolderProprietaire.find('tr.info').length == 2) {
+        var tr_index = $collectionHolderProprietaire.find('tr.info:eq(1)').index() + 1;
+        var clone = $collectionHolderProprietaire.find('tr.info').clone();
+        var cloned = 0;
+        $(clone).insertAfter($collectionHolderProprietaire.find('tr:eq('+(tr_index-1)+')'));console.log(tr_index);
+        $collectionHolderProprietaire.find('tr:eq('+tr_index+')').removeClass('info');
+        $collectionHolderProprietaire.find('tr:eq('+(tr_index + 1)+')').removeClass('info');
+        $collectionHolderProprietaire.find('tr:eq('+tr_index+')').find('[id*="_accordProprietaire"]').val($collectionHolderProprietaire.find('tr:eq('+(tr_index-2)+')').find('[id*="_accordProprietaire"]').val());
+        $collectionHolderProprietaire.find('tr:eq('+(tr_index + 1)+')').find('[id*="_accordExploitant"]').val($collectionHolderProprietaire.find('tr:eq('+(tr_index-1)+')').find('[id*="_accordExploitant"]').val());
+        cloned = 1;
+        if(cloned) {
+          $collectionHolderProprietaire.children().each(function() {
+            tr_index = $(this).attr('class') == 'proprietaire_entry' ? $(this).index() : $(this).index() - 1;
+            $(this).find('input').each(function() {
+              name = $(this).attr('name').replace(/\[\d+\]/, '['+tr_index+']');
+              $(this).attr('name', name);
+              id = $(this).attr('id').replace(/_\d+_/, '_'+tr_index+'_');
+              $(this).attr('id', id);
+            });
+            $(this).find('select').each(function() {
+              name = $(this).attr('name').replace(/\[\d+\]/, '['+tr_index+']');
+              $(this).attr('name', name);
+              id = $(this).attr('id').replace(/_\d+_/, '_'+tr_index+'_');
+              $(this).attr('id', id);
+            });
+          });
+        }
+        {# $collectionHolderProprietaire.children().removeClass('info');
+        $('#projet_proprietaires_duplicate_entry').addClass('disabled'); #}
+      }
+    });
+
     $('#projet_proprietaires_remove_entry').click(function () {
       if($('> :last-child', $collectionHolderProprietaire).length) {
         var id = $('> :last-child', $collectionHolderProprietaire).find('input:eq(0)').attr('id').match(/\d+/);
@@ -1066,6 +1099,13 @@
         else $('#tab_contacts tbody tr[rel="'+id+'"]:eq(1)').addClass('hide');
       } else if($(this).attr('id')=='projet_proprietaires_'+id+'_telephoneExploitant')
         $('#tab_contacts tbody tr[rel="'+id+'"]:eq(1) td:eq(2)').text($(this).val());
+    });
+    $($collectionHolderProprietaire).on('click', 'tr', function() {
+      $collectionHolderProprietaire.children().removeClass('info');
+      $(this).addClass('info');
+      second_tr_index = $(this).attr('class') == 'proprietaire_entry' ? $(this).index() + 1 : $(this).index() - 1;
+      $('#projet_proprietaires tr:eq('+second_tr_index+')').addClass('info');
+      if($collectionHolderProprietaire.children().length) $('#projet_proprietaires_duplicate_entry').removeClass('disabled');
     });
 
     var $collectionHolderDC = $('#projet_dateCles');
