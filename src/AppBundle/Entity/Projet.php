@@ -456,22 +456,6 @@ class Projet
     private $completude = 0;
 
     /**
-     * @var ModelePanneau
-     *
-     * @ORM\ManyToOne(targetEntity="ModelePanneau", inversedBy="projets")
-     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
-     */
-    private $modelePanneau;
-
-    /**
-     * @var ModeleEolienne
-     *
-     * @ORM\ManyToOne(targetEntity="ModeleEolienne", inversedBy="projets")
-     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
-     */
-    private $modeleEolienne;
-
-    /**
      * @var Liste
      *
      * @ORM\ManyToOne(targetEntity="Liste", inversedBy="projets")
@@ -498,6 +482,7 @@ class Projet
         $this->documents = new ArrayCollection();
         $this->parcelles = new ArrayCollection();
         $this->notes = new ArrayCollection();
+        $this->proprietaires = new ArrayCollection();
     }
 
     /**
@@ -1895,42 +1880,6 @@ class Projet
     public function setCompletude($completude)
     {
         $this->completude = $completude;
-        return $this;
-    }
-
-    /**
-     * @return ModelePanneau
-     */
-    public function getModelePanneau()
-    {
-        return $this->modelePanneau;
-    }
-
-    /**
-     * @param ModelePanneau $modelePanneau
-     * @return \AppBundle\Entity\Projet
-     */
-    public function setModelePanneau(ModelePanneau $modelePanneau)
-    {
-        $this->modelePanneau = $modelePanneau;
-        return $this;
-    }
-
-    /**
-     * @return ModeleEolienne
-     */
-    public function getModeleEolienne()
-    {
-        return $this->modeleEolienne;
-    }
-
-    /**
-     * @param ModeleEolienne $modeleEolienne
-     * @return \AppBundle\Entity\Projet
-     */
-    public function setModeleEolienne(ModeleEolienne $modeleEolienne)
-    {
-        $this->modeleEolienne = $modeleEolienne;
         return $this;
     }
 

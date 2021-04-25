@@ -92,16 +92,8 @@ class ModelePanneau implements JsonSerializable
      */
     private $poids;
 
-    /**
-     * @var Departement
-     *
-     * @ORM\OneToMany(targetEntity="Projet", mappedBy="modelePanneau", cascade={"persist"})
-     */
-    private $projets;
-
     public function __construct()
     {
-        $this->projets = new ArrayCollection();
     }
 
     /**
@@ -278,43 +270,6 @@ class ModelePanneau implements JsonSerializable
     {
         $this->poids = $poids;
         return $this;
-    }
-
-    /**
-     * @return ArrayCollection|Projet[]
-     */
-    public function getProjets()
-    {
-        return $this->projets;
-    }
-
-    /**
-     * @param ArrayCollection $projets
-     * @return \AppBundle\Entity\Projet
-     */
-    public function setProjets(ArrayCollection $projets)
-    {
-        $this->projets = $projets;
-        return $this;
-    }
-    
-    /**
-     * @param \AppBundle\Entity\Projet $projet
-     */
-    public function addProjet(Projet $projet)
-    {
-        if (!$this->projets->contains($projet)) {
-            $projet->setModelePanneau($this);
-            $this->projets->add($projet);
-        }
-    }
-
-    /**
-     * @param \AppBundle\Entity\Projet $projet
-     */
-    public function removeProjet(Projet $projet)
-    {
-        $this->projets->removeElement($projet);
     }
 
     /**

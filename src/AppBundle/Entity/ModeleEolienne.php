@@ -78,16 +78,8 @@ class ModeleEolienne implements JsonSerializable
      */
     private $hauteurTotale;
 
-    /**
-     * @var Departement
-     *
-     * @ORM\OneToMany(targetEntity="Projet", mappedBy="modeleEolienne", cascade={"persist"})
-     */
-    private $projets;
-
     public function __construct()
     {
-        $this->projets = new ArrayCollection();
     }
 
     /**
@@ -226,43 +218,6 @@ class ModeleEolienne implements JsonSerializable
     {
         $this->hauteurTotale = $hauteurTotale;
         return $this;
-    }
-
-    /**
-     * @return ArrayCollection|Projet[]
-     */
-    public function getProjets()
-    {
-        return $this->projets;
-    }
-
-    /**
-     * @param ArrayCollection $projets
-     * @return \AppBundle\Entity\Projet
-     */
-    public function setProjets(ArrayCollection $projets)
-    {
-        $this->projets = $projets;
-        return $this;
-    }
-    
-    /**
-     * @param \AppBundle\Entity\Projet $projet
-     */
-    public function addProjet(Projet $projet)
-    {
-        if (!$this->projets->contains($projet)) {
-            $projet->setModeleEolienne($this);
-            $this->projets->add($projet);
-        }
-    }
-
-    /**
-     * @param \AppBundle\Entity\Projet $projet
-     */
-    public function removeProjet(Projet $projet)
-    {
-        $this->projets->removeElement($projet);
     }
 
     /**
