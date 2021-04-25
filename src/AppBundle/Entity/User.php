@@ -113,7 +113,7 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * @var ArrayCollection|Departement[]
      *
-     * @ORM\ManyToMany(targetEntity="Departement", inversedBy="users")
+     * @ORM\ManyToMany(targetEntity="Departement")
      * @ORM\JoinTable(name="user_departement_chef_projet")
      */
     private $departementsChefProjet;
@@ -121,7 +121,7 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * @var ArrayCollection|Departement[]
      *
-     * @ORM\ManyToMany(targetEntity="Departement", inversedBy="users")
+     * @ORM\ManyToMany(targetEntity="Departement")
      * @ORM\JoinTable(name="user_departement_charge_foncier")
      */
     private $departementsChargeFoncier;

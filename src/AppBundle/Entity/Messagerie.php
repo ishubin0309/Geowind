@@ -47,7 +47,7 @@ class Messagerie
     /**
      * @var Projet
      *
-     * @ORM\ManyToOne(targetEntity="Projet", inversedBy="enjeuxs")
+     * @ORM\ManyToOne(targetEntity="Projet", inversedBy="messages")
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      * @Assert\NotBlank()
      */
