@@ -858,6 +858,7 @@
         clearBtn: true,
       });
       $('#tab_contacts tbody').append('<tr rel="'+length+'" class="hide"><td>-</td><td>Propriétaire</td><td>-</td></tr><tr rel="'+length+'" class="hide"><td>-</td><td>Exploitant</td><td>-</td></tr>');
+    foncierTypehead(length);
     });
 
     $('#projet_proprietaires_duplicate_entry').click(function () {
@@ -873,23 +874,27 @@
         cloned = 1;
         if(cloned) {
           $collectionHolderProprietaire.children().each(function() {
-            tr_index = $(this).attr('class') == 'proprietaire_entry' ? $(this).index() : $(this).index() - 1;
+            {# if($(this).attr('class').match('proprietaire_entry') foncierTypehead($(this).index()); #}
+            tr_index = $(this).attr('class').match('proprietaire_entry') ? $(this).index() : $(this).index() - 1;
             $(this).find('input').each(function() {
-              name = $(this).attr('name').replace(/\[\d+\]/, '['+tr_index+']');
-              $(this).attr('name', name);
-              id = $(this).attr('id').replace(/_\d+_/, '_'+tr_index+'_');
-              $(this).attr('id', id);
+              if($(this).attr('name') !== undefined) {
+                name = $(this).attr('name').replace(/\[\d+\]/, '['+(tr_index/2)+']');
+                $(this).attr('name', name);
+                id = $(this).attr('id').replace(/_\d+_/, '_'+(tr_index/2)+'_');
+                $(this).attr('id', id);
+              }
             });
             $(this).find('select').each(function() {
-              name = $(this).attr('name').replace(/\[\d+\]/, '['+tr_index+']');
+              name = $(this).attr('name').replace(/\[\d+\]/, '['+(tr_index/2)+']');
               $(this).attr('name', name);
-              id = $(this).attr('id').replace(/_\d+_/, '_'+tr_index+'_');
+              id = $(this).attr('id').replace(/_\d+_/, '_'+(tr_index/2)+'_');
               $(this).attr('id', id);
             });
           });
         }
         {# $collectionHolderProprietaire.children().removeClass('info');
         $('#projet_proprietaires_duplicate_entry').addClass('disabled'); #}
+        loadAllTypeheads();
       }
     });
 
@@ -925,6 +930,62 @@
       $($collectionHolderProprietaire).find('tr:eq('+second_tr_index+')').addClass('info');
       if($collectionHolderProprietaire.children().length) $('#projet_proprietaires_duplicate_entry').removeClass('disabled');
     });
+    loadAllTypeheads();
+    var suggestionsArray = [];
+    {% if form.vars.value.parcelles[0] is defined %}
+      {% for parcelle in form.vars.value.parcelles %}
+        if(!suggestionsArray.includes('{{ parcelle.nom }}')) {
+          suggestionsArray.push('{{ parcelle.nom }}');
+        }
+      {% endfor %}
+    {% endif %}
+    $('#projet_parcelles').on('change', 'input[id*="_nom"]', function() {
+      suggestionsArray = [];
+      if($('#projet_parcelles tr').length) {
+        $('#projet_parcelles tr').each(function(i,element) {
+          if(!suggestionsArray.includes($(element).find('td:eq(0) input').val().trim())) {
+            suggestionsArray.push($(element).find('td:eq(0) input').val().trim());
+          }
+        });
+      }
+      loadAllTypeheads();
+    });
+    function loadAllTypeheads() {
+      $('#projet_proprietaires input[id*="_parcelles"]').each(function(i,element) {
+        id = $(this).attr('name').match(/\d+/);
+        id = parseInt(id);
+        foncierTypehead(id);
+      });
+    }
+    function obtainer(query, cb) {
+      var filteredList = $.grep(suggestionsArray, function (item, index) {
+          return item.match(query);
+      });
+
+      mapped = $.map(filteredList, function (item) { return { value: item } });
+      cb(mapped);
+    }
+
+    function foncierTypehead(index) {
+      var quicksearchInput = $("#projet_proprietaires_"+index+"_parcelles");
+      quicksearchInput.typeahead("destroy");
+      quicksearchInput.typeahead({
+          hint: true,
+          highlight: true,
+          minLength: 0
+      }, {
+          name: "noname",
+          displayKey: "value",
+          source: obtainer
+      });
+
+      quicksearchInput.on("click", function () {
+          ev = $.Event("keydown")
+          ev.keyCode = ev.which = 40
+          $(this).trigger(ev)
+          return true
+      });
+    }
 
     var $collectionHolderDC = $('#projet_dateCles');
     var prototypeDC = $collectionHolderDC.data('prototype');
