@@ -1773,7 +1773,7 @@
     $('#tab_parcelles .btn').on('click', function() {
       countParcelles();
     });
-    $('#projet_proprietaires').on('change', 'select[id*="_accord"], input[id*="_parcelles"]', function() {
+    $('#projet_proprietaires').on('change typeahead:selected', 'select[id*="_accord"], input[id*="_parcelles"]', function() {
       countParcelles();
     });
 
