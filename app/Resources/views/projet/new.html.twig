@@ -943,8 +943,8 @@
       suggestionsArray = [];
       if($('#projet_parcelles tr').length) {
         $('#projet_parcelles tr').each(function(i,element) {
-          if(!suggestionsArray.includes($(element).find('td:eq(0) input').val().trim())) {
-            suggestionsArray.push($(element).find('td:eq(0) input').val().trim());
+          if(!suggestionsArray.includes($(element).find('td:eq(0) input[name]').val().trim())) {
+            suggestionsArray.push($(element).find('td:eq(0) input[name]').val().trim());
           }
         });
       }
@@ -1555,16 +1555,16 @@
       var parcelles_count = $('#projet_parcelles tr').length;
       var parcelles = [];
       $('#projet_parcelles tr').each(function(i,element) {
-        parcelles.push($(element).find('td:eq(0) input').val().trim());
+        parcelles.push($(element).find('td:eq(0) input[name]').val().trim());
       });
       var counted_accords = [];
       var accords_count = $('#projet_proprietaires tr.proprietaire_entry').length;
       if(accords_count) {
         accords_count = 0;
         $('#projet_proprietaires tr.proprietaire_entry').each(function(i,element) {
-          if(!counted_accords.includes($(element).find('td:eq(0) input').val().trim()) && parcelles.includes($(element).find('td:eq(0) input').val().trim()) && $(element).find('td:eq(2) select').val() == 'OUI' && $('#projet_proprietaires tr.exploitant_entry:eq('+i+')').find('td:eq(2) select').val() != 'NON' && $(element).find('.exploitant_entry td:eq(2) select').val() != 'NEGO') {
+          if(!counted_accords.includes($(element).find('td:eq(0) input[name]').val().trim()) && parcelles.includes($(element).find('td:eq(0) input[name]').val().trim()) && $(element).find('td:eq(2) select').val() == 'OUI' && $('#projet_proprietaires tr.exploitant_entry:eq('+i+')').find('td:eq(2) select').val() != 'NON' && $(element).find('.exploitant_entry td:eq(2) select').val() != 'NEGO') {
             accords_count++;
-            counted_accords.push($(element).find('td:eq(0) input').val().trim());
+            counted_accords.push($(element).find('td:eq(0) input[name]').val().trim());
           }
         });
       }
