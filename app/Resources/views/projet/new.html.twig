@@ -176,6 +176,14 @@
       <fieldset class="hide" id="tab_taches">
         {{ form_widget(form.taches) }}
       </fieldset>
+      
+      <fieldset class="hide" id="tab_foncier">
+        <legend>Accords</legend>
+        <div class="col-sm-12 col-md-6 col-lg-3">
+          <input type="text" id="projet_proprietaires_recherche" class="form-control {% if form.vars.value.proprietaires[0] is not defined %}hide{% endif %}" placeholder="recherche" autocomplete="off">
+        </div>
+        {{ form_widget(form.proprietaires) }}
+      </fieldset>
 
       <fieldset class="hide" id="tab_concertation">
         {{ form_widget(form.concertations) }}
@@ -198,11 +206,6 @@
           <input type="text" id="projet_notes_recherche" class="form-control hide" placeholder="recherche" autocomplete="off">
         </div>
         {{ form_widget(form.notes) }}
-      </fieldset>
-      
-      <fieldset class="hide" id="tab_foncier">
-        <legend>Accords</legend>
-        {{ form_widget(form.proprietaires) }}
       </fieldset>
 
     </div>
@@ -858,7 +861,7 @@
         clearBtn: true,
       });
       $('#tab_contacts tbody').append('<tr rel="'+length+'" class="hide"><td>-</td><td>Propriétaire</td><td>-</td></tr><tr rel="'+length+'" class="hide"><td>-</td><td>Exploitant</td><td>-</td></tr>');
-    foncierTypehead(length);
+      loadAllTypeheads();
     });
 
     $('#projet_proprietaires_duplicate_entry').click(function () {
@@ -904,7 +907,8 @@
         id = parseInt(id);
         $('#tab_contacts tbody tr[rel="'+id+'"]').remove();
         $('> :last-child', $collectionHolderProprietaire).remove();
-        $('> :last-child', $collectionHolderProprietaire).remove(); {# // required twice #}
+        $('> :last-child', $collectionHolderProprietaire).remove(); // required twice
+        loadAllTypeheads();
       }
     });
     $('#projet_proprietaires').on('change', '[id*="_proprietaire"], [id*="_telephoneProprietaire"], [id*="_exploitant"], [id*="_telephoneExploitant"]', function () {
@@ -951,6 +955,8 @@
       loadAllTypeheads();
     });
     function loadAllTypeheads() {
+      if($('#projet_proprietaires input[id*="_parcelles"]').length) $('#projet_proprietaires_recherche').addClass('hide');
+      else $('#projet_proprietaires_recherche').removeClass('hide');
       $('#projet_proprietaires input[id*="_parcelles"]').each(function(i,element) {
         id = $(this).attr('name').match(/\d+/);
         id = parseInt(id);
@@ -986,6 +992,29 @@
           return true
       });
     }
+    $('#projet_proprietaires_recherche').on('change', function() {
+      var search = $(this).val().trim();
+      $.each($('#projet_proprietaires tr'), function(i, tr) {
+        var row = $(tr);
+        var search_found = false;
+        row.find('td')
+        $.each(row.find('td'), function(i, td) {
+          var col = $(td);
+          if(search && col.find('input').length && col.find('input').val().match(new RegExp(search, 'gi'))) {
+            col.css('background-color', 'rgb(255, 153, 0)');
+            search_found = true;
+          } else if(search && col.find('select').length && (col.find('select option:selected').text().match(new RegExp(search, 'gi')) || (col.find('select').val().length > 1 && col.find('select').val().match(new RegExp(search, 'gi'))))) {
+            col.css('background-color', 'rgb(255, 153, 0)');
+            search_found = true;
+          } else if(search && !col.find('input').length && !col.find('select').length && col.text().match(new RegExp(search, 'gi'))) {
+            col.css('background-color', 'rgb(255, 153, 0)');
+            search_found = true;
+          } else col.css('background-color', 'white');
+        });
+        if(!search || search_found) row.removeClass('hide');
+        else row.addClass('hide');
+      });
+    });
 
     var $collectionHolderDC = $('#projet_dateCles');
     var prototypeDC = $collectionHolderDC.data('prototype');
