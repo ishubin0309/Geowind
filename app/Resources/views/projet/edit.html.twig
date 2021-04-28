@@ -1177,11 +1177,11 @@
     }
     $('#projet_proprietaires_recherche').on('change', function() {
       var search = $(this).val().trim();
+      var search_found_in_proprietaire = false;
       $.each($('#projet_proprietaires tr'), function(i, tr) {
         var row = $(tr);
         var search_found = false;
-        if(row.attr('class').match('proprietaire_entry')) var search_found_in_proprietaire = false;
-        row.find('td')
+        if(row.attr('class').match('proprietaire_entry')) search_found_in_proprietaire = false;
         $.each(row.find('td'), function(i, td) {
           var col = $(td);
           if(search && col.find('input[name]').length && col.find('input[name]').val().match(new RegExp(search, 'gi'))) {
