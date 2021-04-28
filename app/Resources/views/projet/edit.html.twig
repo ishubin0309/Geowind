@@ -1138,8 +1138,8 @@
       loadAllTypeheads();
     });
     function loadAllTypeheads() {
-      if($('#projet_proprietaires input[id*="_parcelles"]').length) $('#projet_proprietaires_recherche').addClass('hide');
-      else $('#projet_proprietaires_recherche').removeClass('hide');
+      if($('#projet_proprietaires tr').length) $('#projet_proprietaires_recherche').removeClass('hide');
+      else $('#projet_proprietaires_recherche').addClass('hide');
       $('#projet_proprietaires input[id*="_parcelles"]').each(function(i,element) {
         id = $(this).attr('name').match(/\d+/);
         id = parseInt(id);
@@ -1183,13 +1183,13 @@
         row.find('td')
         $.each(row.find('td'), function(i, td) {
           var col = $(td);
-          if(search && col.find('input').length && col.find('input').val().match(new RegExp(search, 'gi'))) {
+          if(search && col.find('input[name]').length && col.find('input[name]').val().match(new RegExp(search, 'gi'))) {
             col.css('background-color', 'rgb(255, 153, 0)');
             search_found = true;
           } else if(search && col.find('select').length && (col.find('select option:selected').text().match(new RegExp(search, 'gi')) || (col.find('select').val().length > 1 && col.find('select').val().match(new RegExp(search, 'gi'))))) {
             col.css('background-color', 'rgb(255, 153, 0)');
             search_found = true;
-          } else if(search && !col.find('input').length && !col.find('select').length && col.text().match(new RegExp(search, 'gi'))) {
+          } else if(search && !col.find('input[name]').length && !col.find('select').length && col.text().match(new RegExp(search, 'gi'))) {
             col.css('background-color', 'rgb(255, 153, 0)');
             search_found = true;
           } else col.css('background-color', 'white');
