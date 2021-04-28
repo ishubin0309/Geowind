@@ -997,6 +997,7 @@
       $.each($('#projet_proprietaires tr'), function(i, tr) {
         var row = $(tr);
         var search_found = false;
+        var search_found_in_proprietaire = false;
         row.find('td')
         $.each(row.find('td'), function(i, td) {
           var col = $(td);
@@ -1011,8 +1012,12 @@
             search_found = true;
           } else col.css('background-color', 'white');
         });
-        if(!search || search_found) row.removeClass('hide');
-        else row.addClass('hide');
+        if(row.attr('class').match('proprietaire_entry')) {
+          search_found_in_proprietaire = search_found;
+        } else {
+          if(!search || search_found || search_found_in_proprietaire) row.removeClass('hide');
+          else row.addClass('hide');
+        }
       });
     });
 
