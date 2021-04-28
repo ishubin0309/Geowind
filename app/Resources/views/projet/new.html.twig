@@ -997,7 +997,7 @@
       $.each($('#projet_proprietaires tr'), function(i, tr) {
         var row = $(tr);
         var search_found = false;
-        var search_found_in_proprietaire = false;
+        if(row.attr('class').match('proprietaire_entry')) var search_found_in_proprietaire = false;
         row.find('td')
         $.each(row.find('td'), function(i, td) {
           var col = $(td);
