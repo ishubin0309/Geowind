@@ -241,6 +241,8 @@
       $("#proprietaires_recherche").change(function (e) {
         filterArgs[$(this).data('attr')] = this.value;
         updateFilter();
+        updateFilter();
+        grid.render();
       });
 
       dataView.beginUpdate();
