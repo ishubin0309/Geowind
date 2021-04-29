@@ -190,7 +190,7 @@
         var somme = 'Total: ' + montant_total + '€ HT | Total engagé: ' + engage + '€ HT | Total payé: ' + paye + '€ HT';
         $('#selected-counter').text(somme);
         
-        grid.render
+        grid.render();
       });
       dataView.onRowsChanged.subscribe(function (e, args) {
         grid.invalidateRows(args.rows);

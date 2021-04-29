@@ -32,6 +32,13 @@
       <legend>Propriétaires</legend>
       <button id="button-send" class="btn btn-success btn-sm" data-toggle="modal" data-target=".bs-modal-lg" disabled><i class="fa fa-fw fa-paperclip"></i> Envoyer message</button>
       <br>
+      <div class="form-group">
+        <label for="input-all">Recherche</label>
+        <input id="proprietaires_recherche" class="form-control input-sm input-filter" data-attr="any">
+      </div>
+      <div class="form-group">
+        <button id="form-clear" class="btn btn-default btn-sm" type="reset" value="Clear">Clear</button>
+      </div>
       {% set proprietairesTotal = 0 %}
       {% for projet in projets %}
         {% if is_granted('edit', projet) %}
@@ -166,6 +173,18 @@
 
     var dateMajColumn = { id: "dateMaj", name: "Date maj", field: "dateMaj", sortable: true };
 
+    function filter(item, args){
+      if (args.any != "") {
+        var found = false;
+        $.each(item, function(index, element) {
+          if(String(element).match(args.any)) {
+            found = true;
+          }
+        });
+        return found;
+      } else return true;
+    }
+
     $(function () {
       var data = [];
       {% for projet in projets %}
@@ -201,15 +220,42 @@
         {% endif %}
       {% endfor %}
 
+      var filterArgs = {
+        any: "",
+      };
+
+      function updateFilter() {
+        dataView.setFilterArgs(filterArgs);
+        grid.render();
+        dataView.refresh();
+      }
+
+      $("#form-clear").click(function() {
+        filterArgs = {
+          any: "",
+        };
+        $("#proprietaires_recherche").val("");
+        updateFilter();
+      });
+
+      $("#proprietaires_recherche").change(function (e) {
+        filterArgs[$(this).data('attr')] = this.value;
+        updateFilter();
+      });
+
+      dataView.beginUpdate();
       dataView.setItems(data);
+
+      dataView.setFilterArgs(filterArgs);
+
+      dataView.setFilter(filter);
+      dataView.endUpdate();
 
       grid = new Slick.Grid("#grid", dataView, columns, options);
       grid.registerPlugin( new Slick.AutoTooltips({ enableForHeaderCells: true }) );
       grid.registerPlugin(checkboxSelector);
       grid.setSelectionModel(new Slick.RowSelectionModel({selectActiveRow: false}));
-
       grid.autosizeColumns();
-
       dataView.syncGridSelection(grid, true);
 
       grid.onSelectedRowsChanged.subscribe(function() {
@@ -244,6 +290,11 @@
           $('#selected-counter').text(selected + ' propriétaire sélectionné sur ' + total);
         }
 
+        grid.render();
+      });
+      dataView.onRowsChanged.subscribe(function (e, args) {
+        grid.invalidateRows(args.rows);
+        grid.render();
       });
 
       grid.onSort.subscribe(function(e, args) {
