@@ -266,7 +266,7 @@ class ProjetEditType extends AbstractType
                 'scale' => 3,
             ])
             ->add('production', NumberType::class, [
-                'label' => 'Production (Mw)',
+                'label' => 'Production (Mwh)',
                 'required' => false,
                 'scale' => 3,
             ])
