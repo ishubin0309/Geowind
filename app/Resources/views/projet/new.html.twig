@@ -1428,10 +1428,10 @@
     var technologies = {{ technologies|raw }};
     $('#projet_technologie').change(function () {
       if($('#projet_technologie').val() == 'eolienne') {
-        $('#projet_surfaceUtile').parents('.form-group').addClass('hide');
+        $('#projet_puissanceUnitaire').parents('.form-group').addClass('hide');
         $('#projet_emprise').val(500000);
       } else {
-        $('#projet_surfaceUtile').parents('.form-group').addClass('hide');
+        $('#projet_puissanceUnitaire').parents('.form-group').addClass('hide');
         equipementType = '';
         $('#projet_emprise').val(0);
       }
