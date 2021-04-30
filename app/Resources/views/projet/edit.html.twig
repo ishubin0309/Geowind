@@ -1637,7 +1637,7 @@
         $.each(technologies, function(code, technologie) {
           if(code == selected_technologie) {
             $('#tab_projet p').html('');
-            var technologie_su = $('#projet_surfaceUtile').val() ? $('#projet_surfaceUtile').val().replace(/\s/g, '') : 0;
+            var technologie_su = $('#projet_surfaceUtile').val() ? parseFloat($('#projet_surfaceUtile').val().replace(/\s/g, '')) : 0;
             var technologie_largeur = 0;
             var technologie_longeur = 0;
             var technologie_pu = 0;
