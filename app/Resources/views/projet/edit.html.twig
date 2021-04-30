@@ -1637,7 +1637,7 @@
         $.each(technologies, function(code, technologie) {
           if(code == selected_technologie) {
             $('#tab_projet p').html('');
-            var technologie_su = $('#projet_surfaceUtile').val() ? $('#projet_surfaceUtile').val().replace(/\s/, '') : 0;
+            var technologie_su = $('#projet_surfaceUtile').val() ? $('#projet_surfaceUtile').val().replace(/\s/g, '') : 0;
             var technologie_largeur = 0;
             var technologie_longeur = 0;
             var technologie_pu = 0;
@@ -1681,7 +1681,7 @@
       $('#projet_technologie').change();
     });
     $('#projet_surfaceUtile').on('input', function () {
-      $('#projet_surfaceUtile').val($('#projet_surfaceUtile').val().replace(/\B(?=(\d{3})+(?!\d))/g, ' '));
+      $('#projet_surfaceUtile').val($('#projet_surfaceUtile').val().replace(/\s/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ' '));
     });
 
     var current_main_image = 0;
