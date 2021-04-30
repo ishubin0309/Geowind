@@ -1465,8 +1465,8 @@
               } else {
                 var technologie_emprise = (technologie_largeur * technologie_longeur) / 1000000;
                 var technologie_unite = technologie_su / technologie_emprise;
-                $('#projet_unite').val(technologie_unite.toFixed(3));
-                $('#projet_emprise').val(technologie_emprise.toFixed(0));
+                $('#projet_unite').val(technologie_unite.toFixed(0));
+                $('#projet_emprise').val(technologie_emprise.toFixed(3));
               }
               var technologie_pt = technologie_unite * technologie_pu;
               $('#projet_puissanceTotale').val(technologie_pt.toFixed(3));
