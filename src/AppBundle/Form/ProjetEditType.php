@@ -258,7 +258,6 @@ class ProjetEditType extends AbstractType
             ->add('unite', NumberType::class, [
                 'label' => 'Unités (NB)',
                 'required' => false,
-                'scale' => 3,
             ])
             ->add('puissanceUnitaire', NumberType::class, [
                 'label' => 'Puissance Unitaire (Mw)',
