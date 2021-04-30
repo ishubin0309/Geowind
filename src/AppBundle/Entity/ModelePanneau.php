@@ -304,8 +304,8 @@ class ModelePanneau implements JsonSerializable
             'Puissance <span style="color:black;">(Wc)</span>'=> $this->puissance,
             'Longeur <span style="color:black;">(mm)</span>'=> $this->longeur,
             'Largeur <span style="color:black;">(mm)</span>'=> $this->largeur,
-            'Epaisseur <span style="color:black;">(mm)</span>'=> $this->epaisseur,
-            'Poids <span style="color:black;">(kg)</span>'=> $this->poids,
+            // 'Epaisseur <span style="color:black;">(mm)</span>'=> $this->epaisseur,
+            // 'Poids <span style="color:black;">(kg)</span>'=> $this->poids,
         );
     }
 }
