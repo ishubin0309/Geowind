@@ -250,6 +250,11 @@ class ProjetType extends AbstractType
                 'label' => 'Surface utile (m2)',
                 'required' => false,
             ])
+            ->add('emprise', NumberType::class, [
+                'label' => 'Emprise',
+                'required' => false,
+                'scale' => 3,
+            ])
             ->add('unite', NumberType::class, [
                 'label' => 'Unités (NB)',
                 'required' => false,
@@ -267,11 +272,6 @@ class ProjetType extends AbstractType
             ])
             ->add('production', NumberType::class, [
                 'label' => 'Production (Mwh)',
-                'required' => false,
-                'scale' => 3,
-            ])
-            ->add('emprise', NumberType::class, [
-                'label' => 'Emprise',
                 'required' => false,
                 'scale' => 3,
             ])

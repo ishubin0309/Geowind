@@ -1428,9 +1428,9 @@
     var technologies = {{ technologies|raw }};
     $('#projet_technologie').change(function () {
       if($('#projet_technologie').val() == 'eolienne') {
-        $('#projet_surfaceUtile').parents('.form-group').addClass('hide');
+        {# $('#projet_surfaceUtile').parents('.form-group').addClass('hide'); #}
       } else {
-        $('#projet_surfaceUtile').parents('.form-group').removeClass('hide');
+        {# $('#projet_surfaceUtile').parents('.form-group').removeClass('hide'); #}
         equipementType = '';
       }
       if($(this).val()) {
