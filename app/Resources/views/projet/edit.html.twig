@@ -1652,7 +1652,7 @@
                 technologie_pu = value.replace(/'/, '.').trim();
                 $('#projet_puissanceUnitaire').val(technologie_pu);
               }
-              $('#tab_projet p').append('<div class="form-group form-group-sm"><label class="col-sm-4 control-label">'+field+':</label><div class="col-sm-8">' + value + '</div></div>');
+              $('#tab_projet p').append('<div class="form-group form-group-sm"><label class="col-sm-4 control-label">'+field+':</label><div class="col-sm-8 control-label">' + value + '</div></div>');
             });
             if($('#projet_technologie').val() == 'eolienne' || (technologie_su && technologie_largeur && technologie_longeur)) {
               if($('#projet_technologie').val() == 'eolienne') {
