@@ -251,7 +251,7 @@ class ProjetEditType extends AbstractType
                 'required' => false,
             ])
             ->add('emprise', NumberType::class, [
-                'label' => 'Emprise',
+                'label' => 'Emprise (m2)',
                 'required' => false,
                 'scale' => 3,
             ])

@@ -1626,9 +1626,11 @@
     $('#projet_technologie').change(function () {
       if($('#projet_technologie').val() == 'eolienne') {
         {# $('#projet_surfaceUtile').parents('.form-group').addClass('hide'); #}
+        $('#projet_emprise').val(500000);
       } else {
         {# $('#projet_surfaceUtile').parents('.form-group').removeClass('hide'); #}
         equipementType = '';
+        $('#projet_emprise').val(0);
       }
       if($(this).val()) {
         var selected_technologie = $(this).val();
@@ -1658,8 +1660,10 @@
               if($('#projet_technologie').val() == 'eolienne') {
                 var technologie_unite = parseFloat($('#projet_unite').val());
               } else {
-                var technologie_unite = (technologie_su * 1000) / (technologie_largeur * technologie_longeur);
+                var technologie_emprise = (technologie_largeur * technologie_longeur) / 1000000;
+                var technologie_unite = technologie_su / technologie_emprise;
                 $('#projet_unite').val(technologie_unite.toFixed(3));
+                $('#projet_emprise').val(technologie_emprise.toFixed(0));
               }
               var technologie_pt = technologie_unite * technologie_pu;
               $('#projet_puissanceTotale').val(technologie_pt.toFixed(3));
@@ -1673,10 +1677,7 @@
       equipementType = $(this).val();
       $('#projet_technologie').change();
     });
-    $('#projet_surfaceUtile').change(function () {
-      $('#projet_technologie').change();
-    });
-    $('#projet_unite').change(function () {
+    $('#projet_surfaceUtile, #projet_emprise, #projet_unite').change(function () {
       $('#projet_technologie').change();
     });
 
