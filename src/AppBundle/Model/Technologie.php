@@ -46,7 +46,7 @@ class Technologie
                     'Marque' => 'JNE',  
                     'Modèle' => '300W', 
                     'Puissance nominale (Wc)' => '300', 
-                    'Longeur (mm)' => '1640', 
+                    'Longueur (mm)' => '1640',
                     'Largeur (mm)' => '992', 
                     'Epaisseur (mm)' => '40'
                 ]

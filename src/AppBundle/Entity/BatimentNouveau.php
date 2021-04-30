@@ -51,7 +51,7 @@ class BatimentNouveau implements JsonSerializable
      *
      * @ORM\Column(type="string", nullable=true)
      */
-    private $longeur;
+    private $longueur;
 
     /**
      * @var string
@@ -274,18 +274,18 @@ class BatimentNouveau implements JsonSerializable
     /**
      * @return string
      */
-    public function getLongeur()
+    public function getLongueur()
     {
-        return $this->longeur;
+        return $this->longueur;
     }
 
     /**
-     * @param string $longeur
+     * @param string $longueur
      * @return \AppBundle\Entity\BatimentNouveau
      */
-    public function setLongeur($longeur)
+    public function setLongueur($longueur)
     {
-        $this->longeur = $longeur;
+        $this->longueur = $longueur;
         return $this;
     }
 
@@ -813,7 +813,7 @@ class BatimentNouveau implements JsonSerializable
             'id' => $this->id,
             'nom' => $this->nom,
             'pans'=> $this->pans,
-            'longeur'=> $this->longeur,
+            'longueur'=> $this->longueur,
             'largeur'=> $this->largeur,
             'faitage'=> $this->faitage,
             'surfaceSol'=> $this->surfaceSol,

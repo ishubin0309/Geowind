@@ -66,9 +66,9 @@ class Toiture implements JsonSerializable
     /**
      * @var string
      *
-     * @ORM\Column(type="string", name="longeur", nullable=true)
+     * @ORM\Column(type="string", name="longueur", nullable=true)
      */
-    private $longeur;
+    private $longueur;
 
     /**
      * @var string
@@ -240,18 +240,18 @@ class Toiture implements JsonSerializable
     /**
      * @return string
      */
-    public function getLongeur()
+    public function getLongueur()
     {
-        return $this->longeur;
+        return $this->longueur;
     }
 
     /**
-     * @param string $longeur
+     * @param string $longueur
      * @return \AppBundle\Entity\Toiture
      */
-    public function setLongeur($longeur)
+    public function setLongueur($longueur)
     {
-        $this->longeur = $longeur;
+        $this->longueur = $longueur;
         return $this;
     }
 
@@ -535,7 +535,7 @@ class Toiture implements JsonSerializable
             'hautPente'=> $this->hautPente,
             'basPente'=> $this->basPente,
             'pente'=> $this->pente,
-            'longeur'=> $this->longeur,
+            'longueur'=> $this->longueur,
             'largeur'=> $this->largeur,
             'surfaceTotale'=> $this->surfaceTotale,
             'surfaceUtile'=> $this->surfaceUtile,

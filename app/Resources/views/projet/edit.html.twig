@@ -806,24 +806,24 @@
       updateMairie();
     {% endif %}
 
-    $('#projet_batimentExistant_longeur, #projet_batimentExistant_largeur').change(function() {
-      var longeur = $('#projet_batimentExistant_longeur').val().trim();
+    $('#projet_batimentExistant_longueur, #projet_batimentExistant_largeur').change(function() {
+      var longueur = $('#projet_batimentExistant_longueur').val().trim();
       var largeur = $('#projet_batimentExistant_largeur').val().trim();
-      if(!longeur || !largeur) $('#projet_batimentExistant_surfaceSol').val(0);
+      if(!longueur || !largeur) $('#projet_batimentExistant_surfaceSol').val(0);
       else {
-        longeur = parseInt(longeur);
+        longueur = parseInt(longueur);
         largeur = parseInt(largeur);
-        $('#projet_batimentExistant_surfaceSol').val(longeur * largeur);
+        $('#projet_batimentExistant_surfaceSol').val(longueur * largeur);
       }
     });
-    $('#projet_batimentExistant_toitures').on('change', '[id*="_longeur"],[id*="_largeur"]', function() {
-      var longeur = $(this).parents('tr').find('[id*="_longeur"]').val().trim();
+    $('#projet_batimentExistant_toitures').on('change', '[id*="_longueur"],[id*="_largeur"]', function() {
+      var longueur = $(this).parents('tr').find('[id*="_longueur"]').val().trim();
       var largeur = $(this).parents('tr').find('[id*="_largeur"]').val().trim();
-      if(!longeur || !largeur) $(this).parents('tr').find('[id*="_surfaceTotale"]').val(0);
+      if(!longueur || !largeur) $(this).parents('tr').find('[id*="_surfaceTotale"]').val(0);
       else {
-        longeur = parseInt(longeur);
+        longueur = parseInt(longueur);
         largeur = parseInt(largeur);
-        $(this).parents('tr').find('[id*="_surfaceTotale"]').val(longeur * largeur);
+        $(this).parents('tr').find('[id*="_surfaceTotale"]').val(longueur * largeur);
       }
     });
     
@@ -1639,7 +1639,7 @@
             $('#tab_projet p').html('');
             var technologie_su = $('#projet_surfaceUtile').val() ? parseFloat($('#projet_surfaceUtile').val().replace(/\s/g, '')) : 0;
             var technologie_largeur = 0;
-            var technologie_longeur = 0;
+            var technologie_longueur = 0;
             var technologie_pu = 0;
             $('#projet_equipement').html('');
             $.each(technologie['data'], function(field, value) {
@@ -1648,7 +1648,7 @@
             if(equipementType) $('#projet_equipement').val(equipementType);
             else $('#projet_equipement').val($('#projet_equipement option:first').val());
             $.each(technologie['data'][$( "#projet_equipement option:selected" ).text()], function(field, value) {
-              if(field.match('Longeur')) technologie_longeur = value.replace(/'/, '.').trim();
+              if(field.match('Longueur')) technologie_longueur = value.replace(/'/, '.').trim();
               else if(field.match('Largeur')) technologie_largeur = value.replace(/'/, '.').trim();
               else if(field.match('Puissance')) {
                 technologie_pu = value.replace(/'/, '.').trim() / 1000000;
@@ -1656,11 +1656,11 @@
               }
               $('#tab_projet p').append('<div class="form-group form-group-sm"><label class="col-sm-4 control-label">'+field+':</label><div class="col-sm-8 control-label">' + value + '</div></div>');
             });
-            if($('#projet_technologie').val() == 'eolienne' || (technologie_su && technologie_largeur && technologie_longeur)) {
+            if($('#projet_technologie').val() == 'eolienne' || (technologie_su && technologie_largeur && technologie_longueur)) {
               if($('#projet_technologie').val() == 'eolienne') {
                 var technologie_unite = parseFloat($('#projet_unite').val());
               } else {
-                var technologie_emprise = (technologie_largeur * technologie_longeur) / 1000000;
+                var technologie_emprise = (technologie_largeur * technologie_longueur) / 1000000;
                 var technologie_unite = technologie_su / technologie_emprise;
                 $('#projet_unite').val(technologie_unite.toFixed(0));
                 $('#projet_emprise').val(technologie_emprise.toFixed(3));

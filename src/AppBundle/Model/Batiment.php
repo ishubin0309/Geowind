@@ -28,7 +28,7 @@ class Batiment
             self::BATIMENT_UN => [
                 // 'Type' => 'Type1',
                 'Photo' => 'BatimeType1.JPG',
-                'Longeur' => '36 m',
+                'Longueur' => '36 m',
                 'Largeur' => '18 m',
                 'Surface au sol' => '648 m²',
                 'Surface utile' => '500 m²',

@@ -69,7 +69,7 @@ class ModelePanneau implements JsonSerializable
      *
      * @ORM\Column(type="string", nullable=true)
      */
-    private $longeur;
+    private $longueur;
 
     /**
      * @var string
@@ -199,19 +199,19 @@ class ModelePanneau implements JsonSerializable
     /**
      * @return string
      */
-    public function getLongeur()
+    public function getLongueur()
     {
-        return $this->longeur;
+        return $this->longueur;
     }
 
     /**
      *
-     * @param string $longeur
+     * @param string $longueur
      * @return \AppBundle\Entity\ModelePanneau
      */
-    public function setLongeur($longeur)
+    public function setLongueur($longueur)
     {
-        $this->longeur = $longeur;
+        $this->longueur = $longueur;
         return $this;
     }
 
@@ -287,7 +287,7 @@ class ModelePanneau implements JsonSerializable
         $this->technique = $modelePanneau->getTechnique();
         $this->pays = $modelePanneau->getPays();
         $this->puissance = $modelePanneau->getPuissance();
-        $this->longeur = $modelePanneau->getLongeur();
+        $this->longueur = $modelePanneau->getLongueur();
         $this->largeur = $modelePanneau->getLargeur();
         $this->epaisseur = $modelePanneau->getEpaisseur();
         $this->poids = $modelePanneau->getPoids();
@@ -302,7 +302,7 @@ class ModelePanneau implements JsonSerializable
             // 'Origine'=> $this->pays,
             'Technique'=> $this->technique,
             'Puissance <span style="color:black;">(Wc)</span>'=> $this->puissance,
-            'Longeur <span style="color:black;">(mm)</span>'=> $this->longeur,
+            'Longueur <span style="color:black;">(mm)</span>'=> $this->longueur,
             'Largeur <span style="color:black;">(mm)</span>'=> $this->largeur,
             // 'Epaisseur <span style="color:black;">(mm)</span>'=> $this->epaisseur,
             // 'Poids <span style="color:black;">(kg)</span>'=> $this->poids,

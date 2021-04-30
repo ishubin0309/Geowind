@@ -26,8 +26,8 @@ class BatimentType extends AbstractType
                 'label' => 'Pans',
                 'required' => false,
             ])
-            ->add('longeur', TextType::class, [
-                'label' => 'Longeur (m)',
+            ->add('longueur', TextType::class, [
+                'label' => 'Longueur (m)',
                 'required' => false,
             ])
             ->add('largeur', TextType::class, [

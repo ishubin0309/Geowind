@@ -37,8 +37,8 @@ class ModelePanneauType extends AbstractType
                 'label' => 'Puissance (Wc)',
                 'required' => false,
             ])
-            ->add('longeur', TextType::class, [
-                'label' => 'Longeur (mm)',
+            ->add('longueur', TextType::class, [
+                'label' => 'Longueur (mm)',
                 'required' => false,
             ])
             ->add('largeur', TextType::class, [

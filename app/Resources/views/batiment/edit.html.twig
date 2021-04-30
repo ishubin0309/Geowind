@@ -15,7 +15,7 @@
       {{ form_start(form) }}
       {{ form_row(form.nom) }}
       {{ form_row(form.pans) }}
-      {{ form_row(form.longeur) }}
+      {{ form_row(form.longueur) }}
       {{ form_row(form.largeur) }}
       {{ form_row(form.faitage) }}
       {{ form_row(form.surfaceSol) }}
@@ -50,10 +50,10 @@
 
 {% block js %}
 <script>
-  $('#batiment_nouveau_longeur, #batiment_nouveau_largeur').change(function() {
-    longeur = $('#batiment_nouveau_longeur').val();
+  $('#batiment_nouveau_longueur, #batiment_nouveau_largeur').change(function() {
+    longueur = $('#batiment_nouveau_longueur').val();
     largeur = $('#batiment_nouveau_largeur').val();
-    if(longeur && largeur) surfaceSol = longeur * largeur;
+    if(longueur && largeur) surfaceSol = longueur * largeur;
     else surfaceSol = 0;
     $('#batiment_nouveau_surfaceSol').val(surfaceSol);
   });

@@ -40,7 +40,7 @@ class Batiment
      *
      * @ORM\Column(type="string", nullable=true)
      */
-    private $longeur;
+    private $longueur;
 
     /**
      * @var string
@@ -223,18 +223,18 @@ class Batiment
     /**
      * @return string
      */
-    public function getLongeur()
+    public function getLongueur()
     {
-        return $this->longeur;
+        return $this->longueur;
     }
 
     /**
-     * @param string $longeur
+     * @param string $longueur
      * @return \AppBundle\Entity\Batiment
      */
-    public function setLongeur($longeur)
+    public function setLongueur($longueur)
     {
-        $this->longeur = $longeur;
+        $this->longueur = $longueur;
         return $this;
     }
 
@@ -672,7 +672,7 @@ class Batiment
 
     public function isNotEmpty()
     {
-        if($this->pans || $this->longeur || $this->largeur || $this->faitage || $this->surfaceSol || $this->charge || $this->zonage || $this->documentUrbanisme || !$this->toitures->isEmpty())
+        if($this->pans || $this->longueur || $this->largeur || $this->faitage || $this->surfaceSol || $this->charge || $this->zonage || $this->documentUrbanisme || !$this->toitures->isEmpty())
             return true;
         else return false;
     }
