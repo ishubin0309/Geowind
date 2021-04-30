@@ -416,7 +416,7 @@ class Projet
     /**
      * @var string
      *
-     * @ORM\Column(type="decimal", precision=12, scale=6)
+     * @ORM\Column(type="integer")
      */
     private $unite = 0;
 
