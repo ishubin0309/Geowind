@@ -247,7 +247,7 @@ class ProjetEditType extends AbstractType
                 'required' => true,
             ])
             ->add('surfaceUtile', NumberType::class, [
-                'label' => 'Surface utile (SU)',
+                'label' => 'Surface utile (m2)',
                 'required' => false,
             ])
             ->add('unite', NumberType::class, [
