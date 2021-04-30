@@ -269,7 +269,7 @@
       { id: "servitudes", name: "Servitudes", field: "servitudes", sortable: true, sorter: stringSorter, formatter: dynamiqueFormatter, maxWidth: 250 },
       { id: "environnement", name: "Environnement", field: "environnement", sortable: true, sorter: stringSorter, formatter: dynamiqueFormatter, maxWidth: 250 },
       { id: "monuments", name: "Monuments", field: "monuments", sortable: true, sorter: stringSorter, formatter: dynamiqueFormatter, maxWidth: 250 },
-      { id: "paysage", name: "Paysage", field: "paysage", sortable: true, sorter: stringSorter, formatter: dynamiqueFormatter, maxWidth: 250 },
+      { id: "paysages", name: "Paysages", field: "paysages", sortable: true, sorter: stringSorter, formatter: dynamiqueFormatter, maxWidth: 250 },
       { id: "urbanisme", name: "Urbanisme", field: "urbanisme", sortable: true, sorter: stringSorter, formatter: dynamiqueFormatter, maxWidth: 250 },
       { id: "dateCrea", name: '<strong>Date création</strong>', field: "dateCrea", sortable: true, sorter: dateSorter, width: 100, maxWidth: 250},
       { id: "dateMaj", name: '<strong>Date majour</strong>', field: "dateMaj", sortable: true, sorter: dateSorter, width: 100, maxWidth: 250},
@@ -414,7 +414,7 @@
             {% set servitudes = false %}
             {% set environnement = false %}
             {% set monuments = false %}
-            {% set paysage = false %}
+            {% set paysages = false %}
             {% set urbanisme = false %}
             {% for enjeux in projet.enjeuxs %}
               {% if enjeux.facteur == 'servitudes'%}
@@ -423,8 +423,8 @@
               {% set environnement = true %}environnement: '{{ enjeux.risque }}',
               {% elseif enjeux.facteur == 'monuments'%}
               {% set monuments = true %}monuments: '{{ enjeux.risque }}',
-              {% elseif enjeux.facteur == 'paysage'%}
-              {% set paysage = true %}paysage: '{{ enjeux.risque }}',
+              {% elseif enjeux.facteur == 'paysages'%}
+              {% set paysages = true %}paysages: '{{ enjeux.risque }}',
               {% elseif enjeux.facteur == 'urbanisme'%}
               {% set urbanisme = true %}urbanisme: '{{ enjeux.risque }}',
               {% endif %}
@@ -432,7 +432,7 @@
             {% if not servitudes %}servitudes: '',{% endif %}
             {% if not environnement %}environnement: '',{% endif %}
             {% if not monuments %}monuments: '',{% endif %}
-            {% if not paysage %}paysage: '',{% endif %}
+            {% if not paysages %}paysages: '',{% endif %}
             {% if not urbanisme %}urbanisme: '',{% endif %}
           {% endif %}
           {% if columnsType != 3 %}
