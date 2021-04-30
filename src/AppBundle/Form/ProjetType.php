@@ -247,26 +247,26 @@ class ProjetType extends AbstractType
                 'required' => true,
             ])
             ->add('surfaceUtile', NumberType::class, [
-                'label' => 'Surface Utile (SU)',
+                'label' => 'Surface utile (SU)',
                 'required' => false,
             ])
             ->add('unite', NumberType::class, [
-                'label' => 'Unité (NB)',
+                'label' => 'Unités (NB)',
                 'required' => false,
                 'scale' => 3,
             ])
             ->add('puissanceUnitaire', NumberType::class, [
-                'label' => 'Puissance Unitaire (PU)',
+                'label' => 'Puissance Unitaire (Mw)',
                 'required' => false,
                 'scale' => 3,
             ])
             ->add('puissanceTotale', NumberType::class, [
-                'label' => 'Puissance Totale (PT)',
+                'label' => 'Puissance Totale (Mw)',
                 'required' => false,
                 'scale' => 3,
             ])
             ->add('production', NumberType::class, [
-                'label' => 'Production (PROD)',
+                'label' => 'Production (Mw)',
                 'required' => false,
                 'scale' => 3,
             ])
