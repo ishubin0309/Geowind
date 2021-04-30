@@ -1454,7 +1454,7 @@
               if(field.match('Longeur')) technologie_longeur = value.replace(/'/, '.').trim();
               else if(field.match('Largeur')) technologie_largeur = value.replace(/'/, '.').trim();
               else if(field.match('Puissance')) {
-                technologie_pu = value.replace(/'/, '.').trim() * 1000000;
+                technologie_pu = value.replace(/'/, '.').trim() / 1000000;
                 $('#projet_puissanceUnitaire').val(technologie_pu);
               }
               $('#tab_projet p').append('<div class="form-group form-group-sm"><label class="col-sm-4 control-label">'+field+':</label><div class="col-sm-8 control-label">' + value + '</div></div>');
