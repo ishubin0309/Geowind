@@ -1377,6 +1377,14 @@
       entry = entry.replace(/__name__/g, length);
       $collectionHolderEnjeux.append(entry);
 
+      $('#projet_enjeuxs_' + length + '_date').datepicker({
+        format: 'dd/mm/yyyy',
+        autoclose: true,
+        language: 'fr',
+      });
+
+      $('#projet_enjeuxs_' + length + '_enjeux').change();
+
     });
 
     $('#projet_enjeuxs_remove_entry').click(function () {
