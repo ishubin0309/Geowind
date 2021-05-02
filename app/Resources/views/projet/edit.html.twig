@@ -1646,7 +1646,7 @@
             $.each(technologie['data'], function(field, value) {
               $('#projet_equipement').append(new Option(field, field.trim().toLowerCase()));
             });
-            if(equipementType) $('#projet_equipement').val(equipementType);
+            if(equipementType && $('#projet_equipement option[value="'+equipementType+'"]').length) $('#projet_equipement').val(equipementType);
             else $('#projet_equipement').val($('#projet_equipement option:first').val());
             $.each(technologie['data'][$( "#projet_equipement option:selected" ).text()], function(field, value) {
               if(field.match('Longueur')) technologie_longueur = value.replace(/'/, '.').trim();
@@ -1657,14 +1657,16 @@
               }
               $('#tab_projet p').append('<div class="form-group form-group-sm"><label class="col-sm-4 control-label">'+field+':</label><div class="col-sm-8 control-label">' + value + '</div></div>');
             });
+            if($('#projet_technologie').val() != 'eolienne') {
+              var technologie_emprise = (technologie_largeur * technologie_longueur) / 1000000;
+              $('#projet_emprise').val(technologie_emprise.toFixed(3));
+            }
             if($('#projet_technologie').val() == 'eolienne' || (technologie_su && technologie_largeur && technologie_longueur)) {
               if($('#projet_technologie').val() == 'eolienne') {
                 var technologie_unite = parseFloat($('#projet_unite').val());
               } else {
-                var technologie_emprise = (technologie_largeur * technologie_longueur) / 1000000;
                 var technologie_unite = technologie_su / technologie_emprise;
                 $('#projet_unite').val(technologie_unite.toFixed(0));
-                $('#projet_emprise').val(technologie_emprise.toFixed(3));
               }
               var technologie_pt = technologie_unite * technologie_pu;
               $('#projet_puissanceTotale').val(technologie_pt.toFixed(3));
