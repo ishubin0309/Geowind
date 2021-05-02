@@ -393,6 +393,6 @@ class Commune
      */
     public function __toString()
     {
-        return $this->nomMiniscule;
+        return $this->nom;
     }
 }
