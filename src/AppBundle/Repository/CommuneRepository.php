@@ -29,7 +29,7 @@ class CommuneRepository extends EntityRepository
         foreach ($results as $result) {
             $arr = [
                 'id' => $result[0]['id'],
-                'text' => $result[0]['nom'] . ' (' . $result[0]['insee'] . ')',
+                'text' => $result[0]['nomMiniscule'] . ' (' . $result[0]['insee'] . ')',
             ];
             $data[] = $arr;
         }
