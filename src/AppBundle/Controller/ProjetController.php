@@ -155,6 +155,78 @@ class ProjetController extends Controller
     }
 
     /**
+     * @Route("/commune/update", name="commune_update")
+     * @Security("has_role('ROLE_ADMIN')")
+     */
+    public function communeUpdateAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $file_path = __DIR__ . '/../Admin.csv';
+        $row = 0;
+        if(file_exists($file_path)) {
+            if (($handle = fopen($file_path, "r")) !== FALSE) {
+                ini_set("memory_limit", "4000M");
+                set_time_limit(3000);
+                ini_set('display_errors', 1);
+                ini_set('display_startup_errors', 1);
+                error_reporting(E_ALL);
+                $start_time = microtime(true);
+                $write_close = false;
+                while (($data = fgetcsv($handle, 10000, ",")) !== FALSE) {
+                    /* if(!$write_close) {
+                        $end_time = microtime(true); 
+                        $execution_time = ($end_time - $start_time); 
+                        if($execution_time > 30) {
+                            session_write_close();
+                            $write_close = true;
+                        }
+                    } */
+                    if(!$row++) {
+                        $inseeColumn = 3;
+                        $nomColumn = 4;
+                        $nomMinisculeColumn = 5;
+                        $departementColumn = 6;
+                        $intercommunaliteColumn = 7;
+                        $intercommunaliteNbColumn = 8;
+                        $intercommunalitePopColumn = 9;
+                        $intercommunaliteCpColumn = 10;
+                        $intercommunaliteEpciColumn = 11;
+                        $ventVitesseColumn = 12;
+                        continue;
+                    }
+                    // if($row < 30000) continue;
+                    $data = array_map("utf8_encode", $data);
+                    // echo $row . ': Insee ' . $data[$inseeColumn] . '<br>';
+                    $commune = $em->getRepository('AppBundle:Commune')->findOneBy(['insee' => $data[$inseeColumn]]);
+                    if(!$commune) {
+                        echo 'Insee ' . $data[$inseeColumn] . ' New<br>';
+                        $commune = new Commune();
+                        $departement = $em->getRepository('AppBundle:Departement')->findOneBy(['code' => $data[$departementColumn]]);
+                        if(!$departement) continue;
+                        $commune->setDepartement($departement);
+                        $commune->setNom($data[$nomColumn]);
+                        $commune->setInsee($data[$inseeColumn]);
+                        $commune->setCode(substr($data[$inseeColumn], -3));
+                    } else if($commune->getNomMiniscule()) continue;
+                    $commune->setNomMiniscule($data[$nomMinisculeColumn]);
+                    $commune->setIntercommunalite($data[$intercommunaliteColumn]);
+                    $commune->setIntercommunaliteNb($data[$intercommunaliteNbColumn]);
+                    $commune->setIntercommunalitePop($data[$intercommunalitePopColumn]);
+                    $commune->setIntercommunaliteCp($data[$intercommunaliteCpColumn]);
+                    $commune->setIntercommunaliteEpci($data[$intercommunaliteEpciColumn]);
+                    $commune->setVentVitesse($data[$ventVitesseColumn]);
+                    $em->persist($commune);
+                    if($row % 100 == 0) $em->flush();
+                }
+                fclose($handle);
+                $em->flush();
+            }
+            return new Response('Done');
+        } else new Response('Fichier introuvable');
+    }
+
+    /**
      * @Route("/liste/nouveau", name="liste_new")
      * @Security("has_role('ROLE_VIEW_ALL')")
      */

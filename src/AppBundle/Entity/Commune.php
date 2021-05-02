@@ -53,6 +53,69 @@ class Commune
     private $departement;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $nomPresident;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $telephonePresident;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $nomMiniscule;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $intercommunalite;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $intercommunaliteNb;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $intercommunalitePop;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $intercommunaliteCp;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $intercommunaliteEpci;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $ventVitesse;
+
+    /**
      * @var ArrayCollection|Projet[]
      *
      * @ORM\ManyToMany(targetEntity="Projet", mappedBy="communes")
@@ -142,6 +205,168 @@ class Commune
     public function setDepartement(Departement $departement)
     {
         $this->departement = $departement;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNomPresident()
+    {
+        return $this->nomPresident;
+    }
+
+    /**
+     * @param string $nomPresident
+     * @return \AppBundle\Entity\Commune
+     */
+    public function setNomPresident($nomPresident)
+    {
+        $this->nomPresident = $nomPresident;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTelephonePresident()
+    {
+        return $this->TelephonePresident;
+    }
+
+    /**
+     * @param string $TelephonePresident
+     * @return \AppBundle\Entity\Commune
+     */
+    public function setTelephonePresident($TelephonePresident)
+    {
+        $this->TelephonePresident = $TelephonePresident;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNomMiniscule()
+    {
+        return $this->nomMiniscule;
+    }
+
+    /**
+     * @param string $nomMiniscule
+     * @return \AppBundle\Entity\Commune
+     */
+    public function setNomMiniscule($nomMiniscule)
+    {
+        $this->nomMiniscule = $nomMiniscule;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIntercommunalite()
+    {
+        return $this->intercommunalite;
+    }
+
+    /**
+     * @param string $intercommunalite
+     * @return \AppBundle\Entity\Commune
+     */
+    public function setIntercommunalite($intercommunalite)
+    {
+        if($intercommunalite) $this->intercommunalite = $intercommunalite;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIntercommunaliteNb()
+    {
+        return $this->intercommunaliteNb;
+    }
+
+    /**
+     * @param string $intercommunaliteNb
+     * @return \AppBundle\Entity\Commune
+     */
+    public function setIntercommunaliteNb($intercommunaliteNb)
+    {
+        if($intercommunaliteNb) $this->intercommunaliteNb = $intercommunaliteNb;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIntercommunalitePop()
+    {
+        return $this->intercommunalitePop;
+    }
+
+    /**
+     * @param string $intercommunalitePop
+     * @return \AppBundle\Entity\Commune
+     */
+    public function setIntercommunalitePop($intercommunalitePop)
+    {
+        if($intercommunalitePop) $this->intercommunalitePop = $intercommunalitePop;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIntercommunaliteCp()
+    {
+        return $this->intercommunaliteCp;
+    }
+
+    /**
+     * @param string $intercommunaliteCp
+     * @return \AppBundle\Entity\Commune
+     */
+    public function setIntercommunaliteCp($intercommunaliteCp)
+    {
+        if($intercommunaliteCp) $this->intercommunaliteCp = $intercommunaliteCp;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIntercommunaliteEpci()
+    {
+        return $this->intercommunaliteEpci;
+    }
+
+    /**
+     * @param string $intercommunaliteEpci
+     * @return \AppBundle\Entity\Commune
+     */
+    public function setIntercommunaliteEpci($intercommunaliteEpci)
+    {
+        if($intercommunaliteEpci) $this->intercommunaliteEpci = $intercommunaliteEpci;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getVentVitesse()
+    {
+        return $this->ventVitesse;
+    }
+
+    /**
+     * @param string $ventVitesse
+     * @return \AppBundle\Entity\Commune
+     */
+    public function setVentVitesse($ventVitesse)
+    {
+        if($ventVitesse) $this->ventVitesse = $ventVitesse;
         return $this;
     }
 
