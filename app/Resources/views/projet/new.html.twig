@@ -70,6 +70,12 @@
         <legend>Situation administrative</legend>
         {{ form_row(form.departement) }}
         {{ form_row(form.communes) }}
+        <div class="form-group form-group-sm">
+          <label class="col-sm-4 control-label" for="projet_epci">EPCI</label>
+          <div id="projet_epci" class="col-sm-8 control-label">
+            {% if form.vars.value.communes[0] is defined %}{{ form.vars.communes[0].intercommunalite }}{% endif %}
+          </div>
+        </div>
         
         <legend>Situation géographique</legend>
         {{ form_row(form.latitude) }}
@@ -115,6 +121,11 @@
               <td class="required">{{ form_widget(form.mairie, {'attr': {'style': 'width:100%'}}) }}</td>
               <td>{{ form_widget(form.mairieTelephone) }}</td>
             <tr>
+            <tr id="contact_epci">
+              <td>EPCI</td>
+              <td class="required">{% if form.vars.value.communes[0] is defined %}{{ form.vars.communes[0].nomPresident }}{% endif %}</td>
+              <td>{% if form.vars.value.communes[0] is defined %}{{ form.vars.communes[0].telephonePresident }}{% endif %}</td>
+            </tr>
           </tbody>
         </table>
       </fieldset>
@@ -407,6 +418,7 @@
       if($(this).attr('id') == 'projet_communes') {
         var query = $('#projet_communes option:selected').text().replace(/\(.+/, '').trim();
         updateMairie();
+        updateEpci();
       } else {
         var query = $('#projet_departement option:selected').text().trim();
         updateContacts();
@@ -617,6 +629,30 @@
             }
             $('#projet_mairie').trigger('change');
           }, error: function () {
+          }
+        });
+      }
+    }
+    function updateEpci() {
+      var commune_id = $('#projet_communes option:selected').val();
+      if(commune_id) {
+        jQuery.ajax({
+          url: Routing.generate('epci_search_by_commune', { id: commune_id }),
+          method: "POST",
+          dataType: "json", 
+          beforeSend: function () {
+            $('#contact_epci td:eq(1)').val('');
+            $('#contact_epci td:eq(2)').val('');
+            $('#projet_epci').val('');
+          },
+          success: function (response) {
+            $('#contact_epci td:eq(1)').val(response['nom_president']);
+            $('#contact_epci td:eq(2)').val(response['telephone_president']);
+            $('#projet_epci').val(response['epci']);
+          }, error: function () {
+            $('#contact_epci td:eq(1)').val('');
+            $('#contact_epci td:eq(2)').val('');
+            $('#projet_epci').val('');
           }
         });
       }

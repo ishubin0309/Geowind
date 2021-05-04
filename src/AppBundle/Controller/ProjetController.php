@@ -663,6 +663,22 @@ class ProjetController extends Controller
     }
     
     /**
+     * @Route("/{id}/search-by-commune", name="epci_search_by_commune", options={ "expose": true })
+     * @ParamConverter("commune", options={"mapping": {"id": "id"}})
+     * @Method({"POST"})
+     * @Security("has_role('ROLE_VIEW')")
+     */
+    public function epciSearchByCommuneAction(Request $request, Commune $commune)
+    {
+        $response = new JsonResponse();
+
+        $result = ['ecpi' => $commune->getIntercommunalite(), 'nom_president' => $commune->getNomPresident(), 'telephone_president' => $commune->getTelephonePresident()];
+        $response->setData($result);
+
+        return $response;
+    }
+    
+    /**
      * @Route("/{id}/messagerie/new", name="messagerie_new", options={ "expose": true })
      * @Security("is_granted('view', projet)")
      */
