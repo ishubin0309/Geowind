@@ -268,7 +268,7 @@ class ProjetController extends Controller
                     $commune->setIntercommunalitePop($data[$intercommunalitePopColumn]);
                     $commune->setIntercommunaliteCp($data[$intercommunaliteCpColumn]);
                     $commune->setIntercommunaliteEpci($data[$intercommunaliteEpciColumn]);
-                    $commune->setVentVitesse($data[$ventVitesseColumn]);
+                    if(isset($data[$ventVitesseColumn])) $commune->setVentVitesse($data[$ventVitesseColumn]);
                     $em->persist($commune);
                     if($row % 100 == 0) $em->flush();
                 }
