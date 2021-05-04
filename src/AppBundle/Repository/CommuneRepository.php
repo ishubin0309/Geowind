@@ -37,9 +37,10 @@ class CommuneRepository extends EntityRepository
         $data = [];
 
         foreach ($results as $result) {
+            $nom = $result[0]['nomMiniscule'] ? $result[0]['nomMiniscule'] : $result[0]['nom'];
             $arr = [
                 'id' => $result[0]['id'],
-                'text' => $result[0]['nomMiniscule'] . ' (' . $result[0]['insee'] . ')',
+                'text' => $nom . ' (' . $result[0]['insee'] . ')',
             ];
             $data[] = $arr;
         }
