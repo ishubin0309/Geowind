@@ -827,10 +827,10 @@
             $('#contact_epci td:eq(2)').text('');
             $('#projet_epci').text('');
           },
-          success: function (response) {console.log(response['nom_president']);console.log(response['epci']);
+          success: function (response) {console.log(response['nom_president']);
             $('#contact_epci td:eq(1)').text(response['nom_president']);
             $('#contact_epci td:eq(2)').text(response['telephone_president']);
-            $('#projet_epci').text(response['epci']);
+            $('#projet_epci').html('<b>' + response['epci'] + '</b>');
           }, error: function () {
             $('#contact_epci td:eq(1)').text('');
             $('#contact_epci td:eq(2)').text('');
