@@ -654,7 +654,7 @@ class ProjetController extends Controller
         $results = [];
 
         if (!empty($term)) {
-            $em = $this->getDoctrine()->getManager();echo $departement;
+            $em = $this->getDoctrine()->getManager();
             $results = $em->getRepository('AppBundle:Commune')->searchTerm($term, $departement);
         }
 
