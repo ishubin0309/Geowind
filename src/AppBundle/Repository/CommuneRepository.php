@@ -9,17 +9,18 @@ use Doctrine\ORM\Query;
  */
 class CommuneRepository extends EntityRepository
 {
-    public function searchTerm($term)
+    public function searchTerm($term, $departement)
     {
         $query = $this->createQueryBuilder('c')
                     ->select('c, LENGTH(c.nom) len')
-                    ->where('c.nom LIKE :nom')
-                    ->orWhere('c.insee = :code')
+                    ->where('c.departement = :departement')
+                    ->AndWhere('(c.nom LIKE :nom OR c.insee = :code)')
                     ->orderBy('len', 'ASC')
                     ->setFirstResult(0)
                     ->setMaxResults(10)
                     ->setParameter('nom', '%' . $term . '%')
                     ->setParameter('code', $term)
+                    ->setParameter('departement', $departement)
                 ;
 
         $results = $query->getQuery()->getResult(Query::HYDRATE_ARRAY);

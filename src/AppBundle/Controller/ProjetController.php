@@ -649,11 +649,13 @@ class ProjetController extends Controller
 
         $term = $request->query->get('term', null);
 
+        $departement = $request->query->get('departement', null);
+
         $results = [];
 
         if (!empty($term)) {
             $em = $this->getDoctrine()->getManager();
-            $results = $em->getRepository('AppBundle:Commune')->searchTerm($term);
+            $results = $em->getRepository('AppBundle:Commune')->searchTerm($term, $departement);
         }
 
         $response->setData($results);
