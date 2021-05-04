@@ -673,7 +673,7 @@ class ProjetController extends Controller
     {
         $response = new JsonResponse();
 
-        $result = ['ecpi' => $commune->getIntercommunalite(), 'nom_president' => $commune->getNomPresident(), 'telephone_president' => $commune->getTelephonePresident()];
+        $result = ['epci' => $commune->getIntercommunalite(), 'nom_president' => $commune->getNomPresident(), 'telephone_president' => $commune->getTelephonePresident()];
         $response->setData($result);
 
         return $response;
