@@ -827,7 +827,7 @@
             $('#contact_epci td:eq(2)').text('');
             $('#projet_epci').text('');
           },
-          success: function (response) {
+          success: function (response) {console.log(response);
             $('#contact_epci td:eq(1)').text(response['nom_president']);
             $('#contact_epci td:eq(2)').text(response['telephone_president']);
             $('#projet_epci').text(response['epci']);
