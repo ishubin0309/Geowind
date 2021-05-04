@@ -640,14 +640,14 @@
           method: "POST",
           dataType: "json", 
           beforeSend: function () {
-            $('#contact_epci td:eq(1)').text('');
-            $('#contact_epci td:eq(2)').text('');
-            $('#projet_epci').text('');
+            $('#contact_epci td:eq(1)').text('-');
+            $('#contact_epci td:eq(2)').text('-');
+            $('#projet_epci').text('-');
           },
           success: function (response) {
-            $('#contact_epci td:eq(1)').text(response['nom_president']);
-            $('#contact_epci td:eq(2)').text(response['telephone_president']);
-            $('#projet_epci').html('<b>' + response['epci'] + '</b>');
+            if(response['nom_president']) $('#contact_epci td:eq(1)').text(response['nom_president']);
+            if(response['telephone_president']) $('#contact_epci td:eq(2)').text(response['telephone_president']);
+            if(response['epci']) $('#projet_epci').html('<b>' + response['epci'] + '</b>');
           }, error: function () {
             $('#contact_epci td:eq(1)').text('');
             $('#contact_epci td:eq(2)').text('');
