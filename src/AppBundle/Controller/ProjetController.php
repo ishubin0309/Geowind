@@ -162,7 +162,7 @@ class ProjetController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $file_path = __DIR__ . '/../Coordonnees.csv';
+        $file_path = __DIR__ . '/../03_EPCI.csv';
         $row = 0;
         if(file_exists($file_path)) {
             if (($handle = fopen($file_path, "r")) !== FALSE) {
@@ -183,39 +183,20 @@ class ProjetController extends Controller
                         }
                     }
                     if(!$row++) {
-                        $inseeColumn = 3;
-                        $nomColumn = 4;
-                        $nomMinisculeColumn = 5;
-                        $departementColumn = 6;
-                        $intercommunaliteColumn = 7;
-                        $intercommunaliteNbColumn = 8;
-                        $intercommunalitePopColumn = 9;
-                        $intercommunaliteCpColumn = 10;
-                        $intercommunaliteEpciColumn = 11;
-                        $ventVitesseColumn = 12;
+                        $inseeColumn = 0;
+                        $nomPresidentColumn = 4;
+                        // $telephoneMinisculeColumn = 12;
                         continue;
                     }
-                    // if($row < 30000) continue;
+                    // if($row > 10) continue;
                     $data = array_map("utf8_encode", $data);
                     // echo $row . ': Insee ' . $data[$inseeColumn] . '<br>';
                     $commune = $em->getRepository('AppBundle:Commune')->findOneBy(['insee' => $data[$inseeColumn]]);
                     if(!$commune) {
-                        echo 'Insee ' . $data[$inseeColumn] . ' New<br>';
-                        $commune = new Commune();
-                        $departement = $em->getRepository('AppBundle:Departement')->findOneBy(['code' => $data[$departementColumn]]);
-                        if(!$departement) continue;
-                        $commune->setDepartement($departement);
-                        $commune->setNom($data[$nomColumn]);
-                        $commune->setInsee($data[$inseeColumn]);
-                        $commune->setCode(substr($data[$inseeColumn], -3));
-                    } else if($commune->getNomMiniscule()) continue;
-                    $commune->setNomMiniscule($data[$nomMinisculeColumn]);
-                    $commune->setIntercommunalite($data[$intercommunaliteColumn]);
-                    $commune->setIntercommunaliteNb($data[$intercommunaliteNbColumn]);
-                    $commune->setIntercommunalitePop($data[$intercommunalitePopColumn]);
-                    $commune->setIntercommunaliteCp($data[$intercommunaliteCpColumn]);
-                    $commune->setIntercommunaliteEpci($data[$intercommunaliteEpciColumn]);
-                    $commune->setVentVitesse($data[$ventVitesseColumn]);
+                        continue;
+                    }
+                    $commune->setNomPresident($data[$nomPresidentColumn]);
+                    // $commune->setTelephonePresident($data[$telephoneMinisculeColumn]);
                     $em->persist($commune);
                     if($row % 100 == 0) $em->flush();
                 }
@@ -234,7 +215,7 @@ class ProjetController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $file_path = __DIR__ . '/../Admin.csv';
+        $file_path = __DIR__ . '/../01_Admin.csv';
         $row = 0;
         if(file_exists($file_path)) {
             if (($handle = fopen($file_path, "r")) !== FALSE) {
