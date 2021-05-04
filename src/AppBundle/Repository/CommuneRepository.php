@@ -11,16 +11,26 @@ class CommuneRepository extends EntityRepository
 {
     public function searchTerm($term, $departement)
     {
-        $query = $this->createQueryBuilder('c')
-                    ->select('c, LENGTH(c.nom) len')
-                    ->where('c.departement = :departement AND (c.nom LIKE :nom OR c.insee = :code)')
-                    ->orderBy('len', 'ASC')
-                    ->setFirstResult(0)
-                    ->setMaxResults(10)
-                    ->setParameter('departement', $departement)
-                    ->setParameter('nom', '%' . $term . '%')
-                    ->setParameter('code', $term)
-                ;
+        if($departement)
+            $query = $this->createQueryBuilder('c')
+                ->select('c, LENGTH(c.nom) len')
+                ->where('c.departement = :departement AND (c.nom LIKE :nom OR c.insee = :code)')
+                ->orderBy('len', 'ASC')
+                ->setFirstResult(0)
+                ->setMaxResults(10)
+                ->setParameter('departement', $departement)
+                ->setParameter('nom', '%' . $term . '%')
+                ->setParameter('code', $term)
+            ;
+        else $query = $this->createQueryBuilder('c')
+            ->select('c, LENGTH(c.nom) len')
+            ->where('c.nom LIKE :nom OR c.insee = :code')
+            ->orderBy('len', 'ASC')
+            ->setFirstResult(0)
+            ->setMaxResults(10)
+            ->setParameter('nom', '%' . $term . '%')
+            ->setParameter('code', $term)
+        ;
 
         $results = $query->getQuery()->getResult(Query::HYDRATE_ARRAY);
 
