@@ -640,18 +640,18 @@
           method: "POST",
           dataType: "json", 
           beforeSend: function () {
-            $('#contact_epci td:eq(1)').val('');
-            $('#contact_epci td:eq(2)').val('');
-            $('#projet_epci').val('');
+            $('#contact_epci td:eq(1)').text('');
+            $('#contact_epci td:eq(2)').text('');
+            $('#projet_epci').text('');
           },
           success: function (response) {
-            $('#contact_epci td:eq(1)').val(response['nom_president']);
-            $('#contact_epci td:eq(2)').val(response['telephone_president']);
-            $('#projet_epci').val(response['epci']);
+            $('#contact_epci td:eq(1)').text(response['nom_president']);
+            $('#contact_epci td:eq(2)').text(response['telephone_president']);
+            $('#projet_epci').text(response['epci']);
           }, error: function () {
-            $('#contact_epci td:eq(1)').val('');
-            $('#contact_epci td:eq(2)').val('');
-            $('#projet_epci').val('');
+            $('#contact_epci td:eq(1)').text('');
+            $('#contact_epci td:eq(2)').text('');
+            $('#projet_epci').text('');
           }
         });
       }
