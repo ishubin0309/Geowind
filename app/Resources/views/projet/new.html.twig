@@ -547,8 +547,7 @@
     $("#projet_communes").val(9);
     $("#projet_communes").select2({
       ajax: {
-        url: queryCommuneUrl,
-        data: {departement: $('#projet_departement').val()},
+        url: queryCommuneUrl + '?departement=' + $('#projet_departement').val(),
         dataType: 'json',
         delay: 500,
         processResults: function (data) {
