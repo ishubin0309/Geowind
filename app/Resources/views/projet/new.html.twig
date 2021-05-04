@@ -73,7 +73,6 @@
         <div class="form-group form-group-sm">
           <label class="col-sm-4 control-label" for="projet_epci">EPCI</label>
           <div id="projet_epci" class="col-sm-8 control-label">
-            {% if form.vars.value.communes[0] is defined %}{{ form.vars.communes[0].intercommunalite }}{% endif %}
           </div>
         </div>
         
@@ -123,8 +122,8 @@
             <tr>
             <tr id="contact_epci">
               <td>EPCI</td>
-              <td class="required">{% if form.vars.value.communes[0] is defined %}{{ form.vars.communes[0].nomPresident }}{% endif %}</td>
-              <td>{% if form.vars.value.communes[0] is defined %}{{ form.vars.communes[0].telephonePresident }}{% endif %}</td>
+              <td class="required"></td>
+              <td></td>
             </tr>
           </tbody>
         </table>
@@ -659,6 +658,9 @@
     }
     {% if form.vars.value.mairie is null and form.vars.value.communes[0].id is not defined %}
       updateMairie();
+    {% endif %}
+    {% form.vars.value.communes[0].id is defined %}
+      updateEpci();
     {% endif %}
     
     {% if form.vars.value.batimentExistant.photo is defined and form.vars.value.batimentExistant.photo %}
