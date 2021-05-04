@@ -561,7 +561,6 @@
         var query = $('#projet_communes option:selected').text().replace(/\(.+/, '').trim();
         updateMairie($('#projet_communes option:selected').val());
       } else {
-        queryCommuneDepartementUrl = queryCommuneDepartementUrl.replace(/departement=\d+/, 'departement=' + $(this).val());
         var query = $('#projet_departement option:selected').text().trim();
         {% if is_granted('ROLE_ADMIN') or projet.origine.id == app.user.id %}
         updateContacts();
@@ -700,7 +699,6 @@
     {% endif %}
 
     var queryCommuneUrl = "{{ path('commune_search') }}";
-    var queryCommuneDepartementUrl = "{{ path('commune_search') }}?departement={{ form.vars.value.departement.id }}";
 
     $('.datepicker-type').datepicker({
       format: 'dd/mm/yyyy',
@@ -711,7 +709,9 @@
     
     $("#projet_communes").select2({
       ajax: {
-        url: queryCommuneDepartementUrl,
+        url: function () {
+          return queryCommuneUrl + '?departement=' + $('#projet_departement').val();
+        },
         dataType: 'json',
         delay: 500,
         processResults: function (data) {
