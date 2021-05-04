@@ -408,7 +408,7 @@
         var query = $('#projet_communes option:selected').text().replace(/\(.+/, '').trim();
         updateMairie();
       } else {
-        queryCommuneUrl = queryCommuneUrl.replace(/departement=\d+/, 'departement=' . $(this).val());
+        queryCommuneUrl = queryCommuneUrl.replace(/departement=\d+/, 'departement=' . $('#projet_departement option:selected').val());
         var query = $('#projet_departement option:selected').text().trim();
         updateContacts();
       }
