@@ -231,16 +231,16 @@ class Commune
      */
     public function getTelephonePresident()
     {
-        return $this->TelephonePresident;
+        return $this->telephonePresident;
     }
 
     /**
-     * @param string $TelephonePresident
+     * @param string $telephonePresident
      * @return \AppBundle\Entity\Commune
      */
-    public function setTelephonePresident($TelephonePresident)
+    public function setTelephonePresident($telephonePresident)
     {
-        $this->TelephonePresident = $TelephonePresident;
+        $this->telephonePresident = $telephonePresident;
         return $this;
     }
 
