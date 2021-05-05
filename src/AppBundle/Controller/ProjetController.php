@@ -13,6 +13,7 @@ use AppBundle\Entity\Tache;
 use AppBundle\Entity\Parcelle;
 use AppBundle\Entity\Commune;
 use AppBundle\Entity\Messagerie;
+use AppBundle\Entity\Mairie;
 use AppBundle\Model\Environnement;
 use AppBundle\Model\Etat as EtatModel;
 use AppBundle\Form\ProjetEditType;
@@ -200,6 +201,100 @@ class ProjetController extends Controller
                     // $commune->setTelephonePresident($data[$telephoneMinisculeColumn]);
                     $em->persist($commune);
                     if($row % 100 == 0) $em->flush();
+                }
+                fclose($handle);
+                $em->flush();
+            }
+            return new Response('Done');
+        } else new Response('Fichier introuvable');
+    }
+
+    /**
+     * @Route("/mairie/update", name="mairie_update")
+     * @Security("has_role('ROLE_ADMIN')")
+     */
+    public function mairieUpdateAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $file_path = __DIR__ . '/../02_MAIRIES.csv';
+        $row = 0;
+        $min_row = 0;
+        if(file_exists(__DIR__ . '/../mairie_counter.txt')) $min_row = file_get_contents(__DIR__ . '/../mairie_counter.txt');
+        if(file_exists($file_path)) {
+            if (($handle = fopen($file_path, "r")) !== FALSE) {
+                ini_set("memory_limit", "4000M");
+                set_time_limit(3000);
+                ini_set('display_errors', 1);
+                ini_set('display_startup_errors', 1);
+                error_reporting(E_ALL);
+                $start_time = microtime(true);
+                $write_close = false;
+                $last_insee = false;
+                $last_mairie = false;
+                $elus = [];
+                while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+                    if(!$write_close) {
+                        $end_time = microtime(true); 
+                        $execution_time = ($end_time - $start_time); 
+                        if($execution_time > 30) {
+                            session_write_close();
+                            $write_close = true;
+                        }
+                    }
+                    if(!$row++) {
+                        $inseeColumn = 0;
+                        $communeColumn = 1;
+                        $eluColumn = 2;
+                        $eluFonctionColumn = 3;
+                        $eluEmailColumn = 4;
+                        $eluTelephoneColumn = 5;
+                        $mairieTelephoneColumn = 6;
+                        $mairieEmailColumn = 7;
+                        $departementColumn = 8;
+                        $adresseColumn = 10;
+                        continue;
+                    }
+                    if($row < $min_row) continue;
+                    $data = array_map("utf8_encode", $data);
+                    if($last_mairie !== false && $data[$inseeColumn] != $last_insee) {
+                        echo $row . ': Insee ' . $last_mairie->getInsee() . ' Persist<br>';
+                        // $em->persist($last_mairie);
+                        $last_mairie = false;
+                        $elus = [];
+                        file_put_contents(__DIR__ . '/../mairie_counter.txt', $row);
+                        if($row % 500 == 0) $em->flush();
+                        if($row > 10000) break;
+                    }
+                    $last_insee = $data[$inseeColumn];
+                    // echo $row . ': Insee ' . $data[$inseeColumn] . '<br>';
+                    if($last_mairie === false) {
+                        $last_mairie = $em->getRepository('AppBundle:Mairie')->findOneBy(['insee' => $data[$inseeColumn]]);
+                        if(!$last_mairie) {
+                            $last_mairie = new Mairie();
+                            $last_mairie->setInsee($data[$inseeColumn]);
+                            $departement = $em->getRepository('AppBundle:Departement')->findOneBy(['code' => $data[$departementColumn]]);
+                            if(!$departement) continue;
+                            $last_mairie->setRegion($departement->getRegion()->getNom());
+                        }
+                    }
+                    $last_mairie->setTelephone($data[$mairieTelephoneColumn]);
+                    $last_mairie->setEmail1($data[$mairieEmailColumn]);
+                    $last_mairie->setEmail2(null);
+                    $last_mairie->setEmail3(null);
+                    $last_mairie->setEmail4(null);
+                    $last_mairie->setEmail5(null);
+                    $last_mairie->setFax(null);
+                    $last_mairie->setSiteinternet(null);
+                    if($data[$communeColumn]) $last_mairie->setCommune($data[$communeColumn]);
+                    if($data[$eluFonctionColumn] == 'Mairie') {
+                        $fullName = explode(' ', $data[$eluColumn]);
+                        $last_mairie->setNomMaire($fullName[0]);
+                        $last_mairie->setPrenomMaire(trim(str_replace($fullName[0], '', $data[$eluColumn])));
+                    } else {
+                        $elus[] = ['funtion' => $data[$eluFonctionColumn], 'nom' => $data[$eluColumn], 'email' => $data[$eluEmailColumn], 'telephone' => $data[$eluTelephoneColumn]];
+                        $last_mairie->setElus($elus);
+                    }
                 }
                 fclose($handle);
                 $em->flush();

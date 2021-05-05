@@ -186,6 +186,13 @@ class Mairie
     private $region;
     
     /**
+     * @var string
+     *
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $elus = [];
+    
+    /**
      * @var ArrayCollection|Message[]
      * 
      * @ORM\OneToMany(targetEntity="Message", mappedBy="mairie")
@@ -338,6 +345,11 @@ class Mairie
         return $this->region;
     }
 
+    public function getElus()
+    {
+        return $this->elus ? \unserialize($this->elus) : [];
+    }
+
     public function setClassement($classement)
     {
         $this->classement = $classement;
@@ -473,6 +485,12 @@ class Mairie
     public function setRegion($region)
     {
         $this->region = $region;
+        return $this;
+    }
+
+    public function setElus(Array $elus)
+    {
+        $this->elus = \serialize($elus);
         return $this;
     }
     
