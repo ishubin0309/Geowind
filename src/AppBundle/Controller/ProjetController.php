@@ -264,7 +264,7 @@ class ProjetController extends Controller
                         $elus = [];
                         file_put_contents(__DIR__ . '/../mairie_counter.txt', $row);
                         if($row % 500 == 0) $em->flush();
-                        if($row > 10000) break;
+                        // if($row > ($min_row + 10000)) break;
                     }
                     $last_insee = $data[$inseeColumn];
                     // echo $row . ': Insee ' . $data[$inseeColumn] . '<br>';
