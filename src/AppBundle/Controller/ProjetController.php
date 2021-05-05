@@ -258,7 +258,7 @@ class ProjetController extends Controller
                     if($row < $min_row) continue;
                     $data = array_map("utf8_encode", $data);
                     if($last_mairie !== false && $data[$inseeColumn] != $last_insee) {
-                        echo $row . ': Insee ' . $last_mairie->getInsee() . ' Persist<br>';
+                        // echo $row . ': Insee ' . $last_mairie->getInsee() . ' Persist<br>';
                         // $em->persist($last_mairie);
                         $last_mairie = false;
                         $elus = [];
