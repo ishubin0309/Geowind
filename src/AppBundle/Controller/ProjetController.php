@@ -217,7 +217,7 @@ class ProjetController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $file_path = __DIR__ . '/../02_MAIRIES.csv';
+        $file_path = __DIR__ . '/../02_Mairies.csv';
         $row = 0;
         $min_row = 0;
         if(file_exists(__DIR__ . '/../mairie_counter.txt')) $min_row = file_get_contents(__DIR__ . '/../mairie_counter.txt');
@@ -300,8 +300,7 @@ class ProjetController extends Controller
                 $em->flush();
             }
             return new Response('Done');
-        } else new Response('Fichier introuvable');
-        return new Response('Not sure');
+        } else return new Response('Fichier introuvable');
     }
 
     /**
