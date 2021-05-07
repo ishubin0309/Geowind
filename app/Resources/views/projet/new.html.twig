@@ -647,7 +647,7 @@
           success: function (response) {
             if(response['nom_president']) $('#contact_epci td:eq(1)').text(response['nom_president']);
             if(response['telephone_president']) $('#contact_epci td:eq(2)').text(response['telephone_president']);
-            if(response['epci']) $('#projet_epci').html('<b>' + response['epci'] + '</b>');
+            if(response['epci']) $('#projet_epci').html('<input type="text" class="form-control" value="' + response['epci'] + '">');
           }, error: function () {
             $('#contact_epci td:eq(1)').text('');
             $('#contact_epci td:eq(2)').text('');
