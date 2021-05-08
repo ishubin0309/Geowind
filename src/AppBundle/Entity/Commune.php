@@ -71,6 +71,13 @@ class Commune
      *
      * @ORM\Column(type="string", nullable=true)
      */
+    private $emailPresident;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
     private $nomMiniscule;
 
     /**
@@ -107,13 +114,6 @@ class Commune
      * @ORM\Column(type="integer", nullable=true)
      */
     private $intercommunaliteEpci;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string", nullable=true)
-     */
-    private $ventVitesse;
 
     /**
      * @var ArrayCollection|Projet[]
@@ -247,6 +247,24 @@ class Commune
     /**
      * @return string
      */
+    public function getEmailPresident()
+    {
+        return $this->emailPresident;
+    }
+
+    /**
+     * @param string $emailPresident
+     * @return \AppBundle\Entity\Commune
+     */
+    public function setEmailPresident($emailPresident)
+    {
+        $this->emailPresident = $emailPresident;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
     public function getNomMiniscule()
     {
         return $this->nomMiniscule;
@@ -349,24 +367,6 @@ class Commune
     public function setIntercommunaliteEpci($intercommunaliteEpci)
     {
         if($intercommunaliteEpci) $this->intercommunaliteEpci = $intercommunaliteEpci;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getVentVitesse()
-    {
-        return $this->ventVitesse;
-    }
-
-    /**
-     * @param string $ventVitesse
-     * @return \AppBundle\Entity\Commune
-     */
-    public function setVentVitesse($ventVitesse)
-    {
-        if($ventVitesse) $this->ventVitesse = $ventVitesse;
         return $this;
     }
 

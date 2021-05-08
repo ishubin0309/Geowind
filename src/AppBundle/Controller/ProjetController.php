@@ -185,20 +185,22 @@ class ProjetController extends Controller
                         }
                     }
                     if(!$row++) {
-                        $inseeColumn = 0;
-                        $nomPresidentColumn = 4;
-                        // $telephoneMinisculeColumn = 12;
+                        $epciColumn = 0;
+                        $nomPresidentColumn = 2;
+                        $epciTelephoneColumn = 5;
+                        $epciEmailColumn = 6;
                         continue;
                     }
                     // if($row > 10) continue;
                     $data = array_map("utf8_encode", $data);
                     // echo $row . ': Insee ' . $data[$inseeColumn] . '<br>';
-                    $commune = $em->getRepository('AppBundle:Commune')->findOneBy(['insee' => $data[$inseeColumn]]);
+                    $commune = $em->getRepository('AppBundle:Commune')->findOneBy(['intercommunaliteEpci' => $data[$epciColumn]]);
                     if(!$commune) {
                         continue;
                     }
                     $commune->setNomPresident($data[$nomPresidentColumn]);
-                    // $commune->setTelephonePresident($data[$telephoneMinisculeColumn]);
+                    $commune->setTelephonePresident($data[$epciTelephoneColumn]);
+                    $commune->setEmailPresident($data[$epciEmailColumn]);
                     $em->persist($commune);
                     if($row % 100 == 0) $em->flush();
                 }
@@ -341,7 +343,6 @@ class ProjetController extends Controller
                         $intercommunalitePopColumn = 9;
                         $intercommunaliteCpColumn = 10;
                         $intercommunaliteEpciColumn = 11;
-                        $ventVitesseColumn = 12;
                         continue;
                     }
                     // if($row < 30000) continue;
@@ -364,7 +365,6 @@ class ProjetController extends Controller
                     $commune->setIntercommunalitePop($data[$intercommunalitePopColumn]);
                     $commune->setIntercommunaliteCp($data[$intercommunaliteCpColumn]);
                     $commune->setIntercommunaliteEpci($data[$intercommunaliteEpciColumn]);
-                    if(isset($data[$ventVitesseColumn])) $commune->setVentVitesse($data[$ventVitesseColumn]);
                     $em->persist($commune);
                     if($row % 100 == 0) $em->flush();
                 }
