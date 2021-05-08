@@ -194,7 +194,7 @@ class ProjetController extends Controller
                     // if($row > 10) continue;
                     $data = array_map("utf8_encode", $data);
                     // if($data[$epciColumn] != '240100883') continue;
-                    // echo $row . ': Insee ' . $data[$epciColumn] . '<br>';
+                    echo $row . ',';
                     $communes = $em->getRepository('AppBundle:Commune')->findBy(['intercommunaliteEpci' => $data[$epciColumn]]);
                     if(empty($communes)) {
                         continue;
@@ -205,7 +205,7 @@ class ProjetController extends Controller
                         $commune->setEmailPresident($data[$epciEmailColumn]);
                         $em->persist($commune);
                     }
-                    if($row % 100 == 0) $em->flush();
+                    if($row % 50 == 0) $em->flush();
                 }
                 fclose($handle);
                 $em->flush();
