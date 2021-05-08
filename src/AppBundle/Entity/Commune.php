@@ -71,13 +71,6 @@ class Commune
      *
      * @ORM\Column(type="string", nullable=true)
      */
-    private $emailPresident;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string", nullable=true)
-     */
     private $nomMiniscule;
 
     /**
