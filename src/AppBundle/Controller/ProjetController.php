@@ -193,15 +193,18 @@ class ProjetController extends Controller
                     }
                     // if($row > 10) continue;
                     $data = array_map("utf8_encode", $data);
-                    // echo $row . ': Insee ' . $data[$inseeColumn] . '<br>';
-                    $commune = $em->getRepository('AppBundle:Commune')->findOneBy(['intercommunaliteEpci' => $data[$epciColumn]]);
-                    if(!$commune) {
+                    // if($data[$epciColumn] != '240100883') continue;
+                    // echo $row . ': Insee ' . $data[$epciColumn] . '<br>';
+                    $communes = $em->getRepository('AppBundle:Commune')->findBy(['intercommunaliteEpci' => $data[$epciColumn]]);
+                    if(empty($communes)) {
                         continue;
+                    }//echo $commune->getInsee().', ' . $data[$epciTelephoneColumn] . ', ' . $data[$epciEmailColumn] . '<br>';
+                    foreach($communes as $commune) {
+                        $commune->setNomPresident($data[$nomPresidentColumn]);
+                        $commune->setTelephonePresident($data[$epciTelephoneColumn]);
+                        $commune->setEmailPresident($data[$epciEmailColumn]);
+                        $em->persist($commune);
                     }
-                    $commune->setNomPresident($data[$nomPresidentColumn]);
-                    $commune->setTelephonePresident($data[$epciTelephoneColumn]);
-                    $commune->setEmailPresident($data[$epciEmailColumn]);
-                    $em->persist($commune);
                     if($row % 100 == 0) $em->flush();
                 }
                 fclose($handle);
