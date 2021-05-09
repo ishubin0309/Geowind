@@ -492,7 +492,7 @@ class Batiment
     /**
      * @return string
      */
-    public function getTranfo()
+    public function getTransfo()
     {
         return $this->transfo;
     }
@@ -502,7 +502,7 @@ class Batiment
      * @param string $transfo
      * @return \AppBundle\Entity\Batiment
      */
-    public function setTranfo($transfo)
+    public function setTransfo($transfo)
     {
         $this->transfo = $transfo;
         return $this;
