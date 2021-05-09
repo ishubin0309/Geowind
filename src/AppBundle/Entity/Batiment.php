@@ -122,23 +122,23 @@ class Batiment
     /**
      * @var string
      *
-     * @ORM\Column(type="string", name="gestionnaire", nullable=true)
+     * @ORM\Column(type="string", name="livraison", nullable=true)
      */
-    private $gestionnaire;
+    private $livraison;
 
     /**
      * @var string
      *
-     * @ORM\Column(type="string", name="distance_onduleur", nullable=true)
+     * @ORM\Column(type="string", name="injection", nullable=true)
      */
-    private $distanceOnduleur;
+    private $injection;
 
     /**
      * @var string
      *
-     * @ORM\Column(type="string", name="distance_tranfo", nullable=true)
+     * @ORM\Column(type="string", name="transfo", nullable=true)
      */
-    private $distanceTranfo;
+    private $transfo;
 
     /**
      * @var string
@@ -454,57 +454,57 @@ class Batiment
     /**
      * @return string
      */
-    public function getGestionnaire()
+    public function getLivraison()
     {
-        return $this->gestionnaire;
+        return $this->livraison;
     }
 
     /**
      *
-     * @param string $gestionnaire
+     * @param string $livraison
      * @return \AppBundle\Entity\Batiment
      */
-    public function setGestionnaire($gestionnaire)
+    public function setLivraison($livraison)
     {
-        $this->gestionnaire = $gestionnaire;
+        $this->livraison = $livraison;
         return $this;
     }
 
     /**
      * @return string
      */
-    public function getDistanceOnduleur()
+    public function getInjection()
     {
-        return $this->distanceOnduleur;
+        return $this->injection;
     }
 
     /**
      *
-     * @param string $distanceOnduleur
+     * @param string $injection
      * @return \AppBundle\Entity\Batiment
      */
-    public function setDistanceOnduleur($distanceOnduleur)
+    public function setInjection($injection)
     {
-        $this->distanceOnduleur = $distanceOnduleur;
+        $this->injection = $injection;
         return $this;
     }
 
     /**
      * @return string
      */
-    public function getDistanceTranfo()
+    public function getTranfo()
     {
-        return $this->distanceTranfo;
+        return $this->transfo;
     }
 
     /**
      *
-     * @param string $distanceTranfo
+     * @param string $transfo
      * @return \AppBundle\Entity\Batiment
      */
-    public function setDistanceTranfo($distanceTranfo)
+    public function setTranfo($transfo)
     {
-        $this->distanceTranfo = $distanceTranfo;
+        $this->transfo = $transfo;
         return $this;
     }
 

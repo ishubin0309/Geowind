@@ -85,16 +85,16 @@ class BatimentType extends AbstractType
                 'required' => false,
                 'by_reference' => false,
             ])
-            ->add('gestionnaire', TextType::class, [
-                'label' => 'Gestionnaire',
+            ->add('livraison', TextType::class, [
+                'label' => 'Livraison (km)',
                 'required' => false,
             ])
-            ->add('distanceOnduleur', TextType::class, [
-                'label' => 'Distance onduleur',
+            ->add('injection', TextType::class, [
+                'label' => 'Injection (km)',
                 'required' => false,
             ])
-            ->add('distanceTranfo', TextType::class, [
-                'label' => 'Distance tranfo',
+            ->add('transfo', TextType::class, [
+                'label' => 'Transfo (km)',
                 'required' => false,
             ])
             ->add('documentUrbanisme', ChoiceType::class, [
