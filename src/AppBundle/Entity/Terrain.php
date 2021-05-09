@@ -49,7 +49,7 @@ class Terrain
      *
      * @ORM\Column(type="string", nullable=true)
      */
-    private $gestionnaire;
+    private $livraison;
 
     /**
      * @var string
@@ -63,7 +63,7 @@ class Terrain
      *
      * @ORM\Column(type="string", name="distance_pdl", nullable=true)
      */
-    private $distancePdl;
+    private $injection;
 
     /**
      * @var string
@@ -177,19 +177,19 @@ class Terrain
     /**
      * @return string
      */
-    public function getGestionnaire()
+    public function getLivraison()
     {
-        return $this->gestionnaire;
+        return $this->livraison;
     }
 
     /**
      *
-     * @param string $gestionnaire
+     * @param string $livraison
      * @return \AppBundle\Entity\Terrain
      */
-    public function setGestionnaire($gestionnaire)
+    public function setLivraison($livraison)
     {
-        $this->gestionnaire = $gestionnaire;
+        $this->livraison = $livraison;
         return $this;
     }
 
@@ -215,19 +215,19 @@ class Terrain
     /**
      * @return string
      */
-    public function getDistancePdl()
+    public function getInjection()
     {
-        return $this->distancePdl;
+        return $this->injection;
     }
 
     /**
      *
-     * @param string $distancePdl
+     * @param string $injection
      * @return \AppBundle\Entity\Terrain
      */
-    public function setDistancePdl($distancePdl)
+    public function setInjection($injection)
     {
-        $this->distancePdl = $distancePdl;
+        $this->injection = $injection;
         return $this;
     }
 
@@ -414,7 +414,7 @@ class Terrain
 
     public function isNotEmpty()
     {
-        if($this->topographie || $this->altitude || $this->exposition || $this->gestionnaire || $this->nomPoste || $this->distancePdl || $this->zonage || $this->documentUrbanisme)
+        if($this->topographie || $this->altitude || $this->exposition || $this->livraison || $this->nomPoste || $this->injection || $this->zonage || $this->documentUrbanisme)
             return true;
         else return false;
     }

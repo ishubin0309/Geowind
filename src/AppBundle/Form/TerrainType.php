@@ -31,16 +31,16 @@ class TerrainType extends AbstractType
                 'label' => 'Exposition',
                 'required' => false,
             ])
-            ->add('gestionnaire', TextType::class, [
-                'label' => 'Gestionnaire',
+            ->add('livraison', TextType::class, [
+                'label' => 'Livraison (km)',
+                'required' => false,
+            ])
+            ->add('injection', TextType::class, [
+                'label' => 'Injection (km)',
                 'required' => false,
             ])
             ->add('nomPoste', TextType::class, [
-                'label' => 'Nom de poste',
-                'required' => false,
-            ])
-            ->add('distancePdl', TextType::class, [
-                'label' => 'Distance PDL',
+                'label' => 'Nom du poste',
                 'required' => false,
             ])
             ->add('documentUrbanisme', ChoiceType::class, [
