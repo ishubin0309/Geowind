@@ -266,7 +266,7 @@ class ProjetController extends Controller
                     if($row < $min_row) continue;
                     $data = array_map("utf8_encode", $data);
                     if($last_mairie !== false && $data[$inseeColumn] != $last_insee) {
-                        echo $row . ': Insee ' . $last_mairie->getInsee() . ' Persist, ';
+                        // echo $row . ': Insee ' . $last_mairie->getInsee() . ' Persist, ';
                         // $em->persist($last_mairie);
                         $last_mairie = false;
                         $elus = [];
@@ -300,7 +300,7 @@ class ProjetController extends Controller
                         $last_mairie->setNomMaire($fullName[0]);
                         $last_mairie->setPrenomMaire(trim(str_replace($fullName[0], '', $data[$eluColumn])));
                     } else {
-                        $elus[] = ['funtion' => $data[$eluFonctionColumn], 'nom' => $data[$eluColumn], 'email' => $data[$eluEmailColumn], 'telephone' => $data[$eluTelephoneColumn]];
+                        $elus[] = ['function' => $data[$eluFonctionColumn], 'nom' => $data[$eluColumn], 'email' => $data[$eluEmailColumn], 'telephone' => $data[$eluTelephoneColumn]];
                         $last_mairie->setElus($elus);
                     }
                 }
