@@ -227,6 +227,7 @@ class ProjetController extends Controller
 
         $file_path = __DIR__ . '/../02_Mairies.csv';
         $row = 0;
+        $row2 = 0;
         $min_row = 0;
         if(file_exists(__DIR__ . '/../mairie_counter.txt')) $min_row = file_get_contents(__DIR__ . '/../mairie_counter.txt');
         if(file_exists($file_path)) {
@@ -250,6 +251,7 @@ class ProjetController extends Controller
                             $write_close = true;
                         }
                     }
+                    $row2++;
                     if(!$row++) {
                         $inseeColumn = 0;
                         $communeColumn = 1;
@@ -270,8 +272,11 @@ class ProjetController extends Controller
                         // $em->persist($last_mairie);
                         $last_mairie = false;
                         $elus = [];
-                        file_put_contents(__DIR__ . '/../mairie_counter.txt', $row);
-                        if($row % 500 == 0) $em->flush();
+                        if($row2 > 500) {
+                            $em->flush();
+                            $row2 = 0;
+                            file_put_contents(__DIR__ . '/../mairie_counter.txt', $row);
+                        }
                         // if($row > ($min_row + 10000)) break;
                     }
                     $last_insee = $data[$inseeColumn];
