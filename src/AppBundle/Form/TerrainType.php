@@ -69,6 +69,28 @@ class TerrainType extends AbstractType
                 'required' => false,
                 'choices' => array_flip(Terrain::getEtatList()),
             ])
+            ->add('pcaet', ChoiceType::class, [
+                'label' => 'PCAET',
+                'required' => false,
+                'choices' => array_flip(Terrain::getEtatList()),
+            ])
+            ->add('tepos', ChoiceType::class, [
+                'label' => 'TEPOS',
+                'required' => false,
+                'choices' => array_flip(Terrain::getEtatList()),
+            ])
+            ->add('eoliennes', TextType::class, [
+                'label' => 'Eoliennes',
+                'required' => false,
+            ])
+            ->add('vitesseVent', TextType::class, [
+                'label' => 'Vitesse de vent (m/s)',
+                'required' => false,
+            ])
+            ->add('productibleSolaire', TextType::class, [
+                'label' => 'Productible solaire (h/an)',
+                'required' => false,
+            ])
         ;
     }
 

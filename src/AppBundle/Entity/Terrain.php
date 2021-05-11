@@ -101,6 +101,36 @@ class Terrain
     private $zonage;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $pcaet;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $tepos;
+
+    private $eoliennes;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $vitesseVent;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $productibleSolaire;
+
+    /**
      * @var Projet
      *
      * @ORM\OneToOne(targetEntity="Projet", mappedBy="terrain")
@@ -323,6 +353,101 @@ class Terrain
     public function setZonage($zonage)
     {
         $this->zonage = $zonage;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPcaet()
+    {
+        return $this->pcaet;
+    }
+
+    /**
+     *
+     * @param string $pcaet
+     * @return \AppBundle\Entity\Terrain
+     */
+    public function setPcaet($pcaet)
+    {
+        $this->pcaet = $pcaet;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTepos()
+    {
+        return $this->tepos;
+    }
+
+    /**
+     *
+     * @param string $tepos
+     * @return \AppBundle\Entity\Terrain
+     */
+    public function setTepos($tepos)
+    {
+        $this->tepos = $tepos;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEoliennes()
+    {
+        return $this->eoliennes;
+    }
+
+    /**
+     *
+     * @param string $eoliennes
+     * @return \AppBundle\Entity\Terrain
+     */
+    public function setEoliennes($eoliennes)
+    {
+        $this->eoliennes = $eoliennes;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getVitesseVent()
+    {
+        return $this->vitesseVent;
+    }
+
+    /**
+     *
+     * @param string $vitesseVent
+     * @return \AppBundle\Entity\Terrain
+     */
+    public function setVitesseVent($vitesseVent)
+    {
+        $this->vitesseVent = $vitesseVent;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getProductibleSolaire()
+    {
+        return $this->productibleSolaire;
+    }
+
+    /**
+     *
+     * @param string $productibleSolaire
+     * @return \AppBundle\Entity\Terrain
+     */
+    public function setProductibleSolaire($productibleSolaire)
+    {
+        $this->productibleSolaire = $productibleSolaire;
         return $this;
     }
     
