@@ -88,7 +88,7 @@
             {% if mairie.elus|length > 0 %}<label>Conseillers</label>{% endif %}
             {% for elu in mairie.elus %}
             <tr>
-              <th>{{ elu['nom'] }}</th>
+              <td>{{ elu['nom'] }}</td>
               <td>{% if elu['email'] %}{{ elu['email'] }}
                 <button type="button" data-mail="{{ elu['email'] }}" class="select-mail btn btn-xs btn-primary pull-right"><i class="fa fa-mail-forward"></i></button>{% endif %}
                 {% if elu['telephone'] %}{{ elu['telephone'] }}{% endif %}
