@@ -4,7 +4,7 @@
 {% set item = 'news' %}
 
 {% block body %}
-  <div class="container-fluid">
+  <div class="container">
     
     <fieldset id="tab_news" class="">
       <legend>News <a href="{{ path('news_new') }}" class="btn btn-primary btn-xs pull-right"><i class="fa fa-fw fa-plus"></i> Ajouter news</a></legend>
@@ -39,7 +39,7 @@
               {% if item.note %}<button class="btn btn-info btn-sm btn_note">Afficher</button>{% endif %}
               <span class="hide">{{ item.note }}</span>
               </td>
-              <td>{{ item.url }}</td>
+              <td><a target="_blank" href="{{ item.url }}">{{ item.url }}</a></td>
               <td class="column-fit">
               <a href="{{ path('news_edit', {id: item.id}) }}"><button id="{{ item.id }}" type="news" class="btn btn-warning btn-xs button-edit"><i class="fa fa-fw fa-edit"></i></button></a>
               {% if is_granted('ROLE_ADMIN') %}
