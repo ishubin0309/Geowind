@@ -80,7 +80,7 @@ class TerrainType extends AbstractType
                 'choices' => array_flip(Terrain::getEtatList()),
             ])
             ->add('eoliennes', TextType::class, [
-                'label' => 'Eoliennes',
+                'label' => 'Existant',
                 'required' => false,
             ])
             ->add('vitesseVent', TextType::class, [
