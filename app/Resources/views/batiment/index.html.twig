@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% set title = 'Documents | Batiments | Panneaux PV | Eoliennes' %}
+{% set title = 'Documentation | Batiments | Panneaux PV | Eoliennes' %}
 {% set item = 'batiment' %}
 
 {% block body %}
@@ -31,7 +31,7 @@
       </div><!-- /.container-fluid -->
     </nav>
     <fieldset id="tab_docs">
-      <legend>Docs <a href="{{ path('docs_new') }}" class="btn btn-primary btn-xs pull-right"><i class="fa fa-fw fa-plus"></i> Ajouter doc</a></legend>
+      <legend>Documentation <a href="{{ path('docs_new') }}" class="btn btn-primary btn-xs pull-right"><i class="fa fa-fw fa-plus"></i> Ajouter doc</a></legend>
         
         {% if docs is empty %}
         <div class="alert alert-info mt0">
