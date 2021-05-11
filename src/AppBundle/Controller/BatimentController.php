@@ -37,9 +37,6 @@ class BatimentController extends Controller
         $batiments = $em->getRepository('AppBundle:BatimentNouveau')
                     ->findAll();
 
-        $news = $em->getRepository('AppBundle:News')
-                    ->findAll();
-
         $docs = $em->getRepository('AppBundle:Docs')
                     ->findAll();
 
@@ -51,10 +48,23 @@ class BatimentController extends Controller
 
         return $this->render('batiment/index.html.twig', [
             'batiments' => $batiments,
-            'news' => $news,
             'docs' => $docs,
             'modelesPanneaux' => $modelesPanneaux,
             'modelesEoliennes' => $modelesEoliennes,
+        ]);
+    }
+    /**
+     * @Route("/news", name="batiment_news")
+     */
+    public function newsIndexAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $news = $em->getRepository('AppBundle:News')
+                    ->findAll();
+
+        return $this->render('batiment/news_index.html.twig', [
+            'news' => $news,
         ]);
     }
 

@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% set title = 'Documents | Batiments | News | Panneaux PV | Eoliennes' %}
+{% set title = 'Documents | Batiments | Panneaux PV | Eoliennes' %}
 {% set item = 'batiment' %}
 
 {% block body %}
@@ -22,9 +22,8 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="documents_nav">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#" rel="tab_docs">Documents</a></li>
+            <li class="active"><a href="#" rel="tab_docs">Documentation</a></li>
             <li class=""><a href="#" rel="tab_batiments">Batiments</a></li>
-            <li class=""><a href="#" rel="tab_news">News</a></li>
             <li class=""><a href="#" rel="tab_modeles_panneaux">Modèles panneaux pv</a></li>
             <li class=""><a href="#" rel="tab_modeles_eoliennes">Modèles d'éoliennes</a></li>
           </ul>
@@ -113,51 +112,6 @@
         </tbody>
       </table>
     </fieldset>
-    <fieldset id="tab_news" class="hide">
-      <legend>News <a href="{{ path('news_new') }}" class="btn btn-primary btn-xs pull-right"><i class="fa fa-fw fa-plus"></i> Ajouter news</a></legend>
-        
-      {% if news is empty %}
-        <div class="alert alert-info mt0">
-          Aucun news
-        </div>
-      {% else %}
-        <table id="datatable_news" class="table table-striped table-middle">
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Saisie</th>
-              <th>Thème</th>
-              <th>Filère</th>
-              <th class="column-fit">Titre</th>
-              <th>Note</th>
-              <th>URL</th>
-              <th class="column-fit"></th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for item in news %}
-            <tr>
-              <td>{{ item.date|date('d/m/Y') }}</td>
-              <td>{{ item.saisie }}</td>
-              <td>{{ item.theme }}</td>
-              <td>{{ item.filiere }}</td>
-              <td class="column-fit">{{ item.titre }}</td>
-              <td>
-              {% if item.note %}<button class="btn btn-info btn-sm btn_note">Afficher</button>{% endif %}
-              <span class="hide">{{ item.note }}</span>
-              </td>
-              <td>{{ item.url }}</td>
-              <td class="column-fit">
-              <a href="{{ path('news_edit', {id: item.id}) }}"><button id="{{ item.id }}" type="news" class="btn btn-warning btn-xs button-edit"><i class="fa fa-fw fa-edit"></i></button></a>
-              {% if is_granted('ROLE_ADMIN') %}
-              &nbsp;&nbsp;<button id="{{ item.id }}" type="news" nom="" class="btn btn-danger btn-xs button-delete" title="Double click"><i class="fa fa-fw fa-trash"></i></button>
-              {% endif %}</td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      {% endif %}
-    </fieldset>
     <fieldset id="tab_modeles_panneaux" class="hide">
       <legend>Modèles de panneaux pv <a href="{{ path('modele_panneau_new') }}" class="btn btn-primary btn-xs pull-right"><i class="fa fa-fw fa-plus"></i> Ajouter un modèle</a></legend>
 
@@ -235,14 +189,6 @@
       </table>
     </fieldset>
   </div>
-  <div class="modal fade bs-modal" tabindex="-1" role="dialog" aria-labelledby="newsModal">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content text-center">
-        <div id="show_note" style="padding: 20px;text-align: left;" class="modal-body">
-        </div>
-      </div>
-    </div>
-  </div>
   </div>
 {% endblock %}
 
@@ -260,8 +206,8 @@
       nom = $(this).attr('nom');
       type = $(this).attr('type');
       
-      if(type=='news' || type=='docs')
-        title = type=='news' ? 'News sera supprimé définitivement.' : 'Doc sera supprimé définitivement.';
+      if(type=='docs')
+        title = 'Doc sera supprimé définitivement.';
       else title = "Le modèle « "+nom+" » sera supprimé définitivement.";
       
       if (!id) {

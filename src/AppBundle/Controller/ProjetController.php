@@ -300,7 +300,7 @@ class ProjetController extends Controller
                     $last_mairie->setFax(null);
                     $last_mairie->setSiteinternet(null);
                     if($data[$communeColumn]) $last_mairie->setCommune($data[$communeColumn]);
-                    if($data[$eluFonctionColumn] == 'Mairie') {
+                    if($data[$eluFonctionColumn] == 'Maire') {
                         $fullName = explode(' ', $data[$eluColumn]);
                         $last_mairie->setNomMaire($fullName[0]);
                         $last_mairie->setPrenomMaire(trim(str_replace($fullName[0], '', $data[$eluColumn])));
