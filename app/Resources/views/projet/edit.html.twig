@@ -163,6 +163,12 @@
         {{ form_row(form.latitude) }}
         {{ form_row(form.longitude) }}
         {{ form_row(form.adresse) }}
+
+        <div id="population">
+          <legend>Population</legend>
+          <span>-</span>
+          <span>-</span>
+        </div>
       </fieldset>
 
       <fieldset class="hide" id="tab_contacts">
@@ -826,15 +832,21 @@
             $('#contact_epci td:eq(1)').text('-');
             $('#contact_epci td:eq(2)').text('-');
             $('#projet_epci').text('-');
+            $('#population span:eq(0)').text('-');
+            $('#population span:eq(1)').text('-');
           },
           success: function (response) {
             if(response['nom_president']) $('#contact_epci td:eq(1)').text(response['nom_president']);
             if(response['telephone_president']) $('#contact_epci td:eq(2)').text(response['telephone_president']);
             if(response['epci']) $('#projet_epci').html('<input type="text" class="form-control" value="' + response['epci'] + '">');
+            $('#population span:eq(0)').text(response['commmune'] + ': ' + response['commmune_pop']);
+            $('#population span:eq(1)').text(response['epci'] + ': ' + response['epci_pop']);
           }, error: function () {
             $('#contact_epci td:eq(1)').text('');
             $('#contact_epci td:eq(2)').text('');
             $('#projet_epci').text('');
+            $('#population span:eq(0)').text('');
+            $('#population span:eq(1)').text('');
           }
         });
       }
