@@ -83,9 +83,23 @@ class Commune
     /**
      * @var string
      *
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $communePop;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $communeCp;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(type="string", nullable=true)
      */
-    private $intercommunalite;
+    private $intercommunalite; // EPCI
 
     /**
      * @var string
@@ -113,7 +127,21 @@ class Commune
      *
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $intercommunaliteEpci;
+    private $intercommunaliteEpci; // EPCI siren
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $vitesseVent;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $productiblePv;
 
     /**
      * @var ArrayCollection|Projet[]
@@ -319,6 +347,42 @@ class Commune
     /**
      * @return string
      */
+    public function getCommunePop()
+    {
+        return $this->communePop;
+    }
+
+    /**
+     * @param string $communePop
+     * @return \AppBundle\Entity\Commune
+     */
+    public function setCommunePop($communePop)
+    {
+        if($communePop) $this->communePop = $communePop;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCommuneCp()
+    {
+        return $this->communeCp;
+    }
+
+    /**
+     * @param string $communeCp
+     * @return \AppBundle\Entity\Commune
+     */
+    public function setCommuneCp($communeCp)
+    {
+        if($communeCp) $this->communeCp = $communeCp;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
     public function getIntercommunalitePop()
     {
         return $this->intercommunalitePop;
@@ -367,6 +431,42 @@ class Commune
     public function setIntercommunaliteEpci($intercommunaliteEpci)
     {
         if($intercommunaliteEpci) $this->intercommunaliteEpci = $intercommunaliteEpci;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getVitesseVent()
+    {
+        return $this->vitesseVent;
+    }
+
+    /**
+     * @param string $vitesseVent
+     * @return \AppBundle\Entity\Commune
+     */
+    public function setVitesseVent($vitesseVent)
+    {
+        $this->vitesseVent = $vitesseVent;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getProductiblePv()
+    {
+        return $this->productiblePv;
+    }
+
+    /**
+     * @param string $productiblePv
+     * @return \AppBundle\Entity\Commune
+     */
+    public function setProductiblePv($productiblePv)
+    {
+        if($productiblePv) $this->productiblePv = $productiblePv;
         return $this;
     }
 

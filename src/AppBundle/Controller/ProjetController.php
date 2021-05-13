@@ -351,9 +351,13 @@ class ProjetController extends Controller
                         $departementColumn = 6;
                         $intercommunaliteColumn = 7;
                         $intercommunaliteNbColumn = 8;
-                        $intercommunalitePopColumn = 9;
-                        $intercommunaliteCpColumn = 10;
+                        $communePopColumn = 9;
+                        $communeCpColumn = 10;
                         $intercommunaliteEpciColumn = 11;
+                        $vitesseVentColumn = 12;
+                        $productiblePvColumn = 13;
+                        $intercommunalitePopColumn = 14;
+                        $intercommunaliteCpColumn = 15;
                         continue;
                     }
                     // if($row < 30000) continue;
@@ -374,8 +378,12 @@ class ProjetController extends Controller
                     $commune->setIntercommunalite($data[$intercommunaliteColumn]);
                     $commune->setIntercommunaliteNb($data[$intercommunaliteNbColumn]);
                     $commune->setIntercommunalitePop($data[$intercommunalitePopColumn]);
-                    $commune->setIntercommunaliteCp($data[$intercommunaliteCpColumn]);
+                    if(isset($data[$intercommunaliteCpColumn])) $commune->setIntercommunaliteCp($data[$intercommunaliteCpColumn]);
                     $commune->setIntercommunaliteEpci($data[$intercommunaliteEpciColumn]);
+                    $commune->setCommunePop($data[$communePopColumn]);
+                    $commune->setCommuneCp($data[$communeCpColumn]);
+                    $commune->setVitesseVent($data[$vitesseVentColumn]);
+                    $commune->setProductiblePv($data[$productiblePvColumn]);
                     $em->persist($commune);
                     if($row % 100 == 0) $em->flush();
                 }
