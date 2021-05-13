@@ -649,21 +649,21 @@
             $('#contact_epci td:eq(1)').text('-');
             $('#contact_epci td:eq(2)').text('-');
             $('#projet_epci').text('-');
-            $('#population div:eq(0)').html('<label class="col-sm-4 control-label">-:</label><div class="col-sm-8">-</div>');
-            $('#population div:eq(1)').html('<label class="col-sm-4 control-label">-:</label><div class="col-sm-8">-</div>');
+            $('#population > div:eq(0)').html('<label class="col-sm-4 control-label">-:</label><div class="col-sm-8">-</div>');
+            $('#population > div:eq(1)').html('<label class="col-sm-4 control-label">-:</label><div class="col-sm-8">-</div>');
           },
           success: function (response) {
             if(response['nom_president']) $('#contact_epci td:eq(1)').text(response['nom_president']);
             if(response['telephone_president']) $('#contact_epci td:eq(2)').text(response['telephone_president']);
             if(response['epci']) $('#projet_epci').html('<input type="text" class="form-control" value="' + response['epci'] + '">');
-            $('#population div:eq(0)').html('<label class="col-sm-4 control-label">'+response['commune']+':</label><div class="col-sm-8">'+response['commune_pop']+'</div>');
-            $('#population div:eq(1)').html('<label class="col-sm-4 control-label">'+response['epci']+':</label><div class="col-sm-8">'+response['epci_pop']+'</div>');
+            $('#population > div:eq(0)').html('<label class="col-sm-4 control-label">'+response['commune']+':</label><div class="col-sm-8">'+response['commune_pop']+'</div>');
+            $('#population > div:eq(1)').html('<label class="col-sm-4 control-label">'+response['epci']+':</label><div class="col-sm-8">'+response['epci_pop']+'</div>');
           }, error: function () {
             $('#contact_epci td:eq(1)').text('');
             $('#contact_epci td:eq(2)').text('');
             $('#projet_epci').text('');
-            $('#population div:eq(0)').html('<label class="col-sm-4 control-label"></label><div class="col-sm-8"></div>');
-            $('#population div:eq(1)').html('<label class="col-sm-4 control-label"></label><div class="col-sm-8"></div>');
+            $('#population > div:eq(0)').html('<label class="col-sm-4 control-label"></label><div class="col-sm-8"></div>');
+            $('#population > div:eq(1)').html('<label class="col-sm-4 control-label"></label><div class="col-sm-8"></div>');
           }
         });
       }
