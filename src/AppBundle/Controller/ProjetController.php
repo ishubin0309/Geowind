@@ -361,7 +361,7 @@ class ProjetController extends Controller
                         $intercommunaliteCpColumn = 15;
                         continue;
                     }//echo '<pre>';print_r($data);die;
-                    if($row > 20000 || $row < 10000) continue;
+                    if($row > 30000 || $row < 20000) continue;
                     $data = array_map("utf8_encode", $data);
                     // echo $row . ': Insee ' . $data[$inseeColumn] . '<br>';
                     $commune = $em->getRepository('AppBundle:Commune')->findOneBy(['insee' => $data[$inseeColumn]]);
