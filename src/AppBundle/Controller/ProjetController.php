@@ -355,11 +355,11 @@ class ProjetController extends Controller
                         $communeCpColumn = 10;
                         $intercommunaliteEpciColumn = 11;
                         $vitesseVentColumn = 12;
-                        $productiblePvColumn = 13;
-                        $intercommunalitePopColumn = 14;
+                        $productiblePvColumn = 14;
+                        $intercommunalitePopColumn = 13;
                         $intercommunaliteCpColumn = 15;
                         continue;
-                    }echo '<pre>';print_r($data);die;
+                    }//echo '<pre>';print_r($data);die;
                     // if($row < 30000) continue;
                     $data = array_map("utf8_encode", $data);
                     // echo $row . ': Insee ' . $data[$inseeColumn] . '<br>';
