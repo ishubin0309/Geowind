@@ -359,7 +359,7 @@ class ProjetController extends Controller
                         $intercommunalitePopColumn = 14;
                         $intercommunaliteCpColumn = 15;
                         continue;
-                    }
+                    }echo '<pre>';print_r($data);die;
                     // if($row < 30000) continue;
                     $data = array_map("utf8_encode", $data);
                     // echo $row . ': Insee ' . $data[$inseeColumn] . '<br>';
