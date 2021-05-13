@@ -203,7 +203,7 @@
             dateSignature: '{{ proprietaire.dateSignatureProprietaire is not null ? proprietaire.dateSignatureProprietaire|date('d/m/Y') }}',
             dateEcheance: '{{ proprietaire.dateEcheanceProprietaire is not null ? proprietaire.dateEcheanceProprietaire|date('d/m/Y') }}',
           });
-            {% if proprietaire.accordExploitant %}
+            {% if proprietaire.exploitant or proprietaire.accordExploitant %}
           data.push({
             id: -{{ proprietaire.id }},
             projetId: {{ projet.id }},
