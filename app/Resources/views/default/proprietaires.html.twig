@@ -203,6 +203,7 @@
             dateSignature: '{{ proprietaire.dateSignatureProprietaire is not null ? proprietaire.dateSignatureProprietaire|date('d/m/Y') }}',
             dateEcheance: '{{ proprietaire.dateEcheanceProprietaire is not null ? proprietaire.dateEcheanceProprietaire|date('d/m/Y') }}',
           });
+            {% if proprietaire.exploitant %}
           data.push({
             id: -{{ proprietaire.id }},
             projetId: {{ projet.id }},
@@ -216,6 +217,7 @@
             dateSignature: '{{ proprietaire.dateSignatureExploitant is not null ? proprietaire.dateSignatureExploitant|date('d/m/Y') }}',
             dateEcheance: '{{ proprietaire.dateEcheanceExploitant is not null ? proprietaire.dateEcheanceExploitant|date('d/m/Y') }}',
           });
+            {% endif %}
           {% endfor %}
         {% endif %}
       {% endfor %}
