@@ -326,6 +326,7 @@ class ProjetController extends Controller
 
         $file_path = __DIR__ . '/../01_Admin.csv';
         $row = 0;
+        $row2 = 0;
         if(file_exists($file_path)) {
             if (($handle = fopen($file_path, "r")) !== FALSE) {
                 ini_set("memory_limit", "4000M");
@@ -344,6 +345,7 @@ class ProjetController extends Controller
                             $write_close = true;
                         }
                     }
+                    $row2++;
                     if(!$row++) {
                         $inseeColumn = 3;
                         $nomColumn = 4;
@@ -385,7 +387,10 @@ class ProjetController extends Controller
                     $commune->setVitesseVent($data[$vitesseVentColumn]);
                     $commune->setProductiblePv($data[$productiblePvColumn]);
                     $em->persist($commune);
-                    if($row % 100 == 0) $em->flush();
+                    if($row2 > 100) {
+                        $em->flush();
+                        $row2 = 0;
+                    }
                 }
                 fclose($handle);
                 $em->flush();
