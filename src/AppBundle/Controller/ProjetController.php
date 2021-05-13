@@ -345,7 +345,6 @@ class ProjetController extends Controller
                             $write_close = true;
                         }
                     }
-                    $row2++;
                     if(!$row++) {
                         $inseeColumn = 3;
                         $nomColumn = 4;
@@ -376,6 +375,7 @@ class ProjetController extends Controller
                         $commune->setInsee($data[$inseeColumn]);
                         $commune->setCode(substr($data[$inseeColumn], -3));
                     } else if($commune->getCommunePop()) continue;
+                    $row2++;
                     $commune->setNomMiniscule($data[$nomMinisculeColumn]);
                     $commune->setIntercommunalite($data[$intercommunaliteColumn]);
                     $commune->setIntercommunaliteNb($data[$intercommunaliteNbColumn]);
