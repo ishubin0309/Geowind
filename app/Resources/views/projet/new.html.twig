@@ -425,7 +425,7 @@
         updateMairie();
         updateEpci();
       } else {
-        var query = $('#projet_departement option:selected').text().trim();
+        var query = $('#projet_departement option:selected').text().replace(/\(.+/, '').trim();
         updateContacts();
       }
       if(query && last_reverse_search != query) {

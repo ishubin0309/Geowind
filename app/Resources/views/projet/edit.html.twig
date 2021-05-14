@@ -578,7 +578,7 @@
         updateMairie();
         updateEpci();
       } else {
-        var query = $('#projet_departement option:selected').text().trim();
+        var query = $('#projet_departement option:selected').text().replace(/\(.+/, '').trim();
         {% if is_granted('ROLE_ADMIN') or projet.origine.id == app.user.id %}
         updateContacts();
         {% endif %}
