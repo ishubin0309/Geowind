@@ -774,12 +774,15 @@
           beforeSend: function () {
             markers.clearLayers();
             parcMarkers = {};
+            $('#projet_terrain_eoliennes').val('');
           },
           success: function (response) {
             parcEoliens = response['parc_eoliens'];
+            $('#projet_terrain_eoliennes').val(parcEoliens.length);
           }, error: function () {
             markers.clearLayers();
             parcMarkers = {};
+            $('#projet_terrain_eoliennes').val('');
           }
         });
       }
@@ -905,6 +908,8 @@
             $('#projet_epci').text('-');
             $('#population > div:eq(0)').html('<label class="col-sm-4 control-label">-:</label><div class="col-sm-8">-</div>');
             $('#population > div:eq(1)').html('<label class="col-sm-4 control-label">-:</label><div class="col-sm-8">-</div>');
+            $('#projet_terrain_vitesseVent').val('');
+            $('#projet_terrain_productibleSolaire').val('');
           },
           success: function (response) {
             if(response['nom_president']) $('#contact_epci td:eq(1)').text(response['nom_president']);
@@ -912,12 +917,16 @@
             if(response['epci']) $('#projet_epci').html('<input type="text" class="form-control" value="' + response['epci'] + '">');
             $('#population > div:eq(0)').html('<label class="col-sm-4 control-label">'+response['commune']+':</label><div class="col-sm-8">'+response['commune_pop']+'</div>');
             $('#population > div:eq(1)').html('<label class="col-sm-4 control-label">'+response['epci']+':</label><div class="col-sm-8">'+response['epci_pop']+'</div>');
+            $('#projet_terrain_vitesseVent').val(response['vitesse_vent']);
+            $('#projet_terrain_productibleSolaire').val(response['productible_pv']);
           }, error: function () {
             $('#contact_epci td:eq(1)').text('');
             $('#contact_epci td:eq(2)').text('');
             $('#projet_epci').text('');
             $('#population > div:eq(0)').html('<label class="col-sm-4 control-label"></label><div class="col-sm-8"></div>');
             $('#population > div:eq(1)').html('<label class="col-sm-4 control-label"></label><div class="col-sm-8"></div>');
+            $('#projet_terrain_vitesseVent').val('');
+            $('#projet_terrain_productibleSolaire').val('');
           }
         });
       }
