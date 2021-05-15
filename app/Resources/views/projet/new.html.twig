@@ -3,6 +3,11 @@
 {% set title = 'Nouvelle fiche' %}
 {% set item = 'creer' %}
 
+{% block css %}
+  <link rel="stylesheet" href="{{ asset('vendor/Leaflet.markercluster-1.1.0/dist/MarkerCluster.css') }}">
+  <link rel="stylesheet" href="{{ asset('vendor/Leaflet.markercluster-1.1.0/dist/MarkerCluster.Default.css') }}">
+{% endblock %}
+
 {% form_theme form 'bootstrap_3_horizontal_sm_layout.html.twig' %}
 
 {% block body %}
@@ -267,6 +272,7 @@
 {% endblock %}
 
 {% block js %}
+  <script src="{{ asset('vendor/Leaflet.markercluster-1.1.0/dist/leaflet.markercluster.js') }}"></script>
   <script>
     var map = L.map('map').setView([46, 2], 5.5);
 
