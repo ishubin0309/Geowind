@@ -361,7 +361,7 @@ class ProjetController extends Controller
                         $intercommunaliteCpColumn = 15;
                         continue;
                     }//echo '<pre>';print_r($data);die;
-                    if($row < 30000) continue;
+                    if($row > 10000) continue;
                     $data = array_map("utf8_encode", $data);
                     // echo $row . ': Insee ' . $data[$inseeColumn] . '<br>';
                     $commune = $em->getRepository('AppBundle:Commune')->findOneBy(['insee' => $data[$inseeColumn]]);
@@ -374,7 +374,7 @@ class ProjetController extends Controller
                         $commune->setNom($data[$nomColumn]);
                         $commune->setInsee($data[$inseeColumn]);
                         $commune->setCode(substr($data[$inseeColumn], -3));
-                    } else if($commune->getCommunePop()) continue;
+                    } //else if($commune->getCommunePop()) continue;
                     $row2++;
                     $commune->setNomMiniscule($data[$nomMinisculeColumn]);
                     $commune->setIntercommunalite($data[$intercommunaliteColumn]);
@@ -794,7 +794,16 @@ class ProjetController extends Controller
 
         $epciPop = $commune->getIntercommunalitePop() ? $commune->getIntercommunalitePop() : '-';
         $communePop = $commune->getCommunePop() ? $commune->getCommunePop() : '-';
-        $result = ['epci' => $commune->getIntercommunalite(), 'epci_pop' => $epciPop, 'commune' => $commune->getNomMiniscule(), 'commune_pop' => $communePop, 'nom_president' => $commune->getNomPresident(), 'telephone_president' => $commune->getTelephonePresident(), 'email_president' => $commune->getEmailPresident()];
+        $result = ['epci' => $commune->getIntercommunalite(), 'epci_pop' => $epciPop, 'commune' => $commune->getNomMiniscule(), 'commune_pop' => $communePop, 'nom_president' => $commune->getNomPresident(), 'telephone_president' => $commune->getTelephonePresident(), 'email_president' => $commune->getEmailPresident(), 'parc_eoliens' => []];
+        $departement = $request->query->get('departement', null);
+        if($departement) {
+            $em = $this->getDoctrine()->getManager();
+            $parcEoliens = $em->getRepository('AppBundle:ParcEolien')->findBy(['departement' => $departement]);
+            foreach($parcEoliens as $parc) {
+                $denomination = $parc->getDenomination() ? $parc->getDenomination() : $parc->getId();
+                $result['parc_eoliens'][] = ['id' => $parc->getId(),'denomination' => $denomination, 'latitude' => $parc->getLatitude(), 'longitude' => $parc->getLongitude()];
+            }
+        }
         $response->setData($result);
 
         return $response;
