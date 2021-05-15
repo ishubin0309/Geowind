@@ -3,6 +3,11 @@
 {% set title = 'Modifier ' ~ projet %}
 {% set item = 'afficher' %}
 
+{% block css %}
+  <link rel="stylesheet" href="{{ asset('vendor/Leaflet.markercluster-1.1.0/dist/MarkerCluster.css') }}">
+  <link rel="stylesheet" href="{{ asset('vendor/Leaflet.markercluster-1.1.0/dist/MarkerCluster.Default.css') }}">
+{% endblock %}
+
 {% form_theme form 'bootstrap_3_horizontal_sm_layout.html.twig' %}
 
 {% block body %}
@@ -420,6 +425,7 @@
 {% endblock %}
 
 {% block js %}
+  <script src="{{ asset('vendor/Leaflet.markercluster-1.1.0/dist/leaflet.markercluster.js') }}"></script>
   <script>
     var map = L.map('map').setView([46, 2], 5.5);
 
@@ -581,6 +587,7 @@
         var query = $('#projet_departement option:selected').text().replace(/\(.+/, '').trim();
         {% if is_granted('ROLE_ADMIN') or projet.origine.id == app.user.id %}
         updateContacts();
+        updateParcEoliens();
         {% endif %}
       }
       if(query && last_reverse_search != query) {
@@ -714,6 +721,70 @@
     }
     updateContacts();
     {% endif %}
+    
+    function showPopup(layer) {
+      var status = layer.options.denomination;
+      return status;
+    }
+    
+    function showTooltip(layer) {
+      var status = layer.options.denomination;
+      return status;
+    }
+
+    var markers = {};
+    
+    var markerIcon = new L.DivIcon.SVGIcon({
+      color: '#E53935',
+      fillOpacity: 0.7
+    });
+
+    var markers = L.markerClusterGroup({
+      maxClusterRadius: 40,
+    });
+
+    var parcMarkers = {};
+    var parcEoliens = {};
+    function loadParcMarkers() {
+      markers.clearLayers();
+      parcMarkers = {};
+      $.each(parcEoliens, function(index, parc) {
+        var marker = L.marker([parc.latitude, parc.longitude], {
+          id: parc.id, 
+          icon: markerIcon,
+          denomination: parc.denomination,
+        })
+        .bindTooltip(showTooltip)
+        .bindPopup(showPopup);
+        
+        markers.addLayer(marker);
+        
+        parcMarkers[parc.id] = marker;
+      });
+    
+      map.addLayer(markers);
+    }
+    function updateParcEoliens() {
+      var departement_id = $('#projet_departement').val();
+      if(departement_id) {
+        jQuery.ajax({
+          url: Routing.generate('parc_eoliens_search_by_departement', { departement: departement_id }),
+          method: "POST",
+          dataType: "json", 
+          beforeSend: function () {
+            markers.clearLayers();
+            parcMarkers = {};
+          },
+          success: function (response) {
+            parcEoliens = response['parc_eoliens'];
+          }, error: function () {
+            markers.clearLayers();
+            parcMarkers = {};
+          }
+        });
+      }
+    }
+    updateParcEoliens();
 
     var queryCommuneUrl = "{{ path('commune_search') }}";
 
@@ -821,53 +892,11 @@
         });
       }
     }
-    function showPopup(layer) {
-      var status = layer.options.denomination;
-      return status;
-    }
-    
-    function showTooltip(layer) {
-      var status = layer.options.denomination;
-      return status;
-    }
-
-    var markers = {};
-    
-    var markerIcon = new L.DivIcon.SVGIcon({
-      color: '#E53935',
-      fillOpacity: 0.7
-    });
-
-    var markers = L.markerClusterGroup({
-      maxClusterRadius: 40,
-    });
-    
-    var parcMarkers = {};
-    function loadParcMarkers(parcs) {
-      markers.clearLayers();
-      parcMarkers = {};
-      $.each(parcs, function(index, parc) {
-        var marker = L.marker([parc.latitude, parc.longitude], {
-          id: parc.id, 
-          icon: markerIcon,
-          denomination: parc.denomination,
-        })
-        .bindTooltip(showTooltip)
-        .bindPopup(showPopup);
-        
-        markers.addLayer(marker);
-        
-        parcMarkers[parc.id] = marker;
-      });
-    
-      map.addLayer(markers);
-    }
     function updateEpci() {
       var commune_id = $('#projet_communes option:selected').val();
-      var departement_id = $('#projet_departement').val();
       if(commune_id) {
         jQuery.ajax({
-          url: Routing.generate('epci_search_by_commune', { id: commune_id, departement: departement_id }),
+          url: Routing.generate('epci_search_by_commune', { id: commune_id }),
           method: "POST",
           dataType: "json", 
           beforeSend: function () {
@@ -883,7 +912,6 @@
             if(response['epci']) $('#projet_epci').html('<input type="text" class="form-control" value="' + response['epci'] + '">');
             $('#population > div:eq(0)').html('<label class="col-sm-4 control-label">'+response['commune']+':</label><div class="col-sm-8">'+response['commune_pop']+'</div>');
             $('#population > div:eq(1)').html('<label class="col-sm-4 control-label">'+response['epci']+':</label><div class="col-sm-8">'+response['epci_pop']+'</div>');
-            loadParcMarkers(response['parc_eoliens']);
           }, error: function () {
             $('#contact_epci td:eq(1)').text('');
             $('#contact_epci td:eq(2)').text('');
@@ -2155,6 +2183,8 @@
       var attr = $(this).attr('rel');
       if(typeof attr !== typeof undefined && attr !== false) {
         refresh_messagerie = 0;
+        markers.clearLayers();
+        parcMarkers = {};
         $('#nouveau_projet_nav li').removeClass('active');
         $(this).parent().addClass('active');
         $('fieldset').addClass('hide');
@@ -2184,6 +2214,7 @@
           $('#fields_div').addClass('col-sm-6');
         }
         if(attr == 'tab_site') {
+          loadParcMarkers();
           $('.form_site').addClass('hide');
           var type_site = $('#projet_typeSite').val();
           $('#tab_site legend:eq(0)').text($('#projet_typeSite option:selected').text());

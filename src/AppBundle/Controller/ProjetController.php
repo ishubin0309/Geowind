@@ -783,7 +783,7 @@ class ProjetController extends Controller
     }
     
     /**
-     * @Route("/{id}/search-by-commune", name="epci_search_by_commune", options={ "expose": true })
+     * @Route("/{id}/epci-by-commune", name="epci_search_by_commune", options={ "expose": true })
      * @ParamConverter("commune", options={"mapping": {"id": "id"}})
      * @Method({"POST"})
      * @Security("has_role('ROLE_VIEW')")
@@ -794,7 +794,23 @@ class ProjetController extends Controller
 
         $epciPop = $commune->getIntercommunalitePop() ? $commune->getIntercommunalitePop() : '-';
         $communePop = $commune->getCommunePop() ? $commune->getCommunePop() : '-';
-        $result = ['epci' => $commune->getIntercommunalite(), 'epci_pop' => $epciPop, 'commune' => $commune->getNomMiniscule(), 'commune_pop' => $communePop, 'nom_president' => $commune->getNomPresident(), 'telephone_president' => $commune->getTelephonePresident(), 'email_president' => $commune->getEmailPresident(), 'parc_eoliens' => []];
+        $result = ['epci' => $commune->getIntercommunalite(), 'epci_pop' => $epciPop, 'commune' => $commune->getNomMiniscule(), 'commune_pop' => $communePop, 'nom_president' => $commune->getNomPresident(), 'telephone_president' => $commune->getTelephonePresident(), 'email_president' => $commune->getEmailPresident()];
+
+        $response->setData($result);
+
+        return $response;
+    }
+    
+    /**
+     * @Route("/parc-eoliens-by-departement", name="parc_eoliens_search_by_departement", options={ "expose": true })
+     * @Method({"POST"})
+     * @Security("has_role('ROLE_VIEW')")
+     */
+    public function parcEoliensSearchByDepartementAction(Request $request)
+    {
+        $response = new JsonResponse();
+
+        $result = ['parc_eoliens' => []];
         $departement = $request->query->get('departement', null);
         if($departement) {
             $em = $this->getDoctrine()->getManager();
