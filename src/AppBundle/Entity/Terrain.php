@@ -42,7 +42,7 @@ class Terrain
      *
      * @ORM\Column(type="string", nullable=true)
      */
-    private $exposition;
+    private $orientation;
 
     /**
      * @var string
@@ -188,19 +188,19 @@ class Terrain
     /**
      * @return string
      */
-    public function getExposition()
+    public function getOrientation()
     {
-        return $this->exposition;
+        return $this->orientation;
     }
 
     /**
      *
-     * @param string $exposition
+     * @param string $orientation
      * @return \AppBundle\Entity\Terrain
      */
-    public function setExposition($exposition)
+    public function setOrientation($orientation)
     {
-        $this->exposition = $exposition;
+        $this->orientation = $orientation;
         return $this;
     }
 
@@ -468,6 +468,19 @@ class Terrain
     /**
      * @return array
      */
+    public static function getOrientationList()
+    {
+        return [
+            'e_o' => 'E-O',
+            'n_s' => 'N-S',
+            'no_se' => 'NO-SE',
+            'ne_so' => 'NE-SO'
+        ];
+    }
+    
+    /**
+     * @return array
+     */
     public static function getDocumentUrbanismeList()
     {
         return [
@@ -539,7 +552,7 @@ class Terrain
 
     public function isNotEmpty()
     {
-        if($this->relief || $this->altitude || $this->exposition || $this->livraison || $this->nomPoste || $this->injection || $this->zonage || $this->documentUrbanisme)
+        if($this->relief || $this->altitude || $this->orientation || $this->livraison || $this->nomPoste || $this->injection || $this->zonage || $this->documentUrbanisme)
             return true;
         else return false;
     }
