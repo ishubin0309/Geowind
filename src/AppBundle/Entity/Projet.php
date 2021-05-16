@@ -414,6 +414,13 @@ class Projet
     private $surfaceUtile = 0;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(type="integer")
+     */
+    private $voiries = 0;
+
+    /**
      * @var string
      *
      * @ORM\Column(type="integer")
@@ -1772,6 +1779,24 @@ class Projet
     public function setSurfaceUtile($surfaceUtile)
     {
         $this->surfaceUtile = $surfaceUtile;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getVoiries()
+    {
+        return $this->voiries;
+    }
+
+    /**
+     * @param int $voiries
+     * @return \AppBundle\Entity\Projet
+     */
+    public function setVoiries($voiries)
+    {
+        $this->voiries = $voiries;
         return $this;
     }
 

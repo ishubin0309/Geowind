@@ -250,6 +250,10 @@ class ProjetEditType extends AbstractType
                 'label' => 'Surface utile (m2)',
                 'required' => false,
             ])
+            ->add('voiries', NumberType::class, [
+                'label' => 'Voiries (m2)',
+                'required' => false,
+            ])
             ->add('emprise', NumberType::class, [
                 'label' => 'Emprise (m2)',
                 'required' => false,
