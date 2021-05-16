@@ -405,11 +405,10 @@ class Terrain
     public static function getTopographieList()
     {
         return [
-            'montagne' => 'Montagne',
-            'plateau' => 'Plateau',
-            'plaine' => 'Plaine',
-            'valle' => 'Vallée',
-            'littoral' => 'Littoral'
+            'Bas plateaux-colines' => 'Bas plateaux-colines',
+            'Haute montagne' => 'Haute montagne',
+            'Hauts plateaux' => 'Hauts plateaux',
+            'Plaine' => 'Plaine'
         ];
     }
     
@@ -419,10 +418,10 @@ class Terrain
     public static function getDocumentUrbanismeList()
     {
         return [
-            'plu' => 'PLU',
-            'plui' => 'PLUi',
-            'carte'=> 'CARTE',
-            'pos' => 'POS'
+            'PLU' => 'PLU',
+            'CARTE'=> 'CARTE',
+            'POS' => 'POS',
+            'SANS' => 'SANS'
         ];
     }
     
@@ -444,10 +443,9 @@ class Terrain
     public static function getEtatList()
     {
         return [
-            'sans' => 'Sans',
-            'prescrit' => 'Prescrit',
-            'en_cours' => 'En cours',
-            'en_projet' => 'En projet'
+            'A l\'étude' => 'A l\'étude',
+            'Adopté' => 'Adopté',
+            'En réflexion' => 'En réflexion'
         ];
     }
     
