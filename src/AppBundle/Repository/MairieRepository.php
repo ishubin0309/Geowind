@@ -29,7 +29,7 @@ class MairieRepository extends EntityRepository
                 'insee' => $result[0]['insee'],
                 'id' => $result[0]['id'],
                 'telephone' => $result[0]['telephone'],
-                'text' => $result[0]['mairie'] . ' (' . $result[0]['codePostal'] . ')',
+                'text' => trim(str_replace(array('Mairie d\'', 'Mairie de '), '', $result[0]['mairie'])) . ' (' . $result[0]['codePostal'] . ')',
             ];
             $data[] = $arr;
         }
