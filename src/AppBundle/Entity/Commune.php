@@ -158,6 +158,13 @@ class Commune
     private $urbanismeEtat;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $altitude;
+
+    /**
      * @var string
      *
      * @ORM\Column(type="string", nullable=true)
@@ -524,6 +531,24 @@ class Commune
     public function setUrbanismeEtat($urbanismeEtat)
     {
         $this->urbanismeEtat = $urbanismeEtat;
+        return $this;
+    }
+
+    /**
+     * @return integer
+     */
+    public function getAltitude()
+    {
+        return $this->altitude;
+    }
+
+    /**
+     * @param integer $altitude
+     * @return \AppBundle\Entity\Commune
+     */
+    public function setAltitude($altitude)
+    {
+        if($altitude) $this->altitude = $altitude;
         return $this;
     }
 

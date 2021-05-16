@@ -360,11 +360,12 @@ class ProjetController extends Controller
                         $intercommunalitePopColumn = 13;
                         $urbanismeTypeColumn = 15;
                         $urbanismeEtatColumn = 16;
-                        $reliefColumn = 17;
+                        $altitudeColumn = 17;
+                        $reliefColumn = 18;
                         continue;
                     }//echo '<pre>';print_r($data);die;
-                    // if($row > 30000) break;
-                    if($row < 30000) continue;
+                    if($row > 10000) break;
+                    // if($row < 30000) continue;
                     $data = array_map("utf8_encode", $data);
                     // echo $row . ': Insee ' . $data[$inseeColumn] . '<br>';
                     $commune = $em->getRepository('AppBundle:Commune')->findOneBy(['insee' => $data[$inseeColumn]]);
@@ -377,7 +378,7 @@ class ProjetController extends Controller
                         $commune->setNom($data[$nomColumn]);
                         $commune->setInsee($data[$inseeColumn]);
                         $commune->setCode(substr($data[$inseeColumn], -3));
-                    } else if($commune->getUrbanismeType()) continue;
+                    } else if($commune->getAltitude()) continue;
                     $row2++;
                     $commune->setNomMiniscule($data[$nomMinisculeColumn]);
                     $commune->setIntercommunalite($data[$intercommunaliteColumn]);
@@ -390,6 +391,7 @@ class ProjetController extends Controller
                     $commune->setProductiblePv($data[$productiblePvColumn]);
                     $commune->setUrbanismeType($data[$urbanismeTypeColumn]);
                     $commune->setUrbanismeEtat($data[$urbanismeEtatColumn]);
+                    $commune->setAltitude($data[$altitudeColumn]);
                     $commune->setRelief($data[$reliefColumn]);
                     $em->persist($commune);
                     if($row2 > 100) {
