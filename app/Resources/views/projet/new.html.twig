@@ -604,7 +604,7 @@
     }
     function updateParcEoliens() {
       var departement = $('#projet_departement option:selected').text();
-      if(departement.match(/\(\d+\)/)) departement_id = departement.match(/\(\d+\)/).match(\d+/);
+      if(departement.match(/\(\d+\)/)) departement_id = departement.match(/\(\d+\)/).match(/\d+/);
       else departement_id = $('#projet_departement').val();
       if(departement_id) {
         jQuery.ajax({
