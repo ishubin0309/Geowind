@@ -365,7 +365,7 @@ class ProjetController extends Controller
                         continue;
                     }//echo '<pre>';print_r($data);die;
                     // if($row > 30000) break;
-                    if($row < 20000) continue;
+                    // if($row < 20000) continue;
                     $data = array_map("utf8_encode", $data);
                     // echo $row . ': Insee ' . $data[$inseeColumn] . '<br>';
                     $commune = $em->getRepository('AppBundle:Commune')->findOneBy(['insee' => $data[$inseeColumn]]);
@@ -801,7 +801,7 @@ class ProjetController extends Controller
 
         $epciPop = $commune->getIntercommunalitePop() ? $commune->getIntercommunalitePop() : '-';
         $communePop = $commune->getCommunePop() ? $commune->getCommunePop() : '-';
-        $result = ['epci' => $commune->getIntercommunalite(), 'epci_pop' => $epciPop, 'commune' => $commune->getNomMiniscule(), 'commune_pop' => $communePop, 'nom_president' => $commune->getNomPresident(), 'telephone_president' => $commune->getTelephonePresident(), 'email_president' => $commune->getEmailPresident(), 'vitesse_vent' => $commune->getVitesseVent(), 'productible_pv' => $commune->getProductiblePv()];
+        $result = ['epci' => $commune->getIntercommunalite(), 'epci_pop' => $epciPop, 'commune' => $commune->getNomMiniscule(), 'commune_pop' => $communePop, 'nom_president' => $commune->getNomPresident(), 'telephone_president' => $commune->getTelephonePresident(), 'email_president' => $commune->getEmailPresident(), 'vitesse_vent' => $commune->getVitesseVent(), 'productible_pv' => $commune->getProductiblePv(), 'urbanisme_type' => $commune->getUrbanismeType(), 'urbanisme_etat' => $commune->getUrbanismeEtat(), 'altitude' => $commune->getAltitude(), 'relief' => $commune->getRelief()];
 
         $response->setData($result);
 

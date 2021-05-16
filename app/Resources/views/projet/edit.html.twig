@@ -910,6 +910,10 @@
             $('#population > div:eq(1)').html('<label class="col-sm-4 control-label">-:</label><div class="col-sm-8">-</div>');
             $('#projet_terrain_vitesseVent').val('');
             $('#projet_terrain_productibleSolaire').val('');
+            $('#projet_terrain_altitude').val('');
+            $('#projet_terrain_topographie').val('');
+            $('#projet_terrain_documentUrbanisme').val('');
+            $('#projet_terrain_etatUrbanisme').val('');
           },
           success: function (response) {
             if(response['nom_president']) $('#contact_epci td:eq(1)').text(response['nom_president']);
@@ -919,6 +923,10 @@
             $('#population > div:eq(1)').html('<label class="col-sm-4 control-label">'+response['epci']+':</label><div class="col-sm-8">'+response['epci_pop']+'</div>');
             $('#projet_terrain_vitesseVent').val(response['vitesse_vent']);
             $('#projet_terrain_productibleSolaire').val(response['productible_pv']);
+            $('#projet_terrain_altitude').val(response['altitude']);
+            $('#projet_terrain_topographie').val(response['relief']);
+            $('#projet_terrain_documentUrbanisme').val(response['urbanisme_type']);
+            $('#projet_terrain_etatUrbanisme').val(response['urbanisme_etat']);
           }, error: function () {
             $('#contact_epci td:eq(1)').text('');
             $('#contact_epci td:eq(2)').text('');
@@ -927,6 +935,10 @@
             $('#population > div:eq(1)').html('<label class="col-sm-4 control-label"></label><div class="col-sm-8"></div>');
             $('#projet_terrain_vitesseVent').val('');
             $('#projet_terrain_productibleSolaire').val('');
+            $('#projet_terrain_altitude').val('');
+            $('#projet_terrain_topographie').val('');
+            $('#projet_terrain_documentUrbanisme').val('');
+            $('#projet_terrain_etatUrbanisme').val('');
           }
         });
       }
