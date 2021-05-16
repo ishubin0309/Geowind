@@ -649,19 +649,9 @@
       if(type.match('olien')) {
         $('#projet_technologie').val('eolienne');
         $('#projet_technologie').change();
-        $('#projet_terrain_topographie').parents('.form-group').find('label').text('Relief');
-        $('#projet_terrain_exposition').parents('.form-group').find('label').text('Orientation');
-        var projet_terrain_exposition = $('#projet_terrain_exposition').val();
-        $('#projet_terrain_exposition').parents('.form-group').find('div').html('<select id="projet_terrain_exposition" name="projet[terrain][exposition]" class="form-control"><option value=""></option><option value="E-O">E-O</option><option value="N-S">N-S</option><option value="NO-SE">NO-SE</option><option value="NE-SO">NE-SO</option></select>');
-        $('#projet_terrain_exposition').val(projet_terrain_exposition);
       } else {
         $('#projet_technologie').val('photovoltaique');
         $('#projet_technologie').change();
-        $('#projet_terrain_topographie').parents('.form-group').find('label').text('Topographie');
-        $('#projet_terrain_exposition').parents('.form-group').find('label').text('Exposition');
-        var projet_terrain_exposition = $('#projet_terrain_exposition').val();
-        $('#projet_terrain_exposition').parents('.form-group').find('div').html('<select id="projet_terrain_exposition" name="projet[terrain][exposition]" class="form-control"><option value=""></option><option value="S">S</option><option value="SE">SE</option><option value="E">E</option><option value="O">O</option><option value="SO">SO</option></select>');
-        $('#projet_terrain_exposition').val(projet_terrain_exposition);
       }
       denomination = $('#projet_denomination').val().trim();
       search = denomination.match(/_(\d+)$/)
@@ -1770,10 +1760,20 @@
       if($('#projet_technologie').val() == 'eolienne') {
         $('#projet_puissanceUnitaire').parents('.form-group').addClass('hide');
         $('#projet_emprise').val(500000);
+        $('#projet_terrain_topographie').parents('.form-group').find('label').text('Relief');
+        $('#projet_terrain_exposition').parents('.form-group').find('label').text('Orientation');
+        var projet_terrain_exposition = $('#projet_terrain_exposition').val();
+        $('#projet_terrain_exposition').parents('.form-group').find('div').html('<select id="projet_terrain_exposition" name="projet[terrain][exposition]" class="form-control"><option value=""></option><option value="E-O">E-O</option><option value="N-S">N-S</option><option value="NO-SE">NO-SE</option><option value="NE-SO">NE-SO</option></select>');
+        $('#projet_terrain_exposition').val(projet_terrain_exposition);
       } else {
         $('#projet_puissanceUnitaire').parents('.form-group').addClass('hide');
         {# equipementType = ''; #}
         $('#projet_emprise').val(0);
+        $('#projet_terrain_topographie').parents('.form-group').find('label').text('Topographie');
+        $('#projet_terrain_exposition').parents('.form-group').find('label').text('Exposition');
+        var projet_terrain_exposition = $('#projet_terrain_exposition').val();
+        $('#projet_terrain_exposition').parents('.form-group').find('div').html('<select id="projet_terrain_exposition" name="projet[terrain][exposition]" class="form-control"><option value=""></option><option value="S">S</option><option value="SE">SE</option><option value="E">E</option><option value="O">O</option><option value="SO">SO</option></select>');
+        $('#projet_terrain_exposition').val(projet_terrain_exposition);
       }
       if($(this).val()) {
         var selected_technologie = $(this).val();
