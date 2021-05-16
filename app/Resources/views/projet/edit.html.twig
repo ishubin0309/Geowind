@@ -279,6 +279,7 @@
         <legend>Installation</legend>
         <div class="clearfix"></div>
         {{ form_row(form.surfaceUtile) }}
+        {{ form_row(form.voiries) }}
         {{ form_row(form.unite) }}
         {{ form_row(form.puissanceUnitaire) }}
         {{ form_row(form.puissanceTotale) }}
@@ -1846,7 +1847,7 @@
     $('#projet_surfaceUtile').on('input', function () {
       $('#projet_surfaceUtile').val($('#projet_surfaceUtile').val().replace(/\s/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ' '));
       var technologie_su = $('#projet_surfaceUtile').val() ? parseFloat($('#projet_surfaceUtile').val().replace(/\s/g, '')) : 0;
-      voiries = technologie_su * 0.6
+      voiries = technologie_su * 0.6;
       $('#projet_voiries').val(voiries.toString().replace(/\s/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ' '));
     });
 
