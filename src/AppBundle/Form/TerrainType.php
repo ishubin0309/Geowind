@@ -58,17 +58,6 @@ class TerrainType extends AbstractType
                 'required' => false,
                 'choices' => array_flip(Terrain::getEtatList()),
             ])
-            ->add('documentEnergie', ChoiceType::class, [
-                'label' => 'Document',
-                'required' => false,
-                'multiple' => true,
-                'choices' => array_flip(Terrain::getDocumentEnergieList()),
-            ])
-            ->add('etatEnergie', ChoiceType::class, [
-                'label' => 'Etat',
-                'required' => false,
-                'choices' => array_flip(Terrain::getEtatList()),
-            ])
             ->add('pcaet', ChoiceType::class, [
                 'label' => 'PCAET',
                 'required' => false,

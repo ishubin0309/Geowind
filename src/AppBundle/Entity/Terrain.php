@@ -80,20 +80,6 @@ class Terrain
     private $etatUrbanisme;
 
     /**
-     * @var array
-     *
-     * @ORM\Column(type="array", name="document_energie", nullable=true)
-     */
-    private $documentEnergie;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string", name="etat_energie", nullable=true)
-     */
-    private $etatEnergie;
-
-    /**
      * @var string
      *
      * @ORM\Column(type="string", nullable=true)
@@ -296,44 +282,6 @@ class Terrain
     public function setEtatUrbanisme($etatUrbanisme)
     {
         $this->etatUrbanisme = $etatUrbanisme;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDocumentEnergie()
-    {
-        return $this->documentEnergie;
-    }
-
-    /**
-     *
-     * @param string $documentEnergie
-     * @return \AppBundle\Entity\Terrain
-     */
-    public function setDocumentEnergie($documentEnergie)
-    {
-        $this->documentEnergie = $documentEnergie;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getEtatEnergie()
-    {
-        return $this->etatEnergie;
-    }
-
-    /**
-     *
-     * @param string $etatEnergie
-     * @return \AppBundle\Entity\Terrain
-     */
-    public function setEtatEnergie($etatEnergie)
-    {
-        $this->etatEnergie = $etatEnergie;
         return $this;
     }
 
