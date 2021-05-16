@@ -363,8 +363,8 @@ class ProjetController extends Controller
                         $reliefColumn = 17;
                         continue;
                     }//echo '<pre>';print_r($data);die;
-                    if($row > 5000) break;
-                    // if($row > 20000 || $row < 10000) continue;
+                    if($row > 10000) break;
+                    if($row < 5000) continue;
                     $data = array_map("utf8_encode", $data);
                     // echo $row . ': Insee ' . $data[$inseeColumn] . '<br>';
                     $commune = $em->getRepository('AppBundle:Commune')->findOneBy(['insee' => $data[$inseeColumn]]);
@@ -377,7 +377,7 @@ class ProjetController extends Controller
                         $commune->setNom($data[$nomColumn]);
                         $commune->setInsee($data[$inseeColumn]);
                         $commune->setCode(substr($data[$inseeColumn], -3));
-                    } //else if($commune->getCommunePop()) continue;
+                    } else if($commune->getUrbanismeType()) continue;
                     $row2++;
                     $commune->setNomMiniscule($data[$nomMinisculeColumn]);
                     $commune->setIntercommunalite($data[$intercommunaliteColumn]);
