@@ -603,7 +603,7 @@
       map.addLayer(markers);
     }
     function updateParcEoliens() {
-      var departement = $('#projet_departement option:selected').text().replace(/\(.*/, '');
+      var departement = $('#projet_departement option:selected').text().replace(/\(.*/, '').trim();
       if(departement) {
         jQuery.ajax({
           url: Routing.generate('parc_eoliens_search_by_departement', { departement: departement }),
