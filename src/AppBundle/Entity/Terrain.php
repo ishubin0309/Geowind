@@ -28,7 +28,7 @@ class Terrain
      *
      * @ORM\Column(type="string", nullable=true)
      */
-    private $topographie;
+    private $relief;
 
     /**
      * @var string
@@ -152,18 +152,18 @@ class Terrain
     /**
      * @return string
      */
-    public function getTopographie()
+    public function getRelief()
     {
-        return $this->topographie;
+        return $this->relief;
     }
 
     /**
-     * @param string $topographie
+     * @param string $relief
      * @return \AppBundle\Entity\Terrain
      */
-    public function setTopographie($topographie)
+    public function setRelief($relief)
     {
-        $this->topographie = $topographie;
+        $this->relief = $relief;
         return $this;
     }
 
@@ -454,7 +454,7 @@ class Terrain
     /**
      * @return array
      */
-    public static function getTopographieList()
+    public static function getReliefList()
     {
         return [
             'montagne' => 'Montagne',
@@ -539,7 +539,7 @@ class Terrain
 
     public function isNotEmpty()
     {
-        if($this->topographie || $this->altitude || $this->exposition || $this->livraison || $this->nomPoste || $this->injection || $this->zonage || $this->documentUrbanisme)
+        if($this->relief || $this->altitude || $this->exposition || $this->livraison || $this->nomPoste || $this->injection || $this->zonage || $this->documentUrbanisme)
             return true;
         else return false;
     }
@@ -549,6 +549,6 @@ class Terrain
      */
     public function __toString()
     {
-        return $this->topographie;
+        return $this->relief;
     }
 }
