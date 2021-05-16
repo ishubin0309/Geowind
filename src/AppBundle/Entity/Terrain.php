@@ -474,7 +474,12 @@ class Terrain
             'e_o' => 'E-O',
             'n_s' => 'N-S',
             'no_se' => 'NO-SE',
-            'ne_so' => 'NE-SO'
+            'ne_so' => 'NE-SO',
+            's' => 'S',
+            'se' => 'SE',
+            'e' => 'E',
+            'o' => 'O',
+            'so' => 'SO'
         ];
     }
     
