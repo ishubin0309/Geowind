@@ -363,8 +363,8 @@ class ProjetController extends Controller
                         $reliefColumn = 17;
                         continue;
                     }//echo '<pre>';print_r($data);die;
-                    if($row > 15000) break;
-                    if($row < 10000) continue;
+                    if($row > 20000) break;
+                    if($row < 15000) continue;
                     $data = array_map("utf8_encode", $data);
                     // echo $row . ': Insee ' . $data[$inseeColumn] . '<br>';
                     $commune = $em->getRepository('AppBundle:Commune')->findOneBy(['insee' => $data[$inseeColumn]]);
