@@ -27,9 +27,10 @@ class TerrainType extends AbstractType
                 'required' => false,
                 'choices' => array_flip(Terrain::getReliefList()),
             ])
-            ->add('exposition', TextType::class, [
-                'label' => 'Exposition',
+            ->add('orientation', ChoiceType::class, [
+                'label' => 'Orientation',
                 'required' => false,
+                'choices' => array_flip(Terrain::getOrientationList()),
             ])
             ->add('livraison', TextType::class, [
                 'label' => 'Livraison (km)',
