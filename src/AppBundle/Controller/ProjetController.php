@@ -358,7 +358,9 @@ class ProjetController extends Controller
                         $vitesseVentColumn = 12;
                         $productiblePvColumn = 14;
                         $intercommunalitePopColumn = 13;
-                        $intercommunaliteCpColumn = 15;
+                        $urbanismeTypeColumn = 15;
+                        $urbanismeEtatColumn = 16;
+                        $reliefColumn = 17;
                         continue;
                     }//echo '<pre>';print_r($data);die;
                     if($row > 10000) continue;
@@ -380,12 +382,14 @@ class ProjetController extends Controller
                     $commune->setIntercommunalite($data[$intercommunaliteColumn]);
                     $commune->setIntercommunaliteNb($data[$intercommunaliteNbColumn]);
                     $commune->setIntercommunalitePop($data[$intercommunalitePopColumn]);
-                    if(isset($data[$intercommunaliteCpColumn])) $commune->setIntercommunaliteCp($data[$intercommunaliteCpColumn]);
                     $commune->setIntercommunaliteEpci($data[$intercommunaliteEpciColumn]);
                     $commune->setCommunePop($data[$communePopColumn]);
                     $commune->setCommuneCp($data[$communeCpColumn]);
                     $commune->setVitesseVent($data[$vitesseVentColumn]);
                     $commune->setProductiblePv($data[$productiblePvColumn]);
+                    $commune->setUrbanismeType($data[$urbanismeTypeColumn]);
+                    $commune->setUrbanismeEtat($data[$urbanismeEtatColumn]);
+                    $commune->setRelief($data[$reliefColumn]);
                     $em->persist($commune);
                     if($row2 > 100) {
                         $em->flush();

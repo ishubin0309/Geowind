@@ -137,11 +137,32 @@ class Commune
     private $vitesseVent;
 
     /**
-     * @var string
+     * @var integer
      *
      * @ORM\Column(type="integer", nullable=true)
      */
     private $productiblePv;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $urbanismeType;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $urbanismeEtat;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $relief;
 
     /**
      * @var ArrayCollection|Projet[]
@@ -453,7 +474,7 @@ class Commune
     }
 
     /**
-     * @return string
+     * @return integer
      */
     public function getProductiblePv()
     {
@@ -461,12 +482,66 @@ class Commune
     }
 
     /**
-     * @param string $productiblePv
+     * @param integer $productiblePv
      * @return \AppBundle\Entity\Commune
      */
     public function setProductiblePv($productiblePv)
     {
         if($productiblePv) $this->productiblePv = $productiblePv;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUrbanismeType()
+    {
+        return $this->urbanismeType;
+    }
+
+    /**
+     * @param string $urbanismeType
+     * @return \AppBundle\Entity\Commune
+     */
+    public function setUrbanismeType($urbanismeType)
+    {
+        $this->urbanismeType = $urbanismeType;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUrbanismeEtat()
+    {
+        return $this->urbanismeEtat;
+    }
+
+    /**
+     * @param string $urbanismeEtat
+     * @return \AppBundle\Entity\Commune
+     */
+    public function setUrbanismeEtat($urbanismeEtat)
+    {
+        $this->urbanismeEtat = $urbanismeEtat;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRelief()
+    {
+        return $this->relief;
+    }
+
+    /**
+     * @param string $relief
+     * @return \AppBundle\Entity\Commune
+     */
+    public function setRelief($relief)
+    {
+        $this->relief = $relief;
         return $this;
     }
 
