@@ -765,12 +765,10 @@
       map.addLayer(markers);
     }
     function updateParcEoliens() {
-      var departement = $('#projet_departement option:selected').text();
-      if(departement_id = departement.match(/\(\d+\)/)) departement_id = departement_id.toString().match(/\d+/);
-      else departement_id = $('#projet_departement').val();
-      if(departement_id) {
+      var departement = $('#projet_departement option:selected').text().replace(/\(.*/, '');
+      if(departement) {
         jQuery.ajax({
-          url: Routing.generate('parc_eoliens_search_by_departement', { departement: departement_id }),
+          url: Routing.generate('parc_eoliens_search_by_departement', { departement: departement }),
           method: "POST",
           dataType: "json", 
           beforeSend: function () {
