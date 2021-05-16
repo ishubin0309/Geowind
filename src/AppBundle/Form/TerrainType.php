@@ -18,19 +18,18 @@ class TerrainType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('topographie', ChoiceType::class, [
+                'label' => 'Topographie',
+                'required' => false,
+                'choices' => array_flip(Terrain::getTopographieList()),
+            ])
             ->add('altitude', TextType::class, [
                 'label' => 'Altitude',
                 'required' => false,
             ])
-            ->add('relief', ChoiceType::class, [
-                'label' => 'Relief',
+            ->add('exposition', TextType::class, [
+                'label' => 'Exposition',
                 'required' => false,
-                'choices' => array_flip(Terrain::getReliefList()),
-            ])
-            ->add('orientation', ChoiceType::class, [
-                'label' => 'Orientation',
-                'required' => false,
-                'choices' => array_flip(Terrain::getOrientationList()),
             ])
             ->add('livraison', TextType::class, [
                 'label' => 'Livraison (km)',

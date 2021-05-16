@@ -28,7 +28,7 @@ class Terrain
      *
      * @ORM\Column(type="string", nullable=true)
      */
-    private $relief;
+    private $topographie;
 
     /**
      * @var string
@@ -42,7 +42,7 @@ class Terrain
      *
      * @ORM\Column(type="string", nullable=true)
      */
-    private $orientation;
+    private $exposition;
 
     /**
      * @var string
@@ -152,18 +152,18 @@ class Terrain
     /**
      * @return string
      */
-    public function getRelief()
+    public function getTopographie()
     {
-        return $this->relief;
+        return $this->topographie;
     }
 
     /**
-     * @param string $relief
+     * @param string $topographie
      * @return \AppBundle\Entity\Terrain
      */
-    public function setRelief($relief)
+    public function setTopographie($topographie)
     {
-        $this->relief = $relief;
+        $this->topographie = $topographie;
         return $this;
     }
 
@@ -188,19 +188,19 @@ class Terrain
     /**
      * @return string
      */
-    public function getOrientation()
+    public function getExposition()
     {
-        return $this->orientation;
+        return $this->exposition;
     }
 
     /**
      *
-     * @param string $orientation
+     * @param string $exposition
      * @return \AppBundle\Entity\Terrain
      */
-    public function setOrientation($orientation)
+    public function setExposition($exposition)
     {
-        $this->orientation = $orientation;
+        $this->exposition = $exposition;
         return $this;
     }
 
@@ -454,7 +454,7 @@ class Terrain
     /**
      * @return array
      */
-    public static function getReliefList()
+    public static function getTopographieList()
     {
         return [
             'montagne' => 'Montagne',
@@ -462,24 +462,6 @@ class Terrain
             'plaine' => 'Plaine',
             'valle' => 'Vallée',
             'littoral' => 'Littoral'
-        ];
-    }
-    
-    /**
-     * @return array
-     */
-    public static function getOrientationList()
-    {
-        return [
-            'e_o' => 'E-O',
-            'n_s' => 'N-S',
-            'no_se' => 'NO-SE',
-            'ne_so' => 'NE-SO',
-            's' => 'S',
-            'se' => 'SE',
-            'e' => 'E',
-            'o' => 'O',
-            'so' => 'SO'
         ];
     }
     
@@ -557,7 +539,7 @@ class Terrain
 
     public function isNotEmpty()
     {
-        if($this->relief || $this->altitude || $this->orientation || $this->livraison || $this->nomPoste || $this->injection || $this->zonage || $this->documentUrbanisme)
+        if($this->topographie || $this->altitude || $this->exposition || $this->livraison || $this->nomPoste || $this->injection || $this->zonage || $this->documentUrbanisme)
             return true;
         else return false;
     }
@@ -567,6 +549,6 @@ class Terrain
      */
     public function __toString()
     {
-        return $this->relief;
+        return $this->topographie;
     }
 }

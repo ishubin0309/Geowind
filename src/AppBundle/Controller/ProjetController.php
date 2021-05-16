@@ -447,7 +447,7 @@ class ProjetController extends Controller
                 $lngColumn = false;
                 $altitudeColumn = false;
                 $environnementColumn = false;
-                $reliefColumn = false;
+                $topographieColumn = false;
                 $typeProjetColumn = false;
                 $typeSiteColumn = false;
                 $potentielColumn = false;
@@ -480,7 +480,7 @@ class ProjetController extends Controller
                             elseif($name=='longitude') $lngColumn = $c;
                             elseif($name=='altitude') $altitudeColumn = $c;
                             elseif($name=='environnement' || $name=='type de milieu') $environnementColumn = $c;
-                            elseif($name=='relief' || $name=='topographie') $reliefColumn = $c;
+                            elseif($name=='topographie') $topographieColumn = $c;
                             elseif($name=='type de projet') $typeProjetColumn = $c;
                             elseif($name=='type de site' || $name=='type de bien') $typeSiteColumn = $c;
                             elseif($name=='potentiel (mw)') $potentielColumn = $c;
@@ -536,7 +536,7 @@ class ProjetController extends Controller
                         if($tSite == 'terrain' && $altitudeColumn !== false) {
                             $terrain = new Terrain();
                             if($altitudeColumn !== false) $terrain->setAltitude($data[$altitudeColumn]);
-                            if($reliefColumn !== false) $terrain->setRelief($data[$reliefColumn]);
+                            if($topographieColumn !== false) $terrain->setTopographie($data[$topographieColumn]);
                             $projet->setTerrain($terrain);
                         } elseif($tSite == 'batiment_existant' || $tSite == 'nouveau_batiment') {
                             if($tSite == 'nouveau_batiment') $projet->setBatimentNouveau('type1');
