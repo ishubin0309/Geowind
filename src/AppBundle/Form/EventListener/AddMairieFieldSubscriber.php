@@ -34,7 +34,6 @@ class AddMairieFieldSubscriber implements EventSubscriberInterface
         $form = $event->getForm();
 
         $choices = [$projet->getMairie()];
-        $choices = ['1' => 'test'];
         // $choices = [];
 
         $form->add('mairie', EntityType::class, [
@@ -42,6 +41,9 @@ class AddMairieFieldSubscriber implements EventSubscriberInterface
             'label' => 'Mairie',
             'required' => false,
             'multiple' => false,
+            'choice_label' => function ($mairie) {
+                return $mairie ? $mairie->getNomMaire() . ' ' . $mairie->getPrenomMaire() : '';
+            },
             'class' => 'AppBundle:mairie',
         ]);
     }
