@@ -92,6 +92,7 @@ class AnnuaireController extends Controller
             $results['mairie']['id'] = $mairie->getId();
             $results['mairie']['text'] = $mairie->getMairie() . ' (' . $mairie->getInsee() . ')';
             $results['mairie']['telephone'] = $mairie->getTelephone();
+            $results['mairie']['maire'] = $mairie->getNomMaire() . ' ' . $mairie->getPrenomMaire();
         }
 
         $response->setData($results);

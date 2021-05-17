@@ -705,14 +705,19 @@
           url: Routing.generate('mairie_search_by_commune', { id: commune_id }),
           method: "POST",
           dataType: "json",
+          beforeSend: function () {
+            $('#projet_mairie').val('');
+            $('#projet_mairieTelephone').val('');
+            $('#contact_maire td:eq(1)').val('');
+            $('#contact_maire td:eq(2)').val('');
+          },
           success: function (response) {
             if(response['mairie']) {
               $('#projet_mairie').append(new Option(response['mairie']['text'], response['mairie']['id']));
               $('#projet_mairie').val(response['mairie']['id']);
               $('#projet_mairieTelephone').val(response['mairie']['telephone']);
-            } else {
-              $('#projet_mairie').val('');
-              $('#projet_mairieTelephone').val('');
+              $('#contact_maire td:eq(1)').text(response['mairie']['maire']);
+              $('#contact_maire td:eq(2)').text(response['mairie']['telephone']);
             }
             $('#projet_mairie').trigger('change');
           }, error: function () {
@@ -768,9 +773,7 @@
         });
       }
     }
-    {% if form.vars.value.mairie is null and form.vars.value.communes[0].id is not defined %}
-      updateMairie();
-    {% endif %}
+    updateMairie();
     {% if form.vars.value.communes[0].id is defined %}
       updateEpci();
     {% endif %}
