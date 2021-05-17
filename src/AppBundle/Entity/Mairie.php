@@ -539,7 +539,6 @@ class Mairie
      */
     public function __toString()
     {
-        return $this->nomMaire . ' ' . $this->prenomMaire;
         return trim(str_replace(array('Mairie d\'', 'Mairie de '), '', $this->mairie));
     }
 }
