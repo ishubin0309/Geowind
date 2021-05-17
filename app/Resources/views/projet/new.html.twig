@@ -1584,9 +1584,9 @@
         $('#projet_puissanceUnitaire').parents('.form-group').addClass('hide');
         $('#projet_emprise').val(500000);
         $('#projet_terrain_topographie').parents('.form-group').find('label').text('Relief');
-        var clone = $('#projet_terrain_altitude').parents('.form-group').clone();
+        {# var clone = $('#projet_terrain_altitude').parents('.form-group').clone();
         $('#projet_terrain_altitude').parents('.form-group').remove();
-        $(clone).insertBefore($('#projet_terrain_topographie').parents('.form-group'));
+        $(clone).insertBefore($('#projet_terrain_topographie').parents('.form-group')); #}
         $('#projet_terrain_exposition').parents('.form-group').find('label').text('Orientation');
         var projet_terrain_exposition = $('#projet_terrain_exposition').val();
         $('#projet_terrain_exposition').parents('.form-group').find('div').html('<select id="projet_terrain_exposition" name="projet[terrain][exposition]" class="form-control"><option value=""></option><option value="E-O">E-O</option><option value="N-S">N-S</option><option value="NO-SE">NO-SE</option><option value="NE-SO">NE-SO</option></select>');
@@ -1596,9 +1596,9 @@
         {# equipementType = ''; #}
         $('#projet_emprise').val(0);
         $('#projet_terrain_topographie').parents('.form-group').find('label').text('Topographie');
-        var clone = $('#projet_terrain_altitude').parents('.form-group').clone();
+        {# var clone = $('#projet_terrain_altitude').parents('.form-group').clone();
         $('#projet_terrain_altitude').parents('.form-group').remove();
-        $(clone).insertAfter($('#projet_terrain_topographie').parents('.form-group'));
+        $(clone).insertAfter($('#projet_terrain_topographie').parents('.form-group')); #}
         $('#projet_terrain_exposition').parents('.form-group').find('label').text('Exposition');
         var projet_terrain_exposition = $('#projet_terrain_exposition').val();
         $('#projet_terrain_exposition').parents('.form-group').find('div').html('<select id="projet_terrain_exposition" name="projet[terrain][exposition]" class="form-control"><option value=""></option><option value="S">S</option><option value="SE">SE</option><option value="E">E</option><option value="O">O</option><option value="SO">SO</option></select>');
