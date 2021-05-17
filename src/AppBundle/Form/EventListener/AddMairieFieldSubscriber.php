@@ -41,9 +41,6 @@ class AddMairieFieldSubscriber implements EventSubscriberInterface
             'label' => 'Mairie',
             'required' => false,
             'multiple' => false,
-            'choice_label' => function ($mairie) {
-                return $mairie ? $mairie->getNomMaire() . ' ' . $mairie->getPrenomMaire() : '';
-            },
             'class' => 'AppBundle:mairie',
         ]);
     }

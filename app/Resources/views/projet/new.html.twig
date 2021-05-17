@@ -131,6 +131,11 @@
               <td class="required">{{ form_widget(form.mairie, {'attr': {'style': 'width:100%'}}) }}</td>
               <td>{{ form_widget(form.mairieTelephone) }}</td>
             <tr>
+            <tr id="contact_maire">
+              <td>Maire</td>
+              <td class="required"></td>
+              <td></td>
+            </tr>
             <tr id="contact_epci">
               <td>EPCI</td>
               <td class="required"></td>
@@ -690,9 +695,8 @@
     $('#projet_mairie').on('select2:select', function (e) {
       var data = e.params.data;
       $('#projet_mairieTelephone').val(data.telephone);
-      setTimeout(function() {
-        $('#select2-projet_mairie-container').text(data.maire);
-      }, 500);
+      $('#contact_maire td:eq(1)').text(data.maire);
+      $('#contact_maire td:eq(2)').text(data.telephone);
     });
     function updateMairie() {
       var commune_id = $('#projet_communes option:selected').val();

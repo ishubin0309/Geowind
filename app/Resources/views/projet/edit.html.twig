@@ -210,10 +210,15 @@
               <td>{% if is_granted('ROLE_ADMIN') or projet.origine.id == app.user.id %}{{ form_widget(form.partenaireTelephone) }}{% else %}{{ form.vars.value.partenaireTelephone }}{{ form_widget(form.partenaireTelephone, {'attr': {'class': 'hide'}}) }}{% endif %}</td>
             <tr>
             <tr>
-              <td>Maire</td>
+              <td>Mairie</td>
               <td class="required">{% if is_granted('ROLE_ADMIN') or projet.origine.id == app.user.id %}{{ form_widget(form.mairie, {'attr': {'style': 'width:100%'}}) }}{% else %}{{ form.vars.value.mairie }}{{ form_widget(form.mairie, {'attr': {'class': 'hide','style': 'width:100%'}}) }}{% endif %}</td>
               <td>{% if is_granted('ROLE_ADMIN') or projet.origine.id == app.user.id %}{{ form_widget(form.mairieTelephone) }}{% else %}{{ form.vars.value.mairieTelephone }}{{ form_widget(form.mairieTelephone, {'attr': {'class': 'hide'}}) }}{% endif %}</td>
             <tr>
+            <tr id="contact_maire">
+              <td>Maire</td>
+              <td class="required"></td>
+              <td></td>
+            </tr>
             <tr id="contact_epci">
               <td>EPCI</td>
               <td class="required"></td>
@@ -872,9 +877,8 @@
     $('#projet_mairie').on('select2:select', function (e) {
       var data = e.params.data;
       $('#projet_mairieTelephone').val(data.telephone);
-      setTimeout(function() {
-        $('#select2-projet_mairie-container').text(data.maire);
-      }, 500);
+      $('#contact_maire td:eq(1)').text(data.maire);
+      $('#contact_maire td:eq(2)').text(data.telephone);
     });
     {% endif %}
     function updateMairie() {
