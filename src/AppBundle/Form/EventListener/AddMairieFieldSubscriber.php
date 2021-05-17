@@ -33,7 +33,8 @@ class AddMairieFieldSubscriber implements EventSubscriberInterface
         $projet = $event->getData();
         $form = $event->getForm();
 
-        $choices = [$projet->getMairie()->getNomMaire() . ' ' . $projet->getMairie()->getPrenomMaire() => $projet->getMairie()->getId()];
+        $choices = [$projet->getMairie()];
+        $choices = ['1' => 'test'];
         // $choices = [];
 
         $form->add('mairie', EntityType::class, [
