@@ -444,6 +444,7 @@ class Terrain
     public static function getEtatList()
     {
         return [
+            'Sans' => 'Sans',
             'Adopté' => 'Adopté',
             'A l\'étude' => 'A l\'étude',
             'En réflexion' => 'En réflexion'
