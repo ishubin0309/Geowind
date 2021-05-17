@@ -872,6 +872,7 @@
     $('#projet_mairie').on('select2:select', function (e) {
       var data = e.params.data;
       $('#projet_mairieTelephone').val(data.telephone);
+      $('#select2-projet_mairie-container').text(data.maire);
     });
     {% endif %}
     function updateMairie() {
