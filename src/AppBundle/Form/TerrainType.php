@@ -77,7 +77,7 @@ class TerrainType extends AbstractType
                 'required' => false,
             ])
             ->add('productibleSolaire', TextType::class, [
-                'label' => 'Productible solaire (h/an)',
+                'label' => 'Productible pv (Kwh/kwc)',
                 'required' => false,
             ])
         ;

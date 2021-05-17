@@ -114,7 +114,7 @@ class Terrain
      *
      * @ORM\Column(type="string", nullable=true)
      */
-    private $productibleSolaire;
+    private $productiblePv;
 
     /**
      * @var Projet
@@ -383,19 +383,19 @@ class Terrain
     /**
      * @return string
      */
-    public function getProductibleSolaire()
+    public function getProductiblePv()
     {
-        return $this->productibleSolaire;
+        return $this->productiblePv;
     }
 
     /**
      *
-     * @param string $productibleSolaire
+     * @param string $productiblePv
      * @return \AppBundle\Entity\Terrain
      */
-    public function setProductibleSolaire($productibleSolaire)
+    public function setProductiblePv($productiblePv)
     {
-        $this->productibleSolaire = $productibleSolaire;
+        $this->productiblePv = $productiblePv;
         return $this;
     }
     
@@ -461,7 +461,7 @@ class Terrain
             'zone_naturelle' => 'Zone naturelle',
             'zone_agricole' => 'Zone agricole',
             'zone_a_urbaniser' => 'Zone à urbaniser',
-            'zone_protegee' => 'Zone protégée',
+            'zone_a_risque' => 'Zone à risque',
             'zone_incontructible' => 'Zone incontructible',
             'zone_constructible' => 'Zone constructible'
         ];
