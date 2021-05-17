@@ -210,7 +210,7 @@
               <td>{% if is_granted('ROLE_ADMIN') or projet.origine.id == app.user.id %}{{ form_widget(form.partenaireTelephone) }}{% else %}{{ form.vars.value.partenaireTelephone }}{{ form_widget(form.partenaireTelephone, {'attr': {'class': 'hide'}}) }}{% endif %}</td>
             <tr>
             <tr>
-              <td>Mairie</td>
+              <td>Maire</td>
               <td class="required">{% if is_granted('ROLE_ADMIN') or projet.origine.id == app.user.id %}{{ form_widget(form.mairie, {'attr': {'style': 'width:100%'}}) }}{% else %}{{ form.vars.value.mairie }}{{ form_widget(form.mairie, {'attr': {'class': 'hide','style': 'width:100%'}}) }}{% endif %}</td>
               <td>{% if is_granted('ROLE_ADMIN') or projet.origine.id == app.user.id %}{{ form_widget(form.mairieTelephone) }}{% else %}{{ form.vars.value.mairieTelephone }}{{ form_widget(form.mairieTelephone, {'attr': {'class': 'hide'}}) }}{% endif %}</td>
             <tr>
@@ -852,7 +852,7 @@
       }
     });
     $("#projet_origine, #projet_chargeFoncier, #projet_chefProjet, #projet_partenaire").select2({placeholder: "Non désigné"});
-    var queryMairieUrl = "{{ path('mairie_search') }}";
+    var queryMairieUrl = "{{ path('mairie_search2') }}";
     
     $("#projet_mairie").select2({
       placeholder: "Non désigné",

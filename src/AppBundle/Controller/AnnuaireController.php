@@ -76,6 +76,27 @@ class AnnuaireController extends Controller
     }
     
     /**
+     * @Route("/mairie/search2", name="mairie_search2", options={ "expose": true })
+     * @Security("has_role('ROLE_VIEW')")
+     */
+    public function communesAction(Request $request)
+    {
+        $response = new JsonResponse();
+
+        $term = $request->query->get('term', null);
+
+        $results = [];
+
+        if (!empty($term)) {
+            $em = $this->getDoctrine()->getManager();
+            $results = $em->getRepository('AppBundle:Mairie')->searchTerm2($term);
+        }
+
+        $response->setData($results);
+        return $response;
+    }
+    
+    /**
      * @Route("/{id}/search-by-commune", name="mairie_search_by_commune", options={ "expose": true })
      * @ParamConverter("commune", options={"mapping": {"id": "id"}})
      * @Method({"POST"})

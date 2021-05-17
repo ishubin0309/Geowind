@@ -37,6 +37,34 @@ class MairieRepository extends EntityRepository
         return $data;
     }
 
+    public function searchTerm2($term)
+    {
+        $query = $this->createQueryBuilder('c')
+                    ->select('c, LENGTH(c.mairie) len')
+                    ->where('c.commune LIKE :commune')
+                    ->orderBy('len', 'ASC')
+                    ->setFirstResult(0)
+                    ->setMaxResults(30)
+                    ->setParameter('commune', '%' . $term . '%')
+                ;
+
+        $results = $query->getQuery()->getResult(Query::HYDRATE_ARRAY);
+
+        $data = [];
+
+        foreach ($results as $result) {
+            $arr = [
+                'insee' => $result[0]['insee'],
+                'id' => $result[0]['id'],
+                'telephone' => $result[0]['telephone'],
+                'text' => $result[0]['nomMaire'] . ' ' . $result[0]['prenomMaire'],
+            ];
+            $data[] = $arr;
+        }
+
+        return $data;
+    }
+
     public function findByInseeIdxByInsee(array $insees)
     {
         $query = $this->createQueryBuilder('c', 'c.insee')
