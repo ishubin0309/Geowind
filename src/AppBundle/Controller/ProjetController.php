@@ -405,6 +405,62 @@ class ProjetController extends Controller
             return new Response('Done');
         } else new Response('Fichier introuvable');
     }
+    /**
+     * @Route("/commune/correction", name="commune_correction")
+     * @Security("has_role('ROLE_ADMIN')")
+     */
+    public function communeCorrectionAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $file_path = __DIR__ . '/../coorrection_relief.csv';
+        $row = 0;
+        $row2 = 0;
+        if(file_exists($file_path)) {
+            if (($handle = fopen($file_path, "r")) !== FALSE) {
+                ini_set("memory_limit", "4000M");
+                set_time_limit(3000);
+                ini_set('display_errors', 1);
+                ini_set('display_startup_errors', 1);
+                error_reporting(E_ALL);
+                $start_time = microtime(true);
+                $write_close = false;
+                while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+                    if(!$write_close) {
+                        $end_time = microtime(true); 
+                        $execution_time = ($end_time - $start_time); 
+                        if($execution_time > 30) {
+                            session_write_close();
+                            $write_close = true;
+                        }
+                    }
+                    if(!$row++) {
+                        $inseeColumn = 0;
+                        $reliefColumn = 1;
+                        continue;
+                    }//echo '<pre>';print_r($data);die;
+                    // if($row > 25000) break;
+                    // if($row < 18000) continue;
+                    $data = array_map("utf8_encode", $data);
+                    // echo $row . ': Insee ' . $data[$inseeColumn] . '<br>';
+                    $commune = $em->getRepository('AppBundle:Commune')->findOneBy(['insee' => $data[$inseeColumn]]);
+                    if(!$commune) {
+                        continue;
+                    }
+                    $row2++;
+                    $commune->setRelief($data[$reliefColumn]);
+                    $em->persist($commune);
+                    if($row2 > 300) {echo $row.',';
+                        $em->flush();
+                        $row2 = 0;
+                    }
+                }
+                fclose($handle);
+                $em->flush();
+            }
+            return new Response('Done');
+        } else new Response('Fichier introuvable');
+    }
 
     /**
      * @Route("/liste/nouveau", name="liste_new")
