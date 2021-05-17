@@ -405,9 +405,10 @@ class Terrain
     public static function getTopographieList()
     {
         return [
-            'Bas plateaux-colines' => 'Bas plateaux-colines',
             'Haute montagne' => 'Haute montagne',
+            'Moyenne montagne' => 'Moyenne montagne',
             'Hauts plateaux' => 'Hauts plateaux',
+            'Bas plateaux-colines' => 'Bas plateaux-colines',
             'Plaine' => 'Plaine'
         ];
     }
