@@ -19,7 +19,7 @@ class TerrainType extends AbstractType
     {
         $builder
             ->add('altitude', TextType::class, [
-                'label' => 'Altitude',
+                'label' => 'Altitude (m)',
                 'required' => false,
             ])
             ->add('topographie', ChoiceType::class, [
