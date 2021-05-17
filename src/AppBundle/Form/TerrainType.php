@@ -76,7 +76,7 @@ class TerrainType extends AbstractType
                 'label' => 'Vitesse de vent (m/s)',
                 'required' => false,
             ])
-            ->add('productibleSolaire', TextType::class, [
+            ->add('productiblePv', TextType::class, [
                 'label' => 'Productible pv (Kwh/kwc)',
                 'required' => false,
             ])
