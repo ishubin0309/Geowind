@@ -1643,9 +1643,9 @@
                 var technologie_unite = technologie_su * 0.4 / technologie_emprise;
                 $('#projet_unite').val(technologie_unite.toFixed(0));
               } #}
-              var technologie_unite = technologie_lineaire && technologie_interdistance ? round(technologie_lineaire / technologie_interdistance) : 0;
+              var technologie_unite = technologie_lineaire && technologie_interdistance ? Math.round(technologie_lineaire / technologie_interdistance) : 0;
               $('#projet_unite').val(technologie_unite);
-              var voiries = round(technologie_unite * 5.4);
+              var voiries = Math.round(technologie_unite * 5.4);
               $('#projet_voiries').val(voiries.toString().replace(/\s/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ' '));
               technologie_su = technologie_unite * technologie_emprise;
               $('#projet_surfaceUtile').val(technologie_su);
