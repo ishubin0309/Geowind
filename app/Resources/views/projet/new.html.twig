@@ -1583,11 +1583,11 @@
     var technologies = {{ technologies|raw }};
     $('#projet_technologie').change(function () {
       if($('#projet_technologie').val() == 'eolienne') {
-        var clone = $('#projet_voiries').parents('.form-group').clone();
-        $('#projet_voiries').parents('.form-group').remove();
-        $(clone).insertAfter($('#projet_unite').parents('.form-group'));
         var clone = $('#projet_surfaceUtile').parents('.form-group').clone();
         $('#projet_surfaceUtile').parents('.form-group').remove();
+        $(clone).insertAfter($('#projet_unite').parents('.form-group'));
+        var clone = $('#projet_voiries').parents('.form-group').clone();
+        $('#projet_voiries').parents('.form-group').remove();
         $(clone).insertAfter($('#projet_unite').parents('.form-group'));
         $('#projet_lineaire').parents('.form-group').removeClass('hide');
         $('#projet_interdistance').parents('.form-group').removeClass('hide');
