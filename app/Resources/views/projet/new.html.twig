@@ -482,6 +482,7 @@
           if($(element).val().match('batiment')) $(element).removeClass('hide');
           else $(element).addClass('hide');
         });
+        $('#projet_environnement').val('exploitation_agricole');
       } else if(type == 'mesure_enviro') {
         $('#projet_typeSite').val('terrain');
         $.each($('#projet_typeSite option'), function(i, element) {
