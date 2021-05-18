@@ -1773,6 +1773,8 @@
     var technologies = {{ technologies|raw }};
     $('#projet_technologie').change(function () {
       if($('#projet_technologie').val() == 'eolienne') {
+        $('#projet_lineaire').parents('.form-group').removeClass('hide');
+        $('#projet_interdistance').parents('.form-group').removeClass('hide');
         $('#projet_puissanceUnitaire').parents('.form-group').addClass('hide');
         var technologie_emprise = 3000;
         $('#projet_emprise').val(technologie_emprise);
@@ -1785,6 +1787,8 @@
         $('#projet_terrain_exposition').parents('.form-group').find('div').html('<select id="projet_terrain_exposition" name="projet[terrain][exposition]" class="form-control"><option value=""></option><option value="E-O">E-O</option><option value="N-S">N-S</option><option value="NO-SE">NO-SE</option><option value="NE-SO">NE-SO</option></select>');
         $('#projet_terrain_exposition').val(projet_terrain_exposition);
       } else {
+        $('#projet_lineaire').parents('.form-group').addClass('hide');
+        $('#projet_interdistance').parents('.form-group').addClass('hide');
         $('#projet_puissanceUnitaire').parents('.form-group').addClass('hide');
         {# equipementType = ''; #}
         $('#projet_emprise').val(0);
@@ -1818,7 +1822,11 @@
               if(field.match('Longueur')) technologie_longueur = value.replace(/'/, '.').trim();
               else if(field.match('Largeur')) technologie_largeur = value.replace(/'/, '.').trim();
               else if(field.match('Puissance')) {
-                technologie_pu = value.replace(/'/, '.').trim() / 1000000;
+                if($('#projet_technologie').val() == 'eolienne') {
+                  technologie_pu = value.replace(/'/, '.').trim();
+                } else {
+                  technologie_pu = value.replace(/'/, '.').trim() / 1000000;
+                }
                 $('#projet_puissanceUnitaire').val(technologie_pu);
               }
               $('#tab_projet p').append('<div class="form-group form-group-sm"><label class="col-sm-4 control-label">'+field+':</label><div class="col-sm-8 control-label">' + value + '</div></div>');
