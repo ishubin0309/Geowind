@@ -409,7 +409,9 @@ class Terrain
             'Moyenne montagne' => 'Moyenne montagne',
             'Hauts plateaux' => 'Hauts plateaux',
             'Bas plateaux-colines' => 'Bas plateaux-colines',
-            'Plaine' => 'Plaine'
+            'Plaine' => 'Plaine',
+            'Vallée' => 'Vallée',
+            'Versant' => 'Versant'
         ];
     }
     
