@@ -1584,7 +1584,8 @@
     $('#projet_technologie').change(function () {
       if($('#projet_technologie').val() == 'eolienne') {
         $('#projet_puissanceUnitaire').parents('.form-group').addClass('hide');
-        $('#projet_emprise').val(3000);
+        var technologie_emprise = 3000;
+        $('#projet_emprise').val(technologie_emprise);
         $('#projet_terrain_topographie').parents('.form-group').find('label').text('Relief');
         var clone = $('#projet_terrain_altitude').parents('.form-group').clone();
         $('#projet_terrain_altitude').parents('.form-group').remove();
