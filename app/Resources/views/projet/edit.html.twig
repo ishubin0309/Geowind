@@ -1773,6 +1773,12 @@
     var technologies = {{ technologies|raw }};
     $('#projet_technologie').change(function () {
       if($('#projet_technologie').val() == 'eolienne') {
+        var clone = $('#projet_voiries').parents('.form-group').clone();
+        $('#projet_voiries').parents('.form-group').remove();
+        $(clone).insertAfter($('#projet_unite').parents('.form-group'));
+        var clone = $('#projet_surfaceUtile').parents('.form-group').clone();
+        $('#projet_surfaceUtile').parents('.form-group').remove();
+        $(clone).insertAfter($('#projet_unite').parents('.form-group'));
         $('#projet_lineaire').parents('.form-group').removeClass('hide');
         $('#projet_interdistance').parents('.form-group').removeClass('hide');
         $('#projet_puissanceUnitaire').parents('.form-group').addClass('hide');
@@ -1787,6 +1793,12 @@
         $('#projet_terrain_exposition').parents('.form-group').find('div').html('<select id="projet_terrain_exposition" name="projet[terrain][exposition]" class="form-control"><option value=""></option><option value="E-O">E-O</option><option value="N-S">N-S</option><option value="NO-SE">NO-SE</option><option value="NE-SO">NE-SO</option></select>');
         $('#projet_terrain_exposition').val(projet_terrain_exposition);
       } else {
+        var clone = $('#projet_surfaceUtile').parents('.form-group').clone();
+        $('#projet_surfaceUtile').parents('.form-group').remove();
+        $(clone).insertBefore($('#projet_unite').parents('.form-group'));
+        var clone = $('#projet_voiries').parents('.form-group').clone();
+        $('#projet_voiries').parents('.form-group').remove();
+        $(clone).insertBefore($('#projet_unite').parents('.form-group'));
         $('#projet_lineaire').parents('.form-group').addClass('hide');
         $('#projet_lineaire').val(0);
         $('#projet_interdistance').parents('.form-group').addClass('hide');
