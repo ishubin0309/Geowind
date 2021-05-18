@@ -235,6 +235,11 @@ class ProjetEditType extends AbstractType
                 'required' => false,
                 'choices' => array_flip(Projet::getValorisationList()),
             ])
+            ->add('tarif', ChoiceType::class, [
+                'label' => 'Tarif',
+                'required' => false,
+                'choices' => array_flip(Projet::getTarifList()),
+            ])
             ->add('technologie', ChoiceType::class, [
                 'label' => 'Technologie',
                 'choices' => array_flip(Technologie::getTechnologieList()),

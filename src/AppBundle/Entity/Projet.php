@@ -397,6 +397,13 @@ class Projet
      *
      * @ORM\Column(type="text", nullable=true)
      */
+    private $tarif;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="text", nullable=true)
+     */
     private $technologie;
 
     /**
@@ -573,6 +580,17 @@ class Projet
             'non_defini' => 'Non-défini',
             'biodiversite' => 'Biodiversité',
             'cession' => 'Cession'
+        ];
+    }
+    
+    /**
+     * @return array
+     */
+    public static function getTarifList()
+    {
+        return [
+            'Appel d\'offre'=> 'Appel d\'offre',
+            'PPA' => 'PPA'
         ];
     }
     
@@ -1739,6 +1757,24 @@ class Projet
     public function setDebouche($debouche)
     {
         $this->debouche = $debouche;
+        return $this;
+    }
+    
+    /**
+     * @return string
+     */
+    public function getTarif()
+    {
+        return $this->tarif;
+    }
+
+    /**
+     * @param string $tarif
+     * @return \AppBundle\Entity\Projet
+     */
+    public function setTarif($tarif)
+    {
+        $this->tarif = $tarif;
         return $this;
     }
     
