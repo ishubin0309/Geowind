@@ -278,9 +278,11 @@
         {{ form_row(form.emprise) }}
         <legend>Installation</legend>
         <div class="clearfix"></div>
-        {{ form_row(form.surfaceUtile) }}
-        {{ form_row(form.voiries) }}
+        {{ form_row(form.lineaire) }}
+        {{ form_row(form.interdistance) }}
         {{ form_row(form.unite) }}
+        {{ form_row(form.voiries) }}
+        {{ form_row(form.surfaceUtile) }}
         {{ form_row(form.puissanceUnitaire) }}
         {{ form_row(form.puissanceTotale) }}
         {{ form_row(form.production) }}
@@ -1772,7 +1774,7 @@
     $('#projet_technologie').change(function () {
       if($('#projet_technologie').val() == 'eolienne') {
         $('#projet_puissanceUnitaire').parents('.form-group').addClass('hide');
-        $('#projet_emprise').val(500000);
+        $('#projet_emprise').val(3000);
         $('#projet_terrain_topographie').parents('.form-group').find('label').text('Relief');
         var clone = $('#projet_terrain_altitude').parents('.form-group').clone();
         $('#projet_terrain_altitude').parents('.form-group').remove();
@@ -1799,6 +1801,8 @@
         $.each(technologies, function(code, technologie) {
           if(code == selected_technologie) {
             $('#tab_projet p').html('');
+            var technologie_lineaire = $('#projet_lineaire').val() ? parseFloat($('#projet_lineaire').val().replace(/\s/g, '')) : 0;
+            var technologie_interdistance = $('#projet_interdistance').val() ? parseFloat($('#projet_interdistance').val().replace(/\s/g, '')) : 0;
             var technologie_su = $('#projet_surfaceUtile').val() ? parseFloat($('#projet_surfaceUtile').val().replace(/\s/g, '')) : 0;
             var technologie_largeur = 0;
             var technologie_longueur = 0;
@@ -1822,13 +1826,20 @@
               var technologie_emprise = (technologie_largeur * technologie_longueur) / 1000000;
               $('#projet_emprise').val(technologie_emprise.toFixed(3));
             }
-            if($('#projet_technologie').val() == 'eolienne' || (technologie_su && technologie_largeur && technologie_longueur)) {
-              if($('#projet_technologie').val() == 'eolienne') {
+            if($('#projet_technologie').val() == 'eolienne' || (/*technologie_su && */technologie_largeur && technologie_longueur)) {
+              {# if($('#projet_technologie').val() == 'eolienne') {
                 var technologie_unite = parseFloat($('#projet_unite').val());
               } else {
                 var technologie_unite = technologie_su * 0.4 / technologie_emprise;
                 $('#projet_unite').val(technologie_unite.toFixed(0));
-              }
+              } #}
+              var technologie_unite = technologie_lineaire && technologie_interdistance ? round(technologie_lineaire / technologie_interdistance) : 0;
+              $('#projet_unite').val(technologie_unite);
+              var voiries = round(technologie_unite * 5.4);
+              $('#projet_voiries').val(voiries.toString().replace(/\s/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ' '));
+              technologie_su = technologie_unite * technologie_emprise;
+              $('#projet_surfaceUtile').val(technologie_su);
+
               var technologie_pt = technologie_unite * technologie_pu;
               $('#projet_puissanceTotale').val(technologie_pt.toFixed(3));
               $('#projet_potentiel').val(technologie_pt.toFixed(3));
@@ -1841,14 +1852,11 @@
       equipementType = $(this).val();
       $('#projet_technologie').change();
     });
-    $('#projet_surfaceUtile, #projet_emprise, #projet_unite').change(function () {
+    $('#projet_lineaire, #projet_interdistance').change(function () {
       $('#projet_technologie').change();
     });
-    $('#projet_surfaceUtile').on('input', function () {
-      $('#projet_surfaceUtile').val($('#projet_surfaceUtile').val().replace(/\s/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ' '));
-      var technologie_su = $('#projet_surfaceUtile').val() ? parseFloat($('#projet_surfaceUtile').val().replace(/\s/g, '')) : 0;
-      voiries = technologie_su * 0.6;
-      $('#projet_voiries').val(voiries.toString().replace(/\s/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ' '));
+    $('#projet_surfaceUtile, #projet_voiries').on('input', function () {
+      $(this).val($(this).val().replace(/\s/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ' '));
     });
 
     var current_main_image = 0;

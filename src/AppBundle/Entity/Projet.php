@@ -416,14 +416,28 @@ class Projet
     /**
      * @var int
      *
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", options={"default" : 0})
      */
     private $voiries = 0;
 
     /**
-     * @var string
+     * @var int
      *
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", options={"default" : 0})
+     */
+    private $lineaire = 0;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(type="integer", options={"default" : 0})
+     */
+    private $interdistance = 0;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(type="integer", options={"default" : 0})
      */
     private $unite = 0;
 
@@ -1787,7 +1801,7 @@ class Projet
      */
     public function getVoiries()
     {
-        return $this->voiries;
+        return floatval($this->voiries);
     }
 
     /**
@@ -1801,7 +1815,43 @@ class Projet
     }
 
     /**
-     * @return float
+     * @return int
+     */
+    public function getLineaire()
+    {
+        return floatval($this->lineaire);
+    }
+
+    /**
+     * @param int $lineaire
+     * @return \AppBundle\Entity\Projet
+     */
+    public function setLineaire($lineaire)
+    {
+        $this->lineaire = $lineaire;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getInterdistance()
+    {
+        return floatval($this->interdistance);
+    }
+
+    /**
+     * @param int $interdistance
+     * @return \AppBundle\Entity\Projet
+     */
+    public function setInterdistance($interdistance)
+    {
+        $this->interdistance = $interdistance;
+        return $this;
+    }
+
+    /**
+     * @return int
      */
     public function getUnite()
     {
@@ -1809,7 +1859,7 @@ class Projet
     }
 
     /**
-     * @param string $unite
+     * @param int $unite
      * @return \AppBundle\Entity\Projet
      */
     public function setUnite($unite)

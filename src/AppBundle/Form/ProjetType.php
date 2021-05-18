@@ -254,6 +254,14 @@ class ProjetType extends AbstractType
                 'label' => 'Voiries (m2)',
                 'required' => false,
             ])
+            ->add('lineaire', NumberType::class, [
+                'label' => 'Lineaire (m)',
+                'required' => false,
+            ])
+            ->add('interdistance', NumberType::class, [
+                'label' => 'Interdistance (m)',
+                'required' => false,
+            ])
             ->add('emprise', NumberType::class, [
                 'label' => 'Emprise (m2)',
                 'required' => false,
