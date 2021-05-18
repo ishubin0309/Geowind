@@ -668,14 +668,14 @@
         }
         else if(type == 'ferme_solaire') {
           $('#projet_denomination').val('Psol_'+id);
-          if(update_type_milieu) $('#projet_environnement').val('zone_urbaine');
+          if(update_type_milieu) $('#projet_environnement').val('terre_arable');
         }
         else if(type == 'ombriere_solaire') $('#projet_denomination').val('Pomb_'+id);
         else if(type == 'tracker_solaire') $('#projet_denomination').val('Ptrack_'+id);
         else if(type == 'mesure_enviro') $('#projet_denomination').val('Menv_'+id);
         else {
           $('#projet_denomination').val('Esol_'+id);
-          if(update_type_milieu) $('#projet_environnement').val('zone_urbaine');
+          if(update_type_milieu) $('#projet_environnement').val('terre_arable');
         }
       }
     });
