@@ -1836,7 +1836,7 @@
                 var voiries = Math.round(technologie_unite * 4.5);
                 $('#projet_voiries').val(voiries.toString().replace(/\s/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ' '));
                 technologie_su = technologie_unite * technologie_emprise;
-                $('#projet_surfaceUtile').val(technologie_su);
+                $('#projet_surfaceUtile').val(technologie_su.toString().replace(/\s/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ' '));
               } else {
                 var technologie_unite = technologie_su * 0.4 / technologie_emprise;
                 $('#projet_unite').val(technologie_unite.toFixed(0));
