@@ -120,7 +120,7 @@
             {% if is_granted('ROLE_ADMIN') %}
               <li{{ item is defined and item == 'user' ? ' class="active"' }}><a href="{{ path('user_index') }}"><i class="fa fa-users"></i> Utilisateurs</a></li>
               <li{{ item is defined and item == 'batiment' ? ' class="active"' }}><a href="{{ path('batiment_index') }}"><i class="fa fa-building"></i> Documentation</a></li>
-              <li{{ item is defined and item == 'news' ? ' class="active"' }}><a href="{{ path('batiment_news') }}"><i class="fa fa-newspaper-o"></i> News</a></li>
+              <li{{ item is defined and item == 'news' ? ' class="active"' }}><a href="{{ path('batiment_news') }}"><i class="fa fa-newspaper-o"></i> Infos</a></li>
             {% endif %}
             <li class="dropdown dropdown-legend">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-dot-circle-o"></i> Légende <span class="caret"></span></a>
