@@ -1836,9 +1836,10 @@
               } #}
               var technologie_unite = technologie_lineaire && technologie_interdistance ? Math.round(technologie_lineaire / technologie_interdistance) : 0;
               $('#projet_unite').val(technologie_unite);
-              var voiries = Math.round(technologie_unite * 5.4);
+              var voiries = Math.round(technologie_unite * 4.5);
               $('#projet_voiries').val(voiries.toString().replace(/\s/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ' '));
               technologie_su = technologie_unite * technologie_emprise;
+              console.log(technologie_unite +' * '+ technologie_emprise +' = '+ technologie_su);
               $('#projet_surfaceUtile').val(technologie_su);
 
               var technologie_pt = technologie_unite * technologie_pu;
