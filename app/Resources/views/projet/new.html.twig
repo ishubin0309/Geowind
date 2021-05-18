@@ -105,7 +105,7 @@
           </thead>
           <tbody>
             <tr>
-              <td>Sourceur</td>
+              <td>Source</td>
               <td class="required">{{ form_widget(form.origine, {'attr': {'style': 'width:100%'}}) }}</td>
               <td>{{ form_widget(form.origineTelephone) }}</td>
             </tr>
@@ -131,11 +131,6 @@
               <td class="required">{{ form_widget(form.mairie, {'attr': {'style': 'width:100%'}}) }}</td>
               <td>{{ form_widget(form.mairieTelephone) }}</td>
             <tr>
-            <tr id="contact_maire">
-              <td>Maire</td>
-              <td class="required"></td>
-              <td></td>
-            </tr>
             <tr id="contact_epci">
               <td>EPCI</td>
               <td class="required"></td>
@@ -695,8 +690,6 @@
     $('#projet_mairie').on('select2:select', function (e) {
       var data = e.params.data;
       $('#projet_mairieTelephone').val(data.telephone);
-      $('#contact_maire td:eq(1)').text(data.maire);
-      $('#contact_maire td:eq(2)').text(data.telephone);
     });
     function updateMairie() {
       var commune_id = $('#projet_communes option:selected').val();
@@ -705,19 +698,14 @@
           url: Routing.generate('mairie_search_by_commune', { id: commune_id }),
           method: "POST",
           dataType: "json",
-          beforeSend: function () {
-            $('#projet_mairie').val('');
-            $('#projet_mairieTelephone').val('');
-            $('#contact_maire td:eq(1)').val('');
-            $('#contact_maire td:eq(2)').val('');
-          },
           success: function (response) {
             if(response['mairie']) {
               $('#projet_mairie').append(new Option(response['mairie']['text'], response['mairie']['id']));
               $('#projet_mairie').val(response['mairie']['id']);
               $('#projet_mairieTelephone').val(response['mairie']['telephone']);
-              $('#contact_maire td:eq(1)').text(response['mairie']['maire']);
-              $('#contact_maire td:eq(2)').text(response['mairie']['telephone']);
+            } else {
+              $('#projet_mairie').val('');
+              $('#projet_mairieTelephone').val('');
             }
             $('#projet_mairie').trigger('change');
           }, error: function () {
@@ -739,7 +727,7 @@
             $('#population > div:eq(0)').html('<label class="col-sm-4 control-label">-:</label><div class="col-sm-8">-</div>');
             $('#population > div:eq(1)').html('<label class="col-sm-4 control-label">-:</label><div class="col-sm-8">-</div>');
             $('#projet_terrain_vitesseVent').val('');
-            $('#projet_terrain_productiblePv').val('');
+            $('#projet_terrain_productibleSolaire').val('');
             $('#projet_terrain_altitude').val('');
             $('#projet_terrain_topographie').val('');
             $('#projet_terrain_documentUrbanisme').val('');
@@ -752,7 +740,7 @@
             $('#population > div:eq(0)').html('<label class="col-sm-4 control-label">'+response['commune']+':</label><div class="col-sm-8">'+response['commune_pop']+'</div>');
             $('#population > div:eq(1)').html('<label class="col-sm-4 control-label">'+response['epci']+':</label><div class="col-sm-8">'+response['epci_pop']+'</div>');
             $('#projet_terrain_vitesseVent').val(response['vitesse_vent']);
-            $('#projet_terrain_productiblePv').val(response['productible_pv']);
+            $('#projet_terrain_productibleSolaire').val(response['productible_pv']);
             $('#projet_terrain_altitude').val(response['altitude']);
             $('#projet_terrain_topographie').val(response['relief']);
             $('#projet_terrain_documentUrbanisme').val(response['urbanisme_type']);
@@ -764,7 +752,7 @@
             $('#population > div:eq(0)').html('<label class="col-sm-4 control-label"></label><div class="col-sm-8"></div>');
             $('#population > div:eq(1)').html('<label class="col-sm-4 control-label"></label><div class="col-sm-8"></div>');
             $('#projet_terrain_vitesseVent').val('');
-            $('#projet_terrain_productiblePv').val('');
+            $('#projet_terrain_productibleSolaire').val('');
             $('#projet_terrain_altitude').val('');
             $('#projet_terrain_topographie').val('');
             $('#projet_terrain_documentUrbanisme').val('');
@@ -773,7 +761,9 @@
         });
       }
     }
-    updateMairie();
+    {% if form.vars.value.mairie is null and form.vars.value.communes[0].id is not defined %}
+      updateMairie();
+    {% endif %}
     {% if form.vars.value.communes[0].id is defined %}
       updateEpci();
     {% endif %}
@@ -1592,11 +1582,11 @@
     $('#projet_technologie').change(function () {
       if($('#projet_technologie').val() == 'eolienne') {
         $('#projet_puissanceUnitaire').parents('.form-group').addClass('hide');
-        $('#projet_emprise').val(3000);
+        $('#projet_emprise').val(500000);
         $('#projet_terrain_topographie').parents('.form-group').find('label').text('Relief');
-        {# var clone = $('#projet_terrain_altitude').parents('.form-group').clone();
+        var clone = $('#projet_terrain_altitude').parents('.form-group').clone();
         $('#projet_terrain_altitude').parents('.form-group').remove();
-        $(clone).insertBefore($('#projet_terrain_topographie').parents('.form-group')); #}
+        $(clone).insertBefore($('#projet_terrain_topographie').parents('.form-group'));
         $('#projet_terrain_exposition').parents('.form-group').find('label').text('Orientation');
         var projet_terrain_exposition = $('#projet_terrain_exposition').val();
         $('#projet_terrain_exposition').parents('.form-group').find('div').html('<select id="projet_terrain_exposition" name="projet[terrain][exposition]" class="form-control"><option value=""></option><option value="E-O">E-O</option><option value="N-S">N-S</option><option value="NO-SE">NO-SE</option><option value="NE-SO">NE-SO</option></select>');
@@ -1606,9 +1596,9 @@
         {# equipementType = ''; #}
         $('#projet_emprise').val(0);
         $('#projet_terrain_topographie').parents('.form-group').find('label').text('Topographie');
-        {# var clone = $('#projet_terrain_altitude').parents('.form-group').clone();
+        var clone = $('#projet_terrain_altitude').parents('.form-group').clone();
         $('#projet_terrain_altitude').parents('.form-group').remove();
-        $(clone).insertAfter($('#projet_terrain_topographie').parents('.form-group')); #}
+        $(clone).insertAfter($('#projet_terrain_topographie').parents('.form-group'));
         $('#projet_terrain_exposition').parents('.form-group').find('label').text('Exposition');
         var projet_terrain_exposition = $('#projet_terrain_exposition').val();
         $('#projet_terrain_exposition').parents('.form-group').find('div').html('<select id="projet_terrain_exposition" name="projet[terrain][exposition]" class="form-control"><option value=""></option><option value="S">S</option><option value="SE">SE</option><option value="E">E</option><option value="O">O</option><option value="SO">SO</option></select>');
