@@ -1826,7 +1826,7 @@
             if($('#projet_technologie').val() != 'eolienne') {
               var technologie_emprise = (technologie_largeur * technologie_longueur) / 1000000;
               $('#projet_emprise').val(technologie_emprise.toFixed(3));
-            }
+            } else var technologie_emprise = $('#projet_emprise').val() ? parseFloat($('#projet_emprise').val().replace(/\s/g, '')) : 0;
             if($('#projet_technologie').val() == 'eolienne' || (/*technologie_su && */technologie_largeur && technologie_longueur)) {
               {# if($('#projet_technologie').val() == 'eolienne') {
                 var technologie_unite = parseFloat($('#projet_unite').val());
