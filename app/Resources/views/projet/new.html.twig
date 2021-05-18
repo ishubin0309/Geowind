@@ -450,6 +450,7 @@
       
     });
 
+    var update_type_milieu = false;
     $('#projet_typeProjet').change(function() {
       type = $(this).val();
       if(type == 'parc__eolien') {
@@ -503,18 +504,18 @@
         if(type == 'eolienne_isolee') $('#projet_denomination').val('EOi_'+id);
         if(type == 'toiture_solaire') {
           $('#projet_denomination').val('Ptoit_'+id);
-          $('#projet_environnement').val('exploitation_agricole');
+          if(update_type_milieu) $('#projet_environnement').val('exploitation_agricole');
         }
         else if(type == 'ferme_solaire') {
           $('#projet_denomination').val('Psol_'+id);
-          $('#projet_environnement').val('zone_urbaine');
+          if(update_type_milieu) $('#projet_environnement').val('zone_urbaine');
         }
         else if(type == 'ombriere_solaire') $('#projet_denomination').val('Pomb_'+id);
         else if(type == 'tracker_solaire') $('#projet_denomination').val('Ptrack_'+id);
         else if(type == 'mesure_enviro') $('#projet_denomination').val('Menv_'+id);
         else {
           $('#projet_denomination').val('Esol_'+id);
-          $('#projet_environnement').val('zone_urbaine');
+          if(update_type_milieu) $('#projet_environnement').val('zone_urbaine');
         }
       }
     });
@@ -1967,7 +1968,9 @@
       $('#projet_batimentExistant_charpente').parents('.form-group').addClass('hide');
       countParcelles();
       commandeUpdate();
+      var update_type_milieu = true;
       $('#projet_typeProjet').change();
+      var update_type_milieu = true;
       $('#projet_technologie').change();
       $('select[id*="_phase"]').change();
       $('select[id*="_objet"]').change();
