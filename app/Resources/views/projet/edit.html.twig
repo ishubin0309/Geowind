@@ -1828,7 +1828,6 @@
               $('#projet_emprise').val(technologie_emprise.toFixed(3));
             } else {
               var technologie_emprise = $('#projet_emprise').val() ? parseFloat($('#projet_emprise').val().replace(/\s/g, '')) : 0;
-              console.log(technologie_emprise);
             }
             if($('#projet_technologie').val() == 'eolienne' || (/*technologie_su && */technologie_largeur && technologie_longueur)) {
               {# if($('#projet_technologie').val() == 'eolienne') {
@@ -1842,7 +1841,6 @@
               var voiries = Math.round(technologie_unite * 4.5);
               $('#projet_voiries').val(voiries.toString().replace(/\s/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ' '));
               technologie_su = technologie_unite * technologie_emprise;
-              console.log(technologie_unite +' * '+ technologie_emprise +' = '+ technologie_su);
               $('#projet_surfaceUtile').val(technologie_su);
 
               var technologie_pt = technologie_unite * technologie_pu;
