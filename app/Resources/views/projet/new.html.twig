@@ -1018,7 +1018,7 @@
         language: 'fr',
         clearBtn: true,
       });
-      $('#tab_contacts tbody').append('<tr rel="'+length+'" class="hide"><td>-</td><td>Propriétaire</td><td>-</td></tr><tr rel="'+length+'" class="hide"><td>-</td><td>Exploitant</td><td>-</td></tr>');
+      $('#tab_contacts tbody').append('<tr rel="'+length+'" class="hide"><td>Propriétaire</td><td>-</td><td>-</td></tr><tr rel="'+length+'" class="hide"><td>Exploitant</td><td>-</td><td>-</td></tr>');
       loadAllTypeheads();
     });
 
@@ -1073,13 +1073,13 @@
       var id = $(this).attr('id').match(/\d+/);
       id = parseInt(id);
       if($(this).attr('id')=='projet_proprietaires_'+id+'_proprietaire') {
-        $('#tab_contacts tbody tr[rel="'+id+'"]:eq(0) td:eq(0)').text($(this).val());
+        $('#tab_contacts tbody tr[rel="'+id+'"]:eq(0) td:eq(1)').text($(this).val());
         if($(this).val()) $('#tab_contacts tbody tr[rel="'+id+'"]:eq(0)').removeClass('hide');
         else $('#tab_contacts tbody tr[rel="'+id+'"]:eq(0)').addClass('hide');
       } else if($(this).attr('id')=='projet_proprietaires_'+id+'_telephoneProprietaire')
         $('#tab_contacts tbody tr[rel="'+id+'"]:eq(0) td:eq(2)').text($(this).val());
       else if($(this).attr('id')=='projet_proprietaires_'+id+'_exploitant') {
-        $('#tab_contacts tbody tr[rel="'+id+'"]:eq(1) td:eq(0)').text($(this).val());
+        $('#tab_contacts tbody tr[rel="'+id+'"]:eq(1) td:eq(1)').text($(this).val());
         if($(this).val()) $('#tab_contacts tbody tr[rel="'+id+'"]:eq(1)').removeClass('hide');
         else $('#tab_contacts tbody tr[rel="'+id+'"]:eq(1)').addClass('hide');
       } else if($(this).attr('id')=='projet_proprietaires_'+id+'_telephoneExploitant')
