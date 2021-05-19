@@ -1894,7 +1894,6 @@
       var technologie_su = $('#projet_surfaceUtile').val() ? parseFloat($('#projet_surfaceUtile').val().replace(/\s/g, '')) : 0;
       voiries = technologie_su * 0.6;
       $('#projet_voiries').val(voiries.toString().replace(/\s/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ' '));
-      $('#projet_technologie').change();
     });
 
     var current_main_image = 0;
