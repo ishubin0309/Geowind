@@ -572,14 +572,12 @@ class Projet
     public static function getValorisationList()
     {
         return [
-            'injection' => 'Injection',
-            'autoconso_i' => 'Autoconso-i',
-            'autoconso_c' => 'Autoconso-c',
-            'mixte' => 'Mixte',
-            'ct_remuneration'=> 'Ct de rémunération',
-            'non_defini' => 'Non-défini',
-            'biodiversite' => 'Biodiversité',
-            'cession' => 'Cession'
+            'Non décidé' => 'Non décidé',
+            'Injection' => 'Injection',
+            'Autoconso-i' => 'Autoconso-i',
+            'Autoconso-c' => 'Autoconso-c',
+            'Mixte' => 'Mixte',
+            'Biodiversité' => 'Biodiversité'
         ];
     }
     
@@ -589,6 +587,7 @@ class Projet
     public static function getTarifList()
     {
         return [
+            'Non décidé' => 'Non décidé',
             'Appel d\'offre'=> 'Appel d\'offre',
             'PPA' => 'PPA'
         ];
