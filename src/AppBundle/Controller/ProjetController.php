@@ -1229,7 +1229,7 @@ class ProjetController extends Controller
                 $fp = fopen($file, 'wb');
                 curl_setopt($ch, CURLOPT_FILE, $fp);
                 curl_setopt($ch, CURLOPT_HEADER, 0);
-                $userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:85.0) Gecko/20100101 Firefox/85.0';
+                $userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:87.0) Gecko/20100101 Firefox/87.0';
                 curl_setopt($ch,CURLOPT_USERAGENT,$userAgent);
                 curl_exec($ch);
                 curl_close($ch);
