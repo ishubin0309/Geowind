@@ -1210,32 +1210,30 @@ class ProjetController extends Controller
             mkdir($dirDest."/tiles",0755);
         }
 
-        for($x=$startX;$x<=$endX;$x++)
-        {
-            for($y=$startY;$y<=$endY;$y++)
-            {
-            $file = $dirDest . "/tiles/${zoom}_${x}_${y}.png";
-            if(!is_file($file) || filemtime($file) < time() - (86400 * 30))
-            {
-                $server = array();
-                $server[] = 'a.tile.openstreetmap.org';
-                $server[] = 'b.tile.openstreetmap.org';
-                $server[] = 'c.tile.openstreetmap.org';
+        for($x=$startX;$x<=$endX;$x++) {
+            for($y=$startY;$y<=$endY;$y++) {
+                $file = $dirDest . "/tiles/${zoom}_${x}_${y}.png";
+                if(!is_file($file) || filemtime($file) < time() - (86400 * 30)) {
+                    $server = array();
+                    $server[] = 'a.tile.openstreetmap.org';
+                    $server[] = 'b.tile.openstreetmap.org';
+                    $server[] = 'c.tile.openstreetmap.org';
 
-                $url = 'http://'.$server[array_rand($server)];
-                $url .= "/".$zoom."/".$x."/".$y.".png";
+                    $url = 'https://'.$server[array_rand($server)];
+                    $url .= "/".$zoom."/".$x."/".$y.".png";
 
-                $ch = curl_init($url);
-                $fp = fopen($file, 'wb');
-                curl_setopt($ch, CURLOPT_FILE, $fp);
-                curl_setopt($ch, CURLOPT_HEADER, 0);
-                $userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:87.0) Gecko/20100101 Firefox/87.0';
-                curl_setopt($ch,CURLOPT_USERAGENT,$userAgent);
-                curl_exec($ch);
-                curl_close($ch);
-                fflush($fp);    // need to insert this line for proper output when tile is first requested
-                fclose($fp);
-            }
+                    $ch = curl_init($url);
+                    $fp = fopen($file, 'wb');
+                    curl_setopt($ch, CURLOPT_FILE, $fp);
+                    curl_setopt($ch, CURLOPT_HEADER, 0);
+                    $userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:87.0) Gecko/20100101 Firefox/87.0';
+                    $header = ['Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8','Accept-Language: en-US,en;q=0.5','User-Agent:'.$userAgent];
+                    curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+                    $result = curl_exec($ch);
+                    curl_close($ch);
+                    fflush($fp);    // need to insert this line for proper output when tile is first requested
+                    fclose($fp);
+                }
             }
         }
 
