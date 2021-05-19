@@ -899,7 +899,7 @@
               $('#projet_mairie').append(new Option(response['mairie']['text'], response['mairie']['id']));
               $('#projet_mairie').val(response['mairie']['id']);
               $('#projet_mairieTelephone').val(response['mairie']['telephone']);
-              setTimeout(function() {$('#select2-projet_mairie-container').text(response['mairie']['maire']);}, 500);
+              $('#projet_mairie option:selected').text(response['mairie']['maire']);
             } else {
               $('#projet_mairie').val('');
               $('#projet_mairieTelephone').val('');
