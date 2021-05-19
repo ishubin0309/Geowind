@@ -899,6 +899,8 @@
               $('#projet_mairie').append(new Option(response['mairie']['maire'], response['mairie']['id']));
               $('#projet_mairie').val(response['mairie']['id']);
               $('#projet_mairieTelephone').val(response['mairie']['telephone']);
+              setTimeout(function() {$('#select2-projet_mairie-container').text(response['mairie']['maire']);}, 500);
+
             } else {
               $('#projet_mairie').val('');
               $('#projet_mairieTelephone').val('');
