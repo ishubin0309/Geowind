@@ -703,6 +703,7 @@
     $('#projet_mairie').on('select2:select', function (e) {
       var data = e.params.data;
       $('#projet_mairieTelephone').val(data.telephone);
+      setTimeout(function() {$('#select2-projet_mairie-container').text(data.maire);}, 500);
     });
     function updateMairie() {
       var commune_id = $('#projet_communes option:selected').val();
