@@ -1820,7 +1820,7 @@
         $('#projet_terrain_topographie').parents('.form-group').find('label').text('Relief');
         var clone = $('#projet_terrain_altitude').parents('.form-group').clone();
         $('#projet_terrain_altitude').parents('.form-group').remove();
-        $(clone).insertAfter($('#projet_terrain_topographie').parents('.form-group'));
+        $(clone).insertBefore($('#projet_terrain_topographie').parents('.form-group'));
         $('#projet_terrain_exposition').parents('.form-group').find('label').text('Exposition');
         var projet_terrain_exposition = $('#projet_terrain_exposition').val();
         $('#projet_terrain_exposition').parents('.form-group').find('div').html('<select id="projet_terrain_exposition" name="projet[terrain][exposition]" class="form-control"><option value=""></option><option value="S">S</option><option value="SE">SE</option><option value="E">E</option><option value="O">O</option><option value="SO">SO</option></select>');
