@@ -237,7 +237,7 @@ class Mairie
 
     public function getMairie()
     {
-        return trim(str_replace(array('Mairie d\'', 'Mairie de '), '', $this->mairie));
+        return trim(str_replace(array('Mairie d\'', 'Mairie de ', 'Mairie du '), '', $this->mairie));
     }
 
     public function getAddress1()
@@ -539,6 +539,6 @@ class Mairie
      */
     public function __toString()
     {
-        return trim(str_replace(array('Mairie d\'', 'Mairie de '), '', $this->mairie));
+        return trim(str_replace(array('Mairie d\'', 'Mairie de ', 'Mairie du '), '', $this->mairie));
     }
 }
