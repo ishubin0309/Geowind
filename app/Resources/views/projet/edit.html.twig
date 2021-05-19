@@ -1886,10 +1886,10 @@
       equipementType = $(this).val();
       $('#projet_technologie').change();
     });
-    $('#projet_lineaire, #projet_interdistance, #projet_surfaceUtile, #projet_emprise, #projet_unite').change(function () {
+    $('#tab_projet').on('change', '#projet_lineaire, #projet_interdistance, #projet_surfaceUtile, #projet_emprise, #projet_unite', function () {
       $('#projet_technologie').change();
     });
-    $('#projet_surfaceUtile').on('input', function () {
+    $('#tab_projet').on('input', '#projet_surfaceUtile', function () {
       $('#projet_surfaceUtile').val($('#projet_surfaceUtile').val().replace(/\s/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ' '));
       var technologie_su = $('#projet_surfaceUtile').val() ? parseFloat($('#projet_surfaceUtile').val().replace(/\s/g, '')) : 0;
       voiries = technologie_su * 0.6;
