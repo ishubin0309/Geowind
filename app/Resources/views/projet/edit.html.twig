@@ -958,9 +958,7 @@
         });
       }
     }
-    {% if form.vars.value.mairie is null and form.vars.value.communes[0].id is defined %}
-      updateMairie();
-    {% endif %}
+    updateMairie();
     {% if form.vars.value.communes[0].id is defined %}
       updateEpci();
     {% endif %}
