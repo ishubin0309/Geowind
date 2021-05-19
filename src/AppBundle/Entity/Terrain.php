@@ -459,9 +459,9 @@ class Terrain
     public static function getZonageList()
     {
         return [
-            'zone_urbanisee' => 'Zone urbanisée',
             'zone_naturelle' => 'Zone naturelle',
             'zone_agricole' => 'Zone agricole',
+            'zone_urbanisee' => 'Zone urbanisée',
             'zone_a_urbaniser' => 'Zone à urbaniser',
             'zone_a_risque' => 'Zone à risque',
             'zone_incontructible' => 'Zone incontructible',
