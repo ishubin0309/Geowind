@@ -742,7 +742,7 @@
             $('#population > div:eq(0)').html('<label class="col-sm-4 control-label">-:</label><div class="col-sm-8">-</div>');
             $('#population > div:eq(1)').html('<label class="col-sm-4 control-label">-:</label><div class="col-sm-8">-</div>');
             $('#projet_terrain_vitesseVent').val('');
-            $('#projet_terrain_productibleSolaire').val('');
+            $('#projet_terrain_productiblePv').val('');
             $('#projet_terrain_altitude').val('');
             $('#projet_terrain_topographie').val('');
             $('#projet_terrain_documentUrbanisme').val('');
@@ -755,7 +755,7 @@
             $('#population > div:eq(0)').html('<label class="col-sm-4 control-label">'+response['commune']+':</label><div class="col-sm-8">'+response['commune_pop']+'</div>');
             $('#population > div:eq(1)').html('<label class="col-sm-4 control-label">'+response['epci']+':</label><div class="col-sm-8">'+response['epci_pop']+'</div>');
             $('#projet_terrain_vitesseVent').val(response['vitesse_vent']);
-            $('#projet_terrain_productibleSolaire').val(response['productible_pv']);
+            $('#projet_terrain_productiblePv').val(response['productible_pv']);
             $('#projet_terrain_altitude').val(response['altitude']);
             $('#projet_terrain_topographie').val(response['relief']);
             $('#projet_terrain_documentUrbanisme').val(response['urbanisme_type']);
@@ -767,7 +767,7 @@
             $('#population > div:eq(0)').html('<label class="col-sm-4 control-label"></label><div class="col-sm-8"></div>');
             $('#population > div:eq(1)').html('<label class="col-sm-4 control-label"></label><div class="col-sm-8"></div>');
             $('#projet_terrain_vitesseVent').val('');
-            $('#projet_terrain_productibleSolaire').val('');
+            $('#projet_terrain_productiblePv').val('');
             $('#projet_terrain_altitude').val('');
             $('#projet_terrain_topographie').val('');
             $('#projet_terrain_documentUrbanisme').val('');
