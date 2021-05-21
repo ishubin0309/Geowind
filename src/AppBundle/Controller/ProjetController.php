@@ -364,8 +364,8 @@ class ProjetController extends Controller
                         $reliefColumn = 18;
                         continue;
                     }//echo '<pre>';print_r($data);die;
-                    if($row > 25000) break;
-                    if($row < 18000) continue;
+                    // if($row > 25000) break;
+                    // if($row < 18000) continue;
                     $data = array_map("utf8_encode", $data);
                     // echo $row . ': Insee ' . $data[$inseeColumn] . '<br>';
                     $commune = $em->getRepository('AppBundle:Commune')->findOneBy(['insee' => $data[$inseeColumn]]);
@@ -378,9 +378,10 @@ class ProjetController extends Controller
                         $commune->setNom($data[$nomColumn]);
                         $commune->setInsee($data[$inseeColumn]);
                         $commune->setCode(substr($data[$inseeColumn], -3));
-                    } else if($commune->getAltitude()) continue;
+                    } else if($commune->getNom() == data[$nomColumn]) continue;
                     $row2++;
-                    $commune->setNomMiniscule($data[$nomMinisculeColumn]);
+                    $commune->setNom($data[$nomColumn]);
+                    /* $commune->setNomMiniscule($data[$nomMinisculeColumn]);
                     $commune->setIntercommunalite($data[$intercommunaliteColumn]);
                     $commune->setIntercommunaliteNb($data[$intercommunaliteNbColumn]);
                     $commune->setIntercommunalitePop($data[$intercommunalitePopColumn]);
@@ -392,9 +393,9 @@ class ProjetController extends Controller
                     $commune->setUrbanismeType($data[$urbanismeTypeColumn]);
                     $commune->setUrbanismeEtat($data[$urbanismeEtatColumn]);
                     $commune->setAltitude($data[$altitudeColumn]);
-                    $commune->setRelief($data[$reliefColumn]);
+                    $commune->setRelief($data[$reliefColumn]); */
                     $em->persist($commune);
-                    if($row2 > 100) {
+                    if($row2 > 300) {echo $row.',';
                         $em->flush();
                         $row2 = 0;
                     }
