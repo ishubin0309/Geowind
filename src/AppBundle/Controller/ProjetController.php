@@ -378,7 +378,7 @@ class ProjetController extends Controller
                         $commune->setNom($data[$nomColumn]);
                         $commune->setInsee($data[$inseeColumn]);
                         $commune->setCode(substr($data[$inseeColumn], -3));
-                    } else if($commune->getNom() == data[$nomColumn]) continue;
+                    } else if($commune->getNom() == $data[$nomColumn]) continue;
                     $row2++;
                     $commune->setNom($data[$nomColumn]);
                     /* $commune->setNomMiniscule($data[$nomMinisculeColumn]);
