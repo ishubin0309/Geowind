@@ -183,7 +183,7 @@ class EolienController extends Controller
 
             $em = $this->getDoctrine()->getManager();
             $parcs = $em->getRepository('AppBundle:ParcEolien')->findAll();
-            fputcsv($handle, ['ID','denomination','region','departement','commune','insee','longitude','latitude','mise_en_service','type_machine','puissance_nominale_unitaire','puissance_nominale_totale','productible_estime','developpeur','operateur','nom_contact','telephone_contact','email_contact','description'],';');
+            fputcsv($handle, ['ID','denomination','region','departement','commune','insee','longitude','latitude','mise_en_service','type_machine','puissance_nominale_unitaire','puissance_nominale_totale','productible_estime','developpeur','operateur','nom_contact','telephone_contact','email_contact','description'],',');
             foreach($parcs as $parc) {
                 fputcsv($handle, $parc->getRowForExport(), ',');
             }
