@@ -42,6 +42,7 @@ class EolienController extends Controller
                 $regionColumn = false;
                 $departementColumn = false;
                 $communeColumn = false;
+                $inseeColumn = false;
                 $latColumn = false;
                 $lngColumn = false;
                 $mise_en_serviceColumn = false;
@@ -55,7 +56,7 @@ class EolienController extends Controller
                 $email_contactColumn = false;
                 $descriptionColumn = false;
                 set_time_limit(1000);
-                while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
+                while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
                     if(!$row++) {
                         for ($c=0; $c < count($data); $c++) {
                             $name = trim(strtolower($data[$c]));
@@ -64,6 +65,7 @@ class EolienController extends Controller
                             elseif($name=='region') $regionColumn = $c;
                             elseif($name=='departement') $departementColumn = $c;
                             elseif($name=='commune') $communeColumn = $c;
+                            elseif($name=='insee') $inseeColumn = $c;
                             elseif($name=='latitude') $latColumn = $c;
                             elseif($name=='longitude') $lngColumn = $c;
                             elseif($name=='mise_en_service') $mise_en_serviceColumn = $c;
@@ -94,6 +96,7 @@ class EolienController extends Controller
                     if($regionColumn !== false) $parcEolien->setRegion($data[$regionColumn]);
                     if($departementColumn !== false) $parcEolien->setDepartement($data[$departementColumn]);
                     if($communeColumn !== false) $parcEolien->setCommune($data[$communeColumn]);
+                    if($inseeColumn !== false) $parcEolien->setInsee($data[$inseeColumn]);
                     if($latColumn !== false) $parcEolien->setLatitude($data[$latColumn]);
                     if($lngColumn !== false) $parcEolien->setLongitude($data[$lngColumn]);
                     if($mise_en_serviceColumn !== false) $parcEolien->setMiseEnService($data[$mise_en_serviceColumn]);
@@ -180,9 +183,9 @@ class EolienController extends Controller
 
             $em = $this->getDoctrine()->getManager();
             $parcs = $em->getRepository('AppBundle:ParcEolien')->findAll();
-            fputcsv($handle, ['ID','denomination','region','departement','commune','longitude','latitude','mise_en_service','type_machine','puissance_nominale_unitaire','puissance_nominale_totale','productible_estime','developpeur','operateur','nom_contact','telephone_contact','email_contact','description'],';');
+            fputcsv($handle, ['ID','denomination','region','departement','commune','insee','longitude','latitude','mise_en_service','type_machine','puissance_nominale_unitaire','puissance_nominale_totale','productible_estime','developpeur','operateur','nom_contact','telephone_contact','email_contact','description'],';');
             foreach($parcs as $parc) {
-                fputcsv($handle, $parc->getRowForExport(), ';');
+                fputcsv($handle, $parc->getRowForExport(), ',');
             }
 
             fclose($handle);

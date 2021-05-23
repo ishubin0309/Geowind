@@ -37,6 +37,13 @@ class ParcEolien
      * @ORM\Column(type="string", nullable=true)
      */
     private $commune;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $insee;
     
     /**
      * @var string
@@ -181,6 +188,11 @@ class ParcEolien
         return $this->commune;
     }
 
+    public function getInsee()
+    {
+        return $this->insee;
+    }
+
     public function getRegion()
     {
         return $this->region;
@@ -280,6 +292,12 @@ class ParcEolien
     public function setCommune($commune)
     {
         $this->commune = $commune;
+        return $this;
+    }
+
+    public function setInsee($insee)
+    {
+        $this->insee = $insee;
         return $this;
     }
 
@@ -426,6 +444,7 @@ class ParcEolien
             $this->region, 
             $this->departement, 
             $this->commune, 
+            $this->insee, 
             $this->longitude, 
             $this->latitude, 
             $this->miseEnService, 
