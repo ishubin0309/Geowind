@@ -818,14 +818,14 @@ class ProjetController extends Controller
     {
         $response = new JsonResponse();
 
-        $result = ['parc_eoliens' => [], 'parc_eoliens_commune' => []];
+        $result = ['parc_eoliens_departement' => [], 'parc_eoliens_commune' => []];
         $departement = $request->query->get('departement', null);
         if($departement) {
             $em = $this->getDoctrine()->getManager();
             $parcEoliens = $em->getRepository('AppBundle:ParcEolien')->findBy(['departement' => $departement]);
             foreach($parcEoliens as $parc) {
                 $denomination = $parc->getDenomination() ? $parc->getDenomination() : $parc->getId();
-                $result['parc_eoliens'][] = ['id' => $parc->getId(),'denomination' => $denomination, 'latitude' => $parc->getLatitude(), 'longitude' => $parc->getLongitude()];
+                $result['parc_eoliens_departement'][] = ['id' => $parc->getId(),'denomination' => $denomination, 'latitude' => $parc->getLatitude(), 'longitude' => $parc->getLongitude()];
             }
             $communeId = $request->query->get('commune_id', null);
             if($communeId) {

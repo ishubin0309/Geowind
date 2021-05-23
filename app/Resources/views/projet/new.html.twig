@@ -632,18 +632,18 @@
           beforeSend: function () {
             markers.clearLayers();
             parcMarkers = {};
-            $('#projet_terrain_eoliennes_departement').val('');
-            $('#projet_terrain_eoliennes_commune').val('');
+            $('#projet_terrain_eoliennesDepartement').val('');
+            $('#projet_terrain_eoliennesCommune').val('');
           },
           success: function (response) {
-            parcEoliens = response['parc_eoliens'];
-            $('#projet_terrain_eoliennes').val(parcEoliens.length);
-            $('#projet_terrain_eoliennes_commune').val(parc_eoliens_commune.length);
+            parcEoliens = response['parc_eoliens_departement'];
+            $('#projet_terrain_eoliennesDepartement').val(response['parc_eoliens_departement'].length);
+            $('#projet_terrain_eoliennesCommune').val(response['parc_eoliens_commune'].length);
           }, error: function () {
             markers.clearLayers();
             parcMarkers = {};
-            $('#projet_terrain_eoliennes').val('');
-            $('#projet_terrain_eoliennes_commune').val('');
+            $('#projet_terrain_eoliennesDepartement').val('');
+            $('#projet_terrain_eoliennesCommune').val('');
           }
         });
       }
@@ -1978,7 +1978,7 @@
       $('<legend>Raccordement</legend>').insertBefore($('#projet_terrain_livraison').parents('.form-group'));
       $('<legend>Urbanisme</legend>').insertBefore($('#projet_terrain_documentUrbanisme').parents('.form-group'));
       $('<legend>Energie</legend>').insertBefore($('#projet_terrain_pcaet').parents('.form-group'));
-      $('<legend>Eoliennes</legend>').insertBefore($('#projet_terrain_eoliennes_departement').parents('.form-group'));
+      $('<legend>Eoliennes</legend>').insertBefore($('#projet_terrain_eoliennesDepartement').parents('.form-group'));
       $('<legend>Gisement</legend>').insertBefore($('#projet_terrain_vitesseVent').parents('.form-group'));
       $('#projet_batimentExistant_bardage').parents('.form-group').addClass('hide');
       $('#projet_batimentExistant_ossature').parents('.form-group').addClass('hide');
