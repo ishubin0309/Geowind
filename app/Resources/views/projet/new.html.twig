@@ -624,10 +624,9 @@
     function updateParcEoliens() {
       var departement = $('#projet_departement option:selected').text().replace(/\(.*/, '').trim();
       var commune_id = $('#projet_communes option:selected').val();
-      var commune_nom = $('#projet_communes option:selected').text().replace(/\(.+/, '').trim();
       if(departement) {
         jQuery.ajax({
-          url: Routing.generate('parc_eoliens_search_by_departement', { departement: departement, commune_id: commune_id, commune_nom: commune_nom }),
+          url: Routing.generate('parc_eoliens_search_by_departement', { departement: departement, commune_id: commune_id }),
           method: "POST",
           dataType: "json", 
           beforeSend: function () {

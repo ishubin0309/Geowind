@@ -836,18 +836,6 @@ class ProjetController extends Controller
                         $denomination = $parc->getDenomination() ? $parc->getDenomination() : $parc->getId();
                         $result['parc_eoliens_commune'][] = ['id' => $parc->getId(),'denomination' => $denomination, 'latitude' => $parc->getLatitude(), 'longitude' => $parc->getLongitude()];
                     }
-                } else {
-                    $communeNom = $request->query->get('commune_nom', null);
-                    if($communeNom) {
-                        $commune = $em->getRepository('AppBundle:Commune')->findBy(['nom' => $communeNom]);
-                        if($commune) {
-                            $parcEoliens = $em->getRepository('AppBundle:ParcEolien')->findBy(['insee' => $commune->getInsee()]);
-                            foreach($parcEoliens as $parc) {
-                                $denomination = $parc->getDenomination() ? $parc->getDenomination() : $parc->getId();
-                                $result['parc_eoliens_commune'][] = ['id' => $parc->getId(),'denomination' => $denomination, 'latitude' => $parc->getLatitude(), 'longitude' => $parc->getLongitude()];
-                            }
-                        }
-                    }
                 }
             }
         }
