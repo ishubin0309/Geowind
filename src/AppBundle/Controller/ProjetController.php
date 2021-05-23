@@ -818,7 +818,7 @@ class ProjetController extends Controller
     {
         $response = new JsonResponse();
 
-        $result = ['parc_eoliens' => []];
+        $result = ['parc_eoliens' => [], 'parc_eoliens_commune' => []];
         $departement = $request->query->get('departement', null);
         if($departement) {
             $em = $this->getDoctrine()->getManager();
@@ -826,6 +826,17 @@ class ProjetController extends Controller
             foreach($parcEoliens as $parc) {
                 $denomination = $parc->getDenomination() ? $parc->getDenomination() : $parc->getId();
                 $result['parc_eoliens'][] = ['id' => $parc->getId(),'denomination' => $denomination, 'latitude' => $parc->getLatitude(), 'longitude' => $parc->getLongitude()];
+            }
+            $communeId = $request->query->get('commune_id', null);
+            if($communeId) {
+                $commune = $em->getRepository('AppBundle:Commune')->find($communeId);
+                if($commune) {
+                    $parcEoliens = $em->getRepository('AppBundle:ParcEolien')->findBy(['insee' => $commune->getInsee()]);
+                    foreach($parcEoliens as $parc) {
+                        $denomination = $parc->getDenomination() ? $parc->getDenomination() : $parc->getId();
+                        $result['parc_eoliens_commune'][] = ['id' => $parc->getId(),'denomination' => $denomination, 'latitude' => $parc->getLatitude(), 'longitude' => $parc->getLongitude()];
+                    }
+                }
             }
         }
         $response->setData($result);

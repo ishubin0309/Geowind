@@ -596,9 +596,9 @@
         var query = $('#projet_departement option:selected').text().replace(/\(.+/, '').trim();
         {% if is_granted('ROLE_ADMIN') or projet.origine.id == app.user.id %}
         updateContacts();
-        updateParcEoliens();
         {% endif %}
       }
+      updateParcEoliens();
       if(query && last_reverse_search != query) {
         last_reverse_search = query;
         reverseGeolocalisation(query, true);
@@ -784,23 +784,27 @@
     }
     function updateParcEoliens() {
       var departement = $('#projet_departement option:selected').text().replace(/\(.*/, '').trim();
+      var commune_id = $('#projet_communes option:selected').val();
       if(departement) {
         jQuery.ajax({
-          url: Routing.generate('parc_eoliens_search_by_departement', { departement: departement }),
+          url: Routing.generate('parc_eoliens_search_by_departement', { departement: departement, commune_id: commune_id }),
           method: "POST",
           dataType: "json", 
           beforeSend: function () {
             markers.clearLayers();
             parcMarkers = {};
-            $('#projet_terrain_eoliennes').val('');
+            $('#projet_terrain_eoliennes_departement').val('');
+            $('#projet_terrain_eoliennes_commune').val('');
           },
           success: function (response) {
             parcEoliens = response['parc_eoliens'];
-            $('#projet_terrain_eoliennes').val(parcEoliens.length);
+            $('#projet_terrain_eoliennes_departement').val(parcEoliens.length);
+            $('#projet_terrain_eoliennes_commune').val(parc_eoliens_commune.length);
           }, error: function () {
             markers.clearLayers();
             parcMarkers = {};
-            $('#projet_terrain_eoliennes').val('');
+            $('#projet_terrain_eoliennes_departement').val('');
+            $('#projet_terrain_eoliennes_commune').val('');
           }
         });
       }
@@ -1877,7 +1881,7 @@
             }
             if($('#projet_technologie').val() == 'eolienne' || (technologie_su && technologie_largeur && technologie_longueur)) {
               if($('#projet_technologie').val() == 'eolienne') {
-                var technologie_unite = technologie_lineaire && technologie_interdistance ? Math.round(technologie_lineaire / technologie_interdistance) : 0;
+                var technologie_unite = technologie_lineaire && technologie_interdistance ? Math.round(((technologie_lineaire / technologie_interdistance)+1)) : 0;
                 $('#projet_unite').val(technologie_unite.toString().replace(/\s/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ' '));
                 var voiries = Math.round(technologie_lineaire * 4.5);
                 $('#projet_voiries').val(voiries.toString().replace(/\s/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ' '));
@@ -2163,7 +2167,7 @@
       $('<legend>Raccordement</legend>').insertBefore($('#projet_terrain_livraison').parents('.form-group'));
       $('<legend>Urbanisme</legend>').insertBefore($('#projet_terrain_documentUrbanisme').parents('.form-group'));
       $('<legend>Energie</legend>').insertBefore($('#projet_terrain_pcaet').parents('.form-group'));
-      $('<legend>Eoliennes</legend>').insertBefore($('#projet_terrain_eoliennes').parents('.form-group'));
+      $('<legend>Eoliennes</legend>').insertBefore($('#projet_terrain_eoliennes_departement').parents('.form-group'));
       $('<legend>Gisement</legend>').insertBefore($('#projet_terrain_vitesseVent').parents('.form-group'));
       $('#projet_batimentExistant_bardage').parents('.form-group').addClass('hide');
       $('#projet_batimentExistant_ossature').parents('.form-group').addClass('hide');

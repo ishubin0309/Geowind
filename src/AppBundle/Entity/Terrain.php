@@ -100,7 +100,9 @@ class Terrain
      */
     private $tepos;
 
-    private $eoliennes;
+    private $eoliennesDepartement;
+
+    private $eoliennesCommune;
 
     /**
      * @var string
@@ -345,19 +347,38 @@ class Terrain
     /**
      * @return string
      */
-    public function getEoliennes()
+    public function getEoliennesDepartement()
     {
-        return $this->eoliennes;
+        return $this->eoliennesDepartement;
     }
 
     /**
      *
-     * @param string $eoliennes
+     * @param string $eoliennesDepartement
      * @return \AppBundle\Entity\Terrain
      */
-    public function setEoliennes($eoliennes)
+    public function setEoliennesDepartement($eoliennesDepartement)
     {
-        $this->eoliennes = $eoliennes;
+        $this->eoliennesDepartement = $eoliennesDepartement;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEoliennesCommune()
+    {
+        return $this->eoliennesCommune;
+    }
+
+    /**
+     *
+     * @param string $eoliennesCommune
+     * @return \AppBundle\Entity\Terrain
+     */
+    public function setEoliennesCommune($eoliennesCommune)
+    {
+        $this->eoliennesCommune = $eoliennesCommune;
         return $this;
     }
 
