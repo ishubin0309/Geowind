@@ -714,7 +714,7 @@
           dataType: "json",
           success: function (response) {
             if(response['mairie']) {
-              $('#projet_mairie').append(new Option(response['mairie']['maire'], response['mairie']['id']));
+              $('#projet_mairie').append(new Option(response['mairie']['text'], response['mairie']['id']));
               $('#projet_mairie').val(response['mairie']['id']);
               $('#projet_mairieTelephone').val(response['mairie']['telephone']);
               var maireHtml = '<tr id="contact_maire"><td>Maire</td><td class="required">'+response['mairie']['maire']+'</td><td>'+response['mairie']['telephone']+'</td></tr>';
