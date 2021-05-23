@@ -182,6 +182,20 @@ class Projet
      *
      * @ORM\Column(type="string", nullable=true)
      */
+    private $maire;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", name="maire_telephone", nullable=true)
+     */
+    private $maireTelephone;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
     private $photoImplantation;
 
     /**
@@ -876,6 +890,35 @@ class Projet
     public function setMairieTelephone($mairieTelephone)
     {
         $this->mairieTelephone = $mairieTelephone;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMaire()
+    {
+        return $this->maire;
+    }
+
+    /**
+     * @param string $maire
+     * @return \AppBundle\Entity\Projet
+     */
+    public function setMaire($maire)
+    {
+        $this->maire = $maire;
+        return $this;
+    }
+
+    public function getMaireTelephone()
+    {
+        return $this->maireTelephone;
+    }
+
+    public function setMaireTelephone($maireTelephone)
+    {
+        $this->maireTelephone = $maireTelephone;
         return $this;
     }
 

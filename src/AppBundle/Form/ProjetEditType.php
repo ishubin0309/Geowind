@@ -131,6 +131,14 @@ class ProjetEditType extends AbstractType
                 'label' => 'Téléphone',
                 'required' => false,
             ])
+            ->add('maire', TextType::class, [
+                'label' => 'Maire',
+                'required' => false,
+            ])
+            ->add('maireTelephone', TextType::class, [
+                'label' => 'Téléphone',
+                'required' => false,
+            ])
             ->add('denomination', TextType::class, [
                 'label' => 'Dénomination',
                 'required' => true,

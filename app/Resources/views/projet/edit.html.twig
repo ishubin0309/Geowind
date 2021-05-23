@@ -214,6 +214,11 @@
               <td class="required">{% if is_granted('ROLE_ADMIN') or projet.origine.id == app.user.id %}{{ form_widget(form.mairie, {'attr': {'style': 'width:100%'}}) }}{% else %}{{ form.vars.value.mairie }}{{ form_widget(form.mairie, {'attr': {'class': 'hide','style': 'width:100%'}}) }}{% endif %}</td>
               <td>{% if is_granted('ROLE_ADMIN') or projet.origine.id == app.user.id %}{{ form_widget(form.mairieTelephone) }}{% else %}{{ form.vars.value.mairieTelephone }}{{ form_widget(form.mairieTelephone, {'attr': {'class': 'hide'}}) }}{% endif %}</td>
             <tr>
+            <tr>
+              <td>Maire</td>
+              <td class="required">{% if is_granted('ROLE_ADMIN') or projet.origine.id == app.user.id %}{{ form_widget(form.maire, {'attr': {'style': 'width:100%'}}) }}{% else %}{{ form.vars.value.maire }}{{ form_widget(form.maire, {'attr': {'class': 'hide','style': 'width:100%'}}) }}{% endif %}</td>
+              <td>{% if is_granted('ROLE_ADMIN') or projet.origine.id == app.user.id %}{{ form_widget(form.maireTelephone) }}{% else %}{{ form.vars.value.maireTelephone }}{{ form_widget(form.maireTelephone, {'attr': {'class': 'hide'}}) }}{% endif %}</td>
+            <tr>
             <tr id="contact_epci">
               <td>EPCI</td>
               <td class="required"></td>
@@ -885,6 +890,8 @@
       var data = e.params.data;
       $('#projet_mairieTelephone').val(data.telephone);
       setTimeout(function() {$('#select2-projet_mairie-container').text(data.maire);}, 500);
+      $('#projet_maire').val(data.maire);
+      $('#projet_maireTelephone').val(data.telephone);
     });
     {% endif %}
     function updateMairie() {
@@ -899,12 +906,13 @@
               $('#projet_mairie').append(new Option(response['mairie']['text'], response['mairie']['id']));
               $('#projet_mairie').val(response['mairie']['id']);
               $('#projet_mairieTelephone').val(response['mairie']['telephone']);
-              var maireHtml = '<tr id="contact_maire"><td>Maire</td><td class="required">'+response['mairie']['maire']+'</td><td>'+response['mairie']['telephone']+'</td></tr>';
-              if($('#contact_maire').length) $('#contact_maire').remove();
-              $(maireHtml).insertBefore('#contact_epci');
+              $('#projet_maire').val(response['mairie']['maire']);
+              $('#projet_maireTelephone').val(response['mairie']['telephone']);
             } else {
               $('#projet_mairie').val('');
               $('#projet_mairieTelephone').val('');
+              $('#projet_maire').val('');
+              $('#projet_maireTelephone').val('');
             }
             $('#projet_mairie').trigger('change');
           }, error: function () {
