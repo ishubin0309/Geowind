@@ -906,8 +906,10 @@
               $('#projet_mairie').append(new Option(response['mairie']['text'], response['mairie']['id']));
               $('#projet_mairie').val(response['mairie']['id']);
               $('#projet_mairieTelephone').val(response['mairie']['telephone']);
-              {# $('#projet_maire').val(response['mairie']['maire']);
-              $('#projet_maireTelephone').val(response['mairie']['telephone']); #}
+              if(!$('#projet_maire').val()) {
+                $('#projet_maire').val(response['mairie']['maire']);
+                $('#projet_maireTelephone').val(response['mairie']['telephone']);
+              }
             } else {
               $('#projet_mairie').val('');
               $('#projet_mairieTelephone').val('');
