@@ -89,8 +89,8 @@ class EolienController extends Controller
                         continue;
                     }
                     $data = array_map("utf8_encode", $data);
-                    if($row > 8000) break;
-                    if($row <= 4000) continue;
+                    // if($row > 8000) break;
+                    if($row <= 8000) continue;
                     $parcEolien = new ParcEolien();
                     // $parcEolien->setId($data[$idColumn]);
                     $parcEolien->setId($row);
