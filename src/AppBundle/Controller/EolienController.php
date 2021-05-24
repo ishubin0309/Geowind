@@ -91,7 +91,8 @@ class EolienController extends Controller
                     $data = array_map("utf8_encode", $data);
                     // if($row > 200) break;
                     $parcEolien = new ParcEolien();
-                    $parcEolien->setId($data[$idColumn]);
+                    // $parcEolien->setId($data[$idColumn]);
+                    $parcEolien->setId($row);
                     if($denominationColumn !== false) $parcEolien->setDenomination($data[$denominationColumn]);
                     if($regionColumn !== false) $parcEolien->setRegion($data[$regionColumn]);
                     if($departementColumn !== false) $parcEolien->setDepartement($data[$departementColumn]);
