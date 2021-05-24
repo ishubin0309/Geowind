@@ -95,8 +95,8 @@
     {% endfor %}
     var projet_data_default = '<strong>Nombre d\'éoliennes</strong>: {{ nombreParcs }}<br><strong>Puissance installée (MW)</strong>: {{ puissanceParcs / 1000 }}{% if createdAt %}<br><strong>Date d\'import</strong>: {{ createdAt|date("d/m/Y H:i") }}{% endif %}';
     projet_data_default += '<br><br><table class="table table-striped"><thead><tr><th>Région</th><th>Nombre de machines</th><th>Puissance installée (MW)</th></tr></thead><tbody>';
-    $.each(regions, function(index, region) {console.log(index + '**'+ region[1]);
-      projet_data_default += '<tr><td>'+index+'</td><td>'+region[0]+'</td><td>'+(region[1]/1000)+'</td></tr>';
+    $.each(regions, function(index, region) {
+      projet_data_default += '<tr><td>'+index+'</td><td>'+region[0]+'</td><td>'+((region[1]).toFixed(2)/1000)+'</td></tr>';
     });
     projet_data_default += '</tbody></table>';
     $('#projet-data').html(projet_data_default);
