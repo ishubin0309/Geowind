@@ -78,8 +78,7 @@
     {% set region = '-' %}
     {% for parc in parcs %}
     {% set nombreParcs = nombreParcs + 1 %}
-    {% if parc.puissanceNominaleUnitaire %}
-      {% set puissanceParcs = puissanceParcs + parc.puissanceNominaleUnitaire %}
+    {% if parc.puissanceNominaleUnitaire %}{% set puissanceParcs = puissanceParcs + parc.puissanceNominaleUnitaire %}{% endif %}
     {% if not createdAt %}{% set createdAt = parc.createdAt %}{% endif %}
     {% if parc.region %}{% set region = parc.region %}{% endif %}
       parcs.push({
