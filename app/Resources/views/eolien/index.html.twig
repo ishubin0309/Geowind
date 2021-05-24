@@ -89,7 +89,7 @@
         mise_en_service: '{{ parc.miseEnService }}'
       });
       if(regions['{{ region }}'] === undefined) regions['{{ region }}'] = {0: 1, 1: {{ parc.puissanceNominaleUnitaire }}};
-      else regions['{{ region }}'] = {0: (regions['{{ region }}'][0] + 1), 1: (regions['{{ region }}'][1] + {{ parc.puissanceNominaleUnitaire }})};
+      else regions['{{ region }}'] = {0: (regions['{{ region }}'][0] + 1), 1: (regions['{{ region }}'][1]*1 + {{ parc.puissanceNominaleUnitaire }})};
       if('{{ region }}'=='Île-de-France') console.log({{ parc.puissanceNominaleUnitaire }} + ' *** ' + regions['{{ region }}'][1]);
     {% endfor %}
     var projet_data_default = '<strong>Nombre d\'éoliennes</strong>: {{ nombreParcs }}<br><strong>Puissance installée (MW)</strong>: {{ puissanceParcs / 1000 }}{% if createdAt %}<br><strong>Date d\'import</strong>: {{ createdAt|date("d/m/Y H:i") }}{% endif %}';
