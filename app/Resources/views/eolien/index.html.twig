@@ -90,7 +90,8 @@
       });
       if(regions['{{ region }}'] === undefined) regions['{{ region }}'] = {0: 1, 1: {{ parc.puissanceNominaleUnitaire }}};
       else {
-        regions['{{ region }}'] = {0: (regions['{{ region }}'][0] + 1), 1: (regions['{{ region }}'][1] + {{ parc.puissanceNominaleUnitaire }}).toFixed(3)};
+        puissance = (regions['{{ region }}'][1] + {{ parc.puissanceNominaleUnitaire }});
+        regions['{{ region }}'] = {0: (regions['{{ region }}'][0] + 1), 1: puissance.toFixed(3)};
       }
       if('{{ region }}'=='Île-de-France') console.log({{ parc.puissanceNominaleUnitaire }} + ' *** ' + regions['{{ region }}'][1]);
     {% endfor %}
