@@ -91,7 +91,7 @@ class EolienController extends Controller
                     $data = array_map("utf8_encode", $data);
                     // if($row > 200) break;
                     $parcEolien = new ParcEolien();
-                    $parcEolien->setId($data[$idColumn]);
+                    // $parcEolien->setId($data[$idColumn]);
                     if($denominationColumn !== false) $parcEolien->setDenomination($data[$denominationColumn]);
                     if($regionColumn !== false) $parcEolien->setRegion($data[$regionColumn]);
                     if($departementColumn !== false) $parcEolien->setDepartement($data[$departementColumn]);
@@ -111,7 +111,7 @@ class EolienController extends Controller
                     if($email_contactColumn !== false) $parcEolien->setEmailContact($data[$email_contactColumn]);
                     if($descriptionColumn !== false) $parcEolien->setDescription($data[$descriptionColumn]);
                     $em->persist($parcEolien);
-                    if($row % 50 == 0) $em->flush();
+                    if($row % 80 == 0) $em->flush();
                 }
                 fclose($handle);
                 $em->flush();
