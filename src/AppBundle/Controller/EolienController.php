@@ -37,6 +37,8 @@ class EolienController extends Controller
             $file_path = $import->getImportFile();
             $row = 0;
             if (($handle = fopen($file_path, "r")) !== FALSE) {
+                ini_set("memory_limit", "4000M");
+                set_time_limit(3000);
                 $idColumn = false;
                 $denominationColumn = false;
                 $regionColumn = false;
@@ -55,7 +57,6 @@ class EolienController extends Controller
                 $telephone_contactColumn = false;
                 $email_contactColumn = false;
                 $descriptionColumn = false;
-                set_time_limit(1000);
                 while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
                     if(!$row++) {
                         for ($c=0; $c < count($data); $c++) {
