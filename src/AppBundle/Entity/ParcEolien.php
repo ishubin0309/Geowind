@@ -177,6 +177,13 @@ class ParcEolien
      * @Vich\UploadableField(mapping="document", fileNameProperty="document")
      */
     private $documentFile;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $etat;
     
     public function getId()
     {
@@ -281,6 +288,11 @@ class ParcEolien
     public function getDocumentOriginalName()
     {
         return $this->documentOriginalName;
+    }
+
+    public function getEtat()
+    {
+        return $this->etat;
     }
 
     public function setId($id)
@@ -435,6 +447,12 @@ class ParcEolien
 
         return $this;
     }
+
+    public function setEtat($etat)
+    {
+        $this->descrietatption = $etat;
+        return $this;
+    }
     
     public function getRowForExport()
     {
@@ -457,7 +475,8 @@ class ParcEolien
             $this->nomContact, 
             $this->telephoneContact, 
             $this->emailContact, 
-            $this->description
+            $this->description, 
+            $this->etat
         ];
     }
 

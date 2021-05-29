@@ -57,6 +57,7 @@ class EolienController extends Controller
                 $telephone_contactColumn = false;
                 $email_contactColumn = false;
                 $descriptionColumn = false;
+                $etatColumn = false;
                 while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
                     if(!$row++) {
                         for ($c=0; $c < count($data); $c++) {
@@ -80,6 +81,7 @@ class EolienController extends Controller
                             elseif($name=='telephone_contact') $telephone_contactColumn = $c;
                             elseif($name=='email_contact') $email_contactColumn = $c;
                             elseif($name=='description') $descriptionColumn = $c;
+                            elseif($name=='etat') $descriptionColumn = $c;
                         }
                         if(false === $idColumn || false === $latColumn || false === $lngColumn) {
                             $this->addFlash('danger', 'Le fichier manque des colonnes obligatoires.');
@@ -113,6 +115,7 @@ class EolienController extends Controller
                     if($telephone_contactColumn !== false) $parcEolien->setTelephoneContact($data[$telephone_contactColumn]);
                     if($email_contactColumn !== false) $parcEolien->setEmailContact($data[$email_contactColumn]);
                     if($descriptionColumn !== false) $parcEolien->setDescription($data[$descriptionColumn]);
+                    if($etatColumn !== false) $parcEolien->setEtat($data[$etatColumn]);
                     $em->persist($parcEolien);
                     if($row % 200 == 0) $em->flush();
                 }
@@ -186,7 +189,7 @@ class EolienController extends Controller
 
             $em = $this->getDoctrine()->getManager();
             $parcs = $em->getRepository('AppBundle:ParcEolien')->findAll();
-            fputcsv($handle, ['ID','denomination','region','departement','commune','insee','longitude','latitude','mise_en_service','type_machine','puissance_nominale_unitaire','puissance_nominale_totale','productible_estime','developpeur','operateur','nom_contact','telephone_contact','email_contact','description'],',');
+            fputcsv($handle, ['ID','denomination','region','departement','commune','insee','longitude','latitude','mise_en_service','type_machine','puissance_nominale_unitaire','puissance_nominale_totale','productible_estime','developpeur','operateur','nom_contact','telephone_contact','email_contact','description','etat'],',');
             foreach($parcs as $parc) {
                 fputcsv($handle, $parc->getRowForExport(), ',');
             }
