@@ -51,7 +51,7 @@ class ParcEolienType extends AbstractType
                 'label' => 'Mise en service',
                 'required' => false,
             ])
-            ->add('etat', TextareaType::class, [
+            ->add('etat', TextType::class, [
                 'label' => 'Etat',
                 'required' => false,
             ])
