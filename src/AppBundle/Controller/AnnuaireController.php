@@ -55,6 +55,46 @@ class AnnuaireController extends Controller
     }
     
     /**
+     * @Route("/{id}/mairie/edit", name="mairie_edit", options={ "expose": true })
+     * @ParamConverter("Mairie", options={"mapping": {"id": "id"}})
+     * @Method({"POST"})
+     * @Security("has_role('ROLE_ADMIN')")
+     */
+    public function editMairieAction(Request $request, Mairie $mairie)
+    {
+        $response = new JsonResponse();
+
+        $data = $request->request->all();
+
+        $status = 0;
+        $em = $this->getDoctrine()->getManager();
+        if(isset($data['order']) && isset($data['elu']) && isset($data['email']) && isset($data['telephone'])) {
+            $elus = $mairie->getElus();
+            if(isset($data['order'])) {
+                $function = isset($elus[$data['order']]['funtion']) ? $elus[$data['order']]['funtion'] : $elus[$data['order']]['function'];
+                $elus[$data['order']] = ['function' => $function, 'nom' => trim($data['elu']), 'email' => trim($data['email']), 'telephone' => trim($data['telephone'])];
+                $mairie->setElus($elus);
+                $em->persist($mairie);
+                $status = 1;
+            }
+        } elseif(isset($data['telephone'])) {
+            $mairie->setTelephone(trim($data['telephone']));
+            $em->persist($mairie);
+            $status = 1;
+        } elseif(isset($data['email1'])) {
+            $mairie->setEmail1(trim($data['email1']));
+            $em->persist($mairie);
+            $status = 1;
+        }
+        $em->flush();
+
+        $results = ['status' => $status];
+
+        $response->setData($results);
+        return $response;
+    }
+    
+    /**
      * @Route("/mairie/search", name="mairie_search", options={ "expose": true })
      * @Security("has_role('ROLE_VIEW')")
      */

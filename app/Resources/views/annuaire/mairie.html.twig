@@ -35,7 +35,9 @@
             </tr>
             <tr>
               <th><i class="fa fa-phone fa-fw"></i> Téléphone</th>
-              <td>{{ mairie.telephone }}
+              <td>
+              {% if is_granted('ROLE_ADMIN') %}<button class="btn btn-default btn-xs edit_data" title="Modifier" data='{"telephone": "{{ mairie.telephone }}"}'><i class="fa fa-pencil-square-o"></i></button>&nbsp;{% endif %}
+              {{ mairie.telephone }}
               <button type="button" data-telephone="{{ mairie.telephone }}" class="select-telephone btn btn-xs btn-primary pull-right"><i class="fa fa-mail-forward"></i></button>
               </td>
             </tr>
@@ -49,7 +51,9 @@
             </tr>
             <tr>
               <th><i class="fa fa-envelope-o"></i> EMAIL 1</th>
-              <td>{{ mairie.email1 }}
+              <td>
+              {% if is_granted('ROLE_ADMIN') %}<button class="btn btn-default btn-xs edit_data" title="Modifier" data='{"email1": "{{ mairie.email1 }}"}'><i class="fa fa-pencil-square-o"></i></button>&nbsp;{% endif %}
+              {{ mairie.email1 }}
                 <button type="button" data-mail="{{ mairie.email1 }}" class="select-mail btn btn-xs btn-primary pull-right"><i class="fa fa-mail-forward"></i></button>
               </td>
             </tr>
@@ -85,13 +89,20 @@
               </td>
             </tr>
             {% endif %}
-            {% if mairie.elus|length > 0 %}<label>Conseillers</label>{% endif %}
+            {% if mairie.elus|length > 0 %}<tr><td>Conseillers</td><td></td><td></td></tr>{% endif %}
             {% for elu in mairie.elus %}
             <tr>
               <td>{{ elu['nom'] }}</td>
-              <td>{% if elu['email'] %}{{ elu['email'] }}
-                <button type="button" data-mail="{{ elu['email'] }}" class="select-mail btn btn-xs btn-primary pull-right"><i class="fa fa-mail-forward"></i></button>{% endif %}
+              <td>
+                {% if is_granted('ROLE_ADMIN') %}<button class="btn btn-default btn-xs edit_data" title="Modifier" data='{"order":"{{ loop.index0 }}", "elu" : "{{ elu['nom'] }}", "email": "{{ elu['email'] }}", "telephone": "{{ elu['telephone'] }}"}'><i class="fa fa-pencil-square-o"></i></button>&nbsp;{% endif %}
+                {% if elu['email'] %}{{ elu['email'] }}{% endif %}
                 {% if elu['telephone'] %}{{ elu['telephone'] }}{% endif %}
+                {% if elu['email'] %}
+                  <button type="button" data-mail="{{ elu['email'] }}" class="select-mail btn btn-xs btn-primary pull-right"><i class="fa fa-mail-forward"></i></button>
+                {% endif %}
+                {% if elu['telephone'] %}
+                  <button type="button" data-telephone="{{ elu['telephone'] }}" class="select-telephone btn btn-xs btn-primary pull-right"><i class="fa fa-mail-forward"></i></button>
+                {% endif %}
               </td>
             </tr>
             {% endfor %}
@@ -172,16 +183,86 @@
       </div>
     </div>
 
-
-
-
   </div>
+
+  {% if is_granted('ROLE_ADMIN') %}
+  <div id="mairieModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Modifier mairie</h4>
+        </div>
+        <div class="modal-body">
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+          <button id="submitMairieModal" type="button" class="btn btn-primary">Sauvegarder</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+  {% endif %}
+
 {% endblock %}
 
 {% block js %}
   <script>
-    
-    var models = [];
+  {% if is_granted('ROLE_ADMIN') %}
+  $('body').on('click', '.edit_data', function() {
+    var data = JSON.parse($(this).attr('data'));
+    var html = '<div id="alertMairieModal" class="alert"></div>';
+    $.each(data, function(index, value) {
+      if(index == 'order') class_name = 'hide';
+      else class_name = '';
+      html += '<div class="form-group col-md-12 '+class_name+'">\
+          <label class="col-md-4 control-label" for="textinput">'+index+'</label>\
+          <div class="col-md-8">\
+          <input id="'+index+'" name="'+index+'" type="text" placeholder="'+value+'" value="'+value+'" class="form-control input-md">\
+          </div>\
+        </div><div class="clearfix"></div>';
+    });
+    $('#mairieModal .modal-body').html('<form id="formMairieModal" data="'+$(this).attr('data')+'" action="">'+html+'</form><div class="clearfix"></div>');
+    $('#mairieModal').modal('show');
+  });
+  $('body').on('click', '#submitMairieModal', function(e) {
+    e.preventDefault();
+    submit_mairie_modal = $(this);
+    submit_mairie_modal.addClass('disabled');
+    submit_mairie_modal.prop('disabled', true);
+    var data = $('#formMairieModal').serialize();
+    $.ajax({
+        url: Routing.generate('mairie_edit', { id: {{ mairie.id }} }),
+        type: 'POST',
+        data: data,
+        beforeSend: function() {
+          $('body').find('#alertMairieModal').addClass('alert-info').removeClass('alert-success').removeClass('alert-warning').removeClass('alert-danger').text('En cours...');
+        },
+        success: function(result) {
+          if(result['status']) {
+            $('body').find('#alertMairieModal').addClass('alert-success').removeClass('alert-info').text('Mairie modifiée avec succcès');
+            submit_mairie_modal.removeClass('disabled');
+            submit_mairie_modal.prop('disabled', false);
+            setTimeout(function() {location.reload();}, 2000);
+          } else {
+            $('body').find('#alertMairieModal').addClass('alert-warning').removeClass('alert-info').text('Modification a échouer');
+            submit_mairie_modal.removeClass('disabled');
+            submit_mairie_modal.prop('disabled', false);
+          }
+        },
+        error: function() {
+          $('body').find('#alertMairieModal').addClass('alert-danger').removeClass('alert-info').text('Erreur 500');
+          submit_mairie_modal.removeClass('disabled');
+          submit_mairie_modal.prop('disabled', false);
+        }
+      });
+  });
+  {% endif %}
+  </script>
+
+  <script>
+  var models = [];
     
   {% for model in models %}
     models[{{ model.id }}] = {

@@ -504,12 +504,12 @@
     escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
     minimumInputLength: 1,
   });
-  $('#input-mairie').on('select2:select', function (e) {
-
-    var data = e.params.data;
+  var last_annuaire_mairie_insee = '';
+  function annuaire_mairie(insee) {
+    last_annuaire_mairie_insee = insee;
     var csrf = '{{ csrf_token('token')|e('js') }}';
     $.ajax({
-      url: Routing.generate('annuaire_mairie', { insee: data.insee }),
+      url: Routing.generate('annuaire_mairie', { insee: last_annuaire_mairie_insee }),
       type: 'GET',
       data: { token: csrf },
       beforeSend: function() {
@@ -519,13 +519,17 @@
         $('#new_mail').html(result);
       }
     });
-  });
-  $('#input-mairie-appel').on('select2:select', function (e) {
-
+  }
+  $('#input-mairie').on('select2:select', function (e) {
     var data = e.params.data;
+    annuaire_mairie(data.insee);
+  });
+  var last_annuaire_mairie_appel_insee = '';
+  function annuaire_mairie_appel(insee) {
+    last_annuaire_mairie_appel_insee = insee;
     var csrf = '{{ csrf_token('token')|e('js') }}';
     $.ajax({
-      url: Routing.generate('annuaire_mairie_appel', { insee: data.insee }),
+      url: Routing.generate('annuaire_mairie_appel', { insee: last_annuaire_mairie_appel_insee }),
       type: 'GET',
       data: { token: csrf },
       beforeSend: function() {
@@ -535,6 +539,10 @@
         $('#new_call').html(result);
       }
     });
+  }
+  $('#input-mairie-appel').on('select2:select', function (e) {
+    var data = e.params.data;
+    annuaire_mairie_appel(data.insee);
   });
 
   {# $('#input-mairie').on('select2:select', function (e) {
