@@ -2,6 +2,7 @@
 
 namespace AppBundle\Form;
 
+use AppBundle\Entity\ParcEolien;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -51,9 +52,10 @@ class ParcEolienType extends AbstractType
                 'label' => 'Mise en service',
                 'required' => false,
             ])
-            ->add('etat', TextType::class, [
+            ->add('etat', ChoiceType::class, [
                 'label' => 'Etat',
                 'required' => false,
+                'choices' => array_flip(ParcEolien::getEtatList()),
             ])
             ->add('typeMachine', TextType::class, [
                 'label' => 'Type de machine',
