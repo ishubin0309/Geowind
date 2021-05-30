@@ -129,7 +129,7 @@
             <li class=""><a href="#" rel="tab_images">Images</a></li>
             {% set unreadMessage = false %}
             {% for message in projet.messages %}
-              {% if message.createdBy is null or (app.user.id != message.createdBy.id and app.user not in message.viewers) %}{% set unreadMessage = true %}{% endif %}
+              {% if message.createdBy is not null and (app.user.id != message.createdBy.id and app.user not in message.viewers) %}{% set unreadMessage = true %}{% endif %}
             {% endfor %}
             <li class=""><a href="#" rel="tab_messagerie">Messagerie{% if unreadMessage %} <i class="fa fa-circle" style="color:red;"></i>{% endif %}</a></li>
           </ul>

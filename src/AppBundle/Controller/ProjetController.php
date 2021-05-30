@@ -365,7 +365,7 @@ class ProjetController extends Controller
                         continue;
                     }//echo '<pre>';print_r($data);die;
                     // if($row > 25000) break;
-                    if($row < 34270) continue;
+                    // if($row < 34270) continue;
                     $data = array_map("utf8_encode", $data);
                     // echo $row . ': Insee ' . $data[$inseeColumn] . '<br>';
                     $commune = $em->getRepository('AppBundle:Commune')->findOneBy(['insee' => $data[$inseeColumn]]);
@@ -890,7 +890,7 @@ class ProjetController extends Controller
         $messages = $projet->getMessages();
         $results = [];
         foreach($messages as $message) {
-            if(!$message->getCreatedBy() || $message->getCreatedBy() != $this->getUser()) {
+            if($message->getCreatedBy() && $message->getCreatedBy() != $this->getUser()) {
                 $message->addViewer($this->getUser());
                 $em->persist($message);
             }
