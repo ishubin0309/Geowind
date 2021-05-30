@@ -381,8 +381,8 @@ class ProjetController extends Controller
                     } else if($commune->getNom() == $data[$nomColumn]) continue;
                     $row2++;
                     $commune->setNom($data[$nomColumn]);
-                    /* $commune->setNomMiniscule($data[$nomMinisculeColumn]);
-                    $commune->setIntercommunalite($data[$intercommunaliteColumn]);
+                    $commune->setNomMiniscule($data[$nomMinisculeColumn]);
+                    /* $commune->setIntercommunalite($data[$intercommunaliteColumn]);
                     $commune->setIntercommunaliteNb($data[$intercommunaliteNbColumn]);
                     $commune->setIntercommunalitePop($data[$intercommunalitePopColumn]);
                     $commune->setIntercommunaliteEpci($data[$intercommunaliteEpciColumn]);
