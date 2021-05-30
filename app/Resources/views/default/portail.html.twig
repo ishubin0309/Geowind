@@ -22,7 +22,7 @@
       {% set projetsPageTotal = projetsPageTotal + 1 %}
       {# {% if is_granted('edit', projet) %} #}
         {% for message in projet.messages %}
-          {% if message.createdBy is null or (app.user.id != message.createdBy.id and app.user not in message.viewers) %}{% set unreadMessages = unreadMessages + 1 %}{% endif %}
+          {% if message.createdBy is not null and (app.user.id != message.createdBy.id and app.user not in message.viewers) %}{% set unreadMessages = unreadMessages + 1 %}{% endif %}
         {% endfor %}
       {# {% endif %} #}
     {% endfor %}
