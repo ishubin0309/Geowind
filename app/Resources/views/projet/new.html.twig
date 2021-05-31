@@ -551,7 +551,7 @@
               var projet_chargeFoncier = $('#projet_chargeFoncier').val();
               $('#projet_chargeFoncier').html('');
               var first_option = false;
-              jQuery.each(response.chef_projets, function(index, data) {
+              jQuery.each(response.charge_fonciers, function(index, data) {
                 if(!first_option) first_option = data.id;
                 first_option = data.id != projet_chargeFoncier ? first_option : data.id
                 var newOption = new Option(data.text, data.id, false, false);
@@ -1620,7 +1620,8 @@
         $(clone).insertAfter($('#projet_unite').parents('.form-group'));
         $('#projet_lineaire').parents('.form-group').removeClass('hide');
         $('#projet_interdistance').parents('.form-group').removeClass('hide');
-        $('#projet_interdistance').val(300);
+        $('#projet_interdistance').val(30
+        0);
         $('#projet_puissanceUnitaire').parents('.form-group').addClass('hide');
         var technologie_emprise = 3000;
         $('#projet_emprise').val(technologie_emprise);

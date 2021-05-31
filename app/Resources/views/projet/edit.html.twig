@@ -711,7 +711,7 @@
               var projet_chargeFoncier = $('#projet_chargeFoncier').val();
               $('#projet_chargeFoncier').html('');
               var first_option = false;
-              jQuery.each(response.chef_projets, function(index, data) {
+              jQuery.each(response.charge_fonciers, function(index, data) {
                 if(!first_option) first_option = data.id;
                 first_option = data.id != projet_chargeFoncier ? first_option : data.id
                 var newOption = new Option(data.text, data.id, false, false);
