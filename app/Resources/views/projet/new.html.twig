@@ -436,7 +436,7 @@
       $input = $(this);
 
       if($(this).attr('id') == 'projet_communes') {
-        var query = $('#projet_communes option:selected').text().replace(/\(.+/, '').trim();
+        var query = $('#projet_departement option:selected').text().replace(/\(.+/, '').trim() + ' ' + $('#projet_communes option:selected').text().replace(/\(.+/, '').trim();
         updateMairie(true);
         updateEpci();
       } else {
