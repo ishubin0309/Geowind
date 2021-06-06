@@ -15,7 +15,7 @@ use JsonSerializable;
  * @author Haffoudhi
  *
  * @ORM\Entity()
- * @UniqueEntity(fields={"nom", "technique"})
+ * @UniqueEntity(fields={"nom", "technique", "puissance"})
  */
 class ModelePanneau implements JsonSerializable
 {
