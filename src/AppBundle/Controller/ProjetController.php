@@ -484,7 +484,7 @@ class ProjetController extends Controller
                     if(!$row++) {
                         for ($c=0; $c < count($data); $c++) {
                             $name = trim(strtolower($data[$c]));
-                            if($name=='insee_com' || $name=='insee' || $name=='commune_insee') $inseeColumn = $c;
+                            if($name=='insee_com' || $name=='insee' || $name=='commune_insee' || $name=='commune insee') $inseeColumn = $c;
                             if($name=='commune') $communeColumn = $c;
                             elseif($name=='departement') $departementColumn = $c;
                             elseif($name=='latitude') $latColumn = $c;

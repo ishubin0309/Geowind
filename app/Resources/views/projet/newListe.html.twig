@@ -13,7 +13,7 @@
     <div class="col-xs-12">
 
       <fieldset>
-        <legend>Nouvelle Liste</legend>
+        <legend>Nouvelle Liste <a class="btn btn-info btn-xs pull-right" download='Liste_{{ app.user.id }}_{{ "now"|date("d-m-Y") }}.csv' href="{{ asset('Liste_modèle.csv') }}">Télécharger modèle</a></legend>
         <div class="col-xs-4">
         {{ form_row(form.listeFile) }}
         </div>
