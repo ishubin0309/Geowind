@@ -546,7 +546,7 @@ class ProjetController extends Controller
                             $projet->setTechnologie('photovoltaique');
                             $projet->setPuissanceUnitaire(300);
                         }
-                        if($potentielColumn !== false) $projet->setPotentiel($data[$potentielColumn]);
+                        if($potentielColumn !== false && trim($data[$potentielColumn])) $projet->setPotentiel(trim($data[$potentielColumn]));
                         if($commentaireColumn !== false) $projet->setCommentaires($data[$commentaireColumn]);
                         if($pvSurfaceColumn !== false) $projet->setSurfaceUtile($data[$pvSurfaceColumn]);
                         if($eolienLineaireSurfaceColumn !== false) $projet->setLineaire($data[$eolienLineaireSurfaceColumn]);
