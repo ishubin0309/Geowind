@@ -548,8 +548,8 @@ class ProjetController extends Controller
                         }
                         if($potentielColumn !== false && trim($data[$potentielColumn])) $projet->setPotentiel(trim($data[$potentielColumn]));
                         if($commentaireColumn !== false) $projet->setCommentaires($data[$commentaireColumn]);
-                        if($pvSurfaceColumn !== false) $projet->setSurfaceUtile($data[$pvSurfaceColumn]);
-                        if($eolienLineaireSurfaceColumn !== false) $projet->setLineaire($data[$eolienLineaireSurfaceColumn]);
+                        if($pvSurfaceColumn !== false && trim($data[$pvSurfaceColumn])) $projet->setSurfaceUtile($data[$pvSurfaceColumn]);
+                        if($eolienLineaireSurfaceColumn !== false && trim($data[$eolienLineaireSurfaceColumn])) $projet->setLineaire($data[$eolienLineaireSurfaceColumn]);
                         if($tSite == 'terrain' && $altitudeColumn !== false) {
                             $terrain = new Terrain();
                             if($altitudeColumn !== false) $terrain->setAltitude($data[$altitudeColumn]);
