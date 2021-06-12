@@ -133,6 +133,14 @@ class AnnuaireController extends Controller
             $results['mairie']['text'] = $mairie->getMairie() . ' (' . $mairie->getInsee() . ')';
             $results['mairie']['telephone'] = $mairie->getTelephone();
             $results['mairie']['maire'] = $mairie->getNomMaire() . ' ' . $mairie->getPrenomMaire();
+            $elus = $mairie->getElus();
+            foreach($elus as $elu) {
+                $function = isset($elu['funtion']) ? $elu['funtion'] : $elu['function'];
+                if($function == 'Maire') {
+                    $results['mairie']['telephone'] = $elu['telephone'];
+                    $results['mairie']['maire'] = $elu['nom'];
+                }
+            }
         }
 
         $response->setData($results);
