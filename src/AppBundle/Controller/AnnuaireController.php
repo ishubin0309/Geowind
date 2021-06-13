@@ -137,7 +137,6 @@ class AnnuaireController extends Controller
             foreach($elus as $elu) {
                 $function = isset($elu['funtion']) ? $elu['funtion'] : $elu['function'];
                 if($function == 'Maire') {
-                    $results['mairie']['telephone'] = $elu['telephone'];
                     $results['mairie']['maire'] = $elu['nom'];
                 }
             }
