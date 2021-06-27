@@ -246,7 +246,9 @@
       
     });
   
-  L.geoJSON(zone_naturelles_protegees, {}).addTo(map);
+  L.geoJSON(zone_naturelles_protegees, {filter: function(feature, layer) {
+        return feature.properties.show_on_map;
+    }}).addTo(map);
       
       
     
