@@ -1,0 +1,294 @@
+{% extends 'base.html.twig' %}
+
+{% set title = 'Parcs éoliens construits' %}
+{% set item = 'cartographie' %}
+
+{% set zone = 'eolien' %}
+
+{% block css %}
+  <link rel="stylesheet" href="{{ asset('vendor/Leaflet.markercluster-1.1.0/dist/MarkerCluster.css') }}">
+  <link rel="stylesheet" href="{{ asset('vendor/Leaflet.markercluster-1.1.0/dist/MarkerCluster.Default.css') }}">
+{% endblock %}
+
+{% block body %}
+  <div class="container">
+    <div class="page-title">
+      <h1>
+        <strong>Parcs éoliens construits</strong>
+        <div class="btn-group col-sm-offset-3" role="group" aria-label="...">
+          <a href="{{ asset('Essai.geojson') }}" class="btn btn-success btn-sm" download><i class="fa fa-fw fa-save"></i> Exporter</a>
+          <button id="import" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-paperclip"></i> Importer</a>
+        </div>
+        <div class="clearfix"></div>
+      </h1>
+    </div>
+    <hr>
+    <div class="row">
+      
+      <div class="col-sm-5">
+        <div class="form-group row">
+          <div class="col-sm-6">
+            <input type="number" class="form-control" id="search_id" placeholder="Chercher un ID">
+          </div>
+          <div class="col-sm-6">
+            <input type="text" class="form-control" id="search_mise_en_service" placeholder="Année de mise en service">
+          </div>
+        </div>
+        
+        <div id="loading-text" class="loading-text m-t-10"><i class="fa fa-spinner fa-spin fa-fw"></i> Chargement ...</div>
+        <div id="projet-data" class="m-t-10"></div>
+      </div>
+      <div class="col-sm-7">
+        <div class="form-group">
+          <input type="text" class="form-control" id="location" placeholder="Chercher une adresse">
+        </div>
+        <div id="map" class="map map-home"></div>
+      </div>
+    </div>
+    <div class="row hide">
+      <div class="col-xs-12">
+        
+        {{ form_start(form) }}
+        <fieldset>
+          <legend>Importer</legend>
+          <div class="col-xs-4">
+          {{ form_row(form.importFile) }}
+          </div>
+          <div class="col-xs-2">
+            <button id="import_submit" type="submit" class="btn btn-primary"><i class="fa fa-paperclip"></i> Importer</button>
+          </div>
+        </fieldset>
+        
+        {{ form_rest(form) }}
+        {{ form_end(form) }}
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block js %}
+  <script src="{{ asset('vendor/Leaflet.markercluster-1.1.0/dist/leaflet.markercluster.js') }}"></script>
+  <script>
+    var parcs = [];
+    var regions = {};
+    {% set regions = [] %}
+    {% set createdAt = 0 %}
+    {% set nombreParcs = 0 %}
+    {% set puissanceParcs = 0 %}
+    {% set region = '-' %}
+    {% for parc in parcs %}
+    {% set nombreParcs = nombreParcs + 1 %}
+    {% set puissanceParcs = puissanceParcs + parc.puissanceNominaleUnitaire %}
+    {% if not createdAt %}{% set createdAt = parc.createdAt %}{% endif %}
+    {% if parc.region %}{% set region = parc.region %}{% endif %}
+      parcs.push({
+        id: {{ parc.id }},
+        longitude: {{ parc.longitude }},
+        latitude: {{ parc.latitude }},
+        denomination: '{{ parc.denomination is not empty ? parc.denomination|e('js') : parc.id }}',
+        mise_en_service: '{{ parc.miseEnService }}'
+      });
+      if(regions['{{ region }}'] === undefined) regions['{{ region }}'] = {0: 1, 1: {{ parc.puissanceNominaleUnitaire }}};
+      else {
+        regions['{{ region }}'] = {0: (regions['{{ region }}'][0] + 1), 1: (regions['{{ region }}'][1] + {{ parc.puissanceNominaleUnitaire }})};
+      }
+    {% endfor %}
+    var projet_data_default = '<strong>Nombre d\'éoliennes</strong>: {{ nombreParcs }}<br><strong>Puissance installée (MW)</strong>: {{ puissanceParcs / 1000 }}{% if createdAt %}<br><strong>Date d\'import</strong>: {{ createdAt|date("d/m/Y H:i") }}{% endif %}';
+    projet_data_default += '<br><br><table class="table table-striped"><thead><tr><th>Région</th><th>Nombre de machines</th><th>Puissance installée (MW)</th></tr></thead><tbody>';
+    $.each(regions, function(index, region) {
+      projet_data_default += '<tr><td>'+index+'</td><td>'+region[0]+'</td><td>'+(Math.round(region[1])/1000)+'</td></tr>';
+    });
+    projet_data_default += '</tbody></table>';
+    $('#projet-data').html(projet_data_default);
+    $('#map').height(function(index, height) {
+      return window.innerHeight - $(this).offset().top - 40;
+    });
+
+    var map = L.map('map').setView([46, 2], 5.5);
+
+    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    var markers = {};
+    
+    var markerIcon = new L.DivIcon.SVGIcon({
+      color: '#E53935',
+      fillOpacity: 0.7
+    });
+
+    var markers = L.markerClusterGroup({
+      maxClusterRadius: 40,
+    });
+    
+    var mise_en_service = 0;
+    var parcMarkers = {};  
+    function loadMarkers() {
+      markers.clearLayers();
+      parcMarkers = {};
+      $.each(parcs, function(index, parc) {
+        if(!mise_en_service || parc.mise_en_service.match(mise_en_service)) {
+          var marker = L.marker([parc.latitude, parc.longitude], {
+            id: parc.id, 
+            icon: markerIcon,
+            denomination: parc.denomination,
+          })
+          .bindTooltip(showTooltip)
+          .bindPopup(showPopup)
+          .on('click', onMarkerClick);
+          
+          markers.addLayer(marker);
+          
+          parcMarkers[parc.id] = marker;
+        }
+      });
+    
+      map.addLayer(markers);
+    }
+    loadMarkers();
+      
+      
+    function showPopup(layer) {
+      var status = layer.options.denomination;
+      return status;
+    }
+    
+    function showTooltip(layer) {
+      var status = layer.options.denomination;
+      return status;
+    }
+
+    function onMarkerClick(e) {
+      var id = this.options.id;
+      loadData(id);
+    }
+    
+    function loadData(id) {
+      $('#loading-text').show();
+      $('#projet-data').hide();
+      
+      $('#projet-data').load(Routing.generate('parc_data', { id: id }), '', function() {
+        $('#loading-text').hide();
+        $('#projet-data').show();
+      });
+    }
+    
+    function focusOn(id) {
+      markers.zoomToShowLayer(parcMarkers[id]);
+      parcMarkers[id].openPopup();
+      loadData(id);
+    }
+    
+    $('#search_id').change(function() {
+      
+      if (parcMarkers[$(this).val()] != undefined) {
+        focusOn($(this).val());
+        $(this).val('');
+        $(this).parent().removeClass('has-error');
+      } else {
+        $(this).parent().addClass('has-error');
+      }
+      
+    });
+    
+    $('#search_mise_en_service').change(function() {
+      
+      year = $(this).val().trim();
+      if(year) {
+        mise_en_service = year;
+      } else mise_en_service = 0;
+      loadMarkers();
+    });
+    
+    $('#location').change(function() {
+      
+      var nominatimUrl = 'https://nominatim.openstreetmap.org/search';
+      $input = $(this);
+
+      var query = $('#location').val();
+      $.ajax({
+        type: 'GET',
+        url: nominatimUrl,
+        data: {
+          q: query,
+          extratags: 0,
+          namedetails: 0,
+          polygon_geojson: 0,
+          format: 'json',
+        },
+        dataType: 'json',
+
+      })
+      .done(function(data) {
+
+        if (data.length === 0) {
+          $input.parent().addClass('has-error');
+          return;
+        }
+
+        var lat = data[0]['lat'];
+        var lon = data[0]['lon'];
+        var bbox = data[0]['boundingbox'];
+        
+        if (bbox != undefined) {
+          map.fitBounds([
+            [bbox[0], bbox[2]],
+            [bbox[1], bbox[3]]
+          ]);
+        } else {
+          map.setView([lat, lon], 10);
+        }
+        
+        $input.parent().removeClass('has-error');
+        
+      });
+      
+    });
+  $.getJSON('{{ asset('Essai.geojson') }}', function(zone_naturelles_protegees) {
+    L.geoJSON(zone_naturelles_protegees, {}).addTo(map);
+  });
+      
+      
+    
+  {% if focus_id is not null %}
+    focusOn({{ focus_id }});
+  {% endif %}
+  
+  $('#import').click(function() {
+    $('#import_importFile').click();
+  });
+  var count = 1;
+  
+  $('#import_importFile').change(function() {
+    swal({
+        title: "Importer ce fichier ?",
+        text: "Exporter le fichier geojson avant l'import.",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Importer",
+        cancelButtonText: "Annuler",
+        closeOnConfirm: false,
+        closeOnCancel: true,
+        allowOutsideClick: true,
+        showLoaderOnConfirm: true,
+      },
+      function(isConfirm){
+        if (isConfirm) {
+          $('#import_importFile').parents('form').submit();
+          setInterval(function() {
+            if(count) {
+              count = 0;
+              $.get('{{ path('parc_count_all') }}', function( data ) {
+                count = 1;
+                $('body').find('.sweet-alert h2').html(data + ' éoliennes importées');
+              });
+            }
+          }, 3000);
+        } else {
+
+        }
+    });
+  });
+  </script>
+{% endblock %}
