@@ -244,7 +244,7 @@
       });
       
     });
-  var zone_naturelles_protegees = read('{{ asset('Essai.geojson') }}');
+  var zone_naturelles_protegees = read('{{ asset('Essai.geojson') }}');console.log(zone_naturelles_protegees);
   L.geoJSON(zone_naturelles_protegees, {}).addTo(map);
       
       
