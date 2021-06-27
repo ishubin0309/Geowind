@@ -244,6 +244,7 @@
       });
       
     });
+    
   $.getJSON('{{ asset('Essai.geojson') }}', function(zone_naturelles_protegees) {
     L.geoJSON(zone_naturelles_protegees, {}).addTo(map);
   });
