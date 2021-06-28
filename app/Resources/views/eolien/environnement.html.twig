@@ -277,15 +277,6 @@
       function(isConfirm){
         if (isConfirm) {
           $('#import_importFile').parents('form').submit();
-          setInterval(function() {
-            if(count) {
-              count = 0;
-              $.get('{{ path('parc_count_all') }}', function( data ) {
-                count = 1;
-                $('body').find('.sweet-alert h2').html(data + ' éoliennes importées');
-              });
-            }
-          }, 3000);
         } else {
 
         }
