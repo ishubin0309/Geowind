@@ -21,7 +21,7 @@ class ImportType extends AbstractType
                 'required' => true,
                 'constraints' => [
                     new File([
-                        'maxSize' => '20m',
+                        'maxSize' => '40m',
                         'mimeTypes' => [
                             'text/plain', 
                             'text/csv', 
