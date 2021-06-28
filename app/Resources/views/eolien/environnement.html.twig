@@ -244,13 +244,9 @@
       });
       
     });
-  $.ajax({
-      url: '{{ asset('Essai.geojson') }}',
-      type: "GET",
-      dataType: "json",
-      success: function(zone_naturelles_protegees){
-          L.geoJSON(zone_naturelles_protegees, {}).addTo(map);
-      },
+    
+  $.getJSON('{{ asset('Essai.geojson') }}', function(zone_naturelles_protegees) {
+    L.geoJSON(zone_naturelles_protegees, {}).addTo(map);
   });
       
       
