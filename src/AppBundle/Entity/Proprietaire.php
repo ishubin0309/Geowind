@@ -87,6 +87,28 @@ class Proprietaire
      * @Assert\Date()
      */
     private $dateEcheanceProprietaire;
+    
+    /**
+     * @var DateTime
+     *
+     * @ORM\Column(type="date", nullable=true)
+     * @Assert\Date()
+     */
+    private $dateNaissanceProprietaire;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $lieuNaissanceProprietaire;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $civiliteProprietaire;
 
     /**
      * @var string
@@ -325,6 +347,21 @@ class Proprietaire
         return $this->dateEcheanceProprietaire;
     }
 
+    public function getDateNaissanceProprietaire()
+    {
+        return $this->dateNaissanceProprietaire;
+    }
+
+    public function getLieuNaissanceProprietaire()
+    {
+        return $this->lieuNaissanceProprietaire;
+    }
+
+    public function getCiviliteProprietaire()
+    {
+        return $this->civiliteProprietaire;
+    }
+
     public function getDateSignatureExploitant()
     {
         return $this->dateSignatureExploitant;
@@ -333,6 +370,21 @@ class Proprietaire
     public function getDateEcheanceExploitant()
     {
         return $this->dateEcheanceExploitant;
+    }
+
+    public function getDateNaissanceExploitant()
+    {
+        return $this->dateNaissanceExploitant;
+    }
+
+    public function getLieuNaissanceExploitant()
+    {
+        return $this->lieuNaissanceExploitant;
+    }
+
+    public function getCiviliteExploitant()
+    {
+        return $this->civiliteExploitant;
     }
 
     public function setDateSignatureProprietaire(DateTime $dateSignatureProprietaire = null)
@@ -347,6 +399,24 @@ class Proprietaire
         return $this;
     }
 
+    public function setDateNaissanceProprietaire(DateTime $dateNaissanceProprietaire = null)
+    {
+        $this->dateNaissanceProprietaire = $dateNaissanceProprietaire;
+        return $this;
+    }
+
+    public function setLieuNaissanceProprietaire($lieuNaissanceProprietaire)
+    {
+        $this->lieuNaissanceProprietaire = $lieuNaissanceProprietaire;
+        return $this;
+    }
+
+    public function setCiviliteProprietaire($civiliteProprietaire)
+    {
+        $this->civiliteProprietaire = $civiliteProprietaire;
+        return $this;
+    }
+
     public function setDateSignatureExploitant(DateTime $dateSignatureExploitant = null)
     {
         $this->dateSignatureExploitant = $dateSignatureExploitant;
@@ -356,6 +426,24 @@ class Proprietaire
     public function setDateEcheanceExploitant(DateTime $dateEcheanceExploitant = null)
     {
         $this->dateEcheanceExploitant = $dateEcheanceExploitant;
+        return $this;
+    }
+
+    public function setDateNaissanceExploitant(DateTime $dateNaissanceExploitant = null)
+    {
+        $this->dateNaissanceExploitant = $dateNaissanceExploitant;
+        return $this;
+    }
+
+    public function setLieuNaissanceExploitant($lieuNaissanceExploitant)
+    {
+        $this->lieuNaissanceExploitant = $lieuNaissanceExploitant;
+        return $this;
+    }
+
+    public function setCiviliteExploitant($civiliteExploitant)
+    {
+        $this->civiliteExploitant = $civiliteExploitant;
         return $this;
     }
     

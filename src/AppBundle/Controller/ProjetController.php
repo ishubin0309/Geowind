@@ -754,6 +754,43 @@ class ProjetController extends Controller
     }
 
     /**
+     * @Route("/publier", name="projet_publier", options = { "expose" = true })
+     * @Security("has_role('ROLE_VIEW')")
+     */
+    public function publierAction(Request $request)
+    {
+        $full_path = __DIR__ . '/../PdBS Eolien updated.docx';
+
+        copy(__DIR__ . '/../PdBS Eolien.docx', $full_path);
+
+        // add calss Zip Archive
+        $zip_val = new \ZipArchive;
+
+        //Docx file is nothing but a zip file. Open this Zip File
+        if($zip_val->open($full_path) == true)
+        {
+            // In the Open XML Wordprocessing format content is stored.
+            // In the document.xml file located in the word directory.
+
+            $key_file_name = 'word/document.xml';
+            $message = $zip_val->getFromName($key_file_name);
+
+            $timestamp = date('d-M-Y H:i:s');
+
+            // this data Replace the placeholders with actual values
+            $message = preg_replace('%\+{5,10}%', '5+', $message);
+            $message = preg_replace('%\+{4}%', '4+', $message);
+            $message = preg_replace('%\+{3}%', '3+', $message);
+            $message = preg_replace('%\+{2}%', '2+', $message); 
+
+            //Replace the content with the new content created above.
+            $zip_val->addFromString($key_file_name, $message);
+            $zip_val->close();
+        }
+        exit('Done');
+    }
+
+    /**
      * @Route("/contacts/search", name="contacts_search")
      * @Security("has_role('ROLE_VIEW')")
      */

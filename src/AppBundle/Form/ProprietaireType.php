@@ -61,6 +61,26 @@ class ProprietaireType extends AbstractType
                 'html5' => false,
                 'required' => false,
             ])
+            ->add('dateNaissanceProprietaire', DatePickerType::class, [
+                'label' => 'Date naissance propriétaire',
+                'widget' => 'single_text',
+                'format' => 'dd/MM/yyyy',
+                'html5' => false,
+                'required' => false,
+            ])
+            ->add('lieuNaissanceProprietaire', TextType::class, [
+                'label' => 'Lieu naissance propriétaire',
+                'required' => false,
+            ])
+            ->add('civiliteProprietaire', ChoiceType::class, [
+                'label' => 'Civilité propriétaire',
+                'required' => false,
+                'choices' => [
+                    'Mr' => 'Mr', 
+                    'Mme' => 'Mme',
+                    'Mlle' => 'Mlle'
+                ],
+            ])
             ->add('exploitant', TextType::class, [
                 'label' => 'Exploitant',
                 'required' => false,
@@ -99,6 +119,26 @@ class ProprietaireType extends AbstractType
                 'format' => 'dd/MM/yyyy',
                 'html5' => false,
                 'required' => false,
+            ])
+            ->add('dateNaissanceExploitant', DatePickerType::class, [
+                'label' => 'Date naissance exploitant',
+                'widget' => 'single_text',
+                'format' => 'dd/MM/yyyy',
+                'html5' => false,
+                'required' => false,
+            ])
+            ->add('lieuNaissanceExploitant', TextType::class, [
+                'label' => 'Lieu naissance exploitant',
+                'required' => false,
+            ])
+            ->add('civiliteExploitant', ChoiceType::class, [
+                'label' => 'Civilité exploitant',
+                'required' => false,
+                'choices' => [
+                    'Mr' => 'Mr', 
+                    'Mme' => 'Mme',
+                    'Mlle' => 'Mlle'
+                ],
             ])
         ;
     }
