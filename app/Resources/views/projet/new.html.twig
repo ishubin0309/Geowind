@@ -278,6 +278,18 @@
       </div>
     </div>
   </div>
+
+  <div class="modal fade publish-modal" tabindex="-1" role="dialog" aria-labelledby="publishModal">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content text-center">
+        <div class="modal-body">
+          <form id="publish_form" class="form-horizontal" method="POST" action="{{ path('projet_publish') }}">
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}
 
 {% block js %}
@@ -1089,6 +1101,13 @@
       }
     });
 
+    $('#projet_proprietaires_publish_entry').click(function () {
+      if(!$(this).hasClass('disabled') && $collectionHolderProprietaire.find('tr.info').length == 2) {
+        var tr_index = $collectionHolderProprietaire.find('tr.info:eq(1)').index() + 1;
+
+      }
+    });
+
     $('#projet_proprietaires_remove_entry').click(function () {
       if($('> :last-child', $collectionHolderProprietaire).length) {
         var id = $('> :last-child', $collectionHolderProprietaire).find('input:eq(0)').attr('id').match(/\d+/);
@@ -1120,7 +1139,10 @@
       $(this).addClass('info');
       second_tr_index = $(this).attr('class').match('proprietaire_entry') ? $(this).index() + 1 : $(this).index() - 1;
       $($collectionHolderProprietaire).find('tr:eq('+second_tr_index+')').addClass('info');
-      if($collectionHolderProprietaire.children().length) $('#projet_proprietaires_duplicate_entry').removeClass('disabled');
+      if($collectionHolderProprietaire.children().length) {
+        $('#projet_proprietaires_duplicate_entry').removeClass('disabled');
+        $('#projet_proprietaires_publish_entry').removeClass('disabled');
+      }
     });
     loadAllTypeheads();
     var suggestionsArray = [];
