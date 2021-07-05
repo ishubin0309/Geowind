@@ -1331,6 +1331,7 @@
           fields.push(['exemplaires', 'field', 'DEUX (2)']);
           fields.push(['date_signature', 'field', '{{ "now"|date("d/m/Y") }}']);
           fields.push(['lieu_signature', 'field', '']);
+          fields.push(['societe', 'field', 'WKN France']);
           fields.push(['ANNEXES', 'title', '']);
         } else {
           fields.push(['representant_proprietaire', 'field', '']);
@@ -1368,10 +1369,10 @@
           fields.push(['indeminite_sinon', 'field', 'CINQ CENT EUROS (500€)']);
           fields.push(['n_annexe', 'field', '6 (six)']);
           fields.push(['SIGNATURES', 'title', '']);
-          fields.push(['exemplaires', 'field', 'DEUX (2)']);
+          fields.push(['lesExemplaires', 'field', 'DEUX (2)']);
           fields.push(['date_signature', 'field', '{{ "now"|date("d/m/Y") }}']);
           fields.push(['lieu_signature', 'field', '']);
-          fields.push(['societe', 'field', 'WKN France']);
+          fields.push(['laSociete', 'field', 'WKN France']);
           fields.push(['ANNEXES', 'title', '']);
         }
         if (publish_form.text().trim().length == 0 ) {
@@ -1380,7 +1381,7 @@
             if(field[1] == 'title') {
               publish_form.append('<legend>' + field[0] + '</legend>');
             } else if(field[1] == 'field') {
-              publish_form.append('<div class="form-group"><label for="text" style="color:#B0413E;" class="control-label col-xs-4">' + field[0] + '</label><div class="col-xs-8"><input id="text" name="' + field[0] + '" value="' + field[2] + '" type="text" class="form-control"></div></div>');
+              publish_form.append('<div class="form-group"><label for="text" style="color:#B0413E;" class="control-label col-xs-4">{' + field[0] + '}</label><div class="col-xs-8"><input id="text" name="{' + field[0] + '}" value="' + field[2] + '" type="text" class="form-control"></div></div>');
             }
           });
           publish_form.append('<div class="form-group row"><div class="col-xs-offset-4 col-xs-8"><button name="submit" type="submit" class="btn btn-primary">Publier</button></div></div>');

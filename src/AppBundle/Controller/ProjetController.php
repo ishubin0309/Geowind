@@ -752,6 +752,25 @@ class ProjetController extends Controller
             'technologies' => json_encode($technologies)
         ]);
     }
+    function replaceText($element, $variable, $value) {
+        $text_class = 'PhpOffice\PhpWord\Element\Text';
+        $table_class = 'PhpOffice\PhpWord\Element\Table';
+        foreach ($element as $e) {
+            if (get_class($e) !== $text_class && method_exists($e, 'getElements')) {
+                replaceText($e->getElements(), $variable, $value);
+            } elseif (get_class($e) === $text_class && ($match_count = substr_count($e->getText(), $variable))) {
+                for ($i = 1; $i <= $match_count; $i++) {
+                    $e->setText(str_replace($variable, $value, $e->getText()));
+                }
+            } elseif (get_class($e) === $table_class && ($row_count = count($e->getRows()))) {
+                foreach ($e->getRows() as $row) {
+                    foreach ($row->getCells() as $cell) {
+                        replaceText($cell->getElements(), $variable, $value);
+                    }
+                }
+            }
+        }
+    }
 
     /**
      * @Route("/publier", name="projet_publish")
@@ -761,7 +780,7 @@ class ProjetController extends Controller
     {
         if(isset($_POST['projet_technologie'])) {
             if($_POST['projet_technologie'] == 'eolienne') {
-                $fileName = 'PdBS Solaire.docx';
+                $fileName = 'PdBS Eolien.docx';
                 $fullPath = $this->getUser()->getId() . '_' . $fileName;
             } else {
                 $fileName = 'PdBS Solaire.docx';
@@ -779,19 +798,15 @@ class ProjetController extends Controller
                 }
             }
 
-            // add calss Zip Archive
             $zip_val = new \ZipArchive;
 
-            //Docx file is nothing but a zip file. Open this Zip File
             if($zip_val->open($fullPath) == true) {
-                // In the Open XML Wordprocessing format content is stored.
-                // In the document.xml file located in the word directory.
 
                 $key_file_name = 'word/document.xml';
                 $message = $zip_val->getFromName($key_file_name);
 
                 $timestamp = date('d-M-Y H:i:s');
-                // this data Replace the placeholders with actual values
+
                 $message = str_replace($replaceThis, $replaceBy, $message);
 
                 //Replace the content with the new content created above.
