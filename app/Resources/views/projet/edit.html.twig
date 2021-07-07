@@ -1291,15 +1291,16 @@
           var fields = [];
           // name, type, value
           fields.push(['PARTIES', 'title', '']);
-          fields.push(['proprietaire_civilité', 'field', tr_proprietaire.find('select[id*="_civiliteProprietaire"]').val()]);
+          fields.push(['proprietaire_civilite', 'field', tr_proprietaire.find('select[id*="_civiliteProprietaire"]').val()]);
           fields.push(['proprietaire_identite', 'field', tr_proprietaire.find('input[id*="_proprietaire"]').val()]);
           fields.push(['proprietaire_adresse', 'field', tr_proprietaire.find('input[id*="_adresseProprietaire"]').val()]);
           fields.push(['proprietaire_droit', 'field', '']);
           fields.push(['proprietaire_marital', 'field', '']);
           fields.push(['proprietaire_ne_le', 'field', tr_proprietaire.find('input[id*="_dateNaissanceProprietaire"]').val()]);
           fields.push(['proprietaire_ne_a', 'field', tr_proprietaire.find('input[id*="_lieuNaissanceProprietaire"]').val()]);
-          fields.push(['exploitant_civilité', 'field', tr_exploitant.find('select[id*="_civiliteExploitant"]').val()]);
+          fields.push(['exploitant_civilite', 'field', tr_exploitant.find('select[id*="_civiliteExploitant"]').val()]);
           fields.push(['exploitant_identite', 'field', tr_exploitant.find('input[id*="_exploitant"]').val()]);
+          fields.push(['exploitant_adresse', 'field', tr_exploitant.find('input[id*="_adresseExploitant"]').val()]);
           fields.push(['exploitant_ne_le', 'field', tr_exploitant.find('input[id*="_dateNaissanceExploitant"]').val()]);
           fields.push(['exploitant_ne_a', 'field', tr_exploitant.find('input[id*="_lieuNaissanceExploitant"]').val()]);
           fields.push(['exploitant_droit', 'field', '']);
@@ -1386,14 +1387,15 @@
           });
           publish_form.append('<div class="form-group row"><div class="col-xs-offset-4 col-xs-8"><button name="submit" type="submit" class="btn btn-primary">Publier</button></div></div>');
         } else {
-          publish_form.find('input[name="proprietaire_civilité"]').val(tr_proprietaire.find('select[id*="_civiliteProprietaire"]').val());
+          publish_form.find('input[name="proprietaire_civilite"]').val(tr_proprietaire.find('select[id*="_civiliteProprietaire"]').val());
           publish_form.find('input[name="proprietaire_identite"]').val(tr_proprietaire.find('input[id*="_proprietaire"]').val());
           publish_form.find('input[name="proprietaire_adresse"]').val(tr_proprietaire.find('input[id*="_adresseProprietaire"]').val());
           publish_form.find('input[name="proprietaire_ne_le"]').val(tr_proprietaire.find('input[id*="_dateNaissanceProprietaire"]').val());
           publish_form.find('input[name="proprietaire_ne_a"]').val(tr_proprietaire.find('input[id*="_lieuNaissanceProprietaire"]').val());
 
-          publish_form.find('input[name="exploitant_civilité"]').val(tr_proprietaire.find('select[id*="_civiliteExploitant"]').val());
+          publish_form.find('input[name="exploitant_civilite"]').val(tr_proprietaire.find('select[id*="_civiliteExploitant"]').val());
           publish_form.find('input[name="exploitant_identite"]').val(tr_proprietaire.find('input[id*="_exploitant"]').val());
+          publish_form.find('input[name="exploitant_adresse"]').val(tr_proprietaire.find('input[id*="_adresseExploitant"]').val());
           publish_form.find('input[name="exploitant_ne_le"]').val(tr_proprietaire.find('input[id*="_dateNaissanceExploitant"]').val());
           publish_form.find('input[name="exploitant_ne_a"]').val(tr_proprietaire.find('input[id*="_lieuNaissanceExploitant"]').val());
         }
