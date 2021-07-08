@@ -1342,9 +1342,9 @@
           fields.push(['WKN_immatriculation', 'field', 'RCS de Nantes']);
           fields.push(['WKN_numero', 'field', 'B 443 622 295']);
           fields.push(['WKN_representant', 'field', 'Roland STANZE']);
-          fields.push(['Né(e) le', 'field', '']);
+          {# fields.push(['Né(e) le', 'field', '']);
           fields.push(['Demeurant à', 'field', '']);
-          fields.push(['Représenté(e) par', 'field', '']);
+          fields.push(['Représenté(e) par', 'field', '']); #}
         } else {
           fields.push(['representant_proprietaire', 'field', '']);
           fields.push(['representant_exploitant', 'field', '']);
@@ -1394,9 +1394,9 @@
           fields.push(['WKN_immatriculation', 'field', 'RCS de Nantes']);
           fields.push(['WKN_numero', 'field', 'B 443 622 295']);
           fields.push(['WKN_representant', 'field', 'Roland STANZE']);
-          fields.push(['Né(e) le', 'field', '']);
+          {# fields.push(['Né(e) le', 'field', '']);
           fields.push(['Demeurant à', 'field', '']);
-          fields.push(['Représenté(e) par', 'field', '']);
+          fields.push(['Représenté(e) par', 'field', '']); #}
         }
         if (publish_form.text().trim().length == 0 ) {
           publish_form.append('<input type="hidden" name="projet_technologie" value="' + $('#projet_technologie').val() + '">');
