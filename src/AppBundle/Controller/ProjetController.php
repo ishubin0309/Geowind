@@ -795,7 +795,7 @@ class ProjetController extends Controller
             $replaceBy = [];
             foreach($_POST as $key => $value) {
                 if(preg_match('%\{.+?\}%', $key) && $value) {
-                    if($key != '{parcelles}') {
+                    if($key != '{publish_parcelles}') {
                         $replaceThis[] = $key;
                         $replaceBy[] = $value;
                     } else {
