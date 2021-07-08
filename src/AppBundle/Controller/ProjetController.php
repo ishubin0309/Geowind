@@ -803,7 +803,7 @@ class ProjetController extends Controller
                         $parcelleRow = '';
                         $parcelles = json_decode($value, 1);
                         foreach($parcelles as $parcelle) {
-                            $parcelleRow .= str_replace(['{parcelle_n}', '{parcelle_com}', '{parcelle_section}', '{parcelle_lieudit}', '{parcelle_surface}'], [$parcelle[0], $parcelle[1], $parcelle[2], $parcelle[3], $parcelle[4]], $parcelleRowCopy);
+                            $parcelleRow .= str_replace(['{parcelle_n}', '{parcelle_section}', '{parcelle_com}', '{parcelle_lieudit}', '{parcelle_surface}'], [$parcelle[0], $parcelle[1], $parcelle[2], $parcelle[3], $parcelle[4]], $parcelleRowCopy);
                         }
                     }
                 }
