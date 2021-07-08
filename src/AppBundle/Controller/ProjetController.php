@@ -792,7 +792,7 @@ class ProjetController extends Controller
             $replaceThis = [];
             $replaceBy = [];
             foreach($_POST as $key => $value) {
-                if(preg_match('%\{.+?\}%', $key)) {
+                if(preg_match('%\{.+?\}%', $key) && $value) {
                     $replaceThis[] = $key;
                     $replaceBy[] = $value;
                 }
