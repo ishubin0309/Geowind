@@ -807,7 +807,7 @@ class ProjetController extends Controller
 
                 $timestamp = date('d-M-Y H:i:s');
 
-                $message = str_replace($replaceThis, $replaceBy, $message);
+                $message = str_ireplace($replaceThis, $replaceBy, $message);
 
                 //Replace the content with the new content created above.
                 $zip_val->addFromString($key_file_name, $message);
