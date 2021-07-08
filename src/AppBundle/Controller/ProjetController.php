@@ -786,6 +786,7 @@ class ProjetController extends Controller
             } else {
                 $fileName = 'PdBS Solaire.docx';
                 $fullPath = $this->getUser()->getId() . '_' . $fileName;
+                $parcelleRow = '';
             }
             @unlink($fullPath);
             copy(__DIR__ . '/../' . $fileName, $fullPath);
@@ -794,8 +795,17 @@ class ProjetController extends Controller
             $replaceBy = [];
             foreach($_POST as $key => $value) {
                 if(preg_match('%\{.+?\}%', $key) && $value) {
-                    $replaceThis[] = $key;
-                    $replaceBy[] = $value;
+                    if($key != '{parcelles}') {
+                        $replaceThis[] = $key;
+                        $replaceBy[] = $value;
+                    } else {
+                        $parcelleRowCopy = $parcelleRow;
+                        $parcelleRow = '';
+                        $parcelles = json_decode($value, 1);
+                        foreach($parcelles as $parcelle) {
+                            $parcelleRow .= str_replace(['{parcelle_n}', '{parcelle_com}', '{parcelle_section}', '{parcelle_lieudit}', '{parcelle_surface}'], [$parcelle[0], $parcelle[1], $parcelle[2], $parcelle[3], $parcelle[4]], $parcelleRowCopy);
+                        }
+                    }
                 }
             }
 
@@ -809,7 +819,7 @@ class ProjetController extends Controller
                 $timestamp = date('d-M-Y H:i:s');
 
                 if($_POST['projet_technologie'] == 'eolienne') {
-                    $message = str_replace('{parcelle_row}', $parcelleRow . $parcelleRow, $message);
+                    $message = str_replace('{parcelle_row}', $parcelleRow, $message);
                 }
                 $message = str_ireplace($replaceThis, $replaceBy, $message);
 

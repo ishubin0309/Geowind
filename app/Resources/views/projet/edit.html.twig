@@ -1336,6 +1336,16 @@
           fields.push(['representant_societe', 'field', '']);
           fields.push(['societe', 'field', 'WKN France']);
           fields.push(['ANNEXES', 'title', '']);
+          var parcelle = tr_proprietaire.find('input[id*="_parcelles"]').val().trim();
+          var parcellesArray = [];
+          if($('#projet_parcelles tr').length) {
+            $('#projet_parcelles tr').each(function(i,element) {
+              if($(element).find('td:eq(0) input[name]').val().trim() == parcelle) {
+                parcellesArray.push([$(element).find('td:eq(0) input[name]').val().trim(), $(element).find('td:eq(1) select option:selected').text(), $(element).find('td:eq(2) select option:selected').text(), $(element).find('td:eq(3) input[name]').val().trim(), $(element).find('td:eq(4) input[name]').val().trim()]);
+              }
+            });
+          }
+          fields.push(['parcelles', 'field', JSON.stringify(parcellesArray)]);
           fields.push(['WKN', 'title', '']);
           fields.push(['WKN_Raison_sociale', 'field', 'WKN France']);
           fields.push(['Type de groupement', 'field', 'SASU']);
@@ -1389,6 +1399,16 @@
           fields.push(['representant_societe', 'field', '']);
           fields.push(['laSociete', 'field', 'WKN France']);
           fields.push(['ANNEXES', 'title', '']);
+          var parcelle = tr_proprietaire.find('input[id*="_parcelles"]').val().trim();
+          var parcellesArray = [];
+          if($('#projet_parcelles tr').length) {
+            $('#projet_parcelles tr').each(function(i,element) {
+              if($(element).find('td:eq(0) input[name]').val().trim() == parcelle) {
+                parcellesArray.push([$(element).find('td:eq(0) input[name]').val().trim(), $(element).find('td:eq(1) select option:selected').text(), $(element).find('td:eq(2) select option:selected').text(), $(element).find('td:eq(3) input[name]').val().trim(), $(element).find('td:eq(4) input[name]').val().trim()]);
+              }
+            });
+          }
+          fields.push(['parcelles', 'field', JSON.stringify(parcellesArray)]);
           fields.push(['WKN', 'title', '']);
           fields.push(['WKN_Raison_sociale', 'field', 'WKN France']);
           fields.push(['Type de groupement', 'field', 'SASU']);
@@ -1407,7 +1427,8 @@
             if(field[1] == 'title') {
               publish_form.append('<legend>' + field[0] + '</legend>');
             } else if(field[1] == 'field') {
-              publish_form.append('<div class="form-group"><label for="text" style="color:#B0413E;" class="control-label col-xs-4">{' + field[0] + '}</label><div class="col-xs-8"><input id="text" name="{' + field[0] + '}" value="' + field[2] + '" type="text" class="form-control"></div></div>');
+              publish_form.append('<div class="form-group"><label for="text" style="color:#B0413E;" class="control-label col-xs-4">{' + field[0] + '}</label><div class="col-xs-8"><input id="text" name="{' + field[0] + '}" value="" type="text" class="form-control"></div></div>');
+              $(publish_form).find('input[name="{' + field[0] + '}"]').val(field[2]);
             }
           });
           publish_form.append('<div class="form-group row"><div class="col-xs-offset-4 col-xs-8"><button name="submit" type="submit" class="btn btn-primary">Publier</button></div></div>');
