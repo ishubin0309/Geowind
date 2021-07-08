@@ -27,15 +27,15 @@ class ProprietaireType extends AbstractType
                 'required' => true,
             ])
             ->add('telephoneProprietaire', TextType::class, [
-                'label' => 'Téléphone propriétaire',
+                'label' => 'Téléphone',
                 'required' => false,
             ])
             ->add('adresseProprietaire', TextType::class, [
-                'label' => 'Adresse propriétaire',
+                'label' => 'Adresse',
                 'required' => false,
             ])
             ->add('emailProprietaire', EmailType::class, [
-                'label' => 'Email propriétaire',
+                'label' => 'Email',
                 'required' => false,
             ])
             ->add('accordProprietaire', ChoiceType::class, [
@@ -48,32 +48,32 @@ class ProprietaireType extends AbstractType
                 ],
             ])
             ->add('dateSignatureProprietaire', DatePickerType::class, [
-                'label' => 'Date signature propriétaire',
+                'label' => 'Date signature',
                 'widget' => 'single_text',
                 'format' => 'dd/MM/yyyy',
                 'html5' => false,
                 'required' => false,
             ])
             ->add('dateEcheanceProprietaire', DatePickerType::class, [
-                'label' => 'Date échéance propriétaire',
+                'label' => 'Date échéance',
                 'widget' => 'single_text',
                 'format' => 'dd/MM/yyyy',
                 'html5' => false,
                 'required' => false,
             ])
             ->add('dateNaissanceProprietaire', DatePickerType::class, [
-                'label' => 'Date naissance propriétaire',
+                'label' => 'Date naissance',
                 'widget' => 'single_text',
                 'format' => 'dd/MM/yyyy',
                 'html5' => false,
                 'required' => false,
             ])
             ->add('lieuNaissanceProprietaire', TextType::class, [
-                'label' => 'Lieu naissance propriétaire',
+                'label' => 'Lieu naissance',
                 'required' => false,
             ])
             ->add('civiliteProprietaire', ChoiceType::class, [
-                'label' => 'Civilité propriétaire',
+                'label' => 'Civilité',
                 'required' => false,
                 'choices' => [
                     'Mr' => 'Mr', 
@@ -81,20 +81,28 @@ class ProprietaireType extends AbstractType
                     'Mlle' => 'Mlle'
                 ],
             ])
+            ->add('droitProprietaire', TextType::class, [
+                'label' => 'Droit',
+                'required' => false,
+            ])
+            ->add('maritalProprietaire', TextType::class, [
+                'label' => 'Marital',
+                'required' => false,
+            ])
             ->add('exploitant', TextType::class, [
                 'label' => 'Exploitant',
                 'required' => false,
             ])
             ->add('telephoneExploitant', TextType::class, [
-                'label' => 'Téléphone exploitant',
+                'label' => 'Téléphone',
                 'required' => false,
             ])
             ->add('adresseExploitant', TextType::class, [
-                'label' => 'Adresse exploitant',
+                'label' => 'Adresse',
                 'required' => false,
             ])
             ->add('emailExploitant', EmailType::class, [
-                'label' => 'Email exploitant',
+                'label' => 'Email',
                 'required' => false,
             ])
             ->add('accordExploitant', ChoiceType::class, [
@@ -107,21 +115,21 @@ class ProprietaireType extends AbstractType
                 ],
             ])
             ->add('dateSignatureExploitant', DatePickerType::class, [
-                'label' => 'Date signature exploitant',
+                'label' => 'Date signature',
                 'widget' => 'single_text',
                 'format' => 'dd/MM/yyyy',
                 'html5' => false,
                 'required' => false,
             ])
             ->add('dateEcheanceExploitant', DatePickerType::class, [
-                'label' => 'Date échéance exploitant',
+                'label' => 'Date échéance',
                 'widget' => 'single_text',
                 'format' => 'dd/MM/yyyy',
                 'html5' => false,
                 'required' => false,
             ])
             ->add('dateNaissanceExploitant', DatePickerType::class, [
-                'label' => 'Date naissance exploitant',
+                'label' => 'Date naissance',
                 'widget' => 'single_text',
                 'format' => 'dd/MM/yyyy',
                 'html5' => false,
@@ -132,13 +140,21 @@ class ProprietaireType extends AbstractType
                 'required' => false,
             ])
             ->add('civiliteExploitant', ChoiceType::class, [
-                'label' => 'Civilité exploitant',
+                'label' => 'Civilité',
                 'required' => false,
                 'choices' => [
                     'Mr' => 'Mr', 
                     'Mme' => 'Mme',
                     'Mlle' => 'Mlle'
                 ],
+            ])
+            ->add('droitExploitant', TextType::class, [
+                'label' => 'Droit',
+                'required' => false,
+            ])
+            ->add('maritalExploitant', TextType::class, [
+                'label' => 'Marital',
+                'required' => false,
             ])
         ;
     }

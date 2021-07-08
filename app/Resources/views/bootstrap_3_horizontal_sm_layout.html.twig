@@ -221,6 +221,8 @@ col-sm-8
             <th>Email</th>
             <th>Né le</th>
             <th>Né à</th>
+            <th>Droit</th>
+            <th>Marital</th>
             <th>Date signature</th>
             <th>Date échéance</th>
           </tr>
@@ -257,6 +259,8 @@ col-sm-8
       <td>{{ form_widget(form.emailProprietaire) }}</td>
       <td>{{ form_widget(form.dateNaissanceProprietaire) }}</td>
       <td>{{ form_widget(form.lieuNaissanceProprietaire) }}</td>
+      <td>{{ form_widget(form.droitProprietaire) }}</td>
+      <td>{{ form_widget(form.maritalProprietaire) }}</td>
       <td>{% if form.vars.value.dateSignatureProprietaire is defined %}{{ form_widget(form.dateSignatureProprietaire) }}{% else %}{{ form_widget(form.dateSignatureProprietaire, {'value' : "now"|date("d/m/Y")}) }}{% endif %}</td>
       <td>{% if form.vars.value.dateEcheanceProprietaire is defined %}{{ form_widget(form.dateEcheanceProprietaire) }}{% else %}{{ form_widget(form.dateEcheanceProprietaire, {'value' : "now"|date("d/m/Y")}) }}{% endif %}</td>
     </tr>
@@ -270,6 +274,8 @@ col-sm-8
       <td>{{ form_widget(form.emailExploitant) }}</td>
       <td>{{ form_widget(form.dateNaissanceExploitant) }}</td>
       <td>{{ form_widget(form.lieuNaissanceExploitant) }}</td>
+      <td>{{ form_widget(form.droitExploitant) }}</td>
+      <td>{{ form_widget(form.maritalExploitant) }}</td>
       <td>{% if form.vars.value.dateSignatureExploitant is defined %}{{ form_widget(form.dateSignatureExploitant) }}{% else %}{{ form_widget(form.dateSignatureExploitant, {'value' : "now"|date("d/m/Y")}) }}{% endif %}</td>
       <td>{% if form.vars.value.dateEcheanceExploitant is defined %}{{ form_widget(form.dateEcheanceExploitant) }}{% else %}{{ form_widget(form.dateEcheanceExploitant, {'value' : "now"|date("d/m/Y")}) }}{% endif %}</td>
     </tr>

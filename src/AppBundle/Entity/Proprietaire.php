@@ -115,6 +115,20 @@ class Proprietaire
      *
      * @ORM\Column(type="string", nullable=true)
      */
+    private $droitProprietaire;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $maritalProprietaire;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
     private $exploitant;
     
     /**
@@ -182,6 +196,20 @@ class Proprietaire
      * @ORM\Column(type="string", nullable=true)
      */
     private $civiliteExploitant;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $droitExploitant;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $maritalExploitant;
     
     /**
      * @var ArrayCollection|Message[]
@@ -384,6 +412,16 @@ class Proprietaire
         return $this->civiliteProprietaire;
     }
 
+    public function getDroitProprietaire()
+    {
+        return $this->droitProprietaire;
+    }
+
+    public function getMaritalProprietaire()
+    {
+        return $this->maritalProprietaire;
+    }
+
     public function getDateSignatureExploitant()
     {
         return $this->dateSignatureExploitant;
@@ -407,6 +445,16 @@ class Proprietaire
     public function getCiviliteExploitant()
     {
         return $this->civiliteExploitant;
+    }
+
+    public function getDroitExploitant()
+    {
+        return $this->droitExploitant;
+    }
+
+    public function getMaritalExploitant()
+    {
+        return $this->maritalExploitant;
     }
 
     public function setDateSignatureProprietaire(DateTime $dateSignatureProprietaire = null)
@@ -439,6 +487,18 @@ class Proprietaire
         return $this;
     }
 
+    public function setDroitProprietaire($droitProprietaire)
+    {
+        $this->droitProprietaire = $droitProprietaire;
+        return $this;
+    }
+
+    public function setMaritalProprietaire($maritalProprietaire)
+    {
+        $this->maritalProprietaire = $maritalProprietaire;
+        return $this;
+    }
+
     public function setDateSignatureExploitant(DateTime $dateSignatureExploitant = null)
     {
         $this->dateSignatureExploitant = $dateSignatureExploitant;
@@ -466,6 +526,18 @@ class Proprietaire
     public function setCiviliteExploitant($civiliteExploitant)
     {
         $this->civiliteExploitant = $civiliteExploitant;
+        return $this;
+    }
+
+    public function setDroitExploitant($droitExploitant)
+    {
+        $this->droitExploitant = $droitExploitant;
+        return $this;
+    }
+
+    public function setMaritalExploitant($maritalExploitant)
+    {
+        $this->maritalExploitant = $maritalExploitant;
         return $this;
     }
     
