@@ -813,7 +813,7 @@ class ProjetController extends Controller
                             if(preg_match('%\d+%', $parcelleName, $m)) {
                                 $parcelleNumber = $m[0];
                             }
-                            $parcelleRow .= str_replace(['{parcelle_section}', '{parcelle_n}', '{parcelle_com}', '{parcelle_lieudit}', '{parcelle_surface}'], [$parcelleSection, $parcelleNumber, $parcelle[2], $parcelle[3], $parcelle[4]], $parcelleRowCopy);
+                            $parcelleRow .= str_replace(['{parcelle_section}', '{parcelle_n}', '{parcelle_com}', '{parcelle_lieudit}', '{parcelle_surface}'], [$parcelleSection, $parcelleNumber, $parcelle[1], $parcelle[2], $parcelle[3]], $parcelleRowCopy);
                         }
                     }
                 }
