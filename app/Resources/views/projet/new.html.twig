@@ -917,7 +917,7 @@
       }
     });
     $('body').on('click', '#popup_photo_close', function() {
-      $('.bs-modal-lg').modal('hide');
+        
     });
     $('body').on('click', '.popup_fichier', function(e) {
       e.preventDefault();
@@ -1069,7 +1069,7 @@
         var tr_index = $collectionHolderProprietaire.find('tr.info:eq(1)').index() + 1;
         var clone = $collectionHolderProprietaire.find('tr.info').clone();
         var cloned = 0;
-        $(clone).insertAfter($collectionHolderProprietaire.find('tr:eq('+(tr_index-1)+')'));console.log(tr_index);
+        $(clone).insertAfter($collectionHolderProprietaire.find('tr:eq('+(tr_index-1)+')'));
         $collectionHolderProprietaire.find('tr:eq('+tr_index+')').removeClass('info');
         $collectionHolderProprietaire.find('tr:eq('+(tr_index + 1)+')').removeClass('info');
         $collectionHolderProprietaire.find('tr:eq('+tr_index+')').find('[id*="_accordProprietaire"]').val($collectionHolderProprietaire.find('tr:eq('+(tr_index-2)+')').find('[id*="_accordProprietaire"]').val());
@@ -1103,8 +1103,183 @@
 
     $('#projet_proprietaires_publish_entry').click(function () {
       if(!$(this).hasClass('disabled') && $collectionHolderProprietaire.find('tr.info').length == 2) {
-        var tr_index = $collectionHolderProprietaire.find('tr.info:eq(1)').index() + 1;
+        var tr_proprietaire = $collectionHolderProprietaire.find('tr.info:eq(0)');
+        var tr_exploitant = $collectionHolderProprietaire.find('tr.info:eq(1)');
+        var publish_form = $('#publish_form');
+          var fields = [];
+          // name, type, value
+          fields.push(['PARTIES', 'title', '']);
+          fields.push(['proprietaire_civilite', 'field', tr_proprietaire.find('select[id$="_civiliteProprietaire"]').val()]);
+          fields.push(['proprietaire_identite', 'field', tr_proprietaire.find('input[id$="_proprietaire"]').val()]);
+          fields.push(['proprietaire_adresse', 'field', tr_proprietaire.find('input[id$="_adresseProprietaire"]').val()]);
+          fields.push(['proprietaire_droit', 'field', tr_proprietaire.find('input[id$="_droitProprietaire"]').val()]);
+          fields.push(['proprietaire_marital', 'field', tr_proprietaire.find('input[id$="_maritalProprietaire"]').val()]);
+          fields.push(['proprietaire_ne_le', 'field', tr_proprietaire.find('input[id$="_dateNaissanceProprietaire"]').val()]);
+          fields.push(['proprietaire_ne_a', 'field', tr_proprietaire.find('input[id$="_lieuNaissanceProprietaire"]').val()]);
+          fields.push(['exploitant_civilite', 'field', tr_exploitant.find('select[id$="_civiliteExploitant"]').val()]);
+          fields.push(['exploitant_identite', 'field', tr_exploitant.find('input[id$="_exploitant"]').val()]);
+          fields.push(['exploitant_adresse', 'field', tr_exploitant.find('input[id$="_adresseExploitant"]').val()]);
+          fields.push(['exploitant_ne_le', 'field', tr_exploitant.find('input[id$="_dateNaissanceExploitant"]').val()]);
+          fields.push(['exploitant_ne_a', 'field', tr_exploitant.find('input[id$="_lieuNaissanceExploitant"]').val()]);
+          fields.push(['exploitant_droit', 'field', tr_exploitant.find('input[id$="_droitExploitant"]').val()]);
+          fields.push(['exploitant_marital', 'field', tr_exploitant.find('input[id$="_maritalExploitant"]').val()]);
 
+        if($('#projet_technologie').val() == 'eolienne') {
+          fields.push(['BAIL', 'title', '']);
+          fields.push(['montant_base', 'field', 'CINQ CENTS EUROS (500 €)']);
+          fields.push(['montant_exploitation', 'field', 'DEUX MILLE CINQ CENTS EUROS (2500€), par an']);
+          fields.push(['montant_pdf', 'field', 'MILLE CINQ CENTS (1.500 €) par an']);
+          fields.push(['part_proprietaire', 'field', '50%']);
+          fields.push(['part_exploitant', 'field', '50%']);
+          fields.push(['montant_fin_exploit', 'field', 'CINQ CENTS (500) € par an']);
+          fields.push(['montant_reseau', 'field', 'UN (1) euros et CINQUANTE (50) centimes']);
+          fields.push(['montant_surplomb', 'field', 'TROIS CENTS (300) euros par an']);
+          fields.push(['montant_passage', 'field', 'CINQUANTE (50) centimes d’euros par mètre carré et par an']);
+          fields.push(['emprise_eolienne', 'field', $('#projet_emprise').val() + ' m²']);
+          fields.push(['emprise_pdf', 'field', '200 m²']);
+          fields.push(['exclusivite_dist', 'field', 'MILLE CINQ CENTS (1 500) mètres']);
+          fields.push(['duree_bail', 'field', 'TRENTE (30)  années']);
+          fields.push(['xprorogation_bail', 'field', 'UNE (1) fois']);
+          fields.push(['tprorogation_bail', 'field', 'DIX (10) années']);
+          fields.push(['avis_entree', 'field', 'QUINZE (15) jours']);
+          fields.push(['avis_demantellement', 'field', 'UN (1) mois']);
+          fields.push(['delais_entree', 'field', '']);
+          fields.push(['largeur_enligne', 'field', 'CINQ (5) mètres']);
+          fields.push(['largeur_encourbe', 'field', 'DIX (10) mètres']);
+          fields.push(['duree_promesse', 'field', 'HUIT (8) années']);
+          fields.push(['SIGNATURES', 'title', '']);
+          fields.push(['exemplaires', 'field', 'DEUX (2)']);
+          fields.push(['date_signature', 'field', '{{ "now"|date("d/m/Y") }}']);
+          fields.push(['lieu_signature', 'field', '']);
+          fields.push(['representant_societe', 'field', '']);
+          fields.push(['societe', 'field', 'WKN France']);
+          fields.push(['ANNEXES', 'title', '']);
+          var parcelle = tr_proprietaire.find('input[id*="_parcelles"]').val().trim();
+          var parcellesArray = [];
+          if($('#projet_parcelles tr').length) {
+            $('#projet_parcelles tr').each(function(i,element) {
+              if($(element).find('td:eq(0) input[name]').val().trim() == parcelle) {
+                parcellesArray.push([$(element).find('td:eq(0) input[name]').val(), $(element).find('td:eq(2) select option:selected').text().replace(/\(.+/, '').trim(), $(element).find('td:eq(3) input[name]').val().trim(), $(element).find('td:eq(4) input[name]').val().trim()]);
+              }
+            });
+          }
+          fields.push(['publish_parcelles', 'field', JSON.stringify(parcellesArray)]);
+          fields.push(['WKN', 'title', '']);
+          fields.push(['WKN_Raison_sociale', 'field', 'WKN France']);
+          fields.push(['Type de groupement', 'field', 'SASU']);
+          fields.push(['WKN_capital_social', 'field', '500000 €']);
+          fields.push(['WKN_siege_social', 'field', 'immeuble « le Sanitat », 10, rue Charles Brunellière 44100 NANTES']);
+          fields.push(['WKN_immatriculation', 'field', 'RCS de Nantes']);
+          fields.push(['WKN_numero', 'field', 'B 443 622 295']);
+          fields.push(['WKN_representant', 'field', 'Roland STANZE']);
+          {# fields.push(['Né(e) le', 'field', '']);
+          fields.push(['Demeurant à', 'field', '']);
+          fields.push(['Représenté(e) par', 'field', '']); #}
+        } else {
+          fields.push(['representant', 'field', '']);
+          fields.push(['representant_proprietaire', 'field', '']);
+          fields.push(['representant_exploitant', 'field', '']);
+          fields.push(['representant_wkn', 'field', '']);
+          fields.push(['EXPOSE', 'title', '']);
+          var tr_index = $collectionHolderProprietaire.find('tr.info:eq(1)').index() + 1;
+          fields.push(['commune', 'field', $('#projet_parcelles_' + (tr_index/2) + '_commune option:selected').text()]);
+          fields.push(['BAIL', 'title', '']);
+          fields.push(['montant_base', 'field', 'DEUX MILLE CINQ CENT EUROS (2500 €)']);
+          fields.push(['montant_exploitation', 'field', 'DEUX MILLE CINQ CENT EUROS (2500 €)']);
+          fields.push(['part_proprietaire', 'field', '50%']);
+          fields.push(['part_exploitant', 'field', '50%']);
+          fields.push(['duree_bail', 'field', 'DIX HUIT (18)']);
+          fields.push(['xprorogation_bail', 'field', 'Cinq (5) années']);
+          fields.push(['tprorogation_bail', 'field', 'DEUX (2) fois']);
+          fields.push(['avis1_LRAR', 'field', 'SIX (6) mois pleins']);
+          fields.push(['delais1_levee_doption', 'field', 'DEUX (2) années pleines']);
+          fields.push(['delais2_levee_doption', 'field', 'UNE (1) année(s) pleine(s)']);
+          fields.push(['avis2_LRAR', 'field', 'SIX (6) mois pleins']);
+          fields.push(['ptf_mois', 'field', '5 (cinq)']);
+          fields.push(['ptf_%capex', 'field', '25%']);
+          fields.push(['puissance', 'field', '5 Mwc (cinq mégawatts-crête)']);
+          fields.push(['pdl', 'field', 'UN (1) poste']);
+          fields.push(['avis_entree', 'field', 'DIX (10) jours']);
+          fields.push(['SERVITUDES', 'title', '']);
+          fields.push(['delais_servitudes', 'field', 'SIX (6) mois pleins']);
+          fields.push(['largeur_enligne', 'field', 'QUATRE (4) mètres']);
+          fields.push(['largeur_encourbe', 'field', 'DIX (10) mètres']);
+          fields.push(['PROMESSE', 'title', '']);
+          fields.push(['duree_promesse', 'field', 'Cinq (5) années']);
+          fields.push(['ndelais_promesse', 'field', '2 (deux) fois']);
+          fields.push(['prorogation_promesse', 'field', '2 (deux) années']);
+          fields.push(['LRAR1_promesse', 'field', '6 (six) mois']);
+          fields.push(['indeminite_sinon', 'field', 'CINQ CENT EUROS (500€)']);
+          fields.push(['n_annexe', 'field', '6 (six)']);
+          fields.push(['SIGNATURES', 'title', '']);
+          fields.push(['lesExemplaires', 'field', 'DEUX (2)']);
+          fields.push(['date_signature', 'field', '{{ "now"|date("d/m/Y") }}']);
+          fields.push(['lieu_signature', 'field', '']);
+          fields.push(['representant_societe', 'field', '']);
+          fields.push(['laSociete', 'field', 'WKN France']);
+          fields.push(['ANNEXES', 'title', '']);
+          var parcelle = tr_proprietaire.find('input[id*="_parcelles"]').val().trim();
+          var parcellesArray = [];
+          if($('#projet_parcelles tr').length) {
+            $('#projet_parcelles tr').each(function(i,element) {
+              if($(element).find('td:eq(0) input[name]').val().trim() == parcelle) {
+                parcellesArray.push([$(element).find('td:eq(0) input[name]').val(), $(element).find('td:eq(2) select option:selected').text().replace(/\(.+/, '').trim(), $(element).find('td:eq(3) input[name]').val().trim(), $(element).find('td:eq(4) input[name]').val().trim()]);
+              }
+            });
+          }
+          fields.push(['publish_parcelles', 'field', JSON.stringify(parcellesArray)]);
+          fields.push(['WKN', 'title', '']);
+          fields.push(['WKN_Raison_sociale', 'field', 'WKN France']);
+          fields.push(['Type de groupement', 'field', 'SASU']);
+          fields.push(['WKN_capital_social', 'field', '500000 €']);
+          fields.push(['WKN_siege_social', 'field', 'immeuble « le Sanitat », 10, rue Charles Brunellière 44100 NANTES']);
+          fields.push(['WKN_immatriculation', 'field', 'RCS de Nantes']);
+          fields.push(['WKN_numero', 'field', 'B 443 622 295']);
+          fields.push(['WKN_representant', 'field', 'Roland STANZE']);
+          {# fields.push(['Né(e) le', 'field', '']);
+          fields.push(['Demeurant à', 'field', '']);
+          fields.push(['Représenté(e) par', 'field', '']); #}
+        }
+        if (publish_form.text().trim().length == 0 ) {
+          publish_form.append('<input type="hidden" name="projet_technologie" value="' + $('#projet_technologie').val() + '">');
+          $.each(fields, function(index, field) {
+            if(field[1] == 'title') {
+              publish_form.append('<legend>' + field[0] + '</legend>');
+            } else if(field[1] == 'field') {
+              publish_form.append('<div class="form-group"><label for="text" style="color:#B0413E;" class="control-label col-xs-4">{' + field[0] + '}</label><div class="col-xs-8"><input id="text" name="{' + field[0] + '}" value="" type="text" class="form-control"></div></div>');
+              $(publish_form).find('input[name="{' + field[0] + '}"]').val(field[2]);
+            }
+          });
+          publish_form.append('<div class="form-group row"><div class="col-xs-offset-4 col-xs-8"><button name="submit" type="submit" class="btn btn-primary">Publier</button></div></div>');
+        } else {
+          publish_form.find('input[name="{proprietaire_civilite}"]').val(tr_proprietaire.find('select[id$="_civiliteProprietaire"]').val());
+          publish_form.find('input[name="{proprietaire_identite}"]').val(tr_proprietaire.find('input[id$="_proprietaire"]').val());
+          publish_form.find('input[name="{proprietaire_adresse}"]').val(tr_proprietaire.find('input[id$="_adresseProprietaire"]').val());
+          publish_form.find('input[name="{proprietaire_ne_le}"]').val(tr_proprietaire.find('input[id$="_dateNaissanceProprietaire"]').val());
+          publish_form.find('input[name="{proprietaire_ne_a}"]').val(tr_proprietaire.find('input[id$="_lieuNaissanceProprietaire"]').val());
+          publish_form.find('input[name="{proprietaire_droit}"]').val(tr_proprietaire.find('input[id$="_droitProprietaire"]').val());
+          publish_form.find('input[name="{proprietaire_marital}"]').val(tr_proprietaire.find('input[id$="_maritalProprietaire"]').val());
+
+          publish_form.find('input[name="{exploitant_civilite}"]').val(tr_exploitant.find('select[id$="_civiliteExploitant"]').val());
+          publish_form.find('input[name="{exploitant_identite}"]').val(tr_exploitant.find('input[id$="_exploitant"]').val());
+          publish_form.find('input[name="{exploitant_adresse}"]').val(tr_exploitant.find('input[id$="_adresseExploitant"]').val());
+          publish_form.find('input[name="{exploitant_ne_le}"]').val(tr_exploitant.find('input[id$="_dateNaissanceExploitant"]').val());
+          publish_form.find('input[name="{exploitant_ne_a}"]').val(tr_exploitant.find('input[id$="_lieuNaissanceExploitant"]').val());
+          publish_form.find('input[name="{exploitant_droit}"]').val(tr_exploitant.find('input[id$="_droitExploitant"]').val());
+          publish_form.find('input[name="{exploitant_marital}"]').val(tr_exploitant.find('input[id$="_maritalExploitant"]').val());
+
+          var parcelle = tr_proprietaire.find('input[id*="_parcelles"]').val().trim();
+          var parcellesArray = [];
+          if($('#projet_parcelles tr').length) {
+            $('#projet_parcelles tr').each(function(i,element) {
+              if($(element).find('td:eq(0) input[name]').val().trim() == parcelle) {
+                parcellesArray.push([$(element).find('td:eq(0) input[name]').val().trim(), $(element).find('td:eq(1) select option:selected').text().replace(/\(.+/, '').trim(), $(element).find('td:eq(2) select option:selected').text().replace(/\(.+/, '').trim(), $(element).find('td:eq(3) input[name]').val().trim(), $(element).find('td:eq(4) input[name]').val().trim()]);
+              }
+            });
+          }
+          $(publish_form).find('input[name="{publish_parcelles}"]').val(JSON.stringify(parcellesArray));
+        }
+        $('.publish-modal').modal('show');
       }
     });
 

@@ -81,9 +81,15 @@ class ProprietaireType extends AbstractType
                     'Mlle' => 'Mlle'
                 ],
             ])
-            ->add('droitProprietaire', TextType::class, [
+            ->add('droitProprietaire', ChoiceType::class, [
                 'label' => 'Droit',
                 'required' => false,
+                'choices' => [
+                    'Propriétaire' => 'Propriétaire',
+                    'Indivisaire' => 'Indivisaire',
+                    'Usufruitier(e)' => 'Usufruitier(e)',
+                    'Nu(e)-propriétaire' => 'Nu(e)-propriétaire)',
+                ],
             ])
             ->add('maritalProprietaire', TextType::class, [
                 'label' => 'Marital',
@@ -148,9 +154,15 @@ class ProprietaireType extends AbstractType
                     'Mlle' => 'Mlle'
                 ],
             ])
-            ->add('droitExploitant', TextType::class, [
+            ->add('droitExploitant', ChoiceType::class, [
                 'label' => 'Droit',
                 'required' => false,
+                'choices' => [
+                    'Propriétaire' => 'Propriétaire',
+                    'Indivisaire' => 'Indivisaire',
+                    'Usufruitier(e)' => 'Usufruitier(e)',
+                    'Nu(e)-propriétaire' => 'Nu(e)-propriétaire)',
+                ],
             ])
             ->add('maritalExploitant', TextType::class, [
                 'label' => 'Marital',
