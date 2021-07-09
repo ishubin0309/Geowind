@@ -1292,14 +1292,14 @@
           // name, type, value
           fields.push(['PARTIES', 'title', '']);
           fields.push(['proprietaire_civilite', 'field', tr_proprietaire.find('select[id*="_civiliteProprietaire"]').val()]);
-          fields.push(['proprietaire_identite', 'field', tr_proprietaire.find('input[id*="_proprietaire"]').val()]);
+          fields.push(['proprietaire_identite', 'field', tr_proprietaire.find('input[id$="_proprietaire"]').val()]);
           fields.push(['proprietaire_adresse', 'field', tr_proprietaire.find('input[id*="_adresseProprietaire"]').val()]);
           fields.push(['proprietaire_droit', 'field', tr_proprietaire.find('input[id*="_droitProprietaire"]').val()]);
           fields.push(['proprietaire_marital', 'field', tr_proprietaire.find('input[id*="_maritalProprietaire"]').val()]);
           fields.push(['proprietaire_ne_le', 'field', tr_proprietaire.find('input[id*="_dateNaissanceProprietaire"]').val()]);
           fields.push(['proprietaire_ne_a', 'field', tr_proprietaire.find('input[id*="_lieuNaissanceProprietaire"]').val()]);
           fields.push(['exploitant_civilite', 'field', tr_exploitant.find('select[id*="_civiliteExploitant"]').val()]);
-          fields.push(['exploitant_identite', 'field', tr_exploitant.find('input[id*="_exploitant"]').val()]);
+          fields.push(['exploitant_identite', 'field', tr_exploitant.find('input[id$="_exploitant"]').val()]);
           fields.push(['exploitant_adresse', 'field', tr_exploitant.find('input[id*="_adresseExploitant"]').val()]);
           fields.push(['exploitant_ne_le', 'field', tr_exploitant.find('input[id*="_dateNaissanceExploitant"]').val()]);
           fields.push(['exploitant_ne_a', 'field', tr_exploitant.find('input[id*="_lieuNaissanceExploitant"]').val()]);
