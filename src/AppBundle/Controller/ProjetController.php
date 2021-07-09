@@ -819,9 +819,9 @@ class ProjetController extends Controller
 
                 $timestamp = date('d-M-Y H:i:s');
 
-                if($_POST['projet_technologie'] == 'eolienne') {
+                // if($_POST['projet_technologie'] == 'eolienne') {
                     $message = str_replace('{parcelle_row}', $parcelleRow, $message);
-                }
+                // }
                 $message = str_ireplace($replaceThis, $replaceBy, $message);
 
                 //Replace the content with the new content created above.
