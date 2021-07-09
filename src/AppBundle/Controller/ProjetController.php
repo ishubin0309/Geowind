@@ -804,7 +804,16 @@ class ProjetController extends Controller
                         $parcelleRow = '';
                         $parcelles = json_decode($value, 1);
                         foreach($parcelles as $parcelle) {
-                            $parcelleRow .= str_replace(['{parcelle_section}', '{parcelle_n}', '{parcelle_com}', '{parcelle_lieudit}', '{parcelle_surface}'], [$parcelle[0], $parcelle[1], $parcelle[2], $parcelle[3], $parcelle[4]], $parcelleRowCopy);
+                            $parcelleName = trim($parcelle[0]);
+                            $parcelleSection = '';
+                            $parcelleNumber = '';
+                            if(preg_match('%^[a-zA-Z]+%', $parcelleName, $m)) {
+                                $parcelleSection = $m[0];
+                            }
+                            if(preg_match('%\d+%', $parcelleName, $m)) {
+                                $parcelleNumber = $m[0];
+                            }
+                            $parcelleRow .= str_replace(['{parcelle_section}', '{parcelle_n}', '{parcelle_com}', '{parcelle_lieudit}', '{parcelle_surface}'], [$parcelleSection, $parcelleNumber, $parcelle[2], $parcelle[3], $parcelle[4]], $parcelleRowCopy);
                         }
                     }
                 }
