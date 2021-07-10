@@ -103,6 +103,7 @@ class ProprietaireType extends AbstractType
                     'Marié' => 'Marié',
                     'Mariée' => 'Mariée',
                 ],
+            ])
             ->add('exploitant', TextType::class, [
                 'label' => 'Exploitant',
                 'required' => false,
