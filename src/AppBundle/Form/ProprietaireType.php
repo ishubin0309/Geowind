@@ -92,8 +92,11 @@ class ProprietaireType extends AbstractType
                 'choices' => [
                     'Propriétaire' => 'Propriétaire',
                     'Indivisaire' => 'Indivisaire',
-                    'Usufruitier(e)' => 'Usufruitier(e)',
-                    'Nu(e)-propriétaire' => 'Nu(e)-propriétaire)',
+                    'Usufruitier' => 'Usufruitier',
+                    'Usufruitiere' => 'Usufruitiere',
+                    'Nu-propriétaire' => 'Nu-propriétaire',
+                    'Nue-propriétaire' => 'Nue-propriétaire',
+                    'Exploitant' => 'Exploitant',
                 ],
             ])
             ->add('maritalProprietaire', ChoiceType::class, [
