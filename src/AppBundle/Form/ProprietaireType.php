@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -59,6 +60,10 @@ class ProprietaireType extends AbstractType
                 'widget' => 'single_text',
                 'format' => 'dd/MM/yyyy',
                 'html5' => false,
+                'required' => false,
+            ])
+            ->add('dureeProprietaire', NumberType::class, [
+                'label' => 'Duree',
                 'required' => false,
             ])
             ->add('dateNaissanceProprietaire', DatePickerType::class, [
@@ -143,6 +148,10 @@ class ProprietaireType extends AbstractType
                 'widget' => 'single_text',
                 'format' => 'dd/MM/yyyy',
                 'html5' => false,
+                'required' => false,
+            ])
+            ->add('dureeExploitant', NumberType::class, [
+                'label' => 'Duree',
                 'required' => false,
             ])
             ->add('dateNaissanceExploitant', DatePickerType::class, [

@@ -89,6 +89,11 @@ class Proprietaire
     private $dateEcheanceProprietaire;
     
     /**
+     * @var string
+     */
+    private $dureeProprietaire;
+    
+    /**
      * @var DateTime
      *
      * @ORM\Column(type="date", nullable=true)
@@ -174,6 +179,11 @@ class Proprietaire
      * @Assert\Date()
      */
     private $dateEcheanceExploitant;
+    
+    /**
+     * @var string
+     */
+    private $dureeExploitant;
     
     /**
      * @var DateTime
@@ -396,6 +406,14 @@ class Proprietaire
     {
         return $this->dateEcheanceProprietaire;
     }
+    
+    public function getDureeProprietaire()
+    {
+        if($this->dateEcheanceProprietaire && $this->dateSignatureProprietaire) {
+            return $this->dateEcheanceProprietaire->format('Y') - $this->dateSignatureProprietaire->format('Y');
+        }
+        return '';
+    }
 
     public function getDateNaissanceProprietaire()
     {
@@ -432,6 +450,14 @@ class Proprietaire
         return $this->dateEcheanceExploitant;
     }
 
+    public function getDureeExploitant()
+    {
+        if($this->dateEcheanceExploitant && $this->dateSignatureExploitant) {
+            return $this->dateEcheanceExploitant->format('Y') - $this->dateSignatureExploitant->format('Y');
+        }
+        return '';
+    }
+
     public function getDateNaissanceExploitant()
     {
         return $this->dateNaissanceExploitant;
@@ -466,6 +492,12 @@ class Proprietaire
     public function setDateEcheanceProprietaire(DateTime $dateEcheanceProprietaire = null)
     {
         $this->dateEcheanceProprietaire = $dateEcheanceProprietaire;
+        return $this;
+    }
+
+    public function setDureeProprietaire($dureeProprietaire)
+    {
+        $this->dureeProprietaire = $dureeProprietaire;
         return $this;
     }
 
@@ -508,6 +540,12 @@ class Proprietaire
     public function setDateEcheanceExploitant(DateTime $dateEcheanceExploitant = null)
     {
         $this->dateEcheanceExploitant = $dateEcheanceExploitant;
+        return $this;
+    }
+
+    public function setDureeExploitant($dureeExploitant)
+    {
+        $this->dureeExploitant = $dureeExploitant;
         return $this;
     }
 

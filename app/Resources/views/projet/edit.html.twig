@@ -1475,7 +1475,7 @@
         loadAllTypeheads();
       }
     });
-    $('#projet_proprietaires').on('change', '[id*="_proprietaire"], [id*="_telephoneProprietaire"], [id*="_exploitant"], [id*="_telephoneExploitant"]', function () {
+    $('#projet_proprietaires').on('change', '[id$="_proprietaire"], [id$="_telephoneProprietaire"], [id$="_exploitant"], [id$="_telephoneExploitant"]', function () {
       var id = $(this).attr('id').match(/\d+/);
       id = parseInt(id);
       if($(this).attr('id')=='projet_proprietaires_'+id+'_proprietaire') {
@@ -1490,6 +1490,33 @@
         else $('#tab_contacts tbody tr[rel="'+id+'"]:eq(1)').addClass('hide');
       } else if($(this).attr('id')=='projet_proprietaires_'+id+'_telephoneExploitant')
         $('#tab_contacts tbody tr[rel="'+id+'"]:eq(1) td:eq(2)').text($(this).val());
+    });
+    $('#projet_proprietaires').on('change', '[id$="_dateSignatureProprietaire"], [id$="_dureeProprietaire"], [id$="_dureeExploitant"], [id$="_dateSignatureExploitant"]', function () {
+      var id = $(this).attr('id').match(/\d+/);
+      id = parseInt(id);
+      if($('#projet_proprietaires_'+id+'_dureeProprietaire').val() && !$('#projet_proprietaires_'+id+'_dureeExploitant').val()) {
+        $('#projet_proprietaires_'+id+'_dureeExploitant').val($('#projet_proprietaires_'+id+'_dureeProprietaire').val());
+      } else if(!$('#projet_proprietaires_'+id+'_dureeProprietaire').val() && $('#projet_proprietaires_'+id+'_dureeExploitant').val()) {
+        $('#projet_proprietaires_'+id+'_dureeProprietaire').val($('#projet_proprietaires_'+id+'_dureeExploitant').val());
+      }
+      if($('#projet_proprietaires_'+id+'_dateSignatureProprietaire').val() && $('#projet_proprietaires_'+id+'_dureeProprietaire').val()) {
+        var duree = $('#projet_proprietaires_'+id+'_dureeProprietaire').val().trim();
+        var dateSplitted = $('#projet_proprietaires_'+id+'_dateSignatureProprietaire').val().trim().split('/');
+        var year  = dateSplitted[2];
+        var month = dateSplitted[1];
+        var day   = dateSplitted[0];
+        var dateEcheanceProprietaire  = new Date((parseInt(year) + parseInt(duree)), month, day);
+        $('#projet_proprietaires_'+id+'_dateEcheanceProprietaire').val(('0' + dateEcheanceProprietaire.getDate()).slice(-2) + '/' + ('0' + dateEcheanceProprietaire.getMonth()).slice(-2) + '/' + dateEcheanceProprietaire.getFullYear());
+      }
+      if($('#projet_proprietaires_'+id+'_dateSignatureExploitant').val() && $('#projet_proprietaires_'+id+'_dureeExploitant').val()) {
+        var duree = $('#projet_proprietaires_'+id+'_dureeProprietaire').val().trim();
+        var dateSplitted = $('#projet_proprietaires_'+id+'_dateSignatureExploitant').val().trim().split('/');
+        var year  = dateSplitted[2];
+        var month = dateSplitted[1];
+        var day   = dateSplitted[0];
+        var dateEcheanceExploitant  = new Date((parseInt(year) + parseInt(duree)), month, day);
+        $('#projet_proprietaires_'+id+'_dateEcheanceExploitant').val(('0' + dateEcheanceExploitant.getDate()).slice(-2) + '/' + ('0' + dateEcheanceExploitant.getMonth()).slice(-2) + '/' + dateEcheanceExploitant.getFullYear());
+      }
     });
     $($collectionHolderProprietaire).on('click', 'tr', function() {
       $collectionHolderProprietaire.children().removeClass('info');

@@ -213,7 +213,7 @@ col-sm-8
         <thead>
           <tr>
             <th>Parcelles<span class="control-label required"></span></th>
-            <th style="width:100px;">Civilité</th>
+            <th style="width:70px;">Civilité</th>
             <th>Identité<span class="control-label required"></span></th>
             <th style="width:100px;">Accords</th>
             <th>Téléphone</th>
@@ -224,6 +224,7 @@ col-sm-8
             <th>Droit</th>
             <th>Marital</th>
             <th>Date signature</th>
+            <th style="width:50px;">A+</th>
             <th>Date échéance</th>
           </tr>
         </thead>
@@ -262,6 +263,7 @@ col-sm-8
       <td>{{ form_widget(form.droitProprietaire) }}</td>
       <td>{{ form_widget(form.maritalProprietaire) }}</td>
       <td>{% if form.vars.value.dateSignatureProprietaire is defined %}{{ form_widget(form.dateSignatureProprietaire) }}{% else %}{{ form_widget(form.dateSignatureProprietaire, {'value' : "now"|date("d/m/Y")}) }}{% endif %}</td>
+      <td>{{ form_widget(form.dureeProprietaire) }}</td>
       <td>{% if form.vars.value.dateEcheanceProprietaire is defined %}{{ form_widget(form.dateEcheanceProprietaire) }}{% else %}{{ form_widget(form.dateEcheanceProprietaire, {'value' : "now"|date("d/m/Y")}) }}{% endif %}</td>
     </tr>
     <tr class="exploitant_entry">
@@ -277,6 +279,7 @@ col-sm-8
       <td>{{ form_widget(form.droitExploitant) }}</td>
       <td>{{ form_widget(form.maritalExploitant) }}</td>
       <td>{% if form.vars.value.dateSignatureExploitant is defined %}{{ form_widget(form.dateSignatureExploitant) }}{% else %}{{ form_widget(form.dateSignatureExploitant, {'value' : "now"|date("d/m/Y")}) }}{% endif %}</td>
+      <td>{{ form_widget(form.dureeExploitant) }}</td>
       <td>{% if form.vars.value.dateEcheanceExploitant is defined %}{{ form_widget(form.dateEcheanceExploitant) }}{% else %}{{ form_widget(form.dateEcheanceExploitant, {'value' : "now"|date("d/m/Y")}) }}{% endif %}</td>
     </tr>
   {% endspaceless %}
