@@ -102,6 +102,8 @@ class ProprietaireType extends AbstractType
                     'Pacsée' => 'Pacsée',
                     'Marié' => 'Marié',
                     'Mariée' => 'Mariée',
+                    'Séparé' => 'Séparé',
+                    'Séparée' => 'Séparée',
                 ],
             ])
             ->add('exploitant', TextType::class, [
@@ -184,6 +186,8 @@ class ProprietaireType extends AbstractType
                     'Pacsée' => 'Pacsée',
                     'Marié' => 'Marié',
                     'Mariée' => 'Mariée',
+                    'Séparé' => 'Séparé',
+                    'Séparée' => 'Séparée',
                 ],
             ])
         ;
