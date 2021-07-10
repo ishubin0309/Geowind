@@ -164,9 +164,18 @@ class ProprietaireType extends AbstractType
                     'Nu(e)-propriétaire' => 'Nu(e)-propriétaire)',
                 ],
             ])
-            ->add('maritalExploitant', TextType::class, [
+            ->add('maritalExploitant', ChoiceType::class, [
                 'label' => 'Marital',
                 'required' => false,
+                'choices' => [
+                    'Célibataire' => 'Célibataire',
+                    'Veuf' => 'Veuf',
+                    'Veuve' => 'Veuve',
+                    'Pacsé' => 'Pacsé',
+                    'Pacsée' => 'Pacsée',
+                    'Marié' => 'Marié',
+                    'Mariée' => 'Mariée',
+                ],
             ])
         ;
     }
