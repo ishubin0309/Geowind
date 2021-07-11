@@ -62,7 +62,7 @@ class ProprietaireType extends AbstractType
                 'html5' => false,
                 'required' => false,
             ])
-            ->add('dureeProprietaire', NumberType::class, [
+            ->add('dureeProprietaire', TextType::class, [
                 'label' => 'Duree',
                 'required' => false,
             ])
@@ -153,7 +153,7 @@ class ProprietaireType extends AbstractType
                 'html5' => false,
                 'required' => false,
             ])
-            ->add('dureeExploitant', NumberType::class, [
+            ->add('dureeExploitant', TextType::class, [
                 'label' => 'Duree',
                 'required' => false,
             ])
