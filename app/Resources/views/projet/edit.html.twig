@@ -2015,6 +2015,7 @@
         $collectionHolderProprietaire.children().each(function() {
           if($(this).find('input[name]:eq(0)').val().trim() == parcelle) {
             $(this).addClass('color-' + colors[color_index]);
+            $(this).next().addClass('color-' + colors[color_index]);
           }
         });
       });
