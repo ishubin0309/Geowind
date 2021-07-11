@@ -23,7 +23,14 @@
 
 {% block js %}
 <script>
-  $('#news_date').datepicker({
+  $('#news_saisie').val('{{ app.user.username }}');
+  $('#news_dateSaisie').datepicker({
+    format: 'dd/mm/yyyy',
+    autoclose: true,
+    language: 'fr',
+    clearBtn: true,
+  });
+  $('#news_dateParution').datepicker({
     format: 'dd/mm/yyyy',
     autoclose: true,
     language: 'fr',

@@ -73,11 +73,18 @@ class News
      * 
      * @ORM\Column(type="date", nullable=true)
      */
-    private $date;
+    private $dateSaisie;
+    
+    /**
+     * @var DateTime
+     * 
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $dateParution;
 
     public function __construct()
     {
-        $this->date = new DateTime('today');
+        $this->dateSaisie = new DateTime('today');
     }
 
     /**
@@ -148,6 +155,19 @@ class News
             'A Nantes' => 'A Nantes',
             'A Nancy' => 'A Nancy',
             'Divers' => 'Divers',
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public static function getFiliereList()
+    {
+        return [
+            'Eolienne' => 'Eolienne', 
+            'PV' => 'PV',
+            'Enr' => 'Enr',
+            'Divers' => 'Divers'
         ];
     }
 
@@ -230,18 +250,36 @@ class News
     /**
      * @return DateTime|null
      */
-    public function getDate()
+    public function getDateSaisie()
     {
-        return $this->date;
+        return $this->dateSaisie;
     }
     
     /**
-     * @param DateTime|null $date
+     * @param DateTime|null $dateSaisie
      * @return $this
      */
-    public function setDate(DateTime $date = null)
+    public function setDateSaisie(DateTime $dateSaisie = null)
     {
-        $this->date = $date;
+        $this->dateSaisie = $dateSaisie;
+        return $this;
+    }
+
+    /**
+     * @return DateTime|null
+     */
+    public function getDateParution()
+    {
+        return $this->dateParution;
+    }
+    
+    /**
+     * @param DateTime|null $dateParution
+     * @return $this
+     */
+    public function setDateParution(DateTime $dateParution = null)
+    {
+        $this->dateParution = $dateParution;
         return $this;
     }
 

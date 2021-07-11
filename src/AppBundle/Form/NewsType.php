@@ -19,8 +19,15 @@ class NewsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('date', DatePickerType::class, [
-                'label' => 'Date',
+            ->add('dateSaisie', DatePickerType::class, [
+                'label' => 'Date Saisie',
+                'widget' => 'single_text',
+                'format' => 'dd/MM/yyyy',
+                'html5' => false,
+                'required' => false,
+            ])
+            ->add('dateParution', DatePickerType::class, [
+                'label' => 'Date Parution',
                 'widget' => 'single_text',
                 'format' => 'dd/MM/yyyy',
                 'html5' => false,
@@ -35,9 +42,10 @@ class NewsType extends AbstractType
                 'required' => true,
                 'choices' => array_flip(News::getThemeList()),
             ])
-            ->add('filiere', TextType::class, [
+            ->add('filiere', ChoiceType::class, [
                 'label' => 'Filière',
                 'required' => false,
+                'choices' => array_flip(News::getFiliereList()),
             ])
             ->add('titre', TextType::class, [
                 'label' => 'Titre',
