@@ -104,14 +104,14 @@ class ParcEolien
     /**
      * @var string
      *
-     * @ORM\Column(type="decimal", precision=18, scale=6)
+     * @ORM\Column(type="decimal", precision=10, scale=2)
      */
     private $puissanceNominaleTotale = 0;
     
     /**
      * @var string
      *
-     * @ORM\Column(type="decimal", precision=18, scale=6)
+     * @ORM\Column(type="decimal", precision=10, scale=2)
      */
     private $hauteurMat = 0;
     
