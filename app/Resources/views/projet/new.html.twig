@@ -1815,16 +1815,16 @@
         tr_index = $(this).index();
         var parcelle = $(this).find('input[name]:eq(0)').val().trim();
         if(!parcelles.includes(parcelle)) {
-          color = parcelles.length;
-          parcellesColors.push(colors[color]);
+          color_index = parcelles.length;
+          parcellesColors.push(colors[color_index]);
           parcelles.push(parcelle);
         } else {
-          color = parcelles.findIndex(parcelle);
+          color_index = parcelles.findIndex(parcelle);
         }
-        $(this).addClass('color-' + color);
+        $(this).addClass('color-' + colors[color_index]);
         $collectionHolderProprietaire.children().each(function() {
           if($(this).find('input[name]:eq(0)').val().trim() == parcelle) {
-            $(this).addClass('color-' + color);
+            $(this).addClass('color-' + colors[color_index]);
           }
         });
       });
