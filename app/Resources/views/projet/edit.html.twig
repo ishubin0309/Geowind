@@ -1646,30 +1646,6 @@
         }
       });
     });
-    
-    function colorParcelles() {
-      var colors = ['blue', 'red', 'green', 'purple', 'orange', 'yellow', 'pink', 'gold', 'blue', 'red', 'green', 'purple', 'orange', 'yellow', 'pink', 'gold'];
-      var parcelles = [];
-      var parcellesColors = [];
-      $collectionHolderParcelle.children().each(function() {
-        tr_index = $(this).index();
-        var parcelle = $(this).find('input[name]:eq(0)').val().trim();
-        if(!parcelles.includes(parcelle)) {
-          color = parcelles.length;
-          parcellesColors.push(colors[color]);
-          parcelles.push(parcelle);
-        } else {
-          color = parcelles.findIndex(parcelle);
-        }
-        $(this).addClass('color-' + color);
-        $collectionHolderProprietaire.children().each(function() {
-          if($(this).find('input[name]:eq(0)').val().trim() == parcelle) {
-            $(this).addClass('color-' + color);
-          }
-        });
-      });
-    }
-    colorParcelles();
 
     var $collectionHolderDC = $('#projet_dateCles');
     var prototypeDC = $collectionHolderDC.data('prototype');
@@ -2020,6 +1996,30 @@
     $('#projet_parcelles_remove_entry').click(function () {
       $('> :last-child', $collectionHolderParcelle).remove();
     });
+    
+    function colorParcelles() {
+      var colors = ['blue', 'red', 'green', 'purple', 'orange', 'yellow', 'pink', 'gold', 'blue', 'red', 'green', 'purple', 'orange', 'yellow', 'pink', 'gold'];
+      var parcelles = [];
+      var parcellesColors = [];
+      $collectionHolderParcelle.children().each(function() {
+        tr_index = $(this).index();
+        var parcelle = $(this).find('input[name]:eq(0)').val().trim();
+        if(!parcelles.includes(parcelle)) {
+          color = parcelles.length;
+          parcellesColors.push(colors[color]);
+          parcelles.push(parcelle);
+        } else {
+          color = parcelles.findIndex(parcelle);
+        }
+        $(this).addClass('color-' + color);
+        $collectionHolderProprietaire.children().each(function() {
+          if($(this).find('input[name]:eq(0)').val().trim() == parcelle) {
+            $(this).addClass('color-' + color);
+          }
+        });
+      });
+    }
+    colorParcelles();
 
     var $collectionHolderEnjeux = $('#projet_enjeuxs');
     var prototypeEnjeux = $collectionHolderEnjeux.data('prototype');
