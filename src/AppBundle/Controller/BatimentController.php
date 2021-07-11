@@ -87,7 +87,7 @@ class BatimentController extends Controller
 
             $this->addFlash('success', 'Batiment « ' . $batiment->getNom() . ' » créé avec succès.');
 
-            return $this->redirectToRoute('batiment_index');
+            return $this->redirectToRoute('batiment_news');
         }
 
         return $this->render('batiment/new.html.twig', [
@@ -412,7 +412,7 @@ class BatimentController extends Controller
             else $this->addFlash('success', 'News modifié avec succès.');
 
             if($isNew) return $this->redirectToRoute('news_new');
-            else return $this->redirectToRoute('batiment_index');
+            else return $this->redirectToRoute('batiment_news');
         }
 
         return $this->render('batiment/news.html.twig', [
