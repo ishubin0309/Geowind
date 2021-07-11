@@ -1583,7 +1583,6 @@
         id = parseInt(id);
         foncierTypehead(id);
       });
-      colorParcelles();
     }
     function obtainer(query, cb) {
       var filteredList = $.grep(suggestionsArray, function (item, index) {
@@ -2022,6 +2021,9 @@
       });
     }
     colorParcelles();
+    $collectionHolderProprietaire.on('change', function() {
+      colorParcelles();
+    });
 
     var $collectionHolderEnjeux = $('#projet_enjeuxs');
     var prototypeEnjeux = $collectionHolderEnjeux.data('prototype');
