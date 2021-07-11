@@ -1327,7 +1327,7 @@
         $('#projet_proprietaires_'+id+'_dateEcheanceProprietaire').val(('0' + dateEcheanceProprietaire.getDate()).slice(-2) + '/' + ('0' + dateEcheanceProprietaire.getMonth()).slice(-2) + '/' + dateEcheanceProprietaire.getFullYear());
       }
       if($('#projet_proprietaires_'+id+'_dateSignatureExploitant').val() && $('#projet_proprietaires_'+id+'_dureeExploitant').val()) {
-        var duree = $('#projet_proprietaires_'+id+'_dureeProprietaire').val().trim();
+        var duree = $('#projet_proprietaires_'+id+'_dureeExploitant').val().trim();
         var dateSplitted = $('#projet_proprietaires_'+id+'_dateSignatureExploitant').val().trim().split('/');
         var year  = dateSplitted[2];
         var month = dateSplitted[1];
