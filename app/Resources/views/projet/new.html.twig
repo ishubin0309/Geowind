@@ -1285,11 +1285,14 @@
 
     $('#projet_proprietaires_remove_entry').click(function () {
       if(!$(this).hasClass('disabled') && $collectionHolderProprietaire.find('tr.info').length == 2) {
-        var id = $collectionHolderProprietaire.find('tr.info:eq(0) input:eq(0)').attr('id').match(/\d+/);
+        var id = $collectionHolderProprietaire.find('tr.info:eq(0) input[name]:eq(0)').attr('id').match(/\d+/);
         id = parseInt(id);
         $('#tab_contacts tbody tr[rel="'+id+'"]').remove();
         $collectionHolderProprietaire.find('tr.info:eq(0)').remove();
         $collectionHolderProprietaire.find('tr.info:eq(1)');
+        $('#projet_proprietaires_remove_entry').addClass('disabled');
+        $('#projet_proprietaires_duplicate_entry').addClass('disabled');
+        $('#projet_proprietaires_publish_entry').addClass('disabled');
         loadAllTypeheads();
       }
     });
