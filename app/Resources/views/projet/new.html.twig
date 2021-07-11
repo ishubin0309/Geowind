@@ -1284,12 +1284,12 @@
     });
 
     $('#projet_proprietaires_remove_entry').click(function () {
-      if($('> :last-child', $collectionHolderProprietaire).length) {
-        var id = $('> :last-child', $collectionHolderProprietaire).find('input:eq(0)').attr('id').match(/\d+/);
+      if(!$(this).hasClass('disabled') && $collectionHolderProprietaire.find('tr.info').length == 2) {
+        var id = $collectionHolderProprietaire.find('tr.info:eq(0) input:eq(0)').attr('id').match(/\d+/);
         id = parseInt(id);
         $('#tab_contacts tbody tr[rel="'+id+'"]').remove();
-        $('> :last-child', $collectionHolderProprietaire).remove();
-        $('> :last-child', $collectionHolderProprietaire).remove(); // required twice
+        $collectionHolderProprietaire.find('tr.info:eq(0)').remove();
+        $collectionHolderProprietaire.find('tr.info:eq(1)');
         loadAllTypeheads();
       }
     });
@@ -1342,6 +1342,7 @@
       second_tr_index = $(this).attr('class').match('proprietaire_entry') ? $(this).index() + 1 : $(this).index() - 1;
       $($collectionHolderProprietaire).find('tr:eq('+second_tr_index+')').addClass('info');
       if($collectionHolderProprietaire.children().length) {
+        $('#projet_proprietaires_remove_entry').removeClass('disabled');
         $('#projet_proprietaires_duplicate_entry').removeClass('disabled');
         $('#projet_proprietaires_publish_entry').removeClass('disabled');
       }
