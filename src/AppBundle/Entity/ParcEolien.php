@@ -111,14 +111,14 @@ class ParcEolien
     /**
      * @var string
      *
-     * @ORM\Column(type="decimal", precision=10, scale=2)
+     * @ORM\Column(type="decimal", precision=10, scale=3)
      */
     private $hauteurMat = 0;
     
     /**
      * @var string
      *
-     * @ORM\Column(type="decimal", precision=10, scale=2)
+     * @ORM\Column(type="decimal", precision=10, scale=3)
      */
     private $hauteurTotale = 0;
     
