@@ -146,13 +146,13 @@ class EolienController extends Controller
      */
     public function zoneNaturellesProtegeesAction(Request $request)
     {
+        ini_set("memory_limit", "4000M");
+        set_time_limit(3000);
         $import = new Import();
         $form = $this->createForm(ImportType::class, $import);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            ini_set("memory_limit", "4000M");
-            set_time_limit(3000);
             $em = $this->getDoctrine()->getManager();
 
             $file_path = $import->getImportFile();
