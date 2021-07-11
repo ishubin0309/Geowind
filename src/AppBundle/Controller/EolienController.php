@@ -72,6 +72,8 @@ class EolienController extends Controller
                             elseif($name=='longitude') $lngColumn = $c;
                             elseif($name=='mise_en_service') $mise_en_serviceColumn = $c;
                             elseif($name=='type_machine') $type_machineColumn = $c;
+                            elseif($name=='hauteur_mat') $hauteur_matColumn = $c;
+                            elseif($name=='hauteur_totale') $hauteur_totaleColumn = $c;
                             elseif($name=='puissance_nominale_unitaire') $puissance_nominale_unitaireColumn = $c;
                             elseif($name=='puissance_nominale_totale') $puissance_nominale_totaleColumn = $c;
                             elseif($name=='productible_estime') $productible_estimeColumn = $c;
@@ -106,6 +108,8 @@ class EolienController extends Controller
                     if($lngColumn !== false) $parcEolien->setLongitude($data[$lngColumn]);
                     if($mise_en_serviceColumn !== false) $parcEolien->setMiseEnService($data[$mise_en_serviceColumn]);
                     if($type_machineColumn !== false) $parcEolien->setTypeMachine($data[$type_machineColumn]);
+                    if($hauteur_matColumn !== false) $parcEolien->setHauteurMat((float) $data[$hauteur_matColumn]);
+                    if($hauteur_totaleColumn !== false) $parcEolien->setHauteurTotale((float) $data[$hauteur_totaleColumn]);
                     if($puissance_nominale_unitaireColumn !== false) $parcEolien->setPuissanceNominaleUnitaire((float) $data[$puissance_nominale_unitaireColumn]);
                     if($puissance_nominale_totaleColumn !== false) $parcEolien->setPuissanceNominaleTotale((float) $data[$puissance_nominale_totaleColumn]);
                     if($productible_estimeColumn !== false) $parcEolien->setProductibleEstime((float) $data[$productible_estimeColumn]);
@@ -218,7 +222,7 @@ class EolienController extends Controller
 
             $em = $this->getDoctrine()->getManager();
             $parcs = $em->getRepository('AppBundle:ParcEolien')->findAll();
-            fputcsv($handle, ['ID','denomination','region','departement','commune','insee','longitude','latitude','mise_en_service','type_machine','puissance_nominale_unitaire','puissance_nominale_totale','productible_estime','developpeur','operateur','nom_contact','telephone_contact','email_contact','description','etat'],',');
+            fputcsv($handle, ['ID','denomination','region','departement','commune','insee','longitude','latitude','mise_en_service','type_machine','hauteur_mat','hauteur_totale','type_machine','puissance_nominale_unitaire','puissance_nominale_totale','productible_estime','developpeur','operateur','nom_contact','telephone_contact','email_contact','description','etat'],',');
             foreach($parcs as $parc) {
                 fputcsv($handle, $parc->getRowForExport(), ',');
             }

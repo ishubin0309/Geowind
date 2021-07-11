@@ -113,6 +113,20 @@ class ParcEolien
      *
      * @ORM\Column(type="decimal", precision=18, scale=6)
      */
+    private $hauteurMat = 0;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="decimal", precision=18, scale=6)
+     */
+    private $hauteurTotale = 0;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="decimal", precision=18, scale=6)
+     */
     private $productibleEstime = 0;
     
     /**
@@ -245,6 +259,16 @@ class ParcEolien
         return (float) $this->puissanceNominaleTotale;
     }
 
+    public function getHauteurMat()
+    {
+        return (float) $this->hauteurMat;
+    }
+
+    public function getHauteurTotale()
+    {
+        return (float) $this->hauteurTotale;
+    }
+
     public function getProductibleEstime()
     {
         return (float) $this->productibleEstime;
@@ -367,6 +391,18 @@ class ParcEolien
         return $this;
     }
 
+    public function setHauteurMat($hauteurMat)
+    {
+        $this->hauteurMat = $hauteurMat;
+        return $this;
+    }
+
+    public function setHauteurTotale($hauteurTotale)
+    {
+        $this->hauteurTotale = $hauteurTotale;
+        return $this;
+    }
+
     public function setProductibleEstime($productibleEstime)
     {
         $this->productibleEstime = $productibleEstime;
@@ -480,6 +516,8 @@ class ParcEolien
             $this->latitude, 
             $this->miseEnService, 
             $this->typeMachine, 
+            $this->hauteurMat, 
+            $this->hauteurTotale, 
             $this->puissanceNominaleUnitaire, 
             $this->puissanceNominaleTotale, 
             $this->productibleEstime, 
