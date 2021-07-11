@@ -20,14 +20,14 @@ class NewsType extends AbstractType
     {
         $builder
             ->add('dateSaisie', DatePickerType::class, [
-                'label' => 'Date Saisie',
+                'label' => 'Date saisie',
                 'widget' => 'single_text',
                 'format' => 'dd/MM/yyyy',
                 'html5' => false,
                 'required' => false,
             ])
             ->add('dateParution', DatePickerType::class, [
-                'label' => 'Date Parution',
+                'label' => 'Date parution',
                 'widget' => 'single_text',
                 'format' => 'dd/MM/yyyy',
                 'html5' => false,
