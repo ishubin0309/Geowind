@@ -151,6 +151,8 @@ class EolienController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            ini_set("memory_limit", "4000M");
+            set_time_limit(3000);
             $em = $this->getDoctrine()->getManager();
 
             $file_path = $import->getImportFile();
