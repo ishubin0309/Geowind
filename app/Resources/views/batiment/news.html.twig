@@ -23,7 +23,7 @@
 
 {% block js %}
 <script>
-  $('#news_saisie').val('{{ app.user.username }}');
+  if(!$('#news_saisie').val()) $('#news_saisie').val('{{ app.user.username }}');
   $('#news_dateSaisie').datepicker({
     format: 'dd/mm/yyyy',
     autoclose: true,
