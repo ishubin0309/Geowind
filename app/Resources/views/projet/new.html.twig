@@ -16,6 +16,30 @@
     padding-right: 10px;
     padding-left: 10px;
   }
+  tr.color-blue > input, tr.color-blue > select {
+    color: blue;
+  }
+  tr.color-red > input, tr.color-red > select {
+    color: red;
+  }
+  tr.color-green > input, tr.color-green > select {
+    color: green;
+  }
+  tr.color-purple > input, tr.color-purple > select {
+    color: purple;
+  }
+  tr.color-orange > input, tr.color-orange > select {
+    color: orange;
+  }
+  tr.color-yellow > input, tr.color-yellow > select {
+    color: yellow;
+  }
+  tr.color-pink > input, tr.color-pink > select {
+    color: pink;
+  }
+  tr.color-gold > input, tr.color-gold > select {
+    color: gold;
+  }
   </style>
 
   {{ form_start(form) }}
@@ -1378,6 +1402,29 @@
         foncierTypehead(id);
       });
     }
+    function colorParcelles() {
+      var colors = ['blue', 'red', 'green', 'purple', 'orange', 'yellow', 'pink', 'gold', 'blue', 'red', 'green', 'purple', 'orange', 'yellow', 'pink', 'gold'];
+      var parcelles = [];
+      var parcellesColors = [];
+      $collectionHolderParcelle.children().each(function() {
+        tr_index = $(this).index();
+        var parcelle = $(this).find('input[name]:eq(0)').val().trim();
+        if(!parcelles.includes(parcelle)) {
+          color = parcelles.length;
+          parcellesColors.push(colors[color]);
+          parcelles.push(parcelle);
+        } else {
+          color = parcelles.findIndex(parcelle);
+        }
+        $(this).addClass('color-' + color);
+        $collectionHolderProprietaire.children().each(function() {
+          if($(this).find('input[name]:eq(0)').val().trim() == parcelle) {
+            $(this).addClass('color-' + color);
+          }
+        });
+      });
+    }
+    colorParcelles();
     function obtainer(query, cb) {
       var filteredList = $.grep(suggestionsArray, function (item, index) {
           return item.match(query);
