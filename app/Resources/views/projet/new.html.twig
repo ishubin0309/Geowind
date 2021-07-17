@@ -1043,7 +1043,7 @@
     var prototypeproprietaire = $collectionHolderProprietaire.data('prototype');
 
     $('#projet_proprietaires_add_entry').click(function () {
-      var length = $collectionHolderProprietaire.children().length / 2;
+      var length = $collectionHolderProprietaire.children().length / 3;
       var entry = prototypeproprietaire.replace(/__name__label__/g, length);
       entry = entry.replace(/__name__/g, length);
       $collectionHolderProprietaire.append(entry);
@@ -1084,70 +1084,121 @@
         language: 'fr',
         clearBtn: true,
       });
+  
+      $('#projet_proprietaires_' + length + '_dateSignatureProprietaire2').datepicker({
+        format: 'dd/mm/yyyy',
+        autoclose: true,
+        language: 'fr',
+        clear: true,
+      });
+      $('#projet_proprietaires_' + length + '_dateEcheanceProprietaire2').datepicker({
+        format: 'dd/mm/yyyy',
+        autoclose: true,
+        language: 'fr',
+        clearBtn: true,
+      });
+      $('#projet_proprietaires_' + length + '_dateNaissanceProprietaire2').datepicker({
+        format: 'dd/mm/yyyy',
+        autoclose: true,
+        language: 'fr',
+        clearBtn: true,
+      });
       $('#tab_contacts tbody').append('<tr rel="'+length+'" class="hide"><td>Propriétaire</td><td>-</td><td>-</td></tr><tr rel="'+length+'" class="hide"><td>Exploitant</td><td>-</td><td>-</td></tr>');
       loadAllTypeheads();
     });
 
     $('#projet_proprietaires_duplicate_entry').click(function () {
-      if(!$(this).hasClass('disabled') && $collectionHolderProprietaire.find('tr.info').length == 2) {
-        var tr_index = $collectionHolderProprietaire.find('tr.info:eq(1)').index() + 1;
+      if(!$(this).hasClass('disabled') && $collectionHolderProprietaire.find('tr.info').length == 3) {
+        var tr_index = $collectionHolderProprietaire.find('tr.info:eq(2)').index() + 1;
         var clone = $collectionHolderProprietaire.find('tr.info').clone();
         var cloned = 0;
         $(clone).insertAfter($collectionHolderProprietaire.find('tr:eq('+(tr_index-1)+')'));
         $collectionHolderProprietaire.find('tr:eq('+tr_index+')').removeClass('info');
         $collectionHolderProprietaire.find('tr:eq('+(tr_index + 1)+')').removeClass('info');
+        $collectionHolderProprietaire.find('tr:eq('+(tr_index + 2)+')').removeClass('info');
+  
+        $collectionHolderProprietaire.find('tr:eq('+tr_index+')').find('[id*="_civiliteProprietaire"]').val($collectionHolderProprietaire.find('tr:eq('+(tr_index-2)+')').find('[id*="_civiliteProprietaire"]').val());
+        $collectionHolderProprietaire.find('tr:eq('+(tr_index + 1)+')').find('[id*="_civiliteExploitant"]').val($collectionHolderProprietaire.find('tr:eq('+(tr_index-1)+')').find('[id*="_civiliteExploitant"]').val());
+        $collectionHolderProprietaire.find('tr:eq('+(tr_index + 2)+')').find('[id*="_civiliteProprietaire2"]').val($collectionHolderProprietaire.find('tr:eq('+(tr_index)+')').find('[id*="_civiliteProprietaire2"]').val());
+  
+        $collectionHolderProprietaire.find('tr:eq('+tr_index+')').find('[id*="_qualiteProprietaire"]').val($collectionHolderProprietaire.find('tr:eq('+(tr_index-2)+')').find('[id*="_qualiteProprietaire"]').val());
+        $collectionHolderProprietaire.find('tr:eq('+(tr_index + 1)+')').find('[id*="_qualiteExploitant"]').val($collectionHolderProprietaire.find('tr:eq('+(tr_index-1)+')').find('[id*="_qualiteExploitant"]').val());
+        $collectionHolderProprietaire.find('tr:eq('+(tr_index + 2)+')').find('[id*="_qualiteProprietaire2"]').val($collectionHolderProprietaire.find('tr:eq('+(tr_index)+')').find('[id*="_qualiteProprietaire2"]').val());
+  
         $collectionHolderProprietaire.find('tr:eq('+tr_index+')').find('[id*="_accordProprietaire"]').val($collectionHolderProprietaire.find('tr:eq('+(tr_index-2)+')').find('[id*="_accordProprietaire"]').val());
         $collectionHolderProprietaire.find('tr:eq('+(tr_index + 1)+')').find('[id*="_accordExploitant"]').val($collectionHolderProprietaire.find('tr:eq('+(tr_index-1)+')').find('[id*="_accordExploitant"]').val());
+        $collectionHolderProprietaire.find('tr:eq('+(tr_index + 2)+')').find('[id*="_accordProprietaire2"]').val($collectionHolderProprietaire.find('tr:eq('+(tr_index)+')').find('[id*="_accordProprietaire2"]').val());
+  
+        $collectionHolderProprietaire.find('tr:eq('+tr_index+')').find('[id*="_droitProprietaire"]').val($collectionHolderProprietaire.find('tr:eq('+(tr_index-2)+')').find('[id*="_droitProprietaire"]').val());
+        $collectionHolderProprietaire.find('tr:eq('+(tr_index + 1)+')').find('[id*="_droitExploitant"]').val($collectionHolderProprietaire.find('tr:eq('+(tr_index-1)+')').find('[id*="_droitExploitant"]').val());
+        $collectionHolderProprietaire.find('tr:eq('+(tr_index + 2)+')').find('[id*="_droitProprietaire2"]').val($collectionHolderProprietaire.find('tr:eq('+(tr_index)+')').find('[id*="_droitProprietaire2"]').val());
+  
+        $collectionHolderProprietaire.find('tr:eq('+tr_index+')').find('[id*="_maritalProprietaire"]').val($collectionHolderProprietaire.find('tr:eq('+(tr_index-2)+')').find('[id*="_maritalProprietaire"]').val());
+        $collectionHolderProprietaire.find('tr:eq('+(tr_index + 1)+')').find('[id*="_maritalExploitant"]').val($collectionHolderProprietaire.find('tr:eq('+(tr_index-1)+')').find('[id*="_maritalExploitant"]').val());
+        $collectionHolderProprietaire.find('tr:eq('+(tr_index + 2)+')').find('[id*="_maritalProprietaire2"]').val($collectionHolderProprietaire.find('tr:eq('+(tr_index)+')').find('[id*="_maritalProprietaire2"]').val());
         cloned = 1;
         if(cloned) {
           $collectionHolderProprietaire.children().each(function() {
             {# if($(this).attr('class').match('proprietaire_entry') foncierTypehead($(this).index()); #}
-            tr_index = $(this).attr('class').match('proprietaire_entry') ? $(this).index() : $(this).index() - 1;
+            if ($(this).attr('class').match('proprietaire_entry')) {
+              tr_index = $(this).index();
+            } else if ($(this).attr('class').match('exploitant_entry')) {
+              tr_index = $(this).index() - 1;
+            } else if ($(this).attr('class').match('proprietaire2_entry')) {
+              tr_index = $(this).index() - 2;
+            }
+        
             $(this).find('input').each(function() {
               if($(this).attr('name') !== undefined) {
-                name = $(this).attr('name').replace(/\[\d+\]/, '['+(tr_index/2)+']');
+                name = $(this).attr('name').replace(/\[\d+\]/, '['+(tr_index/3)+']');
                 $(this).attr('name', name);
-                id = $(this).attr('id').replace(/_\d+_/, '_'+(tr_index/2)+'_');
+                id = $(this).attr('id').replace(/_\d+_/, '_'+(tr_index/3)+'_');
                 $(this).attr('id', id);
               }
             });
             $(this).find('select').each(function() {
-              name = $(this).attr('name').replace(/\[\d+\]/, '['+(tr_index/2)+']');
+              name = $(this).attr('name').replace(/\[\d+\]/, '['+(tr_index/3)+']');
               $(this).attr('name', name);
-              id = $(this).attr('id').replace(/_\d+_/, '_'+(tr_index/2)+'_');
+              id = $(this).attr('id').replace(/_\d+_/, '_'+(tr_index/3)+'_');
               $(this).attr('id', id);
             });
           });
         }
-        {# $collectionHolderProprietaire.children().removeClass('info');
-        $('#projet_proprietaires_duplicate_entry').addClass('disabled'); #}
         loadAllTypeheads();
       }
+    });
+
+    $collectionHolderProprietaire.on('click', '.unhide_foncier_proprietaire', function (e) {
+      e.preventDefault();
+      $(this).parents('tr').next().removeClass('hide');
+      $(this).remove();
     });
 
     $('#projet_proprietaires_publish_entry').click(function () {
       if(!$(this).hasClass('disabled') && $collectionHolderProprietaire.find('tr.info').length == 2) {
         var tr_proprietaire = $collectionHolderProprietaire.find('tr.info:eq(0)');
         var tr_exploitant = $collectionHolderProprietaire.find('tr.info:eq(1)');
+        var tr_proprietaire2 = $collectionHolderProprietaire.find('tr.info:eq(2)');
         var publish_form = $('#publish_form');
-          var fields = [];
-          // name, type, value
-          fields.push(['PARTIES', 'title', '']);
-          fields.push(['proprietaire_civilite', 'field', tr_proprietaire.find('select[id$="_civiliteProprietaire"]').val()]);
-          fields.push(['proprietaire_identite', 'field', tr_proprietaire.find('input[id$="_proprietaire"]').val()]);
-          fields.push(['proprietaire_adresse', 'field', tr_proprietaire.find('input[id$="_adresseProprietaire"]').val()]);
-          fields.push(['proprietaire_droit', 'field', tr_proprietaire.find('input[id$="_droitProprietaire"]').val()]);
-          fields.push(['proprietaire_marital', 'field', tr_proprietaire.find('input[id$="_maritalProprietaire"]').val()]);
-          fields.push(['proprietaire_ne_le', 'field', tr_proprietaire.find('input[id$="_dateNaissanceProprietaire"]').val()]);
-          fields.push(['proprietaire_ne_a', 'field', tr_proprietaire.find('input[id$="_lieuNaissanceProprietaire"]').val()]);
-          fields.push(['exploitant_civilite', 'field', tr_exploitant.find('select[id$="_civiliteExploitant"]').val()]);
-          fields.push(['exploitant_identite', 'field', tr_exploitant.find('input[id$="_exploitant"]').val()]);
-          fields.push(['exploitant_adresse', 'field', tr_exploitant.find('input[id$="_adresseExploitant"]').val()]);
-          fields.push(['exploitant_ne_le', 'field', tr_exploitant.find('input[id$="_dateNaissanceExploitant"]').val()]);
-          fields.push(['exploitant_ne_a', 'field', tr_exploitant.find('input[id$="_lieuNaissanceExploitant"]').val()]);
-          fields.push(['exploitant_droit', 'field', tr_exploitant.find('input[id$="_droitExploitant"]').val()]);
-          fields.push(['exploitant_marital', 'field', tr_exploitant.find('input[id$="_maritalExploitant"]').val()]);
-
+        var fields = [];
+        // name, type, value
+        fields.push(['PARTIES', 'title', '']);
+        fields.push(['proprietaire_civilite', 'field', tr_proprietaire.find('select[id$="_civiliteProprietaire"]').val()]);
+        fields.push(['proprietaire_identite', 'field', tr_proprietaire.find('input[id$="_proprietaire"]').val()]);
+        fields.push(['proprietaire_qualite', 'field', tr_proprietaire.find('select[id$="_qualiteProprietaire"]').val()]);
+        fields.push(['proprietaire_adresse', 'field', tr_proprietaire.find('input[id$="_adresseProprietaire"]').val()]);
+        fields.push(['proprietaire_droit', 'field', tr_proprietaire.find('input[id$="_droitProprietaire"]').val()]);
+        fields.push(['proprietaire_marital', 'field', tr_proprietaire.find('input[id$="_maritalProprietaire"]').val()]);
+        fields.push(['proprietaire_ne_le', 'field', tr_proprietaire.find('input[id$="_dateNaissanceProprietaire"]').val()]);
+        fields.push(['proprietaire_ne_a', 'field', tr_proprietaire.find('input[id$="_lieuNaissanceProprietaire"]').val()]);
+        fields.push(['exploitant_civilite', 'field', tr_exploitant.find('select[id$="_civiliteExploitant"]').val()]);
+        fields.push(['exploitant_identite', 'field', tr_exploitant.find('input[id$="_exploitant"]').val()]);
+        fields.push(['exploitant_adresse', 'field', tr_exploitant.find('input[id$="_adresseExploitant"]').val()]);
+        fields.push(['exploitant_ne_le', 'field', tr_exploitant.find('input[id$="_dateNaissanceExploitant"]').val()]);
+        fields.push(['exploitant_ne_a', 'field', tr_exploitant.find('input[id$="_lieuNaissanceExploitant"]').val()]);
+        fields.push(['exploitant_droit', 'field', tr_exploitant.find('input[id$="_droitExploitant"]').val()]);
+        fields.push(['exploitant_marital', 'field', tr_exploitant.find('input[id$="_maritalExploitant"]').val()]);
+    
         if($('#projet_technologie').val() == 'eolienne') {
           fields.push(['BAIL', 'title', '']);
           fields.push(['montant_base', 'field', 'CINQ CENTS EUROS (500 €)']);
@@ -1278,12 +1329,13 @@
         } else {
           publish_form.find('input[name="{proprietaire_civilite}"]').val(tr_proprietaire.find('select[id$="_civiliteProprietaire"]').val());
           publish_form.find('input[name="{proprietaire_identite}"]').val(tr_proprietaire.find('input[id$="_proprietaire"]').val());
+          publish_form.find('input[name="{proprietaire_qualite}"]').val(tr_proprietaire.find('select[id$="_qualiteProprietaire"]').val());
           publish_form.find('input[name="{proprietaire_adresse}"]').val(tr_proprietaire.find('input[id$="_adresseProprietaire"]').val());
           publish_form.find('input[name="{proprietaire_ne_le}"]').val(tr_proprietaire.find('input[id$="_dateNaissanceProprietaire"]').val());
           publish_form.find('input[name="{proprietaire_ne_a}"]').val(tr_proprietaire.find('input[id$="_lieuNaissanceProprietaire"]').val());
           publish_form.find('input[name="{proprietaire_droit}"]').val(tr_proprietaire.find('input[id$="_droitProprietaire"]').val());
           publish_form.find('input[name="{proprietaire_marital}"]').val(tr_proprietaire.find('input[id$="_maritalProprietaire"]').val());
-
+      
           publish_form.find('input[name="{exploitant_civilite}"]').val(tr_exploitant.find('select[id$="_civiliteExploitant"]').val());
           publish_form.find('input[name="{exploitant_identite}"]').val(tr_exploitant.find('input[id$="_exploitant"]').val());
           publish_form.find('input[name="{exploitant_adresse}"]').val(tr_exploitant.find('input[id$="_adresseExploitant"]').val());
@@ -1291,7 +1343,7 @@
           publish_form.find('input[name="{exploitant_ne_a}"]').val(tr_exploitant.find('input[id$="_lieuNaissanceExploitant"]').val());
           publish_form.find('input[name="{exploitant_droit}"]').val(tr_exploitant.find('input[id$="_droitExploitant"]').val());
           publish_form.find('input[name="{exploitant_marital}"]').val(tr_exploitant.find('input[id$="_maritalExploitant"]').val());
-
+      
           var parcelle = tr_proprietaire.find('input[id*="_parcelles"]').val().trim();
           var parcellesArray = [];
           if($('#projet_parcelles tr').length) {
@@ -1308,7 +1360,7 @@
     });
 
     $('#projet_proprietaires_remove_entry').click(function () {
-      if(!$(this).hasClass('disabled') && $collectionHolderProprietaire.find('tr.info').length == 2) {
+      if(!$(this).hasClass('disabled') && $collectionHolderProprietaire.find('tr.info').length == 3) {
         var id = $collectionHolderProprietaire.find('tr.info:eq(0) input[name]:eq(0)').attr('id').match(/\d+/);
         id = parseInt(id);
         $('#tab_contacts tbody tr[rel="'+id+'"]').remove();
@@ -1319,7 +1371,7 @@
         loadAllTypeheads();
       }
     });
-    $('#projet_proprietaires').on('change', '[id$="_proprietaire"], [id$="_telephoneProprietaire"], [id$="_exploitant"], [id$="_telephoneExploitant"]', function () {
+    $('#projet_proprietaires').on('change', '[id$="_proprietaire"], [id$="_telephoneProprietaire"], [id$="_exploitant"], [id$="_telephoneExploitant"], [id$="_proprietaire2"], [id$="_telephoneProprietaire2"]', function () {
       var id = $(this).attr('id').match(/\d+/);
       id = parseInt(id);
       if($(this).attr('id')=='projet_proprietaires_'+id+'_proprietaire') {
@@ -1334,15 +1386,17 @@
         else $('#tab_contacts tbody tr[rel="'+id+'"]:eq(1)').addClass('hide');
       } else if($(this).attr('id')=='projet_proprietaires_'+id+'_telephoneExploitant')
         $('#tab_contacts tbody tr[rel="'+id+'"]:eq(1) td:eq(2)').text($(this).val());
+      else if($(this).attr('id')=='projet_proprietaires_'+id+'_proprietaire2') {
+        $('#tab_contacts tbody tr[rel="'+id+'"]:eq(2) td:eq(1)').text($(this).val());
+        if($(this).val()) $('#tab_contacts tbody tr[rel="'+id+'"]:eq(2)').removeClass('hide');
+        else $('#tab_contacts tbody tr[rel="'+id+'"]:eq(1)').addClass('hide');
+      } else if($(this).attr('id')=='projet_proprietaires_'+id+'_telephoneProprietaire2')
+        $('#tab_contacts tbody tr[rel="'+id+'"]:eq(2) td:eq(2)').text($(this).val());
     });
-    $('#projet_proprietaires').on('change', '[id$="_dateSignatureProprietaire"], [id$="_dureeProprietaire"], [id$="_dureeExploitant"], [id$="_dateSignatureExploitant"]', function () {
+    $('#projet_proprietaires').on('change', '[id$="_dureeProprietaire"], [id$="_dateSignatureProprietaire"], [id$="_dateSignatureExploitant"], [id$="_dateSignatureProprietaire2"]', function () {
       var id = $(this).attr('id').match(/\d+/);
       id = parseInt(id);
-      if($('#projet_proprietaires_'+id+'_dureeProprietaire').val() && !$('#projet_proprietaires_'+id+'_dureeExploitant').val()) {
-        $('#projet_proprietaires_'+id+'_dureeExploitant').val($('#projet_proprietaires_'+id+'_dureeProprietaire').val());
-      } else if(!$('#projet_proprietaires_'+id+'_dureeProprietaire').val() && $('#projet_proprietaires_'+id+'_dureeExploitant').val()) {
-        $('#projet_proprietaires_'+id+'_dureeProprietaire').val($('#projet_proprietaires_'+id+'_dureeExploitant').val());
-      }
+  
       if($('#projet_proprietaires_'+id+'_dateSignatureProprietaire').val() && $('#projet_proprietaires_'+id+'_dureeProprietaire').val()) {
         var duree = $('#projet_proprietaires_'+id+'_dureeProprietaire').val().trim();
         var dateSplitted = $('#projet_proprietaires_'+id+'_dateSignatureProprietaire').val().trim().split('/');
@@ -1352,8 +1406,8 @@
         var dateEcheanceProprietaire  = new Date((parseInt(year) + parseInt(duree)), month, day);
         $('#projet_proprietaires_'+id+'_dateEcheanceProprietaire').val(('0' + dateEcheanceProprietaire.getDate()).slice(-2) + '/' + ('0' + dateEcheanceProprietaire.getMonth()).slice(-2) + '/' + dateEcheanceProprietaire.getFullYear());
       }
-      if($('#projet_proprietaires_'+id+'_dateSignatureExploitant').val() && $('#projet_proprietaires_'+id+'_dureeExploitant').val()) {
-        var duree = $('#projet_proprietaires_'+id+'_dureeExploitant').val().trim();
+      if($('#projet_proprietaires_'+id+'_dateSignatureExploitant').val() && $('#projet_proprietaires_'+id+'_dureeProprietaire').val()) {
+        var duree = $('#projet_proprietaires_'+id+'_dureeProprietaire').val().trim();
         var dateSplitted = $('#projet_proprietaires_'+id+'_dateSignatureExploitant').val().trim().split('/');
         var year  = dateSplitted[2];
         var month = dateSplitted[1];
@@ -1361,12 +1415,31 @@
         var dateEcheanceExploitant  = new Date((parseInt(year) + parseInt(duree)), month, day);
         $('#projet_proprietaires_'+id+'_dateEcheanceExploitant').val(('0' + dateEcheanceExploitant.getDate()).slice(-2) + '/' + ('0' + dateEcheanceExploitant.getMonth()).slice(-2) + '/' + dateEcheanceExploitant.getFullYear());
       }
+      if($('#projet_proprietaires_'+id+'_dateSignatureProprietaire2').val() && $('#projet_proprietaires_'+id+'_dureeProprietaire').val()) {
+        var duree = $('#projet_proprietaires_'+id+'_dureeProprietaire').val().trim();
+        var dateSplitted = $('#projet_proprietaires_'+id+'_dateSignatureProprietaire2').val().trim().split('/');
+        var year  = dateSplitted[2];
+        var month = dateSplitted[1];
+        var day   = dateSplitted[0];
+        var dateEcheanceProprietaire  = new Date((parseInt(year) + parseInt(duree)), month, day);
+        $('#projet_proprietaires_'+id+'_dateEcheanceProprietaire2').val(('0' + dateEcheanceProprietaire.getDate()).slice(-2) + '/' + ('0' + dateEcheanceProprietaire.getMonth()).slice(-2) + '/' + dateEcheanceProprietaire.getFullYear());
+      }
     });
     $($collectionHolderProprietaire).on('click', 'tr', function() {
       $collectionHolderProprietaire.children().removeClass('info');
       $(this).addClass('info');
-      second_tr_index = $(this).attr('class').match('proprietaire_entry') ? $(this).index() + 1 : $(this).index() - 1;
+      if ($(this).attr('class').match('proprietaire_entry')) {
+        second_tr_index = $(this).index() + 1;
+        third_tr_index = $(this).index() + 2;
+      } else if ($(this).attr('class').match('exploitant_entry')) {
+        second_tr_index = $(this).index() - 1;
+        third_tr_index = $(this).index() + 1;
+      } else if ($(this).attr('class').match('proprietaire2_entry')) {
+        second_tr_index = $(this).index() - 2;
+        third_tr_index = $(this).index() - 1;
+      }
       $($collectionHolderProprietaire).find('tr:eq('+second_tr_index+')').addClass('info');
+      $($collectionHolderProprietaire).find('tr:eq('+third_tr_index+')').addClass('info');
       if($collectionHolderProprietaire.children().length) {
         $('#projet_proprietaires_remove_entry').removeClass('disabled');
         $('#projet_proprietaires_duplicate_entry').removeClass('disabled');
@@ -1434,10 +1507,12 @@
     $('#projet_proprietaires_recherche').on('change', function() {
       var search = $(this).val().trim();
       var search_found_in_proprietaire = false;
+      var search_found_in_exploitant = false;
       $.each($('#projet_proprietaires tr'), function(i, tr) {
         var row = $(tr);
         var search_found = false;
         if(row.attr('class').match('proprietaire_entry')) search_found_in_proprietaire = false;
+        else if(row.attr('class').match('exploitant_entry')) search_found_in_exploitant = false;
         $.each(row.find('td'), function(i, td) {
           var col = $(td);
           if(search && col.find('input[name]').length && col.find('input[name]').val().match(new RegExp(search, 'gi'))) {
@@ -1453,11 +1528,20 @@
         });
         if(row.attr('class').match('proprietaire_entry')) {
           search_found_in_proprietaire = search_found;
-        } else {
+        } else if(row.attr('class').match('expoitant_entry')) {
+          search_found_in_exploitant = search_found;
+        } else if(row.attr('class').match('proprietaire2_entry')) {
+          console.log(row.attr('class'));
+          console.log(row.prev().attr('class'));
+          console.log(row.prev().prev().attr('class'));
           if(!search || search_found || search_found_in_proprietaire) {
+            row.prev().prev().removeClass('hide');
             row.prev().removeClass('hide');
-            row.removeClass('hide');
+            if(!row.prev().find('i.unhide_foncier_proprietaire').length) {
+              // row.removeClass('hide');
+            }
           } else {
+            row.prev().prev().addClass('hide');
             row.prev().addClass('hide');
             row.addClass('hide');
           }
@@ -1826,6 +1910,7 @@
           if($(this).find('input[name]:eq(0)').val().trim() == parcelle) {
             $(this).addClass('color-' + colors[color_index]);
             $(this).next().addClass('color-' + colors[color_index]);
+            $(this).next().next().addClass('color-' + colors[color_index]);
           }
         });
       });

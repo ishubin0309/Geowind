@@ -105,14 +105,6 @@ class ProprietaireType extends AbstractType
                 'label' => 'Duree',
                 'required' => false,
             ])
-            ->add('dureeProprietaire2', TextType::class, [
-                'label' => 'Duree',
-                'required' => false,
-            ])
-            ->add('dureeProprietaire2', TextType::class, [
-                'label' => 'Duree',
-                'required' => false,
-            ])
             ->add('dateNaissanceProprietaire', DatePickerType::class, [
                 'label' => 'Date naissance',
                 'widget' => 'single_text',
@@ -264,10 +256,6 @@ class ProprietaireType extends AbstractType
                 'html5' => false,
                 'required' => false,
             ])
-			->add('dureeExploitant', TextType::class, [
-				'label' => 'Duree',
-				'required' => false,
-			])
             ->add('dateNaissanceExploitant', DatePickerType::class, [
                 'label' => 'Date naissance',
                 'widget' => 'single_text',

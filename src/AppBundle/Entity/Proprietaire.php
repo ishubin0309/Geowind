@@ -145,11 +145,6 @@ class Proprietaire
     private $dureeProprietaire;
     
     /**
-     * @var string
-     */
-    private $dureeProprietaire2;
-    
-    /**
      * @var DateTime
      *
      * @ORM\Column(type="date", nullable=true)
@@ -285,11 +280,6 @@ class Proprietaire
      * @Assert\Date()
      */
     private $dateEcheanceExploitant;
-    
-    /**
-     * @var string
-     */
-    private $dureeExploitant;
     
     /**
      * @var DateTime
@@ -585,14 +575,6 @@ class Proprietaire
         }
         return '';
     }
-    
-    public function getDureeProprietaire2()
-    {
-        if($this->dateEcheanceProprietaire2 && $this->dateSignatureProprietaire2) {
-            return $this->dateEcheanceProprietaire2->format('Y') - $this->dateSignatureProprietaire2->format('Y');
-        }
-        return '';
-    }
 
     public function getDateNaissanceProprietaire()
     {
@@ -727,12 +709,6 @@ class Proprietaire
         return $this;
     }
 
-    public function setDureeProprietaire2($dureeProprietaire2)
-    {
-        $this->dureeProprietaire2 = $dureeProprietaire2;
-        return $this;
-    }
-
     public function setDateNaissanceProprietaire(DateTime $dateNaissanceProprietaire = null)
     {
         $this->dateNaissanceProprietaire = $dateNaissanceProprietaire;
@@ -808,12 +784,6 @@ class Proprietaire
     public function setDateEcheanceExploitant(DateTime $dateEcheanceExploitant = null)
     {
         $this->dateEcheanceExploitant = $dateEcheanceExploitant;
-        return $this;
-    }
-
-    public function setDureeExploitant($dureeExploitant)
-    {
-        $this->dureeExploitant = $dureeExploitant;
         return $this;
     }
 
