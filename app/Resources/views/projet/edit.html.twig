@@ -1341,7 +1341,7 @@
     $('.unhide_foncier_proprietaire').click(function (e) {
       e.preventDefault();
       $(this).parents('tr').next().removeClass('hide');
-      $(this).addClass('hide');
+      $(this).remove();
     });
     
     $('#projet_proprietaires_publish_entry').click(function () {
@@ -1671,7 +1671,7 @@
         var row = $(tr);
         var search_found = false;
         if(row.attr('class').match('proprietaire_entry')) search_found_in_proprietaire = false;
-        else if(row.attr('class').match('proprietaire2_entry')) search_found_in_exploitant = false;
+        else if(row.attr('class').match('exploitant_entry')) search_found_in_exploitant = false;
         $.each(row.find('td'), function(i, td) {
           var col = $(td);
           if(search && col.find('input[name]').length && col.find('input[name]').val().match(new RegExp(search, 'gi'))) {
@@ -1689,14 +1689,16 @@
           search_found_in_proprietaire = search_found;
         } else if(row.attr('class').match('expoitant_entry')) {
           search_found_in_exploitant = search_found;
-        } else {
+        } else if(row.attr('class').match('proprietaire2_entry')) {
+          console.log(row.attr('class'));
+          console.log(row.prev().attr('class'));
+          console.log(row.prev().prev().attr('class'));
           if(!search || search_found || search_found_in_proprietaire) {
-            row.prev().removeClass('hide');
-            row.removeClass('hide');
-          } else if(!search || search_found || search_found_in_exploitant) {
             row.prev().prev().removeClass('hide');
             row.prev().removeClass('hide');
-            row.removeClass('hide');
+            if(!row.prev().find('i.unhide_foncier_proprietaire').length) {
+              // row.removeClass('hide');
+            }
           } else {
             row.prev().prev().addClass('hide');
             row.prev().addClass('hide');
