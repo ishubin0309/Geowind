@@ -43,6 +43,13 @@ class Proprietaire
      * @ORM\Column(type="string", nullable=true)
      */
     private $proprietaire;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $proprietaire2;
     
     /**
      * @var string
@@ -56,7 +63,21 @@ class Proprietaire
      *
      * @ORM\Column(type="string", nullable=true)
      */
+    private $telephoneProprietaire2;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
     private $adresseProprietaire;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $adresseProprietaire2;
 
     /**
      * @var string
@@ -64,6 +85,13 @@ class Proprietaire
      * @ORM\Column(type="string", nullable=true)
      */
     private $emailProprietaire;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $emailProprietaire2;
     
     /**
      * @var string
@@ -71,6 +99,13 @@ class Proprietaire
      * @ORM\Column(type="string", nullable=true)
      */
     private $accordProprietaire;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $accordProprietaire2;
     
     /**
      * @var DateTime
@@ -86,12 +121,33 @@ class Proprietaire
      * @ORM\Column(type="date", nullable=true)
      * @Assert\Date()
      */
+    private $dateSignatureProprietaire2;
+    
+    /**
+     * @var DateTime
+     *
+     * @ORM\Column(type="date", nullable=true)
+     * @Assert\Date()
+     */
     private $dateEcheanceProprietaire;
+    
+    /**
+     * @var DateTime
+     *
+     * @ORM\Column(type="date", nullable=true)
+     * @Assert\Date()
+     */
+    private $dateEcheanceProprietaire2;
     
     /**
      * @var string
      */
     private $dureeProprietaire;
+    
+    /**
+     * @var string
+     */
+    private $dureeProprietaire2;
     
     /**
      * @var DateTime
@@ -100,6 +156,14 @@ class Proprietaire
      * @Assert\Date()
      */
     private $dateNaissanceProprietaire;
+    
+    /**
+     * @var DateTime
+     *
+     * @ORM\Column(type="date", nullable=true)
+     * @Assert\Date()
+     */
+    private $dateNaissanceProprietaire2;
 
     /**
      * @var string
@@ -113,7 +177,21 @@ class Proprietaire
      *
      * @ORM\Column(type="string", nullable=true)
      */
+    private $lieuNaissanceProprietaire2;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
     private $civiliteProprietaire;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $civiliteProprietaire2;
 
     /**
      * @var string
@@ -127,7 +205,35 @@ class Proprietaire
      *
      * @ORM\Column(type="string", nullable=true)
      */
+    private $droitProprietaire2;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $qualiteProprietaire;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $qualiteProprietaire2;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
     private $maritalProprietaire;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $maritalProprietaire2;
 
     /**
      * @var string
@@ -260,9 +366,19 @@ class Proprietaire
         return $this->proprietaire;
     }
 
+    public function getProprietaire2()
+    {
+        return $this->proprietaire2;
+    }
+
     public function getTelephoneProprietaire()
     {
         return $this->telephoneProprietaire;
+    }
+
+    public function getTelephoneProprietaire2()
+    {
+        return $this->telephoneProprietaire2;
     }
 
     public function getAdresseProprietaire()
@@ -270,9 +386,19 @@ class Proprietaire
         return $this->adresseProprietaire;
     }
 
+    public function getAdresseProprietaire2()
+    {
+        return $this->adresseProprietaire2;
+    }
+
     public function getEmailProprietaire()
     {
         return $this->emailProprietaire;
+    }
+
+    public function getEmailProprietaire2()
+    {
+        return $this->emailProprietaire2;
     }
 
     public function getExploitant()
@@ -317,9 +443,21 @@ class Proprietaire
         return $this;
     }
 
+    public function setProprietaire2($proprietaire2)
+    {
+        $this->proprietaire2 = $proprietaire2;
+        return $this;
+    }
+
     public function setTelephoneProprietaire($telephoneProprietaire)
     {
         $this->telephoneProprietaire = $telephoneProprietaire;
+        return $this;
+    }
+
+    public function setTelephoneProprietaire2($telephoneProprietaire2)
+    {
+        $this->telephoneProprietaire2 = $telephoneProprietaire2;
         return $this;
     }
 
@@ -329,9 +467,21 @@ class Proprietaire
         return $this;
     }
 
+    public function setAdresseProprietaire2($adresseProprietaire2)
+    {
+        $this->adresseProprietaire2 = $adresseProprietaire2;
+        return $this;
+    }
+
     public function setEmailProprietaire($emailProprietaire)
     {
         $this->emailProprietaire = $emailProprietaire;
+        return $this;
+    }
+
+    public function setEmailProprietaire2($emailProprietaire2)
+    {
+        $this->emailProprietaire2 = $emailProprietaire2;
         return $this;
     }
 
@@ -363,6 +513,11 @@ class Proprietaire
     {
         return $this->accordProprietaire;
     }
+    
+    public function getAccordProprietaire2()
+    {
+        return $this->accordProprietaire2;
+    }
 
     public function getAccordExploitant()
     {
@@ -372,6 +527,12 @@ class Proprietaire
     public function setAccordProprietaire($accordProprietaire)
     {
         $this->accordProprietaire = $accordProprietaire;
+        return $this;
+    }
+
+    public function setAccordProprietaire2($accordProprietaire2)
+    {
+        $this->accordProprietaire2 = $accordProprietaire2;
         return $this;
     }
 
@@ -401,10 +562,20 @@ class Proprietaire
     {
         return $this->dateSignatureProprietaire;
     }
+    
+    public function getDateSignatureProprietaire2()
+    {
+        return $this->dateSignatureProprietaire2;
+    }
 
     public function getDateEcheanceProprietaire()
     {
         return $this->dateEcheanceProprietaire;
+    }
+
+    public function getDateEcheanceProprietaire2()
+    {
+        return $this->dateEcheanceProprietaire2;
     }
     
     public function getDureeProprietaire()
@@ -414,10 +585,23 @@ class Proprietaire
         }
         return '';
     }
+    
+    public function getDureeProprietaire2()
+    {
+        if($this->dateEcheanceProprietaire2 && $this->dateSignatureProprietaire2) {
+            return $this->dateEcheanceProprietaire2->format('Y') - $this->dateSignatureProprietaire2->format('Y');
+        }
+        return '';
+    }
 
     public function getDateNaissanceProprietaire()
     {
         return $this->dateNaissanceProprietaire;
+    }
+
+    public function getDateNaissanceProprietaire2()
+    {
+        return $this->dateNaissanceProprietaire2;
     }
 
     public function getLieuNaissanceProprietaire()
@@ -425,19 +609,49 @@ class Proprietaire
         return $this->lieuNaissanceProprietaire;
     }
 
+    public function getLieuNaissanceProprietaire2()
+    {
+        return $this->lieuNaissanceProprietaire2;
+    }
+
     public function getCiviliteProprietaire()
     {
         return $this->civiliteProprietaire;
     }
 
-    public function getDroitProprietaire()
+    public function getCiviliteProprietaire2()
     {
-        return $this->droitProprietaire;
+        return $this->civiliteProprietaire2;
     }
+	
+	public function getDroitProprietaire()
+	{
+		return $this->droitProprietaire;
+	}
+	
+	public function getDroitProprietaire2()
+	{
+		return $this->droitProprietaire2;
+	}
+	
+	public function getQualiteProprietaire()
+	{
+		return $this->qualiteProprietaire;
+	}
+	
+	public function getQualiteProprietaire2()
+	{
+		return $this->qualiteProprietaire2;
+	}
 
     public function getMaritalProprietaire()
     {
         return $this->maritalProprietaire;
+    }
+
+    public function getMaritalProprietaire2()
+    {
+        return $this->maritalProprietaire2;
     }
 
     public function getDateSignatureExploitant()
@@ -489,9 +703,21 @@ class Proprietaire
         return $this;
     }
 
+    public function setDateSignatureProprietaire2(DateTime $dateSignatureProprietaire2 = null)
+    {
+        $this->dateSignatureProprietaire2 = $dateSignatureProprietaire2;
+        return $this;
+    }
+
     public function setDateEcheanceProprietaire(DateTime $dateEcheanceProprietaire = null)
     {
         $this->dateEcheanceProprietaire = $dateEcheanceProprietaire;
+        return $this;
+    }
+
+    public function setDateEcheanceProprietaire2(DateTime $dateEcheanceProprietaire2 = null)
+    {
+        $this->dateEcheanceProprietaire2 = $dateEcheanceProprietaire2;
         return $this;
     }
 
@@ -501,9 +727,21 @@ class Proprietaire
         return $this;
     }
 
+    public function setDureeProprietaire2($dureeProprietaire2)
+    {
+        $this->dureeProprietaire2 = $dureeProprietaire2;
+        return $this;
+    }
+
     public function setDateNaissanceProprietaire(DateTime $dateNaissanceProprietaire = null)
     {
         $this->dateNaissanceProprietaire = $dateNaissanceProprietaire;
+        return $this;
+    }
+
+    public function setDateNaissanceProprietaire2(DateTime $dateNaissanceProprietaire2 = null)
+    {
+        $this->dateNaissanceProprietaire2 = $dateNaissanceProprietaire2;
         return $this;
     }
 
@@ -513,15 +751,45 @@ class Proprietaire
         return $this;
     }
 
+    public function setLieuNaissanceProprietaire2($lieuNaissanceProprietaire2)
+    {
+        $this->lieuNaissanceProprietaire2 = $lieuNaissanceProprietaire2;
+        return $this;
+    }
+
     public function setCiviliteProprietaire($civiliteProprietaire)
     {
         $this->civiliteProprietaire = $civiliteProprietaire;
         return $this;
     }
 
+    public function setCiviliteProprietaire2($civiliteProprietaire2)
+    {
+        $this->civiliteProprietaire2 = $civiliteProprietaire2;
+        return $this;
+    }
+
     public function setDroitProprietaire($droitProprietaire)
     {
         $this->droitProprietaire = $droitProprietaire;
+        return $this;
+    }
+
+    public function setDroitProprietaire2($droitProprietaire2)
+    {
+        $this->droitProprietaire2 = $droitProprietaire2;
+        return $this;
+    }
+
+    public function setQualiteProprietaire($qualiteProprietaire)
+    {
+        $this->qualiteProprietaire = $qualiteProprietaire;
+        return $this;
+    }
+
+    public function setQualiteProprietaire2($qualiteProprietaire2)
+    {
+        $this->qualiteProprietaire2 = $qualiteProprietaire2;
         return $this;
     }
 
