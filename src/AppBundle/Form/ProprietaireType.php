@@ -29,7 +29,7 @@ class ProprietaireType extends AbstractType
             ])
             ->add('proprietaire2', TextType::class, [
                 'label' => 'Vendeur',
-                'required' => true,
+                'required' => false,
             ])
             ->add('telephoneProprietaire', TextType::class, [
                 'label' => 'Téléphone',
