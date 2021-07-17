@@ -1693,6 +1693,10 @@
           if(!search || search_found || search_found_in_proprietaire) {
             row.prev().removeClass('hide');
             row.removeClass('hide');
+          } else if(!search || search_found || search_found_in_proprietaire2) {
+            row.prev().prev().removeClass('hide');
+            row.prev().removeClass('hide');
+            row.removeClass('hide');
           } else {
             row.prev().addClass('hide');
             row.addClass('hide');
