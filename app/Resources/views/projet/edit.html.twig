@@ -1666,12 +1666,12 @@
     $('#projet_proprietaires_recherche').on('change', function() {
       var search = $(this).val().trim();
       var search_found_in_proprietaire = false;
-      var search_found_in_proprietaire2 = false;
+      var search_found_in_exploitant = false;
       $.each($('#projet_proprietaires tr'), function(i, tr) {
         var row = $(tr);
         var search_found = false;
         if(row.attr('class').match('proprietaire_entry')) search_found_in_proprietaire = false;
-        else if(row.attr('class').match('proprietaire2_entry')) search_found_in_expoitant = false;
+        else if(row.attr('class').match('proprietaire2_entry')) search_found_in_exploitant = false;
         $.each(row.find('td'), function(i, td) {
           var col = $(td);
           if(search && col.find('input[name]').length && col.find('input[name]').val().match(new RegExp(search, 'gi'))) {
@@ -1688,12 +1688,12 @@
         if(row.attr('class').match('proprietaire_entry')) {
           search_found_in_proprietaire = search_found;
         } else if(row.attr('class').match('expoitant_entry')) {
-          search_found_in_expoitant = search_found;
+          search_found_in_exploitant = search_found;
         } else {
           if(!search || search_found || search_found_in_proprietaire) {
             row.prev().removeClass('hide');
             row.removeClass('hide');
-          } else if(!search || search_found || search_found_in_expoitant) {
+          } else if(!search || search_found || search_found_in_exploitant) {
             row.prev().prev().removeClass('hide');
             row.prev().removeClass('hide');
             row.removeClass('hide');
