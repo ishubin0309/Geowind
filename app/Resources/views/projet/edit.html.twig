@@ -1671,7 +1671,7 @@
         var row = $(tr);
         var search_found = false;
         if(row.attr('class').match('proprietaire_entry')) search_found_in_proprietaire = false;
-        else if(row.attr('class').match('proprietaire2_entry')) search_found_in_proprietaire2 = false;
+        else if(row.attr('class').match('proprietaire2_entry')) search_found_in_expoitant = false;
         $.each(row.find('td'), function(i, td) {
           var col = $(td);
           if(search && col.find('input[name]').length && col.find('input[name]').val().match(new RegExp(search, 'gi'))) {
@@ -1687,18 +1687,18 @@
         });
         if(row.attr('class').match('proprietaire_entry')) {
           search_found_in_proprietaire = search_found;
-        } else if(row.attr('class').match('proprietaire2_entry')) {
-          search_found_in_proprietaire2 = search_found;
+        } else if(row.attr('class').match('expoitant_entry')) {
+          search_found_in_expoitant = search_found;
         } else {
           if(!search || search_found || search_found_in_proprietaire) {
             row.prev().removeClass('hide');
             row.removeClass('hide');
-          } else if(!search || search_found || search_found_in_proprietaire2) {
-            row.next().removeClass('hide');
+          } else if(!search || search_found || search_found_in_expoitant) {
+            row.prev().prev().removeClass('hide');
             row.prev().removeClass('hide');
             row.removeClass('hide');
           } else {
-            row.next().addClass('hide');
+            row.prev().prev().addClass('hide');
             row.prev().addClass('hide');
             row.addClass('hide');
           }
