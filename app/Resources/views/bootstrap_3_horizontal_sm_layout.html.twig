@@ -268,10 +268,47 @@ col-sm-8
       <td>{{ form_widget(form.dureeProprietaire) }}</td>
       <td>{% if form.vars.value.dateEcheanceProprietaire is defined %}{{ form_widget(form.dateEcheanceProprietaire) }}{% else %}{{ form_widget(form.dateEcheanceProprietaire, {'value' : "now"|date("d/m/Y")}) }}{% endif %}</td>
     </tr>
+    <tr class="proprietaire2_entry {% if form.vars.value.classProprietaire2 is not defined or form.vars.value.classProprietaire2 == 'hide' %}hide{% endif %}">
+      <td></td>
+      <td>{{ form_widget(form.civiliteProprietaire2) }}</td>
+      <td>{{ form_widget(form.proprietaire2) }}</td>
+      <td>{{ form_widget(form.qualiteProprietaire2) }}</td>
+      <td>{{ form_widget(form.accordProprietaire2) }}</td>
+      <td>{{ form_widget(form.telephoneProprietaire2) }}</td>
+      <td>{{ form_widget(form.adresseProprietaire2) }}</td>
+      <td>{{ form_widget(form.emailProprietaire2) }}</td>
+      <td>{{ form_widget(form.dateNaissanceProprietaire2) }}</td>
+      <td>{{ form_widget(form.lieuNaissanceProprietaire2) }}</td>
+      <td>{{ form_widget(form.droitProprietaire2) }}</td>
+      <td>{{ form_widget(form.maritalProprietaire2) }}</td>
+      <td>{% if form.vars.value.dateSignatureProprietaire2 is defined %}{{ form_widget(form.dateSignatureProprietaire2) }}{% else %}{{ form_widget(form.dateSignatureProprietaire2, {'value' : "now"|date("d/m/Y")}) }}{% endif %}</td>
+      <td></td>
+      <td>{% if form.vars.value.dateEcheanceProprietaire2 is defined %}{{ form_widget(form.dateEcheanceProprietaire2) }}{% else %}{{ form_widget(form.dateEcheanceProprietaire2, {'value' : "now"|date("d/m/Y")}) }}{% endif %}</td>
+    </tr>
+    <tr class="proprietaire3_entry {% if form.vars.value.classProprietaire3 is not defined or form.vars.value.classProprietaire3 == 'hide' %}hide{% endif %}">
+      <td></td>
+      <td>{{ form_widget(form.civiliteProprietaire3) }}</td>
+      <td>{{ form_widget(form.proprietaire3) }}</td>
+      <td>{{ form_widget(form.qualiteProprietaire3) }}</td>
+      <td>{{ form_widget(form.accordProprietaire3) }}</td>
+      <td>{{ form_widget(form.telephoneProprietaire3) }}</td>
+      <td>{{ form_widget(form.adresseProprietaire3) }}</td>
+      <td>{{ form_widget(form.emailProprietaire3) }}</td>
+      <td>{{ form_widget(form.dateNaissanceProprietaire3) }}</td>
+      <td>{{ form_widget(form.lieuNaissanceProprietaire3) }}</td>
+      <td>{{ form_widget(form.droitProprietaire3) }}</td>
+      <td>{{ form_widget(form.maritalProprietaire3) }}</td>
+      <td>{% if form.vars.value.dateSignatureProprietaire3 is defined %}{{ form_widget(form.dateSignatureProprietaire3) }}{% else %}{{ form_widget(form.dateSignatureProprietaire3, {'value' : "now"|date("d/m/Y")}) }}{% endif %}</td>
+      <td></td>
+      <td>{% if form.vars.value.dateEcheanceProprietaire3 is defined %}{{ form_widget(form.dateEcheanceProprietaire3) }}{% else %}{{ form_widget(form.dateEcheanceProprietaire3, {'value' : "now"|date("d/m/Y")}) }}{% endif %}</td>
+    </tr>
     <tr class="exploitant_entry">
       <td>
-        {% if form.vars.value.proprietaire2 is not defined or not form.vars.value.proprietaire2 %}
-          <a title="Ajouter une ligne" class="unhide_foncier_proprietaire" href="#"><i class="fa fa-plus-square"></i></a>
+        {% if form.vars.value.proprietaire2 is not defined or not form.vars.value.proprietaire2 or form.vars.value.proprietaire3 is not defined or not form.vars.value.proprietaire3 %}
+          <a style="color: brown;" title="Ajouter une ligne" class="unhide_foncier_proprietaire" href="#"><i class="fa fa-plus-square"></i></a>
+        {% endif %}
+        {% if form.vars.value.exploitant2 is not defined or not form.vars.value.exploitant2 or form.vars.value.exploitant3 is not defined or not form.vars.value.exploitant3 %}
+          <a style="color: forestgreen;" title="Ajouter une ligne" class="unhide_foncier_exploitant" href="#"><i class="fa fa-plus-square"></i></a>
         {% endif %}
       </td>
       <td>{{ form_widget(form.civiliteExploitant) }}</td>
@@ -289,22 +326,39 @@ col-sm-8
       <td></td>
       <td>{% if form.vars.value.dateEcheanceExploitant is defined %}{{ form_widget(form.dateEcheanceExploitant) }}{% else %}{{ form_widget(form.dateEcheanceExploitant, {'value' : "now"|date("d/m/Y")}) }}{% endif %}</td>
     </tr>
-    <tr class="proprietaire2_entry {% if form.vars.value.classProprietaire2 is not defined or form.vars.value.classProprietaire2 == 'hide' %}hide{% endif %}">
+    <tr class="exploitant2_entry">
       <td></td>
-      <td>{{ form_widget(form.civiliteProprietaire2) }}</td>
-      <td>{{ form_widget(form.proprietaire2) }}</td>
-      <td>{{ form_widget(form.qualiteProprietaire2) }}</td>
-      <td>{{ form_widget(form.accordProprietaire2) }}</td>
-      <td>{{ form_widget(form.telephoneProprietaire2) }}</td>
-      <td>{{ form_widget(form.adresseProprietaire2) }}</td>
-      <td>{{ form_widget(form.emailProprietaire2) }}</td>
-      <td>{{ form_widget(form.dateNaissanceProprietaire2) }}</td>
-      <td>{{ form_widget(form.lieuNaissanceProprietaire2) }}</td>
-      <td>{{ form_widget(form.droitProprietaire2) }}</td>
-      <td>{{ form_widget(form.maritalProprietaire2) }}</td>
-      <td>{% if form.vars.value.dateSignatureProprietaire2 is defined %}{{ form_widget(form.dateSignatureProprietaire2) }}{% else %}{{ form_widget(form.dateSignatureProprietaire2, {'value' : "now"|date("d/m/Y")}) }}{% endif %}</td>
+      <td>{{ form_widget(form.civiliteExploitant2) }}</td>
+      <td>{{ form_widget(form.exploitant2) }}</td>
       <td></td>
-      <td>{% if form.vars.value.dateEcheanceProprietaire2 is defined %}{{ form_widget(form.dateEcheanceProprietaire2) }}{% else %}{{ form_widget(form.dateEcheanceProprietaire2, {'value' : "now"|date("d/m/Y")}) }}{% endif %}</td>
+      <td>{{ form_widget(form.accordExploitant2) }}</td>
+      <td>{{ form_widget(form.telephoneExploitant2) }}</td>
+      <td>{{ form_widget(form.adresseExploitant2) }}</td>
+      <td>{{ form_widget(form.emailExploitant2) }}</td>
+      <td>{{ form_widget(form.dateNaissanceExploitant2) }}</td>
+      <td>{{ form_widget(form.lieuNaissanceExploitant2) }}</td>
+      <td>{{ form_widget(form.droitExploitant2) }}</td>
+      <td>{{ form_widget(form.maritalExploitant2) }}</td>
+      <td>{% if form.vars.value.dateSignatureExploitant2 is defined %}{{ form_widget(form.dateSignatureExploitant2) }}{% else %}{{ form_widget(form.dateSignatureExploitant2, {'value' : "now"|date("d/m/Y")}) }}{% endif %}</td>
+      <td></td>
+      <td>{% if form.vars.value.dateEcheanceExploitant2 is defined %}{{ form_widget(form.dateEcheanceExploitant2) }}{% else %}{{ form_widget(form.dateEcheanceExploitant2, {'value' : "now"|date("d/m/Y")}) }}{% endif %}</td>
+    </tr>
+    <tr class="exploitant3_entry">
+      <td></td>
+      <td>{{ form_widget(form.civiliteExploitant3) }}</td>
+      <td>{{ form_widget(form.exploitant3) }}</td>
+      <td></td>
+      <td>{{ form_widget(form.accordExploitant3) }}</td>
+      <td>{{ form_widget(form.telephoneExploitant3) }}</td>
+      <td>{{ form_widget(form.adresseExploitant3) }}</td>
+      <td>{{ form_widget(form.emailExploitant3) }}</td>
+      <td>{{ form_widget(form.dateNaissanceExploitant3) }}</td>
+      <td>{{ form_widget(form.lieuNaissanceExploitant3) }}</td>
+      <td>{{ form_widget(form.droitExploitant3) }}</td>
+      <td>{{ form_widget(form.maritalExploitant3) }}</td>
+      <td>{% if form.vars.value.dateSignatureExploitant3 is defined %}{{ form_widget(form.dateSignatureExploitant3) }}{% else %}{{ form_widget(form.dateSignatureExploitant3, {'value' : "now"|date("d/m/Y")}) }}{% endif %}</td>
+      <td></td>
+      <td>{% if form.vars.value.dateEcheanceExploitant3 is defined %}{{ form_widget(form.dateEcheanceExploitant3) }}{% else %}{{ form_widget(form.dateEcheanceExploitant3, {'value' : "now"|date("d/m/Y")}) }}{% endif %}</td>
     </tr>
   {% endspaceless %}
 {% endblock %}
