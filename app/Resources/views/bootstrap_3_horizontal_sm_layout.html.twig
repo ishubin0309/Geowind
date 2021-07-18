@@ -268,7 +268,7 @@ col-sm-8
       <td>{{ form_widget(form.dureeProprietaire) }}</td>
       <td>{% if form.vars.value.dateEcheanceProprietaire is defined %}{{ form_widget(form.dateEcheanceProprietaire) }}{% else %}{{ form_widget(form.dateEcheanceProprietaire, {'value' : "now"|date("d/m/Y")}) }}{% endif %}</td>
     </tr>
-    <tr class="proprietaire2_entry {% if form.vars.value.classProprietaire2 is not defined or form.vars.value.classProprietaire2 == 'hide' %}hide{% endif %}">
+    <tr class="proprietaire2_entry {% if form.vars.value.proprietaire2 is not defined or not form.vars.value.proprietaire2 %}hide{% endif %}">
       <td></td>
       <td>{{ form_widget(form.civiliteProprietaire2) }}</td>
       <td>{{ form_widget(form.proprietaire2) }}</td>
@@ -285,7 +285,7 @@ col-sm-8
       <td></td>
       <td>{% if form.vars.value.dateEcheanceProprietaire2 is defined %}{{ form_widget(form.dateEcheanceProprietaire2) }}{% else %}{{ form_widget(form.dateEcheanceProprietaire2, {'value' : "now"|date("d/m/Y")}) }}{% endif %}</td>
     </tr>
-    <tr class="proprietaire3_entry {% if form.vars.value.classProprietaire3 is not defined or form.vars.value.classProprietaire3 == 'hide' %}hide{% endif %}">
+    <tr class="proprietaire3_entry {% if form.vars.value.proprietaire3 is not defined or not form.vars.value.proprietaire3 %}hide{% endif %}">
       <td></td>
       <td>{{ form_widget(form.civiliteProprietaire3) }}</td>
       <td>{{ form_widget(form.proprietaire3) }}</td>
@@ -326,7 +326,7 @@ col-sm-8
       <td></td>
       <td>{% if form.vars.value.dateEcheanceExploitant is defined %}{{ form_widget(form.dateEcheanceExploitant) }}{% else %}{{ form_widget(form.dateEcheanceExploitant, {'value' : "now"|date("d/m/Y")}) }}{% endif %}</td>
     </tr>
-    <tr class="exploitant2_entry">
+    <tr class="exploitant2_entry {% if form.vars.value.exploitant2 is not defined or not form.vars.value.exploitant2 %}hide{% endif %}">
       <td></td>
       <td>{{ form_widget(form.civiliteExploitant2) }}</td>
       <td>{{ form_widget(form.exploitant2) }}</td>
@@ -343,7 +343,7 @@ col-sm-8
       <td></td>
       <td>{% if form.vars.value.dateEcheanceExploitant2 is defined %}{{ form_widget(form.dateEcheanceExploitant2) }}{% else %}{{ form_widget(form.dateEcheanceExploitant2, {'value' : "now"|date("d/m/Y")}) }}{% endif %}</td>
     </tr>
-    <tr class="exploitant3_entry">
+    <tr class="exploitant3_entry {% if form.vars.value.exploitant3 is not defined or not form.vars.value.exploitant3 %}hide{% endif %}">
       <td></td>
       <td>{{ form_widget(form.civiliteExploitant3) }}</td>
       <td>{{ form_widget(form.exploitant3) }}</td>
