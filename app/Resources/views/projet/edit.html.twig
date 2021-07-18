@@ -1291,6 +1291,9 @@
       });
       $('#tab_contacts tbody').append('<tr rel="'+length+'" class="hide"><td>Bailleur</td>><td>-</td><td>-</td></tr><tr rel="'+length+'" class="hide"><td>Exploitant</td><td>-</td><td>-</td></tr><tr rel="'+length+'" class="hide"><td>Vendeur</td><td>-</td><td>-</td></tr>');
       loadAllParcellesTags();
+      hide_columns('projet_proprietaires', (length * 3));
+      hide_columns('projet_proprietaires', ((length * 3) + 1));
+      hide_columns('projet_proprietaires', ((length * 3) + 2));
     });
 
     $('#projet_proprietaires_duplicate_entry').click(function () {
@@ -1411,6 +1414,15 @@
         });
       });
     }, 2000);
+    function hide_columns(table_id, tr_index) {
+      if (hidden_columns_proprietaire[table_id] !== undefined) {
+        $.each(hidden_columns_proprietaire[table_id], function(td_index, value) {
+          td_index = $('#' + table_id).parents('table').find('th[index="' +td_index+ '"]').index() + 1;
+          $('#' + table_id).find('tr:eq(' + tr_index + ') td:eq(' + (td_index - 1) + ')').addClass('hide');
+          $('<td></td>').insertAfter($('#' + table_id).find('tr:eq(' + tr_index + ') td:eq(' + (td_index - 1) + ')'));
+        });
+      }
+    }
 
     $collectionHolderProprietaire.on('click', '.unhide_foncier_proprietaire', function (e) {
       e.preventDefault();
