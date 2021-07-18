@@ -1,0 +1,759 @@
+{% use "bootstrap_3_layout.html.twig" %}
+
+{% block form_start -%}
+    {% set attr = attr|merge({class: (attr.class|default('') ~ ' form-horizontal form-compact')|trim}) %}
+    {{- parent() -}}
+{%- endblock form_start %}
+
+{# Labels #}
+
+{% block form_label -%}
+{% spaceless %}
+    {% if label is same as(null) %}
+    {% elseif label is same as(false) %}
+        <div class="{{ block('form_label_class') }}"></div>
+    {% else %}
+        {% set label_attr = label_attr|merge({class: (label_attr.class|default('') ~ ' ' ~ block('form_label_class'))|trim}) %}
+        {{- parent() -}}
+    {% endif %}
+{% endspaceless %}
+{%- endblock form_label %}
+
+{% block form_label_class -%}
+col-sm-4
+{%- endblock form_label_class %}
+
+{# Rows #}
+
+{% block form_row -%}
+    <div class="form-group form-group-sm{% if (not compound or force_error|default(false)) and not valid %} has-error{% endif %}">
+        {{- form_label(form) -}}
+        <div class="{{ block('form_group_class') }}">
+            {{- form_widget(form) -}}
+            {{- form_errors(form) -}}
+        </div>
+    </div>
+{%- endblock form_row %}
+
+{% block checkbox_row -%}
+    {{- block('checkbox_radio_row') -}}
+{%- endblock checkbox_row %}
+
+{% block radio_row -%}
+    {{- block('checkbox_radio_row') -}}
+{%- endblock radio_row %}
+
+{% block checkbox_radio_row -%}
+{% spaceless %}
+    <div class="form-group form-group-sm{% if not valid %} has-error{% endif %}">
+        <div class="{{ block('form_label_class') }}"></div>
+        <div class="{{ block('form_group_class') }}">
+            {{ form_widget(form) }}
+            {{ form_errors(form) }}
+        </div>
+    </div>
+{% endspaceless %}
+{%- endblock checkbox_radio_row %}
+
+{% block submit_row -%}
+{% spaceless %}
+    <div class="form-group form-group-sm">
+        <div class="{{ block('form_label_class') }}"></div>
+        <div class="{{ block('form_group_class') }}">
+            {{ form_widget(form) }}
+        </div>
+    </div>
+{% endspaceless %}
+{% endblock submit_row %}
+
+{% block reset_row -%}
+{% spaceless %}
+    <div class="form-group form-group-sm">
+        <div class="{{ block('form_label_class') }}"></div>
+        <div class="{{ block('form_group_class') }}">
+            {{ form_widget(form) }}
+        </div>
+    </div>
+{% endspaceless %}
+{% endblock reset_row %}
+
+{% block form_group_class -%}
+{% if label is same as(null) %}
+col-sm-12
+{% else %}
+col-sm-8
+{% endif %}
+{%- endblock form_group_class %}
+
+{% block _projet_commentaires_row %}
+  <div class="form-group form-group-sm{% if (not compound or force_error|default(false)) and not valid %} has-error{% endif %}">
+    {{- form_label(form) -}}
+
+    <div class="col-sm-12">
+      {{- form_widget(form) -}}
+      {{- form_errors(form) -}}
+    </div>
+  </div>
+{% endblock %}
+
+{% block _projet_finances_widget %}
+  {% if prototype is defined %}
+      {%- set attr = attr|merge({'data-prototype': form_row(prototype) }) -%}
+  {% endif %}
+
+    <table class="table table-condensed table-form">
+      <thead>
+        <tr>
+          <th>Ref</th>
+          <th class="col-sm-1">Phase</th>
+          <th class="col-sm-2">Titre<span class="control-label required"></span></th>
+          <th class="col-sm-1">Prestataire</th>
+          <th class="col-sm-2">Note<span class="control-label"></span></th>
+          <th>Total(€HT)<span class="control-label required"></span></th>
+          <th>Engagé(€HT)<span class="control-label required"></span></th>
+          <th>Restant(€HT)<span class="control-label required"></span></th>
+          <th>Payé(€HT)<span class="control-label required"></span></th>
+          <th>Date commande</th>
+          <th>Date d'échéance</th>
+          <th>Date facture</th>
+          <th><i class="fa fa-hourglass-end"></i></th>
+          <th class="hide">Dupliquée</th>
+        </tr>
+      </thead>
+      <tbody {{ block('widget_container_attributes') }}>
+        {% for child in form %}
+          {{- form_row(child) -}}
+        {% endfor %}
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="8">
+            <button type="button" id="{{ id }}_add_entry" class="btn btn-primary btn-xs"><i class="fa fa-plus-circle"></i> Ajouter</button>
+            <button type="button" id="{{ id }}_duplicate_entry" class="btn btn-success disabled btn-xs"><i class="fa fa-plus-circle"></i> Dupliquer</button>
+            <button type="button" id="{{ id }}_remove_entry" class="btn btn-danger btn-xs"><i class="fa fa-minus-circle"></i> Supprimer</button>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+    
+
+{% endblock %}
+
+{% block _projet_finances_entry_row %}
+  {% spaceless %}
+    <tr {% if form.vars.value.duplique is defined and form.vars.value.duplique %}duplique="{{ form.vars.value.duplique }}"{% endif %}>
+      <td></td>
+      <td>{{ form_widget(form.phase) }}</td>
+      <td>{{ form_widget(form.titre) }}</td>
+      <td>{{ form_widget(form.bureau) }}</td>
+      <td>{{ form_widget(form.note) }}</td>
+      <td>{{ form_widget(form.montantTotal) }}</td>
+      <td>{{ form_widget(form.montantEngage) }}</td>
+      <td>{{ form_widget(form.montantRestant) }}</td>
+      <td>{{ form_widget(form.montantPaye) }}</td>
+      <td>{% if form.vars.value.dateEngmt is defined %}{{ form_widget(form.dateEngmt) }}{% else %}{{ form_widget(form.dateEngmt, {'value' : "now"|date("d/m/Y")}) }}{% endif %}</td>
+      <td>{% if form.vars.value.dateEcheance is defined %}{{ form_widget(form.dateEcheance) }}{% else %}{{ form_widget(form.dateEcheance, {'value' : "now"|date("d/m/Y")}) }}{% endif %}</td>
+      <td>{% if form.vars.value.dateFacture is defined %}{{ form_widget(form.dateFacture) }}{% else %}{{ form_widget(form.dateFacture) }}{% endif %}</td>
+      <td class="difference"></td>
+      <td class="hide">{{ form_widget(form.duplique) }}</td>
+    </tr>
+  {% endspaceless %}
+{% endblock %}
+
+{% block _projet_batimentExistant_toitures_widget %}
+    {% if prototype is defined %}
+        {%- set attr = attr|merge({'data-prototype': form_row(prototype) }) -%}
+    {% endif %}
+      <legend style="border-bottom: 0px;">Toiture</legend>
+      <table class="table table-condensed table-form">
+        <tbody {{ block('widget_container_attributes') }}>
+        {% for child in form %}
+            {{- form_row(child) -}}
+        {% endfor %}
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="8">
+                <button type="button" id="{{ id }}_add_entry" class="btn btn-primary btn-xs"><i class="fa fa-plus-circle"></i> Ajouter</button>
+                <button type="button" id="{{ id }}_remove_entry" class="btn btn-danger btn-xs"><i class="fa fa-minus-circle"></i> Supprimer</button>
+            </td>
+          </tr>
+        </tfoot>
+    </table>
+
+
+{% endblock %}
+
+{% block _projet_batimentExistant_toitures_entry_row %}
+    {% spaceless %}
+        <tr>
+          <td>
+            <div class="form-group form-group-sm"><label class="control-label col-sm-4">Désignation</label><div class="col-sm-8">{{ form_widget(form.nom) }}</div></div>
+            <div class="form-group form-group-sm"><label class="control-label col-sm-4">Exposition</label><div class="col-sm-8">{{ form_widget(form.exposition) }}</div></div>
+            <div class="form-group form-group-sm"><label class="control-label col-sm-4">Haut de pente</label><div class="col-sm-8">{{ form_widget(form.hautPente) }}</div></div>
+            <div class="form-group form-group-sm"><label class="control-label col-sm-4">Bas de pente</label><div class="col-sm-8">{{ form_widget(form.basPente) }}</div></div>
+            <div class="form-group form-group-sm"><label class="control-label col-sm-4">Pente calculée</label><div class="col-sm-8">{{ form_widget(form.pente) }}</div></div>
+            <div class="form-group form-group-sm"><label class="control-label col-sm-4">Longueur (m)</label><div class="col-sm-8">{{ form_widget(form.longueur) }}</div></div>
+            <div class="form-group form-group-sm"><label class="control-label col-sm-4">Largeur (m)</label><div class="col-sm-8">{{ form_widget(form.largeur) }}</div></div>
+            <div class="form-group form-group-sm"><label class="control-label col-sm-4">Surface totale (m2)</label><div class="col-sm-8">{{ form_widget(form.surfaceTotale) }}</div></div>
+            <div class="form-group form-group-sm hide"><label class="control-label col-sm-4">Surface unitaire (m2)</label><div class="col-sm-8">{{ form_widget(form.surfaceUtile) }}</div></div>
+            <div class="form-group form-group-sm"><label class="control-label col-sm-4">Entraxe</label><div class="col-sm-8">{{ form_widget(form.entraxe) }}</div></div>
+            <div class="form-group form-group-sm"><label class="control-label col-sm-4">Photo</label><div class="col-sm-8">{{ form_widget(form.photoFile) }}</div></div>
+          </td>
+        </tr>
+    {% endspaceless %}
+{% endblock %}
+
+{% block _projet_proprietaires_widget %}
+  {% if prototype is defined %}
+      {%- set attr = attr|merge({'data-prototype': form_row(prototype) }) -%}
+  {% endif %}
+
+      <table class="table table-condensed table-form">
+        <thead>
+          <tr>
+            <th style="width:80px;">Parcelles<span class="control-label required"></span></th>
+            <th style="width:70px;">Civilité</th>
+            <th>Identité<span class="control-label required"></span></th>
+            <th style="width:80px;">Qualité <a title="Cacher" class="toggle_column_visibility" href="#"><i class="fa fa-minus-square"></i></a></th>
+            <th style="width:80px;">Accords <a title="Cacher" class="toggle_column_visibility" href="#"><i class="fa fa-minus-square"></i></a></th>
+            <th style="width:120px;">Téléphone <a title="Cacher" class="toggle_column_visibility" href="#"><i class="fa fa-minus-square"></i></a></th>
+            <th>Adresse <a title="Cacher" class="toggle_column_visibility" href="#"><i class="fa fa-minus-square"></i></a></th>
+            <th>Email <a title="Cacher" class="toggle_column_visibility" href="#"><i class="fa fa-minus-square"></i></a></th>
+            <th style="width:90px;">Né le <a title="Cacher" class="toggle_column_visibility" href="#"><i class="fa fa-minus-square"></i></a></th>
+            <th>Né à <a title="Cacher" class="toggle_column_visibility" href="#"><i class="fa fa-minus-square"></i></a></th>
+            <th>Droit <a title="Cacher" class="toggle_column_visibility" href="#"><i class="fa fa-minus-square"></i></a></th>
+            <th>Marital <a title="Cacher" class="toggle_column_visibility" href="#"><i class="fa fa-minus-square"></i></a></th>
+            <th style="width:90px;">Date signature <a title="Cacher" class="toggle_column_visibility" href="#"><i class="fa fa-minus-square"></i></a></th>
+            <th style="width:50px;">Durée <a title="Cacher" class="toggle_column_visibility" href="#"><i class="fa fa-minus-square"></i></a></th>
+            <th style="width:90px;">Date échéance <a title="Cacher" class="toggle_column_visibility" href="#"><i class="fa fa-minus-square"></i></a></th>
+          </tr>
+        </thead>
+        <tbody {{ block('widget_container_attributes') }}>
+        {% for child in form %}
+          {{- form_row(child) -}}
+        {% endfor %}
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="8">
+              <button type="button" id="{{ id }}_add_entry" class="btn btn-primary btn-xs"><i class="fa fa-plus-circle"></i> Ajouter</button>
+              <button type="button" id="{{ id }}_duplicate_entry" class="btn btn-success disabled btn-xs"><i class="fa fa-plus-circle"></i> Dupliquer</button>
+              <button type="button" id="{{ id }}_publish_entry" class="btn btn-success disabled btn-xs"><i class="fa fa-file-word-o"></i> Publier</button>
+              <button type="button" id="{{ id }}_remove_entry" class="btn btn-danger disabled btn-xs"><i class="fa fa-minus-circle"></i> Supprimer</button>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    
+
+{% endblock %}
+
+{% block _projet_proprietaires_entry_row %}
+  {% spaceless %}
+    <tr class="proprietaire_entry">
+      <td>{{ form_widget(form.parcelles) }}</td>
+      <td>{{ form_widget(form.civiliteProprietaire) }}</td>
+      <td>{{ form_widget(form.proprietaire) }}</td>
+      <td>{{ form_widget(form.qualiteProprietaire) }}</td>
+      <td>{{ form_widget(form.accordProprietaire) }}</td>
+      <td>{{ form_widget(form.telephoneProprietaire) }}</td>
+      <td>{{ form_widget(form.adresseProprietaire) }}</td>
+      <td>{{ form_widget(form.emailProprietaire) }}</td>
+      <td>{{ form_widget(form.dateNaissanceProprietaire) }}</td>
+      <td>{{ form_widget(form.lieuNaissanceProprietaire) }}</td>
+      <td>{{ form_widget(form.droitProprietaire) }}</td>
+      <td>{{ form_widget(form.maritalProprietaire) }}</td>
+      <td>{% if form.vars.value.dateSignatureProprietaire is defined %}{{ form_widget(form.dateSignatureProprietaire) }}{% else %}{{ form_widget(form.dateSignatureProprietaire, {'value' : "now"|date("d/m/Y")}) }}{% endif %}</td>
+      <td>{{ form_widget(form.dureeProprietaire) }}</td>
+      <td>{% if form.vars.value.dateEcheanceProprietaire is defined %}{{ form_widget(form.dateEcheanceProprietaire) }}{% else %}{{ form_widget(form.dateEcheanceProprietaire, {'value' : "now"|date("d/m/Y")}) }}{% endif %}</td>
+    </tr>
+    <tr class="exploitant_entry">
+      <td>
+        {% if form.vars.value.proprietaire2 is not defined or not form.vars.value.proprietaire2 %}
+          <a title="Ajouter une ligne" class="unhide_foncier_proprietaire" href="#"><i class="fa fa-plus-square"></i></a>
+        {% endif %}
+      </td>
+      <td>{{ form_widget(form.civiliteExploitant) }}</td>
+      <td>{{ form_widget(form.exploitant) }}</td>
+      <td></td>
+      <td>{{ form_widget(form.accordExploitant) }}</td>
+      <td>{{ form_widget(form.telephoneExploitant) }}</td>
+      <td>{{ form_widget(form.adresseExploitant) }}</td>
+      <td>{{ form_widget(form.emailExploitant) }}</td>
+      <td>{{ form_widget(form.dateNaissanceExploitant) }}</td>
+      <td>{{ form_widget(form.lieuNaissanceExploitant) }}</td>
+      <td>{{ form_widget(form.droitExploitant) }}</td>
+      <td>{{ form_widget(form.maritalExploitant) }}</td>
+      <td>{% if form.vars.value.dateSignatureExploitant is defined %}{{ form_widget(form.dateSignatureExploitant) }}{% else %}{{ form_widget(form.dateSignatureExploitant, {'value' : "now"|date("d/m/Y")}) }}{% endif %}</td>
+      <td></td>
+      <td>{% if form.vars.value.dateEcheanceExploitant is defined %}{{ form_widget(form.dateEcheanceExploitant) }}{% else %}{{ form_widget(form.dateEcheanceExploitant, {'value' : "now"|date("d/m/Y")}) }}{% endif %}</td>
+    </tr>
+    <tr class="proprietaire2_entry {% if form.vars.value.classProprietaire2 is not defined or form.vars.value.classProprietaire2 == 'hide' %}hide{% endif %}">
+      <td></td>
+      <td>{{ form_widget(form.civiliteProprietaire2) }}</td>
+      <td>{{ form_widget(form.proprietaire2) }}</td>
+      <td>{{ form_widget(form.qualiteProprietaire2) }}</td>
+      <td>{{ form_widget(form.accordProprietaire2) }}</td>
+      <td>{{ form_widget(form.telephoneProprietaire2) }}</td>
+      <td>{{ form_widget(form.adresseProprietaire2) }}</td>
+      <td>{{ form_widget(form.emailProprietaire2) }}</td>
+      <td>{{ form_widget(form.dateNaissanceProprietaire2) }}</td>
+      <td>{{ form_widget(form.lieuNaissanceProprietaire2) }}</td>
+      <td>{{ form_widget(form.droitProprietaire2) }}</td>
+      <td>{{ form_widget(form.maritalProprietaire2) }}</td>
+      <td>{% if form.vars.value.dateSignatureProprietaire2 is defined %}{{ form_widget(form.dateSignatureProprietaire2) }}{% else %}{{ form_widget(form.dateSignatureProprietaire2, {'value' : "now"|date("d/m/Y")}) }}{% endif %}</td>
+      <td></td>
+      <td>{% if form.vars.value.dateEcheanceProprietaire2 is defined %}{{ form_widget(form.dateEcheanceProprietaire2) }}{% else %}{{ form_widget(form.dateEcheanceProprietaire2, {'value' : "now"|date("d/m/Y")}) }}{% endif %}</td>
+    </tr>
+  {% endspaceless %}
+{% endblock %}
+
+{% block _projet_enjeuxs_widget %}
+  {% if prototype is defined %}
+      {%- set attr = attr|merge({'data-prototype': form_row(prototype) }) -%}
+  {% endif %}
+
+      <table class="table table-condensed table-form">
+        <thead>
+          <tr>
+            <th>Facteur<span class="control-label required"></span></th>
+            <th>Enjeu<span class="control-label required"></span></th>
+            <th>Risque</th>
+            <th>Note</th>
+          </tr>
+        </thead>
+        <tbody {{ block('widget_container_attributes') }}>
+        {% for child in form %}
+          {{- form_row(child) -}}
+        {% endfor %}
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="8">
+              <button type="button" id="{{ id }}_add_entry" class="btn btn-primary btn-xs"><i class="fa fa-plus-circle"></i> Ajouter</button>
+              <button type="button" id="{{ id }}_remove_entry" class="btn btn-danger btn-xs"><i class="fa fa-minus-circle"></i> Supprimer</button>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    
+
+{% endblock %}
+
+{% block _projet_enjeuxs_entry_row %}
+  {% spaceless %}
+    <tr class="enjeux_entry">
+      <td>{{ form_widget(form.facteur) }}</td>
+      <td>{{ form_widget(form.enjeux) }}</td>
+      <td>{{ form_widget(form.risque) }}</td>
+      <td>{{ form_widget(form.note) }}</td>
+    </tr>
+  {% endspaceless %}
+{% endblock %}
+
+{% block _projet_etats_widget %}
+  {% if prototype is defined %}
+      {%- set attr = attr|merge({'data-prototype': form_row(prototype) }) -%}
+  {% endif %}
+
+    <table class="table table-condensed table-form">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Phase</th>
+          <th>Etat</th>
+          {# <th>Dynamique</th> #}
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody {{ block('widget_container_attributes') }}>
+        {% for child in form %}
+          {{- form_row(child) -}}
+        {% endfor %}
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="8">
+            <button type="button" id="{{ id }}_add_entry" class="btn btn-primary btn-xs"><i class="fa fa-plus-circle"></i> Ajouter</button>
+              <button type="button" id="{{ id }}_remove_entry" class="btn btn-danger btn-xs"><i class="fa fa-minus-circle"></i> Supprimer</button>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+    
+
+{% endblock %}
+
+{% block _projet_etats_entry_row %}
+  {% spaceless %}
+    <tr>
+      <td>{% if form.vars.value.date is defined %}{{ form_widget(form.date) }}{% else %}{{ form_widget(form.date, {'value' : "now"|date("d/m/Y")}) }}{% endif %}</td>
+      <td>{{ form_widget(form.phase) }}</td>
+      <td>{{ form_widget(form.etat) }}{{ form_errors(form.etat) }}</td>
+      {# <td>{{ form_widget(form.dynamique) }}</td> #}
+      <td>{{ form_widget(form.note) }}</td>
+    </tr>
+  {% endspaceless %}
+{% endblock %}
+
+{% block _projet_taches_widget %}
+  {% if prototype is defined %}
+      {%- set attr = attr|merge({'data-prototype': form_row(prototype) }) -%}
+  {% endif %}
+
+    <table class="table table-condensed table-form">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Objet</th>
+          <th>Etat</th>
+          {# <th>Dynamique</th> #}
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody {{ block('widget_container_attributes') }}>
+        {% for child in form %}
+          {{- form_row(child) -}}
+        {% endfor %}
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="8">
+            <button type="button" id="{{ id }}_add_entry" class="btn btn-primary btn-xs"><i class="fa fa-plus-circle"></i> Ajouter</button>
+              <button type="button" id="{{ id }}_remove_entry" class="btn btn-danger btn-xs"><i class="fa fa-minus-circle"></i> Supprimer</button>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+    
+
+{% endblock %}
+
+{% block _projet_taches_entry_row %}
+  {% spaceless %}
+    <tr>
+      <td>{% if form.vars.value.date is defined %}{{ form_widget(form.date) }}{% else %}{{ form_widget(form.date, {'value' : "now"|date("d/m/Y")}) }}{% endif %}</td>
+      <td>{{ form_widget(form.objet) }}</td>
+      <td>{{ form_widget(form.etat) }}</td>
+      {# <td>{{ form_widget(form.dynamique) }}</td> #}
+      <td>{{ form_widget(form.note) }}</td>
+    </tr>
+  {% endspaceless %}
+{% endblock %}
+
+{% block _projet_documents_widget %}
+  {% if prototype is defined %}
+      {%- set attr = attr|merge({'data-prototype': form_row(prototype) }) -%}
+  {% endif %}
+
+    <table class="table table-condensed table-form">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Type</th>
+          <th>Titre</th>
+          <th>Fichier</th>
+          <th>Description</th>
+          <th class="hide2">Plan (?)</th>
+        </tr>
+      </thead>
+      <tbody {{ block('widget_container_attributes') }}>
+        {% for child in form %}
+          {{- form_row(child) -}}
+        {% endfor %}
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="8">
+            <button type="button" id="{{ id }}_add_entry" class="btn btn-primary btn-xs"><i class="fa fa-plus-circle"></i> Ajouter</button>
+              <button type="button" id="{{ id }}_remove_entry" class="btn btn-danger btn-xs"><i class="fa fa-minus-circle"></i> Supprimer</button>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+    
+
+{% endblock %}
+
+{% block _projet_documents_entry_row %}
+  {% spaceless %}
+    <tr>
+      <td>{% if form.vars.value.date is defined %}{{ form_widget(form.date) }}{% else %}{{ form_widget(form.date, {'value' : "now"|date("d/m/Y")}) }}{% endif %}</td>
+      <td>{{ form_widget(form.type) }}</td>
+      <td>{{ form_widget(form.titre) }}</td>
+      <td>{{ form_widget(form.documentFile) }}</td>
+      <td>{{ form_widget(form.description) }}</td>
+      <td class="hide2">{{ form_widget(form.plan) }}</td>
+    </tr>
+  {% endspaceless %}
+{% endblock %}
+
+{% block _projet_concertations_widget %}
+  {% if prototype is defined %}
+      {%- set attr = attr|merge({'data-prototype': form_row(prototype) }) -%}
+  {% endif %}
+
+    <table class="table table-condensed table-form">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Phase</th>
+          <th>Objet</th>
+          <th>Destinataire</th>
+          {# <th>Dynamique</th> #}
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody {{ block('widget_container_attributes') }}>
+        {% for child in form %}
+          {{- form_row(child) -}}
+        {% endfor %}
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="8">
+            <button type="button" id="{{ id }}_add_entry" class="btn btn-primary btn-xs"><i class="fa fa-plus-circle"></i> Ajouter</button>
+              <button type="button" id="{{ id }}_remove_entry" class="btn btn-danger btn-xs"><i class="fa fa-minus-circle"></i> Supprimer</button>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+    
+
+{% endblock %}
+
+{% block _projet_concertations_entry_row %}
+  {% spaceless %}
+    <tr>
+      <td>{% if form.vars.value.date is defined %}{{ form_widget(form.date) }}{% else %}{{ form_widget(form.date, {'value' : "now"|date("d/m/Y")}) }}{% endif %}</td>
+      <td>{{ form_widget(form.phase) }}</td>
+      <td>{{ form_widget(form.objet) }}</td>
+      <td>{{ form_widget(form.destinataire) }}</td>
+      {# <td>{{ form_widget(form.dynamique) }}</td> #}
+      <td>{{ form_widget(form.note) }}</td>
+    </tr>
+  {% endspaceless %}
+{% endblock %}
+
+{% block _projet_parcelles_widget %}
+  {% if prototype is defined %}
+      {%- set attr = attr|merge({'data-prototype': form_row(prototype) }) -%}
+  {% endif %}
+
+    <table class="table table-condensed table-form">
+      <thead>
+        <tr>
+          <th>Parcelle<span class="control-label required"></span></th>
+          <th>Département</th>
+          <th>Commune</th>
+          <th>Lieu-dit</th>
+          <th>Surface (m²)</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody {{ block('widget_container_attributes') }}>
+        {% for child in form %}
+          {{- form_row(child) -}}
+        {% endfor %}
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="8">
+            <button type="button" id="{{ id }}_add_entry" class="btn btn-primary btn-xs"><i class="fa fa-plus-circle"></i> Ajouter</button>
+              <button type="button" id="{{ id }}_remove_entry" class="btn btn-danger btn-xs"><i class="fa fa-minus-circle"></i> Supprimer</button>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+    
+
+{% endblock %}
+
+{% block _projet_parcelles_entry_row %}
+  {% spaceless %}
+    <tr>
+      <td>{{ form_widget(form.nom) }}</td>
+      <td>{{ form_widget(form.departement) }}</td>
+      <td>{{ form_widget(form.commune, {'attr': {'style': 'width:100%'}}) }}</td>
+      <td>{{ form_widget(form.lieuDit) }}</td>
+      <td>{{ form_widget(form.surface) }}</td>
+      <td>{{ form_widget(form.note) }}</td>
+    </tr>
+  {% endspaceless %}
+{% endblock %}
+
+{% block _projet_notes_widget %}
+  {% if prototype is defined %}
+      {%- set attr = attr|merge({'data-prototype': form_row(prototype) }) -%}
+  {% endif %}
+
+    <table class="table table-condensed table-form">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Titre</th>
+          <th>Notes</th>
+          <th>Photo</th>
+        </tr>
+      </thead>
+      <tbody {{ block('widget_container_attributes') }}>
+        {% for child in form %}
+          {{- form_row(child) -}}
+        {% endfor %}
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="8">
+            <button type="button" id="{{ id }}_add_entry" class="btn btn-primary btn-xs"><i class="fa fa-plus-circle"></i> Ajouter</button>
+              <button type="button" id="{{ id }}_remove_entry" class="btn btn-danger btn-xs"><i class="fa fa-minus-circle"></i> Supprimer</button>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+    
+
+{% endblock %}
+
+{% block _projet_notes_entry_row %}
+  {% spaceless %}
+    <tr>
+      <td>{% if form.vars.value.date is defined %}{{ form_widget(form.date) }}{% else %}{{ form_widget(form.date, {'value' : "now"|date("d/m/Y")}) }}{% endif %}</td>
+      <td>{{ form_widget(form.titre) }}</td>
+      <td>{{ form_widget(form.note) }}</td>
+      <td>{{ form_widget(form.photoFile) }}</td>
+    </tr>
+  {% endspaceless %}
+{% endblock %}
+
+{% block _rappel_datas_widget %}
+  {% if prototype is defined %}
+      {%- set attr = attr|merge({'data-prototype': form_row(prototype) }) -%}
+  {% endif %}
+
+    <table class="table table-condensed table-form">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Donnée</th>
+          <th>Valeur</th>
+          <th>Note</th>
+          <th class="hide">Ordre</th>
+        </tr>
+      </thead>
+      <tbody {{ block('widget_container_attributes') }}>
+        {% for child in form %}
+          {{- form_row(child) -}}
+        {% endfor %}
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="8">
+            <button type="button" id="{{ id }}_add_entry" class="btn btn-primary btn-xs"><i class="fa fa-plus-circle"></i> Ajouter</button>
+              <button type="button" id="{{ id }}_remove_entry" class="btn btn-danger btn-xs"><i class="fa fa-minus-circle"></i> Supprimer</button>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+    
+
+{% endblock %}
+
+{% block _rappel_datas_entry_row %}
+  {% spaceless %}
+    <tr>
+      <td class="sort_row"><i class="fa fa-arrows-v" aria-hidden="true"></i></td>
+      <td>{{ form_widget(form.donnee) }}</td>
+      <td>{{ form_widget(form.type) }}</td>
+      <td>{{ form_widget(form.note) }}</td>
+      <td class="hide">{{ form_widget(form.sort) }}</td>
+    </tr>
+  {% endspaceless %}
+{% endblock %}
+
+
+{% block _projet_dateCles_widget %}
+  {% if prototype is defined %}
+      {%- set attr = attr|merge({'data-prototype': form_row(prototype) }) -%}
+  {% endif %}
+
+      <table class="table table-condensed table-form">
+        <thead>
+          <tr>
+            <th>Date<span class="control-label required"></span></th>
+            <th>Evénement<span class="control-label required"></span></th>
+            <th>Description (Autres dates)</th>
+          </tr>
+        </thead>
+        <tbody {{ block('widget_container_attributes') }}>
+        {% for child in form %}
+          {{- form_row(child) -}}
+        {% endfor %}
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="3">
+              <button type="button" id="{{ id }}_add_entry" class="btn btn-primary btn-xs"><i class="fa fa-plus-circle"></i> Ajouter</button>
+              <button type="button" id="{{ id }}_remove_entry" class="btn btn-danger btn-xs"><i class="fa fa-minus-circle"></i> Supprimer</button>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    
+
+{% endblock %}
+
+{% block _projet_dateCles_entry_row %}
+  {% spaceless %}
+    <tr class="dateCle_entry">
+      <td>{% if form.vars.value.date is defined %}{{ form_widget(form.date) }}{% else %}{{ form_widget(form.date, {'value' : "now"|date("d/m/Y")}) }}{% endif %}</td>
+      <td>{{ form_widget(form.code) }}</td>
+      <td>{{ form_widget(form.description) }}</td>
+    </tr>
+  {% endspaceless %}
+{% endblock %}
+
+
+{% block _batiment_nouveau_toitures_widget %}
+    {% if prototype is defined %}
+        {%- set attr = attr|merge({'data-prototype': form_row(prototype) }) -%}
+    {% endif %}
+      <legend style="border-bottom: 0px;">Toiture</legend>
+      <table class="table table-condensed table-form">
+        <tbody {{ block('widget_container_attributes') }}>
+        {% for child in form %}
+            {{- form_row(child) -}}
+        {% endfor %}
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="8">
+                <button type="button" id="{{ id }}_add_entry" class="btn btn-primary btn-xs"><i class="fa fa-plus-circle"></i> Ajouter</button>
+                <button type="button" id="{{ id }}_remove_entry" class="btn btn-danger btn-xs"><i class="fa fa-minus-circle"></i> Supprimer</button>
+            </td>
+          </tr>
+        </tfoot>
+    </table>
+
+
+{% endblock %}
+
+{% block _batiment_nouveau_toitures_entry_row %}
+    {% spaceless %}
+        <tr>
+          <td>
+            <div class="form-group form-group-sm"><label class="control-label col-sm-4">Désignation</label><div class="col-sm-8">{{ form_widget(form.nom) }}</div></div>
+            <div class="form-group form-group-sm"><label class="control-label col-sm-4">Exposition (deg)</label><div class="col-sm-8">{{ form_widget(form.exposition) }}</div></div>
+            <div class="form-group form-group-sm"><label class="control-label col-sm-4">Haut de pente (m)</label><div class="col-sm-8">{{ form_widget(form.hautPente) }}</div></div>
+            <div class="form-group form-group-sm"><label class="control-label col-sm-4">Bas de pente (m)</label><div class="col-sm-8">{{ form_widget(form.basPente) }}</div></div>
+            <div class="form-group form-group-sm"><label class="control-label col-sm-4">Pente calculée (%)</label><div class="col-sm-8">{{ form_widget(form.pente) }}</div></div>
+            <div class="form-group form-group-sm"><label class="control-label col-sm-4">Longueur (m)</label><div class="col-sm-8">{{ form_widget(form.longueur) }}</div></div>
+            <div class="form-group form-group-sm"><label class="control-label col-sm-4">Longueur (m)</label><div class="col-sm-8">{{ form_widget(form.largeur) }}</div></div>
+            <div class="form-group form-group-sm"><label class="control-label col-sm-4">Surface totale (m2)</label><div class="col-sm-8">{{ form_widget(form.surfaceTotale) }}</div></div>
+            <div class="form-group form-group-sm"><label class="control-label col-sm-4">Surface unitaire (m2)</label><div class="col-sm-8">{{ form_widget(form.surfaceUtile) }}</div></div>
+            <div class="form-group form-group-sm"><label class="control-label col-sm-4">Entraxe (m)</label><div class="col-sm-8">{{ form_widget(form.entraxe) }}</div></div>
+            <div class="form-group form-group-sm"><label class="control-label col-sm-4">Photo</label><div class="col-sm-8">{{ form_widget(form.photoFile) }}</div></div>
+          </td>
+        </tr>
+    {% endspaceless %}
+{% endblock %}
