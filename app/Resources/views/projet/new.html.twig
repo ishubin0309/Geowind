@@ -570,7 +570,6 @@
           data: {id: id, confirm: 1},
           dataType: "json",
           success: function (response) {
-              {# console.log(response); #}
               var projet_chefProjet = $('#projet_chefProjet').val();
               $('#projet_chefProjet').html('');
               var first_option = false;
@@ -1208,9 +1207,6 @@
           $('<td></td>').insertAfter($(this).find('td:eq(' + td_index + ')'));
         });
         hidden_columns_proprietaire[table_id][$(this).parents('th').attr('index')] = 1;
-        console.log($(this).parents('th').attr('index'));
-        console.log(hidden_columns_proprietaire);
-        console.log(JSON.stringify(hidden_columns_proprietaire));
         setCookie('hidden_columns_proprietaire', JSON.stringify(hidden_columns_proprietaire), 365);
       } else {
         column_tr_index = $(this).parents('th').prev().attr('index');
@@ -1224,7 +1220,7 @@
     });
     setTimeout(function() {
       $.each(hidden_columns_proprietaire, function(table_id, columns) {
-        $.each(columns, function(td_index, value) {console.log('#' + table_id + ' th[index="' +td_index+ '"]');
+        $.each(columns, function(td_index, value) {
           $('#' + table_id).parents('table').find('th[index="' +td_index+ '"] a.toggle_column_visibility').click();
         });
       });
@@ -1546,7 +1542,7 @@
                 if(!suggestionsArray.includes($(element).find('td:eq(0) input[name]').val().trim())) {
                   suggestionsArray.push($(element).find('td:eq(0) input[name]').val().trim());
                 }
-              });console.log(suggestionsArray);
+              });
               return suggestionsArray;
             }
           }
@@ -1618,9 +1614,6 @@
         } else if(row.attr('class').match('expoitant_entry')) {
           search_found_in_exploitant = search_found;
         } else if(row.attr('class').match('proprietaire2_entry')) {
-          console.log(row.attr('class'));
-          console.log(row.prev().attr('class'));
-          console.log(row.prev().prev().attr('class'));
           if(!search || search_found || search_found_in_proprietaire) {
             row.prev().prev().removeClass('hide');
             row.prev().removeClass('hide');
