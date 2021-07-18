@@ -252,7 +252,7 @@ col-sm-8
 {% block _projet_proprietaires_entry_row %}
   {% spaceless %}
     <tr class="proprietaire_entry">
-      <td>{{ form_widget(form.parcelles) }}</td>
+      <td>{{ form_widget(form.parcelles, {'attr': {'style': 'width:150px'}}) }}</td>
       <td>{{ form_widget(form.civiliteProprietaire) }}</td>
       <td>{{ form_widget(form.proprietaire) }}</td>
       <td>{{ form_widget(form.qualiteProprietaire) }}</td>

@@ -8,6 +8,7 @@
     <title>{% block title %}{{ title is defined ? title : 'Portail' }}{% endblock %}</title>
     <link rel="stylesheet" href="{{ asset('vendor/bootstrap-3.3.7-dist/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('vendor/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap-tagsinput.css') }}">
     <link rel="stylesheet" href="{{ asset('vendor/font-awesome-4.7.0/css/font-awesome.min.css') }}">
     <link rel="stylesheet" href="{{ asset('vendor/select2-4.0.3-dist/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('vendor/DataTables/datatables.min.css') }}">
@@ -27,7 +28,9 @@
       .twitter-typeahead{
         width:100%;
       }
-
+      .bootstrap-tagsinput input {
+        width: 120px;
+      }
       .twitter-typeahead .tt-query,
       .twitter-typeahead .tt-hint {
         margin-bottom: 0;
@@ -201,7 +204,9 @@
     <script src="{{ asset('vendor/SlickGrid-master/slick.dataview.js') }}"></script>
     <script src="{{ asset('vendor/SlickGrid-master/slick.grid.js') }}"></script>
     <script src="{{ asset('vendor/leaflet-svgicon-master/svg-icon.js') }}"></script>
-    <script src="{{ asset('js/typeahead.jquery.js') }}"></script>
+{#    <script src="{{ asset('js/typeahead.jquery.js') }}"></script>#}
+    <script src="{{ asset('js/bootstrap3-typeahead.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap-tagsinput.min.js') }}"></script>
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
     <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>

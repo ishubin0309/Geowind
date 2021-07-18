@@ -735,7 +735,6 @@
           data: {id: id, confirm: 1},
           dataType: "json",
           success: function (response) {
-              {# console.log(response); #}
               var projet_chefProjet = $('#projet_chefProjet').val();
               $('#projet_chefProjet').html('');
               var first_option = false;
@@ -1291,7 +1290,7 @@
         clearBtn: true,
       });
       $('#tab_contacts tbody').append('<tr rel="'+length+'" class="hide"><td>Bailleur</td>><td>-</td><td>-</td></tr><tr rel="'+length+'" class="hide"><td>Exploitant</td><td>-</td><td>-</td></tr><tr rel="'+length+'" class="hide"><td>Vendeur</td><td>-</td><td>-</td></tr>');
-      loadAllTypeheads();
+      loadAllParcellesTags();
     });
 
     $('#projet_proprietaires_duplicate_entry').click(function () {
@@ -1351,7 +1350,7 @@
             });
           });
         }
-        loadAllTypeheads();
+        loadAllParcellesTags();
       }
     });
     function setCookie(cname, cvalue, exdays) {
@@ -1394,9 +1393,6 @@
           $('<td></td>').insertAfter($(this).find('td:eq(' + td_index + ')'));
         });
         hidden_columns_proprietaire[table_id][$(this).parents('th').attr('index')] = 1;
-        console.log($(this).parents('th').attr('index'));
-        console.log(hidden_columns_proprietaire);
-        console.log(JSON.stringify(hidden_columns_proprietaire));
         setCookie('hidden_columns_proprietaire', JSON.stringify(hidden_columns_proprietaire), 365);
       } else {
         column_tr_index = $(this).parents('th').prev().attr('index');
@@ -1410,7 +1406,7 @@
     });
     setTimeout(function() {
       $.each(hidden_columns_proprietaire, function(table_id, columns) {
-        $.each(columns, function(td_index, value) {console.log('#' + table_id + ' th[index="' +td_index+ '"]');
+        $.each(columns, function(td_index, value) {
           $('#' + table_id).parents('table').find('th[index="' +td_index+ '"] a.toggle_column_visibility').click();
         });
       });
@@ -1616,7 +1612,7 @@
         $('#projet_proprietaires_remove_entry').addClass('disabled');
         $('#projet_proprietaires_duplicate_entry').addClass('disabled');
         $('#projet_proprietaires_publish_entry').addClass('disabled');
-        loadAllTypeheads();
+        loadAllParcellesTags();
       }
     });
     $('#projet_proprietaires').on('change', '[id$="_proprietaire"], [id$="_telephoneProprietaire"], [id$="_exploitant"], [id$="_telephoneExploitant"], [id$="_proprietaire2"], [id$="_telephoneProprietaire2"]', function () {
@@ -1694,7 +1690,7 @@
         $('#projet_proprietaires_publish_entry').removeClass('disabled');
       }
     });
-    loadAllTypeheads();
+    loadAllParcellesTags();
     var suggestionsArray = [];
     {% if form.vars.value.parcelles[0] is defined %}
       {% for parcelle in form.vars.value.parcelles %}
@@ -1712,8 +1708,33 @@
           }
         });
       }
-      loadAllTypeheads();
+      loadAllParcellesTags();
     });
+    function loadAllParcellesTags() {
+      if($('#projet_proprietaires tr').length) $('#projet_proprietaires_recherche').removeClass('hide');
+      else $('#projet_proprietaires_recherche').addClass('hide');
+      $('#projet_proprietaires input[id*="_parcelles"]').each(function(i,element) {
+        id = $(this).attr('name').match(/\d+/);
+        id = parseInt(id);
+        
+        $("#projet_proprietaires_"+id+"_parcelles").tagsinput({
+          maxTags: 8,
+          typeahead: {
+            afterSelect: function(val) { this.$element.val(""); },
+            minLength : 0,
+            source: function(query) {
+              suggestionsArray = [];
+              $('#projet_parcelles tr').each(function(i,element) {
+                if(!suggestionsArray.includes($(element).find('td:eq(0) input[name]').val().trim())) {
+                  suggestionsArray.push($(element).find('td:eq(0) input[name]').val().trim());
+                }
+              });console.log(suggestionsArray);
+              return suggestionsArray;
+            }
+          }
+        });
+      });
+    }
     function loadAllTypeheads() {
       if($('#projet_proprietaires tr').length) $('#projet_proprietaires_recherche').removeClass('hide');
       else $('#projet_proprietaires_recherche').addClass('hide');
@@ -1779,9 +1800,6 @@
         } else if(row.attr('class').match('expoitant_entry')) {
           search_found_in_exploitant = search_found;
         } else if(row.attr('class').match('proprietaire2_entry')) {
-          console.log(row.attr('class'));
-          console.log(row.prev().attr('class'));
-          console.log(row.prev().prev().attr('class'));
           if(!search || search_found || search_found_in_proprietaire) {
             row.prev().prev().removeClass('hide');
             row.prev().removeClass('hide');
@@ -2121,7 +2139,6 @@
       $collectionHolderParcelle.append(entry);
       
       $('#projet_parcelles_' + length + '_departement').val($('#projet_departement').val());
-      console.log($('#projet_communes option:selected').val());
       if($('#projet_communes option:selected').length) {
         $('#projet_parcelles_' + length + '_commune').append(new Option($('#projet_communes option:selected').text(), $('#projet_communes option:selected').val()));
         $('#projet_parcelles_' + length + '_commune').val($('#projet_communes option:selected').val());
@@ -2475,10 +2492,13 @@
       if(accords_count) {
         accords_count = 0;
         $('#projet_proprietaires tr.proprietaire_entry').each(function(i,element) {
-          if(!counted_accords.includes($(element).find('td:eq(0) input[name]').val().trim()) && parcelles.includes($(element).find('td:eq(0) input[name]').val().trim()) && $(element).find('td:eq(2) select').val() == 'OUI' && $('#projet_proprietaires tr.exploitant_entry:eq('+i+')').find('td:eq(2) select').val() != 'NON' && $(element).find('.exploitant_entry td:eq(2) select').val() != 'NEGO') {
-            accords_count++;
-            counted_accords.push($(element).find('td:eq(0) input[name]').val().trim());
-          }
+          words = $(element).find('td:eq(0) input[name]').val().split(',');
+          $.each(words, function(i, word) {
+            if(!counted_accords.includes(word) && parcelles.includes(word) && $(element).find('select[id$="_accordProprietaire"]').val() == 'OUI' && $('#projet_proprietaires tr.exploitant_entry:eq('+i+')').find('select[id$="_accordProprietaire"]').val() != 'NON' && $(element).find('.exploitant_entry select[id$="_accordProprietaire"]').val() != 'NEGO') {
+              accords_count++;
+              counted_accords.push(word);
+            }
+          });
         });
       }
       if(parcelles_count) {
