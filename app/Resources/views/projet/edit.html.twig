@@ -251,17 +251,17 @@
             {% if form.vars.value.proprietaires[0] is defined %}
               {% for proprietaire in form.vars.value.proprietaires %}
                 <tr rel="{{ loop.index0 }}" class="{% if not proprietaire.proprietaire %}hide{% endif %}">
-                  <td>Bailleur</td>
+                  <td>Propriétaire</td>
                   <td class="required">{{ proprietaire.proprietaire ? proprietaire.proprietaire : '-' }}</td>
                   <td>{{ proprietaire.telephoneProprietaire ? proprietaire.telephoneProprietaire : '-' }}</td>
                 <tr>
                 <tr rel="{{ loop.index0 }}" class="{% if not proprietaire.proprietaire2 %}hide{% endif %}">
-                  <td>Bailleur 2</td>
+                  <td>Propriétaire 2</td>
                   <td class="required">{{ proprietaire.proprietaire2 ? proprietaire.proprietaire2 : '-' }}</td>
                   <td>{{ proprietaire.telephoneProprietaire2 ? proprietaire.telephoneProprietaire2 : '-' }}</td>
                 <tr>
                 <tr rel="{{ loop.index0 }}" class="{% if not proprietaire.proprietaire3 %}hide{% endif %}">
-                  <td>Bailleur 3</td>
+                  <td>Propriétaire 3</td>
                   <td class="required">{{ proprietaire.proprietaire3 ? proprietaire.proprietaire3 : '-' }}</td>
                   <td>{{ proprietaire.telephoneProprietaire3 ? proprietaire.telephoneProprietaire3 : '-' }}</td>
                 <tr>

@@ -305,10 +305,10 @@ col-sm-8
     <tr class="exploitant_entry">
       <td>
         {% if form.vars.value.proprietaire2 is not defined or not form.vars.value.proprietaire2 or form.vars.value.proprietaire3 is not defined or not form.vars.value.proprietaire3 %}
-          <a style="color: brown;" title="Ajouter une ligne" class="unhide_foncier_proprietaire" href="#"><i class="fa fa-plus-square"></i></a>
+          <a style="color: brown;" title="Ajouter propriétaire" class="unhide_foncier_proprietaire" href="#"><i class="fa fa-plus-square"></i></a>
         {% endif %}
         {% if form.vars.value.exploitant2 is not defined or not form.vars.value.exploitant2 or form.vars.value.exploitant3 is not defined or not form.vars.value.exploitant3 %}
-          &nbsp;&nbsp;<a style="color: forestgreen;" title="Ajouter une ligne" class="unhide_foncier_exploitant" href="#"><i class="fa fa-plus-square"></i></a>
+          &nbsp;&nbsp;<a style="color: forestgreen;" title="Ajouter exploitant" class="unhide_foncier_exploitant" href="#"><i class="fa fa-plus-square"></i></a>
         {% endif %}
       </td>
       <td>{{ form_widget(form.civiliteExploitant) }}</td>
