@@ -1913,49 +1913,11 @@
                 if(!suggestionsArray.includes($(element).find('td:eq(0) input[name]').val().trim())) {
                   suggestionsArray.push($(element).find('td:eq(0) input[name]').val().trim());
                 }
-              });console.log(suggestionsArray);
+              });
               return suggestionsArray;
             }
           }
         });
-      });
-    }
-    function loadAllTypeheads() {
-      if($('#projet_proprietaires tr').length) $('#projet_proprietaires_recherche').removeClass('hide');
-      else $('#projet_proprietaires_recherche').addClass('hide');
-      $('#projet_proprietaires input[id*="_parcelles"]').each(function(i,element) {
-        id = $(this).attr('name').match(/\d+/);
-        id = parseInt(id);
-        foncierTypehead(id);
-      });
-    }
-    function obtainer(query, cb) {
-      var filteredList = $.grep(suggestionsArray, function (item, index) {
-          return item.match(query);
-      });
-
-      mapped = $.map(filteredList, function (item) { return { value: item } });
-      cb(mapped);
-    }
-
-    function foncierTypehead(index) {
-      var quicksearchInput = $("#projet_proprietaires_"+index+"_parcelles");
-      quicksearchInput.typeahead("destroy");
-      quicksearchInput.typeahead({
-          hint: true,
-          highlight: true,
-          minLength: 0
-      }, {
-          name: "noname",
-          displayKey: "value",
-          source: obtainer
-      });
-
-      quicksearchInput.on("click", function () {
-          ev = $.Event("keydown")
-          ev.keyCode = ev.which = 40
-          $(this).trigger(ev)
-          return true
       });
     }
     $('#projet_proprietaires_recherche').on('change', function() {
