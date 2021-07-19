@@ -1524,7 +1524,7 @@
         loadAllParcellesTags();
       }
     });
-    $('#projet_proprietaires').on('change', '[id$="_proprietaire"], [id$="_telephoneProprietaire"], [id$="_proprietaire2"], [id$="_telephoneProprietaire2"], [id$="_proprietaire3"], [id$="_telephoneProprietaire3"], [id$="_exploitant"], [id$="_telephoneExploitant"], [id$="_exploitant2"], [id$="_telephoneExploitant2"], [id$="_exploitant3"], [id$="_telephoneExploitant3"]', function () {
+    $collectionHolderProprietaire.on('change', '[id$="_proprietaire"], [id$="_telephoneProprietaire"], [id$="_proprietaire2"], [id$="_telephoneProprietaire2"], [id$="_proprietaire3"], [id$="_telephoneProprietaire3"], [id$="_exploitant"], [id$="_telephoneExploitant"], [id$="_exploitant2"], [id$="_telephoneExploitant2"], [id$="_exploitant3"], [id$="_telephoneExploitant3"]', function () {
       var id = $(this).attr('id').match(/\d+/);
       id = parseInt(id);
       if($(this).attr('id')=='projet_proprietaires_'+id+'_proprietaire') {
@@ -1535,36 +1535,36 @@
         $('#tab_contacts tbody tr[rel="'+id+'"]:eq(0) td:eq(2)').text($(this).val());
       else if($(this).attr('id')=='projet_proprietaires_'+id+'_proprietaire2') {
         $('#tab_contacts tbody tr[rel="'+id+'"]:eq(1) td:eq(1)').text($(this).val());
-        if($(this).val()) $('#tab_contacts tbody tr[rel="'+id+'"]:eq(2)').removeClass('hide');
+        if($(this).val()) $('#tab_contacts tbody tr[rel="'+id+'"]:eq(1)').removeClass('hide');
         else $('#tab_contacts tbody tr[rel="'+id+'"]:eq(1)').addClass('hide');
       } else if($(this).attr('id')=='projet_proprietaires_'+id+'_telephoneProprietaire2')
         $('#tab_contacts tbody tr[rel="'+id+'"]:eq(1) td:eq(2)').text($(this).val());
       else if($(this).attr('id')=='projet_proprietaires_'+id+'_proprietaire3') {
         $('#tab_contacts tbody tr[rel="'+id+'"]:eq(2) td:eq(1)').text($(this).val());
         if($(this).val()) $('#tab_contacts tbody tr[rel="'+id+'"]:eq(2)').removeClass('hide');
-        else $('#tab_contacts tbody tr[rel="'+id+'"]:eq(1)').addClass('hide');
+        else $('#tab_contacts tbody tr[rel="'+id+'"]:eq(2)').addClass('hide');
       } else if($(this).attr('id')=='projet_proprietaires_'+id+'_telephoneProprietaire3')
         $('#tab_contacts tbody tr[rel="'+id+'"]:eq(2) td:eq(2)').text($(this).val());
       else if($(this).attr('id')=='projet_proprietaires_'+id+'_exploitant') {
         $('#tab_contacts tbody tr[rel="'+id+'"]:eq(3) td:eq(1)').text($(this).val());
-        if($(this).val()) $('#tab_contacts tbody tr[rel="'+id+'"]:eq(1)').removeClass('hide');
-        else $('#tab_contacts tbody tr[rel="'+id+'"]:eq(1)').addClass('hide');
+        if($(this).val()) $('#tab_contacts tbody tr[rel="'+id+'"]:eq(3)').removeClass('hide');
+        else $('#tab_contacts tbody tr[rel="'+id+'"]:eq(3)').addClass('hide');
       } else if($(this).attr('id')=='projet_proprietaires_'+id+'_telephoneExploitant')
         $('#tab_contacts tbody tr[rel="'+id+'"]:eq(3) td:eq(2)').text($(this).val());
       else if($(this).attr('id')=='projet_proprietaires_'+id+'_exploitant2') {
         $('#tab_contacts tbody tr[rel="'+id+'"]:eq(4) td:eq(1)').text($(this).val());
-        if($(this).val()) $('#tab_contacts tbody tr[rel="'+id+'"]:eq(1)').removeClass('hide');
-        else $('#tab_contacts tbody tr[rel="'+id+'"]:eq(1)').addClass('hide');
+        if($(this).val()) $('#tab_contacts tbody tr[rel="'+id+'"]:eq(4)').removeClass('hide');
+        else $('#tab_contacts tbody tr[rel="'+id+'"]:eq(4)').addClass('hide');
       } else if($(this).attr('id')=='projet_proprietaires_'+id+'_telephoneExploitant2')
         $('#tab_contacts tbody tr[rel="'+id+'"]:eq(4) td:eq(2)').text($(this).val());
       else if($(this).attr('id')=='projet_proprietaires_'+id+'_exploitant3') {
         $('#tab_contacts tbody tr[rel="'+id+'"]:eq(5) td:eq(1)').text($(this).val());
-        if($(this).val()) $('#tab_contacts tbody tr[rel="'+id+'"]:eq(1)').removeClass('hide');
-        else $('#tab_contacts tbody tr[rel="'+id+'"]:eq(1)').addClass('hide');
+        if($(this).val()) $('#tab_contacts tbody tr[rel="'+id+'"]:eq(5)').removeClass('hide');
+        else $('#tab_contacts tbody tr[rel="'+id+'"]:eq(5)').addClass('hide');
       } else if($(this).attr('id')=='projet_proprietaires_'+id+'_telephoneExploitant3')
         $('#tab_contacts tbody tr[rel="'+id+'"]:eq(5) td:eq(2)').text($(this).val());
     });
-    $('#projet_proprietaires').on('change', '[id$="_dureeProprietaire"], [id$="_dateSignatureProprietaire"], [id$="_dateSignatureProprietaire2"], [id$="_dateSignatureProprietaire3"], [id$="_dateSignatureExploitant"], [id$="_dateSignatureExploitant2"], [id$="_dateSignatureExploitant3"]', function () {
+    $collectionHolderProprietaire.on('change', '[id$="_dureeProprietaire"], [id$="_dateSignatureProprietaire"], [id$="_dateSignatureProprietaire2"], [id$="_dateSignatureProprietaire3"], [id$="_dateSignatureExploitant"], [id$="_dateSignatureExploitant2"], [id$="_dateSignatureExploitant3"]', function () {
       var id = $(this).attr('id').match(/\d+/);
       id = parseInt(id);
   
@@ -2463,7 +2463,7 @@
     $('#tab_parcelles .btn').on('click', function() {
       countParcelles();
     });
-    $('#projet_proprietaires').on('change typeahead:selected', 'select[id*="_accord"], input[id*="_parcelles"]', function() {
+    $collectionHolderProprietaire.on('change typeahead:selected', 'select[id*="_accord"], input[id*="_parcelles"]', function() {
       countParcelles();
     });
 
