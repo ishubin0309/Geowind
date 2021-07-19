@@ -24,15 +24,15 @@ class ProprietaireType extends AbstractType
                 'required' => true,
             ])
             ->add('proprietaire', TextType::class, [
-                'label' => 'Bailleur',
+                'label' => 'Proprietaire',
                 'required' => true,
             ])
             ->add('proprietaire2', TextType::class, [
-                'label' => 'Vendeur',
+                'label' => 'Proprietaire 2',
                 'required' => false,
             ])
             ->add('proprietaire3', TextType::class, [
-                'label' => 'Vendeur',
+                'label' => 'Proprietaire 3',
                 'required' => false,
             ])
             ->add('telephoneProprietaire', TextType::class, [
@@ -317,11 +317,11 @@ class ProprietaireType extends AbstractType
                 'required' => false,
             ])
             ->add('exploitant2', TextType::class, [
-                'label' => 'Exploitant',
+                'label' => 'Exploitant 2',
                 'required' => false,
             ])
             ->add('exploitant3', TextType::class, [
-                'label' => 'Exploitant',
+                'label' => 'Exploitant 3',
                 'required' => false,
             ])
             ->add('telephoneExploitant', TextType::class, [
