@@ -1282,6 +1282,14 @@
         fields.push(['exploitant_marital', 'field', tr_exploitant.find('input[id$="_maritalExploitant"]').val()]);
     
         if($('#projet_technologie').val() == 'eolienne') {
+          fields.push(['WKN', 'title', '']);
+          fields.push(['WKN_Raison_sociale', 'field', 'WKN France']);
+          fields.push(['Type de groupement', 'field', 'SASU']);
+          fields.push(['WKN_capital_social', 'field', '500000 €']);
+          fields.push(['WKN_siege_social', 'field', 'immeuble « le Sanitat », 10, rue Charles Brunellière 44100 NANTES']);
+          fields.push(['WKN_immatriculation', 'field', 'RCS de Nantes']);
+          fields.push(['WKN_numero', 'field', 'B 443 622 295']);
+          fields.push(['WKN_representant', 'field', 'Roland STANZE']);
           fields.push(['BAIL', 'title', '']);
           fields.push(['montant_base', 'field', 'CINQ CENTS EUROS (500 €)']);
           fields.push(['montant_exploitation', 'field', 'DEUX MILLE CINQ CENTS EUROS (2500€), par an']);
@@ -1321,14 +1329,6 @@
             });
           }
           fields.push(['publish_parcelles', 'field', JSON.stringify(parcellesArray)]);
-          fields.push(['WKN', 'title', '']);
-          fields.push(['WKN_Raison_sociale', 'field', 'WKN France']);
-          fields.push(['Type de groupement', 'field', 'SASU']);
-          fields.push(['WKN_capital_social', 'field', '500000 €']);
-          fields.push(['WKN_siege_social', 'field', 'immeuble « le Sanitat », 10, rue Charles Brunellière 44100 NANTES']);
-          fields.push(['WKN_immatriculation', 'field', 'RCS de Nantes']);
-          fields.push(['WKN_numero', 'field', 'B 443 622 295']);
-          fields.push(['WKN_representant', 'field', 'Roland STANZE']);
           {# fields.push(['Né(e) le', 'field', '']);
           fields.push(['Demeurant à', 'field', '']);
           fields.push(['Représenté(e) par', 'field', '']); #}
@@ -1337,6 +1337,14 @@
           fields.push(['representant_proprietaire', 'field', '']);
           fields.push(['representant_exploitant', 'field', '']);
           fields.push(['representant_wkn', 'field', '']);
+          fields.push(['WKN', 'title', '']);
+          fields.push(['WKN_Raison_sociale', 'field', 'WKN France']);
+          fields.push(['Type de groupement', 'field', 'SASU']);
+          fields.push(['WKN_capital_social', 'field', '500000 €']);
+          fields.push(['WKN_siege_social', 'field', 'immeuble « le Sanitat », 10, rue Charles Brunellière 44100 NANTES']);
+          fields.push(['WKN_immatriculation', 'field', 'RCS de Nantes']);
+          fields.push(['WKN_numero', 'field', 'B 443 622 295']);
+          fields.push(['WKN_representant', 'field', 'Roland STANZE']);
           fields.push(['EXPOSE', 'title', '']);
           var tr_index = $collectionHolderProprietaire.find('tr.info:eq(1)').index() + 1;
           fields.push(['commune', 'field', $('#projet_parcelles_' + (tr_index/2) + '_commune option:selected').text()]);
@@ -1385,14 +1393,6 @@
             });
           }
           fields.push(['publish_parcelles', 'field', JSON.stringify(parcellesArray)]);
-          fields.push(['WKN', 'title', '']);
-          fields.push(['WKN_Raison_sociale', 'field', 'WKN France']);
-          fields.push(['Type de groupement', 'field', 'SASU']);
-          fields.push(['WKN_capital_social', 'field', '500000 €']);
-          fields.push(['WKN_siege_social', 'field', 'immeuble « le Sanitat », 10, rue Charles Brunellière 44100 NANTES']);
-          fields.push(['WKN_immatriculation', 'field', 'RCS de Nantes']);
-          fields.push(['WKN_numero', 'field', 'B 443 622 295']);
-          fields.push(['WKN_representant', 'field', 'Roland STANZE']);
           {# fields.push(['Né(e) le', 'field', '']);
           fields.push(['Demeurant à', 'field', '']);
           fields.push(['Représenté(e) par', 'field', '']); #}
