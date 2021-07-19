@@ -1163,9 +1163,6 @@
       
       $('#tab_contacts tbody').append('<tr rel="'+length+'" class="hide"><td>Propriétaire</td><td>-</td><td>-</td></tr><tr rel="'+length+'" class="hide"><td>Exploitant</td><td>-</td><td>-</td></tr>');
       loadAllParcellesTags();
-      hide_columns('projet_proprietaires', (length * 3));
-      hide_columns('projet_proprietaires', ((length * 3) + 1));
-      hide_columns('projet_proprietaires', ((length * 3) + 2));
     });
 
     $('#projet_proprietaires_duplicate_entry').click(function () {
@@ -1228,74 +1225,6 @@
         loadAllParcellesTags();
       }
     });
-
-    function setCookie(cname, cvalue, exdays) {
-      const d = new Date();
-      d.setTime(d.getTime() + (exdays*24*60*60*1000));
-      let expires = "expires="+ d.toUTCString();
-      document.cookie = cname + "=" + cvalue + ";" + expires + "; path=/;";
-    }
-    function getCookie(cname) {
-      let name = cname + "=";
-      let ca = document.cookie.split(';');
-      for(let i = 0; i < ca.length; i++) {
-        let c = ca[i];
-        while (c.charAt(0) == ' ') {
-          c = c.substring(1);
-        }
-        if (c.indexOf(name) == 0) {
-          return JSON.parse(c.substring(name.length, c.length));
-        }
-      }
-      return {};
-    }
-    $('thead > tr > th').each(function() {
-      $(this).attr('index', $(this).index());
-    });
-    var hidden_columns_proprietaire = getCookie('hidden_columns_proprietaire');
-    $('#tab_foncier').on('click', '.toggle_column_visibility', function (e) {
-      e.preventDefault();
-      table = $(this).parents('table').find('tbody');
-      table_id = $(this).parents('table').find('tbody').attr('id');
-      td_index = $(this).parents('th').index();
-      if (hidden_columns_proprietaire[table_id] === undefined) {
-        hidden_columns_proprietaire[table_id] = {};
-      }
-      if ($(this).find('i').hasClass('fa-minus-square')) {
-        $(this).parents('th').addClass('hide');
-        table.children().find('td:eq(' + td_index + ')').addClass('hide');
-        $('<th style="width: 5px;"><a title="Afficher ' + $(this).parents('th').text() + '" class="toggle_column_visibility" href="#"><i class="fa fa-plus-square"></i></a></th>').insertAfter($(this).parents('th'));
-        table.children().each(function() {
-          $('<td></td>').insertAfter($(this).find('td:eq(' + td_index + ')'));
-        });
-        hidden_columns_proprietaire[table_id][$(this).parents('th').attr('index')] = 1;
-        setCookie('hidden_columns_proprietaire', JSON.stringify(hidden_columns_proprietaire), 365);
-      } else {
-        column_tr_index = $(this).parents('th').prev().attr('index');
-        $(this).parents('th').prev().removeClass('hide');
-        $(this).parents('th').remove();
-        delete hidden_columns_proprietaire[table_id][column_tr_index];
-        table.children().find('td:eq(' + td_index + ')').remove();
-        table.children().find('td:eq(' + (td_index - 1) + ')').removeClass('hide');
-        setCookie('hidden_columns_proprietaire', JSON.stringify(hidden_columns_proprietaire), 365);
-      }
-    });
-    setTimeout(function() {
-      $.each(hidden_columns_proprietaire, function(table_id, columns) {
-        $.each(columns, function(td_index, value) {
-          $('#' + table_id).parents('table').find('th[index="' +td_index+ '"] a.toggle_column_visibility').click();
-        });
-      });
-    }, 2000);
-    function hide_columns(table_id, tr_index) {
-      if (hidden_columns_proprietaire[table_id] !== undefined) {
-        $.each(hidden_columns_proprietaire[table_id], function(td_index, value) {
-          td_index = $('#' + table_id).parents('table').find('th[index="' +td_index+ '"]').index() + 1;
-          $('#' + table_id).find('tr:eq(' + tr_index + ') td:eq(' + (td_index - 1) + ')').addClass('hide');
-          $('<td></td>').insertAfter($('#' + table_id).find('tr:eq(' + tr_index + ') td:eq(' + (td_index - 1) + ')'));
-        });
-      }
-    }
 
     $collectionHolderProprietaire.on('click', '.unhide_foncier_proprietaire', function (e) {
       e.preventDefault();
