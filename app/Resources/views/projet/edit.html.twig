@@ -1898,7 +1898,7 @@
     function loadAllParcellesTags() {
       if($('#projet_proprietaires tr').length) $('#projet_proprietaires_recherche').removeClass('hide');
       else $('#projet_proprietaires_recherche').addClass('hide');
-      $('#projet_proprietaires input[id$"_parcelles"]').each(function(i,element) {
+      $('#projet_proprietaires input[id$="_parcelles"]').each(function(i,element) {
         id = $(this).attr('name').match(/\d+/);
         id = parseInt(id);
         
