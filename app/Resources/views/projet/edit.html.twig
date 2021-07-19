@@ -1583,12 +1583,11 @@
           fields.push(['representant_societe', 'field', '']);
           fields.push(['societe', 'field', 'WKN France']);
           fields.push(['ANNEXES', 'title', '']);
-          var parcelle = tr_proprietaire.find('input[id*="_parcelles"]').val().trim();
+          var selectedParcelles = tr_proprietaire.find('input[id$="_parcelles"]').val().trim().split(',');
           var parcellesArray = [];
           if($('#projet_parcelles tr').length) {
-            selectedParcelles = $(element).find('td:eq(0) input[name]').val().trim().split(',');
             $('#projet_parcelles tr').each(function(i,element) {
-              if(selectedParcelles.includes(parcelle)) {
+              if(selectedParcelles.includes($(element).find('td:eq(0) input[name]').val().trim())) {
                 parcellesArray.push([$(element).find('td:eq(0) input[name]').val(), $(element).find('td:eq(2) select option:selected').text().replace(/\(.+/, '').trim(), $(element).find('td:eq(3) input[name]').val().trim(), $(element).find('td:eq(4) input[name]').val().trim()]);
               }
             });
@@ -1648,12 +1647,11 @@
           fields.push(['representant_societe', 'field', '']);
           fields.push(['laSociete', 'field', 'WKN France']);
           fields.push(['ANNEXES', 'title', '']);
-          var parcelle = tr_proprietaire.find('input[id*="_parcelles"]').val().trim();
+          var selectedParcelles = tr_proprietaire.find('input[id$="_parcelles"]').val().trim().split(',');
           var parcellesArray = [];
           if($('#projet_parcelles tr').length) {
-            selectedParcelles = $(element).find('td:eq(0) input[name]').val().trim().split(',');
             $('#projet_parcelles tr').each(function(i,element) {
-              if(selectedParcelles.includes(parcelle)) {
+              if(selectedParcelles.includes($(element).find('td:eq(0) input[name]').val().trim())) {
                 parcellesArray.push([$(element).find('td:eq(0) input[name]').val(), $(element).find('td:eq(2) select option:selected').text().replace(/\(.+/, '').trim(), $(element).find('td:eq(3) input[name]').val().trim(), $(element).find('td:eq(4) input[name]').val().trim()]);
               }
             });
