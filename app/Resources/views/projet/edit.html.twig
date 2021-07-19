@@ -1586,8 +1586,9 @@
           var parcelle = tr_proprietaire.find('input[id*="_parcelles"]').val().trim();
           var parcellesArray = [];
           if($('#projet_parcelles tr').length) {
+            selectedParcelles = $(element).find('td:eq(0) input[name]').val().trim().split(',');
             $('#projet_parcelles tr').each(function(i,element) {
-              if($(element).find('td:eq(0) input[name]').val().trim() == parcelle) {
+              if(selectedParcelles.includes(parcelle)) {
                 parcellesArray.push([$(element).find('td:eq(0) input[name]').val(), $(element).find('td:eq(2) select option:selected').text().replace(/\(.+/, '').trim(), $(element).find('td:eq(3) input[name]').val().trim(), $(element).find('td:eq(4) input[name]').val().trim()]);
               }
             });
@@ -1650,8 +1651,9 @@
           var parcelle = tr_proprietaire.find('input[id*="_parcelles"]').val().trim();
           var parcellesArray = [];
           if($('#projet_parcelles tr').length) {
+            selectedParcelles = $(element).find('td:eq(0) input[name]').val().trim().split(',');
             $('#projet_parcelles tr').each(function(i,element) {
-              if($(element).find('td:eq(0) input[name]').val().trim() == parcelle) {
+              if(selectedParcelles.includes(parcelle)) {
                 parcellesArray.push([$(element).find('td:eq(0) input[name]').val(), $(element).find('td:eq(2) select option:selected').text().replace(/\(.+/, '').trim(), $(element).find('td:eq(3) input[name]').val().trim(), $(element).find('td:eq(4) input[name]').val().trim()]);
               }
             });
