@@ -519,6 +519,30 @@ class ProprietaireType extends AbstractType
                     'Nu(e)-propriétaire' => 'Nu(e)-propriétaire)',
                 ],
             ])
+			->add('qualiteExploitant', ChoiceType::class, [
+				'label' => 'Qualité"',
+				'required' => false,
+				'choices' => [
+					'Société' => 'Société',
+					'Personne' => 'Personne',
+				],
+			])
+			->add('qualiteExploitant2', ChoiceType::class, [
+				'label' => 'Qualité',
+				'required' => false,
+				'choices' => [
+					'Société' => 'Société',
+					'Personne' => 'Personne',
+				],
+			])
+			->add('qualiteExploitant3', ChoiceType::class, [
+				'label' => 'Qualité',
+				'required' => false,
+				'choices' => [
+					'Société' => 'Société',
+					'Personne' => 'Personne',
+				],
+			])
             ->add('maritalExploitant', ChoiceType::class, [
                 'label' => 'Marital',
                 'required' => false,

@@ -563,6 +563,27 @@ class Proprietaire
      * @ORM\Column(type="string", nullable=true)
      */
     private $droitExploitant3;
+	
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(type="string", nullable=true)
+	 */
+	private $qualiteExploitant;
+	
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(type="string", nullable=true)
+	 */
+	private $qualiteExploitant2;
+	
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(type="string", nullable=true)
+	 */
+	private $qualiteExploitant3;
 
     /**
      * @var string
@@ -1207,6 +1228,21 @@ class Proprietaire
         return $this->droitExploitant3;
     }
 
+    public function getQualiteExploitant()
+    {
+        return $this->qualiteExploitant;
+    }
+
+    public function getQualiteExploitant2()
+    {
+        return $this->qualiteExploitant2;
+    }
+
+    public function getQualiteExploitant3()
+    {
+        return $this->qualiteExploitant3;
+    }
+
     public function getMaritalExploitant()
     {
         return $this->maritalExploitant;
@@ -1467,6 +1503,24 @@ class Proprietaire
         $this->droitExploitant3 = $droitExploitant3;
         return $this;
     }
+	
+	public function setQualiteExploitant($qualiteExploitant)
+	{
+		$this->qualiteExploitant = $qualiteExploitant;
+		return $this;
+	}
+	
+	public function setQualiteExploitant2($qualiteExploitant2)
+	{
+		$this->qualiteExploitant2 = $qualiteExploitant2;
+		return $this;
+	}
+	
+	public function setQualiteExploitant3($qualiteExploitant3)
+	{
+		$this->qualiteExploitant3 = $qualiteExploitant3;
+		return $this;
+	}
 
     public function setMaritalExploitant($maritalExploitant)
     {
