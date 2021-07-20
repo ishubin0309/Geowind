@@ -57,6 +57,13 @@ class Proprietaire
      * @ORM\Column(type="string", nullable=true)
      */
     private $proprietaire3;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $proprietaire4;
     
     /**
      * @var string
@@ -84,6 +91,13 @@ class Proprietaire
      *
      * @ORM\Column(type="string", nullable=true)
      */
+    private $telephoneProprietaire4;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
     private $adresseProprietaire;
     
     /**
@@ -99,6 +113,13 @@ class Proprietaire
      * @ORM\Column(type="string", nullable=true)
      */
     private $adresseProprietaire3;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $adresseProprietaire4;
 
     /**
      * @var string
@@ -120,6 +141,13 @@ class Proprietaire
      * @ORM\Column(type="string", nullable=true)
      */
     private $emailProprietaire3;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $emailProprietaire4;
     
     /**
      * @var string
@@ -141,6 +169,13 @@ class Proprietaire
      * @ORM\Column(type="string", nullable=true)
      */
     private $accordProprietaire3;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $accordProprietaire4;
     
     /**
      * @var DateTime
@@ -172,6 +207,14 @@ class Proprietaire
      * @ORM\Column(type="date", nullable=true)
      * @Assert\Date()
      */
+    private $dateSignatureProprietaire4;
+    
+    /**
+     * @var DateTime
+     *
+     * @ORM\Column(type="date", nullable=true)
+     * @Assert\Date()
+     */
     private $dateEcheanceProprietaire;
     
     /**
@@ -189,6 +232,14 @@ class Proprietaire
      * @Assert\Date()
      */
     private $dateEcheanceProprietaire3;
+    
+    /**
+     * @var DateTime
+     *
+     * @ORM\Column(type="date", nullable=true)
+     * @Assert\Date()
+     */
+    private $dateEcheanceProprietaire4;
     
     /**
      * @var string
@@ -218,6 +269,14 @@ class Proprietaire
      * @Assert\Date()
      */
     private $dateNaissanceProprietaire3;
+    
+    /**
+     * @var DateTime
+     *
+     * @ORM\Column(type="date", nullable=true)
+     * @Assert\Date()
+     */
+    private $dateNaissanceProprietaire4;
 
     /**
      * @var string
@@ -245,6 +304,13 @@ class Proprietaire
      *
      * @ORM\Column(type="string", nullable=true)
      */
+    private $lieuNaissanceProprietaire4;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
     private $civiliteProprietaire;
 
     /**
@@ -260,6 +326,13 @@ class Proprietaire
      * @ORM\Column(type="string", nullable=true)
      */
     private $civiliteProprietaire3;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $civiliteProprietaire4;
 
     /**
      * @var string
@@ -287,6 +360,13 @@ class Proprietaire
      *
      * @ORM\Column(type="string", nullable=true)
      */
+    private $droitProprietaire4;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
     private $qualiteProprietaire;
 
     /**
@@ -308,6 +388,13 @@ class Proprietaire
      *
      * @ORM\Column(type="string", nullable=true)
      */
+    private $qualiteProprietaire4;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
     private $maritalProprietaire;
 
     /**
@@ -323,6 +410,13 @@ class Proprietaire
      * @ORM\Column(type="string", nullable=true)
      */
     private $maritalProprietaire3;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $maritalProprietaire4;
 
     /**
      * @var string
@@ -655,6 +749,11 @@ class Proprietaire
         return $this->proprietaire3;
     }
 
+    public function getProprietaire4()
+    {
+        return $this->proprietaire4;
+    }
+
     public function getTelephoneProprietaire()
     {
         return $this->telephoneProprietaire;
@@ -668,6 +767,11 @@ class Proprietaire
     public function getTelephoneProprietaire3()
     {
         return $this->telephoneProprietaire3;
+    }
+
+    public function getTelephoneProprietaire4()
+    {
+        return $this->telephoneProprietaire4;
     }
 
     public function getAdresseProprietaire()
@@ -685,6 +789,11 @@ class Proprietaire
         return $this->adresseProprietaire3;
     }
 
+    public function getAdresseProprietaire4()
+    {
+        return $this->adresseProprietaire4;
+    }
+
     public function getEmailProprietaire()
     {
         return $this->emailProprietaire;
@@ -698,6 +807,11 @@ class Proprietaire
     public function getEmailProprietaire3()
     {
         return $this->emailProprietaire3;
+    }
+
+    public function getEmailProprietaire4()
+    {
+        return $this->emailProprietaire4;
     }
 
     public function getExploitant()
@@ -794,6 +908,12 @@ class Proprietaire
         return $this;
     }
 
+    public function setProprietaire4($proprietaire4)
+    {
+        $this->proprietaire4 = $proprietaire4;
+        return $this;
+    }
+
     public function setTelephoneProprietaire($telephoneProprietaire)
     {
         $this->telephoneProprietaire = $telephoneProprietaire;
@@ -809,6 +929,12 @@ class Proprietaire
     public function setTelephoneProprietaire3($telephoneProprietaire3)
     {
         $this->telephoneProprietaire3 = $telephoneProprietaire3;
+        return $this;
+    }
+
+    public function setTelephoneProprietaire4($telephoneProprietaire4)
+    {
+        $this->telephoneProprietaire4 = $telephoneProprietaire4;
         return $this;
     }
 
@@ -830,6 +956,12 @@ class Proprietaire
         return $this;
     }
 
+    public function setAdresseProprietaire4($adresseProprietaire4)
+    {
+        $this->adresseProprietaire4 = $adresseProprietaire4;
+        return $this;
+    }
+
     public function setEmailProprietaire($emailProprietaire)
     {
         $this->emailProprietaire = $emailProprietaire;
@@ -845,6 +977,12 @@ class Proprietaire
     public function setEmailProprietaire3($emailProprietaire3)
     {
         $this->emailProprietaire3 = $emailProprietaire3;
+        return $this;
+    }
+
+    public function setEmailProprietaire4($emailProprietaire4)
+    {
+        $this->emailProprietaire4 = $emailProprietaire4;
         return $this;
     }
 
@@ -934,6 +1072,11 @@ class Proprietaire
     {
         return $this->accordProprietaire3;
     }
+    
+    public function getAccordProprietaire4()
+    {
+        return $this->accordProprietaire4;
+    }
 
     public function getAccordExploitant()
     {
@@ -965,6 +1108,12 @@ class Proprietaire
     public function setAccordProprietaire3($accordProprietaire3)
     {
         $this->accordProprietaire3 = $accordProprietaire3;
+        return $this;
+    }
+
+    public function setAccordProprietaire4($accordProprietaire4)
+    {
+        $this->accordProprietaire4 = $accordProprietaire4;
         return $this;
     }
 
@@ -1016,6 +1165,11 @@ class Proprietaire
     {
         return $this->dateSignatureProprietaire3;
     }
+    
+    public function getDateSignatureProprietaire4()
+    {
+        return $this->dateSignatureProprietaire4;
+    }
 
     public function getDateEcheanceProprietaire()
     {
@@ -1030,6 +1184,11 @@ class Proprietaire
     public function getDateEcheanceProprietaire3()
     {
         return $this->dateEcheanceProprietaire3;
+    }
+
+    public function getDateEcheanceProprietaire4()
+    {
+        return $this->dateEcheanceProprietaire4;
     }
     
     public function getDureeProprietaire()
@@ -1055,6 +1214,11 @@ class Proprietaire
         return $this->dateNaissanceProprietaire3;
     }
 
+    public function getDateNaissanceProprietaire4()
+    {
+        return $this->dateNaissanceProprietaire4;
+    }
+
     public function getLieuNaissanceProprietaire()
     {
         return $this->lieuNaissanceProprietaire;
@@ -1068,6 +1232,11 @@ class Proprietaire
 	public function getLieuNaissanceProprietaire3()
 	{
 		return $this->lieuNaissanceProprietaire3;
+	}
+	
+	public function getLieuNaissanceProprietaire4()
+	{
+		return $this->lieuNaissanceProprietaire4;
 	}
 
     public function getCiviliteProprietaire()
@@ -1083,6 +1252,11 @@ class Proprietaire
     public function getCiviliteProprietaire3()
     {
         return $this->civiliteProprietaire3;
+    }
+
+    public function getCiviliteProprietaire4()
+    {
+        return $this->civiliteProprietaire4;
     }
 	
 	public function getDroitProprietaire()
@@ -1100,6 +1274,11 @@ class Proprietaire
 		return $this->droitProprietaire3;
 	}
 	
+	public function getDroitProprietaire4()
+	{
+		return $this->droitProprietaire4;
+	}
+	
 	public function getQualiteProprietaire()
 	{
 		return $this->qualiteProprietaire;
@@ -1113,6 +1292,11 @@ class Proprietaire
 	public function getQualiteProprietaire3()
 	{
 		return $this->qualiteProprietaire3;
+	}
+	
+	public function getQualiteProprietaire4()
+	{
+		return $this->qualiteProprietaire4;
 	}
 
     public function getMaritalProprietaire()
@@ -1128,6 +1312,11 @@ class Proprietaire
     public function getMaritalProprietaire3()
     {
         return $this->maritalProprietaire3;
+    }
+
+    public function getMaritalProprietaire4()
+    {
+        return $this->maritalProprietaire4;
     }
 
     public function getDateSignatureExploitant()
@@ -1276,6 +1465,12 @@ class Proprietaire
         return $this;
     }
 
+    public function setDateSignatureProprietaire4(DateTime $dateSignatureProprietaire4 = null)
+    {
+        $this->dateSignatureProprietaire4 = $dateSignatureProprietaire4;
+        return $this;
+    }
+
     public function setDateEcheanceProprietaire(DateTime $dateEcheanceProprietaire = null)
     {
         $this->dateEcheanceProprietaire = $dateEcheanceProprietaire;
@@ -1291,6 +1486,12 @@ class Proprietaire
     public function setDateEcheanceProprietaire3(DateTime $dateEcheanceProprietaire3 = null)
     {
         $this->dateEcheanceProprietaire3 = $dateEcheanceProprietaire3;
+        return $this;
+    }
+
+    public function setDateEcheanceProprietaire4(DateTime $dateEcheanceProprietaire4 = null)
+    {
+        $this->dateEcheanceProprietaire4 = $dateEcheanceProprietaire4;
         return $this;
     }
 
@@ -1318,6 +1519,12 @@ class Proprietaire
         return $this;
     }
 
+    public function setDateNaissanceProprietaire4(DateTime $dateNaissanceProprietaire4 = null)
+    {
+        $this->dateNaissanceProprietaire4 = $dateNaissanceProprietaire4;
+        return $this;
+    }
+
     public function setLieuNaissanceProprietaire($lieuNaissanceProprietaire)
     {
         $this->lieuNaissanceProprietaire = $lieuNaissanceProprietaire;
@@ -1333,6 +1540,12 @@ class Proprietaire
     public function setLieuNaissanceProprietaire3($lieuNaissanceProprietaire3)
     {
         $this->lieuNaissanceProprietaire3 = $lieuNaissanceProprietaire3;
+        return $this;
+    }
+
+    public function setLieuNaissanceProprietaire4($lieuNaissanceProprietaire4)
+    {
+        $this->lieuNaissanceProprietaire4 = $lieuNaissanceProprietaire4;
         return $this;
     }
 
@@ -1354,6 +1567,12 @@ class Proprietaire
         return $this;
     }
 
+    public function setCiviliteProprietaire4($civiliteProprietaire4)
+    {
+        $this->civiliteProprietaire4 = $civiliteProprietaire4;
+        return $this;
+    }
+
     public function setDroitProprietaire($droitProprietaire)
     {
         $this->droitProprietaire = $droitProprietaire;
@@ -1372,6 +1591,12 @@ class Proprietaire
         return $this;
     }
 
+    public function setDroitProprietaire4($droitProprietaire4)
+    {
+        $this->droitProprietaire4 = $droitProprietaire4;
+        return $this;
+    }
+
     public function setQualiteProprietaire($qualiteProprietaire)
     {
         $this->qualiteProprietaire = $qualiteProprietaire;
@@ -1387,6 +1612,12 @@ class Proprietaire
     public function setQualiteProprietaire3($qualiteProprietaire3)
     {
         $this->qualiteProprietaire3 = $qualiteProprietaire3;
+        return $this;
+    }
+
+    public function setQualiteProprietaire4($qualiteProprietaire4)
+    {
+        $this->qualiteProprietaire4 = $qualiteProprietaire4;
         return $this;
     }
 

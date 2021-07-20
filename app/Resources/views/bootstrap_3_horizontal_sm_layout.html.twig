@@ -302,9 +302,26 @@ col-sm-8
       <td>{% if form.vars.value.dureeProprietaire is defined %}{{ form.vars.value.dureeProprietaire }}{% endif %}</td>
       <td>{% if form.vars.value.dateEcheanceProprietaire3 is defined %}{{ form_widget(form.dateEcheanceProprietaire3) }}{% else %}{{ form_widget(form.dateEcheanceProprietaire3, {'value' : "now"|date("d/m/Y")}) }}{% endif %}</td>
     </tr>
+    <tr class="proprietaire4_entry {% if form.vars.value.proprietaire4 is not defined or not form.vars.value.proprietaire4 %}hide{% endif %}">
+      <td></td>
+      <td>{{ form_widget(form.civiliteProprietaire4) }}</td>
+      <td>{{ form_widget(form.proprietaire4) }}</td>
+      <td>{{ form_widget(form.qualiteProprietaire4) }}</td>
+      <td>{{ form_widget(form.accordProprietaire4) }}</td>
+      <td>{{ form_widget(form.telephoneProprietaire4) }}</td>
+      <td>{{ form_widget(form.adresseProprietaire4) }}</td>
+      <td>{{ form_widget(form.emailProprietaire4) }}</td>
+      <td>{{ form_widget(form.dateNaissanceProprietaire4) }}</td>
+      <td>{{ form_widget(form.lieuNaissanceProprietaire4) }}</td>
+      <td>{{ form_widget(form.droitProprietaire4) }}</td>
+      <td>{{ form_widget(form.maritalProprietaire4) }}</td>
+      <td>{% if form.vars.value.dateSignatureProprietaire4 is defined %}{{ form_widget(form.dateSignatureProprietaire4) }}{% else %}{{ form_widget(form.dateSignatureProprietaire4, {'value' : "now"|date("d/m/Y")}) }}{% endif %}</td>
+      <td>{% if form.vars.value.dureeProprietaire is defined %}{{ form.vars.value.dureeProprietaire }}{% endif %}</td>
+      <td>{% if form.vars.value.dateEcheanceProprietaire4 is defined %}{{ form_widget(form.dateEcheanceProprietaire4) }}{% else %}{{ form_widget(form.dateEcheanceProprietaire4, {'value' : "now"|date("d/m/Y")}) }}{% endif %}</td>
+    </tr>
     <tr class="exploitant_entry">
       <td>
-        {% if form.vars.value.proprietaire2 is not defined or not form.vars.value.proprietaire2 or form.vars.value.proprietaire3 is not defined or not form.vars.value.proprietaire3 %}
+        {% if form.vars.value.proprietaire2 is not defined or not form.vars.value.proprietaire2 or form.vars.value.proprietaire3 is not defined or not form.vars.value.proprietaire3 or form.vars.value.proprietaire4 is not defined or not form.vars.value.proprietaire4 %}
           <a title="Ajouter propriétaire" class="unhide_foncier_proprietaire btn btn-xs btn-danger" href="#"><i class="fa fa-plus-square"></i> Prop.</a>
         {% endif %}
         {% if form.vars.value.exploitant2 is not defined or not form.vars.value.exploitant2 or form.vars.value.exploitant3 is not defined or not form.vars.value.exploitant3 %}

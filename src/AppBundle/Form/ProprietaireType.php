@@ -35,6 +35,10 @@ class ProprietaireType extends AbstractType
                 'label' => 'Proprietaire 3',
                 'required' => false,
             ])
+            ->add('proprietaire4', TextType::class, [
+                'label' => 'Proprietaire 4',
+                'required' => false,
+            ])
             ->add('telephoneProprietaire', TextType::class, [
                 'label' => 'Téléphone',
                 'required' => false,
@@ -44,6 +48,10 @@ class ProprietaireType extends AbstractType
                 'required' => false,
             ])
             ->add('telephoneProprietaire3', TextType::class, [
+                'label' => 'Téléphone',
+                'required' => false,
+            ])
+            ->add('telephoneProprietaire4', TextType::class, [
                 'label' => 'Téléphone',
                 'required' => false,
             ])
@@ -59,6 +67,10 @@ class ProprietaireType extends AbstractType
                 'label' => 'Adresse',
                 'required' => false,
             ])
+            ->add('adresseProprietaire4', TextType::class, [
+                'label' => 'Adresse',
+                'required' => false,
+            ])
             ->add('emailProprietaire', EmailType::class, [
                 'label' => 'Email',
                 'required' => false,
@@ -68,6 +80,10 @@ class ProprietaireType extends AbstractType
                 'required' => false,
             ])
             ->add('emailProprietaire3', EmailType::class, [
+                'label' => 'Email',
+                'required' => false,
+            ])
+            ->add('emailProprietaire4', EmailType::class, [
                 'label' => 'Email',
                 'required' => false,
             ])
@@ -98,6 +114,15 @@ class ProprietaireType extends AbstractType
                     'NEGO' => 'NEGO',
                 ],
             ])
+            ->add('accordProprietaire4', ChoiceType::class, [
+                'label' => 'Accord',
+                'required' => false,
+                'choices' => [
+                    'OUI' => 'OUI',
+                    'NON' => 'NON',
+                    'NEGO' => 'NEGO',
+                ],
+            ])
             ->add('dateSignatureProprietaire', DatePickerType::class, [
                 'label' => 'Date signature',
                 'widget' => 'single_text',
@@ -119,6 +144,13 @@ class ProprietaireType extends AbstractType
                 'html5' => false,
                 'required' => false,
             ])
+            ->add('dateSignatureProprietaire4', DatePickerType::class, [
+                'label' => 'Date signature',
+                'widget' => 'single_text',
+                'format' => 'dd/MM/yyyy',
+                'html5' => false,
+                'required' => false,
+            ])
             ->add('dateEcheanceProprietaire', DatePickerType::class, [
                 'label' => 'Date échéance',
                 'widget' => 'single_text',
@@ -134,6 +166,13 @@ class ProprietaireType extends AbstractType
                 'required' => false,
             ])
             ->add('dateEcheanceProprietaire3', DatePickerType::class, [
+                'label' => 'Date échéance',
+                'widget' => 'single_text',
+                'format' => 'dd/MM/yyyy',
+                'html5' => false,
+                'required' => false,
+            ])
+            ->add('dateEcheanceProprietaire4', DatePickerType::class, [
                 'label' => 'Date échéance',
                 'widget' => 'single_text',
                 'format' => 'dd/MM/yyyy',
@@ -165,6 +204,13 @@ class ProprietaireType extends AbstractType
                 'html5' => false,
                 'required' => false,
             ])
+            ->add('dateNaissanceProprietaire4', DatePickerType::class, [
+                'label' => 'Date naissance',
+                'widget' => 'single_text',
+                'format' => 'dd/MM/yyyy',
+                'html5' => false,
+                'required' => false,
+            ])
             ->add('lieuNaissanceProprietaire', TextType::class, [
                 'label' => 'Lieu naissance',
                 'required' => false,
@@ -174,6 +220,10 @@ class ProprietaireType extends AbstractType
                 'required' => false,
             ])
             ->add('lieuNaissanceProprietaire3', TextType::class, [
+                'label' => 'Lieu naissance',
+                'required' => false,
+            ])
+            ->add('lieuNaissanceProprietaire4', TextType::class, [
                 'label' => 'Lieu naissance',
                 'required' => false,
             ])
@@ -196,6 +246,15 @@ class ProprietaireType extends AbstractType
                 ],
             ])
             ->add('civiliteProprietaire3', ChoiceType::class, [
+                'label' => 'Civilité',
+                'required' => false,
+                'choices' => [
+                    'Mr' => 'Mr',
+                    'Mme' => 'Mme',
+                    'Mlle' => 'Mlle'
+                ],
+            ])
+            ->add('civiliteProprietaire4', ChoiceType::class, [
                 'label' => 'Civilité',
                 'required' => false,
                 'choices' => [
@@ -243,6 +302,19 @@ class ProprietaireType extends AbstractType
                     'Exploitant' => 'Exploitant',
                 ],
             ])
+            ->add('droitProprietaire4', ChoiceType::class, [
+                'label' => 'Droit',
+                'required' => false,
+                'choices' => [
+                    'Propriétaire' => 'Propriétaire',
+                    'Indivisaire' => 'Indivisaire',
+                    'Usufruitier' => 'Usufruitier',
+                    'Usufruitiere' => 'Usufruitiere',
+                    'Nu-propriétaire' => 'Nu-propriétaire',
+                    'Nue-propriétaire' => 'Nue-propriétaire',
+                    'Exploitant' => 'Exploitant',
+                ],
+            ])
             ->add('qualiteProprietaire', ChoiceType::class, [
                 'label' => 'Qualité"',
                 'required' => false,
@@ -260,6 +332,14 @@ class ProprietaireType extends AbstractType
                 ],
             ])
             ->add('qualiteProprietaire3', ChoiceType::class, [
+                'label' => 'Qualité',
+                'required' => false,
+                'choices' => [
+					'Société' => 'Société',
+					'Personne' => 'Personne',
+                ],
+            ])
+            ->add('qualiteProprietaire4', ChoiceType::class, [
                 'label' => 'Qualité',
                 'required' => false,
                 'choices' => [
@@ -298,6 +378,21 @@ class ProprietaireType extends AbstractType
                 ],
             ])
             ->add('maritalProprietaire3', ChoiceType::class, [
+                'label' => 'Marital',
+                'required' => false,
+                'choices' => [
+                    'Célibataire' => 'Célibataire',
+                    'Veuf' => 'Veuf',
+                    'Veuve' => 'Veuve',
+                    'Pacsé' => 'Pacsé',
+                    'Pacsée' => 'Pacsée',
+                    'Marié' => 'Marié',
+                    'Mariée' => 'Mariée',
+                    'Séparé' => 'Séparé',
+                    'Séparée' => 'Séparée',
+                ],
+            ])
+            ->add('maritalProprietaire4', ChoiceType::class, [
                 'label' => 'Marital',
                 'required' => false,
                 'choices' => [
