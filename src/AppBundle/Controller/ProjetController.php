@@ -822,7 +822,7 @@ class ProjetController extends Controller
 			$personnesPhysiquesRow = '';
 			for ($i=0; $i <= 4; $i++) {
 				$j = $i > 0 ? $i : '';
-				if (isset($_POST['{proprietaire' . $j . '_identite}']) && $_POST['{proprietaire' . $j . '_identite}']) {
+				if (isset($_POST['{proprietaire' . $j . '_identite}']) && $_POST['{proprietaire' . $j . '_identite}'] && isset($_POST['{proprietaire' . $j . '_qualite}']) && $_POST['{proprietaire' . $j . '_qualite}'] == 'Personne') {
 					$personnesPhysiquesRowCopy2 = $personnesPhysiquesRowCopy;
 					$postArray = ['{proprietaire_civilite}', '{proprietaire_identite}', '{proprietaire_ne_le}', '{proprietaire_ne_a}', '{proprietaire_adresse}', '{proprietaire_droit}', '{proprietaire_marital}', '{proprietaire_qualite}'];
 					foreach ($postArray as $post) {
