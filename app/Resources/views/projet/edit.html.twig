@@ -1512,37 +1512,6 @@
         fields.push(['exploitant_ne_a', 'field', tr_exploitant.find('input[id$="_lieuNaissanceExploitant"]').val()]);
         fields.push(['exploitant_droit', 'field', tr_exploitant.find('input[id$="_droitExploitant"]').val()]);
         fields.push(['exploitant_marital', 'field', tr_exploitant.find('input[id$="_maritalExploitant"]').val()]);
-        
-        if (tr_proprietaire2.find('input[id$="_proprietaire2"]').val() && tr_proprietaire2.find('select[id$="_qualiteProprietaire2"]').val() == 'Personne') {
-          fields.push(['proprietaire2_civilite', 'field', tr_proprietaire2.find('select[id$="_civiliteProprietaire2"]').val()]);
-          fields.push(['proprietaire2_identite', 'field', tr_proprietaire2.find('input[id$="_proprietaire2"]').val()]);
-          fields.push(['proprietaire2_qualite', 'field', tr_proprietaire2.find('select[id$="_qualiteProprietaire2"]').val()]);
-          fields.push(['proprietaire2_adresse', 'field', tr_proprietaire2.find('input[id$="_adresseProprietaire2"]').val()]);
-          fields.push(['proprietaire2_droit', 'field', tr_proprietaire2.find('input[id$="_droitProprietaire2"]').val()]);
-          fields.push(['proprietaire2_marital', 'field', tr_proprietaire2.find('input[id$="_maritalProprietaire2"]').val()]);
-          fields.push(['proprietaire2_ne_le', 'field', tr_proprietaire2.find('input[id$="_dateNaissanceProprietaire2"]').val()]);
-          fields.push(['proprietaire2_ne_a', 'field', tr_proprietaire2.find('input[id$="_lieuNaissanceProprietaire2"]').val()]);
-        }
-        if (tr_proprietaire3.find('input[id$="_proprietaire3"]').val() && tr_proprietaire3.find('select[id$="_qualiteProprietaire3"]').val() == 'Personne') {
-          fields.push(['proprietaire3_civilite', 'field', tr_proprietaire3.find('select[id$="_civiliteProprietaire3"]').val()]);
-          fields.push(['proprietaire3_identite', 'field', tr_proprietaire3.find('input[id$="_proprietaire3"]').val()]);
-          fields.push(['proprietaire3_qualite', 'field', tr_proprietaire3.find('select[id$="_qualiteProprietaire3"]').val()]);
-          fields.push(['proprietaire3_adresse', 'field', tr_proprietaire3.find('input[id$="_adresseProprietaire3"]').val()]);
-          fields.push(['proprietaire3_droit', 'field', tr_proprietaire3.find('input[id$="_droitProprietaire3"]').val()]);
-          fields.push(['proprietaire3_marital', 'field', tr_proprietaire3.find('input[id$="_maritalProprietaire3"]').val()]);
-          fields.push(['proprietaire3_ne_le', 'field', tr_proprietaire3.find('input[id$="_dateNaissanceProprietaire3"]').val()]);
-          fields.push(['proprietaire3_ne_a', 'field', tr_proprietaire3.find('input[id$="_lieuNaissanceProprietaire3"]').val()]);
-        }
-        if (tr_proprietaire4.find('input[id$="_proprietaire4"]').val() && tr_proprietaire4.find('select[id$="_qualiteProprietaire4"]').val() == 'Personne') {
-          fields.push(['proprietaire4_civilite', 'field', tr_proprietaire4.find('select[id$="_civiliteProprietaire4"]').val()]);
-          fields.push(['proprietaire4_identite', 'field', tr_proprietaire4.find('input[id$="_proprietaire4"]').val()]);
-          fields.push(['proprietaire4_qualite', 'field', tr_proprietaire4.find('select[id$="_qualiteProprietaire4"]').val()]);
-          fields.push(['proprietaire4_adresse', 'field', tr_proprietaire4.find('input[id$="_adresseProprietaire4"]').val()]);
-          fields.push(['proprietaire4_droit', 'field', tr_proprietaire4.find('input[id$="_droitProprietaire4"]').val()]);
-          fields.push(['proprietaire4_marital', 'field', tr_proprietaire4.find('input[id$="_maritalProprietaire4"]').val()]);
-          fields.push(['proprietaire4_ne_le', 'field', tr_proprietaire4.find('input[id$="_dateNaissanceProprietaire4"]').val()]);
-          fields.push(['proprietaire4_ne_a', 'field', tr_proprietaire4.find('input[id$="_lieuNaissanceProprietaire4"]').val()]);
-        }
 
         if($('#projet_technologie').val() == 'eolienne') {
           fields.push(['WKN', 'title', '']);
@@ -1660,6 +1629,36 @@
           fields.push(['Demeurant à', 'field', '']);
           fields.push(['Représenté(e) par', 'field', '']); #}
         }
+        //if (tr_proprietaire2.find('input[id$="_proprietaire2"]').val() && tr_proprietaire2.find('select[id$="_qualiteProprietaire2"]').val() == 'Personne') {
+          fields.push(['proprietaire2_civilite', 'field', tr_proprietaire2.find('select[id$="_civiliteProprietaire2"]').val()]);
+          fields.push(['proprietaire2_identite', 'field', tr_proprietaire2.find('input[id$="_proprietaire2"]').val()]);
+          fields.push(['proprietaire2_qualite', 'field', tr_proprietaire2.find('select[id$="_qualiteProprietaire2"]').val()]);
+          fields.push(['proprietaire2_adresse', 'field', tr_proprietaire2.find('input[id$="_adresseProprietaire2"]').val()]);
+          fields.push(['proprietaire2_droit', 'field', tr_proprietaire2.find('input[id$="_droitProprietaire2"]').val()]);
+          fields.push(['proprietaire2_marital', 'field', tr_proprietaire2.find('input[id$="_maritalProprietaire2"]').val()]);
+          fields.push(['proprietaire2_ne_le', 'field', tr_proprietaire2.find('input[id$="_dateNaissanceProprietaire2"]').val()]);
+          fields.push(['proprietaire2_ne_a', 'field', tr_proprietaire2.find('input[id$="_lieuNaissanceProprietaire2"]').val()]);
+        }
+        //if (tr_proprietaire3.find('input[id$="_proprietaire3"]').val() && tr_proprietaire3.find('select[id$="_qualiteProprietaire3"]').val() == 'Personne') {
+        fields.push(['proprietaire3_civilite', 'field', tr_proprietaire3.find('select[id$="_civiliteProprietaire3"]').val()]);
+        fields.push(['proprietaire3_identite', 'field', tr_proprietaire3.find('input[id$="_proprietaire3"]').val()]);
+        fields.push(['proprietaire3_qualite', 'field', tr_proprietaire3.find('select[id$="_qualiteProprietaire3"]').val()]);
+        fields.push(['proprietaire3_adresse', 'field', tr_proprietaire3.find('input[id$="_adresseProprietaire3"]').val()]);
+        fields.push(['proprietaire3_droit', 'field', tr_proprietaire3.find('input[id$="_droitProprietaire3"]').val()]);
+        fields.push(['proprietaire3_marital', 'field', tr_proprietaire3.find('input[id$="_maritalProprietaire3"]').val()]);
+        fields.push(['proprietaire3_ne_le', 'field', tr_proprietaire3.find('input[id$="_dateNaissanceProprietaire3"]').val()]);
+        fields.push(['proprietaire3_ne_a', 'field', tr_proprietaire3.find('input[id$="_lieuNaissanceProprietaire3"]').val()]);
+        //}
+        //if (tr_proprietaire4.find('input[id$="_proprietaire4"]').val() && tr_proprietaire4.find('select[id$="_qualiteProprietaire4"]').val() == 'Personne') {
+        fields.push(['proprietaire4_civilite', 'field', tr_proprietaire4.find('select[id$="_civiliteProprietaire4"]').val()]);
+        fields.push(['proprietaire4_identite', 'field', tr_proprietaire4.find('input[id$="_proprietaire4"]').val()]);
+        fields.push(['proprietaire4_qualite', 'field', tr_proprietaire4.find('select[id$="_qualiteProprietaire4"]').val()]);
+        fields.push(['proprietaire4_adresse', 'field', tr_proprietaire4.find('input[id$="_adresseProprietaire4"]').val()]);
+        fields.push(['proprietaire4_droit', 'field', tr_proprietaire4.find('input[id$="_droitProprietaire4"]').val()]);
+        fields.push(['proprietaire4_marital', 'field', tr_proprietaire4.find('input[id$="_maritalProprietaire4"]').val()]);
+        fields.push(['proprietaire4_ne_le', 'field', tr_proprietaire4.find('input[id$="_dateNaissanceProprietaire4"]').val()]);
+        fields.push(['proprietaire4_ne_a', 'field', tr_proprietaire4.find('input[id$="_lieuNaissanceProprietaire4"]').val()]);
+        //}
         if (publish_form.text().trim().length == 0 ) {
           publish_form.append('<input type="hidden" name="projet_technologie" value="' + $('#projet_technologie').val() + '">');
           $.each(fields, function(index, field) {
