@@ -208,25 +208,25 @@ col-sm-8
   {% if prototype is defined %}
       {%- set attr = attr|merge({'data-prototype': form_row(prototype) }) -%}
   {% endif %}
-
-      <table class="table table-condensed table-form">
+    <div class="table-responsive">
+      <table style="width: 1800px" class="table table-condensed table-form">
         <thead>
           <tr>
-            <th style="width:80px;">Parcelles<span class="control-label required"></span></th>
-            <th style="width:70px;">Civilité</th>
+            <th style2="width:80px;">Parcelles<span class="control-label required"></span></th>
+            <th style2="width:70px;">Civilité</th>
             <th>Identité<span class="control-label required"></span></th>
-            <th style="width:80px;">Qualité</th>
-            <th style="width:80px;">Accords</th>
-            <th style="width:120px;">Téléphone</th>
+            <th style2="width:80px;">Qualité</th>
+            <th style2="width:80px;">Accords</th>
+            <th style2="width:120px;">Téléphone</th>
             <th>Adresse</th>
             <th>Email</th>
-            <th style="width:90px;">Né le</th>
+            <th style2="width:90px;">Né le</th>
             <th>Né à</th>
             <th>Droit</th>
             <th>Marital</th>
-            <th style="width:90px;">Date signature</th>
-            <th style="width:50px;">Durée</th>
-            <th style="width:90px;">Date échéance</th>
+            <th style2="width:90px;">Date signature</th>
+            <th style2="width:50px;">Durée</th>
+            <th style2="width:90px;">Date échéance</th>
           </tr>
         </thead>
         <tbody {{ block('widget_container_attributes') }}>
@@ -245,6 +245,7 @@ col-sm-8
           </tr>
         </tfoot>
       </table>
+    </div>
     
 
 {% endblock %}
