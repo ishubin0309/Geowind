@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
-{% set title = 'Modifier ' ~ projet %}
-{% set item = 'afficher' %}
+{% set title = 'Nouvelle fiche' %}
+{% set item = 'creer' %}
 
 {% block css %}
   <link rel="stylesheet" href="{{ asset('vendor/Leaflet.markercluster-1.1.0/dist/MarkerCluster.css') }}">
@@ -40,128 +40,45 @@
   tr.color-cyan input, tr.color-cyan select {
     color: cyan;
   }
-  .chat-online {
-    color: #34ce57
-  }
-  .chat-offline {
-    color: #e4606d
-  }
-  .chat-messages {
-    display: flex;
-    flex-direction: column;
-    {# max-height: 800px;
-    overflow-y: scroll #}
-  }
-  .chat-message-left,
-  .chat-message-right {
-    display: flex;
-    flex-shrink: 0
-  }
-  .chat-message-left {
-    margin-right: auto
-  }
-  .chat-message-right {
-    flex-direction: row-reverse;
-    margin-left: auto
-  }
-  .p-4 {
-    padding: 1.5rem !important;
-  }
-  .pb-4, .py-4 {
-    padding-bottom: 1.5rem !important;
-  }
-  .mb-4, .my-4 {
-    margin-bottom: 1.5rem !important;
-  }
-  .font-weight-bold {
-    font-weight: 700 !important;
-  }
-  .mb-1, .my-1 {
-    margin-bottom: .25rem !important;
-  }
-  .pl-3, .px-3 {
-    padding-left: 1rem !important;
-  }
-  .pr-3, .px-3 {
-    padding-right: 1rem !important;
-  }
-  .pb-2, .py-2 {
-    padding-bottom: .5rem !important;
-  }
-  .pt-2, .py-2 {
-    padding-top: .5rem !important;
-  }
-  .mr-3, .mx-3 {
-    margin-right: 1rem !important;
-  }
-  .ml-3, .mx-3 {
-    margin-left: 1rem !important;
-  }
-  .bg-light {
-    background-color: #f8f9fa !important;
-  }
-  .bg-gray {
-    background-color: gray !important;
-  }
-  .border-bottom {
-    border-bottom: 1px solid #dee2e6 !important;
-    margin-bottom: .5rem !important;
-  }
-  .border-top {
-    border-top: 1px solid #dee2e6 !important;
-    margin-top: .5rem !important;
-  }
-  .px-4 {
-    padding-right: 1.5rem !important;
-    padding-left: 1.5rem !important;
-  }
-  .py-3 {
-    padding-top: 1rem !important;
-    padding-bottom: 1rem !important;
-  }
   </style>
+
   {{ form_start(form) }}
   <div class="container-fluid">
-    <nav class="navbar navbar-default">
-      <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nouveau_projet_nav" aria-expanded="false">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">{# <img alt="Brand" width="20"  src="{{ asset('favicon.png') }}"> #}</a>
-        </div>
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nouveau_projet_nav" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">{# <img alt="Brand" width="20"  src="{{ asset('favicon.png') }}"> #}</a>
+      </div>
 
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="nouveau_projet_nav">
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="#" rel="tab_localisation">Localisation</a></li>
-            <li><a href="#" rel="tab_contacts">Contacts</a></li>
-            <li class=""><a href="#" rel="tab_site">Site</a></li>
-            <li class=""><a href="#" rel="tab_enjeux">Enjeux</a></li>
-            <li class=""><a href="#" rel="tab_projet">Projet</a></li>
-            <li class=""><a href="#" rel="tab_parcelles">Parcelles</a></li>
-            <li class=""><a href="#" rel="tab_etat">Etat</a></li>
-            <li class=""><a href="#" rel="tab_taches">Taches</a></li>
-            <li class=""><a href="#" rel="tab_foncier">Foncier</a></li>
-            <li class=""><a href="#" rel="tab_concertation">Concertation</a></li>
-            <li class=""><a href="#" rel="tab_commandes">Commandes</a></li>
-            <li class=""><a href="#" rel="tab_documents">Documents</a></li>
-            <li class=""><a href="#" rel="tab_images">Images</a></li>
-            {% set unreadMessage = false %}
-            {% for message in projet.messages %}
-              {% if message.createdBy is not null and (app.user.id != message.createdBy.id and app.user not in message.viewers) %}{% set unreadMessage = true %}{% endif %}
-            {% endfor %}
-            <li class=""><a href="#" rel="tab_messagerie">Messagerie{% if unreadMessage %} <i class="fa fa-circle" style="color:red;"></i>{% endif %}</a></li>
-          </ul>
-        </div><!-- /.navbar-collapse -->
-      </div><!-- /.container-fluid -->
-    </nav>
-    <h1><i class="fa fa-edit"></i> Editer {{ projet }}</h1>
-    <div class="row">
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="nouveau_projet_nav">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="#" rel="tab_localisation">Localisation</a></li>
+          <li class=""><a href="#" rel="tab_contacts">Contacts</a></li>
+          <li class=""><a href="#" rel="tab_site">Site</a></li>
+          <li class=""><a href="#" rel="tab_enjeux">Enjeux</a></li>
+          <li class=""><a href="#" rel="tab_projet">Projet</a></li>
+          <li class=""><a href="#" rel="tab_parcelles">Parcelles</a></li>
+          <li class=""><a href="#" rel="tab_etat">Etat</a></li>
+          <li class=""><a href="#" rel="tab_taches">Taches</a></li>
+          <li class=""><a href="#" rel="tab_foncier">Foncier</a></li>
+          <li class=""><a href="#" rel="tab_concertation">Concertation</a></li>
+          <li class=""><a href="#" rel="tab_commandes">Commandes</a></li>
+          <li class=""><a href="#" rel="tab_documents">Documents</a></li>
+          <li class=""><a href="#" rel="tab_images">Images</a></li>
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
+  {# <h1><i class="fa fa-file-o fa-fw"></i> {{ title }}</h1> #}
+  <div class="row">
     <div id="fields_div" class="col-sm-6">
 
       <fieldset class="" id="tab_localisation">
@@ -213,30 +130,30 @@
           <tbody>
             <tr>
               <td>Source</td>
-              <td class="required">{% if is_granted('ROLE_ADMIN') or projet.origine.id == app.user.id %}{{ form_widget(form.origine, {'attr': {'style': 'width:100%'}}) }}{% else %}{{ form.vars.value.origine }}{{ form_widget(form.origine, {'attr': {'class': 'hide','style': 'width:100%'}}) }}{% endif %}</td>
-              <td>{% if is_granted('ROLE_ADMIN') or projet.origine.id == app.user.id %}{{ form_widget(form.origineTelephone) }}{% else %}{{ form.vars.value.origineTelephone }}{{ form_widget(form.origineTelephone, {'attr': {'class': 'hide'}}) }}{% endif %}</td>
+              <td class="required">{{ form_widget(form.origine, {'attr': {'style': 'width:100%'}}) }}</td>
+              <td>{{ form_widget(form.origineTelephone) }}</td>
             </tr>
             {# {% if is_granted('ROLE_ADMIN') %} #}
             <tr>
               <td>Chef projet</td>
-              <td class="required">{% if is_granted('ROLE_ADMIN') or projet.origine.id == app.user.id %}{{ form_widget(form.chefProjet, {'attr': {'style': 'width:100%'}}) }}{% else %}{{ form.vars.value.chefProjet }}{{ form_widget(form.chefProjet, {'attr': {'class': 'hide','style': 'width:100%'}}) }}{% endif %}</td>
-              <td>{% if is_granted('ROLE_ADMIN') or projet.origine.id == app.user.id %}{{ form_widget(form.chefProjetTelephone) }}{% else %}{{ form.vars.value.chefProjetTelephone }}{{ form_widget(form.chefProjetTelephone, {'attr': {'class': 'hide'}}) }}{% endif %}</td>
+              <td class="required">{{ form_widget(form.chefProjet, {'attr': {'style': 'width:100%'}}) }}</td>
+              <td>{{ form_widget(form.chefProjetTelephone) }}</td>
             </tr>
             {# {% endif %} #}
             <tr>
               <td>Chargé foncier</td>
-              <td>{% if is_granted('ROLE_ADMIN') or projet.origine.id == app.user.id %}{{ form_widget(form.chargeFoncier, {'attr': {'style': 'width:100%'}}) }}{% else %}{{ form.vars.value.chargeFoncier }}{{ form_widget(form.chargeFoncier, {'attr': {'class': 'hide','style': 'width:100%'}}) }}{% endif %}</td>
-              <td>{% if is_granted('ROLE_ADMIN') or projet.origine.id == app.user.id %}{{ form_widget(form.chargeFoncierTelephone) }}{% else %}{{ form.vars.value.chargeFoncierTelephone }}{{ form_widget(form.chargeFoncierTelephone, {'attr': {'class': 'hide'}}) }}{% endif %}</td>
+              <td>{{ form_widget(form.chargeFoncier, {'attr': {'style': 'width:100%'}}) }}</td>
+              <td>{{ form_widget(form.chargeFoncierTelephone) }}</td>
             </tr>
             <tr>
               <td>Partenaire</td>
-              <td class="required">{% if is_granted('ROLE_ADMIN') or projet.origine.id == app.user.id %}{{ form_widget(form.partenaire, {'attr': {'style': 'width:100%'}}) }}{% else %}{{ form.vars.value.partenaire }}{{ form_widget(form.partenaire, {'attr': {'class': 'hide','style': 'width:100%'}}) }}{% endif %}</td>
-              <td>{% if is_granted('ROLE_ADMIN') or projet.origine.id == app.user.id %}{{ form_widget(form.partenaireTelephone) }}{% else %}{{ form.vars.value.partenaireTelephone }}{{ form_widget(form.partenaireTelephone, {'attr': {'class': 'hide'}}) }}{% endif %}</td>
+              <td class="required">{{ form_widget(form.partenaire, {'attr': {'style': 'width:100%'}}) }}</td>
+              <td>{{ form_widget(form.partenaireTelephone) }}</td>
             <tr>
             <tr>
               <td>Mairie</td>
-              <td class="required">{% if is_granted('ROLE_ADMIN') or projet.origine.id == app.user.id %}{{ form_widget(form.mairie, {'attr': {'style': 'width:100%'}}) }}{% else %}{{ form.vars.value.mairie }}{{ form_widget(form.mairie, {'attr': {'class': 'hide','style': 'width:100%'}}) }}{% endif %}</td>
-              <td>{% if is_granted('ROLE_ADMIN') or projet.origine.id == app.user.id %}{{ form_widget(form.mairieTelephone) }}{% else %}{{ form.vars.value.mairieTelephone }}{{ form_widget(form.mairieTelephone, {'attr': {'class': 'hide'}}) }}{% endif %}</td>
+              <td class="required">{{ form_widget(form.mairie, {'attr': {'style': 'width:100%'}}) }}</td>
+              <td>{{ form_widget(form.mairieTelephone) }}</td>
             <tr>
             <tr>
               <td>Maire</td>
@@ -248,54 +165,6 @@
               <td class="required"></td>
               <td></td>
             </tr>
-            {% if form.vars.value.proprietaires[0] is defined %}
-              {% for proprietaire in form.vars.value.proprietaires %}
-                <tr rel="{{ loop.index0 }}" class="{% if not proprietaire.proprietaire %}hide{% endif %}">
-                  <td>Propriétaire</td>
-                  <td class="required">{{ proprietaire.proprietaire ? proprietaire.proprietaire : '-' }}</td>
-                  <td>{{ proprietaire.telephoneProprietaire ? proprietaire.telephoneProprietaire : '-' }}</td>
-                <tr>
-                <tr rel="{{ loop.index0 }}" class="{% if not proprietaire.proprietaire2 %}hide{% endif %}">
-                  <td>Propriétaire 2</td>
-                  <td class="required">{{ proprietaire.proprietaire2 ? proprietaire.proprietaire2 : '-' }}</td>
-                  <td>{{ proprietaire.telephoneProprietaire2 ? proprietaire.telephoneProprietaire2 : '-' }}</td>
-                <tr>
-                <tr rel="{{ loop.index0 }}" class="{% if not proprietaire.proprietaire3 %}hide{% endif %}">
-                  <td>Propriétaire 3</td>
-                  <td class="required">{{ proprietaire.proprietaire3 ? proprietaire.proprietaire3 : '-' }}</td>
-                  <td>{{ proprietaire.telephoneProprietaire3 ? proprietaire.telephoneProprietaire3 : '-' }}</td>
-                <tr>
-                <tr rel="{{ loop.index0 }}" class="{% if not proprietaire.proprietaire4 %}hide{% endif %}">
-                  <td>Propriétaire 4</td>
-                  <td class="required">{{ proprietaire.proprietaire4 ? proprietaire.proprietaire4 : '-' }}</td>
-                  <td>{{ proprietaire.telephoneProprietaire4 ? proprietaire.telephoneProprietaire4 : '-' }}</td>
-                <tr>
-                <tr rel="{{ loop.index0 }}" class="{% if not proprietaire.exploitant %}hide{% endif %}">
-                  <td>Exploitant</td>
-                  <td class="required">{{ proprietaire.exploitant ? proprietaire.exploitant : '-' }}</td>
-                  <td>{{ proprietaire.telephoneExploitant ? proprietaire.telephoneExploitant : '-' }}</td>
-                <tr>
-                <tr rel="{{ loop.index0 }}" class="{% if not proprietaire.exploitant2 %}hide{% endif %}">
-                  <td>Exploitant 2</td>
-                  <td class="required">{{ proprietaire.exploitant2 ? proprietaire.exploitant2 : '-' }}</td>
-                  <td>{{ proprietaire.telephoneExploitant2 ? proprietaire.telephoneExploitant2 : '-' }}</td>
-                <tr>
-                <tr rel="{{ loop.index0 }}" class="{% if not proprietaire.exploitant3 %}hide{% endif %}">
-                  <td>Exploitant 3</td>
-                  <td class="required">{{ proprietaire.exploitant3 ? proprietaire.exploitant3 : '-' }}</td>
-                  <td>{{ proprietaire.telephoneExploitant3 ? proprietaire.telephoneExploitant3 : '-' }}</td>
-                <tr>
-              {% endfor %}
-            {% endif %}
-            {% if form.vars.value.finances[0] is defined %}
-              {% for finance in form.vars.value.finances %}
-                <tr rel="{{ loop.index0 }}" class="{% if not finance.bureau %}hide{% endif %}">
-                  <td>Chargé d'études</td>
-                  <td class="required">{{ finance.bureau.representant is defined ? finance.bureau.representant : '-' }}</td>
-                  <td>{{ finance.bureau.telephone is defined ? finance.bureau.telephone : '-' }}</td>
-                <tr>
-              {% endfor %}
-            {% endif %}
           </tbody>
         </table>
       </fieldset>
@@ -393,54 +262,8 @@
         {{ form_widget(form.notes) }}
       </fieldset>
 
-      <fieldset class="hide" id="tab_messagerie">
-        <div class="col-md-12">
-          <div class="flex-grow-0 py-3 px-4 border-bottom">
-            <div class="col-md-offset-8 col-md-4">
-              <input type="text" id="message_search" class="form-control" placeholder="Rechercher">
-            </div>
-            <div class="clearfix"></div>
-          </div>
-          <div class="chat-messages p-4">
-            {% for message in projet.messages %}
-              {% if message.createdBy is not null and message.createdBy.id == app.user.id %}
-              <div message="{{ message.id }}" class="chat-message-right mb-4">
-								<div title="{{ message.createdAt|date('Y-m-d') }}">
-									<img src="{{ asset('images/me.jpg') }}" class="rounded-circle mr-1" alt="{{ message.createdBy is not null ? message.createdBy.nom ~ ' ' ~ message.createdBy.prenom : '' }}" width="40" height="40">
-									<div class="text-muted small text-nowrap mt-2">{{ message.createdAt|date('H:i A') }}</div>
-								</div>
-								<div class="flex-shrink-1 bg-gray rounded py-2 px-3 mr-3">
-									<div class="font-weight-bold mb-1">Vous</div>
-									{{ message.body }}
-								</div>
-							</div>
-              {% else %}
-              <div message="{{ message.id }}" class="chat-message-left pb-4">
-								<div title="{{ message.createdAt|date('Y-m-d') }}">
-									<img src="{{ asset('images/user.jpg') }}" class="rounded-circle mr-1" alt="{{ message.createdBy is not null ? message.createdBy.nom ~ ' ' ~ message.createdBy.prenom : '' }}" width="40" height="40">
-									<div class="text-muted small text-nowrap mt-2">{{ message.createdAt|date('H:i A') }}</div>
-								</div>
-								<div class="flex-shrink-1 bg-light rounded py-2 px-3 ml-3">
-									<div class="font-weight-bold mb-1">{{ message.createdBy is not null ? message.createdBy.nom ~ ' ' ~ message.createdBy.prenom : '' }}</div>
-									{{ message.body }}
-								</div>
-							</div>
-              {% endif %}
-            {% endfor %}
-          </div>
-          <div class="flex-grow-0 py-3 px-4 border-top">
-            <div class="input-group">
-              <input type="text" id="send_body" class="form-control" placeholder="Ajouter un message">
-              <span class="input-group-btn">
-                <button id="send_message" class="btn btn-primary">Envoyer</button>
-              </span>
-            </div>
-          </div>
-        </div>
-      </fieldset>
-
     </div>
-    <div class="col-sm-offset-1 col-sm-5">
+    <div class="col-sm-offset-2 col-sm-4">
       <div id="map" class="map map-home" style="height: 500px; margin-bottom: 20px;"></div>
       <div id="main_photo" class="hide col-sm-12"><img style="width: inherit;" src=""><nav style="margin-left:30%;" aria-label="Page navigation center-text"><ul class="pagination"><li class="page-item disabled"><a id="prev_image" class="page-link" href="#">Précédent</a></li><li class="page-item disabled"><a id="next_image" class="page-link" href="#">Suivant</a></li></ul></nav></div>
 
@@ -491,7 +314,6 @@
       </div>
     </div>
   </div>
-
 {% endblock %}
 
 {% block js %}
@@ -505,9 +327,9 @@
 
     var marker = null;
 
-    var default_lat = {{ projet.latitude }};
-    var lat = {{ projet.latitude }};
-    var long = {{ projet.longitude }};
+    var default_lat = null;
+    var lat = null;
+    var long = null;
 
     $('#projet_latitude').change(function() {
       lat = $(this).val().replace(',', '.');
@@ -655,9 +477,7 @@
         updateEpci();
       } else {
         var query = $('#projet_departement option:selected').text().replace(/\(.+/, '').trim();
-        {% if is_granted('ROLE_ADMIN') or projet.origine.id == app.user.id %}
         updateContacts();
-        {% endif %}
       }
       updateParcEoliens();
       if(query && last_reverse_search != query) {
@@ -670,12 +490,7 @@
       }
       
     });
-    {# if(!$('#projet_adresse').val()) {
-      if($('#projet_communes option:selected').text()) $('#projet_communes').change();
-      else $('#projet_departement').change();
-    } #}
 
-    updateMarkerPosition(); {# this line is required for edit file #}
     var update_type_milieu = false;
     $('#projet_typeProjet').change(function() {
       type = $(this).val();
@@ -745,7 +560,7 @@
         }
       }
     });
-    {% if is_granted('ROLE_ADMIN') or projet.origine.id == app.user.id %}
+
     var contactsUrl = "{{ path('contacts_search') }}";
     function updateContacts() {
       var id = $('#projet_departement').val();
@@ -798,7 +613,6 @@
       });
     }
     updateContacts();
-    {% endif %}
     
     function showPopup(layer) {
       var status = layer.options.denomination;
@@ -877,9 +691,9 @@
       format: 'dd/mm/yyyy',
       autoclose: true,
       language: 'fr',
-      clearBtn: true,
     });
-    
+
+    {# $("#projet_communes").val(9); #}
     $("#projet_communes").select2({
       ajax: {
         url: function () {
@@ -911,27 +725,7 @@
       escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
       minimumInputLength: 1,
     });
-    {% if is_granted('ROLE_ADMIN') or projet.origine.id == app.user.id %}
-    $("#tab_contacts td").dblclick(function() {
-      if($(this).find('select').length) {
-        if($(this).find('select').attr('id') == 'projet_partenaire') {
-          var projet_partenaire = $('#projet_partenaire').val();
-          $('#projet_partenaire').html($('#projet_origine').html());
-          if(projet_partenaire) $('#projet_partenaire').val(projet_partenaire);
-          $('#projet_partenaire').trigger('change');
-        } else if($(this).find('select').attr('id') == 'projet_chefProjet') {
-          var projet_chefProjet = $('#projet_chefProjet').val();
-          $('#projet_chefProjet').html($('#projet_origine').html());
-          if(projet_chefProjet) $('#projet_chefProjet').val(projet_chefProjet);
-          $('#projet_chefProjet').trigger('change');
-        } else if($(this).find('select').attr('id') == 'projet_chargeFoncier') {
-          var projet_chargeFoncier = $('#projet_chargeFoncier').val();
-          $('#projet_chargeFoncier').html($('#projet_origine').html());
-          if(projet_chargeFoncier) $('#projet_chargeFoncier').val(projet_chargeFoncier);
-          $('#projet_chargeFoncier').trigger('change');
-        }
-      }
-    });
+
     $("#projet_origine, #projet_chargeFoncier, #projet_chefProjet, #projet_partenaire").select2({placeholder: "Non désigné"});
     var queryMairieUrl = "{{ path('mairie_search') }}";
     
@@ -957,7 +751,6 @@
       $('#projet_maire').val(data.maire);
       $('#projet_maireTelephone').val(data.telephone);
     });
-    {% endif %}
     function updateMairie(update_maire) {
       var commune_id = $('#projet_communes option:selected').val();
       if(commune_id) {
@@ -1040,6 +833,14 @@
     {% if form.vars.value.communes[0].id is defined %}
       updateEpci();
     {% endif %}
+    
+    {% if form.vars.value.batimentExistant.photo is defined and form.vars.value.batimentExistant.photo %}
+      if(!$('#batiment_photo').length) $('<button id="batiment_photo" class="btn btn-info btn-sm popup_fichier" data-toggle="modal" data-target=".bs-modal-lg">Afficher</button>').insertAfter('#projet_batimentExistant_photoFile');
+
+      $('#batiment_photo').attr('data-href', '{{ asset('upload/' ~ form.vars.value.batimentExistant.photo) }}');
+      $('#batiment_photo').attr('data-download', '{{ form.vars.value.batimentExistant.photo }}');
+      $('#batiment_photo').attr('data-src', '{{ asset('upload/' ~ form.vars.value.batimentExistant.photo) }}');
+    {% endif %}
 
     $('#projet_batimentExistant_longueur, #projet_batimentExistant_largeur').change(function() {
       var longueur = $('#projet_batimentExistant_longueur').val().trim();
@@ -1061,14 +862,6 @@
         $(this).parents('tr').find('[id*="_surfaceTotale"]').val(longueur * largeur);
       }
     });
-    
-    {% if form.vars.value.batimentExistant.photo is defined and form.vars.value.batimentExistant.photo %}
-      if(!$('#batiment_photo').length) $('<button id="batiment_photo" class="btn btn-info btn-sm popup_fichier" data-toggle="modal" data-target=".bs-modal-lg">Afficher</button>').insertAfter('#projet_batimentExistant_photoFile');
-
-      $('#batiment_photo').attr('data-href', '{{ asset('upload/' ~ form.vars.value.batimentExistant.photo) }}');
-      $('#batiment_photo').attr('data-download', '{{ form.vars.value.batimentExistant.photo }}');
-      $('#batiment_photo').attr('data-src', '{{ asset('upload/' ~ form.vars.value.batimentExistant.photo) }}');
-    {% endif %}
     
     $('#projet_batimentExistant_photoFile').change(function() {
       if (this.files && this.files[0]) {
@@ -1110,7 +903,7 @@
         {% endif %}
       {% endfor %}
     {% endif %}
-    
+
     var next_document_id = -1;
     $('#projet_photoImplantationFile').change(function() {
       if(next_document_id == -1) next_document_id = $('#projet_documents tr').length;
@@ -1126,7 +919,7 @@
           $('#popup_photo a').attr('href', '#');
           $('#popup_photo a').removeAttr('download');
           $('#popup_photo img:eq(1)').attr('src', e.target.result);
-
+          
           if($('#projet_documents_'+next_document_id+'_plan').length && !$('#projet_documents_'+next_document_id+'_plan').prop('checked')) 
             next_document_id =$('#projet_documents tr').length;
           if(!$('#projet_documents_'+next_document_id+'_type').length) $('#projet_documents_add_entry').click();
@@ -1143,11 +936,11 @@
         if(!$('#projet_documents_'+next_document_id+'_type').length) $('#projet_documents_add_entry').click();
         $('#projet_documents_'+next_document_id+'_type').val($('#projet_typeImplantation option:selected').text());
         $('#projet_documents_'+next_document_id+'_titre').val($('#projet_titreImplantation option:selected').text());
-            $('#projet_documents_'+next_document_id+'_plan').prop('checked', true);
+        $('#projet_documents_'+next_document_id+'_plan').prop('checked', true);
       }
     });
     $('body').on('click', '#popup_photo_close', function() {
-      $('.bs-modal-lg').modal('hide');
+        
     });
     $('body').on('click', '.popup_fichier', function(e) {
       e.preventDefault();
@@ -1182,7 +975,7 @@
         language: 'fr',
         clear: true,
       });
-      commandeUpdate();
+      commandeUpdate()
     });
 
     $('#projet_finances_duplicate_entry').click(function () {
@@ -1253,7 +1046,7 @@
       var entry = prototypeproprietaire.replace(/__name__label__/g, length);
       entry = entry.replace(/__name__/g, length);
       $collectionHolderProprietaire.append(entry);
-  
+      
       $('#projet_proprietaires_' + length + '_dateSignatureProprietaire').datepicker({
         format: 'dd/mm/yyyy',
         autoclose: true,
@@ -1329,7 +1122,7 @@
         language: 'fr',
         clearBtn: true,
       });
-  
+      
       $('#projet_proprietaires_' + length + '_dateSignatureExploitant').datepicker({
         format: 'dd/mm/yyyy',
         autoclose: true,
@@ -1348,7 +1141,7 @@
         language: 'fr',
         clearBtn: true,
       });
-  
+      
       $('#projet_proprietaires_' + length + '_dateSignatureExploitant2').datepicker({
         format: 'dd/mm/yyyy',
         autoclose: true,
@@ -1367,7 +1160,7 @@
         language: 'fr',
         clearBtn: true,
       });
-  
+      
       $('#projet_proprietaires_' + length + '_dateSignatureExploitant3').datepicker({
         format: 'dd/mm/yyyy',
         autoclose: true,
@@ -1386,7 +1179,7 @@
         language: 'fr',
         clearBtn: true,
       });
-      
+  
       $('#tab_contacts tbody').append('<tr rel="'+length+'" class="hide"><td>Propriétaire</td>><td>-</td><td>-</td></tr><tr rel="'+length+'" class="hide"><td>Propriétaire 2</td>><td>-</td><td>-</td></tr><tr rel="'+length+'" class="hide"><td>Propriétaire 3</td>><td>-</td><td>-</td></tr><tr rel="'+length+'" class="hide"><td>Exploitant</td><td>-</td><td>-</td></tr><tr rel="'+length+'" class="hide"><td>Exploitant 2</td><td>-</td><td>-</td></tr><tr rel="'+length+'" class="hide"><td>Exploitant 3</td><td>-</td><td>-</td></tr>');
       loadAllParcellesTags();
     });
@@ -1400,23 +1193,23 @@
         $collectionHolderProprietaire.find('tr:eq('+tr_index+')').removeClass('info');
         $collectionHolderProprietaire.find('tr:eq('+(tr_index + 1)+')').removeClass('info');
         $collectionHolderProprietaire.find('tr:eq('+(tr_index + 2)+')').removeClass('info');
-        
+  
         $collectionHolderProprietaire.find('tr:eq('+tr_index+')').find('[id$="_civiliteProprietaire"]').val($collectionHolderProprietaire.find('tr:eq('+(tr_index-3)+')').find('[id$="_civiliteProprietaire"]').val());
         $collectionHolderProprietaire.find('tr:eq('+(tr_index + 1)+')').find('[id$="_civiliteExploitant"]').val($collectionHolderProprietaire.find('tr:eq('+(tr_index-2)+')').find('[id$="_civiliteExploitant"]').val());
         $collectionHolderProprietaire.find('tr:eq('+(tr_index + 2)+')').find('[id$="_civiliteProprietaire2"]').val($collectionHolderProprietaire.find('tr:eq('+(tr_index-1)+')').find('[id$="_civiliteProprietaire2"]').val());
-        
+  
         $collectionHolderProprietaire.find('tr:eq('+tr_index+')').find('[id$="_qualiteProprietaire"]').val($collectionHolderProprietaire.find('tr:eq('+(tr_index-3)+')').find('[id$="_qualiteProprietaire"]').val());
         $collectionHolderProprietaire.find('tr:eq('+(tr_index + 1)+')').find('[id$="_qualiteExploitant"]').val($collectionHolderProprietaire.find('tr:eq('+(tr_index-2)+')').find('[id$="_qualiteExploitant"]').val());
         $collectionHolderProprietaire.find('tr:eq('+(tr_index + 2)+')').find('[id$="_qualiteProprietaire2"]').val($collectionHolderProprietaire.find('tr:eq('+(tr_index-1)+')').find('[id$="_qualiteProprietaire2"]').val());
-        
+  
         $collectionHolderProprietaire.find('tr:eq('+tr_index+')').find('[id$="_accordProprietaire"]').val($collectionHolderProprietaire.find('tr:eq('+(tr_index-3)+')').find('[id$="_accordProprietaire"]').val());
         $collectionHolderProprietaire.find('tr:eq('+(tr_index + 1)+')').find('[id$="_accordExploitant"]').val($collectionHolderProprietaire.find('tr:eq('+(tr_index-2)+')').find('[id$="_accordExploitant"]').val());
         $collectionHolderProprietaire.find('tr:eq('+(tr_index + 2)+')').find('[id$="_accordProprietaire2"]').val($collectionHolderProprietaire.find('tr:eq('+(tr_index-1)+')').find('[id$="_accordProprietaire2"]').val());
-        
+  
         $collectionHolderProprietaire.find('tr:eq('+tr_index+')').find('[id$="_droitProprietaire"]').val($collectionHolderProprietaire.find('tr:eq('+(tr_index-3)+')').find('[id$="_droitProprietaire"]').val());
         $collectionHolderProprietaire.find('tr:eq('+(tr_index + 1)+')').find('[id$="_droitExploitant"]').val($collectionHolderProprietaire.find('tr:eq('+(tr_index-2)+')').find('[id$="_droitExploitant"]').val());
         $collectionHolderProprietaire.find('tr:eq('+(tr_index + 2)+')').find('[id$="_droitProprietaire2"]').val($collectionHolderProprietaire.find('tr:eq('+(tr_index-1)+')').find('[id$="_droitProprietaire2"]').val());
-        
+  
         $collectionHolderProprietaire.find('tr:eq('+tr_index+')').find('[id$="_maritalProprietaire"]').val($collectionHolderProprietaire.find('tr:eq('+(tr_index-3)+')').find('[id$="_maritalProprietaire"]').val());
         $collectionHolderProprietaire.find('tr:eq('+(tr_index + 1)+')').find('[id$="_maritalExploitant"]').val($collectionHolderProprietaire.find('tr:eq('+(tr_index-2)+')').find('[id$="_maritalExploitant"]').val());
         $collectionHolderProprietaire.find('tr:eq('+(tr_index + 2)+')').find('[id$="_maritalProprietaire2"]').val($collectionHolderProprietaire.find('tr:eq('+(tr_index-1)+')').find('[id$="_maritalProprietaire2"]').val());
@@ -1482,7 +1275,7 @@
         $(this).remove();
       }
     });
-    
+
     $('#projet_proprietaires_publish_entry').click(function () {
       if(!$(this).hasClass('disabled') && $collectionHolderProprietaire.find('tr.info').length == 7) {
         var tr_proprietaire = $collectionHolderProprietaire.find('tr.info:eq(0)');
@@ -1512,7 +1305,7 @@
         fields.push(['exploitant_ne_a', 'field', tr_exploitant.find('input[id$="_lieuNaissanceExploitant"]').val()]);
         fields.push(['exploitant_droit', 'field', tr_exploitant.find('input[id$="_droitExploitant"]').val()]);
         fields.push(['exploitant_marital', 'field', tr_exploitant.find('input[id$="_maritalExploitant"]').val()]);
-        
+  
         if (tr_proprietaire2.find('input[id$="_proprietaire2"]').val() && tr_proprietaire2.find('select[id$="_qualiteProprietaire2"]').val() == 'Personne') {
           fields.push(['proprietaire2_civilite', 'field', tr_proprietaire2.find('select[id$="_civiliteProprietaire2"]').val()]);
           fields.push(['proprietaire2_identite', 'field', tr_proprietaire2.find('input[id$="_proprietaire2"]').val()]);
@@ -1543,7 +1336,7 @@
           fields.push(['proprietaire4_ne_le', 'field', tr_proprietaire4.find('input[id$="_dateNaissanceProprietaire4"]').val()]);
           fields.push(['proprietaire4_ne_a', 'field', tr_proprietaire4.find('input[id$="_lieuNaissanceProprietaire4"]').val()]);
         }
-
+    
         if($('#projet_technologie').val() == 'eolienne') {
           fields.push(['WKN', 'title', '']);
           fields.push(['WKN_Raison_sociale', 'field', 'WKN France']);
@@ -1680,40 +1473,7 @@
           publish_form.find('input[name="{proprietaire_ne_a}"]').val(tr_proprietaire.find('input[id$="_lieuNaissanceProprietaire"]').val());
           publish_form.find('input[name="{proprietaire_droit}"]').val(tr_proprietaire.find('input[id$="_droitProprietaire"]').val());
           publish_form.find('input[name="{proprietaire_marital}"]').val(tr_proprietaire.find('input[id$="_maritalProprietaire"]').val());
-  
-          if (tr_proprietaire2.find('input[id$="_proprietaire2"]').val() && tr_proprietaire2.find('select[id$="_qualiteProprietaire2"]').val() == 'Personne') {
-            publish_form.find('input[name="{proprietaire2_civilite}"]').val(tr_proprietaire2.find('select[id$="_civiliteProprietaire2"]').val());
-            publish_form.find('input[name="{proprietaire2_identite}"]').val(tr_proprietaire2.find('input[id$="_proprietaire2"]').val());
-            publish_form.find('input[name="{proprietaire2_qualite}"]').val(tr_proprietaire2.find('select[id$="_qualiteProprietaire2"]').val());
-            publish_form.find('input[name="{proprietaire2_adresse}"]').val(tr_proprietaire2.find('input[id$="_adresseProprietaire2"]').val());
-            publish_form.find('input[name="{proprietaire2_ne_le}"]').val(tr_proprietaire2.find('input[id$="_dateNaissanceProprietaire2"]').val());
-            publish_form.find('input[name="{proprietaire2_ne_a}"]').val(tr_proprietaire2.find('input[id$="_lieuNaissanceProprietaire2"]').val());
-            publish_form.find('input[name="{proprietaire2_droit}"]').val(tr_proprietaire2.find('input[id$="_droitProprietaire2"]').val());
-            publish_form.find('input[name="{proprietaire2_marital}"]').val(tr_proprietaire2.find('input[id$="_maritalProprietaire2"]').val());
-          }
-          if (tr_proprietaire3.find('input[id$="_proprietaire3"]').val() && tr_proprietaire3.find('select[id$="_qualiteProprietaire3"]').val() == 'Personne') {
-            publish_form.find('input[name="{proprietaire3_civilite}"]').val(tr_proprietaire3.find('select[id$="_civiliteProprietaire3"]').val());
-            publish_form.find('input[name="{proprietaire3_identite}"]').val(tr_proprietaire3.find('input[id$="_proprietaire3"]').val());
-            publish_form.find('input[name="{proprietaire3_qualite}"]').val(tr_proprietaire3.find('select[id$="_qualiteProprietaire3"]').val());
-            publish_form.find('input[name="{proprietaire3_adresse}"]').val(tr_proprietaire3.find('input[id$="_adresseProprietaire3"]').val());
-            publish_form.find('input[name="{proprietaire3_ne_le}"]').val(tr_proprietaire3.find('input[id$="_dateNaissanceProprietaire3"]').val());
-            publish_form.find('input[name="{proprietaire3_ne_a}"]').val(tr_proprietaire3.find('input[id$="_lieuNaissanceProprietaire3"]').val());
-            publish_form.find('input[name="{proprietaire3_droit}"]').val(tr_proprietaire3.find('input[id$="_droitProprietaire3"]').val());
-            publish_form.find('input[name="{proprietaire3_marital}"]').val(tr_proprietaire3.find('input[id$="_maritalProprietaire3"]').val());
-          }
-          if (tr_proprietaire4.find('input[id$="_proprietaire4"]').val() && tr_proprietaire4.find('select[id$="_qualiteProprietaire4"]').val() == 'Personne') {
-            publish_form.find('input[name="{proprietaire4_civilite}"]').val(tr_proprietaire4.find('select[id$="_civiliteProprietaire4"]').val());
-            publish_form.find('input[name="{proprietaire4_identite}"]').val(tr_proprietaire4.find('input[id$="_proprietaire4"]').val());
-            publish_form.find('input[name="{proprietaire4_qualite}"]').val(tr_proprietaire4.find('select[id$="_qualiteProprietaire4"]').val());
-            publish_form.find('input[name="{proprietaire4_adresse}"]').val(tr_proprietaire4.find('input[id$="_adresseProprietaire4"]').val());
-            publish_form.find('input[name="{proprietaire4_ne_le}"]').val(tr_proprietaire4.find('input[id$="_dateNaissanceProprietaire4"]').val());
-            publish_form.find('input[name="{proprietaire4_ne_a}"]').val(tr_proprietaire4.find('input[id$="_lieuNaissanceProprietaire4"]').val());
-            publish_form.find('input[name="{proprietaire4_droit}"]').val(tr_proprietaire4.find('input[id$="_droitProprietaire4"]').val());
-            publish_form.find('input[name="{proprietaire4_marital}"]').val(tr_proprietaire4.find('input[id$="_maritalProprietaire4"]').val());
-          } else if(publish_form.find('input[name="{proprietaire4_civilite}"]').length) {
-            publish_form.find('input[name="{proprietaire4_civilite}"]').
-          }
-          
+      
           publish_form.find('input[name="{exploitant_civilite}"]').val(tr_exploitant.find('select[id$="_civiliteExploitant"]').val());
           publish_form.find('input[name="{exploitant_identite}"]').val(tr_exploitant.find('input[id$="_exploitant"]').val());
           publish_form.find('input[name="{exploitant_adresse}"]').val(tr_exploitant.find('input[id$="_adresseExploitant"]').val());
@@ -1798,7 +1558,7 @@
     $collectionHolderProprietaire.on('change', '[id$="_dureeProprietaire"], [id$="_dateSignatureProprietaire"], [id$="_dateSignatureProprietaire2"], [id$="_dateSignatureProprietaire3"], [id$="_dateSignatureProprietaire4"], [id$="_dateSignatureExploitant"], [id$="_dateSignatureExploitant2"], [id$="_dateSignatureExploitant3"]', function () {
       var id = $(this).attr('id').match(/\d+/);
       id = parseInt(id);
-      
+  
       if($('#projet_proprietaires_'+id+'_dateSignatureProprietaire').val() && $('#projet_proprietaires_'+id+'_dureeProprietaire').val()) {
         var duree = $('#projet_proprietaires_'+id+'_dureeProprietaire').val().trim();
         var dateSplitted = $('#projet_proprietaires_'+id+'_dateSignatureProprietaire').val().trim().split('/');
@@ -1954,7 +1714,7 @@
       $('#projet_proprietaires input[id$="_parcelles"]').each(function(i,element) {
         id = $(this).attr('name').match(/\d+/);
         id = parseInt(id);
-        
+    
         $("#projet_proprietaires_"+id+"_parcelles").tagsinput({
           maxTags: 8,
           typeahead: {
@@ -2062,23 +1822,19 @@
       });
     })
 
-    $('#projet_dateCles_remove_entry').click(function () {
-      $('> :last-child', $collectionHolderDC).remove();
-    });
-
     var $collectionHolderDC = $('#projet_batimentExistant_toitures');
     var prototypeDC = $collectionHolderDC.data('prototype');
 
     $('#projet_batimentExistant_toitures_add_entry').click(function () {
-        var length = $collectionHolderDC.children().length;
-        var entry = prototypeDC.replace(/__name__label__/g, length);
-        entry = entry.replace(/__name__/g, length);
-        $collectionHolderDC.append(entry);
+      var length = $collectionHolderDC.children().length;
+      var entry = prototypeDC.replace(/__name__label__/g, length);
+      entry = entry.replace(/__name__/g, length);
+      $collectionHolderDC.append(entry);
 
     });
 
     $('#projet_batimentExistant_toitures_remove_entry').click(function () {
-        $('> :last-child', $collectionHolderDC).remove();
+      $('> :last-child', $collectionHolderDC).remove();
     });
 
     var current_batiment_image = 0;
@@ -2318,7 +2074,7 @@
       });
 
       {# $('#projet_concertations_' + length + '_dynamique').val('0'); #}
-
+      
     });
 
     $('#projet_concertations_remove_entry').click(function () {
@@ -2358,12 +2114,9 @@
       var entry = prototypeParcelle.replace(/__name__label__/g, length);
       entry = entry.replace(/__name__/g, length);
       $collectionHolderParcelle.append(entry);
-      
+
       $('#projet_parcelles_' + length + '_departement').val($('#projet_departement').val());
-      if($('#projet_communes option:selected').length) {
-        $('#projet_parcelles_' + length + '_commune').append(new Option($('#projet_communes option:selected').text(), $('#projet_communes option:selected').val()));
-        $('#projet_parcelles_' + length + '_commune').val($('#projet_communes option:selected').val());
-      } else $('#projet_parcelles_' + length + '_commune').val(9);
+      $('#projet_parcelles_' + length + '_commune').val(9);
       $('#projet_parcelles_' + length + '_commune').select2({
         ajax: {
           url: queryCommuneUrl,
@@ -2378,13 +2131,13 @@
         escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
         minimumInputLength: 1,
       });
-      
+
     });
 
     $('#projet_parcelles_remove_entry').click(function () {
       $('> :last-child', $collectionHolderParcelle).remove();
     });
-
+    
     function colorParcelles() {
       var colors = ['blue', 'red', 'green', 'purple', 'teal', 'aquamarine', 'orange', 'cyan', 'blue', 'red', 'green', 'purple', 'teal', 'aquamarine', 'orange', 'cyan'];
       var parcelles = [];
@@ -2434,6 +2187,7 @@
       });
 
       $('#projet_enjeuxs_' + length + '_enjeux').change();
+
     });
 
     $('#projet_enjeuxs_remove_entry').click(function () {
@@ -2480,7 +2234,7 @@
       }
       $('> :last-child', $collectionHolderNote).remove();
     });
-    
+
     var equipementType = '{{ form.vars.value.equipement is defined and form.vars.value.equipement ? form.vars.value.equipement : "" }}';
     var technologies = {{ technologies|raw }};
     $('#projet_technologie').change(function () {
@@ -2522,7 +2276,7 @@
         $('#projet_terrain_topographie').parents('.form-group').find('label').text('Relief');
         var clone = $('#projet_terrain_altitude').parents('.form-group').clone();
         $('#projet_terrain_altitude').parents('.form-group').remove();
-        $(clone).insertBefore($('#projet_terrain_topographie').parents('.form-group'));
+        $(clone).insertAfter($('#projet_terrain_topographie').parents('.form-group'));
         $('#projet_terrain_exposition').parents('.form-group').find('label').text('Exposition');
         var projet_terrain_exposition = $('#projet_terrain_exposition').val();
         $('#projet_terrain_exposition').parents('.form-group').find('div').html('<select id="projet_terrain_exposition" name="projet[terrain][exposition]" class="form-control"><option value=""></option><option value="S">S</option><option value="SE">SE</option><option value="E">E</option><option value="O">O</option><option value="SO">SO</option></select>');
@@ -2554,7 +2308,6 @@
                 } else {
                   technologie_pu = value.replace(/'/, '.').trim() / 1000000;
                 }
-                $('#projet_puissanceUnitaire').val(technologie_pu);
               }
               $('#tab_projet p').append('<div class="form-group form-group-sm"><label class="col-sm-4 control-label">'+field+':</label><div class="col-sm-8 control-label">' + value + '</div></div>');
             });
@@ -2759,7 +2512,7 @@
             }
           } else {
             row_total = $(element).parents('tbody').find('tr:eq('+($(element).parents('tr').index()-1)+')').find('[id*="_montantRestant"]').val().trim();
-            if(row_total) {
+            if(row_total && (!$(element).parents('tr').find('[id*="_montantEngage"]').val().trim() || $(element).parents('tr').find('[id*="_montantEngage"]').val().trim() == '0')) {
               $(element).parents('tr').find('[id*="_montantRestant"]').val(parseInt(row_total) - parseInt($(element).val().trim()));
             }
           }
@@ -2788,6 +2541,7 @@
 
       var somme = 'Total: ' + total + '€ HT | Total engagé: ' + engage + '€ HT | Total payé: ' + paye + '€ HT';
       $('#selected-counter').text(somme);
+
       var last_index = 0;
       var second_id = 0;
       $.each($('#projet_finances [id*="_dateEngmt"]'), function(i, element) {
@@ -2862,6 +2616,7 @@
       $('#projet_batimentExistant_charpente').parents('.form-group').addClass('hide');
       countParcelles();
       commandeUpdate();
+      update_type_milieu = true;
       $('#projet_typeProjet').change();
       update_type_milieu = true;
       $('#projet_technologie').change();
@@ -2877,104 +2632,11 @@
       }
       $('<div id="batimentNouveau_options" class="form-group form-group-sm"><label class="col-sm-4 control-label"></label><div class="col-sm-8"><p></p></div></div>').insertAfter($('#projet_batimentExistant_photoFile').parents('div.form-group'));
     });
-    var refresh_messagerie = 0;
-    var last_messagerie = [];
-    function refreshMessagerie() {
-      if(refresh_messagerie) {
-        var csrf = '{{ csrf_token('token')|e('js') }}';
-        $.ajax({
-          url: Routing.generate('messagerie_list', { id: {{ projet.id }} }),
-          type: 'GET',
-          dataType: "json",
-          data: { token: csrf },
-          beforeSend: function() {
-            $('.chat-messages').find('#loading_messages').remove();
-            $('.chat-messages').append('<span id="loading_messages">chargement..</span>');
-          },
-          success: function(result) {
-            last_messagerie = result;
-            var message_search = $('#message_search').val().trim();
-            $.each(result, function(index, message) {
-              if(!message_search || message[2].match(new RegExp(message_search, 'i')) || message[3].match(new RegExp(message_search, 'i'))) {
-                if(!$('.chat-messages').find('div[message="'+message[0]+'"]').length) {
-                  if(message[1] == {{ app.user.id }}) {
-                    $('.chat-messages').append('<div message="'+message[0]+'" class="chat-message-right mb-4"><div title="'+message[5]+'"><img src="{{ asset('images/me.jpg') }}" class="rounded-circle mr-1" alt="'+message[2]+'" width="40" height="40"><div class="text-muted small text-nowrap mt-2">'+message[4]+'</div></div><div class="flex-shrink-1 bg-gray rounded py-2 px-3 mr-3"><div class="font-weight-bold mb-1">Vous</div>'+message[3]+'</div></div>');
-                  } else {
-                    $('.chat-messages').append('<div message="'+message[0]+'" class="chat-message-left pb-4"><div title="'+message[5]+'"><img src="{{ asset('images/user.jpg') }}" class="rounded-circle mr-1" alt="'+message[2]+'" width="40" height="40"><div class="text-muted small text-nowrap mt-2">'+message[4]+'</div></div><div class="flex-shrink-1 bg-light rounded py-2 px-3 ml-3"><div class="font-weight-bold mb-1">'+message[2]+'</div>'+message[3]+'</div></div>');
-                  }
-                  $('html, body').animate({
-                    scrollTop: $("#send_message").offset().top
-                  }, 'slow');
-                }
-              } else if($('.chat-messages').find('div[message="'+message[0]+'"]').length) {
-                $('.chat-messages').find('div[message="'+message[0]+'"]').remove();
-              }
-            });
-            $('.chat-messages').find('#loading_messages').remove();
-            $('a[rel="tab_messagerie"]').html('Messagerie');
-          }
-        });
-      }
-    }
-    $('#send_body').keypress(function (e) {
-      if (e.which == 13) {
-        e.preventDefault();
-        $('#send_message').click();
-      }
-    });
-    $('#send_message').click(function(e) {
-      e.preventDefault();
-      var body = $('#send_body').val();
-      if(body) {
-        var csrf = '{{ csrf_token('token')|e('js') }}';
-        $.ajax({
-          url: Routing.generate('messagerie_new', { id: {{ projet.id }} }),
-          type: 'GET',
-          dataType: "json",
-          data: { body: body, token: csrf },
-          success: function(result) {
-            if(result['status']) {
-              $('#send_body').val('');
-              refreshMessagerie();
-            }
-          }
-        });
-      }
-    });
-    $('#message_search').keypress(function (e) {
-      if (e.which == 13) {
-        e.preventDefault();
-        $('#message_search').change();
-      }
-    });
-    $('#message_search').change(function() {
-      if(!last_messagerie.length) refreshMessagerie();
-      else {
-        var message_search = $(this).val().trim();
-        $.each(last_messagerie, function(index, message) {
-          if(!message_search || message[2].match(new RegExp(message_search, 'i')) || message[3].match(new RegExp(message_search, 'i'))) {
-            if(!$('.chat-messages').find('div[message="'+message[0]+'"]').length) {
-              if(message[1] == {{ app.user.id }}) {
-                $('.chat-messages').append('<div message="'+message[0]+'" class="chat-message-right mb-4"><div title="'+message[5]+'"><img src="{{ asset('images/me.jpg') }}" class="rounded-circle mr-1" alt="'+message[2]+'" width="40" height="40"><div class="text-muted small text-nowrap mt-2">'+message[4]+'</div></div><div class="flex-shrink-1 bg-gray rounded py-2 px-3 mr-3"><div class="font-weight-bold mb-1">Vous</div>'+message[3]+'</div></div>');
-              } else {
-                $('.chat-messages').append('<div message="'+message[0]+'" class="chat-message-left pb-4"><div title="'+message[5]+'"><img src="{{ asset('images/user.jpg') }}" class="rounded-circle mr-1" alt="'+message[2]+'" width="40" height="40"><div class="text-muted small text-nowrap mt-2">'+message[4]+'</div></div><div class="flex-shrink-1 bg-light rounded py-2 px-3 ml-3"><div class="font-weight-bold mb-1">'+message[2]+'</div>'+message[3]+'</div></div>');
-              }
-              $('html, body').animate({
-                scrollTop: $("#send_message").offset().top
-              }, 'slow');
-            }
-          } else if($('.chat-messages').find('div[message="'+message[0]+'"]').length) {
-            $('.chat-messages').find('div[message="'+message[0]+'"]').remove();
-          }
-        });
-      }
-    });
-    setInterval(refreshMessagerie, 10000);
+
     $('#nouveau_projet_nav a').click(function (e) {
       e.preventDefault();
       var attr = $(this).attr('rel');
       if(typeof attr !== typeof undefined && attr !== false) {
-        refresh_messagerie = 0;
         markers.clearLayers();
         parcMarkers = {};
         $('#nouveau_projet_nav li').removeClass('active');
@@ -2987,13 +2649,6 @@
           $('#fields_div').removeClass('col-sm-6');
           $('#fields_div').addClass('col-sm-12');
           $('fieldset#' + attr + ' .col-sm-4').addClass('col-sm-2').removeClass('col-sm-4');
-          if(attr == 'tab_messagerie') {
-            refresh_messagerie = 1;
-            refreshMessagerie();
-            $('html, body').animate({
-              scrollTop: $("#send_message").offset().top
-            }, 'slow');
-          }
         } else {
           if(attr != 'tab_images') {
             $('#map').removeClass('hide');
