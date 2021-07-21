@@ -825,7 +825,7 @@ class ProjetController extends Controller
 				if (isset($_POST['{proprietaire' . $j . '_identite}']) && $_POST['{proprietaire' . $j . '_identite}']) {
 					$personnesPhysiquesRow.= str_replace(['{proprietaire_civilite}', '{proprietaire_identite}', '{proprietaire_ne_le}', '{proprietaire_ne_a}', '{proprietaire_adresse}', '{proprietaire_droit}', '{proprietaire_marital}', '{proprietaire_qualite}'], [$_POST['{proprietaire' . $j . '_civilite}'], $_POST['{proprietaire' . $j . '_identite}'], $_POST['{proprietaire' . $j . '_ne_le}'], $_POST['{proprietaire' . $j . '_ne_a}'], $_POST['{proprietaire' . $j . '_adresse}'], $_POST['{proprietaire' . $j . '_droit}'], $_POST['{proprietaire' . $j . '_marital}'], $_POST['{proprietaire' . $j . '_qualite}']], $personnesPhysiquesRowCopy);
 				}
-			}exit($personnesPhysiquesRow);
+			}
 
             $zip_val = new \ZipArchive;
 
