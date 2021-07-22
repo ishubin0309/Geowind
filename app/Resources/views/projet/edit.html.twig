@@ -1795,34 +1795,35 @@
           titles.push($(this).text());
         });
         $collectionHolderProprietaire.children().each(function(i, tr) {
-          if ($(tr).hasClass('proprietaire_entry')) {
-            data.push('Proprietaire');
-          } else if ($(tr).hasClass('proprietaire2_entry')) {
-            data.push('Proprietaire 2');
-          } else if ($(tr).hasClass('proprietaire3_entry')) {
-            data.push('Proprietaire 3');
-          } else if ($(tr).hasClass('proprietaire4_entry')) {
-            data.push('Proprietaire 4');
-          } else if ($(tr).hasClass('exploitant_entry')) {
-            data.push('Exploitant');
-          } else if ($(tr).hasClass('exploitant2_entry')) {
-            data.push('Exploitant 2');
-          } else if ($(tr).hasClass('exploitant3_entry')) {
-            data.push('Exploitant 3');
-          }
-          if($(tr).find('td').length) {
-            $(tr).find('td').each(function(j, td) {
-              if ($(td).find('input:eq(0)').length) {
-                data.push($(td).find('input:eq(0)').val());
-              } else if ($(td).find('select:eq(0)').length) {
-                data.push($(td).find('select:eq(0)').val());
-              } else {
-                data.push('');
-              }
-            });
+          if ($(tr).find('input[id$="_proprietaire"]').length && $(tr).find('input[id$="_proprietaire"]').val().trim()) {
+            if ($(tr).hasClass('proprietaire_entry')) {
+              data.push('Proprietaire');
+            } else if ($(tr).hasClass('proprietaire2_entry')) {
+              data.push('Proprietaire 2');
+            } else if ($(tr).hasClass('proprietaire3_entry')) {
+              data.push('Proprietaire 3');
+            } else if ($(tr).hasClass('proprietaire4_entry')) {
+              data.push('Proprietaire 4');
+            } else if ($(tr).hasClass('exploitant_entry')) {
+              data.push('Exploitant');
+            } else if ($(tr).hasClass('exploitant2_entry')) {
+              data.push('Exploitant 2');
+            } else if ($(tr).hasClass('exploitant3_entry')) {
+              data.push('Exploitant 3');
+            }
+            if($(tr).find('td').length) {
+              $(tr).find('td').each(function(j, td) {
+                if ($(td).find('input:eq(0)').length) {
+                  data.push($(td).find('input:eq(0)').val());
+                } else if ($(td).find('select:eq(0)').length) {
+                  data.push($(td).find('select:eq(0)').val());
+                } else {
+                  data.push('');
+                }
+              });
+            }
           }
         });
-        console.log(data);
         
         var CSVString = prepCSVRow(titles, titles.length, '');
         CSVString = prepCSVRow(data, titles.length, CSVString);

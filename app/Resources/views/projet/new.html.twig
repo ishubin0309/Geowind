@@ -1579,6 +1579,99 @@
         loadAllParcellesTags();
       }
     });
+
+    $('#projet_proprietaires_export_entry').click(function () {
+      if($collectionHolderProprietaire.find('tr').length) {
+        var titles = ['Fonction'];
+        var data = [];
+        $collectionHolderProprietaire.parents('table').find('th').each(function() {
+          titles.push($(this).text());
+        });
+        $collectionHolderProprietaire.children().each(function(i, tr) {
+          if ($(tr).find('input[id$="_proprietaire"]').length && $(tr).find('input[id$="_proprietaire"]').val().trim()) {
+            if ($(tr).hasClass('proprietaire_entry')) {
+              data.push('Proprietaire');
+            } else if ($(tr).hasClass('proprietaire2_entry')) {
+              data.push('Proprietaire 2');
+            } else if ($(tr).hasClass('proprietaire3_entry')) {
+              data.push('Proprietaire 3');
+            } else if ($(tr).hasClass('proprietaire4_entry')) {
+              data.push('Proprietaire 4');
+            } else if ($(tr).hasClass('exploitant_entry')) {
+              data.push('Exploitant');
+            } else if ($(tr).hasClass('exploitant2_entry')) {
+              data.push('Exploitant 2');
+            } else if ($(tr).hasClass('exploitant3_entry')) {
+              data.push('Exploitant 3');
+            }
+            if($(tr).find('td').length) {
+              $(tr).find('td').each(function(j, td) {
+                if ($(td).find('input:eq(0)').length) {
+                  data.push($(td).find('input:eq(0)').val());
+                } else if ($(td).find('select:eq(0)').length) {
+                  data.push($(td).find('select:eq(0)').val());
+                } else {
+                  data.push('');
+                }
+              });
+            }
+          }
+        });
+    
+        var CSVString = prepCSVRow(titles, titles.length, '');
+        CSVString = prepCSVRow(data, titles.length, CSVString);
+    
+        var downloadLink = document.createElement("a");
+        var blob = new Blob(["\ufeff", CSVString]);
+        var url = URL.createObjectURL(blob);
+        downloadLink.href = url;
+        downloadLink.download = "foncier.csv";
+    
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+      }
+    });
+
+    function prepCSVRow(arr, columnCount, initial) {
+      var row = ''; // this will hold data
+      var delimeter = ','; // data slice separator, in excel it's `;`, in usual CSv it's `,`
+      var newLine = '\r\n'; // newline separator for CSV row
+  
+      /*
+	   * Convert [1,2,3,4] into [[1,2], [3,4]] while count is 2
+	   * @param _arr {Array} - the actual array to split
+	   * @param _count {Number} - the amount to split
+	   * return {Array} - splitted array
+	   */
+      function splitArray(_arr, _count) {
+        var splitted = [];
+        var result = [];
+        _arr.forEach(function(item, idx) {
+          if ((idx + 1) % _count === 0) {
+            splitted.push(item);
+            result.push(splitted);
+            splitted = [];
+          } else {
+            splitted.push(item);
+          }
+        });
+        return result;
+      }
+      var plainArr = splitArray(arr, columnCount);
+      // don't know how to explain this
+      // you just have to like follow the code
+      // and you understand, it's pretty simple
+      // it converts `['a', 'b', 'c']` to `a,b,c` string
+      plainArr.forEach(function(arrItem) {
+        arrItem.forEach(function(item, idx) {
+          row += item + ((idx + 1) === arrItem.length ? '' : delimeter);
+        });
+        row += newLine;
+      });
+      return initial + row;
+    }
+    
     $collectionHolderProprietaire.on('change', '[id$="_proprietaire"], [id$="_telephoneProprietaire"], [id$="_proprietaire2"], [id$="_telephoneProprietaire2"], [id$="_proprietaire3"], [id$="_telephoneProprietaire3"], [id$="_proprietaire4"], [id$="_telephoneProprietaire4"], [id$="_exploitant"], [id$="_telephoneExploitant"], [id$="_exploitant2"], [id$="_telephoneExploitant2"], [id$="_exploitant3"], [id$="_telephoneExploitant3"]', function () {
       var id = $(this).attr('id').match(/\d+/);
       id = parseInt(id);
