@@ -1789,7 +1789,7 @@
 
     $('#projet_proprietaires_export_entry').click(function () {
       if($collectionHolderProprietaire.find('tr').length) {
-        var titles = ['Type'];
+        var titles = ['Fonction'];
         var data = [];
         $collectionHolderProprietaire.parents('table').find('th').each(function() {
           titles.push($(this).text());
@@ -1820,6 +1820,7 @@
             }
           });
         });
+        console.log(data);
         
         var CSVString = prepCSVRow(titles, titles.length, '');
         CSVString = prepCSVRow(data, titles.length, CSVString);
