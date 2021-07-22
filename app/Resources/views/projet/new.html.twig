@@ -2613,11 +2613,7 @@
         });
       }
       if(parcelles_count) {
-        if (accords_count) {
-          selectedParcelles = ' (Parcelles: ' + counted_accords.join(', ') + ')';
-        } else {
-          selectedParcelles = '';
-        }
+        selectedParcelles = ' (Parcelles: ' + parcelles.join(', ') + ')';
         if(!$('#tab_foncier legend span').length) $('#tab_foncier legend').append(' <span style="color:red;">'+accords_count+'/'+parcelles_count + selectedParcelles+'</span>');
         else $('#tab_foncier legend span').text(accords_count+'/'+parcelles_count + selectedParcelles);
       }
