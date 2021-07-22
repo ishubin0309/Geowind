@@ -16,30 +16,6 @@
     padding-right: 10px;
     padding-left: 10px;
   }
-  tr.color-blue input, tr.color-blue select {
-    color: blue;
-  }
-  tr.color-red input, tr.color-red select {
-    color: red;
-  }
-  tr.color-green input, tr.color-green select {
-    color: green;
-  }
-  tr.color-purple input, tr.color-purple select {
-    color: purple;
-  }
-  tr.color-orange input, tr.color-orange select {
-    color: orange;
-  }
-  tr.color-aquamarine input, tr.color-aquamarine select {
-    color: aquamarine;
-  }
-  tr.color-teal input, tr.color-teal select {
-    color: teal;
-  }
-  tr.color-cyan input, tr.color-cyan select {
-    color: cyan;
-  }
   </style>
 
   {{ form_start(form) }}
@@ -2231,39 +2207,6 @@
     $('#projet_parcelles_remove_entry').click(function () {
       $('> :last-child', $collectionHolderParcelle).remove();
     });
-    
-    function colorParcelles() {
-      var colors = ['blue', 'red', 'green', 'purple', 'teal', 'aquamarine', 'orange', 'cyan', 'blue', 'red', 'green', 'purple', 'teal', 'aquamarine', 'orange', 'cyan'];
-      var parcelles = [];
-      var parcellesColors = [];
-      $collectionHolderParcelle.children().each(function() {
-        tr_index = $(this).index();
-        var parcelle = $(this).find('input[name]:eq(0)').val().trim();
-        if(!parcelles.includes(parcelle)) {
-          color_index = parcelles.length;
-          parcellesColors.push(colors[color_index]);
-          parcelles.push(parcelle);
-        } else {
-          color_index = parcelles.findIndex(parcelle);
-        }
-        $(this).addClass('color-' + colors[color_index]);
-        $collectionHolderProprietaire.children().each(function() {
-          if($(this).find('input[name]:eq(0)').val().trim() == parcelle) {
-            $(this).addClass('color-' + colors[color_index]);
-            $(this).next().addClass('color-' + colors[color_index]);
-            $(this).next().next().addClass('color-' + colors[color_index]);
-            $(this).next().next().next().addClass('color-' + colors[color_index]);
-            $(this).next().next().next().next().addClass('color-' + colors[color_index]);
-            $(this).next().next().next().next().next().addClass('color-' + colors[color_index]);
-            $(this).next().next().next().next().next().next().addClass('color-' + colors[color_index]);
-          }
-        });
-      });
-    }
-    colorParcelles();
-    $collectionHolderProprietaire.on('change', function() {
-      colorParcelles();
-    });
 
     var $collectionHolderEnjeux = $('#projet_enjeuxs');
     var prototypeEnjeux = $collectionHolderEnjeux.data('prototype');
@@ -2565,8 +2508,8 @@
         accords_count = 0;
         $('#projet_proprietaires tr.proprietaire_entry').each(function(i,element) {
           selectedParcelles = $(element).find('td:eq(0) input[name]').val().split(',');
-          $.each(selectedParcelles, function(i, word) {
-            if(!counted_accords.includes(word) && parcelles.includes(word) && $(element).find('select[id$="_accordProprietaire"]').val() == 'OUI' && (!$('#projet_proprietaires tr.proprietaire2_entry:eq('+i+')').find('input[id$="_proprietaire2"]').val() || $('#projet_proprietaires tr.proprietaire2_entry:eq('+i+')').find('select[id$="_accordProprietaire2"]').val() == 'OUI') && (!$('#projet_proprietaires tr.proprietaire3_entry:eq('+i+')').find('input[id$="_proprietaire3"]').val() || $('#projet_proprietaires tr.proprietaire3_entry:eq('+i+')').find('select[id$="_accordProprietaire3"]').val() == 'OUI') && (!$('#projet_proprietaires tr.proprietaire4_entry:eq('+i+')').find('input[id$="_proprietaire4"]').val() || $('#projet_proprietaires tr.proprietaire4_entry:eq('+i+')').find('select[id$="_accordProprietaire4"]').val() == 'OUI') && $('#projet_proprietaires tr.exploitant_entry:eq('+i+')').find('select[id$="_accordExploitant"]').val() != 'NON' && $(element).find('.exploitant_entry select[id$="_accordExploitant"]').val() != 'NEGO' && $('#projet_proprietaires tr.exploitant_entry2:eq('+i+')').find('select[id$="_accordExploitant2"]').val() != 'NON' && $(element).find('.exploitant_entry2 select[id$="_accordExploitant2"]').val() != 'NEGO' && $('#projet_proprietaires tr.exploitant3_entry:eq('+i+')').find('select[id$="_accordExploitant3"]').val() != 'NON' && $(element).find('.exploitant3_entry select[id$="_accordExploitant3"]').val() != 'NEGO') {
+          $.each(selectedParcelles, function(j, word) {
+            if(!counted_accords.includes(word) && parcelles.includes(word) && $(element).find('select[id$="_accordProprietaire"]').val() == 'OUI' && (!$('#projet_proprietaires tr.proprietaire2_entry:eq('+i+')').find('input[id$="_proprietaire2"]').val() || $('#projet_proprietaires tr.proprietaire2_entry:eq('+i+')').find('select[id$="_accordProprietaire2"]').val() == 'OUI') && (!$('#projet_proprietaires tr.proprietaire3_entry:eq('+i+')').find('input[id$="_proprietaire3"]').val() || $('#projet_proprietaires tr.proprietaire3_entry:eq('+i+')').find('select[id$="_accordProprietaire3"]').val() == 'OUI') && (!$('#projet_proprietaires tr.proprietaire4_entry:eq('+i+')').find('input[id$="_proprietaire4"]').val() || $('#projet_proprietaires tr.proprietaire4_entry:eq('+i+')').find('select[id$="_accordProprietaire4"]').val() == 'OUI') && $('#projet_proprietaires tr.exploitant_entry:eq('+i+')').find('select[id$="_accordExploitant"]').val() != 'NON' && $('#projet_proprietaires tr.exploitant_entry:eq('+i+')').find('select[id$="_accordExploitant"]').val() != 'NEGO' && $('#projet_proprietaires tr.exploitant_entry2:eq('+i+')').find('select[id$="_accordExploitant2"]').val() != 'NON' && $('#projet_proprietaires tr.exploitant_entry2:eq('+i+')').find('select[id$="_accordExploitant2"]').val() != 'NEGO' && $('#projet_proprietaires tr.exploitant3_entry:eq('+i+')').find('select[id$="_accordExploitant3"]').val() != 'NON' && $('#projet_proprietaires tr.exploitant3_entry:eq('+i+')').find('select[id$="_accordExploitant3"]').val() != 'NEGO') {
               accords_count++;
               counted_accords.push(word);
             }
@@ -2574,8 +2517,13 @@
         });
       }
       if(parcelles_count) {
-        if(!$('#tab_foncier legend span').length) $('#tab_foncier legend').append(' <span style="color:red;">'+accords_count+'/'+parcelles_count+'</span>');
-        else $('#tab_foncier legend span').text(accords_count+'/'+parcelles_count);
+        if (accords_count) {
+          selectedParcelles = ' (' + counted_accords.join(', ') + ')';
+        } else {
+          selectedParcelles = '';
+        }
+        if(!$('#tab_foncier legend span').length) $('#tab_foncier legend').append(' <span style="color:red;">'+accords_count+'/'+parcelles_count + selectedParcelles+'</span>');
+        else $('#tab_foncier legend span').text(accords_count+'/'+parcelles_count + selectedParcelles);
       }
     }
     $('#tab_parcelles .btn').on('click', function() {
