@@ -1611,7 +1611,7 @@
                 } else if ($(td).find('select:eq(0)').length) {
                   data.push($(td).find('select:eq(0)').val());
                 } else {
-                  data.push('');
+                  data.push($(td).text());
                 }
               });
             }
