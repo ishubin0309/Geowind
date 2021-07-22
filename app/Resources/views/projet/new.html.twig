@@ -1606,12 +1606,12 @@
             }
             if($(tr).find('td').length) {
               $(tr).find('td').each(function(j, td) {
-                if ($(td).find('input:eq(0)').length) {
-                  data.push($(td).find('input:eq(0)').val());
-                } else if ($(td).find('select:eq(0)').length) {
-                  data.push($(td).find('select:eq(0)').val());
+                if ($(td).find('input[name]:eq(0)').length) {
+                  data.push('"' + $(td).find('input[name]:eq(0)').val() + '"');
+                } else if ($(td).find('select[name]:eq(0)').length) {
+                  data.push('"' + $(td).find('select[name]:eq(0)').val() + '"');
                 } else {
-                  data.push($(td).text());
+                  data.push('"' + $(td).text() + '"');
                 }
               });
             }
