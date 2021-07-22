@@ -1588,7 +1588,7 @@
           titles.push($(this).text());
         });
         $collectionHolderProprietaire.children().each(function(i, tr) {
-          if ($(tr).find('input[id$="_proprietaire"]').length && $(tr).find('input[id$="_proprietaire"]').val().trim()) {
+          if (($(tr).find('input[id*="_proprietaire"]').length && $(tr).find('input[id*="_proprietaire"]').val().trim()) || ($(tr).find('input[id*="_exploitant"]').length && $(tr).find('input[id*="_exploitant"]').val().trim())) {
             if ($(tr).hasClass('proprietaire_entry')) {
               data.push('Proprietaire');
             } else if ($(tr).hasClass('proprietaire2_entry')) {
