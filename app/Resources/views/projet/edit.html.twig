@@ -1428,41 +1428,13 @@
       }
     });
 
-    $collectionHolderProprietaire.on('click', '.unhide_foncier_proprietaire', function (e) {
-      e.preventDefault();
-      if ($(this).parents('tr').prev().prev().prev().hasClass('hide')) {
-        $(this).parents('tr').prev().prev().prev().removeClass('hide');
-        if (!$(this).parents('tr').prev().prev().hasClass('hide') && !$(this).parents('tr').prev().hasClass('hide')) {
-          $(this).remove();
-        }
-      } else if ($(this).parents('tr').prev().prev().hasClass('hide')) {
-        $(this).parents('tr').prev().prev().removeClass('hide');
-        if (!$(this).parents('tr').prev().hasClass('hide')) {
-          $(this).remove();
-        }
-      } else {
-        $(this).parents('tr').prev().removeClass('hide');
-        $(this).remove();
-      }
-    });
-
-    $collectionHolderProprietaire.on('click', '.unhide_foncier_exploitant', function (e) {
-      e.preventDefault();
-      if ($(this).parents('tr').next().hasClass('hide')) {
-        $(this).parents('tr').next().removeClass('hide');
-        if (!$(this).parents('tr').next().next().hasClass('hide')) {
-          $(this).remove();
-        }
-      } else {
-        $(this).parents('tr').next().next().removeClass('hide');
-        $(this).remove();
-      }
-    });
-
     $('#projet_proprietaires_add_proprietaire_entry').click(function () {
       if (!$(this).hasClass('disabled') && $collectionHolderProprietaire.find('tr.info').length == 7) {
         if ($collectionHolderProprietaire.find('tr[class*="info"][class*="proprietaire"][class*="hide"]:eq(0)').length) {
-          $collectionHolderProprietaire.find('tr[class*="info"][class*="proprietaire"][class*="hide"]:eq(0)').removeClass('hide')
+          $collectionHolderProprietaire.find('tr[class*="info"][class*="proprietaire"][class*="hide"]:eq(0)').removeClass('hide');
+          if (!$collectionHolderProprietaire.find('tr[class*="info"][class*="proprietaire"][class*="hide"]:eq(0)').length) {
+            $('#projet_proprietaires_add_proprietaire_entry').addClass('disabled');
+          }
         }
       }
     });
@@ -1470,7 +1442,10 @@
     $('#projet_proprietaires_add_exploitant_entry').click(function () {
       if (!$(this).hasClass('disabled') && $collectionHolderProprietaire.find('tr.info').length == 7) {
         if ($collectionHolderProprietaire.find('tr[class*="info"][class*="exploitant"][class*="hide"]:eq(0)').length) {
-          $collectionHolderProprietaire.find('tr[class*="info"][class*="exploitant"][class*="hide"]:eq(0)').removeClass('hide')
+          $collectionHolderProprietaire.find('tr[class*="info"][class*="exploitant"][class*="hide"]:eq(0)').removeClass('hide');
+          if (!$collectionHolderProprietaire.find('tr[class*="info"][class*="exploitant"][class*="hide"]:eq(0)').length) {
+            $('#projet_proprietaires_add_exploitant_entry').addClass('disabled');
+          }
         }
       }
     });
@@ -2077,10 +2052,10 @@
         $('#projet_proprietaires_remove_entry').removeClass('disabled');
         $('#projet_proprietaires_duplicate_entry').removeClass('disabled');
         $('#projet_proprietaires_publish_entry').removeClass('disabled');
-        if ($(this).find('tr[class*="proprietaire"][class*="hide"]:eq(0)').length) {
+        if ($collectionHolderProprietaire.find('tr[class*="info"][class*="proprietaire"][class*="hide"]:eq(0)').length) {
           $('#projet_proprietaires_add_proprietaire_entry').removeClass('disabled');
         }
-        if ($(this).find('tr[class*="exploitant"][class*="hide"]:eq(0)').length) {
+        if ($collectionHolderProprietaire.find('tr[class*="info"][class*="exploitant"][class*="hide"]:eq(0)').length) {
           $('#projet_proprietaires_add_exploitant_entry').removeClass('disabled');
         }
       }
