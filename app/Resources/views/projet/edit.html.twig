@@ -2054,9 +2054,13 @@
         $('#projet_proprietaires_publish_entry').removeClass('disabled');
         if ($collectionHolderProprietaire.find('tr[class*="info"][class*="proprietaire"][class*="hide"]:eq(0)').length) {
           $('#projet_proprietaires_add_proprietaire_entry').removeClass('disabled');
+        } else {
+          $('#projet_proprietaires_add_proprietaire_entry').addClass('disabled');
         }
         if ($collectionHolderProprietaire.find('tr[class*="info"][class*="exploitant"][class*="hide"]:eq(0)').length) {
           $('#projet_proprietaires_add_exploitant_entry').removeClass('disabled');
+        } else {
+          $('#projet_proprietaires_add_exploitant_entry').addClass('disabled');
         }
       }
     });
