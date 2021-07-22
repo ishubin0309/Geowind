@@ -1627,7 +1627,8 @@
         var blob = new Blob(["\ufeff", CSVString]);
         var url = URL.createObjectURL(blob);
         downloadLink.href = url;
-        downloadLink.download = "foncier.csv";
+        id = $('#projet_denomination').val();
+        downloadLink.download = "foncier_" + id + ".csv";
     
         document.body.appendChild(downloadLink);
         downloadLink.click();
