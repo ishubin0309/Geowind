@@ -1252,6 +1252,14 @@
       }
     });
 
+    $('#projet_proprietaires_add_exploitant_entry').click(function () {
+      if (!$(this).hasClass('disabled') && $collectionHolderProprietaire.find('tr.info').length == 7) {
+        if ($collectionHolderProprietaire.find('tr[class*="exploitant"][class*="hide"]:eq(0)').length) {
+          $collectionHolderProprietaire.find('tr[class*="exploitant"][class*="hide"]:eq(0)').removeClass('hide')
+        }
+      }
+    });
+
     $('#projet_proprietaires_publish_entry').click(function () {
       if(!$(this).hasClass('disabled') && $collectionHolderProprietaire.find('tr.info').length == 7) {
         var tr_proprietaire = $collectionHolderProprietaire.find('tr.info:eq(0)');
@@ -1576,6 +1584,8 @@
         $('#projet_proprietaires_remove_entry').addClass('disabled');
         $('#projet_proprietaires_duplicate_entry').addClass('disabled');
         $('#projet_proprietaires_publish_entry').addClass('disabled');
+        $('#projet_proprietaires_add_proprietaire_entry').addClass('disabled');
+        $('#projet_proprietaires_add_exploitant_entry').addClass('disabled');
         loadAllParcellesTags();
       }
     });
@@ -1852,6 +1862,8 @@
         $('#projet_proprietaires_remove_entry').removeClass('disabled');
         $('#projet_proprietaires_duplicate_entry').removeClass('disabled');
         $('#projet_proprietaires_publish_entry').removeClass('disabled');
+        $('#projet_proprietaires_add_proprietaire_entry').removeClass('disabled');
+        $('#projet_proprietaires_add_exploitant_entry').removeClass('disabled');
       }
     });
     loadAllParcellesTags();
