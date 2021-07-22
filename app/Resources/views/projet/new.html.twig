@@ -1610,8 +1610,10 @@
                   data.push('"' + $(td).find('input[name]:eq(0)').val() + '"');
                 } else if ($(td).find('select[name]:eq(0)').length) {
                   data.push('"' + $(td).find('select[name]:eq(0)').val() + '"');
-                } else {
+                } else if (j > 0) {
                   data.push('"' + $(td).text() + '"');
+                } else {
+                  data.push('');
                 }
               });
             }
