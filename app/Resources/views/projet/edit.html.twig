@@ -1819,20 +1819,20 @@
               data.push('');
             }
           });
-  
-          var CSVString = prepCSVRow(titles, titles.length, '');
-          CSVString = prepCSVRow(data, titles.length, CSVString);
-  
-          var downloadLink = document.createElement("a");
-          var blob = new Blob(["\ufeff", CSVString]);
-          var url = URL.createObjectURL(blob);
-          downloadLink.href = url;
-          downloadLink.download = "foncier.csv";
-  
-          document.body.appendChild(downloadLink);
-          downloadLink.click();
-          document.body.removeChild(downloadLink);
         });
+        
+        var CSVString = prepCSVRow(titles, titles.length, '');
+        CSVString = prepCSVRow(data, titles.length, CSVString);
+  
+        var downloadLink = document.createElement("a");
+        var blob = new Blob(["\ufeff", CSVString]);
+        var url = URL.createObjectURL(blob);
+        downloadLink.href = url;
+        downloadLink.download = "foncier.csv";
+  
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
       }
     });
 
