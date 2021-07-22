@@ -234,21 +234,23 @@ col-sm-8
           {{- form_row(child) -}}
         {% endfor %}
         </tbody>
-        <tfoot>
-          <tr>
-            <td colspan="8">
-              <button type="button" id="{{ id }}_add_entry" class="btn btn-primary btn-xs"><i class="fa fa-plus-circle"></i> Ajouter</button>
-              {#<button type="button" id="{{ id }}_duplicate_entry" class="btn btn-success disabled btn-xs"><i class="fa fa-plus-circle"></i> Dupliquer</button>#}
-              <button type="button" id="{{ id }}_publish_entry" class="btn btn-success disabled btn-xs"><i class="fa fa-file-word-o"></i> Publier</button>
-              <button type="button" id="{{ id }}_remove_entry" class="btn btn-danger disabled btn-xs"><i class="fa fa-minus-circle"></i> Supprimer</button>
-              <button type="button" id="{{ id }}_add_proprietaire_entry" class="btn btn-primary disabled btn-xs"><i class="fa fa-plus-square"></i> Propriétaire</button>
-              <button type="button" id="{{ id }}_add_exploitant_entry" class="btn btn-primary disabled btn-xs"><i class="fa fa-plus-square"></i> Exploitant</button>
-              <button type="button" id="{{ id }}_export_entry" class="btn btn-info btn-xs"><i class="fa fa-file-excel-o"></i> Exporter</button>
-            </td>
-          </tr>
-        </tfoot>
       </table>
     </div>
+    <table>
+      <tbody>
+      <tr>
+        <td colspan="8">
+          <button type="button" id="{{ id }}_add_entry" class="btn btn-primary btn-xs"><i class="fa fa-plus-circle"></i> Ajouter</button>
+          {#<button type="button" id="{{ id }}_duplicate_entry" class="btn btn-success disabled btn-xs"><i class="fa fa-plus-circle"></i> Dupliquer</button>#}
+          <button type="button" id="{{ id }}_publish_entry" class="btn btn-success disabled btn-xs"><i class="fa fa-file-word-o"></i> Publier</button>
+          <button type="button" id="{{ id }}_remove_entry" class="btn btn-danger disabled btn-xs"><i class="fa fa-minus-circle"></i> Supprimer</button>
+          <button type="button" id="{{ id }}_add_proprietaire_entry" class="btn btn-primary disabled btn-xs"><i class="fa fa-plus-square"></i> Propriétaire</button>
+          <button type="button" id="{{ id }}_add_exploitant_entry" class="btn btn-primary disabled btn-xs"><i class="fa fa-plus-square"></i> Exploitant</button>
+          <button type="button" id="{{ id }}_export_entry" class="btn btn-info btn-xs"><i class="fa fa-file-excel-o"></i> Exporter</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
     
 
 {% endblock %}
