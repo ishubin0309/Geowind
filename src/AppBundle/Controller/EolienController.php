@@ -142,7 +142,7 @@ class EolienController extends Controller
     }
 
     /**
-     * @Route("/environnement", name="cartographie_zone_naturelles_protegees")
+     * @Route("/contraintes", name="cartographie_contraintes")
      */
     public function zoneNaturellesProtegeesAction(Request $request)
     {
@@ -156,7 +156,7 @@ class EolienController extends Controller
             $file_path = $import->getImportFile();
             @unlink('Essai.geojson');
             file_put_contents('Essai.geojson', file_get_contents($file_path));
-            return $this->redirectToRoute('cartographie_zone_naturelles_protegees');
+            return $this->redirectToRoute('cartographie_contraintes');
         }
         $focus = $request->query->get('focus', null);
         

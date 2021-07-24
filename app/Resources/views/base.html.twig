@@ -162,7 +162,7 @@
                         <a href="{{ path('home') }}" class="btn btn-default btn-sm btn-block"><i class="fa fa-home"></i> Page de garde</a>
                         {% if is_granted('ROLE_ADMIN') %}
                           <a href="{{ path('cartographie') }}" class="btn btn-default btn-sm btn-block"><i class="fa fa-dot-circle-o"></i> Parcs éoliens</a>
-                          <a href="{{ path('cartographie_zone_naturelles_protegees') }}" class="btn btn-default btn-sm btn-block"><i class="fa fa-tree"></i> Environnement</a>
+                          <a href="{{ path('cartographie_contraintes') }}" class="btn btn-default btn-sm btn-block"><i class="fa fa-tree"></i> Contraintes</a>
                         {% endif %}
                         <a href="{{ path('homepage') }}" class="btn btn-default btn-sm btn-block"><i class="fa fa-map-pin"></i> Pépinière</a>
                         <a href="{{ path('logout') }}" class="btn btn-danger btn-sm btn-block"><i class="fa fa-sign-out"></i> Déconnexion</a>
