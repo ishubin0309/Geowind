@@ -154,6 +154,7 @@ class EolienController extends Controller
             $em = $this->getDoctrine()->getManager();
 
             $file_path = $import->getImportFile();
+            @unlink('Essai.geojson');
             file_put_contents('Essai.geojson', file_get_contents($file_path));
             return $this->redirectToRoute('cartographie_zone_naturelles_protegees');
         }
