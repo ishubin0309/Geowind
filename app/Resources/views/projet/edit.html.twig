@@ -1473,7 +1473,7 @@
         fields.push(['proprietaire_ne_a', 'field', tr_proprietaire.find('input[id$="_lieuNaissanceProprietaire"]').val()]);
         fields.push(['exploitant_civilite', 'field', tr_exploitant.find('select[id$="_civiliteExploitant"]').val()]);
         fields.push(['exploitant_identite', 'field', tr_exploitant.find('input[id$="_exploitant"]').val()]);
-        fields.push(['exploitant_qualite', 'field', tr_exploitant.find('input[id$="_qualiteExploitant"]').val()]);
+        fields.push(['exploitant_qualite', 'field', tr_exploitant.find('select[id$="_qualiteExploitant"]').val()]);
         fields.push(['exploitant_adresse', 'field', tr_exploitant.find('input[id$="_adresseExploitant"]').val()]);
         fields.push(['exploitant_ne_le', 'field', tr_exploitant.find('input[id$="_dateNaissanceExploitant"]').val()]);
         fields.push(['exploitant_ne_a', 'field', tr_exploitant.find('input[id$="_lieuNaissanceExploitant"]').val()]);
@@ -1628,7 +1628,7 @@
         //}
         fields.push(['exploitant2_civilite', 'field', tr_exploitant2.find('select[id$="_civiliteExploitant2"]').val()]);
         fields.push(['exploitant2_identite', 'field', tr_exploitant2.find('input[id$="_exploitant2"]').val()]);
-        fields.push(['exploitant2_qualite', 'field', tr_exploitant2.find('input[id$="_qualiteExploitant2"]').val()]);
+        fields.push(['exploitant2_qualite', 'field', tr_exploitant2.find('select[id$="_qualiteExploitant2"]').val()]);
         fields.push(['exploitant2_adresse', 'field', tr_exploitant2.find('input[id$="_adresseExploitant2"]').val()]);
         fields.push(['exploitant2_ne_le', 'field', tr_exploitant2.find('input[id$="_dateNaissanceExploitant2"]').val()]);
         fields.push(['exploitant2_ne_a', 'field', tr_exploitant2.find('input[id$="_lieuNaissanceExploitant2"]').val()]);
@@ -1637,7 +1637,7 @@
         
         fields.push(['exploitant3_civilite', 'field', tr_exploitant3.find('select[id$="_civiliteExploitant3"]').val()]);
         fields.push(['exploitant3_identite', 'field', tr_exploitant3.find('input[id$="_exploitant3"]').val()]);
-        fields.push(['exploitant3_qualite', 'field', tr_exploitant3.find('input[id$="_qualiteExploitant3"]').val()]);
+        fields.push(['exploitant3_qualite', 'field', tr_exploitant3.find('select[id$="_qualiteExploitant3"]').val()]);
         fields.push(['exploitant3_adresse', 'field', tr_exploitant3.find('input[id$="_adresseExploitant3"]').val()]);
         fields.push(['exploitant3_ne_le', 'field', tr_exploitant3.find('input[id$="_dateNaissanceExploitant3"]').val()]);
         fields.push(['exploitant3_ne_a', 'field', tr_exploitant3.find('input[id$="_lieuNaissanceExploitant3"]').val()]);
@@ -1697,7 +1697,7 @@
           
           publish_form.find('input[name="{exploitant_civilite}"]').val(tr_exploitant.find('select[id$="_civiliteExploitant"]').val());
           publish_form.find('input[name="{exploitant_identite}"]').val(tr_exploitant.find('input[id$="_exploitant"]').val());
-          publish_form.find('input[name="{exploitant_qualite}"]').val(tr_exploitant.find('input[id$="_qualiteExploitant"]').val());
+          publish_form.find('input[name="{exploitant_qualite}"]').val(tr_exploitant.find('select[id$="_qualiteExploitant"]').val());
           publish_form.find('input[name="{exploitant_adresse}"]').val(tr_exploitant.find('input[id$="_adresseExploitant"]').val());
           publish_form.find('input[name="{exploitant_ne_le}"]').val(tr_exploitant.find('input[id$="_dateNaissanceExploitant"]').val());
           publish_form.find('input[name="{exploitant_ne_a}"]').val(tr_exploitant.find('input[id$="_lieuNaissanceExploitant"]').val());
@@ -1707,7 +1707,7 @@
           if (publish_form.find('input[name="{exploitant2_civilite}"]').length) {
             publish_form.find('input[name="{exploitant2_civilite}"]').val(tr_exploitant2.find('select[id$="_civiliteExploitant2"]').val());
             publish_form.find('input[name="{exploitant2_identite}"]').val(tr_exploitant2.find('input[id$="_exploitant2"]').val());
-            publish_form.find('input[name="{exploitant2_qualite}"]').val(tr_exploitant2.find('input[id$="_qualiteExploitant2"]').val());
+            publish_form.find('input[name="{exploitant2_qualite}"]').val(tr_exploitant2.find('select[id$="_qualiteExploitant2"]').val());
             publish_form.find('input[name="{exploitant2_adresse}"]').val(tr_exploitant2.find('input[id$="_adresseExploitant2"]').val());
             publish_form.find('input[name="{exploitant2_ne_le}"]').val(tr_exploitant2.find('input[id$="_dateNaissanceExploitant2"]').val());
             publish_form.find('input[name="{exploitant2_ne_a}"]').val(tr_exploitant2.find('input[id$="_lieuNaissanceExploitant2"]').val());
@@ -1718,7 +1718,7 @@
           if (publish_form.find('input[name="{exploitant3_civilite}"]').length) {
             publish_form.find('input[name="{exploitant3_civilite}"]').val(tr_exploitant3.find('select[id$="_civiliteExploitant3"]').val());
             publish_form.find('input[name="{exploitant3_identite}"]').val(tr_exploitant3.find('input[id$="_exploitant3"]').val());
-            publish_form.find('input[name="{exploitant3_qualite}"]').val(tr_exploitant3.find('input[id$="_qualiteExploitant3"]').val());
+            publish_form.find('input[name="{exploitant3_qualite}"]').val(tr_exploitant3.find('select[id$="_qualiteExploitant3"]').val());
             publish_form.find('input[name="{exploitant3_adresse}"]').val(tr_exploitant3.find('input[id$="_adresseExploitant3"]').val());
             publish_form.find('input[name="{exploitant3_ne_le}"]').val(tr_exploitant3.find('input[id$="_dateNaissanceExploitant3"]').val());
             publish_form.find('input[name="{exploitant3_ne_a}"]').val(tr_exploitant3.find('input[id$="_lieuNaissanceExploitant3"]').val());
