@@ -35,6 +35,21 @@ class GridHelper
         return json_encode($data);
     }
 
+    public function getJsonIconsTypeProjets()
+    {
+        $data = [];
+        $types = Projet::getIconsTypeProjetList();
+
+        foreach ($types as $code => $type) {
+            $data[$code] = [
+                'name' => $type,
+                'data' => $types[$code],
+            ];
+        }
+
+        return json_encode($data);
+    }
+
     public function getJsonTypeSites()
     {
         $data = [];

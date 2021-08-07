@@ -120,7 +120,7 @@
       cssClass: "slick-cell-checkboxsel"
     });
 
-    var typeProjet = {{ grid_helper.getJsontypeProjets|raw }};
+    var typeProjet = {{ grid_helper.getIconsJsontypeProjets|raw }};
     var typeSite = {{ grid_helper.getJsontypeSites|raw }};
     var phases = {{ grid_helper.getJsonPhases|raw }};
     var progressions = {{ grid_helper.getJsonProgressions|raw }};
@@ -192,7 +192,7 @@
     {% if columnsType == 1 %}
       checkboxColumn,
       { id: "id", name: "ID", field: "id", width: 70, maxWidth: 100, sortable: true, sorter: numericSorter, },
-      { id: "typeProjet", name: "Type de projet", field: "typeProjet", width: 70, maxWidth: 250, formatter: typeProjetFormatter, sortable: true, sorter: stringSorter, },
+      { id: "typeProjet", name: "Type de projet", field: "typeProjet", width: 70, maxWidth: 250, formatter: typeProjetFormatter, sortable: false, sorter: stringSorter, },
       { id: "typeSite", name: "Type de Bien", field: "typeSite", width: 70, maxWidth: 250, formatter: typeSiteFormatter, sortable: true, sorter: stringSorter, },
       { id: "environnement", name: "Type de milieu", field: "environnement", sortable: true, sorter: stringSorter, formatter: environnementFormatter, width: 110, maxWidth: 110 },
       { id: "region", name: "Région", field: "region", sortable: true, sorter: stringSorter, maxWidth: 250 },
