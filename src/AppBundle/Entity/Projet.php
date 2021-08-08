@@ -549,12 +549,12 @@ class Projet
     public static function getIconsTypeProjetList()
     {
         return [
-            self::TYPE_PROJET_UN => '<i class="fa fa-dot-circle-o"></i>',
-            self::TYPE_PROJET_DEUX => '<i class="fa fa-th-large"></i>',
+            self::TYPE_PROJET_UN => '<i title="Parc éolien" class="fa fa-dot-circle-o"></i>',
+            self::TYPE_PROJET_DEUX => '<i title="Ferme solaire" class="fa fa-th-large"></i>',
             self::TYPE_PROJET_TROIS => 'Ombrière solaire',
             self::TYPE_PROJET_QUATRE => 'Tracker solaire',
             self::TYPE_PROJET_CINQ => 'Eolienne isolée',
-            self::TYPE_PROJET_SIX => '<i class="fa fa-home"></i>',
+            self::TYPE_PROJET_SIX => '<i title="Toiture solaire" class="fa fa-home"></i>',
             self::TYPE_PROJET_SEPT => 'Mesure enviro'
         ];
     }

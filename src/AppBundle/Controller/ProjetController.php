@@ -521,8 +521,10 @@ class ProjetController extends Controller
                         $projet->setOrigineTelephone($telephone);
                         // $projet->setChefProjetTelephone($telephone);
                         $projet->setDenomination($denomination);
-                        $projet->setLatitude($data[$latColumn]);
-                        $projet->setLongitude($data[$lngColumn]);
+                        if ($data[$latColumn]) $projet->setLatitude($data[$latColumn]);
+                        else $projet->setLatitude(0);
+                        if ($data[$lngColumn]) $projet->setLongitude($data[$lngColumn]);
+                        else $projet->setLongitude(0);
                         $env = array_search($data[$environnementColumn], $listEnvironnements);
                         if($env) $projet->setEnvironnement($env);
                         else $projet->setEnvironnement('foret');
