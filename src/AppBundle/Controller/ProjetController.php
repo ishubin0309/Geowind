@@ -529,7 +529,7 @@ class ProjetController extends Controller
                         if($env) $projet->setEnvironnement($env);
                         else $projet->setEnvironnement('foret');
                         $tProjet = array_search($data[$typeProjetColumn], $listTypeProjets);
-                        if(!$tProjet) $tProjet = 'parc__eolien';echo $tProjet.'<br>';
+                        if(!$tProjet) $tProjet = 'parc__eolien';
                         $projet->setTypeProjet($tProjet);
                         $tSite = array_search($data[$typeSiteColumn], $listTypeSites);
                         if(!$tSite) $tSite = 'terrain';
@@ -615,13 +615,13 @@ class ProjetController extends Controller
                                 }
                             }
                             $em->persist($projet);
-                            // if($row % 50 == 0) $em->flush();
+                            if($row % 50 == 0) $em->flush();
                         } else $this->addFlash('warning', 'Département « ' . $departementVal . ' » n\'existe pas.');
                     // } else $this->addFlash('warning', 'Projet avec latitude et longitude « ' . $data[$latColumn] . ',' . $data[$lngColumn] . ' » déjà existe.');
                 }
                 fclose($handle);
-                // $em->flush();
-            }die;
+                $em->flush();
+            }
             return $this->redirectToRoute('view_liste', [
                 'liste' => $liste->getId(),
             ]);
