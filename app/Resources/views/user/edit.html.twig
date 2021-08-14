@@ -87,6 +87,16 @@
     users['{{ departement.nom }}'] = {0:'{{ departement.nom }}'};
     {% endfor %}
   {% endif %}
+  {% if form.vars.value.departementsChefProjet is not empty %}
+    {% for departement in form.vars.value.departementsChefProjet %}
+    users['{{ departement.nom }}'] = {0:'{{ departement.nom }}'};
+    {% endfor %}
+  {% endif %}
+  {% if form.vars.value.departementsChargeFoncier is not empty %}
+    {% for departement in form.vars.value.departementsChargeFoncier %}
+    users['{{ departement.nom }}'] = {0:'{{ departement.nom }}'};
+    {% endfor %}
+  {% endif %}
   $.each(users, function(i, user) {
     reverseGeolocalisation(user[0], 2);
   });
