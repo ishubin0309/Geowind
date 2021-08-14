@@ -240,7 +240,7 @@
       if('{{ projet.origine.id }}' in users) users['{{ projet.origine.id }}'] = '{{ projet.origine.prenom }}';
       users['{{ projet.origine.id }}'] = '{{ projet.origine.prenom }}';
     {% endfor %}
-    var typeProjet = {{ grid_helper.getJsontypeProjets|raw }};
+    var typeProjet = {{ grid_helper.getJsonIconsTypeProjets|raw }};
 
     function typeProjetFormatter(value) {
       return typeProjet[value] !== undefined ? typeProjet[value]['name'] : value;
