@@ -1229,7 +1229,9 @@
       var entry = prototypeproprietaire.replace(/__name__label__/g, length);
       entry = entry.replace(/__name__/g, length);
       $collectionHolderProprietaire.append(entry);
-  
+      
+      $('#projet_proprietaires_' + length + '_accordProprietaire').val('NON');
+      $('#projet_proprietaires_' + length + '_accordExploitant').val('NON');
       $('#projet_proprietaires_' + length + '_dateSignatureProprietaire').datepicker({
         format: 'dd/mm/yyyy',
         autoclose: true,
