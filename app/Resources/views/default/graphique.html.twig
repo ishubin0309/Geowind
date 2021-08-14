@@ -136,7 +136,7 @@
       <table class="table">
         <thead>
           <tr class="info">
-            <th style="width:250px;">Utilisateur</th>
+            <th style="width:250px;">Origine</th>
             <th>Exploration</th>
             <th>D1</th>
             <th>Négociation</th>
@@ -150,7 +150,47 @@
             <th>Construction</th>
           </tr>
         </thead>
-        <tbody id="tableaux_by_user">
+        <tbody id="tableaux_by_origine">
+        </tbody>
+      </table>
+      <table class="table">
+        <thead>
+          <tr class="info">
+            <th style="width:250px;">Charge foncier</th>
+            <th>Exploration</th>
+            <th>D1</th>
+            <th>Négociation</th>
+            <th>D2</th>
+            <th>Développement</th>
+            <th>D3</th>
+            <th>Instruction</th>
+            <th>D4</th>
+            <th>Pré-construction</th>
+            <th>D5</th>
+            <th>Construction</th>
+          </tr>
+        </thead>
+        <tbody id="tableaux_by_chargeFoncier">
+        </tbody>
+      </table>
+      <table class="table">
+        <thead>
+          <tr class="info">
+            <th style="width:250px;">Chef de projet</th>
+            <th>Exploration</th>
+            <th>D1</th>
+            <th>Négociation</th>
+            <th>D2</th>
+            <th>Développement</th>
+            <th>D3</th>
+            <th>Instruction</th>
+            <th>D4</th>
+            <th>Pré-construction</th>
+            <th>D5</th>
+            <th>Construction</th>
+          </tr>
+        </thead>
+        <tbody id="tableaux_by_chefProjet">
         </tbody>
       </table>
     </fieldset>
@@ -163,8 +203,12 @@
     var data = [];
     var byType = {};
     var byRegion = {};
-    var byUser = {};
-    var users = {};
+    var byOrigine = {};
+    var origines = {};
+    var byChargeFoncier = {};
+    var chargeFonciers = {};
+    var byChefProjet = {};
+    var chefProjets = {};
     {% for projet in projets %}
       data.push({
           id: {{ projet.id }},
@@ -232,13 +276,27 @@
         if(!('{{ projet.departement.region.nom }}' in byRegion)) byRegion['{{ projet.departement.region.nom }}'] = {};
         byRegion['{{ projet.departement.region.nom }}']['{{ projet.phase }}'] = 1;
       }
-      if('{{ projet.origine.id }}' in byUser && '{{ projet.phase }}' in byUser['{{ projet.origine.id }}']) byUser['{{ projet.origine.id }}']['{{ projet.phase }}'] = byUser['{{ projet.origine.id }}']['{{ projet.phase }}']+1;
+      if('{{ projet.origine.id }}' in byOrigine && '{{ projet.phase }}' in byOrigine['{{ projet.origine.id }}']) byOrigine['{{ projet.origine.id }}']['{{ projet.phase }}'] = byOrigine['{{ projet.origine.id }}']['{{ projet.phase }}']+1;
       else {
-        if(!('{{ projet.origine.id }}' in byUser)) byUser['{{ projet.origine.id }}'] = {};
-        byUser['{{ projet.origine.id }}']['{{ projet.phase }}'] = 1;
+        if(!('{{ projet.origine.id }}' in byOrigine)) byOrigine['{{ projet.origine.id }}'] = {};
+        byOrigine['{{ projet.origine.id }}']['{{ projet.phase }}'] = 1;
       }
-      if('{{ projet.origine.id }}' in users) users['{{ projet.origine.id }}'] = '{{ projet.origine.prenom }}';
-      users['{{ projet.origine.id }}'] = '{{ projet.origine.prenom }}';
+      if('{{ projet.origine.id }}' in origines) origines['{{ projet.origine.id }}'] = '{{ projet.origine.prenom }}';
+      origines['{{ projet.origine.id }}'] = '{{ projet.origine.prenom }}';
+      if('{{ projet.chargeFoncier.id }}' in byChargeFoncier && '{{ projet.phase }}' in byChargeFoncier['{{ projet.chargeFoncier.id }}']) byChargeFoncier['{{ projet.chargeFoncier.id }}']['{{ projet.phase }}'] = byChargeFoncier['{{ projet.chargeFoncier.id }}']['{{ projet.phase }}']+1;
+      else {
+        if(!('{{ projet.chargeFoncier.id }}' in byChargeFoncier)) byChargeFoncier['{{ projet.chargeFoncier.id }}'] = {};
+        byChargeFoncier['{{ projet.chargeFoncier.id }}']['{{ projet.phase }}'] = 1;
+      }
+      if('{{ projet.chargeFoncier.id }}' in chargeFonciers) chargeFonciers['{{ projet.chargeFoncier.id }}'] = '{{ projet.chargeFoncier.prenom }}';
+      chargeFonciers['{{ projet.chargeFoncier.id }}'] = '{{ projet.chargeFoncier.prenom }}';
+      if('{{ projet.chefProjet.id }}' in byChefProjet && '{{ projet.phase }}' in byChefProjet['{{ projet.chefProjet.id }}']) byChefProjet['{{ projet.chefProjet.id }}']['{{ projet.phase }}'] = byChefProjet['{{ projet.chefProjet.id }}']['{{ projet.phase }}']+1;
+      else {
+        if(!('{{ projet.chefProjet.id }}' in byChefProjet)) byChefProjet['{{ projet.chefProjet.id }}'] = {};
+        byChefProjet['{{ projet.chefProjet.id }}']['{{ projet.phase }}'] = 1;
+      }
+      if('{{ projet.chefProjet.id }}' in chefProjets) chefProjets['{{ projet.chefProjet.id }}'] = '{{ projet.chefProjet.prenom }}';
+      chefProjets['{{ projet.chefProjet.id }}'] = '{{ projet.chefProjet.prenom }}';
     {% endfor %}
     var typeProjet = {{ grid_helper.getJsonIconsTypeProjets|raw }};
 
@@ -342,7 +400,7 @@
       });
       if(!found) $('#tableaux_by_region').append('<tr rel="'+total+'"><td>'+index+'</td>'+rest+'</tr>');
     });
-    $.each(byUser, function(index, row) {
+    $.each(byOrigine, function(index, row) {
       var total = 0;
       var type = index;
       $.each(row, function(index3, row3) {
@@ -372,13 +430,89 @@
       if('construction' in row) rest += '<td>'+row['construction']+'</td>';
       else rest += '<td>0</td>';
       var found = 0;
-      $('#tableaux_by_user tr').each(function(index2, row2) {
+      $('#tableaux_by_origine tr').each(function(index2, row2) {
         if(!found && $(row2).attr('rel') > total) {
-          $('<tr rel="'+total+'"><td>'+users[index]+'</td>'+rest+'</tr>').insertBefore($(row2));
+          $('<tr rel="'+total+'"><td>'+origines[index]+'</td>'+rest+'</tr>').insertBefore($(row2));
           found = true;
         }
       });
-      if(!found) $('#tableaux_by_user').append('<tr rel="'+total+'"><td>'+users[index]+'</td>'+rest+'</tr>');
+      if(!found) $('#tableaux_by_origine').append('<tr rel="'+total+'"><td>'+origines[index]+'</td>'+rest+'</tr>');
+    });
+    $.each(byChargeFoncier, function(index, row) {
+      var total = 0;
+      var type = index;
+      $.each(row, function(index3, row3) {
+        total += row3;
+      });
+      var rest = '';
+      if('exploratoire' in row) rest += '<td>'+row['exploratoire']+'</td>';
+      else rest += '<td>0</td>';
+      if('decision1' in row) rest += '<td>'+row['decision1']+'</td>';
+      else rest += '<td>0</td>';
+      if('negociation' in row) rest += '<td>'+row['negociation']+'</td>';
+      else rest += '<td>0</td>';
+      if('decision2' in row) rest += '<td>'+row['decision2']+'</td>';
+      else rest += '<td>0</td>';
+      if('developpement' in row) rest += '<td>'+row['developpement']+'</td>';
+      else rest += '<td>0</td>';
+      if('decision3' in row) rest += '<td>'+row['decision3']+'</td>';
+      else rest += '<td>0</td>';
+      if('instruction' in row) rest += '<td>'+row['instruction']+'</td>';
+      else rest += '<td>0</td>';
+      if('decision4' in row) rest += '<td>'+row['decision4']+'</td>';
+      else rest += '<td>0</td>';
+      if('preconstruction' in row) rest += '<td>'+row['preconstruction']+'</td>';
+      else rest += '<td>0</td>';
+      if('decision5' in row) rest += '<td>'+row['decision5']+'</td>';
+      else rest += '<td>0</td>';
+      if('construction' in row) rest += '<td>'+row['construction']+'</td>';
+      else rest += '<td>0</td>';
+      var found = 0;
+      $('#tableaux_by_chargeFoncier tr').each(function(index2, row2) {
+        if(!found && $(row2).attr('rel') > total) {
+          $('<tr rel="'+total+'"><td>'+chargeFonciers[index]+'</td>'+rest+'</tr>').insertBefore($(row2));
+          found = true;
+        }
+      });
+      if(!found) $('#tableaux_by_chargeFoncier').append('<tr rel="'+total+'"><td>'+chargeFonciers[index]+'</td>'+rest+'</tr>');
+    });
+    $.each(byChefProjet, function(index, row) {
+      var total = 0;
+      var type = index;
+      $.each(row, function(index3, row3) {
+        total += row3;
+      });
+      var rest = '';
+      if('exploratoire' in row) rest += '<td>'+row['exploratoire']+'</td>';
+      else rest += '<td>0</td>';
+      if('decision1' in row) rest += '<td>'+row['decision1']+'</td>';
+      else rest += '<td>0</td>';
+      if('negociation' in row) rest += '<td>'+row['negociation']+'</td>';
+      else rest += '<td>0</td>';
+      if('decision2' in row) rest += '<td>'+row['decision2']+'</td>';
+      else rest += '<td>0</td>';
+      if('developpement' in row) rest += '<td>'+row['developpement']+'</td>';
+      else rest += '<td>0</td>';
+      if('decision3' in row) rest += '<td>'+row['decision3']+'</td>';
+      else rest += '<td>0</td>';
+      if('instruction' in row) rest += '<td>'+row['instruction']+'</td>';
+      else rest += '<td>0</td>';
+      if('decision4' in row) rest += '<td>'+row['decision4']+'</td>';
+      else rest += '<td>0</td>';
+      if('preconstruction' in row) rest += '<td>'+row['preconstruction']+'</td>';
+      else rest += '<td>0</td>';
+      if('decision5' in row) rest += '<td>'+row['decision5']+'</td>';
+      else rest += '<td>0</td>';
+      if('construction' in row) rest += '<td>'+row['construction']+'</td>';
+      else rest += '<td>0</td>';
+      var found = 0;
+      $('#tableaux_by_chefProjet tr').each(function(index2, row2) {
+        if(!found && $(row2).attr('rel') > total) {
+          $('<tr rel="'+total+'"><td>'+chefProjets[index]+'</td>'+rest+'</tr>').insertBefore($(row2));
+          found = true;
+        }
+      });
+      if(!found) $('#tableaux_by_chefProjet').append('<tr rel="'+total+'"><td>'+chefProjets[index]+'</td>'+rest+'</tr>');
     });
     $('#graphique_nav a').click(function (e) {
       e.preventDefault();
