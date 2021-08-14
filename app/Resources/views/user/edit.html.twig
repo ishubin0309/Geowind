@@ -160,10 +160,10 @@ $('#user_edit_departements').select2();
 $('#user_edit_departementsChefProjet').select2();
 $('#user_edit_departementsChargeFoncier').select2();
 var last_reverse_search = null;
-$('#user_edit_departements').change(function() {
+$('#user_edit_departements, #user_edit_departementsChefProjet, #user_edit_departementsChargeFoncier').change(function() {
   $.each(markers, function(i, value) {
     found = false;
-    $('#user_edit_departements option:selected').each(function(i2, value2) {
+    $(this).find('option:selected').each(function(i2, value2) {
       if($(value2).text() == i) found = true;
     });
     if(!found) {
@@ -171,9 +171,9 @@ $('#user_edit_departements').change(function() {
       delete markers[i];
     }
   });
-  var query = $('#user_edit_departements option:selected:last').text().trim();
+  var query = $(this).find('option:selected:last').text().trim();
   if(query) {
-    $('#user_edit_departements option:selected').each(function(item, element) {
+    $(this).find('option:selected').each(function(item, element) {
       query = $(element).text().trim();
       reverseGeolocalisation(query, true);
     });
