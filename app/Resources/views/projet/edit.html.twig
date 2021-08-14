@@ -1229,7 +1229,7 @@
       var entry = prototypeproprietaire.replace(/__name__label__/g, length);
       entry = entry.replace(/__name__/g, length);
       $collectionHolderProprietaire.append(entry);
-      
+
       $('#projet_proprietaires_' + length + '_accordProprietaire').val('NON');
       $('#projet_proprietaires_' + length + '_accordExploitant').val('NON');
       $('#projet_proprietaires_' + length + '_dateSignatureProprietaire').datepicker({
@@ -2916,8 +2916,8 @@
         });
       }
       if(parcelles_count) {
-        selectedParcelles = ' (Parcelles: ' + parcelles.join(', ') + ')';
-        if(!$('#tab_foncier legend span').length) $('#tab_foncier legend').append(' <span style="color:red;">'+accords_count+'/'+parcelles_count + selectedParcelles+'</span>');
+        selectedParcelles = ' <span style="color:green;">(Parcelles: ' + parcelles.join(', ') + ')</span>';
+        if(!$('#tab_foncier legend span').length) $('#tab_foncier legend').append(' <span style="color:red;">'+accords_count+'/'+parcelles_count+'</span>' + selectedParcelles);
         else $('#tab_foncier legend span').text(accords_count+'/'+parcelles_count + selectedParcelles);
       }
     }

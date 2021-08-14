@@ -157,7 +157,7 @@ class Enjeux
             'environnement' => 'Environnement',
             'monuments' => 'Monuments',
             'mairie' => 'Mairie',
-            'consultation' => 'Consultation',
+            'agriculture' => 'Agriculture',
             'urbanisme' => 'Urbanisme',
             'epci' => 'EPCI',
             'habitat' => 'Habitat',

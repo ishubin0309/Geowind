@@ -2702,8 +2702,8 @@
         });
       }
       if(parcelles_count) {
-        selectedParcelles = ' (Parcelles: ' + parcelles.join(', ') + ')';
-        if(!$('#tab_foncier legend span').length) $('#tab_foncier legend').append(' <span style="color:red;">'+accords_count+'/'+parcelles_count + selectedParcelles+'</span>');
+        selectedParcelles = ' <span style="color:green;">(Parcelles: ' + parcelles.join(', ') + ')</span>';
+        if(!$('#tab_foncier legend span').length) $('#tab_foncier legend').append(' <span style="color:red;">'+accords_count+'/'+parcelles_count+'</span>' + selectedParcelles);
         else $('#tab_foncier legend span').text(accords_count+'/'+parcelles_count + selectedParcelles);
       }
     }
