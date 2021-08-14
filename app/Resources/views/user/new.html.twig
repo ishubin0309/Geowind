@@ -87,6 +87,16 @@
     users['{{ departement.nom }}'] = {0:'{{ departement.nom }}'};
     {% endfor %}
   {% endif %}
+  {% if form.vars.value.departementsChefProjet is not empty %}
+    {% for departement in form.vars.value.departementsChefProjet %}
+    users['{{ departement.nom }}'] = {0:'{{ departement.nom }}'};
+    {% endfor %}
+  {% endif %}
+  {% if form.vars.value.departementsChargeFoncier is not empty %}
+    {% for departement in form.vars.value.departementsChargeFoncier %}
+    users['{{ departement.nom }}'] = {0:'{{ departement.nom }}'};
+    {% endfor %}
+  {% endif %}
   $.each(users, function(i, user) {
     reverseGeolocalisation(user[0], 2);
   });
@@ -160,7 +170,7 @@ $('#user_departements').select2();
 $('#user_departementsChefProjet').select2();
 $('#user_departementsChargeFoncier').select2();
 var last_reverse_search = null;
-$('#user_departements').change(function() {
+$('#user_departements, #user_departementsChefProjet, #user_departementsChargeFoncier').change(function() {
   $.each(markers, function(i, value) {
     found = false;
     $('#user_departements option:selected').each(function(i2, value2) {
