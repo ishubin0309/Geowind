@@ -53,7 +53,7 @@ class MessageProprietaire
      * @Assert\NotBlank()
      * @Assert\Email()
      */
-    private $from = 'climactif@hotmail.com';
+    private $from = 'r.ammour@wkn-france.fr';
     
     /**
      * @var string
@@ -62,7 +62,7 @@ class MessageProprietaire
      * @Assert\NotBlank()
      * @Assert\Email()
      */
-    private $replyTo = 'climactif@hotmail.com';
+    private $replyTo = 'r.ammour@wkn-france.fr';
     
     /**
      * @var string
