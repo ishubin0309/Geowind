@@ -5,7 +5,7 @@
 
 {% block body %}
   <div class="container-fluid">
-    <div class="page-title"><h1><i class="fa fa-users fa-fw"></i> {{ title }} {% if type != 1 %}<a style="color:black;margin-left:100px;" href="?type=1">Partenaire</a>{% endif %}{% if type != 2 %}<a style="color:black;margin-left:100px;" href="?type=2">Chargé foncier</a>{% endif %}{% if type != 3 %}<a style="color:black;margin-left:100px;" href="?type=3">Chef de projet</a>{% endif %}</h1></div>
+    <div class="page-title"><h1><i class="fa fa-users fa-fw"></i> {{ title }} <span style="margin-left:100px;"></span>{% if type != 1 %}<a style="color:red;margin-left:25px;" href="?type=1">Partenaires</a>{% endif %}{% if type != 2 %}<a style="color:red;margin-left:25px;" href="?type=2">Chargés fonciers</a>{% endif %}{% if type != 3 %}<a style="color:red;margin-left:25px;" href="?type=3">Chefs projets</a>{% endif %}</h1></div>
     <hr>
     <div class="row">
       <div class="col-sm-6">
