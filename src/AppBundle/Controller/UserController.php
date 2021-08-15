@@ -44,9 +44,15 @@ class UserController extends Controller
         $em = $this->getDoctrine()->getManager();
         $users = $em->getRepository('AppBundle:User')
                     ->findAll();
-
+		if (isset($_GET['type']) && in_array($_GET['type'], array(2, 3))) {
+        	$type = $_GET['type'];
+		} else {
+			$type = 1;
+		}
+			
         return $this->render('user/secteur.html.twig', [
             'users' => $users,
+            'type' => $type,
         ]);
     }
 
@@ -87,7 +93,7 @@ class UserController extends Controller
     }
 
     private function nouveauMessage($user, $email, $password, $secteurs)
-    {//$email = 'haffoudhimedtaieb@gmail.com';
+    {
         $message = new Message();
         $from = $this->getParameter('mailer_from');
         $message->setObject('Vos identifiants climactif');
