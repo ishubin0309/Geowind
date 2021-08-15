@@ -115,7 +115,6 @@
           markers[{{ general_counter }}] = new L.DivIcon.SVGIcon({ iconSize: L.point(24, 32), weight: 1, circleWeight: 1, color: '#000000', fillColor: colors[colors_counter], fillOpacity: 0.7 });
           colors_counter++;
         {% endif %}
-      {% endif %}
       {% elseif type == 2 %}
         {% if user.departementsChargeFoncier is not empty %}
         {% for departement in user.departementsChargeFoncier %}
