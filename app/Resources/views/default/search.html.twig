@@ -189,7 +189,8 @@
       cssClass: "slick-cell-checkboxsel"
     });
     
-    var typeProjet = {{ grid_helper.getJsontypeProjets|raw }};
+    var typeProjet = {{ grid_helper.getJsonTypeProjets|raw }};
+    var typeProjetIcons = {{ grid_helper.getJsonIconsTypeProjets|raw }};
     var typeSite = {{ grid_helper.getJsontypeSites|raw }};
 
     function idFormatter(row, cell, value, columnDef, dataContext) {
@@ -197,7 +198,7 @@
     }
 
     function typeProjetFormatter(row, cell, value, columnDef, dataContext) {
-      return typeProjet[value] !== undefined ? typeProjet[value]['name'] : value;
+      return typeProjetIcons[value] !== undefined ? '<span style="display:none;">' + typeProjet[value]['name'] + '</span>' + typeProjetIcons[value]['name'] : value;
     }
 
     function typeSiteFormatter(row, cell, value, columnDef, dataContext) {
