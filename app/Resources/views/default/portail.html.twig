@@ -59,7 +59,7 @@
         <select id="select-typeProjet" class="form-control input-filter" data-attr="typeProjet">
           <option value="">Tous</option>
           {% for code, type in typesProjet %}
-            <option value="{{ code }}" {% if code == '' %}selected{% endif %}>{{ type }}</option>
+            <option value="{{ code }}" {% if code != '' %}selected{% endif %}>{{ type }}</option>
           {% endfor %}
         </select>
       </div>
