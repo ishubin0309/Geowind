@@ -55,6 +55,14 @@
           <option value="6" {% if columnsType == 6 %}selected{% endif %}>Liste-utilisateurs</option>
         </select>
       </div>
+      <div class="col-md-2 col-lg-1">
+        <select id="select-typeProjet" class="form-control input-filter" data-attr="typeProjet">
+          <option value="">Tous</option>
+          {% for code, type in typesProjet %}
+            <option value="{{ code }}">{{ type }}</option>
+          {% endfor %}
+        </select>
+      </div>
       <div class="col-md-9 col-lg-10">
         <nav aria-label="Page navigation center-text">
           <ul style="margin: 0px;margin-bottom: 10px;" class="pagination">
@@ -458,11 +466,16 @@
       {% endfor %}
       var filterArgs = {
         unread: "",
+        typeProjet: "",
       };
       function updateFilter(){
         dataView.setFilterArgs(filterArgs);
         dataView.refresh();
       }
+      $(".input-filter").change(function (e) {
+        filterArgs[$(this).data('attr')] = this.value;
+        updateFilter();
+      });
       $('#button-unread').click(function() {
         if($(this).hasClass('btn-outline-success')) {
           filterArgs['unread'] = '1';
