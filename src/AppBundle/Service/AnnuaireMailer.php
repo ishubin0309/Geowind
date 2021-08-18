@@ -31,7 +31,7 @@ class AnnuaireMailer
     {
         $email = new \SendGrid\Mail\Mail();
         // $email->setFrom('climactif@hotmail.com', 'Climactif');
-        $email->setFrom('r.ammour@wkn-france.fr', 'WKN');
+        $email->setFrom('r.ammour@wkn-france.fr', 'WKN France');
         $email->setSubject($message->getObject());
         $email->addTo($message->getTo());
         $email->addContent("text/plain", strip_tags($message->getBody()));
