@@ -49,12 +49,15 @@ class DefaultController extends Controller
         $gridHelper = new GridHelper();
         $columnsType = isset($_GET['type']) && $_GET['type'] >= 1 ? trim($_GET['type']) : 1;
 
+        $typesProjet = Projet::getTypeProjetList(1);
+
         return $this->render('default/portail.html.twig', [
             'projets' => $projets,
             'page' => $page,
             'totalPages' => $totalPages,
             'columnsType' => $columnsType,
             'grid_helper' => $gridHelper,
+            'typesProjet' => $typesProjet,
             'export_option' => new ExportOption(),
         ]);
     }
@@ -97,12 +100,15 @@ class DefaultController extends Controller
         $gridHelper = new GridHelper();
         $columnsType = isset($_GET['type']) && $_GET['type'] >= 1 ? trim($_GET['type']) : 1;
 
+        $typesProjet = Projet::getTypeProjetList(1);
+
         return $this->render('default/portail.html.twig', [
             'projets' => $projets,
             'page' => $page,
             'totalPages' => $totalPages,
             'columnsType' => $columnsType,
             'grid_helper' => $gridHelper,
+            'typesProjet' => $typesProjet,
             'liste' => $liste,
             'export_option' => new ExportOption(),
         ]);
