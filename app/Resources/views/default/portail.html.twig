@@ -309,6 +309,10 @@
           return false;
       }
 
+      if (args.typeProjet != "" && item["typeProjet"] !== args.typeProjet) {
+          return false;
+      }
+
       return true;
     }
 
@@ -473,7 +477,7 @@
         dataView.refresh();
       }
       $(".input-filter").change(function (e) {
-        filterArgs[$(this).data('attr')] = this.value;console.log(filterArgs);
+        filterArgs[$(this).data('attr')] = this.value;
         updateFilter();
       });
       $('#button-unread').click(function() {
