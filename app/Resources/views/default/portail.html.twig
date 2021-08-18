@@ -476,6 +476,15 @@
         dataView.setFilterArgs(filterArgs);
         dataView.refresh();
       }
+      function clearFilters() {
+        filterArgs = {
+          unread: "",
+          typeProjet: "",
+        };
+
+        updateFilter();
+      }
+      clearFilters();
       $(".input-filter").change(function (e) {
         filterArgs[$(this).data('attr')] = this.value;
         updateFilter();
