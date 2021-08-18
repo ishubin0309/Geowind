@@ -35,7 +35,7 @@ class AnnuaireMailer
         $email->setSubject($message->getObject());
         $email->addTo($message->getTo());
         $email->addContent("text/plain", strip_tags($message->getBody()));
-        $logo = '<br><br><img width="200" src="https://www.climactif.com/images/wkn-france.png" alt="WKN France"><br>Rue Charles Brunellière';
+        $logo = '<br><br><img width="200" src="https://www.climactif.com/images/wkn-france.png" alt="WKN France"><br>WKN France<br>10 Rue Charles Brunellière<br>44100 Nantes';
         $email->addContent(
             "text/html", str_replace("\n", '<br>', $message->getBody()).$logo
         );
