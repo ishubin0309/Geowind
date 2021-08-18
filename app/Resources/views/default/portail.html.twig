@@ -480,6 +480,7 @@
         filterArgs[$(this).data('attr')] = this.value;
         updateFilter();
       });
+      $(".input-filter").change();
       $('#button-unread').click(function() {
         if($(this).hasClass('btn-outline-success')) {
           filterArgs['unread'] = '1';
