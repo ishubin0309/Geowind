@@ -55,7 +55,7 @@
           <option value="6" {% if columnsType == 6 %}selected{% endif %}>Liste-utilisateurs</option>
         </select>
       </div>
-      <div class="col-md-2 col-lg-1">
+      <div class="col-md-3 col-lg-2">
         <select id="select-typeProjet" class="form-control input-filter" data-attr="typeProjet">
           <option value="">Tous</option>
           {% for code, type in typesProjet %}
@@ -473,7 +473,7 @@
         dataView.refresh();
       }
       $(".input-filter").change(function (e) {
-        filterArgs[$(this).data('attr')] = this.value;
+        filterArgs[$(this).data('attr')] = this.value;console.log(filterArgs);
         updateFilter();
       });
       $('#button-unread').click(function() {
