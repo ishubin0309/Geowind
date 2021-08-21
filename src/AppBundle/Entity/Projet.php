@@ -2159,7 +2159,7 @@ class Projet
         switch ($option) {
             
             case 'id_projet':
-                return $this->id;
+                return $this->id ? str_replace('_id', '_'.$this->id, $this->denomination) : $this->denomination;
             case 'date_creation':
                 return $this->createdAt->format('m/d/Y');
             case 'date_maj':
