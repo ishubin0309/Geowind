@@ -2158,6 +2158,8 @@ class Projet
     {
         switch ($option) {
             
+            case 'id_projet':
+                return $this->id;
             case 'date_creation':
                 return $this->createdAt->format('m/d/Y');
             case 'date_maj':
@@ -2168,6 +2170,10 @@ class Projet
                 return $this->typeSite;
             case 'origine':
                 return (string) $this->origine;
+            case 'charge_foncier':
+                return (string) $this->chargeFoncier;
+            case 'partenaire':
+                return (string) $this->partenaire;
             case 'chef_projet':
                 return (string) $this->chefProjet;
             case 'partenaire':
