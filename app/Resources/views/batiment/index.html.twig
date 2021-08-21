@@ -308,7 +308,7 @@
       }
     });
     $('#datatable_docs tbody tr').click(function() {
-      current_main_image $(this).index();
+      current_main_image = $(this).index();
       updatePrevNextButtons();
       $('#main_photo img').attr('src', '');
       $('#main_photo img').attr('src', main_images[current_main_image][2]);
