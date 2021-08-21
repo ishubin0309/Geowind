@@ -96,7 +96,12 @@
       <table class="table">
         <thead>
           <tr class="info">
-            <th style="width:250px;">Type de projet</th>
+            <th style="width:250px;"><select id="select-typeProjet" class="form-control input-filter" data-attr="typeProjet">
+          <option value="" selected>Tous</option>
+          {% for code, type in typesProjet %}
+            <option value="{{ code }}">{{ type }}</option>
+          {% endfor %}
+        </select></th>
             <th>Exploration</th>
             <th>D1</th>
             <th>Négociation</th>
@@ -302,10 +307,11 @@
         chefProjets['{{ projet.chefProjet.id }}'] = '{{ projet.chefProjet.prenom }}';
       {% endif %}
     {% endfor %}
-    var typeProjet = {{ grid_helper.getJsonIconsTypeProjets|raw }};
+    var typeProjet = {{ grid_helper.getJsonTypeProjets|raw }};
+    var typeProjetIcons = {{ grid_helper.getJsonIconsTypeProjets|raw }};
 
     function typeProjetFormatter(value) {
-      return typeProjet[value] !== undefined ? typeProjet[value]['name'] : value;
+      return typeProjetIcons[value] !== undefined ? '<span style="display:none;">' + typeProjet[value]['name'] + '</span>' + typeProjetIcons[value]['name'] : value;
     }
     function formatProjetLink(value) {
       url = '{{ path('projet_edit', {id: 0}) }}';
@@ -321,12 +327,22 @@
       var found = 0;
       $('#graphique tr').each(function(index2, row2) {
         if(!found && $(row2).attr('rel') < row['column']) {
-          $('<tr rel="'+row['column']+'"><td><a href="'+formatProjetLink(row['id'])+'">'+row['id']+'</a></td><td>'+typeProjetFormatter(row['typeProjet'])+'</td>'+rest+'</tr>').insertBefore($(row2));
+          $('<tr rel="'+row['column']+'"><td><a href="'+formatProjetLink(row['id'])+'">'+row['id']+'</a></td><td class="typeProjet">'+typeProjetFormatter(row['typeProjet'])+'</td>'+rest+'</tr>').insertBefore($(row2));
           found = true;
         }
       });
       if(!found) $('#graphique').append('<tr rel="'+row['column']+'"><td><a href="'+formatProjetLink(row['id'])+'">'+row['id']+'</a></td><td>'+typeProjetFormatter(row['typeProjet'])+'</td>'+rest+'</tr>');
     });
+    $(".input-filter").change(function (e) {
+        var filter_this = this.value;
+        $('.' + $(this).data('attr')).each(function() {
+          if(filter_value && !$(this).text().match(filter_value)) {
+            $(this).parent().addClass('hide');
+          } else {
+            $(this).parent().removeClass('hide');
+          }
+        });
+      });
     
     $.each(byType, function(index, row) {
       var total = 0;

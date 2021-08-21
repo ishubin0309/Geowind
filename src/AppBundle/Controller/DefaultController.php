@@ -185,9 +185,12 @@ class DefaultController extends Controller
 
         $gridHelper = new GridHelper();
 
+        $typesProjet = Projet::getTypeProjetList(1);
+
         return $this->render('default/graphique.html.twig', [
             'projets' => $projets,
             'grid_helper' => $gridHelper,
+            'typesProjet' => $typesProjet,
         ]);
     }
 
