@@ -2165,9 +2165,11 @@ class Projet
             case 'date_maj':
                 return $this->updatedAt->format('m/d/Y');
             case 'type_projet':
-                return $this->typeProjet;
+                $typeProjetList = $this->getTypeProjetList();
+                return isset($typeProjetList[$this->typeProjet]) ? $typeProjetList[$this->typeProjet] : $this->typeProjet;
             case 'type_site':
-                return $this->typeSite;
+                $typeSiteList = $this->getTypeSiteList();
+                return isset($typeSiteList[$this->typeSite]) ? $typeSiteList[$this->typeSite] : $this->typeSite;
             case 'origine':
                 return (string) $this->origine;
             case 'charge_foncier':
