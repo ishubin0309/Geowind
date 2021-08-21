@@ -269,7 +269,7 @@
     {% else %}
       var main_images = {};
     {% endif %}
-    console.log(main_images);
+    {# console.log(main_images); #}
     function updatePrevNextButtons() {
       $('#docs tr.info').removeClass('info');
       if(main_images[current_main_image][4]) $('#docs tr:eq('+current_main_image+')').removeClass('success2').addClass('info');
