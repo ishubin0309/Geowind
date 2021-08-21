@@ -307,6 +307,14 @@
         $('#main_photo img').parent().attr('download', main_images[current_main_image][5]);
       }
     });
+    $('#datatable_docs tbody tr').click(function() {
+      current_main_image $(this).index();
+      updatePrevNextButtons();
+      $('#main_photo img').attr('src', '');
+      $('#main_photo img').attr('src', main_images[current_main_image][2]);
+      $('#main_photo img').parent().attr('href', main_images[current_main_image][2]);
+      $('#main_photo img').parent().attr('download', main_images[current_main_image][5]);
+    });
     $('#docs_recherche').change(function() {
       var search = $(this).val().trim();
       $('#main_photo img').attr('src', '');
