@@ -334,15 +334,16 @@
       if(!found) $('#graphique').append('<tr rel="'+row['column']+'"><td><a href="'+formatProjetLink(row['id'])+'">'+row['id']+'</a></td><td class="typeProjet">'+typeProjetFormatter(row['typeProjet'])+'</td>'+rest+'</tr>');
     });
     $(".input-filter").change(function (e) {
-        var filter_value = typeProjet[this.value]['name'] !== undefined ? typeProjet[this.value]['name'] : this.value;
-        $('.' + $(this).data('attr')).each(function() {console.log(filter_value + ' *** '+ $(this).text());
-          if(filter_value && !$(this).text().match(filter_value)) {
-            $(this).parent().addClass('hide');
-          } else {
-            $(this).parent().removeClass('hide');
-          }
-        });
+      var filter_value = typeProjet[this.value]['name'] !== undefined ? typeProjet[this.value]['name'] : this.value;
+      $('.' + $(this).data('attr')).each(function() {
+        if(filter_value && !$(this).text().match(filter_value)) {
+          $(this).parent().addClass('hide');
+        } else {
+          $(this).parent().removeClass('hide');
+        }
       });
+    });
+    $(".input-filter").change();
     
     $.each(byType, function(index, row) {
       var total = 0;
