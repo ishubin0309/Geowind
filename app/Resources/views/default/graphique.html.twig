@@ -335,7 +335,7 @@
     });
     $(".input-filter").change(function (e) {
         var filter_value = this.value;
-        $('.' + $(this).data('attr')).each(function() {
+        $('.' + $(this).data('attr')).each(function() {console.log(filter_value + ' *** '+ $(this).text());
           if(filter_value && !$(this).text().match(filter_value)) {
             $(this).parent().addClass('hide');
           } else {
