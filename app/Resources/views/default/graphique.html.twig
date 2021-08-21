@@ -334,7 +334,7 @@
       if(!found) $('#graphique').append('<tr rel="'+row['column']+'"><td><a href="'+formatProjetLink(row['id'])+'">'+row['id']+'</a></td><td>'+typeProjetFormatter(row['typeProjet'])+'</td>'+rest+'</tr>');
     });
     $(".input-filter").change(function (e) {
-        var filter_this = this.value;
+        var filter_value = this.value;
         $('.' + $(this).data('attr')).each(function() {console.log(filter_value + ' *** '+ $(this).text());
           if(filter_value && !$(this).text().match(filter_value)) {
             $(this).parent().addClass('hide');
