@@ -77,7 +77,7 @@
             {% for message in messages %}
             <tr>
               <td>{{ message.createdAt|date('d/m/Y') }}</td>
-              <td><a href="{{ path('projet_index', {'focus': message.proprietaire.projet.id}) }}">{{ message.proprietaire.projet.id }}</a></td>
+              <td>{% if message.proprietaire is not null %}<a href="{{ path('projet_index', {'focus': message.proprietaire.projet.id}) }}">{{ message.proprietaire.projet.id }}</a>{% endif %}</td>
               <td>{{ message.exploitant ? 'Exploitant' : 'Propriétaire' }}</td>
               <td>{{ message.to }}</td>
               <td>{{ message.createdBy }}</td>
