@@ -2924,7 +2924,10 @@
     $('#tab_parcelles .btn').on('click', function() {
       countParcelles();
     });
-    $collectionHolderProprietaire.on('change typeahead:selected', 'select[id*="_accord"], input[id*="_parcelles"]', function() {
+    $collectionHolderProprietaire.on('change', 'select[id*="_accord"], input[id*="_parcelles"]', function() {
+      countParcelles();
+    });
+    $collectionHolderParcelle.on('change', 'select[id$="_nom"]', function() {
       countParcelles();
     });
 
