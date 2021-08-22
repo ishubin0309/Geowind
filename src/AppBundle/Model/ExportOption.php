@@ -32,10 +32,10 @@ class ExportOption
     {
         return [
             'id' => 'ID',
-            'denomination' => 'Dénomination',
             'date_creation' => 'Date de création',
             'date_maj' => 'Date de mise à jour',
             'type_projet' => 'Type de projet',
+            'denomination' => 'Dénomination',
             'origine' => 'Source',
             'charge_foncier' => 'Chargé du foncier',
             'partenaire' => 'Partenaire',
