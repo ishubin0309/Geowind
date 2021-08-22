@@ -203,7 +203,52 @@
             dateSignature: '{{ proprietaire.dateSignatureProprietaire is not null ? proprietaire.dateSignatureProprietaire|date('d/m/Y') }}',
             dateEcheance: '{{ proprietaire.dateEcheanceProprietaire is not null ? proprietaire.dateEcheanceProprietaire|date('d/m/Y') }}',
           });
-            {% if proprietaire.exploitant or proprietaire.accordExploitant %}
+          {% if proprietaire.proprietaire2 or proprietaire.accordProprietaire2 %}
+          data.push({
+            id: {{ proprietaire.id }},
+            projetId: {{ projet.id }},
+            parcelles: '{{ proprietaire.parcelles|e('js') }}',
+            type: 'Propriétaire2',
+            identite: '{{ proprietaire.proprietaire2|e('js') }}',
+            accord: '{{ proprietaire.accordProprietaire2|e('js') }}',
+            telephone: '{{ proprietaire.telephoneProprietaire2|e('js') }}',
+            adresse: '{{ proprietaire.adresseProprietaire2|e('js') }}',
+            email: '{{ proprietaire.emailProprietaire2|e('js') }}',
+            dateSignature: '{{ proprietaire.dateSignatureProprietaire2 is not null ? proprietaire.dateSignatureProprietaire2|date('d/m/Y') }}',
+            dateEcheance: '{{ proprietaire.dateEcheanceProprietaire2 is not null ? proprietaire.dateEcheanceProprietaire2|date('d/m/Y') }}',
+          });
+          {% endif %}
+          {% if proprietaire.proprietaire3 or proprietaire.accordProprietaire3 %}
+          data.push({
+            id: {{ proprietaire.id }},
+            projetId: {{ projet.id }},
+            parcelles: '{{ proprietaire.parcelles|e('js') }}',
+            type: 'Propriétaire3',
+            identite: '{{ proprietaire.proprietaire3|e('js') }}',
+            accord: '{{ proprietaire.accordProprietaire3|e('js') }}',
+            telephone: '{{ proprietaire.telephoneProprietaire3|e('js') }}',
+            adresse: '{{ proprietaire.adresseProprietaire3|e('js') }}',
+            email: '{{ proprietaire.emailProprietaire3|e('js') }}',
+            dateSignature: '{{ proprietaire.dateSignatureProprietaire3 is not null ? proprietaire.dateSignatureProprietaire3|date('d/m/Y') }}',
+            dateEcheance: '{{ proprietaire.dateEcheanceProprietaire3 is not null ? proprietaire.dateEcheanceProprietaire3|date('d/m/Y') }}',
+          });
+          {% endif %}
+          {% if proprietaire.proprietaire3 or proprietaire.accordProprietaire3 %}
+          data.push({
+            id: {{ proprietaire.id }},
+            projetId: {{ projet.id }},
+            parcelles: '{{ proprietaire.parcelles|e('js') }}',
+            type: 'Propriétaire4',
+            identite: '{{ proprietaire.proprietaire3|e('js') }}',
+            accord: '{{ proprietaire.accordProprietaire3|e('js') }}',
+            telephone: '{{ proprietaire.telephoneProprietaire3|e('js') }}',
+            adresse: '{{ proprietaire.adresseProprietaire3|e('js') }}',
+            email: '{{ proprietaire.emailProprietaire3|e('js') }}',
+            dateSignature: '{{ proprietaire.dateSignatureProprietaire3 is not null ? proprietaire.dateSignatureProprietaire3|date('d/m/Y') }}',
+            dateEcheance: '{{ proprietaire.dateEcheanceProprietaire3 is not null ? proprietaire.dateEcheanceProprietaire3|date('d/m/Y') }}',
+          });
+          {% endif %}
+          {% if proprietaire.exploitant or proprietaire.accordExploitant %}
           data.push({
             id: -{{ proprietaire.id }},
             projetId: {{ projet.id }},
@@ -217,7 +262,37 @@
             dateSignature: '{{ proprietaire.dateSignatureExploitant is not null ? proprietaire.dateSignatureExploitant|date('d/m/Y') }}',
             dateEcheance: '{{ proprietaire.dateEcheanceExploitant is not null ? proprietaire.dateEcheanceExploitant|date('d/m/Y') }}',
           });
-            {% endif %}
+          {% endif %}
+          {% if proprietaire.exploitant2 or proprietaire.accordExploitant2 %}
+          data.push({
+            id: -{{ proprietaire.id }},
+            projetId: {{ projet.id }},
+            parcelles: '{{ proprietaire.parcelles|e('js') }}',
+            type: 'Exploitant2',
+            identite: '{{ proprietaire.exploitant2|e('js') }}',
+            accord: '{{ proprietaire.accordExploitant2|e('js') }}',
+            telephone: '{{ proprietaire.telephoneExploitant2|e('js') }}',
+            adresse: '{{ proprietaire.adresseExploitant2|e('js') }}',
+            email: '{{ proprietaire.emailExploitant2|e('js') }}',
+            dateSignature: '{{ proprietaire.dateSignatureExploitant2 is not null ? proprietaire.dateSignatureExploitant2|date('d/m/Y') }}',
+            dateEcheance: '{{ proprietaire.dateEcheanceExploitant2 is not null ? proprietaire.dateEcheanceExploitant2|date('d/m/Y') }}',
+          });
+          {% endif %}
+          {% if proprietaire.exploitant3 or proprietaire.accordExploitant3 %}
+          data.push({
+            id: -{{ proprietaire.id }},
+            projetId: {{ projet.id }},
+            parcelles: '{{ proprietaire.parcelles|e('js') }}',
+            type: 'Exploitant3',
+            identite: '{{ proprietaire.exploitant3|e('js') }}',
+            accord: '{{ proprietaire.accordExploitant3|e('js') }}',
+            telephone: '{{ proprietaire.telephoneExploitant3|e('js') }}',
+            adresse: '{{ proprietaire.adresseExploitant3|e('js') }}',
+            email: '{{ proprietaire.emailExploitant3|e('js') }}',
+            dateSignature: '{{ proprietaire.dateSignatureExploitant3 is not null ? proprietaire.dateSignatureExploitant3|date('d/m/Y') }}',
+            dateEcheance: '{{ proprietaire.dateEcheanceExploitant3 is not null ? proprietaire.dateEcheanceExploitant3|date('d/m/Y') }}',
+          });
+          {% endif %}
           {% endfor %}
         {% endif %}
       {% endfor %}
