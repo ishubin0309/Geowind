@@ -2707,7 +2707,7 @@
       if(parcelles_count) {
         selectedParcelles = ' <span style="color:green;">(Parcelles: ' + parcelles.join(', ') + ')</span>';
         if(!$('#tab_foncier legend span:eq(0)').length) $('#tab_foncier legend').append(' <span style="color:red;">'+accords_count+'/'+parcelles_count+'</span>' + selectedParcelles);
-        else $('#tab_foncier legend span:eq(0)').text(accords_count+'/'+parcelles_count + selectedParcelles);
+        else $('#tab_foncier legend span:eq(0)').html(accords_count+'/'+parcelles_count + selectedParcelles);
       }
     }
     $('#tab_parcelles .btn').on('click', function() {
