@@ -173,6 +173,12 @@
       <td>{{ projet.chefProjet }}<br><span>{{ projet.chefProjetTelephone }}<br>{{ projet.chefProjet.email }}</span></td>
     </tr>
     {% endif %}
+    {% if projet.chargeFoncier %}
+    <tr class="tr-bs">
+      <td>Chargé du foncier</td>
+      <td>{{ projet.chargeFoncier }}<br><span>{{ projet.chargeFoncierTelephone }}<br>{{ projet.chargeFoncier.email }}</span></td>
+    </tr>
+    {% endif %}
     {% if projet.mairie %}
     <tr class="tr-bs">
       <td>Mairie</td>
@@ -281,6 +287,48 @@
       <td>{{ proprietaire.dateSignatureProprietaire is not null ? proprietaire.dateSignatureProprietaire|date('d/m/Y') }}</td>
       <td>{{ proprietaire.dateEcheanceProprietaire is not null ? proprietaire.dateEcheanceProprietaire|date('d/m/Y') }}</td>
     </tr>
+    {% if proprietaire.proprietaire2 %}
+    <tr class="proprietaire_entry">
+      <th>{{ proprietaire.parcelles }}<br>Propriétaire2</th>
+      <td>
+        {{ proprietaire.proprietaire2 }}<br>
+        {{ proprietaire.telephoneProprietaire2 }}<br>
+        {{ proprietaire.adresseProprietaire2 }}<br>
+        {{ proprietaire.emailProprietaire2 }}
+      </td>
+      <td>{{ proprietaire.accordProprietaire2 }}</td>
+      <td>{{ proprietaire.dateSignatureProprietaire2 is not null ? proprietaire.dateSignatureProprietaire2|date('d/m/Y') }}</td>
+      <td>{{ proprietaire.dateEcheanceProprietaire2 is not null ? proprietaire.dateEcheanceProprietaire2|date('d/m/Y') }}</td>
+    </tr>
+    {% endif %}
+    {% if proprietaire.proprietaire3 %}
+    <tr class="proprietaire_entry">
+      <th>{{ proprietaire.parcelles }}<br>Propriétaire3</th>
+      <td>
+        {{ proprietaire.proprietaire3 }}<br>
+        {{ proprietaire.telephoneProprietaire3 }}<br>
+        {{ proprietaire.adresseProprietaire3 }}<br>
+        {{ proprietaire.emailProprietaire3 }}
+      </td>
+      <td>{{ proprietaire.accordProprietaire3 }}</td>
+      <td>{{ proprietaire.dateSignatureProprietaire3 is not null ? proprietaire.dateSignatureProprietaire3|date('d/m/Y') }}</td>
+      <td>{{ proprietaire.dateEcheanceProprietaire3 is not null ? proprietaire.dateEcheanceProprietaire3|date('d/m/Y') }}</td>
+    </tr>
+    {% endif %}
+    {% if proprietaire.proprietaire4 %}
+    <tr class="proprietaire_entry">
+      <th>{{ proprietaire.parcelles }}<br>Propriétaire4</th>
+      <td>
+        {{ proprietaire.proprietaire4 }}<br>
+        {{ proprietaire.telephoneProprietaire4 }}<br>
+        {{ proprietaire.adresseProprietaire4 }}<br>
+        {{ proprietaire.emailProprietaire4 }}
+      </td>
+      <td>{{ proprietaire.accordProprietaire4 }}</td>
+      <td>{{ proprietaire.dateSignatureProprietaire4 is not null ? proprietaire.dateSignatureProprietaire4|date('d/m/Y') }}</td>
+      <td>{{ proprietaire.dateEcheanceProprietaire4 is not null ? proprietaire.dateEcheanceProprietaire4|date('d/m/Y') }}</td>
+    </tr>
+    {% endif %}
     {% if proprietaire.exploitant %}
     <tr class="exploitant_entry">
       <th>{{ proprietaire.parcelles }}<br>Exploitant</th>
@@ -293,6 +341,34 @@
       <td>{{ proprietaire.accordExploitant }}</td>
       <td>{{ proprietaire.dateSignatureExploitant is not null ? proprietaire.dateSignatureExploitant|date('d/m/Y') }}</td>
       <td>{{ proprietaire.dateEcheanceExploitant is not null ? proprietaire.dateEcheanceExploitant|date('d/m/Y') }}</td>
+    </tr>
+    {% endif %}
+    {% if proprietaire.exploitant2 %}
+    <tr class="exploitant_entry">
+      <th>{{ proprietaire.parcelles }}<br>Exploitant2</th>
+      <td>
+        {{ proprietaire.exploitant2 }}<br>
+        {{ proprietaire.telephoneExploitant2 }}<br>
+        {{ proprietaire.adresseExploitant2 }}<br>
+        {{ proprietaire.emailExploitant2 }}
+      </td>
+      <td>{{ proprietaire.accordExploitant2 }}</td>
+      <td>{{ proprietaire.dateSignatureExploitant2 is not null ? proprietaire.dateSignatureExploitant2|date('d/m/Y') }}</td>
+      <td>{{ proprietaire.dateEcheanceExploitant2 is not null ? proprietaire.dateEcheanceExploitant2|date('d/m/Y') }}</td>
+    </tr>
+    {% endif %}
+    {% if proprietaire.exploitant3 %}
+    <tr class="exploitant_entry">
+      <th>{{ proprietaire.parcelles }}<br>Exploitant3</th>
+      <td>
+        {{ proprietaire.exploitant3 }}<br>
+        {{ proprietaire.telephoneExploitant3 }}<br>
+        {{ proprietaire.adresseExploitant3 }}<br>
+        {{ proprietaire.emailExploitant3 }}
+      </td>
+      <td>{{ proprietaire.accordExploitant3 }}</td>
+      <td>{{ proprietaire.dateSignatureExploitant3 is not null ? proprietaire.dateSignatureExploitant3|date('d/m/Y') }}</td>
+      <td>{{ proprietaire.dateEcheanceExploitant3 is not null ? proprietaire.dateEcheanceExploitant3|date('d/m/Y') }}</td>
     </tr>
     {% endif %}
     {% endfor %}
