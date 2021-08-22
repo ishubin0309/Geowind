@@ -32,6 +32,7 @@ class ExportOption
     {
         return [
             'id' => 'ID',
+            'denomination' => 'Dénomination',
             'date_creation' => 'Date de création',
             'date_maj' => 'Date de mise à jour',
             'type_projet' => 'Type de projet',
@@ -39,7 +40,6 @@ class ExportOption
             'charge_foncier' => 'Chargé du foncier',
             'partenaire' => 'Partenaire',
             'chef_projet' => 'Chef de projet',
-            'denomination' => 'Dénomination',
             'region' => 'Région',
             'departement' => 'Département',
             'commune' => 'Commune(s)',
