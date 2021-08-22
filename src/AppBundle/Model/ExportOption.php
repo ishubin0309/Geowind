@@ -31,7 +31,7 @@ class ExportOption
     public function getOptionList()
     {
         return [
-            'id_projet' => 'ID projet',
+            'id' => 'ID',
             'date_creation' => 'Date de création',
             'date_maj' => 'Date de mise à jour',
             'type_projet' => 'Type de projet',
