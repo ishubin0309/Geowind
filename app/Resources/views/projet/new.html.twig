@@ -2704,9 +2704,9 @@
           });
         });
       }
+      if($('#tab_foncier legend span').length) $('#tab_foncier legend span').remove();
       if(parcelles_count) {
         selectedParcelles = ' <span style="color:green;">(Parcelles: ' + parcelles.join(', ') + ')</span>';
-        if($('#tab_foncier legend span:eq(0)').length) $('#tab_foncier legend span').remove();
         $('#tab_foncier legend').append(' <span style="color:red;">'+accords_count+'/'+parcelles_count+'</span>' + selectedParcelles);
       }
     }
