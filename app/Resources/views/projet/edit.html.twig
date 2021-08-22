@@ -1225,7 +1225,7 @@
     var prototypeproprietaire = $collectionHolderProprietaire.data('prototype');
 
     $('#projet_proprietaires_add_entry').click(function () {
-      var length = $collectionHolderProprietaire.children().length / 3;
+      var length = $collectionHolderProprietaire.children().length / 7;
       var entry = prototypeproprietaire.replace(/__name__label__/g, length);
       entry = entry.replace(/__name__/g, length);
       $collectionHolderProprietaire.append(entry);
