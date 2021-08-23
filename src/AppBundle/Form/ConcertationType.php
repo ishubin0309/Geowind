@@ -7,6 +7,7 @@ use AppBundle\Model\Etat;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use AppBundle\Form\Extension\DatePickerType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -45,7 +46,7 @@ class ConcertationType extends AbstractType
                 'label' => 'Dynamique',
                 'choices' => array_flip(Etat::getDynamiqueList()),
             ]) */
-            ->add('note', TextType::class, [
+            ->add('note', TextareaType::class, [
                 'label' => 'Note',
                 'required' => false,
             ])
