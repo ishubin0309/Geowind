@@ -15,6 +15,7 @@ class Concertation
     const OBJET_SIX = 'memoire';
     const OBJET_SEPT = 'reunion';
     const OBJET_HUIT = 'porte_ouverte';
+    const OBJET_NEUF = 'reporting';
 
     /**
      * @return array
@@ -22,6 +23,7 @@ class Concertation
     public static function getObjetList()
     {
         return [
+            self::OBJET_NEUF => 'Reporting',
             self::OBJET_UN => 'Présentation',
             self::OBJET_DEUX => 'Avis',
             self::OBJET_TROIS => 'Infomation',
@@ -39,6 +41,8 @@ class Concertation
     public static function getDestinataireList()
     {
         return [
+            'equipe' => 'EQUIPE',
+            'partenaire' => 'PARTENAIRE',
             'commune' => 'COMMUNE',
             'epci' => 'EPCI',
             'armee' => 'ARMEE',
@@ -55,7 +59,6 @@ class Concertation
             'drac' => 'DRAC',
             'chambre_agriculture' => 'Chambre d’Agriculture',
             'prefecture' => 'PREFECTURE',
-            'interne' => 'INTERNE',
             'enqueteur' => 'ENQUETEUR',
             'public' => 'PUBLIC'
         ];
