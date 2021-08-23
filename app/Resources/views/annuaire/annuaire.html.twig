@@ -289,6 +289,7 @@
 
 {% block js %}
   <script>
+  {% if messages is not empty or appels is not empty %}
   var map = L.map('map').setView([46, 2], 5.5);
 
   L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
@@ -339,7 +340,6 @@
   });
 
   map.addControl(new customControl());
-  {% if messages is not empty or appels is not empty %}
   var messages = {};
   var markers = {};
   {% set loop_index = 0 %}
