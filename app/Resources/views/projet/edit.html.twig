@@ -474,15 +474,21 @@
   <script src="{{ asset('vendor/Leaflet.markercluster-1.1.0/dist/leaflet.markercluster.js') }}"></script>
   <script>
     var map = L.map('map').setView([46, 2], 5.5);
-
-    {# L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    
+    var originalLayer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map); #}
+    });
 
-    googleHybrid = L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',{
+    var googleHybrid = L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',{
         maxZoom: 20,
         subdomains:['mt0','mt1','mt2','mt3']
     }).addTo(map);
+
+    var baseMaps = {
+        "Rue": originalLayer,
+        "Satellite": googleHybrid
+    };
+    L.control.layers(baseMaps).addTo(map);
 
     {# googleSat = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',{
         maxZoom: 20,
@@ -560,6 +566,49 @@
         container.onclick = function() {
           update_marker = 0;
           map.setView([46,2],5);
+        }
+
+        return container;
+      }
+    });
+    var customControl =  L.Control.extend({
+
+      options: {
+        position: 'topright'
+      },
+
+      onAdd: function (map) {
+        var container = L.DomUtil.create('a');
+        container.setAttribute("role", "button");
+        container.title="Center";
+        container.text = "L";
+
+        container.style.backgroundColor = 'white';     
+        container.style.backgroundImage = "url(images/layers-2x.png)";
+        container.style.backgroundSize = "26px 26px";
+        container.style.width = '34px';
+        container.style.height = '34px';
+        container.style.lineHeight = '24px';
+        container.style.textDecoration = 'none';
+        container.style.cursor = 'pointer';
+        container.style.textAlign = 'center';
+        container.style.color = 'black';
+        container.style.fontSize = '24px';
+        container.style.borderRadius = '4px';
+        container.style.marginTop = '2px';
+        container.style.border = '2px solid rgba(0,0,0,0.2)';
+        
+        container.onmouseover = function(){
+          container.style.backgroundColor = '#f4f4f4'; 
+        }
+        container.onmouseout = function(){
+          container.style.backgroundColor = 'white'; 
+        }
+
+        container.onclick = function() {
+          L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+              attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+          }).addTo(map).removeLayer(grayscale);
         }
 
         return container;
