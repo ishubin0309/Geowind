@@ -482,11 +482,6 @@
     var googleHybrid = L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',{
         maxZoom: 20,
         subdomains:['mt0','mt1','mt2','mt3']
-    });
-
-    googleSatellite = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',{
-        maxZoom: 20,
-        subdomains:['mt0','mt1','mt2','mt3']
     }).addTo(map);
 
     var googleTerrain = L.tileLayer('http://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}',{
@@ -497,7 +492,6 @@
     var baseMaps = {
         "Rue": streetLayer,
         "Aérienne": googleHybrid,
-        "Satellite": googleSatellite,
         "Terrain": googleTerrain
     };
     L.control.layers(baseMaps).addTo(map);
