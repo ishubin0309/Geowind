@@ -2178,8 +2178,8 @@ class Projet
                 return (string) $this->partenaire;
             case 'chef_projet':
                 return (string) $this->chefProjet;
-            case 'partenaire':
-                return (string) $this->partenaire;
+            case 'partenaire_telephone':
+                return (string) $this->partenaireTelephone;
             case 'denomination':
                 return $this->denomination;
             case 'region':
