@@ -47,7 +47,6 @@ class DefaultController extends Controller
         $totalPages = ceil($projetsTotal / $limit);
 
         $gridHelper = new GridHelper();
-        $users = $em->getRepository('AppBundle:User')->findBy([], ['username' => 'ASC']);
         $columnsType = isset($_GET['type']) && $_GET['type'] >= 1 ? trim($_GET['type']) : 1;
 
         $typesProjet = Projet::getTypeProjetList(1);
@@ -59,7 +58,6 @@ class DefaultController extends Controller
             'columnsType' => $columnsType,
             'grid_helper' => $gridHelper,
             'typesProjet' => $typesProjet,
-            'users' => $users,
             'export_option' => new ExportOption(),
         ]);
     }
@@ -100,7 +98,6 @@ class DefaultController extends Controller
         $totalPages = ceil($projetsTotal / $limit);
         $liste = $em->getRepository('AppBundle:Liste')->findOneBy(['id' => $liste]);
         $gridHelper = new GridHelper();
-        $users = $em->getRepository('AppBundle:User')->findBy([], ['username' => 'ASC']);
         $columnsType = isset($_GET['type']) && $_GET['type'] >= 1 ? trim($_GET['type']) : 1;
 
         $typesProjet = Projet::getTypeProjetList(1);
@@ -112,7 +109,6 @@ class DefaultController extends Controller
             'columnsType' => $columnsType,
             'grid_helper' => $gridHelper,
             'typesProjet' => $typesProjet,
-            'users' => $users,
             'liste' => $liste,
             'export_option' => new ExportOption(),
         ]);

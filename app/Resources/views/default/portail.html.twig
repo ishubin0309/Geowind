@@ -66,33 +66,21 @@
       <div class="col-md-3 col-lg-2">
         <select id="select-origine" class="form-control input-filter" data-attr="origine">
           <option value="" selected>Source</option>
-          {% for user in users %}
-            <option value="{{ user }}">{{ user }}</option>
-          {% endfor %}
         </select>
       </div>
       <div class="col-md-3 col-lg-2">
         <select id="select-chefProjet" class="form-control input-filter" data-attr="chefProjet">
           <option value="" selected>Chef projet</option>
-          {% for user in users %}
-            <option value="{{ user }}">{{ user }}</option>
-          {% endfor %}
         </select>
       </div>
       <div class="col-md-3 col-lg-2">
         <select id="select-chargeFoncier" class="form-control input-filter" data-attr="chargeFoncier">
           <option value="" selected>Chargé foncier</option>
-          {% for user in users %}
-            <option value="{{ user }}">{{ user }}</option>
-          {% endfor %}
         </select>
       </div>
       <div class="col-md-3 col-lg-2">
         <select id="select-partenaire" class="form-control input-filter" data-attr="partenaire">
-          <option value="" selected>Partenaire</option>
-          {% for user in users %}
-            <option value="{{ user }}">{{ user }}</option>
-          {% endfor %}
+          <option value="0" selected>Partenaire</option>
         </select>
       </div>
       <div class="col-md-9 col-lg-10">
@@ -357,7 +345,7 @@
           return false;
       }
 
-      if (args.partenaire != "" && item["partenaire"] !== args.partenaire) {
+      if (args.partenaire != "0" && item["partenaire"] !== args.partenaire) {
           return false;
       }
 
@@ -367,6 +355,18 @@
     $(function () {
       var data = [];
       {% for projet in projets %}
+        if(!$('#select-origine option[value="{{ projet.origine }}"]').length) {
+          $('#select-origine').append(new Option("{{ projet.origine }}", "{{ projet.origine }}"));
+        }
+        if(!$('#select-chefProjet option[value="{{ projet.chefProjet }}"]').length) {
+          $('#select-chefProjet').append(new Option("{{ projet.chefProjet }}", "{{ projet.chefProjet }}"));
+        }
+        if(!$('#select-chargeFoncier option[value="{{ projet.chargeFoncier }}"]').length) {
+          $('#select-chargeFoncier').append(new Option("{{ projet.chargeFoncier }}", "{{ projet.chargeFoncier }}"));
+        }
+        if(!$('#select-partenaire option[value="{{ projet.partenaire }}"]').length) {
+          $('#select-partenaire').append(new Option("{{ projet.partenaire }}", "{{ projet.partenaire }}"));
+        }
         {% set listeDate = false %}
         {% set unreadMessage = false %}
         {# {% if is_granted('edit', projet) %} #}
