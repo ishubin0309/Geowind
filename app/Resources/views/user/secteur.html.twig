@@ -25,7 +25,7 @@
               <td>{{ user.prenom|capitalize }}</td>
               <td>{{ user.nom|upper }}</td>
               <td class="column-fit">{{ user.username }}</td>
-              <td>
+              <td class="column-fit">
               {% if type == 1 %}
                 {% if user.departements is not empty %}
                   {% for departement in user.departements %}
@@ -43,8 +43,7 @@
               {% elseif type == 3 %}
                 {% if user.departementsChefProjet is not empty %}
                   {% for departement in user.departementsChefProjet %}
-                    {{ departement.nom }}
-                    {% if not loop.last %}, {% endif %}
+                    {{ departement.nom }}{% if not loop.last %}, {% endif %}
                   {% endfor %}
                 {% endif %}
               {% endif %}
