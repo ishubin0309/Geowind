@@ -15,6 +15,7 @@
               <th>Prenom</th>
               <th>Nom</th>
               <th class="column-fit">User</th>
+              <th class="column-fit">secteurs</th>
               <th></th>
             </tr>
           </thead>
@@ -24,6 +25,30 @@
               <td>{{ user.prenom|capitalize }}</td>
               <td>{{ user.nom|upper }}</td>
               <td class="column-fit">{{ user.username }}</td>
+              <td>
+              {% if type == 1 %}
+                {% if user.departements is not empty %}
+                  {% for departement in user.departements %}
+                    {{ departement.nom }}
+                    {% if not loop.last %}, {% endif %}
+                  {% endfor %}
+                {% endif %}
+              {% elseif type == 2 %}
+                {% if user.departementsChargeFoncier is not empty %}
+                  {% for departement in user.departementsChargeFoncier %}
+                    {{ departement.nom }}
+                    {% if not loop.last %}, {% endif %}
+                  {% endfor %}
+                {% endif %}
+              {% elseif type == 3 %}
+                {% if user.departementsChefProjet is not empty %}
+                  {% for departement in user.departementsChefProjet %}
+                    {{ departement.nom }}
+                    {% if not loop.last %}, {% endif %}
+                  {% endfor %}
+                {% endif %}
+              {% endif %}
+              </td>
               <td></td>
             </tr>
             {% endfor %}
