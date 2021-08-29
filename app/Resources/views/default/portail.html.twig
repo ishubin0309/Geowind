@@ -68,6 +68,16 @@
           <option value="" selected>Source</option>
         </select>
       </div>
+      <div class="col-md-3 col-lg-2">
+        <select id="select-chefProjet" class="form-control input-filter" data-attr="chefProjet">
+          <option value="" selected>Chef projet</option>
+        </select>
+      </div>
+      <div class="col-md-3 col-lg-2">
+        <select id="select-chargeFoncier" class="form-control input-filter" data-attr="chargeFoncier">
+          <option value="" selected>Chargé foncier</option>
+        </select>
+      </div>
       <div class="col-md-9 col-lg-10">
         <nav aria-label="Page navigation center-text">
           <ul style="margin: 0px;margin-bottom: 10px;" class="pagination">
@@ -327,6 +337,12 @@
         if(!$('#select-origine option[value="{{ projet.origine }}"]').length) {
           $('#select-origine').append(new Option("{{ projet.origine }}", "{{ projet.origine }}"));
         }
+        if(!$('#select-chefProjet option[value="{{ projet.chefProjet }}"]').length) {
+          $('#select-chefProjet').append(new Option("{{ projet.chefProjet }}", "{{ projet.chefProjet }}"));
+        }
+        if(!$('#select-chargeFoncier option[value="{{ projet.chargeFoncier }}"]').length) {
+          $('#select-chargeFoncier').append(new Option("{{ projet.chargeFoncier }}", "{{ projet.chargeFoncier }}"));
+        }
         {% set listeDate = false %}
         {% set unreadMessage = false %}
         {# {% if is_granted('edit', projet) %} #}
@@ -480,6 +496,8 @@
         unread: "",
         typeProjet: "",
         origine: "",
+        chefProjet: "",
+        chargeFoncier: "",
       };
       function updateFilter(){
         dataView.setFilterArgs(filterArgs);
