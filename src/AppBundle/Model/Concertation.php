@@ -7,31 +7,24 @@ namespace AppBundle\Model;
  */
 class Concertation
 {
-    const OBJET_UN = 'presentation';
-    const OBJET_DEUX = 'avis';
-    const OBJET_TROIS = 'infomation';
-    const OBJET_QUATRE = 'etude';
-    const OBJET_CINQ = 'soutenance';
-    const OBJET_SIX = 'memoire';
-    const OBJET_SEPT = 'reunion';
-    const OBJET_HUIT = 'porte_ouverte';
-    const OBJET_NEUF = 'reporting';
-
     /**
      * @return array
      */
     public static function getObjetList()
     {
         return [
-            self::OBJET_NEUF => 'Reporting',
-            self::OBJET_UN => 'Présentation',
-            self::OBJET_DEUX => 'Avis',
-            self::OBJET_TROIS => 'Infomation',
-            self::OBJET_QUATRE => 'Etude',
-            self::OBJET_CINQ => 'Soutenance',
-            self::OBJET_SIX => 'Mémoire',
-            self::OBJET_SEPT => 'Réunion',
-            self::OBJET_HUIT => 'Porte ouverte'
+            'reporting' => 'Reporting',
+            'rendez_vous' => 'Rendez-vous',
+            'phasage' => 'Phasage',
+            'preconsultation' => 'Préconsultation',
+            'presentation' => 'Présentation',
+            'avis' => 'Avis',
+            'information' => 'Information',
+            'etude' => 'Etude',
+            'soutenance' => 'Soutenance',
+            'memoire' => 'Mémoire',
+            'reunion' => 'Réunion',
+            'porte_ouverte' => 'Porte ouverte'
         ];
     }
 
@@ -43,7 +36,9 @@ class Concertation
         return [
             'equipe' => 'EQUIPE',
             'partenaire' => 'PARTENAIRE',
-            'commune' => 'COMMUNE',
+            'proprietaires' => 'PROPRIETAIRES',
+            'maire' => 'MAIRE',
+            'conseil_municipal' => 'CONSEIL MUNICIPAL',
             'epci' => 'EPCI',
             'armee' => 'ARMEE',
             'dgac' => 'DGAC',
