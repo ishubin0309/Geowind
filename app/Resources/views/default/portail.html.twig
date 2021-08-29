@@ -365,7 +365,7 @@
           $('#select-chargeFoncier').append(new Option("{{ projet.chargeFoncier }}", "{{ projet.chargeFoncier }}"));
         }
         if(!$('#select-partenaire option[value="{{ projet.partenaire }}"]').length) {
-          $('#select-partenaire').append(new Option("{{ projet.partenaire ? projet.partenaire : 'vide' }}", "{{ projet.partenaire }}"));
+          $('#select-partenaire').append(new Option("{{ projet.partenaire }}", "{{ projet.partenaire }}"));
         }
         {% set listeDate = false %}
         {% set unreadMessage = false %}
