@@ -328,6 +328,18 @@
           return false;
       }
 
+      if (args.origine != "" && item["origine"] !== args.origine) {
+          return false;
+      }
+
+      if (args.chefProjet != "" && item["chefProjet"] !== args.chefProjet) {
+          return false;
+      }
+
+      if (args.chargeFoncier != "" && item["chargeFoncier"] !== args.chargeFoncier) {
+          return false;
+      }
+
       return true;
     }
 
@@ -503,7 +515,7 @@
         dataView.setFilterArgs(filterArgs);
         dataView.refresh();
       }
-      $(".input-filter").change(function (e) {alert(this.value);
+      $(".input-filter").change(function (e) {
         filterArgs[$(this).data('attr')] = this.value;
         updateFilter();
       });
