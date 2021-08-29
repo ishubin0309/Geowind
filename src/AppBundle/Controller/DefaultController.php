@@ -136,7 +136,6 @@ class DefaultController extends Controller
 
         $gridHelper = new GridHelper();
 
-        $users = $em->getRepository('AppBundle:User')->findBy([], ['username' => 'ASC']);
         $regions = $em->getRepository('AppBundle:Region')->findAll();
         $departements = $em->getRepository('AppBundle:Departement')->findAll();
 
@@ -153,7 +152,6 @@ class DefaultController extends Controller
             'page' => $page,
             'totalPages' => $totalPages,
             'grid_helper' => $gridHelper,
-            'users' => $users,
             'regions' => $regions,
             'departements' => $departements,
             'typesProjet' => $typesProjet,

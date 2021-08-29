@@ -31,9 +31,6 @@
                 <label for="select-origine">Source</label>
                 <select id="select-origine" class="form-control input-sm input-filter" data-attr="origine">
                   <option value=""></option>
-                  {% for user in users %}
-                    <option value="{{ user }}">{{ user }}</option>
-                  {% endfor %}
                 </select>
               </div>
             </td>
@@ -42,9 +39,6 @@
                 <label for="select-chefProjet">Chef projet</label>
                 <select id="select-chefProjet" class="form-control input-sm input-filter" data-attr="chefProjet">
                   <option value=""></option>
-                  {% for user in users %}
-                    <option value="{{ user }}">{{ user }}</option>
-                  {% endfor %}
                 </select>
               </div>
             </td>
@@ -53,9 +47,6 @@
                 <label for="select-chargeFoncier">Chargé foncier</label>
                 <select id="select-chargeFoncier" class="form-control input-sm input-filter" data-attr="chargeFoncier">
                   <option value=""></option>
-                  {% for user in users %}
-                    <option value="{{ user }}">{{ user }}</option>
-                  {% endfor %}
                 </select>
               </div>
             </td>
@@ -64,9 +55,6 @@
                 <label for="select-partenaire">Partenaire</label>
                 <select id="select-partenaire" class="form-control input-sm input-filter" data-attr="partenaire">
                   <option value=""></option>
-                  {% for user in users %}
-                    <option value="{{ user }}">{{ user }}</option>
-                  {% endfor %}
                 </select>
               </div>
             </td>
@@ -314,6 +302,18 @@
       var data = [];
 
       {% for projet in projets %}
+        if(!$('#select-origine option[value="{{ projet.origine }}"]').length) {
+          $('#select-origine').append(new Option("{{ projet.origine }}", "{{ projet.origine }}"));
+        }
+        if(!$('#select-chefProjet option[value="{{ projet.chefProjet }}"]').length) {
+          $('#select-chefProjet').append(new Option("{{ projet.chefProjet }}", "{{ projet.chefProjet }}"));
+        }
+        if(!$('#select-chargeFoncier option[value="{{ projet.chargeFoncier }}"]').length) {
+          $('#select-chargeFoncier').append(new Option("{{ projet.chargeFoncier }}", "{{ projet.chargeFoncier }}"));
+        }
+        if(!$('#select-partenaire option[value="{{ projet.partenaire }}"]').length) {
+          $('#select-partenaire').append(new Option("{{ projet.partenaire }}", "{{ projet.partenaire }}"));
+        }
         data.push({
           id: {{ projet.id }},
           typeProjet: '{{ projet.typeProjet }}',
