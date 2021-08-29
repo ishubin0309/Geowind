@@ -1,0 +1,226 @@
+{% extends 'base.html.twig' %}
+
+{% set title = 'Liste des secteurs' %}
+{% set item = 'user' %}
+
+{% block body %}
+  <div class="container-fluid">
+    <div class="page-title"><h1><i class="fa fa-users fa-fw"></i> {{ title }} <span style="margin-left:100px;"></span><a style="{% if type == 1 %}color:red;text-decoration:underline;{% endif %}margin-left:25px;" href="?type=1">Partenaires</a><a style="{% if type == 2 %}color:red;text-decoration:underline;{% endif %}margin-left:25px;" href="?type=2">Chargés foncier</a><a style="{% if type == 3 %}color:red;text-decoration:underline;{% endif %}margin-left:25px;" href="?type=3">Chefs projets</a></h1></div>
+    <hr>
+    <div class="row">
+      <div class="col-sm-6">
+        <table id="datatable" class="table table-striped table-middle">
+          <thead>
+            <tr>
+              <th>Prenom</th>
+              <th>Nom</th>
+              <th class="column-fit">User</th>
+              <th class="column-fit">secteurs</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for user in users %}
+            <tr>
+              <td>{{ user.prenom|capitalize }}</td>
+              <td>{{ user.nom|upper }}</td>
+              <td class="column-fit">{{ user.username }}</td>
+              <td class="column-fit">
+              {% if type == 1 %}
+                {% if user.departements is not empty %}
+                  {% for departement in user.departements %}
+                    {% if not loop.last %}{{ departement.nom ~ ', ' }}{% else %}{{ departement.nom }}{% endif %}
+                  {% endfor %}
+                {% endif %}
+              {% elseif type == 2 %}
+                {% if user.departementsChargeFoncier is not empty %}
+                  {% for departement in user.departementsChargeFoncier %}
+                    {% if not loop.last %}{{ departement.nom ~ ', ' }}{% else %}{{ departement.nom }}{% endif %}
+                  {% endfor %}
+                {% endif %}
+              {% elseif type == 3 %}
+                {% if user.departementsChefProjet is not empty %}
+                  {% for departement in user.departementsChefProjet %}
+                    {% if not loop.last %}{{ departement.nom ~ ', ' }}{% else %}{{ departement.nom }}{% endif %}
+                  {% endfor %}
+                {% endif %}
+              {% endif %}
+              </td>
+              <td></td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        </div>
+        <div class="col-sm-6">
+          <div id="map" class="map map-home " style="height: 500px; margin-bottom: 20px;"></div>
+        </div>
+      </div>
+  </div>
+{% endblock %}
+
+{% block js %}
+  <script>
+    $('#datatable').DataTable({
+      language: dtLang,
+      paging: false,
+      ordering: false,
+      bInfo: false,
+    });
+    $('#open_map').click(function() {
+      $('#map').toggleClass('hide');
+    });
+    var map = L.map('map').setView([46, 2], 5.5);
+    
+    var streetLayer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    var googleHybrid = L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',{
+        maxZoom: 20,
+        subdomains:['mt0','mt1','mt2','mt3']
+    });
+
+    var googleTerrain = L.tileLayer('http://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}',{
+        maxZoom: 20,
+        subdomains:['mt0','mt1','mt2','mt3']
+    });
+
+    var baseMaps = {
+        "Rue": streetLayer,
+        "Aérienne": googleHybrid,
+        "Terrain": googleTerrain
+    };
+    L.control.layers(baseMaps).addTo(map);
+
+    var customControl =  L.Control.extend({
+
+      options: {
+        position: 'topleft'
+      },
+
+      onAdd: function (map) {
+        var container = L.DomUtil.create('a');
+        container.setAttribute("role", "button");
+        container.title="Center";
+        container.text = "c";
+
+        container.style.backgroundColor = 'white';     
+        {# container.style.backgroundImage = "url(https://t1.gstatic.com/images?q=tbn:ANd9GcR6FCUMW5bPn8C4PbKak2BJQQsmC-K9-mbYBeFZm1ZM2w2GRy40Ew)"; #}
+        container.style.backgroundSize = "30px 30px";
+        container.style.width = '32px';
+        container.style.height = '32px';
+        container.style.lineHeight = '24px';
+        container.style.textDecoration = 'none';
+        container.style.cursor = 'pointer';
+        container.style.textAlign = 'center';
+        container.style.color = 'black';
+        container.style.fontSize = '24px';
+        container.style.borderRadius = '4px';
+        container.style.marginTop = '2px';
+        container.style.border = '2px solid rgba(0,0,0,0.2)';
+        
+        container.onmouseover = function(){
+          container.style.backgroundColor = '#f4f4f4'; 
+        }
+        container.onmouseout = function(){
+          container.style.backgroundColor = 'white'; 
+        }
+
+        container.onclick = function() {
+          update_marker = 0;
+          map.setView([46,2],5.5);
+        }
+
+        return container;
+      }
+    });
+
+    map.addControl(new customControl());
+    var users = {};
+    var markers = {};
+    var colors = {0: '#2D85CC', 1: '#FE3636', 2: '#000000', 3: '#F719FB', 4: '#344ceb', 5: '#8e28b0', 6: '#229c28', 7: '#b1b82c', 8: '#1597a3', 9: '#de852c'};
+    var colors_counter = 0;
+    {% set general_counter = 0 %}
+    {% set counter = 0 %}
+    {% for user in users %}
+      {% if type == 1 %}
+        {% if user.departements is not empty %}
+        {% for departement in user.departements %}
+          users[{{ counter }}] = {0: {{ general_counter }}, 1:'{{ departement.nom }}', 2:'{{ user.prenom ~ ' ' ~ user.nom }}', 3: {{ departement.latitude }}, 4: {{ departement.longitude }}};
+        {% set counter= counter + 1 %}
+        {% endfor %}
+        if(colors[colors_counter] === undefined) colors_counter = 0;
+          $('tbody tr:eq({{ general_counter }}) td:last').html('<i style="color:'+colors[colors_counter]+';" class="fa fa-map-marker" aria-hidden="true"></i>');
+          markers[{{ general_counter }}] = new L.DivIcon.SVGIcon({ iconSize: L.point(24, 32), weight: 1, circleWeight: 1, color: '#000000', fillColor: colors[colors_counter], fillOpacity: 0.7 });
+          colors_counter++;
+        {% endif %}
+      {% elseif type == 2 %}
+        {% if user.departementsChargeFoncier is not empty %}
+        {% for departement in user.departementsChargeFoncier %}
+          users[{{ counter }}] = {0: {{ general_counter }}, 1:'{{ departement.nom }}', 2:'{{ user.prenom ~ ' ' ~ user.nom }}', 3: {{ departement.latitude }}, 4: {{ departement.longitude }}};
+        {% set counter= counter + 1 %}
+        {% endfor %}
+        if(colors[colors_counter] === undefined) colors_counter = 0;
+          $('tbody tr:eq({{ general_counter }}) td:last').html('<i style="color:'+colors[colors_counter]+';" class="fa fa-map-marker" aria-hidden="true"></i>');
+          markers[{{ general_counter }}] = new L.DivIcon.SVGIcon({ iconSize: L.point(24, 32), weight: 1, circleWeight: 1, color: '#000000', fillColor: colors[colors_counter], fillOpacity: 0.7 });
+          colors_counter++;
+        {% endif %}
+      {% elseif type == 3 %}
+        {% if user.departementsChefProjet is not empty %}
+        {% for departement in user.departementsChefProjet %}
+          users[{{ counter }}] = {0: {{ general_counter }}, 1:'{{ departement.nom }}', 2:'{{ user.prenom ~ ' ' ~ user.nom }}', 3: {{ departement.latitude }}, 4: {{ departement.longitude }}};
+        {% set counter= counter + 1 %}
+        {% endfor %}
+        if(colors[colors_counter] === undefined) colors_counter = 0;
+          $('tbody tr:eq({{ general_counter }}) td:last').html('<i style="color:'+colors[colors_counter]+';" class="fa fa-map-marker" aria-hidden="true"></i>');
+          markers[{{ general_counter }}] = new L.DivIcon.SVGIcon({ iconSize: L.point(24, 32), weight: 1, circleWeight: 1, color: '#000000', fillColor: colors[colors_counter], fillOpacity: 0.7 });
+          colors_counter++;
+        {% endif %}
+      {% endif %}
+      {% set general_counter = general_counter + 1 %}
+    {% endfor %}
+    function reverseGeolocalisation(query, user, counter) {
+      var nominatimUrl = 'https://nominatim.openstreetmap.org/search';
+      $.ajax({
+          type: 'GET',
+          url: nominatimUrl,
+          data: {
+            q: query,
+            extratags: 0,
+            namedetails: 0,
+            polygon_geojson: 0,
+            format: 'json',
+          },
+          dataType: 'json',
+
+        })
+        .done(function(data) {
+
+          if (data.length === 0) {
+            return;
+          }
+
+          var searchLat = data[0]['lat'];
+          var searchLong = data[0]['lon'];
+          var bbox = data[0]['boundingbox'];
+          var adresse = data[0]['display_name'];
+          if(!adresse.match('France') && data.length > 1) {
+            var searchLat = data[1]['lat'];
+            var searchLong = data[1]['lon'];
+            var bbox = data[1]['boundingbox'];
+            var adresse = data[1]['display_name'];
+          }
+          if(adresse.match('France')) {
+            L.marker([searchLat, searchLong], { icon: markers[counter]}).addTo(map).bindTooltip(query).bindPopup(user);
+          }
+          
+        });
+    }
+    $.each(users, function(i, user) {
+      if(user[3] && user[4]) L.marker([user[3], user[4]], { icon: markers[user[0]]}).addTo(map).bindTooltip(user[1]).bindPopup(user[2]);
+      else reverseGeolocalisation(user[1], user[2], user[0]);
+    });
+      {# L.marker([{{ projet.latitude }}, {{ projet.longitude }}], { id: {{ projet.id }}, icon: markers["{{ projet.progression|e('js') }}"]}).addTo(map).bindTooltip("{{ projet.denomination|e('js') }}").bindPopup("{{ projet.denomination|e('js') }}").on('click', onMarkerClick){% if loop.index0 == focus_index %}.openPopup(){% endif %}; #}
+  </script>
+{% endblock %}
