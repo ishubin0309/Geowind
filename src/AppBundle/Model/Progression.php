@@ -67,7 +67,7 @@ class Progression
     public static function getCssClass($progression)
     {
         // if(in_array($progression, ['nouveau','verification','identification','contacts','en_attente'])) return 'indicateur-flash';
-        if(in_array($progression, ['signatures'])) return 'indicateur-blink';
+        if(in_array($progression, ['signatures'])) return 'indicateur indicateur-blink';
         else return 'indicateur';
     }
 

@@ -202,8 +202,12 @@
     function progressionIndicateurFormatter(row, cell, value, columnDef, dataContext) {
       var color = progressions[value] !== undefined ? progressions[value]['color'] : '#FFFFFF';
       var classes = 'indicateur';
-      if (value == 'nouveau' || value == 'verification' || value == 'identification' || value == 'contacts' || value == 'en_attente') {
+      {# if (value == 'nouveau' || value == 'verification' || value == 'identification' || value == 'contacts' || value == 'en_attente') {
         var classes = 'indicateur-flash';
+        return '<div class="' + classes + '"></div>';
+      } #}
+      if (value == 'signatures' || value == 'nouveau') {
+        var classes = 'indicateur indicateur-blink';
         return '<div class="' + classes + '"></div>';
       }
       return '<div class="' + classes + '" style="background:'+color+';"></div>';
