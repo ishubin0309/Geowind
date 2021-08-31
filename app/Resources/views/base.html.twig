@@ -90,6 +90,12 @@
       .twitter-typeahead .tt-menu {
         background-color: white;
       }
+      .indicateur-blink {
+        animation: blinker 1s linear infinite;
+      }
+      @keyframes blinker {  
+        50% { opacity: 0; }
+      }
     </style>
     {% block css %}{% endblock %}
   </head>
