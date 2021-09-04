@@ -421,7 +421,7 @@
     <div class="col-sm-offset-1 col-sm-5">
       <div id="map" class="map map-home" style="height: 500px; margin-bottom: 20px;"></div>
       <div id="map_search">
-        <div class="form-group">
+        <div class="form-group form-group-sm">
           <label class="col-sm-4 control-label">Rechercher une adresse</label>
           <div class="col-sm-8">
             <input type="text" class="form-control" id="location" placeholder="Rechercher une adresse">
@@ -619,7 +619,7 @@
             var bbox = data[1]['boundingbox'];
             var adresse = data[1]['display_name'];
           }
-          if(adresse.match('France')) {
+          {# if(adresse.match('France')) { #}
             $('#projet_adresse').val(adresse);
             if(update_marker) {
               if (bbox != undefined) {
@@ -638,7 +638,7 @@
                 updateMarkerPosition();
               }
             }
-          }
+          {# } #}
           
         });
     }
