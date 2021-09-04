@@ -545,7 +545,7 @@
         if(label.find('span#projet_typeProjetIcon').length) {
           $(label.find('span#projet_typeProjetIcon').html(typeProjetIcons[type]['name']));
         } else {
-          label.append('<span id="projet_typeProjetIcon" class="pull-right">' + typeProjetIcons[type]['name'] + '</span>');
+          label.append('<span id="projet_typeProjetIcon" style="border-left: solid 2px blue;padding-left: 5px;" class="pull-right">' + typeProjetIcons[type]['name'] + '</span>');
         }
       } else if(typeProjetIcons[type] !== undefined) {
         if(label.find('span#projet_typeProjetIcon').length) {
