@@ -84,13 +84,16 @@
         <legend>Situation géographique</legend>
         {{ form_row(form.latitude) }}
         {{ form_row(form.longitude) }}
-        {{ form_row(form.adresse) }}
 
         <div id="population">
           <legend>Population</legend>
           <div class="form-group form-group-sm"><label class="col-sm-4 control-label">-:</label><div class="col-sm-8">-</div></div>
           <div class="form-group form-group-sm"><label class="col-sm-4 control-label">-:</label><div class="col-sm-8">-</div></div>
         </div>
+
+        
+        <legend>Commentaires</legend>
+        {{ form_widget(form.commentaires) }}
       </fieldset>
 
       <fieldset class="hide" id="tab_contacts">
@@ -241,16 +244,16 @@
     </div>
     <div class="col-sm-offset-1 col-sm-5">
       <div id="map" class="map map-home" style="height: 500px; margin-bottom: 20px;"></div>
-        <div id="map_search">
-        <label class="col-sm-4 control-label">Rechercher une adresse</label>
-        <input type="text" class="form-control" id="location" placeholder="Rechercher une adresse">
+      <div id="map_search">
+        <div class="form-group">
+          <label class="col-sm-4 control-label">Rechercher une adresse</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control" id="location" placeholder="Rechercher une adresse">
+          </div>
         </div>
+        {{ form_row(form.adresse) }}
+      </div>
       <div id="main_photo" class="hide col-sm-12"><img style="width: inherit;" src=""><nav style="margin-left:30%;" aria-label="Page navigation center-text"><ul class="pagination"><li class="page-item disabled"><a id="prev_image" class="page-link" href="#">Précédent</a></li><li class="page-item disabled"><a id="next_image" class="page-link" href="#">Suivant</a></li></ul></nav></div>
-
-      <fieldset id="commentaires">
-        <legend>Commentaires</legend>
-        {{ form_widget(form.commentaires) }}
-      </fieldset>
 
       <div class="text-right m-t-10">
         <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Sauvegarder</button>
@@ -2974,9 +2977,6 @@
             $('#form_site_batimentExistant').removeClass('hide');
             $('#batimentNouveau_options').removeClass('hide');
           }
-        }
-        if(attr == 'tab_localisation') {
-          $('#commentaires').removeClass('hide');
         }
       }
     });
