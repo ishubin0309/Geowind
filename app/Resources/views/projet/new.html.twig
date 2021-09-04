@@ -543,9 +543,9 @@
       label = $(this).parents('div.form-group').find('label');
       if (typeProjetIcons[type] !== undefined) {
         if(label.find('span#projet_typeProjetIcon')) {
-          $(label.find('span#projet_typeProjetIcon').html(typeProjetIcons[type]));
+          $(label.find('span#projet_typeProjetIcon').html(typeProjetIcons[type]['name']));
         } else {
-          label.append('<span id="projet_typeProjetIcon" class="pull-right">' + typeProjetIcons[type] + '</span>');
+          label.append('<span id="projet_typeProjetIcon" class="pull-right">' + typeProjetIcons[type]['name'] + '</span>');
         }
       }
       if(type == 'parc__eolien') {
