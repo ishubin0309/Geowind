@@ -536,9 +536,18 @@
       
     });
 
+    var typeProjetIcons = {{ grid_helper.getJsonIconsTypeProjets|raw }};
     var update_type_milieu = false;
     $('#projet_typeProjet').change(function() {
       type = $(this).val();
+      label = $(this).parents('div.form-group').find('label');
+      if (typeProjetIcons[type] !== undefined) {
+        if(label.find('span#projet_typeProjetIcon')) {
+          $(label.find('span#projet_typeProjetIcon').html(typeProjetIcons[type]));
+        } else {
+          label.append('<span id="projet_typeProjetIcon" class="pull-right">' + typeProjetIcons[type] + '</span>');
+        }
+      }
       if(type == 'parc__eolien') {
         $('#projet_typeSite').val('terrain');
         $.each($('#projet_typeSite option'), function(i, element) {
