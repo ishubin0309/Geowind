@@ -541,11 +541,15 @@
     $('#projet_typeProjet').change(function() {
       type = $(this).val();
       label = $(this).parents('div.form-group').find('label');
-      if (typeProjetIcons[type] !== undefined) {
+      if (typeProjetIcons[type] !== undefined && typeProjetIcons[type]['name'].match('<i')) {
         if(label.find('span#projet_typeProjetIcon').length) {
           $(label.find('span#projet_typeProjetIcon').html(typeProjetIcons[type]['name']));
         } else {
           label.append('<span id="projet_typeProjetIcon" class="pull-right">' + typeProjetIcons[type]['name'] + '</span>');
+        }
+      } else if(typeProjetIcons[type] !== undefined) {
+        if(label.find('span#projet_typeProjetIcon').length) {
+          label.find('span#projet_typeProjetIcon').remove();
         }
       }
       if(type == 'parc__eolien') {
