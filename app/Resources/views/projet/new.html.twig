@@ -241,6 +241,9 @@
     </div>
     <div class="col-sm-offset-1 col-sm-5">
       <div id="map" class="map map-home" style="height: 500px; margin-bottom: 20px;"></div>
+        <div id="map_search" class="form-group">
+          <input type="text" class="form-control" id="location" placeholder="Chercher une adresse">
+        </div>
       <div id="main_photo" class="hide col-sm-12"><img style="width: inherit;" src=""><nav style="margin-left:30%;" aria-label="Page navigation center-text"><ul class="pagination"><li class="page-item disabled"><a id="prev_image" class="page-link" href="#">Précédent</a></li><li class="page-item disabled"><a id="next_image" class="page-link" href="#">Suivant</a></li></ul></nav></div>
 
       <fieldset id="commentaires">
@@ -481,6 +484,51 @@
       } else {
         map.setView([lat, long], 10);
       }
+      
+    });
+
+    $('#location').change(function() {
+      
+      var nominatimUrl = 'https://nominatim.openstreetmap.org/search';
+      $input = $(this);
+
+      var query = $('#location').val();
+      $.ajax({
+        type: 'GET',
+        url: nominatimUrl,
+        data: {
+          q: query,
+          extratags: 0,
+          namedetails: 0,
+          polygon_geojson: 0,
+          format: 'json',
+        },
+        dataType: 'json',
+
+      })
+      .done(function(data) {
+
+        if (data.length === 0) {
+          $input.parent().addClass('has-error');
+          return;
+        }
+
+        var lat = data[0]['lat'];
+        var lon = data[0]['lon'];
+        var bbox = data[0]['boundingbox'];
+        
+        if (bbox != undefined) {
+          map.fitBounds([
+            [bbox[0], bbox[2]],
+            [bbox[1], bbox[3]]
+          ]);
+        } else {
+          map.setView([lat, lon], 10);
+        }
+        
+        $input.parent().removeClass('has-error');
+        
+      });
       
     });
 
@@ -2890,17 +2938,17 @@
         $('fieldset').addClass('hide');
         $('fieldset#' + attr).removeClass('hide');
         if(attr != 'tab_localisation' && attr != 'tab_contacts' && attr != 'tab_site' && attr != 'tab_projet' && attr != 'tab_images') {
-          $('#map').addClass('hide');
+          ('#map, #map_search').addClass('hide');
           $('#main_photo').addClass('hide');
           $('#fields_div').removeClass('col-sm-6');
           $('#fields_div').addClass('col-sm-12');
           $('fieldset#' + attr + ' .col-sm-4').addClass('col-sm-2').removeClass('col-sm-4');
         } else {
           if(attr != 'tab_images') {
-            $('#map').removeClass('hide');
+            ('#map, #map_search').removeClass('hide');
             $('#main_photo').addClass('hide');
           } else {
-            $('#map').addClass('hide');
+            ('#map, #map_search').addClass('hide');
             $('#main_photo').removeClass('hide');
           }
           $('#fields_div').removeClass('col-sm-12');
