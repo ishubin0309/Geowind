@@ -866,6 +866,21 @@ class ProjetController extends Controller
 					$personnesPhysiques2Row .= $personnesPhysiquesRowCopy2;
 				}
 			}
+			$personnesPhysiquesRowCopy = $personnesPhysiques2Row;
+			$personnesPhysiques3Row = '';
+			for ($i=0; $i <= 3; $i++) {
+				$j = $i > 0 ? $i : '';
+				if (isset($_POST['{exploitant' . $j . '_identite}']) && $_POST['{exploitant' . $j . '_identite}'] && isset($_POST['{exploitant' . $j . '_qualite}']) && $_POST['{exploitant' . $j . '_qualite}'] == 'Personne') {
+					$personnesPhysiquesRowCopy2 = $personnesPhysiquesRowCopy;
+					$postArray = ['{proprietaire_civilite}', '{proprietaire_identite}', '{proprietaire_ne_le}', '{proprietaire_ne_a}', '{proprietaire_adresse}', '{proprietaire_droit}', '{proprietaire_marital}', '{proprietaire_qualite}'];
+					foreach ($postArray as $post) {
+						if (isset($_POST[str_replace('proprietaire_', 'exploitant' . $j . '_', $post)]) && $_POST[str_replace('proprietaire_', 'exploitant' . $j . '_', $post)]) {
+							$personnesPhysiquesRowCopy2 = str_replace($post, $_POST[str_replace('proprietaire_', 'exploitant' . $j . '_', $post)], $personnesPhysiquesRowCopy2);
+						}
+					}
+					$personnesPhysiques3Row .= $personnesPhysiquesRowCopy2;
+				}
+			}
 
             $zip_val = new \ZipArchive;
 
@@ -881,6 +896,8 @@ class ProjetController extends Controller
                 $message = str_replace('{personnes_physiques}', $personnesPhysiquesRow, $message);
 
                 $message = str_replace('{personnes_physiques_2}', $personnesPhysiques2Row, $message);
+
+                $message = str_replace('{personnes_physiques_3}', $personnesPhysiques3Row, $message);
 
                 $message = str_ireplace($replaceThis, $replaceBy, $message);
 
