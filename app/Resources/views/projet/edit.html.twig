@@ -3257,7 +3257,7 @@
         $('fieldset').addClass('hide');
         $('fieldset#' + attr).removeClass('hide');
         if(attr != 'tab_localisation' && attr != 'tab_contacts' && attr != 'tab_site' && attr != 'tab_projet' && attr != 'tab_images') {
-          ('#map, #map_search').addClass('hide');
+          $('#map, #map_search').addClass('hide');
           $('#main_photo').addClass('hide');
           $('#fields_div').removeClass('col-sm-6');
           $('#fields_div').addClass('col-sm-12');
@@ -3271,10 +3271,10 @@
           }
         } else {
           if(attr != 'tab_images') {
-            ('#map, #map_search').removeClass('hide');
+            $('#map, #map_search').removeClass('hide');
             $('#main_photo').addClass('hide');
           } else {
-            ('#map, #map_search').addClass('hide');
+            $('#map, #map_search').addClass('hide');
             $('#main_photo').removeClass('hide');
           }
           $('#fields_div').removeClass('col-sm-12');
