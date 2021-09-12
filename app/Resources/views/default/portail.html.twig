@@ -235,11 +235,11 @@
       { id: "potentiel", name: "Potentiel (MW)", field: "potentiel", sortable: true, cssClass: 'text-right', sorter: numericSorter, width: 100, maxWidth: 100 },
       { id: "phase", name: "Phase", field: "phase", sortable: true, sorter: stringSorter, formatter: phaseFormatter, width: 110, maxWidth: 110 },
       { id: "progression", name: "Etat", field: "progression", sortable: true, sorter: stringSorter, formatter: progressionFormatter, width: 110, maxWidth: 110 },
+      { id: "progressionIndicateur", name: "", field: "progressionIndicateur", width: 26, maxWidth: 26, cssClass: 'column-progression-indicateur', formatter: progressionIndicateurFormatter },
       { id: "completude", name: "Etat fiche", field: "completude", sortable: true, cssClass: 'text-right', sorter: numericSorter, formatter: completudeFormatter, width: 60, maxWidth: 100 },
       { id: "dateCrea", name: '<strong>Date création</strong>', field: "dateCrea", sortable: true, sorter: dateSorter, width: 100, maxWidth: 250},
       { id: "dateMaj", name: '<strong>Date majour</strong>', field: "dateMaj", sortable: true, sorter: dateSorter, width: 100, maxWidth: 250},
       { id: "dateDiff", name: "<strong>J+</strong>", field: "dateDiff", sortable: true, sorter: stringSorter, formatter: progressionFormatter, width: 40, maxWidth: 100 },
-      { id: "progressionIndicateur", name: "", field: "progressionIndicateur", width: 26, maxWidth: 26, cssClass: 'column-progression-indicateur', formatter: progressionIndicateurFormatter },
     {% elseif columnsType == 2 %}
       checkboxColumn,
       { id: "id", name: "ID", field: "id", width: 70, maxWidth: 100, sortable: true, sorter: numericSorter, },
@@ -249,6 +249,7 @@
       { id: "potentiel", name: "Potentiel (MW)", field: "potentiel", sortable: true, cssClass: 'text-right', sorter: numericSorter, width: 100, maxWidth: 100 },
       { id: "phase", name: "Phase", field: "phase", sortable: true, sorter: stringSorter, formatter: phaseFormatter, width: 110, maxWidth: 110 },
       { id: "progression", name: "Etat", field: "progression", sortable: true, sorter: stringSorter, formatter: progressionFormatter, width: 110, maxWidth: 110 },
+      { id: "progressionIndicateur", name: "", field: "progressionIndicateur", width: 26, maxWidth: 26, cssClass: 'column-progression-indicateur', formatter: progressionIndicateurFormatter },
       { id: "servitudes", name: "Servitudes", field: "servitudes", sortable: true, sorter: stringSorter, formatter: tacheFormatter, maxWidth: 250 },
       { id: "foncier", name: "Foncier", field: "foncier", sortable: true, sorter: stringSorter, formatter: tacheFormatter, maxWidth: 250 },
       { id: "mairie", name: "Mairie", field: "mairie", sortable: true, sorter: stringSorter, formatter: tacheFormatter, maxWidth: 250 },
@@ -258,7 +259,6 @@
       { id: "dateCrea", name: '<strong>Date création</strong>', field: "dateCrea", sortable: true, sorter: dateSorter, width: 100, maxWidth: 250},
       { id: "dateMaj", name: '<strong>Date majour</strong>', field: "dateMaj", sortable: true, sorter: dateSorter, width: 100, maxWidth: 250},
       { id: "dateDiff", name: "<strong>J+</strong>", field: "dateDiff", sortable: true, sorter: stringSorter, formatter: progressionFormatter, width: 40, maxWidth: 100 },
-      { id: "progressionIndicateur", name: "", field: "progressionIndicateur", width: 26, maxWidth: 26, cssClass: 'column-progression-indicateur', formatter: progressionIndicateurFormatter },
     {% elseif columnsType == 3 %}
       checkboxColumn,
       { id: "id", name: "ID", field: "id", width: 70, maxWidth: 150, sortable: true, sorter: numericSorter, },
@@ -268,12 +268,12 @@
       { id: "potentiel", name: "Potentiel (MW)", field: "potentiel", sortable: true, cssClass: 'text-right', sorter: numericSorter, width: 100, maxWidth: 200 },
       { id: "phase", name: "Phase", field: "phase", sortable: true, sorter: stringSorter, formatter: phaseFormatter, width: 110, maxWidth: 250 },
       { id: "progression", name: "Etat", field: "progression", sortable: true, sorter: stringSorter, formatter: progressionFormatter, width: 110, maxWidth: 250 },
+      { id: "progressionIndicateur", name: "", field: "progressionIndicateur", width: 26, maxWidth: 26, cssClass: 'column-progression-indicateur', formatter: progressionIndicateurFormatter },
       {# { id: "dynamique", name: "Dynamique", field: "dynamique", sortable: true, sorter: stringSorter, formatter: dynamiqueFormatter, width: 110, maxWidth: 250 }, #}
       { id: "completude", name: "Etat fiche", field: "completude", sortable: true, cssClass: 'text-right', sorter: numericSorter, formatter: completudeFormatter, width: 60, maxWidth: 200 },
       { id: "dateCrea", name: '<strong>Date création</strong>', field: "dateCrea", sortable: true, sorter: dateSorter, width: 100, maxWidth: 250},
       { id: "dateMaj", name: '<strong>Date majour</strong>', field: "dateMaj", sortable: true, sorter: dateSorter, width: 100, maxWidth: 250},
       { id: "dateDiff", name: "<strong>J+</strong>", field: "dateDiff", sortable: true, sorter: stringSorter, formatter: progressionFormatter, width: 40, maxWidth: 150 },
-      { id: "progressionIndicateur", name: "", field: "progressionIndicateur", width: 26, maxWidth: 26, cssClass: 'column-progression-indicateur', formatter: progressionIndicateurFormatter },
     {% elseif columnsType == 4 %}
       checkboxColumn,
       { id: "id", name: "ID", field: "id", width: 70, maxWidth: 100, sortable: true, sorter: numericSorter, },
@@ -283,13 +283,13 @@
       { id: "potentiel", name: "Potentiel (MW)", field: "potentiel", sortable: true, cssClass: 'text-right', sorter: numericSorter, width: 100, maxWidth: 150 },
       { id: "phase", name: "Phase", field: "phase", sortable: true, sorter: stringSorter, formatter: phaseFormatter, width: 110, maxWidth: 250 },
       { id: "progression", name: "Etat", field: "progression", sortable: true, sorter: stringSorter, formatter: progressionFormatter, width: 110, maxWidth: 150 },
+      { id: "progressionIndicateur", name: "", field: "progressionIndicateur", width: 26, maxWidth: 26, cssClass: 'column-progression-indicateur', formatter: progressionIndicateurFormatter },
       { id: "foncier", name: "Foncier", field: "foncier", sortable: true, sorter: stringSorter, formatter: tacheFormatter, width: 150, maxWidth: 250 },
       { id: "accords", name: "Accords", field: "accords", sortable: true, sorter: stringSorter, formatter: accordsFormatter, width: 100, maxWidth: 250 },
       { id: "accordsPourcentage", name: "Accords %", field: "accordsPourcentage", sortable: true, cssClass: 'text-right', sorter: numericSorter, formatter: completudeFormatter, width: 60, maxWidth: 100 },
       { id: "dateCrea", name: '<strong>Date création</strong>', field: "dateCrea", sortable: true, sorter: dateSorter, width: 100, maxWidth: 250},
       { id: "dateMaj", name: '<strong>Date majour</strong>', field: "dateMaj", sortable: true, sorter: dateSorter, width: 100, maxWidth: 250},
       { id: "dateDiff", name: "<strong>J+</strong>", field: "dateDiff", sortable: true, sorter: stringSorter, formatter: progressionFormatter, width: 40, maxWidth: 150 },
-      { id: "progressionIndicateur", name: "", field: "progressionIndicateur", width: 26, maxWidth: 26, cssClass: 'column-progression-indicateur', formatter: progressionIndicateurFormatter },
     {% elseif columnsType == 5 %}
       checkboxColumn,
       { id: "id", name: "ID", field: "id", width: 70, maxWidth: 100, sortable: true, sorter: numericSorter, },
@@ -299,6 +299,7 @@
       { id: "potentiel", name: "Potentiel (MW)", field: "potentiel", sortable: true, cssClass: 'text-right', sorter: numericSorter, width: 100, maxWidth: 100 },
       { id: "phase", name: "Phase", field: "phase", sortable: true, sorter: stringSorter, formatter: phaseFormatter, width: 110, maxWidth: 110 },
       { id: "progression", name: "Etat", field: "progression", sortable: true, sorter: stringSorter, formatter: progressionFormatter, width: 110, maxWidth: 110 },
+      { id: "progressionIndicateur", name: "", field: "progressionIndicateur", width: 26, maxWidth: 26, cssClass: 'column-progression-indicateur', formatter: progressionIndicateurFormatter },
       { id: "servitudes", name: "Servitudes", field: "servitudes", sortable: true, sorter: stringSorter, formatter: dynamiqueFormatter, maxWidth: 250 },
       { id: "environnement", name: "Environnement", field: "environnement", sortable: true, sorter: stringSorter, formatter: dynamiqueFormatter, maxWidth: 250 },
       { id: "monuments", name: "Monuments", field: "monuments", sortable: true, sorter: stringSorter, formatter: dynamiqueFormatter, maxWidth: 250 },
@@ -307,7 +308,6 @@
       { id: "dateCrea", name: '<strong>Date création</strong>', field: "dateCrea", sortable: true, sorter: dateSorter, width: 100, maxWidth: 250},
       { id: "dateMaj", name: '<strong>Date majour</strong>', field: "dateMaj", sortable: true, sorter: dateSorter, width: 100, maxWidth: 250},
       { id: "dateDiff", name: "<strong>J+</strong>", field: "dateDiff", sortable: true, sorter: stringSorter, formatter: progressionFormatter, width: 40, maxWidth: 100 },
-      { id: "progressionIndicateur", name: "", field: "progressionIndicateur", width: 26, maxWidth: 26, cssClass: 'column-progression-indicateur', formatter: progressionIndicateurFormatter },
     {% elseif columnsType == 6 %}
       checkboxColumn,
       { id: "id", name: "ID", field: "id", width: 70, maxWidth: 100, sortable: true, sorter: numericSorter, },
@@ -317,6 +317,7 @@
       { id: "potentiel", name: "Potentiel (MW)", field: "potentiel", sortable: true, cssClass: 'text-right', sorter: numericSorter, width: 100, maxWidth: 100 },
       { id: "phase", name: "Phase", field: "phase", sortable: true, sorter: stringSorter, formatter: phaseFormatter, width: 110, maxWidth: 110 },
       { id: "progression", name: "Etat", field: "progression", sortable: true, sorter: stringSorter, formatter: progressionFormatter, width: 110, maxWidth: 110 },
+      { id: "progressionIndicateur", name: "", field: "progressionIndicateur", width: 26, maxWidth: 26, cssClass: 'column-progression-indicateur', formatter: progressionIndicateurFormatter },
       { id: "origine", name: "Source", field: "origine", sortable: true, sorter: stringSorter, width: 130, maxWidth: 250 },
       { id: "chefProjet", name: "Chef de projet", field: "chefProjet", sortable: true, sorter: stringSorter, width: 130, maxWidth: 250 },
       { id: "chargeFoncier", name: "Charge du foncier", field: "chargeFoncier", sortable: true, sorter: stringSorter, width: 130, maxWidth: 250 },
@@ -324,7 +325,6 @@
       { id: "dateCrea", name: '<strong>Date création</strong>', field: "dateCrea", sortable: true, sorter: dateSorter, width: 100, maxWidth: 250},
       { id: "dateMaj", name: '<strong>Date majour</strong>', field: "dateMaj", sortable: true, sorter: dateSorter, width: 100, maxWidth: 250},
       { id: "dateDiff", name: "<strong>J+</strong>", field: "dateDiff", sortable: true, sorter: stringSorter, formatter: progressionFormatter, width: 40, maxWidth: 100 },
-      { id: "progressionIndicateur", name: "", field: "progressionIndicateur", width: 26, maxWidth: 26, cssClass: 'column-progression-indicateur', formatter: progressionIndicateurFormatter },
     {% endif %}
     ];
 
