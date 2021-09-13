@@ -494,7 +494,7 @@
 
     function updateDenomination() {
       commune = $('#projet_communes option:selected').text().replace(/\(.+/, '').trim();
-      commune_words = commune.split('_');
+      commune_words = commune.split('-');
       commune_three_chars = '';
       commune_three_chars += commune_words[0][0].toUpperCase();
       if(commune_words[1] !== undefined) {
