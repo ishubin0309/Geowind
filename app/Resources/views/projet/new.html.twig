@@ -497,7 +497,10 @@
       commune_words = commune.split('-');
       commune_three_chars = '';
       commune_three_chars += commune_words[0][0].toUpperCase();
-      if(commune_words[1] !== undefined) {
+      if(commune_words[2] !== undefined) {
+        commune_three_chars += commune_words[1][0].toUpperCase();
+        commune_three_chars += commune_words[2][0].toUpperCase();
+      } else if(commune_words[1] !== undefined) {
         commune_three_chars += commune_words[1][0].toUpperCase();
         commune_three_chars += commune_words[1][1].toUpperCase();
       } else {
