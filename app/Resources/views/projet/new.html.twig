@@ -508,7 +508,7 @@
         commune_three_chars += commune_words[0][2].toUpperCase();
       }
       denomination = $('#projet_denomination').val().trim();
-      search = denomination.match(/_(\d+)$/)
+      search = denomination.match(/_(\d+)/)
       id = search && search[1] !== undefined ? search[1] : 'id';
       $('#projet_denomination').val(commune_three_chars + '_' + id);
     }
