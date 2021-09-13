@@ -673,12 +673,12 @@
 
     function updateDenomination() {
       commune = $('#projet_communes option:selected').text().replace(/\(.+/, '').trim();
-      commune_words = commune.split('_');
+      commune_words = commune.split('-');
       commune_three_chars = '';
       commune_three_chars += commune_words[0][0].toUpperCase();
       if(commune_words[1] !== undefined) {
+        commune_three_chars += commune_words[1][0].toUpperCase();
         commune_three_chars += commune_words[1][1].toUpperCase();
-        commune_three_chars += commune_words[1][2].toUpperCase();
       } else {
         commune_three_chars += commune_words[0][1].toUpperCase();
         commune_three_chars += commune_words[0][2].toUpperCase();
@@ -688,7 +688,7 @@
       id = search && search[1] !== undefined ? search[1] : 'id';
       $('#projet_denomination').val(commune_three_chars + '_' + id);
     }
-    
+
     {# if(!$('#projet_adresse').val()) {
       if($('#projet_communes option:selected').text()) $('#projet_communes').change();
       else $('#projet_departement').change();
