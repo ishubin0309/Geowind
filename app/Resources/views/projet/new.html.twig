@@ -475,6 +475,7 @@
         var query = $('#projet_departement option:selected').text().replace(/\(.+/, '').trim() + ' ' + $('#projet_communes option:selected').text().replace(/\(.+/, '').trim();
         updateMairie(true);
         updateEpci();
+        updateDenomination();
       } else {
         var query = $('#projet_departement option:selected').text().replace(/\(.+/, '').trim();
         updateContacts();
@@ -490,6 +491,24 @@
       }
       
     });
+
+    function updateDenomination() {
+      commune = $('#projet_communes option:selected').text().replace(/\(.+/, '').trim();
+      commune_words = commune.split('_');
+      commune_three_chars = '';
+      commune_three_chars += commune_words[0][0].toUpperCase();
+      if(commune_words[1] !== undefined) {
+        commune_three_chars += commune_words[1][1].toUpperCase();
+        commune_three_chars += commune_words[1][2].toUpperCase();
+      } else {
+        commune_three_chars += commune_words[0][1].toUpperCase();
+        commune_three_chars += commune_words[0][2].toUpperCase();
+      }
+      denomination = $('#projet_denomination').val().trim();
+      search = denomination.match(/_(\d+)$/)
+      id = search && search[1] !== undefined ? search[1] : 'id';
+      $('#projet_denomination').val(commune_three_chars + '_' + id);
+    }
 
     $('#location').change(function() {
       
@@ -596,7 +615,7 @@
         $('#projet_technologie').val('photovoltaique');
         $('#projet_technologie').change();
       }
-      denomination = $('#projet_denomination').val().trim();
+      {# denomination = $('#projet_denomination').val().trim();
       search = denomination.match(/_(\d+)$/)
       id = search && search[1] !== undefined ? search[1] : 'id';
       if(!denomination || denomination == 'Esol_'+id || denomination == 'EOi_'+id || denomination == 'Ptoit_'+id || denomination == 'Psol_'+id || denomination == 'Pomb_'+id || denomination == 'Ptrack_'+id) {
@@ -616,7 +635,7 @@
           $('#projet_denomination').val('Esol_'+id);
           if(update_type_milieu) $('#projet_environnement').val('terre_arable');
         }
-      }
+      } #}
     });
 
     var contactsUrl = "{{ path('contacts_search') }}";
