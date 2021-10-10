@@ -43,7 +43,7 @@ class AnnuaireMailer
         	$documentPath = $message->getDocumentFile();
         	$documentContent = file_get_contents($documentPath);
         	$documentEncoded = base64_encode($documentContent);
-        	$documentType = mime_content_type($documentContent);
+        	$documentType = mime_content_type($message->getDocumentOriginalName());
         	$email->addAttachment($documentEncoded, $documentType, $message->getDocumentOriginalName(), 'attachment');
 		}
         $sendgrid = new \SendGrid($this->api_key);
