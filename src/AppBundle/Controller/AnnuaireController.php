@@ -174,7 +174,8 @@ class AnnuaireController extends Controller
             $annuaireMailer = new AnnuaireMailer($this->getParameter('mailer_password'));
             
             $errors = [];
-            if ($annuaireMailer->handleMessage($message, $errors)) {
+            $dir = $this->getParameter('document_upload_dir');
+            if ($annuaireMailer->handleMessage($message, $errors, $dir)) {
                 $em->persist($message);
                 $em->flush();
                 $this->addFlash('success', 'Mail envoyé.');

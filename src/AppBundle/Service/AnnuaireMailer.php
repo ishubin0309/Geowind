@@ -17,17 +17,17 @@ class AnnuaireMailer
         $this->api_key = $api_key;
     }
     
-    public function handleMessage(Message $message, &$errors)
+    public function handleMessage(Message $message, &$errors,  $dir='')
     {
-        return $this->sendMail($message, $errors);
+        return $this->sendMail($message, $errors,  $dir);
     }
     
-    public function handleMessageProprietaire(MessageProprietaire $message, &$errors)
+    public function handleMessageProprietaire(MessageProprietaire $message, &$errors,  $dir='')
     {
-        return $this->sendMail($message, $errors);
+        return $this->sendMail($message, $errors,  $dir);
     }
 
-    private function sendMail($message, &$errors)
+    private function sendMail($message, &$errors,  $dir)
     {
         $email = new \SendGrid\Mail\Mail();
         // $email->setFrom('climactif@hotmail.com', 'Climactif');
@@ -39,6 +39,12 @@ class AnnuaireMailer
         $email->addContent(
             "text/html", str_replace("\n", '<br>', $message->getBody()).$logo
         );
+        if ($message->getDocument()) {
+        	$documentPath = $dir . '/' . $message->getDocument();
+        	$documentEncoded = base64_encode(file_get_contents($documentPath));
+        	$documentType = mime_content_type($documentPath);
+        	$email->addAttachment($documentEncoded, $documentType, $message->getDocumentOriginalName(), 'attachment');
+		}
         $sendgrid = new \SendGrid($this->api_key);
         try {
             $response = $sendgrid->send($email);

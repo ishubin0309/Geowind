@@ -108,7 +108,7 @@ class Message
     /**
      * @var UploadedFile
      *
-     * @Vich\UploadableField(mapping="geotiff", fileNameProperty="document")
+     * @Vich\UploadableField(mapping="document", fileNameProperty="document")
      */
     private $documentFile;
     
