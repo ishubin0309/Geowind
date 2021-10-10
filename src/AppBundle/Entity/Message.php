@@ -18,6 +18,7 @@ use DateTime;
  * @author Stéphane Ear <stephaneear@gmail.com>
  *
  * @ORM\Entity(repositoryClass="AppBundle\Repository\MessageRepository")
+ * @Vich\Uploadable
  */
 class Message
 {
