@@ -175,9 +175,9 @@ class AnnuaireController extends Controller
             
             $errors = [];
             $dir = $this->getParameter('document_upload_dir');
+            $em->persist($message);
             exit('*' . $message->getDocument());
             if ($annuaireMailer->handleMessage($message, $errors, $dir)) {
-                $em->persist($message);
                 $em->flush();
                 $this->addFlash('success', 'Mail envoyé.');
                 return $this->redirectToRoute('annuaire_index');
