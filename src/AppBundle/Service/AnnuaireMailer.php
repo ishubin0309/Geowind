@@ -39,11 +39,10 @@ class AnnuaireMailer
         $email->addContent(
             "text/html", str_replace("\n", '<br>', $message->getBody()).$logo
         );
-        if ($message->getDocumentFile() && $message->getDocumentOriginalName()) {
-        	$documentPath = $message->getDocumentFile();
-        	$documentContent = file_get_contents($documentPath);
-        	$documentEncoded = base64_encode($documentContent);
-        	$documentType = mime_content_type($message->getDocumentOriginalName());
+        if ($message->getDocument()) {
+        	$documentPath = $dir . '/' . $message->getDocument();
+        	$documentEncoded = base64_encode(file_get_contents($documentPath));
+        	$documentType = mime_content_type($documentPath);
         	$email->addAttachment($documentEncoded, $documentType, $message->getDocumentOriginalName(), 'attachment');
 		}
         $sendgrid = new \SendGrid($this->api_key);
