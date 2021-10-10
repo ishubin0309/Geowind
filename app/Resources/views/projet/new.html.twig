@@ -2322,13 +2322,13 @@
     });
 
     $('#projet_etats_export_entry').click(function () {
-      if($collectionHolderProprietaire.find('tr').length) {
+      if($collectionHolderEtat.find('tr').length) {
         var titles = [];
         var data = [];
-        $collectionHolderProprietaire.parents('table').find('th').each(function() {
+        $collectionHolderEtat.parents('table').find('th').each(function() {
           titles.push($(this).text());
         });
-        $collectionHolderProprietaire.children().each(function(i, tr) {
+        $collectionHolderEtat.children().each(function(i, tr) {
           if($(tr).find('td').length) {
             $(tr).find('td').each(function(j, td) {
               if ($(td).find('input[name]:eq(0)').length) {
@@ -2427,13 +2427,13 @@
     });
 
     $('#projet_taches_export_entry').click(function () {
-      if($collectionHolderProprietaire.find('tr').length) {
+      if($collectionHolderTache.find('tr').length) {
         var titles = [];
         var data = [];
-        $collectionHolderProprietaire.parents('table').find('th').each(function() {
+        $collectionHolderTache.parents('table').find('th').each(function() {
           titles.push($(this).text());
         });
-        $collectionHolderProprietaire.children().each(function(i, tr) {
+        $collectionHolderTache.children().each(function(i, tr) {
           if($(tr).find('td').length) {
             $(tr).find('td').each(function(j, td) {
               if ($(td).find('input[name]:eq(0)').length) {
@@ -2499,13 +2499,13 @@
     });
 
     $('#projet_concertations_export_entry').click(function () {
-      if($collectionHolderProprietaire.find('tr').length) {
+      if($collectionHolderConcertation.find('tr').length) {
         var titles = [];
         var data = [];
-        $collectionHolderProprietaire.parents('table').find('th').each(function() {
+        $collectionHolderConcertation.parents('table').find('th').each(function() {
           titles.push($(this).text());
         });
-        $collectionHolderProprietaire.children().each(function(i, tr) {
+        $collectionHolderConcertation.children().each(function(i, tr) {
           if($(tr).find('td').length) {
             $(tr).find('td').each(function(j, td) {
               if ($(td).find('input[name]:eq(0)').length) {
