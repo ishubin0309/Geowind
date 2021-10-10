@@ -2585,6 +2585,33 @@
       $('> :last-child', $collectionHolderParcelle).remove();
     });
 
+    $('#projet_parcelles_export_entry').click(function () {
+      if($collectionHolderParcelle.find('tr').length) {
+        var titles = [];
+        var data = [];
+        $collectionHolderParcelle.parents('table').find('th').each(function() {
+          titles.push($(this).text());
+        });
+        $collectionHolderParcelle.children().each(function(i, tr) {
+          if($(tr).find('td').length) {
+            $(tr).find('td').each(function(j, td) {
+              if ($(td).find('input[name]:eq(0)').length) {
+                data.push('"' + $(td).find('input[name]:eq(0)').val() + '"');
+              } else if ($(td).find('select[name]:eq(0)').length) {
+                data.push('"' + $(td).find('select[name]:eq(0)').val() + '"');
+              } else if (j > 0) {
+                data.push('"' + $(td).text() + '"');
+              } else {
+                data.push('');
+              }
+            });
+          }
+        });
+        
+        exportToCsv(titles, data, 'parcelles_');
+      }
+    });
+
     var $collectionHolderEnjeux = $('#projet_enjeuxs');
     var prototypeEnjeux = $collectionHolderEnjeux.data('prototype');
 
