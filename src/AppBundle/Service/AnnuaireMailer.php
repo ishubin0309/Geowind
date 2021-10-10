@@ -39,13 +39,13 @@ class AnnuaireMailer
         $email->addContent(
             "text/html", str_replace("\n", '<br>', $message->getBody()).$logo
         );
-		echo '*' . $message->getDocumentFile() . '<br>';
+		/*echo '*' . $message->getDocumentFile() . '<br>';
 		echo '*' . $dir . '/' . $message->getDocument() . '<br>';
         echo '*' . $message->getDocumentOriginalName() . '<br>';
-        echo '*' . mime_content_type($dir . '/' . $message->getDocument()) . '<br>';
+        echo '*' . mime_content_type($dir . '/' . $message->getDocument()) . '<br>';*/
         die;
-        if ($message->getDocument()) {
-        	$documentPath = $dir . '/' . $message->getDocument();
+        if ($message->getDocumentFile()) {
+        	$documentPath = $message->getDocumentFile();
         	$documentEncoded = base64_encode(file_get_contents($documentPath));
         	$documentType = mime_content_type($documentPath);
         	$email->addAttachment($documentEncoded, $documentType, $message->getDocumentOriginalName(), 'attachment');
