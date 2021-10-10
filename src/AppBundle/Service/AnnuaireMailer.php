@@ -39,7 +39,8 @@ class AnnuaireMailer
         $email->addContent(
             "text/html", str_replace("\n", '<br>', $message->getBody()).$logo
         );
-        echo '*' . $dir . '/' . $message->getDocument() . '<br>';
+		echo '*' . $message->getDocumentFile() . '<br>';
+		echo '*' . $dir . '/' . $message->getDocument() . '<br>';
         echo '*' . $message->getDocumentOriginalName() . '<br>';
         echo '*' . mime_content_type($dir . '/' . $message->getDocument()) . '<br>';
         die;
