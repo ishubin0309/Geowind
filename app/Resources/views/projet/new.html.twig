@@ -1763,6 +1763,22 @@
       }
     });
 
+    function exportToCsv(titles, data, file_name) {
+      var CSVString = prepCSVRow(titles, titles.length, '');
+      CSVString = prepCSVRow(data, titles.length, CSVString);
+
+      var downloadLink = document.createElement("a");
+      var blob = new Blob(["\ufeff", CSVString]);
+      var url = URL.createObjectURL(blob);
+      downloadLink.href = url;
+      id = $('#projet_denomination').val();
+      downloadLink.download = file_name + id + '.csv';
+
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      document.body.removeChild(downloadLink);
+    }
+
     $('#projet_proprietaires_export_entry').click(function () {
       if($collectionHolderProprietaire.find('tr').length) {
         var titles = ['Fonction'];
@@ -1803,19 +1819,7 @@
           }
         });
     
-        var CSVString = prepCSVRow(titles, titles.length, '');
-        CSVString = prepCSVRow(data, titles.length, CSVString);
-    
-        var downloadLink = document.createElement("a");
-        var blob = new Blob(["\ufeff", CSVString]);
-        var url = URL.createObjectURL(blob);
-        downloadLink.href = url;
-        id = $('#projet_denomination').val();
-        downloadLink.download = "foncier_" + id + ".csv";
-    
-        document.body.appendChild(downloadLink);
-        downloadLink.click();
-        document.body.removeChild(downloadLink);
+        exportToCsv(titles, data, 'foncier_');
       }
     });
 
@@ -2317,6 +2321,33 @@
       $('> :last-child', $collectionHolderEtat).remove();
     });
 
+    $('#projet_etats_export_entry').click(function () {
+      if($collectionHolderProprietaire.find('tr').length) {
+        var titles = [];
+        var data = [];
+        $collectionHolderProprietaire.parents('table').find('th').each(function() {
+          titles.push($(this).text());
+        });
+        $collectionHolderProprietaire.children().each(function(i, tr) {
+          if($(tr).find('td').length) {
+            $(tr).find('td').each(function(j, td) {
+              if ($(td).find('input[name]:eq(0)').length) {
+                data.push('"' + $(td).find('input[name]:eq(0)').val() + '"');
+              } else if ($(td).find('select[name]:eq(0)').length) {
+                data.push('"' + $(td).find('select[name]:eq(0)').val() + '"');
+              } else if (j > 0) {
+                data.push('"' + $(td).text() + '"');
+              } else {
+                data.push('');
+              }
+            });
+          }
+        });
+        
+        exportToCsv(titles, data, 'etats_');
+      }
+    });
+
     var etats = {{ grid_helper.getJsonEtats|raw }};
    {#  $('body').on('change', 'select[id*="projet_etats"][id*="_phase"]', function () {
         var selected_phase = $(this).val();
@@ -2395,6 +2426,33 @@
       $('> :last-child', $collectionHolderTache).remove();
     });
 
+    $('#projet_taches_export_entry').click(function () {
+      if($collectionHolderProprietaire.find('tr').length) {
+        var titles = [];
+        var data = [];
+        $collectionHolderProprietaire.parents('table').find('th').each(function() {
+          titles.push($(this).text());
+        });
+        $collectionHolderProprietaire.children().each(function(i, tr) {
+          if($(tr).find('td').length) {
+            $(tr).find('td').each(function(j, td) {
+              if ($(td).find('input[name]:eq(0)').length) {
+                data.push('"' + $(td).find('input[name]:eq(0)').val() + '"');
+              } else if ($(td).find('select[name]:eq(0)').length) {
+                data.push('"' + $(td).find('select[name]:eq(0)').val() + '"');
+              } else if (j > 0) {
+                data.push('"' + $(td).text() + '"');
+              } else {
+                data.push('');
+              }
+            });
+          }
+        });
+        
+        exportToCsv(titles, data, 'taches_');
+      }
+    });
+
     var taches = {{ grid_helper.getJsonTaches|raw }};
     $('body').on('change', 'select[id*="_objet"]', function () {
         var selected_objet = $(this).val();
@@ -2438,6 +2496,33 @@
 
     $('#projet_concertations_remove_entry').click(function () {
       $('> :last-child', $collectionHolderConcertation).remove();
+    });
+
+    $('#projet_concertations_export_entry').click(function () {
+      if($collectionHolderProprietaire.find('tr').length) {
+        var titles = [];
+        var data = [];
+        $collectionHolderProprietaire.parents('table').find('th').each(function() {
+          titles.push($(this).text());
+        });
+        $collectionHolderProprietaire.children().each(function(i, tr) {
+          if($(tr).find('td').length) {
+            $(tr).find('td').each(function(j, td) {
+              if ($(td).find('input[name]:eq(0)').length) {
+                data.push('"' + $(td).find('input[name]:eq(0)').val() + '"');
+              } else if ($(td).find('select[name]:eq(0)').length) {
+                data.push('"' + $(td).find('select[name]:eq(0)').val() + '"');
+              } else if (j > 0) {
+                data.push('"' + $(td).text() + '"');
+              } else {
+                data.push('');
+              }
+            });
+          }
+        });
+        
+        exportToCsv(titles, data, 'concertations_');
+      }
     });
 
     var $collectionHolderDocument = $('#projet_documents');
