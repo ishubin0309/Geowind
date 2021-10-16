@@ -3149,7 +3149,7 @@
     $collectionHolderProprietaire.on('change', 'select[id*="_accord"], input[id*="_parcelles"]', function() {
       countParcelles();
     });
-    $collectionHolderParcelle.on('change', 'input[id$="_nom"]', function() {
+    $collectionHolderParcelle.on('change', 'input[id$="_nom"], input[id$="_surface"]', function() {
       countParcelles();
     });
 
