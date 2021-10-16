@@ -3117,7 +3117,7 @@
       var parcelles = [];
       var parcellesSurfaces = 0;
       $('#projet_parcelles tr').each(function(i,element) {
-        surface = parseInt($(element).find('input[$="_surface"]').val().replace(/\s*/, ''));
+        surface = parseInt($(element).find('input[id$="_surface"]').val().replace(/\s*/, ''));
         parcellesSurfaces += surface;
       });
       var counted_accords = [];
