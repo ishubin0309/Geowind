@@ -195,6 +195,7 @@
       </fieldset>
 
       <fieldset class="hide" id="tab_parcelles">
+        <legend>Parcelles</legend>
         {{ form_widget(form.parcelles) }}
       </fieldset>
 
@@ -2905,6 +2906,8 @@
       var parcelles = [];
       $('#projet_parcelles tr').each(function(i,element) {
         parcelles.push($(element).find('td:eq(0) input[name]').val().trim());
+        surface = parseInt($(element).find('input[id$="_surface"]').val().replace(/\s+/, ''));
+        parcellesSurfaces += surface;
       });
       var counted_accords = [];
       var accords_count = $('#projet_proprietaires tr.proprietaire_entry').length;
@@ -2924,6 +2927,7 @@
       if(parcelles_count) {
         selectedParcelles = ' <span style="color:black;">(Parcelles: ' + parcelles.join(', ') + ')</span>';
         $('#tab_foncier legend').append(' <span style="color:red;">'+accords_count+'/'+parcelles_count+'</span>' + selectedParcelles);
+        $('#tab_parcelles legend').html('Parcelles <span style="color:red;">'+parcellesSurfaces.replace(/\B(?=(\d{3})+(?!\d))/g, ' ')+' m2/'+(parcellesSurfaces/10000)+' ha</span>' + selectedParcelles);
       }
     }
     $('#tab_parcelles .btn').on('click', function() {
