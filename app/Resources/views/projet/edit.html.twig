@@ -3140,7 +3140,7 @@
       if(parcelles_count) {
         selectedParcelles = ' <span style="color:black;">(Parcelles: ' + parcelles.join(', ') + ')</span>';
         $('#tab_foncier legend').append(' <span style="color:red;">'+accords_count+'/'+parcelles_count+'</span>' + selectedParcelles);
-        $('#tab_parcelles legend').html('Parcelles <span style="color:red;">'+parcellesSurfaces.replace(/\B(?=(\d{3})+(?!\d))/g, ' ')+' m2/'+(parcellesSurfaces/10000)+' ha</span>' + selectedParcelles);
+        $('#tab_parcelles legend').html('Parcelles <span style="color:red;">'+parcellesSurfaces.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')+' m2/'+(parcellesSurfaces/10000)+' ha</span>' + selectedParcelles);
       }
     }
     $('#tab_parcelles .btn').on('click', function() {
