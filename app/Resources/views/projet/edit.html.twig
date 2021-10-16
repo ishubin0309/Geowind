@@ -3115,8 +3115,10 @@
     function countParcelles() {
       var parcelles_count = $('#projet_parcelles tr').length;
       var parcelles = [];
+      var parcellesSurfaces = 0;
       $('#projet_parcelles tr').each(function(i,element) {
-        parcelles.push($(element).find('td:eq(0) input[name]').val().trim());
+        surface = parseInt($(element).find('input[$="_surface"]').val().replace(/\s*/, ''));
+        parcellesSurfaces += surface;
       });
       var counted_accords = [];
       var accords_count = $('#projet_proprietaires tr.proprietaire_entry').length;
@@ -3136,6 +3138,7 @@
       if(parcelles_count) {
         selectedParcelles = ' <span style="color:black;">(Parcelles: ' + parcelles.join(', ') + ')</span>';
         $('#tab_foncier legend').append(' <span style="color:red;">'+accords_count+'/'+parcelles_count+'</span>' + selectedParcelles);
+        $('#tab_parcelles legend').append(' <span style="color:red;">'+parcellesSurfaces+'m2/'+(parcellesSurfaces/10000)+'ha</span>' + selectedParcelles);
       }
     }
     $('#tab_parcelles .btn').on('click', function() {
