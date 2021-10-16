@@ -325,7 +325,7 @@
       </fieldset>
 
       <fieldset class="hide" id="tab_parcelles">
-      <legend>Parcelles</legend>
+        <legend>Parcelles</legend>
         {{ form_widget(form.parcelles) }}
       </fieldset>
 
@@ -3118,7 +3118,8 @@
       var parcelles = [];
       var parcellesSurfaces = 0;
       $('#projet_parcelles tr').each(function(i,element) {
-        surface = parseInt($(element).find('input[id$="_surface"]').val().replace(/\s*/, ''));
+        surface = parseInt($(element).find('input[id$="_surface"]').val().replace(/\s+/, ''));
+        console.log($(element).find('input[id$="_surface"]').val().replace(/\s+/, '') + ' *** ' + surface)
         parcellesSurfaces += surface;
       });
       var counted_accords = [];
