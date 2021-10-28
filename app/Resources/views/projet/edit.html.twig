@@ -2299,7 +2299,7 @@
                 if(!suggestionsArray.includes($(element).find('td:eq(0) input[name]').val().trim()) && !selectedSuggestionsArray.includes($(element).find('td:eq(0) input[name]').val().trim())) {
                   suggestionsArray.push($(element).find('td:eq(0) input[name]').val().trim());
                 }
-              });console.log(suggestionsArray);console.log(selectedSuggestionsArray);
+              });console.log(suggestionsArray);console.log(selectedSuggestionsArray);console.log(query);
               return suggestionsArray;
             }
           }
