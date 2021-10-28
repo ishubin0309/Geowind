@@ -2290,10 +2290,10 @@
         $('#projet_proprietaires_'+id+'_parcelles').tagsinput({
           maxTags: 40,
           typeahead: {
-            afterSelect: function(val) { this.$element.val(""); },
+            afterSelect: function(val) { this.$element.val(''); },
             minLength : 0,
             source: function(query) {
-              suggestionsArray = $(this).val().split(',');
+              suggestionsArray = this.$element.split(',');
               $('#projet_parcelles tr').each(function(i,element) {
                 if(!suggestionsArray.includes($(element).find('td:eq(0) input[name]').val().trim())) {
                   suggestionsArray.push($(element).find('td:eq(0) input[name]').val().trim());
