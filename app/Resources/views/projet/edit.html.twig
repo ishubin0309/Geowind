@@ -2287,16 +2287,16 @@
         id = $(this).attr('name').match(/\d+/);
         id = parseInt(id);
         
-        var suggestionsArray = $('#projet_proprietaires_'+id+'_parcelles').val().split(',');
+        var selectedSuggestionsArray = $('#projet_proprietaires_'+id+'_parcelles').val().split(',');
         $('#projet_proprietaires_'+id+'_parcelles').tagsinput({
           maxTags: 40,
           typeahead: {
             afterSelect: function(val) { this.$element.val(''); },
             minLength : 0,
             source: function(query) {
-              {# suggestionsArray = this.$element.split(','); #}
+              suggestionsArray = [];
               $('#projet_parcelles tr').each(function(i,element) {
-                if(!suggestionsArray.includes($(element).find('td:eq(0) input[name]').val().trim())) {
+                if(!suggestionsArray.includes($(element).find('td:eq(0) input[name]').val().trim()) && !selectedSuggestionsArray.includes($(element).find('td:eq(0) input[name]').val().trim())) {
                   suggestionsArray.push($(element).find('td:eq(0) input[name]').val().trim());
                 }
               });console.log(suggestionsArray);
