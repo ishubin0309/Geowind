@@ -2306,16 +2306,12 @@
           },
           freeInput: false
         });
-        {# $('#projet_proprietaires_'+id+'_parcelles').on('itemAdded', function(event) {
-          selectedSuggestionsArray[id].push(event.item);
+        $('#projet_proprietaires_'+id+'_parcelles').on('itemAdded', function(event) {
+          selectedSuggestionsArray[id] = $('#projet_proprietaires_'+id+'_parcelles').val().split(',');
         });
         $('#projet_proprietaires_'+id+'_parcelles').on('itemRemoved', function(event) {
-          for( var i = 0; i < selectedSuggestionsArray[id].length; i++) {
-            if(selectedSuggestionsArray[id][i] == event.item) {
-              selectedSuggestionsArray[id].splice(i, 1);
-            }
-          }
-        }); #}
+          selectedSuggestionsArray[id] = $('#projet_proprietaires_'+id+'_parcelles').val().split(',');
+        });
       });
     }
     $('#projet_proprietaires_recherche').on('change', function() {
