@@ -2287,13 +2287,13 @@
         id = $(this).attr('name').match(/\d+/);
         id = parseInt(id);
         
-        $("#projet_proprietaires_"+id+"_parcelles").tagsinput({
+        $('#projet_proprietaires_'+id+'_parcelles').tagsinput({
           maxTags: 40,
           typeahead: {
             afterSelect: function(val) { this.$element.val(""); },
             minLength : 0,
             source: function(query) {
-              suggestionsArray = $("#projet_proprietaires_"+id+"_parcelles").val().split(',');
+              suggestionsArray = $(this).val().split(',');
               $('#projet_parcelles tr').each(function(i,element) {
                 if(!suggestionsArray.includes($(element).find('td:eq(0) input[name]').val().trim())) {
                   suggestionsArray.push($(element).find('td:eq(0) input[name]').val().trim());
