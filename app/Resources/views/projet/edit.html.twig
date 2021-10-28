@@ -2283,11 +2283,12 @@
     function loadAllParcellesTags() {
       if($('#projet_proprietaires tr').length) $('#projet_proprietaires_recherche').removeClass('hide');
       else $('#projet_proprietaires_recherche').addClass('hide');
+      var selectedSuggestionsArray = [];
       $('#projet_proprietaires input[id$="_parcelles"]').each(function(i,element) {
         id = $(this).attr('name').match(/\d+/);
         id = parseInt(id);
         
-        var selectedSuggestionsArray = $('#projet_proprietaires_'+id+'_parcelles').val().split(',');
+        selectedSuggestionsArray[id] = $('#projet_proprietaires_'+id+'_parcelles').val().split(',');
         $('#projet_proprietaires_'+id+'_parcelles').tagsinput({
           maxTags: 40,
           typeahead: {
@@ -2296,13 +2297,14 @@
             source: function(query) {
               suggestionsArray = [];
               $('#projet_parcelles tr').each(function(i,element) {
-                if(!suggestionsArray.includes($(element).find('td:eq(0) input[name]').val().trim()) && !selectedSuggestionsArray.includes($(element).find('td:eq(0) input[name]').val().trim())) {
+                if(!suggestionsArray.includes($(element).find('td:eq(0) input[name]').val().trim()) && !selectedSuggestionsArray[id].includes($(element).find('td:eq(0) input[name]').val().trim())) {
                   suggestionsArray.push($(element).find('td:eq(0) input[name]').val().trim());
                 }
-              });console.log(suggestionsArray);console.log(selectedSuggestionsArray);console.log(query);
+              });console.log(suggestionsArray);console.log(selectedSuggestionsArray[id]);
               return suggestionsArray;
             }
-          }
+          },
+          freeInput: false
         });
       });
     }
