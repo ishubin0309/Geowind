@@ -2300,13 +2300,13 @@
                 if(!suggestionsArray.includes($(element).find('td:eq(0) input[name]').val().trim()) && !selectedSuggestionsArray[id].includes($(element).find('td:eq(0) input[name]').val().trim())) {
                   suggestionsArray.push($(element).find('td:eq(0) input[name]').val().trim());
                 }
-              });console.log(suggestionsArray);console.log(selectedSuggestionsArray[id]);
+              });
               return suggestionsArray;
             }
           },
           freeInput: false
         });
-        $('#projet_proprietaires_'+id+'_parcelles').on('itemAdded', function(event) {
+        {# $('#projet_proprietaires_'+id+'_parcelles').on('itemAdded', function(event) {
           selectedSuggestionsArray[id].push(event.item);
         });
         $('#projet_proprietaires_'+id+'_parcelles').on('itemRemoved', function(event) {
@@ -2315,7 +2315,7 @@
               selectedSuggestionsArray[id].splice(i, 1);
             }
           }
-        });
+        }); #}
       });
     }
     $('#projet_proprietaires_recherche').on('change', function() {
