@@ -2293,7 +2293,7 @@
             afterSelect: function(val) { this.$element.val(""); },
             minLength : 0,
             source: function(query) {
-              suggestionsArray = [];
+              suggestionsArray = $("#projet_proprietaires_"+id+"_parcelles").val().split(',');
               $('#projet_parcelles tr').each(function(i,element) {
                 if(!suggestionsArray.includes($(element).find('td:eq(0) input[name]').val().trim())) {
                   suggestionsArray.push($(element).find('td:eq(0) input[name]').val().trim());
