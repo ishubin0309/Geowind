@@ -880,7 +880,7 @@ class ProjetController extends Controller
 					}
 					$personnesPhysiques3Row .= $personnesPhysiquesRowCopy2;
 				}
-			}exit($parcelleRow);
+			}if (isset($_GET['test'])) exit($parcelleRow);
 
             $zip_val = new \ZipArchive;
 
