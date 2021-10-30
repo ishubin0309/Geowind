@@ -745,8 +745,18 @@
       
     });
 
-    $.getJSON('{{ asset('arrondissements_municipaux-20180711.geojson') }}', function(arrondissements_municipaux) {
-      L.geoJSON(arrondissements_municipaux, {}).addTo(map);
+    $.ajax({
+      url: "{{ asset('arrondissements_municipaux-20180711.geojson') }}",
+      beforeSend: function(xhr) {
+        if (xhr.overrideMimeType) {
+          xhr.overrideMimeType("application/json");
+        }
+      },
+      dataType: 'json',
+      data: null,
+      success:  function(data, textStatus, request) {
+        L.geoJson(data, {}).addTo(map);
+      }
     });
 
     var typeProjetIcons = {{ grid_helper.getJsonIconsTypeProjets|raw }};
