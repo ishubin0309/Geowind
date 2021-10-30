@@ -746,7 +746,7 @@
     });
 
     $.ajax({
-      url: "{{ asset('arrondissements_municipaux-20180711.geojson') }}",
+      url: "{{ asset('departements-100m.geojson') }}",
       beforeSend: function(xhr) {
         if (xhr.overrideMimeType) {
           xhr.overrideMimeType("application/json");
