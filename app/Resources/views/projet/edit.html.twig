@@ -6,6 +6,7 @@
 {% block css %}
   <link rel="stylesheet" href="{{ asset('vendor/Leaflet.markercluster-1.1.0/dist/MarkerCluster.css') }}">
   <link rel="stylesheet" href="{{ asset('vendor/Leaflet.markercluster-1.1.0/dist/MarkerCluster.Default.css') }}">
+  <link href='https://unpkg.com/mapbox-gl@0.54.0/dist/mapbox-gl.css' rel='stylesheet' />
 {% endblock %}
 
 {% form_theme form 'bootstrap_3_horizontal_sm_layout.html.twig' %}
@@ -327,6 +328,12 @@
       <fieldset class="hide" id="tab_parcelles">
         <legend>Parcelles</legend>
         {{ form_widget(form.parcelles) }}
+        <div id="mapid">
+          <div class="switch-map-style" onclick="changeMapStyle()">
+            <img v-if="mapStyle == 'vector'" src="https://app.dvf.etalab.gouv.fr/images/preview-ortho.png" alt="Fond orthophoto" />
+            <img v-if="mapStyle == 'ortho'" src="https://app.dvf.etalab.gouv.fr/images/preview-vector.png" alt="Fond vectoriel" />
+          </div>
+        </div>
       </fieldset>
 
       <fieldset class="hide" id="tab_enjeux">
@@ -478,6 +485,14 @@
 {% endblock %}
 
 {% block js %}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.4/vue.min.js"></script>
+  <script src='https://unpkg.com/mapbox-gl@0.54.0/dist/mapbox-gl.js'></script>
+  <script src='https://cdn.jsdelivr.net/npm/@turf/turf@5/turf.min.js'></script>
+  <script src='https://app.dvf.etalab.gouv.fr/js/data.js'></script>
+  <script src="https://app.dvf.etalab.gouv.fr/js/component.boite.js"></script>
+	<script src="https://app.dvf.etalab.gouv.fr/js/component.boite-accordeon.js"></script>
+  <script src='https://app.dvf.etalab.gouv.fr/js/index.js'></script>
+  
   <script src="{{ asset('vendor/Leaflet.markercluster-1.1.0/dist/leaflet.markercluster.js') }}"></script>
   <script>
     var map = L.map('map').setView([46, 2], 5.5);
@@ -745,7 +760,7 @@
       
     });
 
-    $.ajax({
+    {# $.ajax({
       url: "{{ asset('departements-100m.geojson') }}",
       beforeSend: function(xhr) {
         if (xhr.overrideMimeType) {
@@ -757,7 +772,7 @@
       success:  function(data, textStatus, request) {
         L.geoJson(data, {}).addTo(map);
       }
-    });
+    }); #}
 
     var typeProjetIcons = {{ grid_helper.getJsonIconsTypeProjets|raw }};
     var update_type_milieu = false;
