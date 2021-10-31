@@ -851,7 +851,7 @@ class ProjetController extends Controller
 					$personnesPhysiquesRow .= $personnesPhysiquesRowCopy2;
 				}
 			}
-			/* $personnesPhysiquesRowCopy = $personnesPhysiques2Row;
+			$personnesPhysiquesRowCopy = $personnesPhysiques2Row;
 			$personnesPhysiques2Row = '';
 			for ($i=0; $i <= 4; $i++) {
 				$j = $i > 0 ? $i : '';
@@ -880,7 +880,7 @@ class ProjetController extends Controller
 					}
 					$personnesPhysiques3Row .= $personnesPhysiquesRowCopy2;
 				}
-			} */if (isset($_GET['test'])) exit($parcelleRow);
+			}if (isset($_GET['test'])) exit($parcelleRow);
 
             $zip_val = new \ZipArchive;
 
@@ -895,9 +895,9 @@ class ProjetController extends Controller
 
                 $message = str_replace('{personnes_physiques}', $personnesPhysiquesRow, $message);
 
-                // $message = str_replace('{personnes_physiques_2}', $personnesPhysiques2Row, $message);
+                $message = str_replace('{personnes_physiques_2}', $personnesPhysiques2Row, $message);
 
-                // $message = str_replace('{personnes_physiques_3}', $personnesPhysiques3Row, $message);
+                $message = str_replace('{personnes_physiques_3}', $personnesPhysiques3Row, $message);
 
                 $message = str_ireplace($replaceThis, $replaceBy, $message);
 
