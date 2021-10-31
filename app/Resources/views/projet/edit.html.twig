@@ -498,11 +498,11 @@
   
   <script src="{{ asset('vendor/Leaflet.markercluster-1.1.0/dist/leaflet.markercluster.js') }}"></script>
   <script>
-    var map = L.map('map').setView([46, 2], 5.5);
+    var mainMap = L.map('map').setView([46, 2], 5.5);
     
     var streetLayer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map);
+    }).addTo(mainMap);
 
     var googleHybrid = L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',{
         maxZoom: 20,
@@ -519,7 +519,7 @@
         "Aérienne": googleHybrid,
         "Terrain": googleTerrain
     };
-    L.control.layers(baseMaps).addTo(map);
+    L.control.layers(baseMaps).addTo(mainMap);
 
     var marker = null;
 
@@ -540,13 +540,13 @@
     function updateMarkerPosition() {
 
       if ($.isNumeric(lat) && $.isNumeric(long) && marker === null && lat != null && long != null) {
-        marker = L.marker([lat, long]).addTo(map);
-        map.panTo(new L.LatLng(lat, long));
+        marker = L.marker([lat, long]).addTo(mainMap);
+        mainMap.panTo(new L.LatLng(lat, long));
       }
 
       if ($.isNumeric(lat) && $.isNumeric(long) && marker != null && lat != null && long != null) {
         marker.setLatLng([lat, long]);
-        map.panTo(new L.LatLng(lat, long));
+        mainMap.panTo(new L.LatLng(lat, long));
       }
 
     }
@@ -556,7 +556,7 @@
         position: 'topleft'
       },
 
-      onAdd: function (map) {
+      onAdd: function (mainMap) {
         var container = L.DomUtil.create('a');
         container.setAttribute("role", "button");
         container.title="Center";
@@ -586,16 +586,16 @@
 
         container.onclick = function() {
           update_marker = 0;
-          map.setView([46,2],5);
+          mainMap.setView([46,2],5);
         }
 
         return container;
       }
     });
 
-    map.addControl(new customControl());
+    mainMap.addControl(new customControl());
     var update_marker = 1;
-    map.on('click', function(e) {
+    mainMap.on('click', function(e) {
       if(update_marker) {
         lat = e.latlng.lat;
         long = e.latlng.lng;
@@ -642,12 +642,12 @@
             $('#projet_adresse').val(adresse);
             if(update_marker) {
               if (bbox != undefined) {
-                map.fitBounds([
+                mainMap.fitBounds([
                   [bbox[0], bbox[2]],
                   [bbox[1], bbox[3]]
                 ]);
               } else {
-                map.setView([searchLat, searchLong], 10);
+                mainMap.setView([searchLat, searchLong], 10);
               }
               if($('#projet_latitude').val() != searchLat && !default_lat) {
                 lat = searchLat;
@@ -683,9 +683,9 @@
         last_reverse_search = query;
         reverseGeolocalisation(query, true);
       } else if(!query) {
-        map.setView([46,2],5.5);
+        mainMap.setView([46,2],5.5);
       } else {
-        map.setView([lat, long], 10);
+        mainMap.setView([lat, long], 10);
       }
       
     });
@@ -749,12 +749,12 @@
         var bbox = data[0]['boundingbox'];
         
         if (bbox != undefined) {
-          map.fitBounds([
+          mainMap.fitBounds([
             [bbox[0], bbox[2]],
             [bbox[1], bbox[3]]
           ]);
         } else {
-          map.setView([lat, lon], 10);
+          mainMap.setView([lat, lon], 10);
         }
         
         $input.parent().removeClass('has-error');
@@ -773,7 +773,7 @@
       dataType: 'json',
       data: null,
       success:  function(data, textStatus, request) {
-        L.geoJson(data, {}).addTo(map);
+        L.geoJson(data, {}).addTo(mainMap);
       }
     }); #}
 
@@ -954,7 +954,7 @@
         parcMarkers[parc.id] = marker;
       });
     
-      map.addLayer(markers);
+      mainMap.addLayer(markers);
     }
     function updateParcEoliens() {
       var departement = $('#projet_departement option:selected').text().replace(/\(.*/, '').trim();
