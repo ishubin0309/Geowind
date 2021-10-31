@@ -895,9 +895,9 @@ class ProjetController extends Controller
 
                 $message = str_replace('{personnes_physiques}', $personnesPhysiquesRow, $message);
 
-                $message = str_replace('{personnes_physiques_2}', $personnesPhysiques2Row, $message);
+                // $message = str_replace('{personnes_physiques_2}', $personnesPhysiques2Row, $message);
 
-                $message = str_replace('{personnes_physiques_3}', $personnesPhysiques3Row, $message);
+                // $message = str_replace('{personnes_physiques_3}', $personnesPhysiques3Row, $message);
 
                 $message = str_ireplace($replaceThis, $replaceBy, $message);
 
