@@ -329,12 +329,6 @@
       <fieldset class="hide" id="tab_parcelles">
         <legend>Parcelles</legend>
         {{ form_widget(form.parcelles) }}
-        <div id="mapid">
-          <div class="switch-map-style" onclick="changeMapStyle()">
-            <img v-if="mapStyle == 'vector'" src="https://app.dvf.etalab.gouv.fr/images/preview-ortho.png" alt="Fond orthophoto" />
-            <img v-if="mapStyle == 'ortho'" src="https://app.dvf.etalab.gouv.fr/images/preview-vector.png" alt="Fond vectoriel" />
-          </div>
-        </div>
       </fieldset>
 
       <fieldset class="hide" id="tab_enjeux">
@@ -437,6 +431,12 @@
           </div>
         </div>
         {{ form_row(form.adresse) }}
+      </div>
+      <div id="mapid">
+        <div class="switch-map-style" onclick="changeMapStyle()">
+          <img v-if="mapStyle == 'vector'" src="https://app.dvf.etalab.gouv.fr/images/preview-ortho.png" alt="Fond orthophoto" />
+          <img v-if="mapStyle == 'ortho'" src="https://app.dvf.etalab.gouv.fr/images/preview-vector.png" alt="Fond vectoriel" />
+        </div>
       </div>
       <div id="main_photo" class="hide col-sm-12"><img style="width: inherit;" src=""><nav style="margin-left:30%;" aria-label="Page navigation center-text"><ul class="pagination"><li class="page-item disabled"><a id="prev_image" class="page-link" href="#">Précédent</a></li><li class="page-item disabled"><a id="next_image" class="page-link" href="#">Suivant</a></li></ul></nav></div>
 
