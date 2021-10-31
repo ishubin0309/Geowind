@@ -486,11 +486,13 @@
 {% endblock %}
 
 {% block js %}
+  <script crossorigin="anonymous" src="https://polyfill.io/v3/polyfill.min.js?features=default%2Ces2015%2Ces2016%2Ces2017%2Cfetch%2CPromise"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.4/vue.min.js"></script>
   <script src='https://unpkg.com/mapbox-gl@0.54.0/dist/mapbox-gl.js'></script>
   <script src='https://cdn.jsdelivr.net/npm/@turf/turf@5/turf.min.js'></script>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+  <script type="text/javascript" src="https://unpkg.com/lodash@4.17.11/lodash.min.js"></script>
   <script src='https://app.dvf.etalab.gouv.fr/js/data.js'></script>
   <script src="https://app.dvf.etalab.gouv.fr/js/component.boite.js"></script>
 	<script src="https://app.dvf.etalab.gouv.fr/js/component.boite-accordeon.js"></script>
