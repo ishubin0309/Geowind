@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="{{ asset('vendor/Leaflet.markercluster-1.1.0/dist/MarkerCluster.css') }}">
   <link rel="stylesheet" href="{{ asset('vendor/Leaflet.markercluster-1.1.0/dist/MarkerCluster.Default.css') }}">
   <link href='https://unpkg.com/mapbox-gl@0.54.0/dist/mapbox-gl.css' rel='stylesheet' />
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 {% endblock %}
 
 {% form_theme form 'bootstrap_3_horizontal_sm_layout.html.twig' %}
@@ -488,6 +489,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.4/vue.min.js"></script>
   <script src='https://unpkg.com/mapbox-gl@0.54.0/dist/mapbox-gl.js'></script>
   <script src='https://cdn.jsdelivr.net/npm/@turf/turf@5/turf.min.js'></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
   <script src='https://app.dvf.etalab.gouv.fr/js/data.js'></script>
   <script src="https://app.dvf.etalab.gouv.fr/js/component.boite.js"></script>
 	<script src="https://app.dvf.etalab.gouv.fr/js/component.boite-accordeon.js"></script>
