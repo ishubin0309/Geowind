@@ -6,6 +6,10 @@
 {% block css %}
   <link rel="stylesheet" href="{{ asset('vendor/Leaflet.markercluster-1.1.0/dist/MarkerCluster.css') }}">
   <link rel="stylesheet" href="{{ asset('vendor/Leaflet.markercluster-1.1.0/dist/MarkerCluster.Default.css') }}">
+
+  <link rel="stylesheet" href="{{ asset('css/dvf_app.css') }}" />
+  <link href='https://unpkg.com/mapbox-gl@0.54.0/dist/mapbox-gl.css' rel='stylesheet' />
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 {% endblock %}
 
 {% form_theme form 'bootstrap_3_horizontal_sm_layout.html.twig' %}
@@ -265,7 +269,57 @@
   
   <div class="row">
     <div class="col-xs-12">
-    
+      <div id="app" class="wrapper">
+        <div id="sidebar_left" class="sidebar" v-show="!fold_left" class="container">
+          <div class="form-group">
+            <label for="departements" class="control-label" style="color: white;">Département</label>
+            <select name="departements" id="departements" onchange="selectionnerDepartement()" class="form-control">
+              <option style="display:none"></option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="communes" class="control-label" style="color: white;">Commune</label>
+            <select name="communes" id="communes" onchange="selectionnerCommune()" class="form-control">
+              <option style="display:none"></option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="sections" class="control-label" style="color: white;">Section cadastrale</label>
+            <select name="sections" id="sections" onchange="selectionnerSection()" class="form-control">
+              <option style="display:none"></option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="parcelles" class="control-label" style="color: white;">Parcelle cadastrale</label>
+            <select name="parcelles" id="parcelles" onchange="selectionnerParcelle()" class="form-control">
+              <option style="display:none"></option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="daterange" class="control-label" style="color: white;">Date de la mutation</label>
+            <input type="text" id="daterange" name="daterange" value="01-01-2010 - 15-01-2018" class="form-control" />
+          </div>
+        </div>
+        <div id="content">
+          <div id="mapid">
+            <div class="switch-map-style" onclick="changeMapStyle()">
+              <img v-if="mapStyle == 'vector'" src="https://app.dvf.etalab.gouv.fr/images/preview-ortho.png" alt="Fond orthophoto" />
+              <img v-if="mapStyle == 'ortho'" src="https://app.dvf.etalab.gouv.fr/images/preview-vector.png" alt="Fond vectoriel" />
+            </div>
+          </div>
+        </div>
+
+        <div id="sidebar_right" class="sidebar" v-if="parcelle != null && parcelle.mutations.length > 0">
+          <div onclick="sortirDeParcelle()" class="close-link">Fermer X</div>
+            <div class="scrollable">
+              <div class="cards">
+                <boite-accordeon v-for="(mutation, index) in parcelle.mutations" :mutation="mutation"
+                  :key="mutation.infos[0].id_parcelle + index" :index="index"></boite-accordeon>
+              </div>
+            </div>
+          </div>
+        </div>
+
       {{ form_rest(form) }}
     </div>
   </div>
@@ -301,13 +355,25 @@
 {% endblock %}
 
 {% block js %}
+  <script crossorigin="anonymous" src="https://polyfill.io/v3/polyfill.min.js?features=default%2Ces2015%2Ces2016%2Ces2017%2Cfetch%2CPromise"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.4/vue.min.js"></script>
+  <script src='https://unpkg.com/mapbox-gl@0.54.0/dist/mapbox-gl.js'></script>
+  <script src='https://cdn.jsdelivr.net/npm/@turf/turf@5/turf.min.js'></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+  <script type="text/javascript" src="https://unpkg.com/lodash@4.17.11/lodash.min.js"></script>
+  <script src='{{ asset('js/dvf_data.js') }}'></script>
+  <script src="https://app.dvf.etalab.gouv.fr/js/component.boite.js"></script>
+	<script src="https://app.dvf.etalab.gouv.fr/js/component.boite-accordeon.js"></script>
+  <script src='{{ asset('js/dvf_index.js') }}'></script>
+  
   <script src="{{ asset('vendor/Leaflet.markercluster-1.1.0/dist/leaflet.markercluster.js') }}"></script>
   <script>
-    var map = L.map('map').setView([46, 2], 5.5);
+    var mainMap = L.map('map').setView([46, 2], 5.5);
 
     var streetLayer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map);
+    }).addTo(mainMap);
 
     var googleHybrid = L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',{
         maxZoom: 20,
@@ -324,7 +390,7 @@
         "Aérienne": googleHybrid,
         "Terrain": googleTerrain
     };
-    L.control.layers(baseMaps).addTo(map);
+    L.control.layers(baseMaps).addTo(mainMap);
 
     var marker = null;
 
@@ -345,13 +411,13 @@
     function updateMarkerPosition() {
 
       if ($.isNumeric(lat) && $.isNumeric(long) && marker === null && lat != null && long != null) {
-        marker = L.marker([lat, long]).addTo(map);
-        map.panTo(new L.LatLng(lat, long));
+        marker = L.marker([lat, long]).addTo(mainMap);
+        mainMap.panTo(new L.LatLng(lat, long));
       }
 
       if ($.isNumeric(lat) && $.isNumeric(long) && marker != null && lat != null && long != null) {
         marker.setLatLng([lat, long]);
-        map.panTo(new L.LatLng(lat, long));
+        mainMap.panTo(new L.LatLng(lat, long));
       }
 
     }
@@ -361,7 +427,7 @@
         position: 'topleft'
       },
 
-      onAdd: function (map) {
+      onAdd: function (mainMap) {
         var container = L.DomUtil.create('a');
         container.setAttribute("role", "button");
         container.title="Center";
@@ -391,16 +457,16 @@
 
         container.onclick = function() {
           update_marker = 0;
-          map.setView([46,2],5);
+          mainMap.setView([46,2],5);
         }
 
         return container;
       }
     });
 
-    map.addControl(new customControl());
+    mainMap.addControl(new customControl());
     var update_marker = 1;
-    map.on('click', function(e) {
+    mainMap.on('click', function(e) {
       if(update_marker) {
         lat = e.latlng.lat;
         long = e.latlng.lng;
@@ -447,12 +513,12 @@
             $('#projet_adresse').val(adresse);
             if(update_marker) {
               if (bbox != undefined) {
-                map.fitBounds([
+                mainMap.fitBounds([
                   [bbox[0], bbox[2]],
                   [bbox[1], bbox[3]]
                 ]);
               } else {
-                map.setView([searchLat, searchLong], 10);
+                mainMap.setView([searchLat, searchLong], 10);
               }
               if($('#projet_latitude').val() != searchLat && !default_lat) {
                 lat = searchLat;
@@ -486,9 +552,9 @@
         last_reverse_search = query;
         reverseGeolocalisation(query, true);
       } else if(!query) {
-        map.setView([46,2],5.5);
+        mainMap.setView([46,2],5.5);
       } else {
-        map.setView([lat, long], 10);
+        mainMap.setView([lat, long], 10);
       }
       
     });
@@ -545,12 +611,12 @@
         var bbox = data[0]['boundingbox'];
         
         if (bbox != undefined) {
-          map.fitBounds([
+          mainMap.fitBounds([
             [bbox[0], bbox[2]],
             [bbox[1], bbox[3]]
           ]);
         } else {
-          map.setView([lat, lon], 10);
+          mainMap.setView([lat, lon], 10);
         }
         
         $input.parent().removeClass('has-error');
@@ -735,7 +801,7 @@
         parcMarkers[parc.id] = marker;
       });
     
-      map.addLayer(markers);
+      mainMap.addLayer(markers);
     }
     function updateParcEoliens() {
       var departement = $('#projet_departement option:selected').text().replace(/\(.*/, '').trim();
@@ -2072,6 +2138,26 @@
       }
       loadAllParcellesTags();
     });
+    function loadCadastres() {
+      $('#projet_parcelles input[id*="_nom"]').tagsinput({
+        maxTags: 1,
+        typeahead: {
+          afterSelect: function(val) { this.$element.val(''); },
+          minLength : 0,
+          source: function(query) {
+            var suggestionsArray = new Array();
+            $('select#parcelles option').each(function() {
+              if($(this).val()) {
+                suggestionsArray.push($(this).val());
+              }
+            });
+            return suggestionsArray;
+          }
+        },
+        freeInput: true
+      });
+    }
+    loadCadastres();
     function loadAllParcellesTags() {
       if($('#projet_proprietaires tr').length) $('#projet_proprietaires_recherche').removeClass('hide');
       else $('#projet_proprietaires_recherche').addClass('hide');
@@ -3117,6 +3203,11 @@
           }
           $('#fields_div').removeClass('col-sm-12');
           $('#fields_div').addClass('col-sm-6');
+        }
+        if(attr != 'tab_parcelles') {
+          $('#app').addClass('hide');
+        } else {
+          $('#app').removeClass('hide');
         }
         if(attr == 'tab_site') {
           loadParcMarkers();
