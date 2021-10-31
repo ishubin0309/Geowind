@@ -2367,7 +2367,9 @@
         source: function(query) {
           var suggestionsArray = new Array();
           $('select#parcelles').each(function() {
-            suggestionsArray.push($(this).val());
+            if($(this).val()) {
+              suggestionsArray.push($(this).val());
+            }
           });
           return suggestionsArray;
         }
