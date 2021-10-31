@@ -444,7 +444,7 @@
   
   <div class="row">
     <div class="col-xs-12">
-      <div id="app" class="wrapper hide">
+      <div id="app" class="wrapper">
         <div id="sidebar_left" class="sidebar" v-show="!fold_left" class="container">
           <div class="form-group">
             <label for="departements" class="control-label">Département</label>
@@ -3363,6 +3363,7 @@
       $('#projet_batimentExistant_bardage').parents('.form-group').addClass('hide');
       $('#projet_batimentExistant_ossature').parents('.form-group').addClass('hide');
       $('#projet_batimentExistant_charpente').parents('.form-group').addClass('hide');
+      $('#app').addClass('hide');
       countParcelles();
       commandeUpdate();
       $('#projet_typeProjet').change();
