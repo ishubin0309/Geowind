@@ -6,7 +6,7 @@
 {% block css %}
   <link rel="stylesheet" href="{{ asset('vendor/Leaflet.markercluster-1.1.0/dist/MarkerCluster.css') }}">
   <link rel="stylesheet" href="{{ asset('vendor/Leaflet.markercluster-1.1.0/dist/MarkerCluster.Default.css') }}">
-  <link rel="stylesheet" href="https://app.dvf.etalab.gouv.fr/css/app.css" />
+  <link rel="stylesheet" href="{{ asset('css/dvf_app.css') }}" />
   <link href='https://unpkg.com/mapbox-gl@0.54.0/dist/mapbox-gl.css' rel='stylesheet' />
   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 {% endblock %}
@@ -446,7 +446,7 @@
     <div class="col-xs-12">
       <div id="app" class="wrapper">
         <div id="sidebar_left" class="sidebar" v-show="!fold_left" class="container">
-          <div class="scrollable">
+          <div>
             <div class="form-group">
               <label for="departements" class="control-label">Département</label>
               <select name="departements" id="departements" onchange="selectionnerDepartement()" class="form-control">
@@ -540,10 +540,10 @@
   <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
   <script type="text/javascript" src="https://unpkg.com/lodash@4.17.11/lodash.min.js"></script>
-  <script src='{{ asset('js/dvh_data.js') }}'></script>
+  <script src='{{ asset('js/dvf_data.js') }}'></script>
   <script src="https://app.dvf.etalab.gouv.fr/js/component.boite.js"></script>
 	<script src="https://app.dvf.etalab.gouv.fr/js/component.boite-accordeon.js"></script>
-  <script src='{{ asset('js/dvh_index.js') }}'></script>
+  <script src='{{ asset('js/dvf_index.js') }}'></script>
   
   <script src="{{ asset('vendor/Leaflet.markercluster-1.1.0/dist/leaflet.markercluster.js') }}"></script>
   <script>
