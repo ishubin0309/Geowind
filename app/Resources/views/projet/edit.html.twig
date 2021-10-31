@@ -432,6 +432,17 @@
         </div>
         {{ form_row(form.adresse) }}
       </div>
+      <div id="main_photo" class="hide col-sm-12"><img style="width: inherit;" src=""><nav style="margin-left:30%;" aria-label="Page navigation center-text"><ul class="pagination"><li class="page-item disabled"><a id="prev_image" class="page-link" href="#">Précédent</a></li><li class="page-item disabled"><a id="next_image" class="page-link" href="#">Suivant</a></li></ul></nav></div>
+
+      <div class="text-right m-t-10">
+        <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Sauvegarder</button>
+      </div>
+       
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-xs-12">
       <div id="app" class="wrapper">
         <div id="sidebar_left" class="sidebar" v-show="!fold_left" class="container">
           <div class="scrollable">
@@ -467,8 +478,8 @@
           <div id="content">
           <div id="mapid">
             <div class="switch-map-style" onclick="changeMapStyle()">
-              <img v-if="mapStyle == 'vector'" src="/images/preview-ortho.png" alt="Fond orthophoto" />
-              <img v-if="mapStyle == 'ortho'" src="/images/preview-vector.png" alt="Fond vectoriel" />
+              <img v-if="mapStyle == 'vector'" src="https://app.dvf.etalab.gouv.fr/images/preview-ortho.png" alt="Fond orthophoto" />
+              <img v-if="mapStyle == 'ortho'" src="https://app.dvf.etalab.gouv.fr/images/preview-vector.png" alt="Fond vectoriel" />
             </div>
           </div>
         </div>
@@ -483,17 +494,6 @@
           </div>
         </div>
       </div>
-      <div id="main_photo" class="hide col-sm-12"><img style="width: inherit;" src=""><nav style="margin-left:30%;" aria-label="Page navigation center-text"><ul class="pagination"><li class="page-item disabled"><a id="prev_image" class="page-link" href="#">Précédent</a></li><li class="page-item disabled"><a id="next_image" class="page-link" href="#">Suivant</a></li></ul></nav></div>
-
-      <div class="text-right m-t-10">
-        <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Sauvegarder</button>
-      </div>
-       
-    </div>
-  </div>
-  
-  <div class="row">
-    <div class="col-xs-12">
     
       {{ form_rest(form) }}
     </div>
