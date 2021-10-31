@@ -486,14 +486,14 @@
 
         <div id="sidebar_right" class="sidebar" v-if="parcelle != null && parcelle.mutations.length > 0">
           <div onclick="sortirDeParcelle()" class="close-link">Fermer X</div>
-          <div class="scrollable">
-            <div class="cards">
-              <boite-accordeon v-for="(mutation, index) in parcelle.mutations" :mutation="mutation"
-                :key="mutation.infos[0].id_parcelle + index" :index="index"></boite-accordeon>
+            <div class="scrollable">
+              <div class="cards">
+                <boite-accordeon v-for="(mutation, index) in parcelle.mutations" :mutation="mutation"
+                  :key="mutation.infos[0].id_parcelle + index" :index="index"></boite-accordeon>
+              </div>
             </div>
           </div>
         </div>
-      </div>
     
       {{ form_rest(form) }}
     </div>
@@ -2358,6 +2358,21 @@
         });
       }
       loadAllParcellesTags();
+    });
+    $('#projet_parcelles input[id*="_nom"]').tagsinput({
+      maxTags: 1,
+      typeahead: {
+        afterSelect: function(val) { this.$element.val(''); },
+        minLength : 0,
+        source: function(query) {
+          var suggestionsArray = new Array();
+          $('select#parcelles').each(function() {
+            suggestionsArray.push($(this).val());
+          });
+          return suggestionsArray;
+        }
+      },
+      freeInput: true
     });
     function loadAllParcellesTags() {
       if($('#projet_proprietaires tr').length) $('#projet_proprietaires_recherche').removeClass('hide');
