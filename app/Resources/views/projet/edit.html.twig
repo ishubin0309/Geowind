@@ -2359,24 +2359,22 @@
       }
       loadAllParcellesTags();
     });
-    $('select#parcelles').on('change', function() {
-      $('#projet_parcelles input[id*="_nom"]').tagsinput({
-        maxTags: 1,
-        typeahead: {
-          afterSelect: function(val) { this.$element.val(''); },
-          minLength : 0,
-          source: function(query) {
-            var suggestionsArray = new Array();
-            $('select#parcelles').each(function() {
-              if($(this).val()) {
-                suggestionsArray.push($(this).val());
-              }
-            });
-            return suggestionsArray;
-          }
-        },
-        freeInput: true
-      });
+    $('#projet_parcelles input[id*="_nom"]').tagsinput({
+      maxTags: 1,
+      typeahead: {
+        afterSelect: function(val) { this.$element.val(''); },
+        minLength : 0,
+        source: function(query) {
+          var suggestionsArray = new Array();
+          $('select#parcelles option').each(function() {
+            if($(this).val()) {
+              suggestionsArray.push($(this).val());
+            }
+          });
+          return suggestionsArray;
+        }
+      },
+      freeInput: true
     });
     function loadAllParcellesTags() {
       if($('#projet_proprietaires tr').length) $('#projet_proprietaires_recherche').removeClass('hide');
