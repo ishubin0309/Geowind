@@ -2369,11 +2369,15 @@
           minLength : 0,
           source: function(query) {
             var suggestionsArray = new Array();
-            $('select#parcelles option').each(function() {
-              if($(this).val()) {
-                suggestionsArray.push($(this).val());
-              }
-            });
+            if($('select#parcelles').val() != '') {
+              suggestionsArray.push($('select#parcelles').val());
+            } else {
+              $('select#parcelles option').each(function() {
+                if($(this).val()) {
+                  suggestionsArray.push($(this).val());
+                }
+              });
+            }
             return suggestionsArray;
           }
         },
