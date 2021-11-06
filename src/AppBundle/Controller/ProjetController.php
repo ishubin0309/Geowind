@@ -935,7 +935,7 @@ class ProjetController extends Controller
                     } else {
                         file_put_contents('cadastre-' . $insee . '-parcelles.json', $result);
                     }
-                } else {
+                } else {die('test');
                     $result = file_get_contents('cadastre-' . $insee . '-parcelles.json');
                 }
             }
