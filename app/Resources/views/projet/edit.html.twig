@@ -643,7 +643,7 @@
 
     mainMap.addControl(new customControl());
     var update_marker = 1;
-    mainMap.on('dbclick', function(e) {
+    mainMap.on('dblclick', function(e) {
       if(update_marker) {
         lat = e.latlng.lat;
         long = e.latlng.lng;
