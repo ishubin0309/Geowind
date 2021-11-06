@@ -434,6 +434,8 @@
         </div>
         {{ form_row(form.adresse) }}
       </div>
+      
+      <div id="map2" class="map map-home" style="height: 500px; margin-bottom: 20px;"></div>
       <div id="main_photo" class="hide col-sm-12"><img style="width: inherit;" src=""><nav style="margin-left:30%;" aria-label="Page navigation center-text"><ul class="pagination"><li class="page-item disabled"><a id="prev_image" class="page-link" href="#">Précédent</a></li><li class="page-item disabled"><a id="next_image" class="page-link" href="#">Suivant</a></li></ul></nav></div>
 
       <div class="text-right m-t-10">
@@ -643,7 +645,7 @@
 
     mainMap.addControl(new customControl());
     var update_marker = 1;
-    mainMap.on('dblclick', function(e) {
+    mainMap.on('click', function(e) {
       if(update_marker) {
         lat = e.latlng.lat;
         long = e.latlng.lng;
@@ -654,6 +656,379 @@
         reverseGeolocalisation(lat + ' ' + long, false);
       } else update_marker = 1;
     });
+    var id = 0;
+    var map;
+    var options = {
+        center: [48.884, 2.59709],
+        zoom: 14,
+        minZoom: 1,
+        maxZoom: 19,
+		preferCanvas: true,
+		fullscreenControl: true,
+    },
+    map = L.map('map2', options);
+    const myEventForwarder = new L.eventForwarder({
+        // ref to leaflet map
+        map: map,
+        // events to forward
+        events: {
+            click: true
+        }
+    });
+
+    // enable event forwarding
+    myEventForwarder.enable();
+
+
+
+
+    // load map tiles and add to map
+    var tiles = L.tileLayer('https://tile2.france-cadastre.fr/styles/klokantech-basic/{z}/{x}/{y}.png', {
+        subdomains: 'abcd',
+        maxZoom: 19
+    });
+
+
+
+    var grayscale = L.tileLayer.provider('CartoDB.Positron', {
+            minZoom: 9,
+            maxZoom: 19
+        }),
+        streets = L.tileLayer.provider('Esri.WorldImagery', {
+            minZoom: 9,
+            maxZoom: 19
+        });
+    var baseMaps = {
+        "Carte": tiles,
+        "Satellite": streets
+    };
+
+    map.on("baselayerchange", function(event) {
+        console.log("change3");
+        //map.removeLayer(defaultLayer);
+        // 		if(typeof tileLayer != 'undefined'){
+        // 			tileLayer.bringToFront();
+        // 		}
+        // 		if(typeof tileLayer != 'undefined'){
+        tileLayer.bringToFront();
+        // 		}
+        //tileLayer.sliced.setStyle( {color: "white"});
+
+
+
+    });
+
+    var defaultLayer = tiles.addTo(map);
+
+    L.Measure = {
+        linearMeasurement: "Mesure de distance",
+        areaMeasurement: "Mesure de surface",
+        start: "start",
+        meter: "m",
+        kilometer: "km",
+        squareMeter: "m²",
+        squareKilometers: "km²",
+    };
+
+    var measure = L.control.measure({}).addTo(map);
+
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        layerControl = L.control.layers(baseMaps, null, {
+            collapsed: true
+        });
+    } else {
+        layerControl = L.control.layers(baseMaps, null, {
+            collapsed: false
+        });
+    }
+
+    L.control.layers(baseMaps).addTo(map);
+
+
+
+
+    map.createPane('parcelPane');
+
+
+    map.getPane('parcelPane').style.zIndex = 650;
+
+
+
+    var overlay;
+    var newoverlay;
+
+    map.on('zoomend', function() {
+
+        if (map.getZoom() >= 17) {
+            var bounds = new L.LatLngBounds(
+                new L.LatLng(map.getBounds().getNorth(), map.getBounds().getWest()),
+                new L.LatLng(map.getBounds().getSouth(), map.getBounds().getEast()));
+
+            newoverlay = new L.ImageOverlay("https://admin.france-cadastre.fr/show_labels.php?nord=" + map.getBounds().getNorth() + "&sud=" + map.getBounds().getSouth() + "&est=" + map.getBounds().getEast() + "&ouest=" + map.getBounds().getWest() + "&zoom=" + map.getZoom() + "&insee=77108", bounds, {
+                opacity: 1
+            });
+
+            map.addLayer(newoverlay);
+            newoverlay.on('load', function(event) {
+
+                if ($('.leaflet-overlay-pane>img').length > 1)
+                    $('.leaflet-overlay-pane>img:nth-child(1)').remove();
+            });
+            overlay = newoverlay;
+        } else {
+            if (typeof overlay != 'undefined') {
+                map.removeLayer(overlay);
+            }
+        }
+    });
+    map.on('moveend', function() {
+
+        if (map.getZoom() >= 17) {
+            var bounds = new L.LatLngBounds(
+                new L.LatLng(map.getBounds().getNorth(), map.getBounds().getWest()),
+                new L.LatLng(map.getBounds().getSouth(), map.getBounds().getEast()));
+
+            newoverlay = new L.ImageOverlay("https://admin.france-cadastre.fr/show_labels.php?nord=" + map.getBounds().getNorth() + "&sud=" + map.getBounds().getSouth() + "&est=" + map.getBounds().getEast() + "&ouest=" + map.getBounds().getWest() + "&zoom=" + map.getZoom() + "&insee=77108", bounds, {
+                opacity: 1
+            });
+
+            map.addLayer(newoverlay);
+            newoverlay.on('load', function(event) {
+
+                if ($('.leaflet-overlay-pane>img').length > 1)
+                    $('.leaflet-overlay-pane>img:nth-child(1)').remove();
+            });
+            overlay = newoverlay;
+        } else {
+            if (typeof overlay != 'undefined') {
+                map.removeLayer(overlay);
+            }
+        }
+    });
+    function buildMap(parcels) {
+      var map = mainMap;
+        tileLayer = L.vectorGrid.slicer(parcels, {
+            rendererFactory: L.canvas.tile,
+            vectorTileLayerStyles: {
+                sliced: {
+                    fillColor: "green",
+                    color: "black",
+                    weight: 1,
+                    fill: true,
+                    fillOpacity: .1
+                }
+            },
+            maxZoom: 22,
+            indexMaxZoom: 5, // max zoom in the initial tile index
+            interactive: true,
+            getFeatureId: function(feature) {
+                return feature.properties["id"]
+            }
+        });
+        var tiletile = tileLayer.addTo(map);
+
+        var myRenderer = L.canvas({
+            padding: 0.5
+        });
+
+
+
+        tileLayer.on("load", function() {
+            $('.loading_map').remove();
+        });
+
+
+
+
+        tileLayer.on('click', function(e) {
+
+
+
+
+            //console.log(e);
+            if (e.layer.feature) {
+                var prop = e.layer.feature.properties;
+                //var latlng = [e.latlng.lat,e.latlng.lng];
+            } else {
+                var prop = e.layer.properties;
+                //var latlng = [Number(parcel.y),Number(parcel.x)];
+            }
+            //settimeout otherwise when map click fires it will override this color change
+            if (id != 0) {
+                tileLayer.setFeatureStyle(id, {
+                    fillColor: "green",
+                    color: "black",
+                    weight: 1,
+                    fill: true
+                });
+            }
+            if (lastSearch != '') {
+                tileLayer.setFeatureStyle(lastSearch, {
+                    fillColor: "green",
+                    color: "black",
+                    weight: 1,
+                    fill: true
+                });
+            }
+            id = prop["id"];
+            setTimeout(function() {
+                tileLayer.setFeatureStyle(id, {
+                    fillColor: "blue",
+                    color: "blue",
+                    weight: 1,
+                    fill: true
+                }, 100);
+            });
+
+
+
+
+            var feature = e.layer.properties;
+
+            if ("ga" in window) {
+                tracker = ga.getAll()[0];
+                if (tracker)
+                    tracker.send('event', 'Cadastre', 'click', 'Parcelle');
+            }
+
+
+            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                //console.log(e);
+                if (e.layer.feature) {
+                    var prop = e.layer.feature.properties;
+                    //var latlng = [e.latlng.lat,e.latlng.lng];
+                } else {
+                    var prop = e.layer.properties;
+                    //var latlng = [Number(parcel.y),Number(parcel.x)];
+                }
+                //settimeout otherwise when map click fires it will override this color change
+                if (id != 0) {
+                    tileLayer.setFeatureStyle(id, {
+                        fillColor: "green",
+                        color: "black",
+                        weight: 1,
+                        fill: true
+                    });
+                }
+                if (lastSearch != '') {
+                    tileLayer.setFeatureStyle(lastSearch, {
+                        fillColor: "green",
+                        color: "black",
+                        weight: 1,
+                        fill: true
+                    });
+                }
+                id = prop["id"];
+                setTimeout(function() {
+                    tileLayer.setFeatureStyle(id, {
+                        fillColor: "blue",
+                        color: "blue",
+                        weight: 1,
+                        fill: true
+                    }, 100);
+                });
+
+
+
+
+                var feature = e.layer.properties;
+
+                if ("ga" in window) {
+                    tracker = ga.getAll()[0];
+                    if (tracker)
+                        tracker.send('event', 'Cadastre', 'click', 'Parcelle');
+                }
+
+
+                var popup = L.popup()
+                    .setLatLng(e.latlng)
+                    .setContent("<h2>Parcelle " + feature.section + feature.numero + "</h2><p>Superficie : " + feature.contenance + " m2<br />Section : " + feature.section + "<br />Numéro : " + feature.numero + "<br />préfixe : " + feature.prefixe + "<br /><a href='https://france-cadastre.fr/predemande?commune=Chelles&section=" + feature.section + "&prefixe=" + feature.prefixe + "&plan=" + feature.numero + "&insee=77108&' target='_blank'>Extrait de plan cadastral (PDF)</a><br/><a href='https://france-cadastre.fr/matrice?dep=77&section=" + feature.section + "&ville=Chelles&plan=" + feature.numero + "&insee=77108' target='_blank'>Qui est le propriétaire ?</a><br/><a href='/risques?commune=Chelles&section=" + feature.section + "&prefixe=" + feature.prefixe + "&plan=" + feature.numero + "&insee=77108&scale=4000'>Étude des risques</a><br/><a href='https://france-cadastre.fr/permisdeconstruire/chelles-77&section=" + feature.section + "&plan=" + feature.numero + "' target='_blank'>Permis de construire</a></p>")
+                    .openOn(map);
+
+
+            } else {
+                showLeftWindow(feature.section, feature.numero, feature.contenance, feature.created, feature.updated, feature.prefixe, e.latlng.lat, e.latlng.lng, feature.id);
+            }
+
+
+        });
+
+        $('.dvf').click(function() {
+            $.getJSON("https://api.cquest.org/dvf?code_commune=77108")
+                .done(function(json) {
+                    $('.legendeDvf').css("display", 'block');
+                    if ("ga" in window) {
+                        tracker = ga.getAll()[0];
+                        if (tracker)
+                            tracker.send('event', 'DVF', 'click', 'Button');
+                    }
+                    $.each(json.resultats, function(i, item) {
+                        //console.log(item.numero_plan);
+                        //console.log(item.valeur_fonciere);
+
+                        if (item.valeur_fonciere >= 200000) {
+                            var couleur = "#e2534b";
+                        } else if (item.valeur_fonciere >= 150000) {
+                            var couleur = "#f5c94a";
+                        } else if (item.valeur_fonciere >= 100000) {
+                            var couleur = "#3e4ce9";
+                        } else {
+                            var couleur = "#89c358";
+                        }
+
+                        tileLayer.setFeatureStyle(item.numero_plan, {
+                            fillColor: couleur,
+                            color: "black",
+                            weight: 1,
+                            fill: true,
+                            fillOpacity: 1
+                        });
+                    });
+                });
+        });
+
+        $('form#formS').submit(function() {
+            var trouve = false;
+            parcels.features.forEach(function(feature) {
+                if ($('.parcelleNum').val() == feature.properties.numero) {
+                    if ($('.parcelleNum').val() == feature.properties.numero && $('.sectionNum').val().toUpperCase() == feature.properties.section) {
+                        trouve = true;
+
+                        var lng = feature.geometry.coordinates[0][0][0];
+                        var lat = feature.geometry.coordinates[0][0][1];
+
+                        showLeftWindow(feature.properties.section, feature.properties.numero, feature.properties.contenance, feature.properties.created, feature.properties.updated, feature.properties.prefixe, lat, lng, feature.id);
+
+                        tileLayer.setFeatureStyle(feature.id, {
+                            fillColor: "blue",
+                            color: "black",
+                            weight: 1,
+                            fill: true
+                        });
+
+                        if (lastSearch != '') {
+                            tileLayer.setFeatureStyle(lastSearch, {
+                                fillColor: "green",
+                                color: "black",
+                                weight: 1,
+                                fill: true
+                            });
+                        }
+
+                        lastSearch = feature.id;
+
+                        map.setView(new L.LatLng(lat, lng), 16);
+                    }
+                }
+
+
+            });
+            if (trouve == false) {
+                alert("Cette parcelle n'existe pas.");
+            }
+            return false;
+        });
+    }
     
     function reverseGeolocalisation(query, update_marker) {
       var nominatimUrl = 'https://nominatim.openstreetmap.org/search';
@@ -751,7 +1126,8 @@
           dataType: 'json',
           data: {commune: commune},
           success:  function(data, textStatus, request) {
-            L.geoJson(data, {}).addTo(mainMap);
+            buildMap(data);
+            {# L.geoJson(data, {}).addTo(mainMap); #}
           }
         });
       }
