@@ -542,11 +542,12 @@
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
   <script type="text/javascript" src="https://unpkg.com/lodash@4.17.11/lodash.min.js"></script>
   <script src='{{ asset('js/dvf_data.js') }}'></script>
-  <script src="{{ asset('js/dvf_component.boite.js') }}"></script>
-	<script src="{{ asset('js/dvf_component.boite-accordeon.js') }}"></script>
+  {# <script src="{{ asset('js/dvf_component.boite.js') }}"></script>
+	<script src="{{ asset('js/dvf_component.boite-accordeon.js') }}"></script> #}
   <script src='{{ asset('js/dvf_index.js') }}'></script>
   
   <script src="{{ asset('vendor/Leaflet.markercluster-1.1.0/dist/leaflet.markercluster.js') }}"></script>
+  <script src="https://france-cadastre.fr/assets/js/leaflet-event-forwarder.js"></script>
   <script>
     var mainMap = L.map('map').setView([46, 2], 5.5);
     
