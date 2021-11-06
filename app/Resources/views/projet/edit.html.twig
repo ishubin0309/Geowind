@@ -740,10 +740,8 @@
 
     function loadCoucheCadastre() {
       var commune = $('#projet_communes option:selected').val();
-      var departement = $('#projet_departement').val();
-      if(commune && departement) {
+      if(commune) {
         $.ajax({
-          {# url: 'https://france-cadastre.fr/map/'+departement+'/'+commune+'/cadastre-'+commune+'-parcelles.json', #}
           url: "{{ path('france_cadastre') }}",
           beforeSend: function(xhr) {
             if (xhr.overrideMimeType) {
@@ -751,7 +749,7 @@
             }
           },
           dataType: 'json',
-          data: {departement: departement, commune: commune},
+          data: {commune: commune},
           success:  function(data, textStatus, request) {
             L.geoJson(data, {}).addTo(mainMap);
           }

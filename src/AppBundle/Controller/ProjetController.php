@@ -921,10 +921,17 @@ class ProjetController extends Controller
     public function franceCadastreAction(Request $request)
     {
         $result = '{}';
-        $departement = $request->query->get('departement', 0);
         $commune = $request->query->get('commune', 0);
-        if($departement && $commune) {
-            $result = file_get_contents('https://france-cadastre.fr/map/' . $departement . '/' . $commune . '/cadastre-' . $commune . '-parcelles.json');
+        if($commune) {
+            $commune = $em->getRepository('AppBundle:Commune')->find($commune);
+            if($commune) {
+                $insee = $commune->getInsee();
+                $departement = substr($insee, 0, 2);
+                $result = file_get_contents('https://france-cadastre.fr/map/' . $departement . '/' . $insee . '/cadastre-' . $insee . '-parcelles.json');
+                if(!$result) {
+                    $result = '{}';
+                }
+            }
         }
         return new Response($result);
     }
