@@ -927,7 +927,7 @@ class ProjetController extends Controller
             $commune = $em->getRepository('AppBundle:Commune')->find($commune);
             if($commune) {
                 $insee = $commune->getInsee();
-                if(!file_exists('cadastre-' . $insee . '-parcelles.json')) {
+                if(!file_exists('cadastres/cadastre-' . $insee . '-parcelles.json')) {
                     $departement = substr($insee, 0, 2);
                     $result = @file_get_contents('https://france-cadastre.fr/map/' . $departement . '/' . $insee . '/cadastre-' . $insee . '-parcelles.json');
                     if(!$result) {
@@ -936,7 +936,7 @@ class ProjetController extends Controller
                         file_put_contents('cadastre-' . $insee . '-parcelles.json', $result);
                     }
                 } else {
-                    $result = file_get_contents('cadastre-' . $insee . '-parcelles.json');
+                    $result = file_get_contents('cadastres/cadastre-' . $insee . '-parcelles.json');
                 }
             }
         }
