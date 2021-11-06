@@ -631,27 +631,6 @@
 
         $('.message').html(msg);
 
-        $.ajax({
-                method: "POST",
-                url: "https://france-cadastre.fr/point_in",
-                data: {
-                    insee: "77108",
-                    lat: lat,
-                    lng: lng
-                }
-            })
-            .done(function(msg) {
-                $('.data-plu').html(msg);
-                if (msg != '') {
-                    if ("ga" in window) {
-                        tracker = ga.getAll()[0];
-                        if (tracker)
-                            tracker.send('event', 'Cadastre', 'infoPluDone', 'plu');
-                    }
-                }
-            });
-
-
         $.getJSON("https://api.cquest.org/dvf?numero_plan=" + id, function(json) {
             // console.log(json.resultats.length);
             // console.log(json.resultats);
@@ -888,14 +867,8 @@
 
             var feature = e.layer.properties;
 
-            if ("ga" in window) {
-                tracker = ga.getAll()[0];
-                if (tracker)
-                    tracker.send('event', 'Cadastre', 'click', 'Parcelle');
-            }
 
-
-            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+            {# if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) { #}
                 //console.log(e);
                 if (e.layer.feature) {
                     var prop = e.layer.feature.properties;
@@ -936,12 +909,6 @@
 
                 var feature = e.layer.properties;
 
-                if ("ga" in window) {
-                    tracker = ga.getAll()[0];
-                    if (tracker)
-                        tracker.send('event', 'Cadastre', 'click', 'Parcelle');
-                }
-
 
                 var popup = L.popup()
                     .setLatLng(e.latlng)
@@ -949,9 +916,9 @@
                     .openOn(map);
 
 
-            } else {
+            {# } else {
                 showLeftWindow(feature.section, feature.numero, feature.contenance, feature.created, feature.updated, feature.prefixe, e.latlng.lat, e.latlng.lng, feature.id);
-            }
+            } #}
 
 
         });
@@ -960,11 +927,6 @@
             $.getJSON("https://api.cquest.org/dvf?code_commune=77108")
                 .done(function(json) {
                     $('.legendeDvf').css("display", 'block');
-                    if ("ga" in window) {
-                        tracker = ga.getAll()[0];
-                        if (tracker)
-                            tracker.send('event', 'DVF', 'click', 'Button');
-                    }
                     $.each(json.resultats, function(i, item) {
                         //console.log(item.numero_plan);
                         //console.log(item.valeur_fonciere);
