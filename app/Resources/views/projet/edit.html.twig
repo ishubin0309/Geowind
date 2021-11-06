@@ -743,14 +743,15 @@
       var departement = $('#projet_departement').val();
       if(commune && departement) {
         $.ajax({
-          url: 'https://france-cadastre.fr/map/'+departement+'/'+commune+'/cadastre-'+commune+'-parcelles.json',
+          {# url: 'https://france-cadastre.fr/map/'+departement+'/'+commune+'/cadastre-'+commune+'-parcelles.json', #}
+          url: "{{ path('france_cadastre') }}",
           beforeSend: function(xhr) {
             if (xhr.overrideMimeType) {
               xhr.overrideMimeType('application/json');
             }
           },
           dataType: 'json',
-          data: null,
+          data: {ment: departement, commune: commune},
           success:  function(data, textStatus, request) {
             L.geoJson(data, {}).addTo(mainMap);
           }

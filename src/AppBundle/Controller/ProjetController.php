@@ -915,6 +915,21 @@ class ProjetController extends Controller
     }
 
     /**
+     * @Route("/france-cadastre", name="france_cadastre", options={ "expose": true })
+     * @Security("has_role('ROLE_VIEW')")
+     */
+    public function franceCadastreAction(Request $request)
+    {
+        $result = '{}';
+        $departement = $request->query->get('departement', 0);
+        $commune = $request->query->get('commune', 0);
+        if($departement && $commune) {
+            $result = file_get_contents('https://france-cadastre.fr/map/' . $departement . '/' . $commune . '/cadastre-' . $commune . '-parcelles.json');
+        }
+        return new Response($result);
+    }
+
+    /**
      * @Route("/contacts/search", name="contacts_search")
      * @Security("has_role('ROLE_VIEW')")
      */
