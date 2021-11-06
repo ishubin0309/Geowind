@@ -751,7 +751,7 @@
             }
           },
           dataType: 'json',
-          data: {ment: departement, commune: commune},
+          data: {departement: departement, commune: commune},
           success:  function(data, textStatus, request) {
             L.geoJson(data, {}).addTo(mainMap);
           }
