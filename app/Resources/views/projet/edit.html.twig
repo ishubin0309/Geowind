@@ -724,18 +724,6 @@
 
     var defaultLayer = tiles.addTo(map);
 
-    L.Measure = {
-        linearMeasurement: "Mesure de distance",
-        areaMeasurement: "Mesure de surface",
-        start: "start",
-        meter: "m",
-        kilometer: "km",
-        squareMeter: "m²",
-        squareKilometers: "km²",
-    };
-
-    var measure = L.control.measure({}).addTo(map);
-
     if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
         layerControl = L.control.layers(baseMaps, null, {
             collapsed: true
