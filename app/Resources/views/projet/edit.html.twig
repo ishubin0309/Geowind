@@ -735,8 +735,28 @@
       } else {
         mainMap.setView([lat, long], 10);
       }
-      
+      loadCoucheCadastre();
     });
+
+    function loadCoucheCadastre() {
+      var commune = $('#projet_communes option:selected').val();
+      var departement = $('#projet_departement').val();
+      if(commune && departement) {
+        $.ajax({
+          url: 'https://france-cadastre.fr/map/'+departement+'/'+commune+'/cadastre-'+commune+'-parcelles.json',
+          beforeSend: function(xhr) {
+            if (xhr.overrideMimeType) {
+              xhr.overrideMimeType('application/json');
+            }
+          },
+          dataType: 'json',
+          data: null,
+          success:  function(data, textStatus, request) {
+            L.geoJson(data, {}).addTo(mainMap);
+          }
+        });
+      }
+    }
 
     function updateDenomination() {
       commune = $('#projet_communes option:selected').text().replace(/\(.+/, '').trim();
@@ -3393,6 +3413,7 @@
       $('#app').addClass('hide');
       countParcelles();
       commandeUpdate();
+      loadCoucheCadastre();
       $('#projet_typeProjet').change();
       update_type_milieu = true;
       $('#projet_technologie').change();
