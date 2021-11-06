@@ -923,6 +923,7 @@ class ProjetController extends Controller
         $result = '{}';
         $commune = $request->query->get('commune', 0);
         if($commune) {
+            $em = $this->getDoctrine()->getManager();
             $commune = $em->getRepository('AppBundle:Commune')->find($commune);
             if($commune) {
                 $insee = $commune->getInsee();
