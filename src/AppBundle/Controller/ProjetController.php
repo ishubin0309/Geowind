@@ -927,10 +927,16 @@ class ProjetController extends Controller
             $commune = $em->getRepository('AppBundle:Commune')->find($commune);
             if($commune) {
                 $insee = $commune->getInsee();
-                $departement = substr($insee, 0, 2);
-                $result = file_get_contents('https://france-cadastre.fr/map/' . $departement . '/' . $insee . '/cadastre-' . $insee . '-parcelles.json');
-                if(!$result) {
-                    $result = '{}';
+                if(!file_exists('cadastre-' . $insee . '-parcelles.json')) {
+                    $departement = substr($insee, 0, 2);
+                    $result = @file_get_contents('https://france-cadastre.fr/map/' . $departement . '/' . $insee . '/cadastre-' . $insee . '-parcelles.json');
+                    if(!$result) {
+                        $result = '{}';
+                    } else {
+                        file_put_contents('cadastre-' . $insee . '-parcelles.json', $result);
+                    }
+                } else {
+                    $result = file_get_contents('cadastre-' . $insee . '-parcelles.json');
                 }
             }
         }
