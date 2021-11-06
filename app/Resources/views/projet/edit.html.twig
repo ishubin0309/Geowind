@@ -999,6 +999,7 @@
                 ]);
               } else {
                 mainMap.setView([searchLat, searchLong], 10);
+                map.setView([searchLat, searchLong], 10);
               }
               if($('#projet_latitude').val() != searchLat && !default_lat) {
                 lat = searchLat;
@@ -1037,6 +1038,7 @@
         mainMap.setView([46,2],5.5);
       } else {
         mainMap.setView([lat, long], 10);
+        map.setView([lat, long], 10);
       }
       loadCoucheCadastre();
     });
