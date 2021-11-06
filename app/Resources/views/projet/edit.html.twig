@@ -597,59 +597,6 @@
       } else update_marker = 1;
     });
 
-    function showLeftWindow(section, numero, contenance, created, updated, prefixe, lat, lng, id) {
-
-
-        $('.message').html("");
-
-
-
-        var msg = "<div class='parcelleInfo'><i class='fa fa-times closeLeftWindows'></i><h2>Parcelle " + section + numero + "</h2><b>Superficie : </b>" + contenance + " m2<br />";
-        let dateCreation = new Date(created);
-        let dateUpdated = new Date(updated);
-        var msg = msg + "<b>Section de parcelle : </b>" + section + "<br />";
-        var msg = msg + "<b>Numéro de parcelle : </b>" + numero + "<br />";
-        var msg = msg + "<b>Date de création : </b>" + ('0' + (dateCreation.getDate())).slice(-2) + "/" + ('0' + (dateCreation.getMonth() + 1)).slice(-2) + "/" + dateCreation.getFullYear() + "<br />";
-        var msg = msg + "<b>Dernière mise à jour : </b>" + ('0' + (dateUpdated.getDate())).slice(-2) + "/" + ('0' + (dateUpdated.getMonth() + 1)).slice(-2) + "/" + dateUpdated.getFullYear() + "<br />";
-        var msg = msg + "<b>Préfixe de parcelle : </b>" + prefixe + "<br />";
-        var msg = msg + "<div class='data-plu'></div><br />";
-
-
-        var msg = msg + "<div class='dropdown'><button class='btn btn_proprietaire dropdown-toggle' type='button' data-toggle='dropdown'>Télécharger l'extrait de plan<br />officiel (service gratuit)</button><ul class='dropdown-menu'><li><a href='/extrait?commune=Chelles&section=" + section + "&prefixe=" + prefixe + "&plan=" + numero + "&insee=77108&scale=200'>échelle 1/200 (très zoomé)</a></li><li><a href='/extrait?commune=Chelles&section=" + section + "&prefixe=" + prefixe + "&plan=" + numero + "&insee=77108&scale=500'>échelle 1/500</a></li><li><a href='/extrait?commune=Chelles&section=" + section + "&prefixe=" + prefixe + "&plan=" + numero + "&insee=77108&scale=650'>échelle 1/650</a></li><li><a href='/extrait?commune=Chelles&section=" + section + "&prefixe=" + prefixe + "&plan=" + numero + "&insee=77108&scale=1000'>échelle 1/1000</a></li><li><a href='/extrait?commune=Chelles&section=" + section + "&prefixe=" + prefixe + "&plan=" + numero + "&insee=77108&scale=1250'>échelle 1/1250</a></li><li><a href='/extrait?commune=Chelles&section=" + section + "&prefixe=" + prefixe + "&plan=" + numero + "&insee=77108&scale=1500'>échelle 1/1500 (conseillé)</a></li><li><a href='/extrait?commune=Chelles&section=" + section + "&prefixe=" + prefixe + "&plan=" + numero + "&insee=77108&scale=2000'>échelle 1/2000</a></li><li><a href='/extrait?commune=Chelles&section=" + section + "&prefixe=" + prefixe + "&plan=" + numero + "&insee=77108&scale=2500'>échelle 1/2500</a></li><li><a href='/extrait?commune=Chelles&section=" + section + "&prefixe=" + prefixe + "&plan=" + numero + "&insee=77108&scale=4000'>échelle 1/4000</a></li><li><a href='/extrait?commune=Chelles&section=" + section + "&prefixe=" + prefixe + "&plan=" + numero + "&insee=77108&scale=5000'>échelle 1/5000 (plan large)</a></li></ul></div><a  class='btn_proprietaire' href='/risques?commune=Chelles&section=" + section + "&prefixe=" + prefixe + "&plan=" + numero + "&insee=77108&scale=4000'>Étude des risques (service gratuit)</a><form method='POST' action='https://france-cadastre.fr/matrice'><input type='hidden' name='dep' value='77'/><input type='hidden' name='commune' value='Chelles'/><input type='hidden' name='insee_commune' value='77108'/><input type='hidden' name='section' value='" + section + "'/><input type='hidden' name='plan' value='" + numero + "'/><input type='hidden' name='prefixe' value='" + prefixe + "'/><input type='hidden' name='lat' value='" + lat + "'/><input type='hidden' name='lng' value='" + lng + "'/><button class='btn_proprietaire' type='submit' value=''>Qui est le propriétaire ?<br />(service gratuit)</button><button class='btn_proprietaire' type='submit' value=''>Je suis propriétaire, je souhaite obtenir un extrait de propriété<br />(service gratuit)</button></form><form method='POST' action='https://france-cadastre.fr/autredemande'><input type='hidden' name='dep' value='77'/><input type='hidden' name='commune' value='Chelles'/><input type='hidden' name='insee_commune' value='77108'/><input type='hidden' name='section' value='" + section + "'/><input type='hidden' name='plan' value='" + numero + "'/><input type='hidden' name='lat' value='" + lat + "'/><input type='hidden' name='lng' value='" + lng + "'/><button class='btn_proprietaire' type='submit' value=''>Contacter l'urbanisme pour toute autre demande<br />(service gratuit)</button></form><a class='btn_proprietaire' href='/permisdeconstruire/chelles-77&section=" + section + "&plan=" + numero + "'>Consulter les permis de construire déposés<br />(service gratuit)</a>";
-
-        var msg = msg + "<center><b>Télécharger au format :<br /></b><a style='color:white;' href='https://france-cadastre.fr/downloadcenter.php?format=json&echelle=parcelle&insee=77108&id=" + id + "' target='_blank'>GeoJson (.json)</a><br /><a style='color:white;' href='https://france-cadastre.fr/downloadcenter.php?format=shp&echelle=parcelle&insee=77108&id=" + id + "' target='_blank'>ShapeFile (.shp)</a><br /><a style='color:white;' href='https://france-cadastre.fr/predemande?commune=Chelles&section=" + section + "&prefixe=" + prefixe + "&plan=" + numero + "&insee=77108' target='_blank'>PDF (.pdf)</a></center><br />";
-
-        var msg = msg + "<b>Lien de partage de la parcelle : </b><input type='text' class='share_link' value='https://france-cadastre.fr/cadastre/chelles-77&id=" + id + "' /><br />";
-
-        var msg = msg + "<br /><b>Latitude : </b>" + lat + "<br />";
-        var msg = msg + "<b>Longitude : </b>" + lng + "<br />";
-        var msg = msg + "<b>Identifiant : </b>" + id + "<br />";
-        var msg = msg + "<div class='dvfres'></div>";
-
-
-        var msg = msg + "</div>";
-
-        $('.message').html(msg);
-
-        $.getJSON("https://api.cquest.org/dvf?numero_plan=" + id, function(json) {
-            // console.log(json.resultats.length);
-            // console.log(json.resultats);
-
-            if (json.resultats.length > 0) {
-                var msvDvf = "<br /><h2>Valeur foncière</h2><div class='dvfcontainer'><table style='width: 100%;' class='dvftable'>";
-                $.each(json.resultats, function(i, item) {
-
-                    let dateDvf = new Date(item.date_mutation);
-                    msvDvf = msvDvf + "<tr><td style='border: 1px solid white;padding: 5px 5px;font-size: 12px;'><b>Date transaction : </b>" + ('0' + (dateDvf.getDate())).slice(-2) + "/" + ('0' + (dateDvf.getMonth() + 1)).slice(-2) + "/" + dateDvf.getFullYear() + "<br /><b>Valeur foncière : </b>" + item.valeur_fonciere + "€<br /><b>Type local : </b>" + (item.type_local != null ? item.type_local : 'NC') + "<br /><b>Surface bâti : </b>" + (item.surface_relle_bati != null ? item.surface_relle_bati + "m²" : 'NC') + "<br /><b>Pièces principales : </b>" + (item.nombre_pieces_principales != null ? item.nombre_pieces_principales : 'NC') + "<br /><b>Surface terrain : </b>" + (item.surface_terrain != null ? item.surface_terrain + 'm²' : 'NC') + "</td></tr>";
-                });
-
-                msvDvf = msvDvf + "</table></div>";
-
-                $('.dvfres').html(msvDvf);
-            }
-        });
-
-    }
     var id = 0;
     var map;
     var lastSearch = '';
@@ -867,59 +814,51 @@
 
             var feature = e.layer.properties;
 
-
-            {# if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) { #}
-                //console.log(e);
-                if (e.layer.feature) {
-                    var prop = e.layer.feature.properties;
-                    //var latlng = [e.latlng.lat,e.latlng.lng];
-                } else {
-                    var prop = e.layer.properties;
-                    //var latlng = [Number(parcel.y),Number(parcel.x)];
-                }
-                //settimeout otherwise when map click fires it will override this color change
-                if (id != 0) {
-                    tileLayer.setFeatureStyle(id, {
-                        fillColor: "green",
-                        color: "black",
-                        weight: 1,
-                        fill: true
-                    });
-                }
-                if (lastSearch != '') {
-                    tileLayer.setFeatureStyle(lastSearch, {
-                        fillColor: "green",
-                        color: "black",
-                        weight: 1,
-                        fill: true
-                    });
-                }
-                id = prop["id"];
-                setTimeout(function() {
-                    tileLayer.setFeatureStyle(id, {
-                        fillColor: "blue",
-                        color: "blue",
-                        weight: 1,
-                        fill: true
-                    }, 100);
+            //console.log(e);
+            if (e.layer.feature) {
+                var prop = e.layer.feature.properties;
+                //var latlng = [e.latlng.lat,e.latlng.lng];
+            } else {
+                var prop = e.layer.properties;
+                //var latlng = [Number(parcel.y),Number(parcel.x)];
+            }
+            //settimeout otherwise when map click fires it will override this color change
+            if (id != 0) {
+                tileLayer.setFeatureStyle(id, {
+                    fillColor: "green",
+                    color: "black",
+                    weight: 1,
+                    fill: true
                 });
+            }
+            if (lastSearch != '') {
+                tileLayer.setFeatureStyle(lastSearch, {
+                    fillColor: "green",
+                    color: "black",
+                    weight: 1,
+                    fill: true
+                });
+            }
+            id = prop["id"];
+            setTimeout(function() {
+                tileLayer.setFeatureStyle(id, {
+                    fillColor: "blue",
+                    color: "blue",
+                    weight: 1,
+                    fill: true
+                }, 100);
+            });
 
 
 
 
-                var feature = e.layer.properties;
+            var feature = e.layer.properties;
 
 
-                var popup = L.popup()
-                    .setLatLng(e.latlng)
-                    .setContent("<h2>Parcelle " + feature.section + feature.numero + "</h2><p>Superficie : " + feature.contenance + " m2<br />Section : " + feature.section + "<br />Numéro : " + feature.numero + "<br />préfixe : " + feature.prefixe + "<br /><a href='https://france-cadastre.fr/predemande?commune=Chelles&section=" + feature.section + "&prefixe=" + feature.prefixe + "&plan=" + feature.numero + "&insee=77108&' target='_blank'>Extrait de plan cadastral (PDF)</a><br/><a href='https://france-cadastre.fr/matrice?dep=77&section=" + feature.section + "&ville=Chelles&plan=" + feature.numero + "&insee=77108' target='_blank'>Qui est le propriétaire ?</a><br/><a href='/risques?commune=Chelles&section=" + feature.section + "&prefixe=" + feature.prefixe + "&plan=" + feature.numero + "&insee=77108&scale=4000'>Étude des risques</a><br/><a href='https://france-cadastre.fr/permisdeconstruire/chelles-77&section=" + feature.section + "&plan=" + feature.numero + "' target='_blank'>Permis de construire</a></p>")
-                    .openOn(map);
-
-
-            {# } else {
-                showLeftWindow(feature.section, feature.numero, feature.contenance, feature.created, feature.updated, feature.prefixe, e.latlng.lat, e.latlng.lng, feature.id);
-            } #}
-
+            var popup = L.popup()
+                .setLatLng(e.latlng)
+                .setContent("<h2>Parcelle " + feature.section + feature.numero + "</h2><p>Superficie : " + feature.contenance + " m2<br />Section : " + feature.section + "<br />Numéro : " + feature.numero + "<br />préfixe : " + feature.prefixe + "<br /><a href='https://france-cadastre.fr/predemande?commune=Chelles&section=" + feature.section + "&prefixe=" + feature.prefixe + "&plan=" + feature.numero + "&insee=77108&' target='_blank'>Extrait de plan cadastral (PDF)</a><br/><a href='https://france-cadastre.fr/matrice?dep=77&section=" + feature.section + "&ville=Chelles&plan=" + feature.numero + "&insee=77108' target='_blank'>Qui est le propriétaire ?</a><br/><a href='/risques?commune=Chelles&section=" + feature.section + "&prefixe=" + feature.prefixe + "&plan=" + feature.numero + "&insee=77108&scale=4000'>Étude des risques</a><br/><a href='https://france-cadastre.fr/permisdeconstruire/chelles-77&section=" + feature.section + "&plan=" + feature.numero + "' target='_blank'>Permis de construire</a></p>")
+                .openOn(map);
 
         });
 
@@ -962,7 +901,7 @@
                         var lng = feature.geometry.coordinates[0][0][0];
                         var lat = feature.geometry.coordinates[0][0][1];
 
-                        showLeftWindow(feature.properties.section, feature.properties.numero, feature.properties.contenance, feature.properties.created, feature.properties.updated, feature.properties.prefixe, lat, lng, feature.id);
+                        // showLeftWindow(feature.properties.section, feature.properties.numero, feature.properties.contenance, feature.properties.created, feature.properties.updated, feature.properties.prefixe, lat, lng, feature.id);
 
                         tileLayer.setFeatureStyle(feature.id, {
                             fillColor: "blue",
@@ -1031,6 +970,10 @@
             if(update_marker) {
               if (bbox != undefined) {
                 mainMap.fitBounds([
+                  [bbox[0], bbox[2]],
+                  [bbox[1], bbox[3]]
+                ]);
+                map.fitBounds([
                   [bbox[0], bbox[2]],
                   [bbox[1], bbox[3]]
                 ]);
