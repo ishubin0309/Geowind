@@ -545,11 +545,14 @@
       if ($.isNumeric(lat) && $.isNumeric(long) && marker === null && lat != null && long != null) {
         marker = L.marker([lat, long]).addTo(mainMap);
         mainMap.panTo(new L.LatLng(lat, long));
+        marker = L.marker([lat, long]).addTo(map);
+        map.panTo(new L.LatLng(lat, long));
       }
 
       if ($.isNumeric(lat) && $.isNumeric(long) && marker != null && lat != null && long != null) {
         marker.setLatLng([lat, long]);
         mainMap.panTo(new L.LatLng(lat, long));
+        map.panTo(new L.LatLng(lat, long));
       }
 
     }
@@ -659,18 +662,7 @@
     };
 
     map.on("baselayerchange", function(event) {
-        console.log("change3");
-        //map.removeLayer(defaultLayer);
-        // 		if(typeof tileLayer != 'undefined'){
-        // 			tileLayer.bringToFront();
-        // 		}
-        // 		if(typeof tileLayer != 'undefined'){
         tileLayer.bringToFront();
-        // 		}
-        //tileLayer.sliced.setStyle( {color: "white"});
-
-
-
     });
 
     var defaultLayer = tiles.addTo(map);
@@ -773,15 +765,6 @@
             padding: 0.5
         });
 
-
-
-        tileLayer.on("load", function() {
-            $('.loading_map').remove();
-        });
-
-
-
-
         tileLayer.on('click', function(e) {
 
             //console.log(e);
@@ -819,9 +802,6 @@
                 }, 100);
             });
 
-
-
-
             var feature = e.layer.properties;
 
             //console.log(e);
@@ -859,12 +839,8 @@
                 }, 100);
             });
 
-
-
-
             var feature = e.layer.properties;
-
-
+            
             var popup = L.popup()
                 .setLatLng(e.latlng)
                 .setContent("<h2>Parcelle " + feature.section + feature.numero + "</h2><p>Superficie : " + feature.contenance + " m2<br />Section : " + feature.section + "<br />Numéro : " + feature.numero + "<br />préfixe : " + feature.prefixe + "<br /><a href='https://france-cadastre.fr/predemande?commune=Chelles&section=" + feature.section + "&prefixe=" + feature.prefixe + "&plan=" + feature.numero + "&insee=77108&' target='_blank'>Extrait de plan cadastral (PDF)</a><br/><a href='https://france-cadastre.fr/matrice?dep=77&section=" + feature.section + "&ville=Chelles&plan=" + feature.numero + "&insee=77108' target='_blank'>Qui est le propriétaire ?</a><br/><a href='/risques?commune=Chelles&section=" + feature.section + "&prefixe=" + feature.prefixe + "&plan=" + feature.numero + "&insee=77108&scale=4000'>Étude des risques</a><br/><a href='https://france-cadastre.fr/permisdeconstruire/chelles-77&section=" + feature.section + "&plan=" + feature.numero + "' target='_blank'>Permis de construire</a></p>")
