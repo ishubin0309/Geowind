@@ -3709,10 +3709,10 @@
       $('<div id="batimentNouveau_options" class="form-group form-group-sm"><label class="col-sm-4 control-label"></label><div class="col-sm-8"><p></p></div></div>').insertAfter($('#projet_batimentExistant_photoFile').parents('div.form-group'));
       $('#parcelleMap').addClass('hide');
     });
-    $('#parcelleTable').on('click', function() {
+    $('a[href="#parcelleTable"]').on('click', function() {
       $('#parcelleMap').addClass('hide');
     });
-    $('#parcelleCarte').on('click', function() {
+    $('a[href="#parcelleCarte"]').on('click', function() {
       $('#parcelleMap').removeClass('hide');
     });
     var refresh_messagerie = 0;
