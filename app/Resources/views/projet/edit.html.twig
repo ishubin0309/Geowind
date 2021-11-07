@@ -334,7 +334,6 @@
         <div class="tab-content">
           <div role="tabpanel" class="tab-pane active" id="parcelleTable">{{ form_widget(form.parcelles) }}</div>
           <div role="tabpanel" class="tab-pane" id="parcelleCarte">
-            <div id="map2" class="map map-home" style="height: 500px; margin-bottom: 20px;"></div>
             <div class="form-group form-group-sm">
               <label class="col-sm-4 control-label">Numéro section</label>
               <div class="col-sm-8">
@@ -465,6 +464,7 @@
     </div>
   </div>
   
+  <div id="parcelleMap" class="map map-home" style="height: 500px; margin-bottom: 20px;"></div>
   <div class="row">
     <div class="col-xs-12">
     
@@ -634,7 +634,7 @@
         preferCanvas: true,
         fullscreenControl: true,
     },
-    parcelleMap = L.map('map2', options);
+    parcelleMap = L.map('parcelleMap', options);
     const myEventForwarder = new L.eventForwarder({
         // ref to leaflet map
         map: parcelleMap,
@@ -3707,6 +3707,13 @@
         $('#projet_taches_1_objet').change();
       }
       $('<div id="batimentNouveau_options" class="form-group form-group-sm"><label class="col-sm-4 control-label"></label><div class="col-sm-8"><p></p></div></div>').insertAfter($('#projet_batimentExistant_photoFile').parents('div.form-group'));
+      $('#parcelleMap').addClass('hide');
+    });
+    $('#parcelleTable').on('click', function() {
+      $('#parcelleMap').addClass('hide');
+    });
+    $('#parcelleCarte').on('click', function() {
+      $('#parcelleMap').removeClass('hide');
     });
     var refresh_messagerie = 0;
     var last_messagerie = [];
