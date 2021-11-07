@@ -700,7 +700,7 @@
     var overlay;
     var newoverlay;
 
-    map.on('zoomend', function() {
+    map.on('zoomend', function() {console.log('zoomend: ' + map.getZoom());
 
         if (map.getZoom() >= 17) {
             var bounds = new L.LatLngBounds(
@@ -724,7 +724,7 @@
             }
         }
     });
-    map.on('moveend', function() {
+    map.on('moveend', function() {console.log('moveend: ' + map.getZoom());
 
         if (map.getZoom() >= 17) {
             var bounds = new L.LatLngBounds(
@@ -913,7 +913,6 @@
                         var lng = feature.geometry.coordinates[0][0][0];
                         var lat = feature.geometry.coordinates[0][0][1];
 
-                        // showLeftWindow(feature.properties.section, feature.properties.numero, feature.properties.contenance, feature.properties.created, feature.properties.updated, feature.properties.prefixe, lat, lng, feature.id);
                         var latlng = [lat,lng];
                         var popup = L.popup()
                             .setLatLng(latlng)
