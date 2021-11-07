@@ -556,13 +556,13 @@
         marker = L.marker([lat, long]).addTo(mainMap);
         mainMap.panTo(new L.LatLng(lat, long));
         marker = L.marker([lat, long]).addTo(parcelleMap);
-        parcelleMappanTo(new L.LatLng(lat, long));
+        parcelleMap.panTo(new L.LatLng(lat, long));
       }
 
       if ($.isNumeric(lat) && $.isNumeric(long) && marker != null && lat != null && long != null) {
         marker.setLatLng([lat, long]);
         mainMap.panTo(new L.LatLng(lat, long));
-        parcelleMappanTo(new L.LatLng(lat, long));
+        parcelleMap.panTo(new L.LatLng(lat, long));
       }
 
     }
@@ -666,7 +666,7 @@
         "Satellite": streets
     };
 
-    parcelleMapon("baselayerchange", function(event) {
+    parcelleMap.on("baselayerchange", function(event) {
         tileLayer.bringToFront();
     });
 
@@ -684,26 +684,26 @@
 
     L.control.layers(baseMaps).addTo(parcelleMap);
 
-    parcelleMapcreatePane('parcelPane');
+    parcelleMap.createPane('parcelPane');
 
-    parcelleMapgetPane('parcelPane').style.zIndex = 650;
+    parcelleMap.getPane('parcelPane').style.zIndex = 650;
 
     var communeInsee = {{ projet.communes is not empty ? projet.communes[0].insee : '' }};
 
     var overlay;
     var newoverlay;
-    parcelleMapon('zoomend', function() {
+    parcelleMap.on('zoomend', function() {
 
-        if (parcelleMapgetZoom() >= 13) {
+        if (parcelleMap.getZoom() >= 13) {
             var bounds = new L.LatLngBounds(
-                new L.LatLng(parcelleMapgetBounds().getNorth(), parcelleMapgetBounds().getWest()),
-                new L.LatLng(parcelleMapgetBounds().getSouth(), parcelleMapgetBounds().getEast()));
+                new L.LatLng(parcelleMap.getBounds().getNorth(), parcelleMap.getBounds().getWest()),
+                new L.LatLng(parcelleMap.getBounds().getSouth(), parcelleMap.getBounds().getEast()));
 
-            newoverlay = new L.ImageOverlay("https://admin.france-cadastre.fr/show_labels.php?nord=" + parcelleMapgetBounds().getNorth() + "&sud=" + parcelleMapgetBounds().getSouth() + "&est=" + parcelleMapgetBounds().getEast() + "&ouest=" + parcelleMapgetBounds().getWest() + "&zoom=" + parcelleMapgetZoom() + "&insee=" + communeInsee, bounds, {
+            newoverlay = new L.ImageOverlay("https://admin.france-cadastre.fr/show_labels.php?nord=" + parcelleMap.getBounds().getNorth() + "&sud=" + parcelleMap.getBounds().getSouth() + "&est=" + parcelleMap.getBounds().getEast() + "&ouest=" + parcelleMap.getBounds().getWest() + "&zoom=" + parcelleMap.getZoom() + "&insee=" + communeInsee, bounds, {
                 opacity: 1
             });
 
-            parcelleMapaddLayer(newoverlay);
+            parcelleMap.addLayer(newoverlay);
             newoverlay.on('load', function(event) {
 
                 if ($('.leaflet-overlay-pane>img').length > 1)
@@ -712,22 +712,22 @@
             overlay = newoverlay;
         } else {
             if (typeof overlay != 'undefined') {
-                parcelleMapremoveLayer(overlay);
+                parcelleMap.removeLayer(overlay);
             }
         }
     });
-    parcelleMapon('moveend', function() {
+    parcelleMap.on('moveend', function() {
 
-        if (parcelleMapgetZoom() >= 13) {
+        if (parcelleMap.getZoom() >= 13) {
             var bounds = new L.LatLngBounds(
-                new L.LatLng(parcelleMapgetBounds().getNorth(), parcelleMapgetBounds().getWest()),
-                new L.LatLng(parcelleMapgetBounds().getSouth(), parcelleMapgetBounds().getEast()));
+                new L.LatLng(parcelleMap.getBounds().getNorth(), parcelleMap.getBounds().getWest()),
+                new L.LatLng(parcelleMap.getBounds().getSouth(), parcelleMap.getBounds().getEast()));
 
-            newoverlay = new L.ImageOverlay("https://admin.france-cadastre.fr/show_labels.php?nord=" + parcelleMapgetBounds().getNorth() + "&sud=" + parcelleMapgetBounds().getSouth() + "&est=" + parcelleMapgetBounds().getEast() + "&ouest=" + parcelleMapgetBounds().getWest() + "&zoom=" + parcelleMapgetZoom() + "&insee=" + communeInsee, bounds, {
+            newoverlay = new L.ImageOverlay("https://admin.france-cadastre.fr/show_labels.php?nord=" + parcelleMap.getBounds().getNorth() + "&sud=" + parcelleMap.getBounds().getSouth() + "&est=" + parcelleMap.getBounds().getEast() + "&ouest=" + parcelleMap.getBounds().getWest() + "&zoom=" + parcelleMap.getZoom() + "&insee=" + communeInsee, bounds, {
                 opacity: 1
             });
 
-            parcelleMapaddLayer(newoverlay);
+            parcelleMap.addLayer(newoverlay);
             newoverlay.on('load', function(event) {
 
                 if ($('.leaflet-overlay-pane>img').length > 1)
@@ -736,7 +736,7 @@
             overlay = newoverlay;
         } else {
             if (typeof overlay != 'undefined') {
-                parcelleMapremoveLayer(overlay);
+                parcelleMap.removeLayer(overlay);
             }
         }
     });
@@ -913,7 +913,7 @@
 
                         lastSearch = feature.id;
 
-                        parcelleMapsetView(new L.LatLng(lat, lng), 16);
+                        parcelleMap.setView(new L.LatLng(lat, lng), 16);
                     }
                 }
 
@@ -927,7 +927,7 @@
     }
     
     function reverseGeolocalisation(query, update_marker) {
-      var nominatimUrl = 'https://nominatim.openstreetparcelleMaporg/search';
+      var nominatimUrl = 'https://nominatim.openstreetparcelleMap.org/search';
       $.ajax({
           type: 'GET',
           url: nominatimUrl,
@@ -965,13 +965,13 @@
                   [bbox[0], bbox[2]],
                   [bbox[1], bbox[3]]
                 ]);
-                parcelleMapfitBounds([
+                parcelleMap.fitBounds([
                   [bbox[0], bbox[2]],
                   [bbox[1], bbox[3]]
                 ]);
               } else {
                 mainMap.setView([searchLat, searchLong], 10);
-                parcelleMapsetView([searchLat, searchLong], 10);
+                parcelleMap.setView([searchLat, searchLong], 10);
               }
               if($('#projet_latitude').val() != searchLat && !default_lat) {
                 lat = searchLat;
@@ -988,7 +988,7 @@
     var last_reverse_search = null;
     $('#projet_communes, #projet_departement').change(function() {
       
-      var nominatimUrl = 'https://nominatim.openstreetparcelleMaporg/search';
+      var nominatimUrl = 'https://nominatim.openstreetparcelleMap.org/search';
       $input = $(this);
 
       if($(this).attr('id') == 'projet_communes') {
@@ -1013,7 +1013,7 @@
         mainMap.setView([46,2],5.5);
       } else {
         mainMap.setView([lat, long], 10);
-        parcelleMapsetView([lat, long], 10);
+        parcelleMap.setView([lat, long], 10);
       }
       loadCoucheCadastre();
     });
@@ -1068,7 +1068,7 @@
 
     $('#location').change(function() {
       
-      var nominatimUrl = 'https://nominatim.openstreetparcelleMaporg/search';
+      var nominatimUrl = 'https://nominatim.openstreetparcelleMap.org/search';
       $input = $(this);
 
       var query = $('#location').val();
