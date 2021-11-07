@@ -914,7 +914,8 @@
                         var lat = feature.geometry.coordinates[0][0][1];
 
                         // showLeftWindow(feature.properties.section, feature.properties.numero, feature.properties.contenance, feature.properties.created, feature.properties.updated, feature.properties.prefixe, lat, lng, feature.id);
-
+                        tileLayer.trigger('click');
+                        
                         tileLayer.setFeatureStyle(feature.id, {
                             fillColor: "blue",
                             color: "black",
