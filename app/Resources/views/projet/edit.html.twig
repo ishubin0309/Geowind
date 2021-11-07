@@ -3794,9 +3794,6 @@
         $('fieldset').addClass('hide');
         $('fieldset#' + attr).removeClass('hide');
         if(attr != 'tab_localisation' && attr != 'tab_contacts' && attr != 'tab_site' && attr != 'tab_projet' && attr != 'tab_images') {
-          if(attr != 'tab_parcelle') {
-            $('#parcelleMap').addClass('hide');
-          }
           $('#map, #map_search').addClass('hide');
           $('#main_photo').addClass('hide');
           $('#fields_div').removeClass('col-sm-6');
@@ -3839,6 +3836,9 @@
             $('#form_site_batimentExistant').removeClass('hide');
             $('#batimentNouveau_options').removeClass('hide');
           }
+        }
+        if(attr != 'tab_parcelle') {
+          $('#parcelleMap').addClass('hide');
         }
       }
     });
