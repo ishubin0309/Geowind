@@ -696,10 +696,10 @@
     map.getPane('parcelPane').style.zIndex = 650;
 
 
+    var communeInsee = {{ projet.communes is not empty ? projet.communes[0].insee : '' }};
 
     var overlay;
     var newoverlay;
-
     map.on('zoomend', function() {console.log('zoomend: ' + map.getZoom());
 
         if (map.getZoom() >= 13) {
@@ -707,7 +707,7 @@
                 new L.LatLng(map.getBounds().getNorth(), map.getBounds().getWest()),
                 new L.LatLng(map.getBounds().getSouth(), map.getBounds().getEast()));
 
-            newoverlay = new L.ImageOverlay("https://admin.france-cadastre.fr/show_labels.php?nord=" + map.getBounds().getNorth() + "&sud=" + map.getBounds().getSouth() + "&est=" + map.getBounds().getEast() + "&ouest=" + map.getBounds().getWest() + "&zoom=" + map.getZoom() + "&insee=77108", bounds, {
+            newoverlay = new L.ImageOverlay("https://admin.france-cadastre.fr/show_labels.php?nord=" + map.getBounds().getNorth() + "&sud=" + map.getBounds().getSouth() + "&est=" + map.getBounds().getEast() + "&ouest=" + map.getBounds().getWest() + "&zoom=" + map.getZoom() + "&insee=" + communeInsee, bounds, {
                 opacity: 1
             });
 
@@ -731,7 +731,7 @@
                 new L.LatLng(map.getBounds().getNorth(), map.getBounds().getWest()),
                 new L.LatLng(map.getBounds().getSouth(), map.getBounds().getEast()));
 
-            newoverlay = new L.ImageOverlay("https://admin.france-cadastre.fr/show_labels.php?nord=" + map.getBounds().getNorth() + "&sud=" + map.getBounds().getSouth() + "&est=" + map.getBounds().getEast() + "&ouest=" + map.getBounds().getWest() + "&zoom=" + map.getZoom() + "&insee=77108", bounds, {
+            newoverlay = new L.ImageOverlay("https://admin.france-cadastre.fr/show_labels.php?nord=" + map.getBounds().getNorth() + "&sud=" + map.getBounds().getSouth() + "&est=" + map.getBounds().getEast() + "&ouest=" + map.getBounds().getWest() + "&zoom=" + map.getZoom() + "&insee=" + communeInsee, bounds, {
                 opacity: 1
             });
 
@@ -1016,6 +1016,9 @@
       $input = $(this);
 
       if($(this).attr('id') == 'projet_communes') {
+        if(m = $('#projet_communes option:selected').text().match(/\((\d+)\)/)) {
+          communeInsee = m[1];
+        }
         var query = $('#projet_departement option:selected').text().replace(/\(.+/, '').trim() + ' ' + $('#projet_communes option:selected').text().replace(/\(.+/, '').trim();
         updateMairie(true);
         updateEpci();
