@@ -327,7 +327,31 @@
 
       <fieldset class="hide" id="tab_parcelles">
         <legend>Parcelles</legend>
-        {{ form_widget(form.parcelles) }}
+        <ul class="nav nav-tabs" role="tablist">
+          <li role="presentation" class="active"><a href="#parcelleTable" aria-controls="parcelleTable" role="tab" data-toggle="tab">Table</a></li>
+          <li role="presentation"><a href="#parcelleCarte" aria-controls="parcelleCarte" role="tab" data-toggle="tab">Carte</a></li>
+        </ul>
+        <div class="tab-content">
+          <div role="tabpanel" class="tab-pane active" id="parcelleTable">{{ form_widget(form.parcelles) }}</div>
+          <div role="tabpanel" class="tab-pane" id="parcelleCarte">
+            <div id="map2" class="map map-home" style="margin-bottom: 20px;"></div>
+            <div class="form-group form-group-sm">
+              <label class="col-sm-4 control-label">Numéro section</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control sectionNum" placeholder="Numéro section">
+              </div>
+            </div>
+            <div class="form-group form-group-sm">
+              <label class="col-sm-4 control-label">Numéro parcelle</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control parcelleNum" placeholder="Numéro parcelle">
+              </div>
+            </div>
+            <button type="button" class="btn btn-primary" id="rechercher_cadastre"><i class="fa fa-save"></i> Rechercher</button>
+              
+          </div>
+        </div>
+        
       </fieldset>
 
       <fieldset class="hide" id="tab_enjeux">
@@ -432,20 +456,6 @@
         {{ form_row(form.adresse) }}
       </div>
       
-      <div id="map2" class="map map-home" style="height: 500px; margin-bottom: 20px;"></div>
-      <div class="form-group form-group-sm">
-        <label class="col-sm-4 control-label">Numéro section</label>
-        <div class="col-sm-8">
-          <input type="text" class="form-control sectionNum" placeholder="Numéro section">
-        </div>
-      </div>
-      <div class="form-group form-group-sm">
-        <label class="col-sm-4 control-label">Numéro parcelle</label>
-        <div class="col-sm-8">
-          <input type="text" class="form-control parcelleNum" placeholder="Numéro parcelle">
-        </div>
-      </div>
-      <button type="button" class="btn btn-primary" id="rechercher_cadastre"><i class="fa fa-save"></i> Rechercher</button>
       <div id="main_photo" class="hide col-sm-12"><img style="width: inherit;" src=""><nav style="margin-left:30%;" aria-label="Page navigation center-text"><ul class="pagination"><li class="page-item disabled"><a id="prev_image" class="page-link" href="#">Précédent</a></li><li class="page-item disabled"><a id="next_image" class="page-link" href="#">Suivant</a></li></ul></nav></div>
 
       <div class="text-right m-t-10">
@@ -545,14 +555,14 @@
       if ($.isNumeric(lat) && $.isNumeric(long) && marker === null && lat != null && long != null) {
         marker = L.marker([lat, long]).addTo(mainMap);
         mainMap.panTo(new L.LatLng(lat, long));
-        marker = L.marker([lat, long]).addTo(map);
-        map.panTo(new L.LatLng(lat, long));
+        marker = L.marker([lat, long]).addTo(parcelleMap);
+        parcelleMappanTo(new L.LatLng(lat, long));
       }
 
       if ($.isNumeric(lat) && $.isNumeric(long) && marker != null && lat != null && long != null) {
         marker.setLatLng([lat, long]);
         mainMap.panTo(new L.LatLng(lat, long));
-        map.panTo(new L.LatLng(lat, long));
+        parcelleMappanTo(new L.LatLng(lat, long));
       }
 
     }
@@ -614,20 +624,20 @@
     });
 
     var id = 0;
-    var map;
+    var parcelleMap;
     var lastSearch = '';
     var options = {
         center: [48.884, 2.59709],
-        zoom: 14,
+        zoom: 12,
         minZoom: 1,
         maxZoom: 19,
-		preferCanvas: true,
-		fullscreenControl: true,
+        preferCanvas: true,
+        fullscreenControl: true,
     },
-    map = L.map('map2', options);
+    parcelleMap = L.map('map2', options);
     const myEventForwarder = new L.eventForwarder({
         // ref to leaflet map
-        map: map,
+        map: parcelleMap,
         // events to forward
         events: {
             click: true
@@ -637,16 +647,11 @@
     // enable event forwarding
     myEventForwarder.enable();
 
-
-
-
     // load map tiles and add to map
     var tiles = L.tileLayer('https://tile2.france-cadastre.fr/styles/klokantech-basic/{z}/{x}/{y}.png', {
         subdomains: 'abcd',
         maxZoom: 19
     });
-
-
 
     var grayscale = L.tileLayer.provider('CartoDB.Positron', {
             minZoom: 9,
@@ -661,11 +666,11 @@
         "Satellite": streets
     };
 
-    map.on("baselayerchange", function(event) {
+    parcelleMapon("baselayerchange", function(event) {
         tileLayer.bringToFront();
     });
 
-    var defaultLayer = tiles.addTo(map);
+    var defaultLayer = tiles.addTo(parcelleMap);
 
     if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
         layerControl = L.control.layers(baseMaps, null, {
@@ -677,33 +682,28 @@
         });
     }
 
-    L.control.layers(baseMaps).addTo(map);
+    L.control.layers(baseMaps).addTo(parcelleMap);
 
+    parcelleMapcreatePane('parcelPane');
 
-
-
-    map.createPane('parcelPane');
-
-
-    map.getPane('parcelPane').style.zIndex = 650;
-
+    parcelleMapgetPane('parcelPane').style.zIndex = 650;
 
     var communeInsee = {{ projet.communes is not empty ? projet.communes[0].insee : '' }};
 
     var overlay;
     var newoverlay;
-    map.on('zoomend', function() {
+    parcelleMapon('zoomend', function() {
 
-        if (map.getZoom() >= 13) {
+        if (parcelleMapgetZoom() >= 13) {
             var bounds = new L.LatLngBounds(
-                new L.LatLng(map.getBounds().getNorth(), map.getBounds().getWest()),
-                new L.LatLng(map.getBounds().getSouth(), map.getBounds().getEast()));
+                new L.LatLng(parcelleMapgetBounds().getNorth(), parcelleMapgetBounds().getWest()),
+                new L.LatLng(parcelleMapgetBounds().getSouth(), parcelleMapgetBounds().getEast()));
 
-            newoverlay = new L.ImageOverlay("https://admin.france-cadastre.fr/show_labels.php?nord=" + map.getBounds().getNorth() + "&sud=" + map.getBounds().getSouth() + "&est=" + map.getBounds().getEast() + "&ouest=" + map.getBounds().getWest() + "&zoom=" + map.getZoom() + "&insee=" + communeInsee, bounds, {
+            newoverlay = new L.ImageOverlay("https://admin.france-cadastre.fr/show_labels.php?nord=" + parcelleMapgetBounds().getNorth() + "&sud=" + parcelleMapgetBounds().getSouth() + "&est=" + parcelleMapgetBounds().getEast() + "&ouest=" + parcelleMapgetBounds().getWest() + "&zoom=" + parcelleMapgetZoom() + "&insee=" + communeInsee, bounds, {
                 opacity: 1
             });
 
-            map.addLayer(newoverlay);
+            parcelleMapaddLayer(newoverlay);
             newoverlay.on('load', function(event) {
 
                 if ($('.leaflet-overlay-pane>img').length > 1)
@@ -712,22 +712,22 @@
             overlay = newoverlay;
         } else {
             if (typeof overlay != 'undefined') {
-                map.removeLayer(overlay);
+                parcelleMapremoveLayer(overlay);
             }
         }
     });
-    map.on('moveend', function() {
+    parcelleMapon('moveend', function() {
 
-        if (map.getZoom() >= 13) {
+        if (parcelleMapgetZoom() >= 13) {
             var bounds = new L.LatLngBounds(
-                new L.LatLng(map.getBounds().getNorth(), map.getBounds().getWest()),
-                new L.LatLng(map.getBounds().getSouth(), map.getBounds().getEast()));
+                new L.LatLng(parcelleMapgetBounds().getNorth(), parcelleMapgetBounds().getWest()),
+                new L.LatLng(parcelleMapgetBounds().getSouth(), parcelleMapgetBounds().getEast()));
 
-            newoverlay = new L.ImageOverlay("https://admin.france-cadastre.fr/show_labels.php?nord=" + map.getBounds().getNorth() + "&sud=" + map.getBounds().getSouth() + "&est=" + map.getBounds().getEast() + "&ouest=" + map.getBounds().getWest() + "&zoom=" + map.getZoom() + "&insee=" + communeInsee, bounds, {
+            newoverlay = new L.ImageOverlay("https://admin.france-cadastre.fr/show_labels.php?nord=" + parcelleMapgetBounds().getNorth() + "&sud=" + parcelleMapgetBounds().getSouth() + "&est=" + parcelleMapgetBounds().getEast() + "&ouest=" + parcelleMapgetBounds().getWest() + "&zoom=" + parcelleMapgetZoom() + "&insee=" + communeInsee, bounds, {
                 opacity: 1
             });
 
-            map.addLayer(newoverlay);
+            parcelleMapaddLayer(newoverlay);
             newoverlay.on('load', function(event) {
 
                 if ($('.leaflet-overlay-pane>img').length > 1)
@@ -736,7 +736,7 @@
             overlay = newoverlay;
         } else {
             if (typeof overlay != 'undefined') {
-                map.removeLayer(overlay);
+                parcelleMapremoveLayer(overlay);
             }
         }
     });
@@ -759,7 +759,7 @@
                 return feature.properties["id"]
             }
         });
-        var tiletile = tileLayer.addTo(map);
+        var tiletile = tileLayer.addTo(parcelleMap);
 
         var myRenderer = L.canvas({
             padding: 0.5
@@ -844,7 +844,7 @@
             var popup = L.popup()
                 .setLatLng(e.latlng)
                 .setContent("<h2>Parcelle " + feature.section + feature.numero + "</h2><p>Superficie : " + feature.contenance + " m2<br />Section : " + feature.section + "<br />Numéro : " + feature.numero + "<br />préfixe : " + feature.prefixe + "<br /><a href='https://france-cadastre.fr/predemande?commune=Chelles&section=" + feature.section + "&prefixe=" + feature.prefixe + "&plan=" + feature.numero + "&insee=77108&' target='_blank'>Extrait de plan cadastral (PDF)</a><br/><a href='https://france-cadastre.fr/matrice?dep=77&section=" + feature.section + "&ville=Chelles&plan=" + feature.numero + "&insee=77108' target='_blank'>Qui est le propriétaire ?</a><br/><a href='/risques?commune=Chelles&section=" + feature.section + "&prefixe=" + feature.prefixe + "&plan=" + feature.numero + "&insee=77108&scale=4000'>Étude des risques</a><br/><a href='https://france-cadastre.fr/permisdeconstruire/chelles-77&section=" + feature.section + "&plan=" + feature.numero + "' target='_blank'>Permis de construire</a></p>")
-                .openOn(map);
+                .openOn(parcelleMap);
 
             $('.sectionNum').val(feature.section);
             $('.parcelleNum').val(feature.numero);
@@ -893,7 +893,7 @@
                         var popup = L.popup()
                             .setLatLng(latlng)
                             .setContent("<h2>Parcelle " + feature.properties.section + feature.properties.numero + "</h2><p>Superficie : " + feature.properties.contenance + " m2<br />Section : " + feature.properties.section + "<br />Numéro : " + feature.properties.numero + "<br />préfixe : " + feature.properties.prefixe + "<br /><a href='https://france-cadastre.fr/predemande?commune=Chelles&section=" + feature.properties.section + "&prefixe=" + feature.properties.prefixe + "&plan=" + feature.properties.numero + "&insee=77108&' target='_blank'>Extrait de plan cadastral (PDF)</a><br/><a href='https://france-cadastre.fr/matrice?dep=77&section=" + feature.properties.section + "&ville=Chelles&plan=" + feature.properties.numero + "&insee=77108' target='_blank'>Qui est le propriétaire ?</a><br/><a href='/risques?commune=Chelles&section=" + feature.properties.section + "&prefixe=" + feature.properties.prefixe + "&plan=" + feature.properties.numero + "&insee=77108&scale=4000'>Étude des risques</a><br/><a href='https://france-cadastre.fr/permisdeconstruire/chelles-77&section=" + feature.properties.section + "&plan=" + feature.properties.numero + "' target='_blank'>Permis de construire</a></p>")
-                            .openOn(map);
+                            .openOn(parcelleMap);
                         
                         tileLayer.setFeatureStyle(feature.id, {
                             fillColor: "blue",
@@ -913,7 +913,7 @@
 
                         lastSearch = feature.id;
 
-                        map.setView(new L.LatLng(lat, lng), 16);
+                        parcelleMapsetView(new L.LatLng(lat, lng), 16);
                     }
                 }
 
@@ -927,7 +927,7 @@
     }
     
     function reverseGeolocalisation(query, update_marker) {
-      var nominatimUrl = 'https://nominatim.openstreetmap.org/search';
+      var nominatimUrl = 'https://nominatim.openstreetparcelleMaporg/search';
       $.ajax({
           type: 'GET',
           url: nominatimUrl,
@@ -965,13 +965,13 @@
                   [bbox[0], bbox[2]],
                   [bbox[1], bbox[3]]
                 ]);
-                map.fitBounds([
+                parcelleMapfitBounds([
                   [bbox[0], bbox[2]],
                   [bbox[1], bbox[3]]
                 ]);
               } else {
                 mainMap.setView([searchLat, searchLong], 10);
-                map.setView([searchLat, searchLong], 10);
+                parcelleMapsetView([searchLat, searchLong], 10);
               }
               if($('#projet_latitude').val() != searchLat && !default_lat) {
                 lat = searchLat;
@@ -988,7 +988,7 @@
     var last_reverse_search = null;
     $('#projet_communes, #projet_departement').change(function() {
       
-      var nominatimUrl = 'https://nominatim.openstreetmap.org/search';
+      var nominatimUrl = 'https://nominatim.openstreetparcelleMaporg/search';
       $input = $(this);
 
       if($(this).attr('id') == 'projet_communes') {
@@ -1013,7 +1013,7 @@
         mainMap.setView([46,2],5.5);
       } else {
         mainMap.setView([lat, long], 10);
-        map.setView([lat, long], 10);
+        parcelleMapsetView([lat, long], 10);
       }
       loadCoucheCadastre();
     });
@@ -1068,7 +1068,7 @@
 
     $('#location').change(function() {
       
-      var nominatimUrl = 'https://nominatim.openstreetmap.org/search';
+      var nominatimUrl = 'https://nominatim.openstreetparcelleMaporg/search';
       $input = $(this);
 
       var query = $('#location').val();
