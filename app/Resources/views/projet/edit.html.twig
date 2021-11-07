@@ -916,7 +916,7 @@
                         // showLeftWindow(feature.properties.section, feature.properties.numero, feature.properties.contenance, feature.properties.created, feature.properties.updated, feature.properties.prefixe, lat, lng, feature.id);
                         var latlng = [lat,lng];
                         var popup = L.popup()
-                            .setLatLng(e.latlng)
+                            .setLatLng(latlng)
                             .setContent("<h2>Parcelle " + feature.properties.section + feature.properties.numero + "</h2><p>Superficie : " + feature.properties.contenance + " m2<br />Section : " + feature.properties.section + "<br />Numéro : " + feature.properties.numero + "<br />préfixe : " + feature.properties.prefixe + "<br /><a href='https://france-cadastre.fr/predemande?commune=Chelles&section=" + feature.properties.section + "&prefixe=" + feature.properties.prefixe + "&plan=" + feature.properties.numero + "&insee=77108&' target='_blank'>Extrait de plan cadastral (PDF)</a><br/><a href='https://france-cadastre.fr/matrice?dep=77&section=" + feature.properties.section + "&ville=Chelles&plan=" + feature.properties.numero + "&insee=77108' target='_blank'>Qui est le propriétaire ?</a><br/><a href='/risques?commune=Chelles&section=" + feature.properties.section + "&prefixe=" + feature.properties.prefixe + "&plan=" + feature.properties.numero + "&insee=77108&scale=4000'>Étude des risques</a><br/><a href='https://france-cadastre.fr/permisdeconstruire/chelles-77&section=" + feature.properties.section + "&plan=" + feature.properties.numero + "' target='_blank'>Permis de construire</a></p>")
                             .openOn(map);
                         
