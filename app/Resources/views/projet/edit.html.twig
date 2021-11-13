@@ -635,8 +635,8 @@
 
     var id = 0;
     var parcelleMap;
-    var lastFeatureIdSearch = '';
-    var lastFeatureSearch = {};
+    var lastSearch = '';
+    var lastFeature = {};
     var options = {
         center: [48.884, 2.59709],
         zoom: 12,
@@ -795,8 +795,8 @@
                     fill: true
                 });
             }
-            if (lastFeatureIdSearch != '') {
-                tileLayer.setFeatureStyle(lastFeatureIdSearch, {
+            if (lastSearch != '') {
+                tileLayer.setFeatureStyle(lastSearch, {
                     fillColor: "green",
                     color: "black",
                     weight: 1,
@@ -814,6 +814,7 @@
             });
 
             var feature = e.layer.properties;
+            lastFeature = feature;
 
             //console.log(e);
             if (e.layer.feature) {
@@ -832,8 +833,8 @@
                     fill: true
                 });
             }
-            if (lastFeatureIdSearch != '') {
-                tileLayer.setFeatureStyle(lastFeatureIdSearch, {
+            if (lastSearch != '') {
+                tileLayer.setFeatureStyle(lastSearch, {
                     fillColor: "green",
                     color: "black",
                     weight: 1,
@@ -916,8 +917,8 @@
                         fill: true
                     });
 
-                    if (lastFeatureIdSearch != '') {
-                        tileLayer.setFeatureStyle(lastFeatureIdSearch, {
+                    if (lastSearch != '') {
+                        tileLayer.setFeatureStyle(lastSearch, {
                             fillColor: "green",
                             color: "black",
                             weight: 1,
@@ -925,8 +926,8 @@
                         });
                     }
 
-                    lastFeatureIdSearch = feature.id;
-                    lastFeatureSearch = feature;
+                    lastSearch = feature.id;
+                    lastFeature = feature;
 
                     parcelleMap.setView(new L.LatLng(lat, lng), 16);
                 }
@@ -941,11 +942,11 @@
     });
 
     $('#ajouter_cadastre').click(function() {
-      if(lastFeatureIdSearch != '' && $('.sectionNum').val() && $('.parcelleNum').val()) {
+      if(lastFeature.length && $('.sectionNum').val() && $('.parcelleNum').val()) {
         $('#projet_parcelles_add_entry').click();
-        $('#projet_parcelles tr:last input[id$="_nom"]').val(lastFeatureSearch.section + lastFeatureSearch.numero);
-        $('#projet_parcelles tr:last input[id$="_surface"]').val(lastFeatureSearch.contenance);
-        tileLayer.setFeatureStyle(lastFeatureIdSearch, {
+        $('#projet_parcelles tr:last input[id$="_nom"]').val(lastFeature.section + lastFeature.numero);
+        $('#projet_parcelles tr:last input[id$="_surface"]').val(lastFeature.contenance);
+        tileLayer.setFeatureStyle(lastFeature.id, {
             fillColor: "red",
             color: "black",
             weight: 1,
