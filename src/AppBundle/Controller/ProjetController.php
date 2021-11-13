@@ -922,6 +922,7 @@ class ProjetController extends Controller
     {
         $result = '{}';
         $commune = $request->query->get('commune', 0);
+        $parcelles = $request->query->get('parcelles', 0);
         if($commune) {
             $em = $this->getDoctrine()->getManager();
             $commune = $em->getRepository('AppBundle:Commune')->find($commune);
@@ -940,7 +941,21 @@ class ProjetController extends Controller
                 }
             }
         }
-        return new Response($result);
+        if($parcelles) {
+            return new Response($result);
+        } else {
+            $response = [];
+            $parcellesArray = explode(',', $parcelles);
+            $data = json_decode($result);
+            foreach($data['features'] as $feature) {
+                $row = array('id' => $feature['id'], 'section' => $feature['section'], 'numero' => $feature['numero'], 'contenance' => $feature['contenance'], 'selected' => 0);
+                if(in_array($feature['section'] . $feature['numero'], $parcellesArray)) {
+                    $row['selected'] = 1;
+                }
+                $response[] = $row;
+            }
+            return new JsonResponse($response);
+        }
     }
 
     /**

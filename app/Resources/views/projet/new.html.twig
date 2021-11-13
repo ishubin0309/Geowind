@@ -573,9 +573,6 @@
     });
     var parcelleSurfaces = {};
     function buildMap(parcels) {
-        parcels.features.forEach(item => {
-            parcelleSurfaces[item.properties.section + item.properties.numero] = {'commune': item.properties.commune, 'contenance': item.properties.contenance, 'section': item.properties.section, 'numero': item.properties.numero};
-        });
         tileLayer = L.vectorGrid.slicer(parcels, {
             rendererFactory: L.canvas.tile,
             vectorTileLayerStyles: {
@@ -759,6 +756,11 @@
             }
             return false;
         });
+
+        parcels.features.forEach(item => {
+            parcelleSurfaces[item.properties.commune + item.properties.section + item.properties.numero] = {'id': item.properties.id, 'contenance': item.properties.contenance, 'section': item.properties.section, 'numero': item.properties.numero};
+        });
+        loadAllParcellesTags();
     }
 
     function reverseGeolocalisation(query, update_marker) {
@@ -853,11 +855,6 @@
       if(commune) {
         $.ajax({
           url: "{{ path('france_cadastre') }}",
-          beforeSend: function(xhr) {
-            if (xhr.overrideMimeType) {
-              xhr.overrideMimeType('application/json');
-            }
-          },
           dataType: 'json',
           data: {commune: commune},
           success:  function(data, textStatus, request) {
@@ -2437,7 +2434,7 @@
         }
       {% endfor %}
     {% endif %}
-    $('#projet_parcelles').on('change', 'input[id*="_nom"]', function() {
+    $('#projet_parcelles').on('change', 'input[id$="_nom"]', function() {
       suggestionsArray = [];
       if($('#projet_parcelles tr').length) {
         $('#projet_parcelles tr').each(function(i,element) {
