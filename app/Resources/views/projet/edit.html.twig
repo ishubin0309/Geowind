@@ -2720,6 +2720,7 @@
               dataType: 'json',
               data: {commune: commune, parcelles: suggestionsArray},
               success:  function(features) {
+                console.log(features);
                 features.forEach(feature => {
                   $('#parcelles_carte').append('<tr><td>'+feature.section+'</td><td>'+feature.numero+'</td><td>'+feature.contenance+'</td></tr>');
                   if(feature.selected) {
