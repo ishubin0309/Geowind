@@ -346,7 +346,8 @@
                 <input type="text" class="form-control parcelleNum" placeholder="Numéro parcelle">
               </div>
             </div>
-            <button type="button" class="btn btn-success" id="rechercher_cadastre"><i class="fa fa-search"></i> Rechercher</button>
+            <button type="button" class="btn btn-success btn-sm" id="rechercher_cadastre"><i class="fa fa-search"></i> Rechercher</button>
+            <button type="button" class="btn btn-info btn-sm" id="ajouter_cadastre"><i class="fa fa-plus"></i> Ajouter à la liste</button>
             <table class="table table-condensed table-form">
               <thead>
                 <th>Section</th>
@@ -634,7 +635,8 @@
 
     var id = 0;
     var parcelleMap;
-    var lastSearch = '';
+    var lastFeatureIdSearch = '';
+    var lastFeatureSearch = {};
     var options = {
         center: [48.884, 2.59709],
         zoom: 12,
@@ -793,8 +795,8 @@
                     fill: true
                 });
             }
-            if (lastSearch != '') {
-                tileLayer.setFeatureStyle(lastSearch, {
+            if (lastFeatureIdSearch != '') {
+                tileLayer.setFeatureStyle(lastFeatureIdSearch, {
                     fillColor: "green",
                     color: "black",
                     weight: 1,
@@ -830,8 +832,8 @@
                     fill: true
                 });
             }
-            if (lastSearch != '') {
-                tileLayer.setFeatureStyle(lastSearch, {
+            if (lastFeatureIdSearch != '') {
+                tileLayer.setFeatureStyle(lastFeatureIdSearch, {
                     fillColor: "green",
                     color: "black",
                     weight: 1,
@@ -858,84 +860,100 @@
             $('.sectionNum').val(feature.section);
             $('.parcelleNum').val(feature.numero);
         });
+        
+        loadAllParcellesTags();
+    }
 
-        $('.dvf').click(function() {
-            $.getJSON("https://api.cquest.org/dvf?code_commune=77108")
-                .done(function(json) {
-                    $('.legendeDvf').css("display", 'block');
-                    $.each(json.resultats, function(i, item) {
-                        //console.log(item.numero_plan);
-                        //console.log(item.valeur_fonciere);
+    {# $('.dvf').click(function() {
+        $.getJSON("https://api.cquest.org/dvf?code_commune=77108")
+            .done(function(json) {
+                $('.legendeDvf').css("display", 'block');
+                $.each(json.resultats, function(i, item) {
+                    //console.log(item.numero_plan);
+                    //console.log(item.valeur_fonciere);
 
-                        if (item.valeur_fonciere >= 200000) {
-                            var couleur = "#e2534b";
-                        } else if (item.valeur_fonciere >= 150000) {
-                            var couleur = "#f5c94a";
-                        } else if (item.valeur_fonciere >= 100000) {
-                            var couleur = "#3e4ce9";
-                        } else {
-                            var couleur = "#89c358";
-                        }
+                    if (item.valeur_fonciere >= 200000) {
+                        var couleur = "#e2534b";
+                    } else if (item.valeur_fonciere >= 150000) {
+                        var couleur = "#f5c94a";
+                    } else if (item.valeur_fonciere >= 100000) {
+                        var couleur = "#3e4ce9";
+                    } else {
+                        var couleur = "#89c358";
+                    }
 
-                        tileLayer.setFeatureStyle(item.numero_plan, {
-                            fillColor: couleur,
-                            color: "black",
-                            weight: 1,
-                            fill: true,
-                            fillOpacity: 1
-                        });
+                    tileLayer.setFeatureStyle(item.numero_plan, {
+                        fillColor: couleur,
+                        color: "black",
+                        weight: 1,
+                        fill: true,
+                        fillOpacity: 1
                     });
                 });
-        });
+            });
+    }); #}
 
-        $('#rechercher_cadastre').click(function() {
-            var trouve = false;
-            parcels.features.forEach(function(feature) {
-                if ($('.parcelleNum').val() == feature.properties.numero) {
-                    if ($('.parcelleNum').val() == feature.properties.numero && $('.sectionNum').val().toUpperCase() == feature.properties.section) {
-                        trouve = true;
+    $('#rechercher_cadastre').click(function() {
+        var trouve = false;
+        parcels.features.forEach(function(feature) {
+            if ($('.parcelleNum').val() == feature.properties.numero) {
+                if ($('.parcelleNum').val() == feature.properties.numero && $('.sectionNum').val().toUpperCase() == feature.properties.section) {
+                    trouve = true;
 
-                        var lng = feature.geometry.coordinates[0][0][0];
-                        var lat = feature.geometry.coordinates[0][0][1];
+                    var lng = feature.geometry.coordinates[0][0][0];
+                    var lat = feature.geometry.coordinates[0][0][1];
 
-                        var latlng = [lat,lng];
-                        var popup = L.popup()
-                            .setLatLng(latlng)
-                            .setContent("<h2>Parcelle " + feature.properties.section + feature.properties.numero + "</h2><p>Superficie : " + feature.properties.contenance + " m2<br />Section : " + feature.properties.section + "<br />Numéro : " + feature.properties.numero + "<br />préfixe : " + feature.properties.prefixe + "<br /><a href='https://france-cadastre.fr/predemande?commune=Chelles&section=" + feature.properties.section + "&prefixe=" + feature.properties.prefixe + "&plan=" + feature.properties.numero + "&insee=77108&' target='_blank'>Extrait de plan cadastral (PDF)</a><br/><a href='https://france-cadastre.fr/matrice?dep=77&section=" + feature.properties.section + "&ville=Chelles&plan=" + feature.properties.numero + "&insee=77108' target='_blank'>Qui est le propriétaire ?</a><br/><a href='https://france-cadastre.fr/risques?commune=Chelles&section=" + feature.properties.section + "&prefixe=" + feature.properties.prefixe + "&plan=" + feature.properties.numero + "&insee=77108&scale=4000' target='_blank'>Étude des risques</a><br/><a href='https://france-cadastre.fr/permisdeconstruire/chelles-77&section=" + feature.properties.section + "&plan=" + feature.properties.numero + "' target='_blank'>Permis de construire</a></p>")
-                            .openOn(parcelleMap);
-                        
-                        tileLayer.setFeatureStyle(feature.id, {
-                            fillColor: "blue",
+                    var latlng = [lat,lng];
+                    var popup = L.popup()
+                        .setLatLng(latlng)
+                        .setContent("<h2>Parcelle " + feature.properties.section + feature.properties.numero + "</h2><p>Superficie : " + feature.properties.contenance + " m2<br />Section : " + feature.properties.section + "<br />Numéro : " + feature.properties.numero + "<br />préfixe : " + feature.properties.prefixe + "<br /><a href='https://france-cadastre.fr/predemande?commune=Chelles&section=" + feature.properties.section + "&prefixe=" + feature.properties.prefixe + "&plan=" + feature.properties.numero + "&insee=77108&' target='_blank'>Extrait de plan cadastral (PDF)</a><br/><a href='https://france-cadastre.fr/matrice?dep=77&section=" + feature.properties.section + "&ville=Chelles&plan=" + feature.properties.numero + "&insee=77108' target='_blank'>Qui est le propriétaire ?</a><br/><a href='https://france-cadastre.fr/risques?commune=Chelles&section=" + feature.properties.section + "&prefixe=" + feature.properties.prefixe + "&plan=" + feature.properties.numero + "&insee=77108&scale=4000' target='_blank'>Étude des risques</a><br/><a href='https://france-cadastre.fr/permisdeconstruire/chelles-77&section=" + feature.properties.section + "&plan=" + feature.properties.numero + "' target='_blank'>Permis de construire</a></p>")
+                        .openOn(parcelleMap);
+                    
+                    tileLayer.setFeatureStyle(feature.id, {
+                        fillColor: "blue",
+                        color: "black",
+                        weight: 1,
+                        fill: true
+                    });
+
+                    if (lastFeatureIdSearch != '') {
+                        tileLayer.setFeatureStyle(lastFeatureIdSearch, {
+                            fillColor: "green",
                             color: "black",
                             weight: 1,
                             fill: true
                         });
-
-                        if (lastSearch != '') {
-                            tileLayer.setFeatureStyle(lastSearch, {
-                                fillColor: "green",
-                                color: "black",
-                                weight: 1,
-                                fill: true
-                            });
-                        }
-
-                        lastSearch = feature.id;
-
-                        parcelleMap.setView(new L.LatLng(lat, lng), 16);
                     }
+
+                    lastFeatureIdSearch = feature.id;
+                    lastFeatureSearch = feature;
+
+                    parcelleMap.setView(new L.LatLng(lat, lng), 16);
                 }
-
-
-            });
-            if (trouve == false) {
-                alert("Cette parcelle n'existe pas.");
             }
-            return false;
+
+
         });
-        
+        if (trouve == false) {
+            alert("Cette parcelle n'existe pas.");
+        }
+        return false;
+    });
+
+    $('#ajouter_cadastre').click(function() {
+      if(lastFeatureIdSearch != '' && $('.sectionNum').val() && $('.parcelleNum').val()) {
+        $('#projet_parcelles_add_entry').click();
+        $('#projet_parcelles tr:last input[id$="_nom"]').val(lastFeatureSearch.section + lastFeatureSearch.numero);
+        $('#projet_parcelles tr:last input[id$="_surface"]').val(lastFeatureSearch.contenance);
+        tileLayer.setFeatureStyle(lastFeatureIdSearch, {
+            fillColor: "red",
+            color: "black",
+            weight: 1,
+            fill: true
+        });
         loadAllParcellesTags();
-    }
+      }
+    });
     
     function reverseGeolocalisation(query, update_marker) {
       var nominatimUrl = 'https://nominatim.openstreetmap.org/search';
@@ -3236,6 +3254,7 @@
 
     $('#projet_parcelles_remove_entry').click(function () {
       $('> :last-child', $collectionHolderParcelle).remove();
+      loadAllParcellesTags();
     });
 
     $('#projet_parcelles_export_entry').click(function () {
