@@ -947,10 +947,11 @@ class ProjetController extends Controller
             $response = [];
             $data = json_decode($result, 1);
             foreach($data['features'] as $feature) {
-                if(in_array($feature['properties']['section'] . $feature['properties']['numero'], $parcelles)) {
+                $nomParcelle = $feature['properties']['section'] . $feature['properties']['numero'];
+                if(in_array($nomParcelle, $parcelles)) {
                     $row = array('id' => $feature['properties']['id'], 'section' => $feature['properties']['section'], 'numero' => $feature['properties']['numero'], 'contenance' => $feature['properties']['contenance'], 'selected' => 1);
+                    $response[$nomParcelle] = $row;
                 }
-                $response[] = $row;
             }
             return new JsonResponse($response);
         }
