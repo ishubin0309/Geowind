@@ -751,7 +751,7 @@
     });
     var parcelleSurfaces = {};
     function buildMap(parcels) {
-        parcels.feature.forEach(item => {
+        parcels.features.forEach(item => {
             parcelleSurfaces[item.properties.section + item.properties.numero] = {'commune': item.properties.commune, 'contenance': item.properties.contenance, 'section': item.properties.section, 'numero': item.properties.numero};
         });console.log(parcelleSurfaces);
         tileLayer = L.vectorGrid.slicer(parcels, {
