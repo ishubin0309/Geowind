@@ -3346,6 +3346,7 @@
     function countParcelles() {
       var parcelles_count = $('#projet_parcelles tr').length;
       var parcelles = [];
+      var parcellesSurfaces = 0;
       $('#projet_parcelles tr').each(function(i,element) {
         parcelles.push($(element).find('td:eq(0) input[name]').val().trim());
         surface = parseInt($(element).find('input[id$="_surface"]').val().replace(/\s/g, ''));
