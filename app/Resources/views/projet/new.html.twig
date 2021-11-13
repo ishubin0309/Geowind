@@ -764,7 +764,7 @@
     });
 
     $('#ajouter_cadastre').click(function() {
-      if(lastFeature.length && $('.sectionNum').val() && $('.parcelleNum').val()) {
+      if(lastFeature.id !== undefined && $('.sectionNum').val() && $('.parcelleNum').val()) {
         $('#projet_parcelles_add_entry').click();
         $('#projet_parcelles tr:last input[id$="_nom"]').val(lastFeature.section + lastFeature.numero);
         $('#projet_parcelles tr:last input[id$="_surface"]').val(lastFeature.contenance);
