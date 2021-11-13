@@ -2704,7 +2704,7 @@
           selectedSuggestionsArray[id] = $('#projet_proprietaires_'+id+'_parcelles').val().split(',');
         });
       });
-      if(tileLayer !== 'undefined') {
+      if(tileLayer !== undefined) {
         $('#parcelles_carte').empty();
         if($('#projet_parcelles tr').length) {
           suggestionsArray = [];
