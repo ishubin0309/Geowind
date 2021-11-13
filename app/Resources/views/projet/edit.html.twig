@@ -749,7 +749,6 @@
             }
         }
     });
-    var parcelleSurfaces = {};
     function buildMap(parcels) {
         tileLayer = L.vectorGrid.slicer(parcels, {
             rendererFactory: L.canvas.tile,
@@ -934,10 +933,7 @@
             }
             return false;
         });
-
-        parcels.features.forEach(item => {
-            parcelleSurfaces[item.properties.commune + item.properties.section + item.properties.numero] = {'id': item.properties.id, 'contenance': item.properties.contenance, 'section': item.properties.section, 'numero': item.properties.numero};
-        });
+        
         loadAllParcellesTags();
     }
     
@@ -2671,6 +2667,7 @@
       }
       loadAllParcellesTags();
     });
+    var selectedParcellesCarte = [];
     function loadAllParcellesTags() {
       if($('#projet_proprietaires tr').length) $('#projet_proprietaires_recherche').removeClass('hide');
       else $('#projet_proprietaires_recherche').addClass('hide');
@@ -2706,6 +2703,15 @@
       });
       if(typeof tileLayer !== 'undefined') {
         $('#parcelles_carte').empty();
+        selectedParcellesCarte.forEach(featureId => {
+          tileLayer.setFeatureStyle(featureId, {
+              fillColor: "green",
+              color: "black",
+              weight: 1,
+              fill: true
+          });
+        });
+        selectedParcellesCarte = [];
         if($('#projet_parcelles tr').length) {
           suggestionsArray = [];
           $('#projet_parcelles tr').each(function(i,element) {
@@ -2724,12 +2730,13 @@
                   features.forEach(feature => {
                     $('#parcelles_carte').append('<tr><td>'+feature.section+'</td><td>'+feature.numero+'</td><td>'+feature.contenance+'</td></tr>');
                     if(feature.selected) {
+                      selectedParcellesCarte.push(feature.id); 
                       tileLayer.setFeatureStyle(feature.id, {
-                            fillColor: "red",
-                            color: "black",
-                            weight: 1,
-                            fill: true
-                        });
+                          fillColor: "red",
+                          color: "black",
+                          weight: 1,
+                          fill: true
+                      });
                     }
                   });
                 }

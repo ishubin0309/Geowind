@@ -571,7 +571,6 @@
             }
         }
     });
-    var parcelleSurfaces = {};
     function buildMap(parcels) {
         tileLayer = L.vectorGrid.slicer(parcels, {
             rendererFactory: L.canvas.tile,
@@ -756,10 +755,7 @@
             }
             return false;
         });
-
-        parcels.features.forEach(item => {
-            parcelleSurfaces[item.properties.commune + item.properties.section + item.properties.numero] = {'id': item.properties.id, 'contenance': item.properties.contenance, 'section': item.properties.section, 'numero': item.properties.numero};
-        });
+        
         loadAllParcellesTags();
     }
 
