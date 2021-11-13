@@ -521,7 +521,7 @@
 
     parcelleMap.getPane('parcelPane').style.zIndex = 650;
 
-    var communeInsee = {{ projet.communes is defined and projet.communes is not empty ? projet.communes[0].insee : '""' }};
+    var communeInsee = '{{ projet.communes is defined and projet.communes is not empty ? projet.communes[0].insee : '' }}';
 
     var overlay;
     var newoverlay;
