@@ -941,7 +941,7 @@ class ProjetController extends Controller
                 }
             }
         }
-        if($parcelles) {
+        if(empty($parcelles)) {
             return new Response($result);
         } else {
             $response = [];
