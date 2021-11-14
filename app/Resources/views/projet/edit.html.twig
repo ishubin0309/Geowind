@@ -337,7 +337,7 @@
             <div class="form-group form-group-sm">
               <label class="col-sm-4 control-label">Section</label>
               <div class="col-sm-6">
-                <input type="text" class="form-control sectionNum" placeholder="Numéro section">
+                <input type="text" class="form-control sectionNum" placeholder="Section">
               </div>
             </div>
             <div class="form-group form-group-sm">
@@ -3255,6 +3255,7 @@
 
     $('#projet_parcelles_remove_entry').click(function () {
       $('> :last-child', $collectionHolderParcelle).remove();
+      enableDisableParcellesSendMail();
       loadAllParcellesTags();
     });
 
@@ -3282,6 +3283,31 @@
         });
         
         exportToCsv(titles, data, 'parcelles_');
+      }
+    });
+
+    function enableDisableParcellesSendMail() {
+      if($collectionHolderParcelle.find('tr.info').length) {
+        $('#projet_parcelles_send_mail').removeClass('disabled');
+      } else {
+        $('#projet_parcelles_send_mail').addClass('disabled');
+      }
+    }
+    $($collectionHolderParcelle).on('click', 'tr', function() {
+      if($(this).hasClass('info')) {
+        $(this).removeClass('info');
+      } else {
+        $(this).addClass('info');
+      }
+      enableDisableParcellesSendMail();
+    });
+    $('#projet_parcelles_send_mail').click(function () {
+      if(!$(this).hasClass('disabled')) {
+        var selectedParcellesForEmail = [];
+        $($collectionHolderParcelle).find('tr.info').each(function(i,element) {
+          selectedParcellesForEmail.push($(element).find('input[id$="_nom"]').val());
+        });
+        alert(selectedParcellesForEmail);
       }
     });
 
