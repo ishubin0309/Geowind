@@ -511,6 +511,32 @@
     </div>
   </div>
 
+  <div class="modal fade send-mail-modal" tabindex="-1" role="dialog" aria-labelledby="sendMailModal">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content text-center">
+        <div class="modal-body">
+          <h1>Envoyer un email</h1>
+          <hr>
+          {{ form_start(formMail) }}
+          
+          {{ form_row(formMail.from) }}
+          {{ form_row(formMail.to) }}
+          
+          <hr>
+          
+          {{ form_rest(formMail) }}
+
+          <div class="form-group">
+            <div class="col-sm-10 col-sm-offset-2">
+              <button type="submit" class="btn btn-primary"><i class="fa fa-send fa-fw"></i> Envoyer</button>
+            </div>
+          </div>
+          {{ form_end(formMail) }}
+        </div>
+      </div>
+    </div>
+  </div>
+
 {% endblock %}
 
 {% block js %}
@@ -751,7 +777,8 @@
             }
         }
     });
-    function buildMap(parcels) {
+    var parcels;
+    function buildMap() {
         tileLayer = L.vectorGrid.slicer(parcels, {
             rendererFactory: L.canvas.tile,
             vectorTileLayerStyles: {
@@ -1056,7 +1083,8 @@
           dataType: 'json',
           data: {commune: commune},
           success:  function(data, textStatus, request) {
-            buildMap(data);
+            parcels = data;
+            buildMap();
             {# L.geoJson(data, {}).addTo(mainMap); #}
           }
         });

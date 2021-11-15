@@ -573,7 +573,8 @@
             }
         }
     });
-    function buildMap(parcels) {
+    var parcels;
+    function buildMap() {
         tileLayer = L.vectorGrid.slicer(parcels, {
             rendererFactory: L.canvas.tile,
             vectorTileLayerStyles: {
@@ -873,7 +874,8 @@
           dataType: 'json',
           data: {commune: commune},
           success:  function(data, textStatus, request) {
-            buildMap(data);
+            parcels = data;
+            buildMap();
             {# L.geoJson(data, {}).addTo(mainMap); #}
           }
         });
