@@ -949,7 +949,7 @@ class ProjetController extends Controller
             foreach($data['features'] as $feature) {
                 $nomParcelle = $feature['properties']['section'] . $feature['properties']['numero'];
                 if(in_array($nomParcelle, $parcelles)) {
-                    $row = array('id' => $feature['properties']['id'], 'section' => $feature['properties']['section'], 'numero' => $feature['properties']['numero'], 'contenance' => $feature['properties']['contenance'], 'selected' => 1);
+                    $row = array('id' => $feature['properties']['id'], 'section' => $feature['properties']['section'], 'numero' => $feature['properties']['numero'], 'commune' => $feature['properties']['commune'], 'contenance' => $feature['properties']['contenance'], 'selected' => 1);
                     $response[] = $row;
                 }
             }
