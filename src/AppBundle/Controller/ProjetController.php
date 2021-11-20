@@ -711,7 +711,7 @@ class ProjetController extends Controller
         $messageParcelles->setFrom($from);
         $messageParcelles->setProjet($projet);
         $formMail = $this->createForm(MessageParcellesType::class, $messageParcelles);
-        if ($formMail->isSubmitted()) {exit('Ok');
+        if ($formMail->isSubmitted() && $formMail->isValid()) {exit('Ok');
             $annuaireMailer = new AnnuaireMailer($this->getParameter('mailer_password'));
             $errors = [];
             $dir = $this->getParameter('document_upload_dir');
@@ -726,7 +726,7 @@ class ProjetController extends Controller
             } else {
                 $this->addFlash('error', 'Erreur');
             }
-        } else exit('Failed');
+        }
 
         $form = $this->createForm(ProjetEditType::class, $projet);
         $form->handleRequest($request);
