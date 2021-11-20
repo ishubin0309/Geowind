@@ -951,7 +951,7 @@ class ProjetController extends Controller
             } elseif(is_array($communes)) {
                 $results = array();
                 foreach($communes as $commune) {
-                    $result = $this->getCadastreForCommune($commune);
+                    $result = $this->getCadastreForCommune($commune);exit($result);
                     if($result && $result != '{}') {
                         $results[] = $result;
                     }
