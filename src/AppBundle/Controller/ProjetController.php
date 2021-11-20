@@ -955,16 +955,16 @@ class ProjetController extends Controller
                     if($result && $result != '{}') {
                         $results[] = $result;
                     }
-                    $features = '';
-                    foreach($results as $result) {
-                        if(preg_match('%"features"\s*:\s*\[(.+?)\]}$%', $result, $m)) {
-                            $features .= $m[1] . ',';
-                        }
+                }
+                $features = '';
+                foreach($results as $result) {
+                    if(preg_match('%"features"\s*:\s*\[(.+?)\]}$%', $result, $m)) {
+                        $features .= $m[1] . ',';
                     }
-                    $result = '{}';
-                    if($features) {
-                        $result = '{"type":"FeatureCollection","features":[ '. rtrim($features, ',') .' ]}';
-                    }
+                }
+                $result = '{}';
+                if($features) {
+                    $result = '{"type":"FeatureCollection","features":[ '. rtrim($features, ',') .' ]}';
                 }
             }
         }
