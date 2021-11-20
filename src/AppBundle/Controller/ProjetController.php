@@ -913,7 +913,7 @@ class ProjetController extends Controller
         }
         exit('Done');
     }
-
+    private $parcelleCommunes = [];
     private function getCadastreForCommune($communeId)
     {
         $result = '{}';
@@ -921,6 +921,11 @@ class ProjetController extends Controller
         $commune = $em->getRepository('AppBundle:Commune')->find($communeId);
         if($commune) {
             $insee = $commune->getInsee();
+            foreach($this->parcelleCommunes as $parcelleCommune) {
+                if($parcelleCommune[1] == $communeId) {
+                    $parcelleCommune[3] = $insee;
+                }
+            }
             if(!file_exists('cadastres/cadastre-' . $insee . '-parcelles.json')) {
                 $departement = substr($insee, 0, 2);
                 $result = @file_get_contents('https://france-cadastre.fr/map/' . $departement . '/' . $insee . '/cadastre-' . $insee . '-parcelles.json');
@@ -944,7 +949,10 @@ class ProjetController extends Controller
     {
         $result = '{}';
         $communes = $request->query->get('communes', 0);
-        $communeNames = $request->query->get('communeNames', 0);
+        $parcelleCommunes = $request->query->get('parcelleCommunes', 0);
+        if(!empty($parcelleCommunes)) {
+            $this->parcelleCommunes = $parcelleCommunes;
+        }
         $parcelles = $request->query->get('parcelles', 0);
         if(!empty($communes)) {
             if(is_string($communes)) {
@@ -978,7 +986,14 @@ class ProjetController extends Controller
             foreach($data['features'] as $feature) {
                 $nomParcelle = $feature['properties']['section'] . $feature['properties']['numero'];
                 if(in_array($nomParcelle, $parcelles)) {
-                    $row = array('id' => $feature['properties']['id'], 'section' => $feature['properties']['section'], 'numero' => $feature['properties']['numero'], 'commune' => $feature['properties']['commune'], 'contenance' => $feature['properties']['contenance'], 'selected' => 1);
+                    $commune = $feature['properties']['commune'];
+                    foreach($this->parcelleCommunes as $parcelleCommune) {
+                        if(isset($parcelleCommune[3]) && $parcelleCommune[0] == $nomParcelle && $parcelleCommune[3] == $commune) {
+                            $commune = $parcelleCommune[2];
+                            break;
+                        }
+                    }
+                    $row = array('id' => $feature['properties']['id'], 'section' => $feature['properties']['section'], 'numero' => $feature['properties']['numero'], 'commune' => $commune, 'contenance' => $feature['properties']['contenance'], 'selected' => 1);
                     $response[] = $row;
                 }
             }
