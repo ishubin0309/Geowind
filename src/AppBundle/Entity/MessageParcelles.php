@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\File\File;
 use DateTime;
 
 /**
- * Entité MessageParcelle
+ * Entité MessageParcelles
  * 
  * Représente un message envoyé via l'annuaire
  *
@@ -21,7 +21,7 @@ use DateTime;
  * @ORM\Entity(repositoryClass="AppBundle\Repository\MessageRepository")
  * @Vich\Uploadable
  */
-class MessageParcelle
+class MessageParcelles
 {
     use BlameableTrait;
     use TimestampableTrait;
