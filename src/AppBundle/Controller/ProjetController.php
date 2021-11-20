@@ -711,6 +711,22 @@ class ProjetController extends Controller
         $messageParcelles->setFrom($from);
         $messageParcelles->setProjet($projet);
         $formMail = $this->createForm(MessageParcellesType::class, $messageParcelles);
+        if ($formMail->isSubmitted() && $formMail->isValid()) {
+            $annuaireMailer = new AnnuaireMailer($this->getParameter('mailer_password'));
+            $errors = [];
+            $dir = $this->getParameter('document_upload_dir');
+            $formMail->setDate(new DateTime('now'));
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($formMail);
+            if ($annuaireMailer->handleMessage($messageParcelles, $errors, $dir)) {
+                $em->flush();
+                $this->addFlash('success', 'Mail envoyé.');
+                // return $this->redirectToRoute('projet_edit', ['id' => $projet]);
+            
+            } else {
+                $this->addFlash('error', 'Erreur');
+            }
+        }
 
         $form = $this->createForm(ProjetEditType::class, $projet);
         $form->handleRequest($request);
@@ -763,6 +779,7 @@ class ProjetController extends Controller
             'technologies' => json_encode($technologies)
         ]);
     }
+
     function replaceText($element, $variable, $value) {
         $text_class = 'PhpOffice\PhpWord\Element\Text';
         $table_class = 'PhpOffice\PhpWord\Element\Table';
