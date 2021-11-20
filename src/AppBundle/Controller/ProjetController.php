@@ -960,7 +960,7 @@ class ProjetController extends Controller
                 $features = '';
                 foreach($results as $result) {
                     if(preg_match('%"features"\s*:\s*\[(.+)$%', $result, $m)) {
-                        $features .= substr($m[1], 0, -3) . ',';exit($features);
+                        $features .= substr($m[1], 0, -2) . ',';exit($features);
                     } else exit('*'.$result.'*');
                 }
                 $result = '{}';
