@@ -973,7 +973,7 @@ class ProjetController extends Controller
             return new Response($result);
         } else {
             $response = [];
-            $data = json_decode($result, 1);
+            $data = json_decode($result, 1);echo '<pre>';print_r($data);die;
             foreach($data['features'] as $feature) {
                 $nomParcelle = $feature['properties']['section'] . $feature['properties']['numero'];
                 if(in_array($nomParcelle, $parcelles)) {

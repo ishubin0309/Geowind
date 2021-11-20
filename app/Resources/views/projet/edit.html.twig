@@ -2771,7 +2771,7 @@
               communesArray.push($(element).find('select[name$="_commune"] :selected').text().trim());
             }
           });
-          if(suggestionsArray.length) {
+          if(parcellesArray.length) {
             if(!communesArray.length) {
               communesArray.push($('#projet_parcelles select[id$="_commune"]:eq(0) option:selected').val());
             }
