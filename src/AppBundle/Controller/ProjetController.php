@@ -914,11 +914,17 @@ class ProjetController extends Controller
         exit('Done');
     }
     private $parcelleCommunes = [];
+    private $cachedCommunes = [];
     private function getCadastreForCommune($communeId)
     {
         $result = '{}';
-        $em = $this->getDoctrine()->getManager();
-        $commune = $em->getRepository('AppBundle:Commune')->find($communeId);
+        if(isset($this->cachedCommunes[$communeId])) {
+            $commune = $this->cachedCommunes[$communeId];
+        } else {
+            $em = $this->getDoctrine()->getManager();
+            $commune = $em->getRepository('AppBundle:Commune')->find($communeId);
+            $this->cachedCommunes[$communeId] = $commune;
+        }
         if($commune) {
             $insee = $commune->getInsee();
             foreach($this->parcelleCommunes as $key => $parcelleCommune) {
