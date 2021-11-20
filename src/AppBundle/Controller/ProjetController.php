@@ -961,7 +961,7 @@ class ProjetController extends Controller
                 foreach($results as $result) {
                     if(preg_match('%"features"\s*:\s*\[(.+?)\]}$%s', $result, $m)) {
                         $features .= $m[1] . ',';exit($features);
-                    } else exit('nope'.$result);
+                    } else exit('*'.$result.'*');
                 }
                 $result = '{}';
                 if($features) {
