@@ -921,9 +921,9 @@ class ProjetController extends Controller
         $commune = $em->getRepository('AppBundle:Commune')->find($communeId);
         if($commune) {
             $insee = $commune->getInsee();
-            foreach($this->parcelleCommunes as $parcelleCommune) {
+            foreach($this->parcelleCommunes as $key => $parcelleCommune) {
                 if($parcelleCommune[1] == $communeId) {
-                    $parcelleCommune[3] = $insee;
+                    $this->parcelleCommunes[$key][3] = $insee;
                 }
             }
             if(!file_exists('cadastres/cadastre-' . $insee . '-parcelles.json')) {
