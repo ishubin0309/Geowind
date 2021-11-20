@@ -868,12 +868,20 @@
     });
 
     function loadCoucheCadastre() {
-      var commune = $('#projet_communes option:selected').val();
-      if(commune) {
+      communeIdsArray = [];
+      $('#projet_parcelles tr').each(function(i,element) {
+        if($(element).find('select[id$="_commune"]').val() && !communeIdsArray.includes($(element).find('select[id$="_commune"]').val())) {
+          communeIdsArray.push($(element).find('select[id$="_commune"]').val());
+        }
+      });
+      if(!communeIdsArray.length) {
+        communeIdsArray.push($('#projet_communes option:selected').val());
+      }
+      if(communeIdsArray.length) {
         $.ajax({
           url: "{{ path('france_cadastre') }}",
           dataType: 'json',
-          data: {communes: commune},
+          data: {communes: communeIdsArray},
           success:  function(data, textStatus, request) {
             parcels = data;
             buildMap();
