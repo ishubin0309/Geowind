@@ -2764,11 +2764,11 @@
           parcellesArray = [];
           communesArray = [];
           $('#projet_parcelles tr').each(function(i,element) {
-            if(!suggestionsArray.includes($(element).find('td:eq(0) input[name]').val().trim())) {
+            if(!parcellesArray.includes($(element).find('td:eq(0) input[name]').val().trim())) {
               parcellesArray.push($(element).find('td:eq(0) input[name]').val().trim());
-              if($(element).find('select[name$="_commune"] :selected').length && $(element).find('select[name$="_commune"] :selected').text().trim()) {
-                communesArray.push($(element).find('select[name$="_commune"] :selected').text().trim());
-              }
+            }
+            if(!communesArray.includes($(element).find('select[name$="_commune"] :selected').text().trim())) {
+              communesArray.push($(element).find('select[name$="_commune"] :selected').text().trim());
             }
           });
           if(suggestionsArray.length) {
