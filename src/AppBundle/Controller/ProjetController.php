@@ -951,7 +951,8 @@ class ProjetController extends Controller
             } elseif(is_array($communes)) {
                 $results = array();
                 foreach($communes as $commune) {
-                    $result = $this->getCadastreForCommune($commune);exit($result);
+                    if(!$commune) continue;
+                    $result = $this->getCadastreForCommune($commune);
                     if($result && $result != '{}') {
                         $results[] = $result;
                     }
@@ -959,8 +960,8 @@ class ProjetController extends Controller
                 $features = '';
                 foreach($results as $result) {
                     if(preg_match('%"features"\s*:\s*\[(.+?)\]}$%s', $result, $m)) {
-                        $features .= $m[1] . ',';
-                    }
+                        $features .= $m[1] . ',';exit($features);
+                    } else exit($result);
                 }
                 $result = '{}';
                 if($features) {
