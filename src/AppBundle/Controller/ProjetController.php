@@ -14,12 +14,14 @@ use AppBundle\Entity\Parcelle;
 use AppBundle\Entity\Commune;
 use AppBundle\Entity\Messagerie;
 use AppBundle\Entity\Mairie;
+use AppBundle\Entity\MessageParcelles;
 use AppBundle\Model\Environnement;
 use AppBundle\Model\Etat as EtatModel;
 use AppBundle\Form\ProjetEditType;
 use AppBundle\Form\ProjetType;
 use AppBundle\Form\ListeType;
 use AppBundle\Form\RappelType;
+use AppBundle\Form\MessageParcellesType;
 use AppBundle\Helper\GridHelper;
 use AppBundle\Model\ExportOption;
 use AppBundle\Service\ProjetExport;
@@ -704,6 +706,8 @@ class ProjetController extends Controller
     {
         $gridHelper = new GridHelper();
 
+        $formMail = $this->createForm(MessageParcellesType::class, new MessageParcelles);
+
         $form = $this->createForm(ProjetEditType::class, $projet);
         $form->handleRequest($request);
 
@@ -746,6 +750,7 @@ class ProjetController extends Controller
 
         return $this->render('projet/edit.html.twig', [
             'form' => $form->createView(),
+            'formMail' => $formMail->createView(),
             'projet' => $projet,
             'show' => $show,
             'grid_helper' => $gridHelper,
