@@ -707,6 +707,9 @@ class ProjetController extends Controller
         $gridHelper = new GridHelper();
 
         $messageParcelles = new MessageParcelles;
+        $from = $this->getParameter('mailer_from');
+        $messageParcelles->setFrom($from);
+        $messageParcelles->setProjet($projet);
         $formMail = $this->createForm(MessageParcellesType::class, $messageParcelles);
 
         $form = $this->createForm(ProjetEditType::class, $projet);
