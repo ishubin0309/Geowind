@@ -959,7 +959,7 @@ class ProjetController extends Controller
                 }
                 $features = '';
                 foreach($results as $result) {
-                    if(preg_match('%"features"\s*:\s*\[(.+?)\]}%s', $result, $m)) {
+                    if(preg_match('%"features"\s*:\s*\[(.+?)\]}[^,]*%s', $result, $m)) {
                         $features .= $m[1] . ',';exit($features);
                     } else exit('nope'.$result);
                 }
