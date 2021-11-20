@@ -914,6 +914,28 @@ class ProjetController extends Controller
         exit('Done');
     }
 
+    private function getCadastreForCommune($communeId)
+    {
+        $result = '{}';
+        $em = $this->getDoctrine()->getManager();
+        $commune = $em->getRepository('AppBundle:Commune')->find($communeId);
+        if($commune) {
+            $insee = $commune->getInsee();
+            if(!file_exists('cadastres/cadastre-' . $insee . '-parcelles.json')) {
+                $departement = substr($insee, 0, 2);
+                $result = @file_get_contents('https://france-cadastre.fr/map/' . $departement . '/' . $insee . '/cadastre-' . $insee . '-parcelles.json');
+                if(!$result) {
+                    $result = '{}';
+                } else {
+                    file_put_contents('cadastres/cadastre-' . $insee . '-parcelles.json', $result);
+                }
+            } else {
+                $result = file_get_contents('cadastres/cadastre-' . $insee . '-parcelles.json');
+            }
+        }
+        return $result;
+    }
+
     /**
      * @Route("/france-cadastre", name="france_cadastre", options={ "expose": true })
      * @Security("has_role('ROLE_VIEW')")
@@ -921,23 +943,28 @@ class ProjetController extends Controller
     public function franceCadastreAction(Request $request)
     {
         $result = '{}';
-        $commune = $request->query->get('commune', 0);
+        $communes = $request->query->get('communes', 0);
         $parcelles = $request->query->get('parcelles', 0);
-        if($commune) {
-            $em = $this->getDoctrine()->getManager();
-            $commune = $em->getRepository('AppBundle:Commune')->find($commune);
-            if($commune) {
-                $insee = $commune->getInsee();
-                if(!file_exists('cadastres/cadastre-' . $insee . '-parcelles.json')) {
-                    $departement = substr($insee, 0, 2);
-                    $result = @file_get_contents('https://france-cadastre.fr/map/' . $departement . '/' . $insee . '/cadastre-' . $insee . '-parcelles.json');
-                    if(!$result) {
-                        $result = '{}';
-                    } else {
-                        file_put_contents('cadastres/cadastre-' . $insee . '-parcelles.json', $result);
+        if(!empty($communes)) {
+            if(is_string($communes)) {
+                $result = $this->getCadastreForCommune($communes);
+            } elseif(is_array($communes)) {
+                $results = array();
+                foreach($communes as $commune) {
+                    $result = $this->getCadastreForCommune($commune);
+                    if($result && $result != '{}') {
+                        $results[] = $result;
                     }
-                } else {
-                    $result = file_get_contents('cadastres/cadastre-' . $insee . '-parcelles.json');
+                    $features = '';
+                    foreach($results as $result) {
+                        if(preg_match('%"features"\s*:\s*\[(.+?)\]}$%', $result, $m)) {
+                            $features .= $m[1] . ',';
+                        }
+                    }
+                    $result = '{}';
+                    if($features) {
+                        $result = '{"type":"FeatureCollection","features":[ '. rtrim($features, ',') .' ]}';
+                    }
                 }
             }
         }

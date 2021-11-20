@@ -873,7 +873,7 @@
         $.ajax({
           url: "{{ path('france_cadastre') }}",
           dataType: 'json',
-          data: {commune: commune},
+          data: {communes: commune},
           success:  function(data, textStatus, request) {
             parcels = data;
             buildMap();
@@ -2509,19 +2509,25 @@
         });
         selectedParcellesCarte = [];
         if($('#projet_parcelles tr').length) {
-          suggestionsArray = [];
+          parcellesArray = [];
+          communesArray = [];
           $('#projet_parcelles tr').each(function(i,element) {
             if(!suggestionsArray.includes($(element).find('td:eq(0) input[name]').val().trim())) {
-              suggestionsArray.push($(element).find('td:eq(0) input[name]').val().trim());
+              parcellesArray.push($(element).find('td:eq(0) input[name]').val().trim());
+              if($(element).find('select[name$="_commune"] :selected').length && $(element).find('select[name$="_commune"] :selected').text().trim()) {
+                communesArray.push($(element).find('select[name$="_commune"] :selected').text().trim());
+              }
             }
           });
           if(suggestionsArray.length) {
-            var commune = $('#projet_parcelles select[id$="_commune"]:eq(0) option:selected').val();
-            if(commune) {
+            if(!communesArray.length) {
+              communesArray.push($('#projet_parcelles select[id$="_commune"]:eq(0) option:selected').val());
+            }
+            if(communesArray.length) {
               $.ajax({
                 url: "{{ path('france_cadastre') }}",
                 dataType: 'json',
-                data: {commune: commune, parcelles: suggestionsArray},
+                data: {communes: communesArray, parcelles: parcellesArray},
                 success:  function(features) {
                   features.forEach(feature => {
                     $('#parcelles_carte').append('<tr><td>'+feature.section+'</td><td>'+feature.numero+'</td><td>'+feature.commune+'</td><td>'+feature.contenance+'</td></tr>');
