@@ -944,6 +944,7 @@ class ProjetController extends Controller
     {
         $result = '{}';
         $communes = $request->query->get('communes', 0);
+        $communeNames = $request->query->get('communeNames', 0);
         $parcelles = $request->query->get('parcelles', 0);
         if(!empty($communes)) {
             if(is_string($communes)) {
@@ -973,7 +974,7 @@ class ProjetController extends Controller
             return new Response($result);
         } else {
             $response = [];
-            $data = json_decode($result, 1);echo '<pre>';print_r($data);die;
+            $data = json_decode($result, 1);
             foreach($data['features'] as $feature) {
                 $nomParcelle = $feature['properties']['section'] . $feature['properties']['numero'];
                 if(in_array($nomParcelle, $parcelles)) {

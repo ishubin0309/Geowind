@@ -2762,24 +2762,26 @@
         selectedParcellesCarte = [];
         if($('#projet_parcelles tr').length) {
           parcellesArray = [];
-          communesArray = [];
+          communeNamesArray = [];
+          communeIdsArray = [];
           $('#projet_parcelles tr').each(function(i,element) {
             if($(element).find('td:eq(0) input[name]').val() && !parcellesArray.includes($(element).find('td:eq(0) input[name]').val().trim())) {
               parcellesArray.push($(element).find('td:eq(0) input[name]').val().trim());
             }
-            if($(element).find('select[id$="_commune"] :selected').text().trim() && !communesArray.includes($(element).find('select[id$="_commune"] :selected').text().trim())) {
-              communesArray.push($(element).find('select[id$="_commune"] :selected').text().trim());
+            if($(element).find('select[id$="_commune"] :selected').text().trim() && !communeNamesArray.includes($(element).find('select[id$="_commune"] :selected').text().trim())) {
+              communeNamesArray.push($(element).find('select[id$="_commune"] :selected').text().trim());
+              communeIdsArray.push($(element).find('select[id$="_commune"]').val());
             }
           });
           if(parcellesArray.length) {
-            if(!communesArray.length) {
-              communesArray.push($('#projet_parcelles select[id$="_commune"]:eq(0) option:selected').val());
+            if(!communeIdsArray.length) {
+              communeIdsArray.push($('#projet_parcelles select[id$="_commune"]:eq(0) option:selected').val());
             }
-            if(communesArray.length) {
+            if(communeIdsArray.length) {
               $.ajax({
                 url: "{{ path('france_cadastre') }}",
                 dataType: 'json',
-                data: {communes: communesArray, parcelles: parcellesArray},
+                data: {communes: communeIdsArray, communeNames: communeNamesArray, parcelles: parcellesArray},
                 success:  function(features) {
                   features.forEach(feature => {
                     $('#parcelles_carte').append('<tr><td>'+feature.section+'</td><td>'+feature.numero+'</td><td>'+feature.commune+'</td><td>'+feature.contenance+'</td></tr>');
