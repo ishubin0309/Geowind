@@ -1,0 +1,205 @@
+{% extends 'base.html.twig' %}
+
+{% set title = 'Message Parcelles' %}
+{% set item = 'message_parcelles' %}
+
+{% block body %}
+  <style>
+  .table-striped tbody tr:hover {
+    background-color: #31b0d5;
+  }
+  </style>
+  <div class="container-fluid">
+    {# <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#message_parcelles_nav" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#"></a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="message_parcelles_nav">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#" rel="tab_list">Journal</a></li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav> #}
+    <fieldset id="tab_list">
+      <legend>Journal</legend>
+      {% if messages is empty %}
+        <div class="alert alert-info mt0">
+          Aucun message envoyé
+        </div>
+      {% else %}
+        <table id="datatable" class="table table-striped table-middle">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Projet</th>
+              <th>Destinaire</th>
+              <th>Contactée par</th>
+              <th>Commune</th>
+              <th>Parcelles</th>
+              <th class="column-fit">Objet</th>
+              <th>Message</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for message in messages %}
+            <tr>
+              <td>{{ message.date|date('d/m/Y') }}</td>
+              <td><a href="{{ path('projet_edit', {id: message.projet.id}) }}">{{ message.projet }}</a></td>
+              <td>{{ message.to }}</td>
+              <td>{{ message.createdBy }}</td>
+              <td class="column-fit">{{ message.communes }}</td>
+              <td class="column-fit">{{ message.parcelles }}</td>
+              <td class="column-fit">{{ message.object }}</td>
+              <td>
+              <button class="btn btn-info btn-sm btn_message">Afficher</button>
+              <span class="hide">{{ message.body }}</span>
+              </td>
+              <td class="column-fit">
+              {% if is_granted('ROLE_ADMIN') %}
+              &nbsp;&nbsp;<button id="{{ message.id }}" type="message" class="btn btn-danger btn-xs button-delete" title="Double click"><i class="fa fa-fw fa-trash"></i></button>
+              {% endif %}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% endif %}
+    </fieldset>
+
+  </div>
+  
+  <div class="modal fade bs-modal" tabindex="-1" role="dialog" aria-labelledby="emailModal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content text-center">
+        <div id="show_message" style="padding: 20px;text-align: left;" class="modal-body">
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block js %}
+  <script>
+  var oTable = $('#datatable').DataTable({
+    language: dtLang,
+    "order": [[ 0, "asc" ]],
+    columnDefs: [
+        { targets: 0, searchable: false },
+        { targets: 1, searchable: false },
+        { targets: 2, searchable: false },
+        { targets: 3, searchable: false },
+        { targets: 4, searchable: false },
+        { targets: 5, searchable: false },
+        { targets: 6, orderable: false },
+        { targets: 7, searchable: false, orderable: false },
+        { targets: 8, orderable: false, orderable: false }
+    ],
+    paging: false,
+    bInfo: false,
+  });
+  $('.button-delete-model').dblclick(function() {
+    id = $(this).attr('id');
+    model = $(this).attr('model');
+    
+    if (!id) {
+      return;
+    }
+    swal({
+      title: "Supprimer ?",
+      text: "Le modèle « "+model+" » sera supprimé définitivement.",
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#DD6B55",
+      confirmButtonText: "Supprimer",
+      cancelButtonText: "Annuler",
+      closeOnConfirm: false,
+      closeOnCancel: true,
+      allowOutsideClick: true,
+      showLoaderOnConfirm: true,
+    },
+    function(isConfirm){
+      if (isConfirm) {
+        var csrf = '{{ csrf_token('token')|e('js') }}';
+        $.ajax({
+          url: Routing.generate('model_delete', {id: id}),
+          type: 'DELETE',
+          data: { token: csrf  },
+          success: function(result) {
+            location.reload();
+          }
+        });
+      } else {
+
+      }
+    });
+
+  });
+
+  $('.btn_message').click(function() {
+    var message = $(this).parent().find('span').text().replace(/\n/, '<br>');
+    $('.bs-modal').modal('show');
+    $('#show_message').html(message.replace(/\n/g, '<br>'));
+  });
+
+  {% if is_granted('ROLE_ADMIN') %}
+  $('.button-delete').dblclick(function() {
+    id = $(this).attr('id');
+    title = 'Le message sera supprimé définitivement.';
+    if (!id) {
+      return;
+    }
+    swal({
+      title: "Supprimer ?",
+      text: title,
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#DD6B55",
+      confirmButtonText: "Supprimer",
+      cancelButtonText: "Annuler",
+      closeOnConfirm: false,
+      closeOnCancel: true,
+      allowOutsideClick: true,
+      showLoaderOnConfirm: true,
+    },
+    function(isConfirm){
+      if (isConfirm) {
+        var csrf = '{{ csrf_token('token')|e('js') }}';
+        $.ajax({
+          url: Routing.generate('message_parcelle_delete', {id: id}),
+          type: 'DELETE',
+          data: {token: csrf},
+          success: function(result) {
+            location.reload();
+          }
+        });
+      } else {
+
+      }
+    });
+
+  });
+  {% endif %}
+  $('#message_parcelles_nav a').click(function (e) {
+    var attr = $(this).attr('rel');
+    if(typeof attr !== typeof undefined && attr !== false) {
+      e.preventDefault();
+      $('#message_parcelles_nav li').removeClass('active');
+      $(this).parent().addClass('active');
+      $('fieldset').addClass('hide');
+      $('fieldset#' + attr).removeClass('hide');
+      if(attr == 'tab_carte') map.invalidateSize();
+    }
+  });
+  </script>
+{% endblock %}
