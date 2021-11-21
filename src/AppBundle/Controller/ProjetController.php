@@ -25,6 +25,7 @@ use AppBundle\Form\MessageParcellesType;
 use AppBundle\Helper\GridHelper;
 use AppBundle\Model\ExportOption;
 use AppBundle\Service\ProjetExport;
+use AppBundle\Service\AnnuaireMailer;
 use DateTime;
 use Imagick;
 use Mpdf\Mpdf;
@@ -711,6 +712,7 @@ class ProjetController extends Controller
         $messageParcelles->setFrom($from);
         $messageParcelles->setProjet($projet);
         $formMail = $this->createForm(MessageParcellesType::class, $messageParcelles);
+        $formMail->handleRequest($request);
         if ($formMail->isSubmitted() && $formMail->isValid()) {exit('Ok');
             $annuaireMailer = new AnnuaireMailer($this->getParameter('mailer_password'));
             $errors = [];
