@@ -98,6 +98,13 @@ class MessageParcelles
      *
      * @ORM\Column(type="string", nullable=true)
      */
+    private $departements;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
     private $parcelles;
 
     /**
@@ -171,6 +178,11 @@ class MessageParcelles
         return $this->communes;
     }
 
+    public function getDepartements()
+    {
+        return $this->departements;
+    }
+
     public function getParcelles()
     {
         return $this->parcelles;
@@ -215,6 +227,12 @@ class MessageParcelles
     public function setCommunes($communes)
     {
         $this->communes = $communes;
+        return $this;
+    }
+
+    public function setDepartements($departements)
+    {
+        $this->departements = $departements;
         return $this;
     }
 

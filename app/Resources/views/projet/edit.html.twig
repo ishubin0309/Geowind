@@ -3370,9 +3370,10 @@
         'Commune: '+ selectedCommunesForEmail.join() +"\n"+
         'Département: '+ selectedDepartementsForEmail.join() +"\n"+
         'Parcelles: '+ selectedParcellesForEmail.join());
+        $('#message_parcelles_departements').val(selectedDepartementsForEmail.join());
         $('#message_parcelles_communes').val(selectedCommunesForEmail.join());
         $('#message_parcelles_parcelles').val(selectedParcellesForEmail.join());
-        $('#message_parcelles_communes, #message_parcelles_parcelles').parents('.form-group').addClass('hide');
+        $('#message_parcelles_departements, #message_parcelles_communes, #message_parcelles_parcelles').parents('.form-group').addClass('hide');
         $('.send-mail-modal').modal('show');
       }
     });
