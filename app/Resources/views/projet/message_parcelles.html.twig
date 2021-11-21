@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% set title = 'Message Parcelles' %}
-{% set item = 'message_parcelle' %}
+{% set item = 'message_parcelles' %}
 
 {% block body %}
   <style>
@@ -54,7 +54,7 @@
             {% for message in messages %}
             <tr>
               <td>{{ message.date|date('d/m/Y') }}</td>
-              <td>{{ message.projet }}</td>
+              <td><a href="{{ path('projet_edit', {id: message.projet.id}) }}">{{ message.projet }}</a></td>
               <td>{{ message.to }}</td>
               <td>{{ message.createdBy }}</td>
               <td class="column-fit">{{ message.object }}</td>
