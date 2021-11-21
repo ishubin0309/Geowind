@@ -3358,12 +3358,12 @@
         });
         $('#message_parcelles_object').val('Sujet');
         $('#message_parcelles_body').val('Madame, monsieur,'+"\n\n"+
-        'Nous réalisons actuellement une étude de faisabilité foncière d’un projet d’énergie renouvelable situé sur la commune ' + selectedCommunes.join() + ' dans le départment de ' + selectedDepartements.join() + '+"\n\n"+
+        'Nous réalisons actuellement une étude de faisabilité foncière d’un projet d’énergie renouvelable situé sur la commune '+ selectedCommunes.join() +' dans le départment de '+ selectedDepartements.join() +"\n\n"+
         'A cette fin,nous sollicitons de votre part, la communication des matices cadastrales des parcelles suivantes afin de demander l’avis des propriétaires concernés.'+"\n\n"+
         'Vous remerciant par avance, je vous prie d\'agréer, madame, monsieur, l’expression de mes salutations distinguées'+"\n\n"+
-        'Commune: ' + selectedCommunes.join() +"\n"+
-        'Département: ' + selectedDepartements.join() +"\n"+
-        'Parcelles: ' + selectedParcellesForEmail);
+        'Commune: '+ selectedCommunes.join() +"\n"+
+        'Département: '+ selectedDepartements.join() +"\n"+
+        'Parcelles: '+ selectedParcellesForEmail);
         $('.send-mail-modal').modal('show');
       }
     });
