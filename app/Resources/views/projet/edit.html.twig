@@ -3299,7 +3299,11 @@
     });
 
     $('#projet_parcelles_remove_entry').click(function () {
-      $('> :last-child', $collectionHolderParcelle).remove();
+      if($collectionHolderParcelle.find('tr.info').length) {
+        $collectionHolderParcelle.find('tr.info').remove();
+      } else {
+        $('> :last-child', $collectionHolderParcelle).remove();
+      }
       enableDisableParcellesSendMail();
       loadAllParcellesTags();
     });
