@@ -2775,7 +2775,7 @@
           $('#projet_parcelles tr').each(function(i,element) {
             if($(element).find('td:eq(0) input[name]').val() && !parcellesArray.includes($(element).find('td:eq(0) input[name]').val().trim())) {
               parcellesArray.push($(element).find('td:eq(0) input[name]').val().trim());
-              parcelleCommuneArray.push([$(element).find('td:eq(0) input[name]').val().trim(), $(element).find('select[id$="_commune"]').val(), $(element).find('select[id$="_commune"] :selected').text().trim()]);
+              parcelleCommuneArray.push([$(element).find('td:eq(0) input[name]').val().trim(), $(element).find('select[id$="_commune"]').val(), $(element).find('select[id$="_commune"] :selected').text().replace(/\(.+/, '').trim()]);
             }
             if($(element).find('select[id$="_commune"]').val() && !communeIdsArray.includes($(element).find('select[id$="_commune"]').val())) {
               communeIdsArray.push($(element).find('select[id$="_commune"]').val());
@@ -3349,16 +3349,20 @@
     $('#projet_parcelles_send_mail').click(function () {
       if(!$(this).hasClass('disabled')) {
         var selectedParcellesForEmail = [];
+        var selectedCommunes = [];
+        var selectedDepartements = [];
         $($collectionHolderParcelle).find('tr.info').each(function(i,element) {
           selectedParcellesForEmail.push($(element).find('input[id$="_nom"]').val());
+          selectedCommunes.push($(element).find('select[id$="_commune"] :selected').text().replace(/\(.+/, '').trim());
+          selectedDepartement.push($(element).find('select[id$="_departement"] :selected').text().replace(/\(.+/, '').trim());
         });
         $('#message_parcelles_object').val('Sujet');
         $('#message_parcelles_body').val('Madame, monsieur,'+"\n\n"+
-        'Nous réalisons actuellement une étude de faisabilité foncière d’un projet d’énergie renouvelable situé sur la commune XXXX dans le départment de XXX'+"\n\n"+
+        'Nous réalisons actuellement une étude de faisabilité foncière d’un projet d’énergie renouvelable situé sur la commune ' + selectedCommunes.join() + ' dans le départment de ' + selectedDepartements.join() + '+"\n\n"+
         'A cette fin,nous sollicitons de votre part, la communication des matices cadastrales des parcelles suivantes afin de demander l’avis des propriétaires concernés.'+"\n\n"+
         'Vous remerciant par avance, je vous prie d\'agréer, madame, monsieur, l’expression de mes salutations distinguées'+"\n\n"+
-        'Commune: XXXX (Code INSEE)'+"\n"+
-        'Département: XXX'+"\n"+
+        'Commune: ' + selectedCommunes.join() +"\n"+
+        'Département: ' + selectedDepartements.join() +"\n"+
         'Parcelles: ' + selectedParcellesForEmail);
         $('.send-mail-modal').modal('show');
       }

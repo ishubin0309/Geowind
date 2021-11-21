@@ -593,6 +593,6 @@ class Commune
      */
     public function __toString()
     {
-        return $this->nomMiniscule ? $this->nomMiniscule : $this->nom;
+        return $this->nomMiniscule ? $this->nomMiniscule . ' (' . $this->insee . ')'  : $this->nom . ' (' . $this->insee . ')';
     }
 }
