@@ -570,7 +570,7 @@
   $('.btn_message').click(function() {
     var message = $(this).parent().find('span').text().replace(/\n/, '<br>');
     $('.bs-modal').modal('show');
-    $('#show_message').html(message);
+    $('#show_message').html(message.replace(/\n/g, '<br>'));
   });
   $(".change_result").select2();
 
