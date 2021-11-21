@@ -720,7 +720,7 @@ class ProjetController extends Controller
             $messageParcelles->setDate(new DateTime('now'));
             $em = $this->getDoctrine()->getManager();
             $em->persist($messageParcelles);
-            if ($annuaireMailer->handleMessage($messageParcelles, $errors, $dir)) {
+            if ($annuaireMailer->handleParcelleMessage($messageParcelles, $errors, $dir)) {
                 $em->flush();
                 $this->addFlash('success', 'Mail envoyé.');
                 // return $this->redirectToRoute('projet_edit', ['id' => $projet]);

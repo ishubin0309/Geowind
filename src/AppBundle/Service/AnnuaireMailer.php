@@ -22,6 +22,11 @@ class AnnuaireMailer
         return $this->sendMail($message, $errors,  $dir);
     }
     
+    public function handleParcelleMessage(MessageParcelles $message, &$errors,  $dir='')
+    {
+        return $this->sendMail($message, $errors,  $dir);
+    }
+    
     public function handleMessageProprietaire(MessageProprietaire $message, &$errors,  $dir='')
     {
         return $this->sendMail($message, $errors,  $dir);
