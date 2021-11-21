@@ -41,6 +41,20 @@ class MessageParcellesType extends AbstractType
                 'label' => 'Fichier',
                 'required' => false,
             ])
+            ->add('communes', TextType::class, [
+                'label' => 'Communes',
+                'required' => false,
+                'attr' => array(
+                    'class' => 'hide'
+                )
+            ])
+            ->add('parcelles', TextType::class, [
+                'label' => 'Parcelles',
+                'required' => false,
+                'attr' => array(
+                    'class' => 'hide'
+                )
+            ])
         ;
     }
 

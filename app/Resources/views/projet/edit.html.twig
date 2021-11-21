@@ -3349,23 +3349,25 @@
     $('#projet_parcelles_send_mail').click(function () {
       if(!$(this).hasClass('disabled')) {
         var selectedParcellesForEmail = [];
-        var selectedCommunes = [];
-        var selectedDepartements = [];
+        var selectedCommunesForEmail = [];
+        var selectedDepartementsForEmail = [];
         $($collectionHolderParcelle).find('tr.info').each(function(i,element) {
           selectedParcellesForEmail.push($(element).find('input[id$="_nom"]').val());
-          if(!selectedCommunes.includes($(element).find('select[id$="_commune"] :selected').text().trim())) {
-            selectedCommunes.push($(element).find('select[id$="_commune"] :selected').text().trim());
-            selectedDepartements.push($(element).find('select[id$="_departement"] :selected').text().trim());
+          if(!selectedCommunesForEmail.includes($(element).find('select[id$="_commune"] :selected').text().trim())) {
+            selectedCommunesForEmail.push($(element).find('select[id$="_commune"] :selected').text().trim());
+            selectedDepartementsForEmail.push($(element).find('select[id$="_departement"] :selected').text().trim());
           }
         });
         $('#message_parcelles_object').val('Sujet');
         $('#message_parcelles_body').val('Madame, monsieur,'+"\n\n"+
-        'Nous réalisons actuellement une étude de faisabilité foncière d’un projet d’énergie renouvelable situé sur la commune '+ selectedCommunes.join() +' dans le départment de '+ selectedDepartements.join() +"\n\n"+
+        'Nous réalisons actuellement une étude de faisabilité foncière d’un projet d’énergie renouvelable situé sur la commune '+ selectedCommunesForEmail.join() +' dans le départment de '+ selectedDepartementsForEmail.join() +"\n\n"+
         'A cette fin,nous sollicitons de votre part, la communication des matices cadastrales des parcelles suivantes afin de demander l’avis des propriétaires concernés.'+"\n\n"+
         'Vous remerciant par avance, je vous prie d\'agréer, madame, monsieur, l’expression de mes salutations distinguées'+"\n\n"+
-        'Commune: '+ selectedCommunes.join() +"\n"+
-        'Département: '+ selectedDepartements.join() +"\n"+
+        'Commune: '+ selectedCommunesForEmail.join() +"\n"+
+        'Département: '+ selectedDepartementsForEmail.join() +"\n"+
         'Parcelles: '+ selectedParcellesForEmail.join());
+        $('#message_parcelles_communes').val(selectedCommunesForEmail.join());
+        $('#message_parcelles_parcelles').val(selectedParcellesForEmail.join());
         $('.send-mail-modal').modal('show');
       }
     });

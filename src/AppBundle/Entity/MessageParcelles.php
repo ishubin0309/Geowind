@@ -91,7 +91,14 @@ class MessageParcelles
      *
      * @ORM\Column(type="string", nullable=true)
      */
-    private $result;
+    private $communes;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $parcelles;
 
     /**
      * @var string
@@ -159,9 +166,14 @@ class MessageParcelles
         return $this->body;
     }
 
-    public function getResult()
+    public function getCommunes()
     {
-        return $this->result;
+        return $this->communes;
+    }
+
+    public function getParcelles()
+    {
+        return $this->parcelles;
     }
 
     public function setId($id)
@@ -200,9 +212,15 @@ class MessageParcelles
         return $this;
     }
 
-    public function setResult($result)
+    public function setCommunes($communes)
     {
-        $this->result = $result;
+        $this->communes = $communes;
+        return $this;
+    }
+
+    public function setParcelles($parcelles)
+    {
+        $this->parcelles = $parcelles;
         return $this;
     }
 
