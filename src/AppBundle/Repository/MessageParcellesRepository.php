@@ -9,11 +9,11 @@ class MessageParcellesRepository extends EntityRepository
 {
     public function findAll()
     {
-        $query = $this->createQueryBuilder('message')
-                ->select(['message', 'projet', 'user'])
-                ->leftJoin('message.projet', 'projet')
-                ->leftJoin('message.createdBy', 'user')
-                ->orderBy('message.createdAt', 'ASC')
+        $query = $this->createQueryBuilder('messageParcelles')
+                ->select(['messageParcelles', 'projet', 'user'])
+                ->leftJoin('messageParcelles.projet', 'projet')
+                ->leftJoin('messageParcelles.createdBy', 'user')
+                ->orderBy('messageParcelles.createdAt', 'ASC')
         ;
 
         return $query->getQuery()->getResult();
