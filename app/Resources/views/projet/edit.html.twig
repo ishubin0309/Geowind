@@ -3354,7 +3354,7 @@
         $($collectionHolderParcelle).find('tr.info').each(function(i,element) {
           selectedParcellesForEmail.push($(element).find('input[id$="_nom"]').val());
           selectedCommunes.push($(element).find('select[id$="_commune"] :selected').text().replace(/\(.+/, '').trim());
-          selectedDepartement.push($(element).find('select[id$="_departement"] :selected').text().replace(/\(.+/, '').trim());
+          selectedDepartements.push($(element).find('select[id$="_departement"] :selected').text().replace(/\(.+/, '').trim());
         });
         $('#message_parcelles_object').val('Sujet');
         $('#message_parcelles_body').val('Madame, monsieur,'+"\n\n"+
