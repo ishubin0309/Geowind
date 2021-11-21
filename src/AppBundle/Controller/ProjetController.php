@@ -717,9 +717,9 @@ class ProjetController extends Controller
             $annuaireMailer = new AnnuaireMailer($this->getParameter('mailer_password'));
             $errors = [];
             $dir = $this->getParameter('document_upload_dir');
-            $formMail->setDate(new DateTime('now'));
+            $messageParcelles->setDate(new DateTime('now'));
             $em = $this->getDoctrine()->getManager();
-            $em->persist($formMail);
+            $em->persist($messageParcelles);
             if ($annuaireMailer->handleMessage($messageParcelles, $errors, $dir)) {
                 $em->flush();
                 $this->addFlash('success', 'Mail envoyé.');
