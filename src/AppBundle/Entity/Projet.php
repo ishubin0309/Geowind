@@ -350,6 +350,14 @@ class Projet
     private $messages;
     
     /**
+     * @var ArrayCollection|Message[]
+     * 
+     * @ORM\OneToMany(targetEntity="MessageParcelles", mappedBy="projet")
+     * @ORM\OrderBy({"createdAt" = "ASC"})
+     */
+    private $messagesParcelles;
+    
+    /**
      * @var ArrayCollection|DateCle[]
      *
      * @ORM\OneToMany(targetEntity="DateCle", mappedBy="projet", cascade={"all"}, orphanRemoval=true)
@@ -525,6 +533,8 @@ class Projet
         $this->parcelles = new ArrayCollection();
         $this->notes = new ArrayCollection();
         $this->proprietaires = new ArrayCollection();
+        $this->messages = new ArrayCollection();
+        $this->messagesParcelles = new ArrayCollection();
     }
 
     /**
@@ -1477,6 +1487,43 @@ class Projet
     public function removeMessage(Messagerie $message)
     {
         $this->messages->removeElement($message);
+    }
+    
+    /**
+     * @return ArrayCollection|MessageParcelles[]
+     */
+    public function getMessagesParcelles()
+    {
+        return $this->messages;
+    }
+
+    /**
+     * @param ArrayCollection $messagesParcelles
+     * @return \AppBundle\Entity\Projet
+     */
+    public function setMessagesParcelles(ArrayCollection $messagesParcelles)
+    {
+        $this->messagesParcelles = $messagesParcelles;
+        return $this;
+    }
+    
+    /**
+     * @param \AppBundle\Entity\Messagerie $message
+     */
+    public function addMessagesParcelle(MessageParcelles $messagesParcelle)
+    {
+        if (!$this->messagesParcelles->contains($messagesParcelle)) {
+            $messagesParcelle->setProjet($this);
+            $this->messagesParcelles->add($message);
+        }
+    }
+
+    /**
+     * @param \AppBundle\Entity\MessageParcelles $messagesParcelle
+     */
+    public function removeMessagesParcelle(MessageParcelles $messagesParcelle)
+    {
+        $this->messagesParcelles->removeElement($messagesParcelle);
     }
     
     /**
