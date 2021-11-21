@@ -18,7 +18,7 @@ use DateTime;
  *
  * @author Haffoudhi
  *
- * @ORM\Entity(repositoryClass="AppBundle\Repository\MessageRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\MessageParcellesRepository")
  * @Vich\Uploadable
  */
 class MessageParcelles
