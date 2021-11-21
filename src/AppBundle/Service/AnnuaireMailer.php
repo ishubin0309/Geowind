@@ -4,6 +4,7 @@ namespace AppBundle\Service;
 
 use AppBundle\Entity\Message;
 use AppBundle\Entity\MessageProprietaire;
+use AppBundle\Entity\MessageParcelles;
 
 /**
  * Haffoudhi
