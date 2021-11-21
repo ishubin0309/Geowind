@@ -877,7 +877,7 @@
       if(!communeIdsArray.length) {
         communeIdsArray.push($('#projet_communes option:selected').val());
       }
-      if(communeIdsArray.length) {
+      if(communeIdsArray.length>0) {
         $.ajax({
           url: "{{ path('france_cadastre') }}",
           dataType: 'json',
@@ -2533,7 +2533,7 @@
             if(!communeIdsArray.length) {
               communeIdsArray.push($('#projet_parcelles select[id$="_commune"]:eq(0) option:selected').val());
             }
-            if(communeIdsArray.length) {
+            if(communeIdsArray.length>0) {
               $.ajax({
                 url: "{{ path('france_cadastre') }}",
                 dataType: 'json',
