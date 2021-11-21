@@ -783,18 +783,44 @@ class ProjetController extends Controller
     }
 
     /**
-     * @Route("/rappel-parcelles", name="rappel_parcelles")
+     * @Route("/message-parcelles", name="message_parcelles")
      */
-    public function rappelParcellesAction(Request $request)
+    public function messageParcellesAction(Request $request)
     {   
         $em = $this->getDoctrine()->getManager();
 
         $messages = $em->getRepository('AppBundle:MessageParcelles')
                         ->findAll();
 
-        return $this->render('projet/rappel_parcelles.html.twig', [
+        return $this->render('projet/message_parcelles.html.twig', [
             'messages' => $messages,
         ]);
+    }
+
+    /**
+     * @Route("/message-parcelle/{id}/supprimer", name="message_parcelle_delete", options={ "expose": true })
+     * @Method("DELETE")
+     * @Security("has_role('ROLE_ADMIN')")
+     */
+    public function messageDeleteAction(Request $request, MessageParcelles $message)
+    {
+        $csrf = $request->request->get('csrf', null);
+
+        if ($this->isCsrfTokenValid('token', $csrf)) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $em = $this->getDoctrine()->getManager();
+
+        $response = new JsonResponse();
+        $response->setData(['success' => 0]);
+        $em = $this->getDoctrine()->getManager();
+        $sujet = $message->getObject();
+        $em->remove($message);
+        $em->flush();
+        $this->addFlash('success', 'Message « '.$sujet.' » a été supprimé.');
+
+        return $response;
     }
 
     function replaceText($element, $variable, $value) {

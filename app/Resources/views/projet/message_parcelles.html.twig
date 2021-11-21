@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
-{% set title = 'Mairie' %}
-{% set item = 'annuaire' %}
+{% set title = 'Message Parcelles' %}
+{% set item = 'message_parcelle' %}
 
 {% block body %}
   <style>
@@ -134,9 +134,7 @@
         { targets: 3, searchable: false },
         { targets: 4, searchable: false },
         { targets: 5, searchable: false, orderable: false },
-        { targets: 6, orderable: false },
-        { targets: 7, searchable: false },
-        { targets: 8, searchable: false }
+        { targets: 6, orderable: false, orderable: false }
     ],
     paging: false,
     bInfo: false,
@@ -151,8 +149,7 @@
   {% if is_granted('ROLE_ADMIN') %}
   $('.button-delete').dblclick(function() {
     id = $(this).attr('id');
-    type = $(this).attr('type');
-    title = type=='message' ? 'Le message sera supprimé définitivement.' : 'L\'appel sera supprimé définitivement.';
+    title = 'Le message sera supprimé définitivement.';
     if (!id) {
       return;
     }
@@ -173,7 +170,7 @@
       if (isConfirm) {
         var csrf = '{{ csrf_token('token')|e('js') }}';
         $.ajax({
-          url: Routing.generate(type + '_delete', {id: id}),
+          url: Routing.generate('message_parcelle_delete', {id: id}),
           type: 'DELETE',
           data: {token: csrf},
           success: function(result) {
@@ -187,12 +184,6 @@
 
   });
   {% endif %}
-  $('.reminder-datepicker').datepicker({
-    format: 'dd/mm/yyyy',
-    autoclose: true,
-    language: 'fr',
-    clearBtn: true,
-  });
   $('#message_parcelles_nav a').click(function (e) {
     var attr = $(this).attr('rel');
     if(typeof attr !== typeof undefined && attr !== false) {
