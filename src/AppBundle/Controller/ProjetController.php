@@ -782,6 +782,21 @@ class ProjetController extends Controller
         ]);
     }
 
+    /**
+     * @Route("/rappel-parcelles", name="rappel_parcelles")
+     */
+    public function rappelParcellesAction(Request $request)
+    {   
+        $em = $this->getDoctrine()->getManager();
+
+        $messages = $em->getRepository('AppBundle:MessageParcelles')
+                        ->findAll();
+
+        return $this->render('projet/rappel_parcelles.html.twig', [
+            'messages' => $messages,
+        ]);
+    }
+
     function replaceText($element, $variable, $value) {
         $text_class = 'PhpOffice\PhpWord\Element\Text';
         $table_class = 'PhpOffice\PhpWord\Element\Table';
