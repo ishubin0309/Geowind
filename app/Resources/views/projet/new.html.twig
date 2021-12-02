@@ -197,12 +197,11 @@
       <fieldset class="hide" id="tab_parcelles">
         <legend>Parcelles</legend>
         <ul class="nav nav-tabs" role="tablist">
-          <li role="presentation" class="active"><a href="#parcelleTable" aria-controls="parcelleTable" role="tab" data-toggle="tab">Table</a></li>
-          <li role="presentation"><a href="#parcelleCarte" aria-controls="parcelleCarte" role="tab" data-toggle="tab">Carte</a></li>
+          <li role="presentation" class="active"><a href="#parcelleCarte" aria-controls="parcelleCarte" role="tab" data-toggle="tab">Carte</a></li>
+          <li role="presentation"><a href="#parcelleTable" aria-controls="parcelleTable" role="tab" data-toggle="tab">Table</a></li>
         </ul>
         <div class="tab-content">
-          <div role="tabpanel" class="tab-pane active" id="parcelleTable">{{ form_widget(form.parcelles) }}</div>
-          <div role="tabpanel" class="tab-pane" id="parcelleCarte">
+          <div role="tabpanel" class="tab-pane active" id="parcelleCarte">
             <div class="form-group form-group-sm">
               <label class="col-sm-4 control-label">Section</label>
               <div class="col-sm-6">
@@ -229,6 +228,7 @@
             </table>
               
           </div>
+          <div role="tabpanel" class="tab-pane" id="parcelleTable">{{ form_widget(form.parcelles) }}</div>
         </div>
         
       </fieldset>
