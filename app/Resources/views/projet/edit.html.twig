@@ -883,8 +883,9 @@
 
             var note = '';
             $('#projet_parcelles tr').each(function() {
-              if(!note && $(this).find('input[id$="_nom"]').val().trim() == feature.section + feature.numero && $(this).find('input[id$="_note"]').val().trim()) {
-                note = 'Notes: ' + $(this).find('input[id$="_note"]').val().trim();
+              sectionConcatNumero = feature.section + feature.numero;
+              if(!note && $(this).find('input[id$="_nom"]').val().trim() == sectionConcatNumero && $(this).find('input[id$="_note"]').val().trim()) {
+                note = 'Notes: ' + $(this).find('input[id$="_note"]').val().trim() + '<br />';
               }
             });
             
