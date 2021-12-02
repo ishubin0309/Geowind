@@ -888,6 +888,9 @@
                 note = 'Notes: ' + $(this).find('input[id$="_note"]').val().trim() + '<br />';
               }
             });
+            if(!note) {
+              note = 'Notes: -<br />';
+            }
             
             var popup = L.popup()
                 .setLatLng(e.latlng)
@@ -949,6 +952,9 @@
                         note = 'Notes: ' + $(this).find('input[id$="_note"]').val().trim() + '<br />';
                       }
                     });
+                    if(!note) {
+                      note = 'Notes: -<br />';
+                    }
                     var popup = L.popup()
                         .setLatLng(latlng)
                         .setContent("<h2>Parcelle " + feature.properties.section + feature.properties.numero + "</h2><p>" + note + "Superficie : " + feature.properties.contenance + " m2<br />Section : " + feature.properties.section + "<br />Numéro : " + feature.properties.numero + "<br />préfixe : " + feature.properties.prefixe + "<br /><a href='https://france-cadastre.fr/predemande?commune=Chelles&section=" + feature.properties.section + "&prefixe=" + feature.properties.prefixe + "&plan=" + feature.properties.numero + "&insee=77108&' target='_blank'>Extrait de plan cadastral (PDF)</a><br/><a href='https://france-cadastre.fr/matrice?dep=77&section=" + feature.properties.section + "&ville=Chelles&plan=" + feature.properties.numero + "&insee=77108' target='_blank'>Qui est le propriétaire ?</a><br/><a href='https://france-cadastre.fr/risques?commune=Chelles&section=" + feature.properties.section + "&prefixe=" + feature.properties.prefixe + "&plan=" + feature.properties.numero + "&insee=77108&scale=4000' target='_blank'>Étude des risques</a><br/><a href='https://france-cadastre.fr/permisdeconstruire/chelles-77&section=" + feature.properties.section + "&plan=" + feature.properties.numero + "' target='_blank'>Permis de construire</a></p>")
