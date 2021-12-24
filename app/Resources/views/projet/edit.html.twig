@@ -3713,7 +3713,7 @@
       }
       if($('#tab_foncier legend span').length) $('#tab_foncier legend span').remove();
       if(parcelles_count) {
-        selectedParcelles = ' <span>(Parcelles: <t style="color:green;">' + parcelles.join(', ') + '</t>)</span>';
+        selectedParcelles = ' <span>(Parcelles: <small style="color:green;">' + parcelles.join(', ') + '</small>)</span>';
         $('#tab_foncier legend').append(' <span style="color:red;">'+accords_count+'/'+parcelles_count+'</span>' + selectedParcelles);
         $('#tab_parcelles legend').html('Parcelles: <span style="color:red;">('+parcellesSurfaces.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')+' m2 / '+(Math.round((parcellesSurfaces/10000)*100)/100).toString().replace(/\./,',')+' ha)</span>');
       }
