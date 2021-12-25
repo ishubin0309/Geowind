@@ -3718,12 +3718,12 @@
         var parcellesInFoncier = [];
         $.each(parcelles, function(j, word) {
           if(!counted_accords.includes(word)) {
-            parcellesLabelText.push(word);
+            parcellesInFoncier.push(word);
           } else {
-            parcellesLabelTextparcellesLabelText.push('<small style="color:gray;">' + word + '</small>');
+            parcellesInFoncier.push('<small style="color:gray;">' + word + '</small>');
           }
         });
-        selectedParcelles = ' <span>(Parcelles: ' + parcellesLabelTextparcellesLabelText.join(', ') + ')</span>';
+        selectedParcelles = ' <span>(Parcelles: ' + parcellesInFoncier.join(', ') + ')</span>';
         $('#tab_foncier legend').append(' <span style="color:red;">'+accords_count+'/'+parcelles_count+'</span>' + selectedParcelles);
         $('#tab_parcelles legend').html('Parcelles: <span style="color:red;">('+parcellesSurfaces.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')+' m2 / '+(Math.round((parcellesSurfaces/10000)*100)/100).toString().replace(/\./,',')+' ha)</span>');
       }
