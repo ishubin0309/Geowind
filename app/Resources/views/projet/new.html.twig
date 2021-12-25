@@ -3375,6 +3375,7 @@
         surface = parseInt($(element).find('input[id$="_surface"]').val().replace(/\s/g, ''));
         if(surface) parcellesSurfaces += surface;
       });
+      var selectedParcellesInFoncier = [];
       var counted_accords = [];
       var accords_count = $('#projet_proprietaires tr.proprietaire_entry').length;
       if(accords_count) {
@@ -3386,12 +3387,21 @@
               accords_count++;
               counted_accords.push(word);
             }
+            selectedParcellesInFoncier.push(word);
           });
         });
       }
       if($('#tab_foncier legend span').length) $('#tab_foncier legend span').remove();
       if(parcelles_count) {
-        selectedParcelles = ' <span style="color:black;">(Parcelles: <small style="color:green;">' + parcelles.join(', ') + '</small>)</span>';
+        var parcellesInFoncier = [];
+        $.each(parcelles, function(j, word) {
+          if(!selectedParcellesInFoncier.includes(word)) {
+            parcellesInFoncier.push(word);
+          } else {
+            parcellesInFoncier.push('<small style="color:gray;">' + word + '</small>');
+          }
+        });
+        selectedParcelles = ' <span style="color:black;">(Parcelles: ' + parcellesInFoncier.join(', ') + ')</span>';
         $('#tab_foncier legend').append(' <span style="color:red;">'+accords_count+'/'+parcelles_count+'</span>' + selectedParcelles);
         $('#tab_parcelles legend').html('Parcelles: <span style="color:red;">('+parcellesSurfaces.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')+' m2 / '+(Math.round((parcellesSurfaces/10000)*100)/100).toString().replace(/\./,',')+' ha)</span>');
       }
