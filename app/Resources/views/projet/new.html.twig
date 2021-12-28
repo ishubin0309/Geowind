@@ -957,7 +957,7 @@
       
     });
 
-    $.ajax({
+    {# $.ajax({
       url: "{{ asset('Poste-source.geojson') }}",
       beforeSend: function(xhr) {
         if (xhr.overrideMimeType) {
@@ -969,7 +969,7 @@
       success:  function(data, textStatus, request) {
         L.geoJson(data, {}).addTo(mainMap);
       }
-    });
+    }); #}
 
     var typeProjetIcons = {{ grid_helper.getJsonIconsTypeProjets|raw }};
     var update_type_milieu = false;
