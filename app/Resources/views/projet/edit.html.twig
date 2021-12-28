@@ -1195,8 +1195,8 @@
       
     });
 
-    {# $.ajax({
-      url: "{{ asset('departements-100m.geojson') }}",
+    $.ajax({
+      url: "{{ asset('Poste-source.geojson') }}",
       beforeSend: function(xhr) {
         if (xhr.overrideMimeType) {
           xhr.overrideMimeType("application/json");
@@ -1207,7 +1207,7 @@
       success:  function(data, textStatus, request) {
         L.geoJson(data, {}).addTo(mainMap);
       }
-    }); #}
+    });
 
     var typeProjetIcons = {{ grid_helper.getJsonIconsTypeProjets|raw }};
     var update_type_milieu = false;
