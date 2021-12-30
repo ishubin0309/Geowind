@@ -482,6 +482,19 @@
       color: '#FF0080',
       features: ['ruler']
     }));
+
+    var measureControl = new L.Control.Measure({ 
+      position: 'topright', 
+      primaryLengthUnit: 'meters', 
+      secondaryLengthUnit: 'kilometers', 
+      primaryAreaUnit: 'sqmeters', 
+      secondaryAreaUnit: 'hectares', 
+      activeColor: '#991f00', 
+      completedColor: '#ff9980', 
+      decPoint: ',', 
+      thousandsSep: ' ' 
+    });
+    measureControl.addTo(mainMap);
     
     var update_marker = 1;
     mainMap.on('click', function(e) {
