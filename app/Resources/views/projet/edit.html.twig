@@ -686,6 +686,9 @@
       color: '#FF0080',
       features: ['ruler']
     }));
+
+    var measureControl = new L.Control.Measure({ position: 'topright', primaryLengthUnit: 'meters', secondaryLengthUnit: 'kilometers' });
+    measureControl.addTo(mainMap);
     
     var update_marker = 1;
     mainMap.on('click', function(e) {
