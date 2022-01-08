@@ -1074,13 +1074,19 @@
               pointToLayer: function (feature, latlng) {
                   return L.circleMarker(latlng, geojsonMarkerOptions);
               }
-            })
+            });
             layerGroup.addLayer(layerPostesSources);
+            $('#postesSources').addClass('checked');
           }
         });
       } else {
-        layerGroup.removeLayer(layerPostesSources);
-        layerPostesSources = null;
+        if ($(this).hasClass('checked')) {
+          layerGroup.removeLayer(layerPostesSources);
+          $(this).removeClass('checked');
+        } else {
+          layerGroup.addLayer(layerPostesSources);
+          $(this).addClass('checked');
+        }
       }
     });
 
