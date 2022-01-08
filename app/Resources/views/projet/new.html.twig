@@ -282,6 +282,19 @@
       <div id="parcelleMap" class="map map-home" style="height: 500px; margin-bottom: 20px;"></div>
       <div id="map_search">
         <div class="form-group form-group-sm">
+          <label class="col-md-4 control-label" for="circleRadius">Rayon du cercle</label>
+          <div class="col-md-4">
+            <select id="circleRadius" class="form-control">
+              <option value="50">50km</option>
+              <option value="100">100km</option>
+              <option value="150">150km</option>
+              <option value="200">200km</option>
+              <option value="300">300km</option>
+              <option value="500">500km</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group form-group-sm">
           <label class="col-sm-4 control-label">Rechercher une adresse</label>
           <div class="col-sm-8">
             <input type="text" class="form-control" id="location" placeholder="Rechercher une adresse">
@@ -368,6 +381,7 @@
     L.control.layers(baseMaps).addTo(mainMap);
 
     var marker = null;
+    var markerParcelle = null;
 
     var default_lat = null;
     var lat = null;
@@ -388,17 +402,34 @@
       if ($.isNumeric(lat) && $.isNumeric(long) && marker === null && lat != null && long != null) {
         marker = L.marker([lat, long]).addTo(mainMap);
         mainMap.panTo(new L.LatLng(lat, long));
-        marker = L.marker([lat, long]).addTo(parcelleMap);
+        markerParcelle = L.marker([lat, long]).addTo(parcelleMap);
         parcelleMap.panTo(new L.LatLng(lat, long));
       }
 
       if ($.isNumeric(lat) && $.isNumeric(long) && marker != null && lat != null && long != null) {
         marker.setLatLng([lat, long]);
         mainMap.panTo(new L.LatLng(lat, long));
+        markerParcelle.setLatLng([lat, long]);
         parcelleMap.panTo(new L.LatLng(lat, long));
       }
-
+      if (theCircle != null) {
+        mainMap.removeLayer(theCircle);
+      };
+      updateCircleRadius(lat, long)
     }
+
+    function updateCircleRadius(lat, long) {
+      var dist = document.getElementById("circleRadius").value;
+      xy = [lat, long];  //center point of circle
+      var theRadius = parseInt(dist) * 1000  //1000 meters in a km //dist is a string so it's convered to an Interger.
+      // draw circle to see the selection area
+      theCircle = L.circle(xy, theRadius , {   /// Number is in Meters
+        color: 'orange',
+        fillOpacity: 0,
+        opacity: 1
+      }).addTo(mainMap);
+    }
+
     var customControl =  L.Control.extend({
 
       options: {
