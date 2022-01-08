@@ -473,7 +473,7 @@
             </select>
           </div>
           <div class="col-md-4">
-            <input id="postesSources" class="btn btn-primary btn-sm" value="Postes sources">
+            <input id="postesSources" class="btn btn-link btn-sm" value="Postes sources">
           </div>
         </div>
         <div class="form-group form-group-sm">
@@ -1319,6 +1319,7 @@
         });
       } else {
         layerGroup.removeLayer(layerPostesSources);
+        delete layerPostesSources;
       }
     });
 
