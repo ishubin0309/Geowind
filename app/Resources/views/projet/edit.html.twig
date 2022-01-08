@@ -474,6 +474,11 @@
           </div>
         </div>
         <div class="form-group form-group-sm">
+          <div class="col-md-4">
+            <button id="postesSources" class="btn btn-primary">Postes sources</button>
+          </div>
+        </div>
+        <div class="form-group form-group-sm">
           <label class="col-sm-4 control-label">Rechercher une adresse</label>
           <div class="col-sm-8">
             <input type="text" class="form-control" id="location" placeholder="Rechercher une adresse">
@@ -1290,21 +1295,33 @@
       opacity: 1,
       fillOpacity: 0.8
     };
-    $.ajax({
-      url: "{{ asset('Poste-source.geojson') }}",
-      beforeSend: function(xhr) {
-        if (xhr.overrideMimeType) {
-          xhr.overrideMimeType("application/json");
-        }
-      },
-      dataType: 'json',
-      data: null,
-      success:  function(data, textStatus, request) {
-        L.geoJson(data, {
-          pointToLayer: function (feature, latlng) {
-              return L.circleMarker(latlng, geojsonMarkerOptions);
+
+    var layerPostesSources;
+    var layerGroup = new L.LayerGroup();
+    $('#postesSources').click(function() {
+      if (layerPostesSources == 'undefined') {
+        layerGroup = new L.LayerGroup();
+        $.ajax({
+          url: "{{ asset('Poste-source.geojson') }}",
+          beforeSend: function(xhr) {
+            if (xhr.overrideMimeType) {
+              xhr.overrideMimeType("application/json");
+            }
+          },
+          dataType: 'json',
+          data: null,
+          success:  function(data, textStatus, request) {
+            layerPostesSources = L.geoJson(data, {
+              pointToLayer: function (feature, latlng) {
+                  return L.circleMarker(latlng, geojsonMarkerOptions);
+              }
+            })
+            layerGroup.addLayer(layerPostesSources);
+            layerGroup.addTo(mainMap);
           }
-        }).addTo(mainMap);
+        });
+      } else {
+        layerGroup.removeLayer(layerPostesSources);
       }
     });
 
