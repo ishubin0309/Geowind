@@ -1296,8 +1296,9 @@
 
     var layerPostesSources;
     var layerGroup = new L.LayerGroup();
+    layerGroup.addTo(mainMap);
     $('#postesSources').click(function() {
-      if (layerPostesSources == 'undefined') {
+      if (layerPostesSources == undefined) {
         $.ajax({
           url: "{{ asset('Poste-source.geojson') }}",
           beforeSend: function(xhr) {
@@ -1314,7 +1315,6 @@
               }
             })
             layerGroup.addLayer(layerPostesSources);
-            layerGroup.addTo(mainMap);
           }
         });
       } else {
