@@ -1298,7 +1298,6 @@
     var layerGroup = new L.LayerGroup();
     $('#postesSources').click(function() {
       if (layerPostesSources == 'undefined') {
-        layerGroup = new L.LayerGroup();
         $.ajax({
           url: "{{ asset('Poste-source.geojson') }}",
           beforeSend: function(xhr) {
