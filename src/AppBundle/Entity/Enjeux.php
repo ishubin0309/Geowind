@@ -170,6 +170,7 @@ class Enjeux
             'echeance' => 'Echéances',
         ];
     }
+    
     public static function getFacteurType($facteur)
     {
         $types = self::getFacteurList();

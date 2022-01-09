@@ -2,7 +2,7 @@
 
 namespace AppBundle\Form;
 
-use AppBundle\Entity\Projet;
+use AppBundle\Entity\Document;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -29,9 +29,10 @@ class DocumentType extends AbstractType
                 'html5' => false,
                 'required' => false,
             ])
-            ->add('type', TextType::class, [
+            ->add('type', ChoiceType::class, [
                 'label' => 'Type',
                 'required' => false,
+                'choices' => array_flip(Document::getTypeList()),
             ])
             ->add('titre', TextType::class, [
                 'label' => 'Titre',

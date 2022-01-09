@@ -285,14 +285,16 @@
           <label class="col-md-4 control-label" for="circleRadius">Rayon du cercle</label>
           <div class="col-md-4">
             <select id="circleRadius" class="form-control">
-              <option value="1">1km</option>
-              <option value="10">10km</option>
-              <option value="50" selected>50km</option>
-              <option value="100">100km</option>
-              <option value="150">150km</option>
-              <option value="200">200km</option>
-              <option value="300">300km</option>
-              <option value="500">500km</option>
+              <option value="500">0.5km</option>
+              <option value="1000">1km</option>
+              <option value="5000">5km</option>
+              <option value="10000">10km</option>
+              <option value="15000">15km</option>
+              <option value="20000">20km</option>
+              <option value="25000">25km</option>
+              <option value="30000">30km</option>
+              <option value="50000">50km</option>
+              <option value="70000">70km</option>
             </select>
           </div>
           <div class="col-md-4">
@@ -426,9 +428,9 @@
     function updateCircleRadius(lat, long) {
       var dist = document.getElementById("circleRadius").value;
       xy = [lat, long];  //center point of circle
-      var theRadius = parseInt(dist) * 1000  //1000 meters in a km //dist is a string so it's convered to an Interger.
+      var theRadius = parseInt(dist)
       // draw circle to see the selection area
-      theCircle = L.circle(xy, theRadius , {   /// Number is in Meters
+      theCircle = L.circle(xy, theRadius , {   // Number is in Meters
         color: 'orange',
         fillOpacity: 0,
         opacity: 1

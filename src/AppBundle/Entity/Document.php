@@ -291,6 +291,21 @@ class Document
     }
 
     /**
+     * @return array
+     */
+    public static function getTypeList()
+    {
+        return [
+            'plan_contexte' => 'Plan de contexte',
+            'plan_zonage' => 'Plan de zonage',
+            'plan_implantation' => 'Plan d\'implantation',
+            'maitrise_fonciere' => 'Maîtrise foncière',
+            'delibération' => 'Délibération',
+            'pre_faisabilite' => 'Pré-faisabilité',
+        ];
+    }
+
+    /**
      * @return string
      */
     public function __toString()
