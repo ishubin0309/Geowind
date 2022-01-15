@@ -475,7 +475,7 @@
             </select>
           </div>
           <div class="col-md-4">
-            <a id="postesSources" href="#"><i style"color:#FF0000;" class="fa fa-circle"></i> Postes sources</a>
+            <a id="postesSources" href="#"><i style="color:#FF0000;" class="fa fa-circle"></i> Postes sources</a>
           </div>
         </div>
         <div class="form-group form-group-sm">
@@ -1318,16 +1318,16 @@
               }
             });
             layerGroup.addLayer(layerPostesSources);
-            $('#postesSources i').removeClass('fa-circle').addClass('fa-circle-o');
+             $('#postesSources i').removeClass('fa-circle-o').addClass('fa-circle');
           }
         });
       } else {
-        if ($(this).find('i').hasClass('fa-circle-o')) {
+        if ($(this).find('i').hasClass('fa-circle')) {
           layerGroup.removeLayer(layerPostesSources);
-          $(this).find('i').removeClass('fa-circle-o').addClass('fa-circle');
+          $(this).find('i').removeClass('fa-circle').addClass('fa-circle-o');
         } else {
           layerGroup.addLayer(layerPostesSources);
-          $(this).find('i').removeClass('fa-circle').addClass('fa-circle-o');
+          $(this).find('i').removeClass('fa-circle-o').addClass('fa-circle');
         }
       }
     });
