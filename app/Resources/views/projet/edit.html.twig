@@ -475,7 +475,7 @@
             </select>
           </div>
           <div class="col-md-4">
-            <input id="postesSources" class="btn btn-link btn-sm" value="Postes sources">
+            <a id="postesSources" href="#"><i style"color:#FF0000;" class="fa-circle"></i> Postes sources</a>
           </div>
         </div>
         <div class="form-group form-group-sm">
@@ -1299,7 +1299,8 @@
     var layerPostesSources;
     var layerGroup = new L.LayerGroup();
     layerGroup.addTo(mainMap);
-    $('#postesSources').click(function() {
+    $('#postesSources').click(function(e) {
+      e.preventDefault();
       if (layerPostesSources == undefined) {
         $.ajax({
           url: "{{ asset('Poste-source.geojson') }}",
@@ -1317,16 +1318,16 @@
               }
             });
             layerGroup.addLayer(layerPostesSources);
-            $('#postesSources').addClass('checked');
+            $('#postesSources i').removeClass('fa-circle').addClass('fa-circle-o');
           }
         });
       } else {
-        if ($(this).hasClass('checked')) {
+        if ($(this).find('i').hasClass('fa-circle-o')) {
           layerGroup.removeLayer(layerPostesSources);
-          $(this).removeClass('checked');
+          $(this).find('i').removeClass('fa-circle-o').addClass('fa-circle');
         } else {
           layerGroup.addLayer(layerPostesSources);
-          $(this).addClass('checked');
+          $(this).find('i').removeClass('fa-circle').addClass('fa-circle-o');
         }
       }
     });
