@@ -149,15 +149,15 @@
       </fieldset>
 
       <fieldset class="hide" id="tab_projet">
+        <div class="form_site hide" id="form_site_terrain_gisement">
+          {{ form_row(form.terrain.vitesseVent) }}
+          {{ form_row(form.terrain.productiblePv) }}
+        </div>
         <div class="hide">
           <legend>Implantation</legend>
           {{ form_row(form.typeImplantation) }}
           {{ form_row(form.titreImplantation) }}
           {{ form_row(form.photoImplantationFile) }}
-        </div>
-        <div class="form_site hide" id="form_site_terrain_gisement">
-          {{ form_row(form.terrain.vitesseVent) }}
-          {{ form_row(form.terrain.productiblePv) }}
         </div>
         <legend>Conventions</legend>
         {{ form_row(form.contrat) }}
