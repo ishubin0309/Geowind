@@ -293,10 +293,12 @@
       </fieldset>
 
       <fieldset class="hide" id="tab_projet">
-        <legend>Implantation</legend>
-        {{ form_row(form.typeImplantation) }}
-        {{ form_row(form.titreImplantation) }}
-        {{ form_row(form.photoImplantationFile) }}
+        <div class="hide">
+          <legend>Implantation</legend>
+          {{ form_row(form.typeImplantation) }}
+          {{ form_row(form.titreImplantation) }}
+          {{ form_row(form.photoImplantationFile) }}
+        </div>
         <legend>Conventions</legend>
         {{ form_row(form.contrat) }}
         {{ form_row(form.debouche) }}
@@ -4023,7 +4025,7 @@
         $(this).parent().addClass('active');
         $('fieldset').addClass('hide');
         $('fieldset#' + attr).removeClass('hide');
-        if(attr != 'tab_localisation' && attr != 'tab_contacts' && attr != 'tab_site' && attr != 'tab_projet' && attr != 'tab_images') {
+        if(attr != 'tab_localisation' && attr != 'tab_contacts' && attr != 'tab_site' && attr != 'tab_projet' && attr != 'tab_images' && attr != 'tab_documents') {
           $('#map, #map_search').addClass('hide');
           $('#main_photo').addClass('hide');
           $('#fields_div').removeClass('col-sm-6');
