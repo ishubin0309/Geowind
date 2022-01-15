@@ -150,6 +150,7 @@
 
       <fieldset class="hide" id="tab_projet">
         <div class="form_site hide" id="form_site_terrain_gisement">
+          <legend>Gisement</legend>
           {{ form_row(form.terrain.vitesseVent) }}
           {{ form_row(form.terrain.productiblePv) }}
         </div>
@@ -3678,7 +3679,7 @@
       $('<legend>Urbanisme</legend>').insertBefore($('#projet_terrain_documentUrbanisme').parents('.form-group'));
       $('<legend>Energie</legend>').insertBefore($('#projet_terrain_pcaet').parents('.form-group'));
       $('<legend>Eoliennes</legend>').insertBefore($('#projet_terrain_eoliennesDepartement').parents('.form-group'));
-      $('<legend>Gisement</legend>').insertBefore($('#projet_terrain_vitesseVent').parents('.form-group'));
+      {# $('<legend>Gisement</legend>').insertBefore($('#projet_terrain_vitesseVent').parents('.form-group')); #}
       $('#projet_batimentExistant_bardage').parents('.form-group').addClass('hide');
       $('#projet_batimentExistant_ossature').parents('.form-group').addClass('hide');
       $('#projet_batimentExistant_charpente').parents('.form-group').addClass('hide');
