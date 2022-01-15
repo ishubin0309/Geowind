@@ -279,25 +279,16 @@
         </table>
       </fieldset>
 
-      <fieldset class="hide" id="tab_site">
-        <legend></legend>
-        <div class="form_site hide" id="form_site_terrain">
-          {{ form_widget(form.terrain) }}
-        </div>
-        <div class="form_site hide" id="form_site_batimentNouveau">
-          {{ form_row(form.batimentNouveau) }}
-        </div>
-        <div class="form_site hide" id="form_site_batimentExistant">
-          {{ form_widget(form.batimentExistant) }}
-        </div>
-      </fieldset>
-
       <fieldset class="hide" id="tab_projet">
         <div class="hide">
           <legend>Implantation</legend>
           {{ form_row(form.typeImplantation) }}
           {{ form_row(form.titreImplantation) }}
           {{ form_row(form.photoImplantationFile) }}
+        </div>
+        <div class="form_site hide" id="form_site_terrain_gisement">
+          {{ form_widget(form.terrain.vitesseVent) }}
+          {{ form_widget(form.terrain.productiblePv) }}
         </div>
         <legend>Conventions</legend>
         {{ form_row(form.contrat) }}
@@ -324,6 +315,19 @@
         {{ form_row(form.production) }}
         <div class="form-group form-group-sm"><label class="col-sm-4 control-label required" for="projet_potentiel"><strong>Potentiel (MW)</strong></label><div class="col-sm-8">    
           {{ form_widget(form.potentiel) }}</div>
+        </div>
+      </fieldset>
+
+      <fieldset class="hide" id="tab_site">
+        <legend></legend>
+        <div class="form_site hide" id="form_site_terrain">
+          {{ form_widget(form.terrain) }}
+        </div>
+        <div class="form_site hide" id="form_site_batimentNouveau">
+          {{ form_row(form.batimentNouveau) }}
+        </div>
+        <div class="form_site hide" id="form_site_batimentExistant">
+          {{ form_widget(form.batimentExistant) }}
         </div>
       </fieldset>
 
@@ -4048,6 +4052,11 @@
           }
           $('#fields_div').removeClass('col-sm-12');
           $('#fields_div').addClass('col-sm-6');
+        }
+        if(attr == 'tab_prjet') {
+          var type_site = $('#projet_typeSite').val();
+          if(type_site == 'terrain' || type_site == 'parking' || type_site == 'plan_deau') $('#form_site_terrain_gisement').removeClass('hide');
+          else $('#form_site_terrain_gisement').addClass('hide');
         }
         if(attr == 'tab_site') {
           loadParcMarkers();
