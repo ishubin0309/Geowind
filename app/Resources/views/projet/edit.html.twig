@@ -1318,16 +1318,16 @@
               }
             });
             layerGroup.addLayer(layerPostesSources);
-             $('#postesSources i').removeClass('fa-square-o').addClass('fa-square');
+             $('#postesSources i').removeClass('fa-square-o').addClass('fa-check-square');
           }
         });
       } else {
-        if ($(this).find('i').hasClass('fa-square')) {
+        if ($(this).find('i').hasClass('fa-check-square')) {
           layerGroup.removeLayer(layerPostesSources);
-          $(this).find('i').removeClass('fa-square').addClass('fa-square-o');
+          $(this).find('i').removeClass('fa-check-square').addClass('fa-square-o');
         } else {
           layerGroup.addLayer(layerPostesSources);
-          $(this).find('i').removeClass('fa-square-o').addClass('fa-square');
+          $(this).find('i').removeClass('fa-square-o').addClass('fa-check-square');
         }
       }
     });
