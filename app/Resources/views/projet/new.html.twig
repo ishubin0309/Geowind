@@ -415,7 +415,8 @@
 
     function updateMarkerPosition() {
       var dist = document.getElementById("circleRadius").value;
-      if (!dist) {
+      var theRadius = parseInt(dist)
+      if (!theRadius) {
         if ($.isNumeric(lat) && $.isNumeric(long) && marker === null && lat != null && long != null) {
           marker = L.marker([lat, long]).addTo(mainMap);
           mainMap.panTo(new L.LatLng(lat, long));
