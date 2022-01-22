@@ -469,6 +469,7 @@
           <label class="col-md-4 control-label" for="circleRadius">Rayon du cercle</label>
           <div class="col-md-4">
             <select id="circleRadius" class="form-control">
+              <option value="0">Point</option>
               <option value="500">0.5km</option>
               <option value="1000">1km</option>
               <option value="5000">5km</option>
@@ -617,24 +618,27 @@
     });
 
     function updateMarkerPosition() {
+      var dist = document.getElementById("circleRadius").value;
+      if (!dist) {
+        if ($.isNumeric(lat) && $.isNumeric(long) && marker === null && lat != null && long != null) {
+          marker = L.marker([lat, long]).addTo(mainMap);
+          mainMap.panTo(new L.LatLng(lat, long));
+          markerParcelle = L.marker([lat, long]).addTo(parcelleMap);
+          parcelleMap.panTo(new L.LatLng(lat, long));
+        }
 
-      if ($.isNumeric(lat) && $.isNumeric(long) && marker === null && lat != null && long != null) {
-        marker = L.marker([lat, long]).addTo(mainMap);
-        mainMap.panTo(new L.LatLng(lat, long));
-        markerParcelle = L.marker([lat, long]).addTo(parcelleMap);
-        parcelleMap.panTo(new L.LatLng(lat, long));
+        if ($.isNumeric(lat) && $.isNumeric(long) && marker != null && lat != null && long != null) {
+          marker.setLatLng([lat, long]);
+          mainMap.panTo(new L.LatLng(lat, long));
+          markerParcelle.setLatLng([lat, long]);
+          parcelleMap.panTo(new L.LatLng(lat, long));
+        }
+        if (theCircle != null) {
+          mainMap.removeLayer(theCircle);
+        };
+      } else {
+        updateCircleRadius(lat, long)
       }
-
-      if ($.isNumeric(lat) && $.isNumeric(long) && marker != null && lat != null && long != null) {
-        marker.setLatLng([lat, long]);
-        mainMap.panTo(new L.LatLng(lat, long));
-        markerParcelle.setLatLng([lat, long]);
-        parcelleMap.panTo(new L.LatLng(lat, long));
-      }
-      if (theCircle != null) {
-        mainMap.removeLayer(theCircle);
-      };
-      updateCircleRadius(lat, long)
     }
 
     function updateCircleRadius(lat, long) {
