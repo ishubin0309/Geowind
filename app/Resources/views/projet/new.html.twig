@@ -398,6 +398,7 @@
     var marker = null;
     var markerParcelle = null;
     var theCircle = null;
+    var theCircles = [];
 
     var default_lat = null;
     var lat = null;
@@ -430,9 +431,12 @@
           markerParcelle.setLatLng([lat, long]);
           parcelleMap.panTo(new L.LatLng(lat, long));
         }
-        if (theCircle != null) {
-          mainMap.removeLayer(theCircle);
-        };
+        if (theCircles.length) {
+          $.each(theCircles, function(i, theCircle) {
+            mainMap.removeLayer(theCircle);
+          });
+          theCircles = [];
+        }
       } else {
         updateCircleRadius(lat, long)
       }
@@ -448,6 +452,7 @@
         fillOpacity: 0,
         opacity: 1
       }).addTo(mainMap);
+      theCircles.push(theCircle);
     }
 
     var customControl =  L.Control.extend({
