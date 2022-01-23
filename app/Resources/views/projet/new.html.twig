@@ -1400,12 +1400,19 @@
                 $('#projet_maire').val(response['mairie']['maire']);
                 $('#projet_maireTelephone').val(response['mairie']['telephone']);
               }
+              if(!$('#tab_contacts legend span').length) {
+                $('#tab_contacts legend').append('<span style="color:red;"></span>');
+              }
+              $('#tab_contacts legend span').html('&nbsp;&nbsp;&nbsp;' + response['mairie']['horaire']);
             } else {
               $('#projet_mairie').val('');
               $('#projet_mairieTelephone').val('');
               if(update_maire) {
                 $('#projet_maire').val('');
                 $('#projet_maireTelephone').val('');
+              }
+              if($('#tab_contacts legend span').length) {
+                $('#tab_contacts legend span').remove();
               }
             }
             $('#projet_mairie').trigger('change');
