@@ -500,7 +500,7 @@ class Mairie
         return $this;
     }
 
-    public function setHoraire($region)
+    public function setHoraire($horaire)
     {
         $this->horaire = $horaire;
         return $this;
