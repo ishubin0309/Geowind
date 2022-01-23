@@ -1660,10 +1660,10 @@
                 $('#projet_maire').val(response['mairie']['maire']);
                 $('#projet_maireTelephone').val(response['mairie']['telephone']);
               }
-              if(!$('#tab_contacts legend span').length) {
-                $('#tab_contacts legend').append('<span style="color:red;"></span>');
+              if(!$('#tab_contacts legend small').length) {
+                $('#tab_contacts legend').append('<small style="color:red;"></small>');
               }
-              $('#tab_contacts legend span').html('&nbsp;&nbsp;&nbsp;' + response['mairie']['horaire']);
+              $('#tab_contacts legend small').html('&nbsp;&nbsp;&nbsp;' + response['mairie']['horaire']);
             } else {
               $('#projet_mairie').val('');
               $('#projet_mairieTelephone').val('');
@@ -1671,8 +1671,8 @@
                 $('#projet_maire').val('');
                 $('#projet_maireTelephone').val('');
               }
-              if($('#tab_contacts legend span').length) {
-                $('#tab_contacts legend span').remove();
+              if($('#tab_contacts legend small').length) {
+                $('#tab_contacts legend small').remove();
               }
             }
             $('#projet_mairie').trigger('change');
