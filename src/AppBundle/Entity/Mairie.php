@@ -184,6 +184,13 @@ class Mairie
      * @ORM\Column(type="string")
      */
     private $region;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $horaire;
     
     /**
      * @var string
@@ -345,6 +352,11 @@ class Mairie
         return $this->region;
     }
 
+    public function getHoraire()
+    {
+        return $this->horaire;
+    }
+
     public function getElus()
     {
         return $this->elus ? \unserialize($this->elus) : [];
@@ -485,6 +497,12 @@ class Mairie
     public function setRegion($region)
     {
         $this->region = $region;
+        return $this;
+    }
+
+    public function setHoraire($region)
+    {
+        $this->horaire = $horaire;
         return $this;
     }
 

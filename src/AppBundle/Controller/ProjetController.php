@@ -221,6 +221,73 @@ class ProjetController extends Controller
     }
 
     /**
+     * @Route("/mairie/update2", name="mairie_update2")
+     * @Security("has_role('ROLE_ADMIN')")
+     */
+    public function mairieUpdate2Action(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $file_path = __DIR__ . '/../04_Horaires.csv';
+        $row = 0;
+        $row2 = 0;
+        $min_row = 0;
+        if(file_exists(__DIR__ . '/../mairie2_counter.txt')) $min_row = file_get_contents(__DIR__ . '/../mairie2_counter.txt');
+        if(file_exists($file_path)) {
+            if (($handle = fopen($file_path, "r")) !== FALSE) {
+                ini_set("memory_limit", "4000M");
+                set_time_limit(3000);
+                ini_set('display_errors', 1);
+                ini_set('display_startup_errors', 1);
+                error_reporting(E_ALL);
+                $start_time = microtime(true);
+                $write_close = false;
+                $last_insee = false;
+                $last_mairie = false;
+                while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+                    if(!$write_close) {
+                        $end_time = microtime(true); 
+                        $execution_time = ($end_time - $start_time); 
+                        if($execution_time > 30) {
+                            session_write_close();
+                            $write_close = true;
+                        }
+                    }
+                    $row2++;
+                    if(!$row++) {
+                        $inseeColumn = 0;
+                        $horaireColumn = 1;
+                        continue;
+                    }
+                    if($row < $min_row) continue;
+                    $data = array_map("utf8_encode", $data);
+                    if($last_mairie !== false && $data[$inseeColumn] != $last_insee) {
+                        $last_mairie = false;
+                        if($row2 > 500) {
+                            $em->flush();
+                            $row2 = 0;
+                            file_put_contents(__DIR__ . '/../mairie2_counter.txt', $row);
+                        }
+                        // if($row > ($min_row + 10000)) break;
+                    }
+                    $last_insee = $data[$inseeColumn];
+                    // echo $row . ': Insee ' . $data[$inseeColumn] . '<br>';
+                    if($last_mairie === false) {
+                        $last_mairie = $em->getRepository('AppBundle:Mairie')->findOneBy(['insee' => $data[$inseeColumn]]);
+                        if(!$last_mairie) {
+                            continue;
+                        }
+                    }
+                    $last_mairie->setHoraire($data[$horaireColumn]);
+                }
+                fclose($handle);
+                $em->flush();
+            }
+            return new Response('Done');
+        } else return new Response('Fichier introuvable');
+    }
+
+    /**
      * @Route("/mairie/update", name="mairie_update")
      * @Security("has_role('ROLE_ADMIN')")
      */
