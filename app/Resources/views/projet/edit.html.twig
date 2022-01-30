@@ -735,7 +735,7 @@
         var container = L.DomUtil.create('a');
         container.setAttribute("role", "button");
         container.title="Postes sources";
-        container.text = '⬤';
+        container.text = '〇';
 
         container.style.backgroundColor = 'white';     
         {# container.style.backgroundImage = "url(https://t1.gstatic.com/images?q=tbn:ANd9GcR6FCUMW5bPn8C4PbKak2BJQQsmC-K9-mbYBeFZm1ZM2w2GRy40Ew)"; #}
@@ -764,10 +764,10 @@
           if(addCircles) {
             addCircles = 0;
             clearTheCircles();
-            container.style.backgroundColor = 'white';
+            container.text = '⬤';
           } else {
             addCircles = 1;
-            container.style.backgroundColor = '#f4f4f4';
+            container.text = '〇';
           }
         }
 
