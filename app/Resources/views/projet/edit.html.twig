@@ -731,6 +731,8 @@
       features: ['ruler']
     }));
 
+    L.simpleMapScreenshoter().addTo(mainMap);
+
     var measureControl = new L.Control.Measure({ 
       position: 'topleft', 
       primaryLengthUnit: 'meters', 
