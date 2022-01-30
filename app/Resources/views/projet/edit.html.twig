@@ -734,7 +734,7 @@
       onAdd: function (mainMap) {
         var container = L.DomUtil.create('a');
         container.setAttribute("role", "button");
-        container.title="Postes sources";
+        container.title = "Pas ajouter des cercles";
         container.text = '〇';
 
         container.style.backgroundColor = 'white';     
@@ -765,9 +765,11 @@
             addCircles = 0;
             clearTheCircles();
             container.text = '⬤';
+            container.title = "Ajouter des cercles";
           } else {
             addCircles = 1;
             container.text = '〇';
+          container.title = "Pas ajouter des cercles";
           }
         }
 
