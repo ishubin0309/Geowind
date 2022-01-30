@@ -742,12 +742,11 @@
         container.style.backgroundSize = "30px 30px";
         container.style.width = '32px';
         container.style.height = '32px';
-        container.style.lineHeight = '28px';
         container.style.textDecoration = 'none';
         container.style.cursor = 'pointer';
         container.style.textAlign = 'center';
         container.style.color = '#FF0000';
-        container.style.fontSize = '14px';
+        container.style.fontSize = '20px';
         container.style.borderRadius = '4px';
         container.style.marginTop = '2px';
         container.style.border = '2px solid rgba(0,0,0,0.2)';
@@ -764,12 +763,12 @@
           if(addCircles) {
             addCircles = 0;
             clearTheCircles();
-            container.text = '⬤';
-            container.title = "Ajouter des cercles";
+            container.text = '〇';
+            container.title = "Ne pas ajouter des cercles";
           } else {
             addCircles = 1;
-            container.text = '〇';
-          container.title = "Ne pas ajouter des cercles";
+            container.text = '⬤';
+            container.title = "Ajouter des cercles";
           }
         }
 
