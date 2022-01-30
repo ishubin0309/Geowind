@@ -430,6 +430,21 @@
       }
     }
 
+    var fixedCircle = {
+      radius: 3,
+      fillColor: "#FF0000",
+      color: "#000",
+      weight: 1,
+      opacity: 1,
+      fillOpacity: 0.8
+    };
+
+    var dynamicCircle = {
+      color: "orange",
+      opacity: 1,
+      fillOpacity: 0
+    };
+
     function updateCircleRadius(lat, long) {
       var dist = document.getElementById("circleRadius").value;
       xy = [lat, long];  //center point of circle
@@ -488,6 +503,17 @@
 
     mainMap.addControl(new customControl());
 
+    var addCircles = false;
+
+    function clearTheCircles() {
+      if (theCircles.length) {
+          $.each(theCircles, function(i, theCircle) {
+            mainMap.removeLayer(theCircle);
+          });
+          theCircles = [];
+        }
+    }
+
     var customControl =  L.Control.extend({
 
       options: {
@@ -519,12 +545,19 @@
           container.style.backgroundColor = '#f4f4f4'; 
         }
         container.onmouseout = function(){
-          container.style.backgroundColor = 'white'; 
+          container.style.backgroundColor = 'white';
         }
 
         container.onclick = function() {
           update_marker = 0;
-          $('#postesSources').click();
+          if(addCircles) {
+            addCircles = 0;
+            clearTheCircles();
+            container.style.backgroundColor = 'white';
+          } else {
+            addCircles = 1;
+            container.style.backgroundColor = '#f4f4f4';
+          }
         }
 
         return container;
@@ -595,17 +628,9 @@
         $('#projet_latitude').val(lat);
         $('#projet_longitude').val(long);
         default_lat = lat;
-        var dist = document.getElementById("circleRadius").value;
-        var theRadius = parseInt(dist)
-        if (!theRadius) {
+        if (!addCircles) {
           updateMarkerPosition();
           reverseGeolocalisation(lat + ' ' + long, false);
-          if (theCircles.length) {
-            $.each(theCircles, function(i, theCircle) {
-              mainMap.removeLayer(theCircle);
-            });
-            theCircles = [];
-          }
         } else {
           updateCircleRadius(lat, long)
         }
