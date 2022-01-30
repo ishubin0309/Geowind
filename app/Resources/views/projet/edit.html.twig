@@ -578,18 +578,18 @@
   <script>
     var mainMap = L.map('map').setView([46, 2], 5.5);
 
-    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(mainMap);
+    {# L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(mainMap); #}
     
-    /*var streetLayer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+    var streetLayer = L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(mainMap);
 
-    var googleHybrid = L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',{
+    var googleHybrid = L.tileLayer('https://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',{
         maxZoom: 20,
         subdomains:['mt0','mt1','mt2','mt3']
     });
 
-    var googleTerrain = L.tileLayer('http://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}',{
+    var googleTerrain = L.tileLayer('https://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}',{
         maxZoom: 20,
         subdomains:['mt0','mt1','mt2','mt3']
     });
@@ -599,7 +599,7 @@
         "Aérienne": googleHybrid,
         "Terrain": googleTerrain
     };
-    L.control.layers(baseMaps).addTo(mainMap);*/
+    L.control.layers(baseMaps).addTo(mainMap);
 
     var marker = null;
     var markerParcelle = null;
