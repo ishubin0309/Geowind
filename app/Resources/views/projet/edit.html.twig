@@ -658,20 +658,20 @@
       onAdd: function (mainMap) {
         var container = L.DomUtil.create('a');
         container.setAttribute("role", "button");
-        container.title="Center";
-        container.text = "c";
+        container.title="Centre";
+        container.text = "⊕";
 
         container.style.backgroundColor = 'white';     
         {# container.style.backgroundImage = "url(https://t1.gstatic.com/images?q=tbn:ANd9GcR6FCUMW5bPn8C4PbKak2BJQQsmC-K9-mbYBeFZm1ZM2w2GRy40Ew)"; #}
         container.style.backgroundSize = "30px 30px";
         container.style.width = '32px';
         container.style.height = '32px';
-        container.style.lineHeight = '24px';
+        container.style.lineHeight = '28px';
         container.style.textDecoration = 'none';
         container.style.cursor = 'pointer';
         container.style.textAlign = 'center';
         container.style.color = 'black';
-        container.style.fontSize = '24px';
+        container.style.fontSize = '20px';
         container.style.borderRadius = '4px';
         container.style.marginTop = '2px';
         container.style.border = '2px solid rgba(0,0,0,0.2)';
@@ -704,19 +704,19 @@
         var container = L.DomUtil.create('a');
         container.setAttribute("role", "button");
         container.title="Postes sources";
-        container.text = '◉';
+        container.text = '⬤';
 
         container.style.backgroundColor = 'white';     
         {# container.style.backgroundImage = "url(https://t1.gstatic.com/images?q=tbn:ANd9GcR6FCUMW5bPn8C4PbKak2BJQQsmC-K9-mbYBeFZm1ZM2w2GRy40Ew)"; #}
         container.style.backgroundSize = "30px 30px";
         container.style.width = '32px';
         container.style.height = '32px';
-        container.style.lineHeight = '24px';
+        container.style.lineHeight = '28px';
         container.style.textDecoration = 'none';
         container.style.cursor = 'pointer';
         container.style.textAlign = 'center';
-        container.style.color = 'black';
-        container.style.fontSize = '24px';
+        container.style.color = '#FF0000';
+        container.style.fontSize = '14px';
         container.style.borderRadius = '4px';
         container.style.marginTop = '2px';
         container.style.border = '2px solid rgba(0,0,0,0.2)';
@@ -725,7 +725,7 @@
           container.style.backgroundColor = '#f4f4f4'; 
         }
         container.onmouseout = function(){
-          container.style.backgroundColor = 'red'; 
+          container.style.backgroundColor = 'white'; 
         }
 
         container.onclick = function() {
