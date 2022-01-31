@@ -450,11 +450,16 @@
       xy = [lat, long];  //center point of circle
       var theRadius = parseInt(dist)
       // draw circle to see the selection area
-      theCircle = L.circle(xy, theRadius , {   // Number is in Meters
-        color: 'orange',
-        fillOpacity: 0,
-        opacity: 1
-      }).addTo(mainMap);
+      if(theRadius) {
+        theCircle = L.circle(xy, theRadius , {   // Number is in Meters
+          color: 'orange',
+          fillOpacity: 0,
+          opacity: 1
+        }).addTo(mainMap);
+      }
+      else {
+        theCircle = L.circleMarker(xy, fixedCircle).addTo(mainMap);
+      }
       theCircles.push(theCircle);
     }
 
