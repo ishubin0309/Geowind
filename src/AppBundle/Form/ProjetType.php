@@ -304,7 +304,7 @@ class ProjetType extends AbstractType
                 'required' => false,
                 'scale' => 3,
             ])
-            ->add('equivalentConsommationEnNbHabitant', NumberType::class, [
+            ->add('equivalentConsommationEnNbHabitants', NumberType::class, [
                 'label' => 'Equivalent conso en nb habitants',
                 'required' => false,
                 'scale' => 3,

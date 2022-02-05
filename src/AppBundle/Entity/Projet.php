@@ -2098,18 +2098,18 @@ class Projet
     /**
      * @return float
      */
-    public function getEquivalentConsommationEnNbHabitant()
+    public function getEquivalentConsommationEnNbHabitants()
     {
-        return floatval($this->equivalentConsommationEnNbHabitant);
+        return floatval($this->equivalentConsommationEnNbHabitants);
     }
 
     /**
-     * @param string $equivalentConsommationEnNbHabitant
+     * @param string $equivalentConsommationEnNbHabitants
      * @return \AppBundle\Entity\Projet
      */
-    public function setEquivalentConsommationEnNbHabitant($equivalentConsommationEnNbHabitant)
+    public function setEquivalentConsommationEnNbHabitants($equivalentConsommationEnNbHabitants)
     {
-        $this->equivalentConsommationEnNbHabitant = $equivalentConsommationEnNbHabitant;
+        $this->equivalentConsommationEnNbHabitants = $equivalentConsommationEnNbHabitants;
         return $this;
     }
 
