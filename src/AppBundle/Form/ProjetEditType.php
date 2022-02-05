@@ -299,6 +299,16 @@ class ProjetEditType extends AbstractType
                 'required' => false,
                 'scale' => 3,
             ])
+            ->add('consommationParHabitant', NumberType::class, [
+                'label' => 'Conso par habitant (kwh/a)',
+                'required' => false,
+                'scale' => 3,
+            ])
+            ->add('EquivalentConsommationEnNbHabitant', NumberType::class, [
+                'label' => 'Equivalent conso en nb habitants',
+                'required' => false,
+                'scale' => 3,
+            ])
             ->add('enjeuxs', CollectionType::class, [
                 'entry_type' => EnjeuxType::class,
                 'allow_add' => true,

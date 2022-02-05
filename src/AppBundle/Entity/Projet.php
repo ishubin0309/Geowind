@@ -496,6 +496,20 @@ class Projet
      *
      * @ORM\Column(type="decimal", precision=12, scale=6)
      */
+    private $consommationParHabitant = 0;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="decimal", precision=12, scale=6)
+     */
+    private $equivalentConsommationEnNbHabitants = 0;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="decimal", precision=12, scale=6)
+     */
     private $emprise = 0;
 
     /**
@@ -2060,6 +2074,42 @@ class Projet
     public function setProduction($production)
     {
         $this->production = $production;
+        return $this;
+    }
+
+    /**
+     * @return float
+     */
+    public function getConsommationParHabitant()
+    {
+        return floatval($this->consommationParHabitant);
+    }
+
+    /**
+     * @param string $consommationParHabitant
+     * @return \AppBundle\Entity\Projet
+     */
+    public function setConsommationParHabitant($consommationParHabitant)
+    {
+        $this->consommationParHabitant = $consommationParHabitant;
+        return $this;
+    }
+
+    /**
+     * @return float
+     */
+    public function getEquivalentConsommationEnNbHabitant()
+    {
+        return floatval($this->equivalentConsommationEnNbHabitant);
+    }
+
+    /**
+     * @param string $equivalentConsommationEnNbHabitant
+     * @return \AppBundle\Entity\Projet
+     */
+    public function setEquivalentConsommationEnNbHabitant($equivalentConsommationEnNbHabitant)
+    {
+        $this->equivalentConsommationEnNbHabitant = $equivalentConsommationEnNbHabitant;
         return $this;
     }
 
