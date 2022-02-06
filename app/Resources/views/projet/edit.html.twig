@@ -3819,8 +3819,8 @@
       $('#projet_voiries').val(voiries.toString().replace(/\s/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ' '));
     });
 
-    if($('#projet_consommationParHabitant').val() == '0.000') {
-      $('#projet_consommationParHabitant').val('2240');
+    if($('#projet_production').val() == '0.000') {
+      $('#projet_production').val('2240');
     }
     $('#tab_projet').on('change', '#projet_terrain_productiblePv, #projet_potentiel, #projet_production, #projet_consommationParHabitant', function () {
       if($(this).attr('id') == 'projet_terrain_productiblePv' || $(this).attr('id') == 'projet_potentiel') {
