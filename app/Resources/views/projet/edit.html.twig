@@ -3819,6 +3819,17 @@
       $('#projet_voiries').val(voiries.toString().replace(/\s/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ' '));
     });
 
+    $('#tab_projet').on('change', '#projet_terrain_productiblePv, #projet_potentiel, #projet_production, #projet_consommationParHabitant', function () {
+      if($(this).attr('id') == 'projet_terrain_productiblePv' || $(this).attr('id') == 'projet_potentiel') {
+        $('#projet_production').val($('#projet_terrain_productiblePv').val().trim() * $('#projet_potentiel').val().trim() * 1000);
+      }
+      if($('#projet_consommationParHabitant').val()) {
+        $('#projet_equivalentConsommationEnNbHabitants').val($('#projet_production').val().trim() / $('#projet_consommationParHabitant').val().trim());
+      } else {
+        $('#projet_equivalentConsommationEnNbHabitants').val('0.000');
+      }
+    });
+
     var current_main_image = 0;
     {% if form.vars.value.notes[0].photo is defined and form.vars.value.notes[0].photo %}
     var main_images = {
