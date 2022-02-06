@@ -489,14 +489,14 @@ class Projet
      *
      * @ORM\Column(type="decimal", precision=12, scale=6)
      */
-    private $production = 2240;
+    private $production = 0;
 
     /**
      * @var string
      *
      * @ORM\Column(type="decimal", precision=12, scale=6)
      */
-    private $consommationParHabitant = 0;
+    private $consommationParHabitant = 2240;
 
     /**
      * @var string
