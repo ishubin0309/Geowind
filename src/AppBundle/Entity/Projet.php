@@ -496,7 +496,7 @@ class Projet
      *
      * @ORM\Column(type="decimal", precision=12, scale=6)
      */
-    private $consommationParHabitant = 0;
+    private $consommationParHabitant = 2240;
 
     /**
      * @var string
