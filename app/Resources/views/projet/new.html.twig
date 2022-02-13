@@ -573,18 +573,6 @@
       }
     });
 
-    var cost_underground = 12.55,
-    cost_above_ground = 17.89,
-    html = [
-        '<table>',
-        ' <tr><td class="cost_label">Cost Above Ground:</td><td class="cost_value">${total_above_ground}</td></tr>',
-        ' <tr><td class="cost_label">Cost Underground:</td><td class="cost_value">${total_underground}</td></tr>',
-        '</table>'
-    ].join(''),
-    numberWithCommas = function(x) {
-        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    };
-
     mainMap.addControl(new customControl());
 
     var Core = L.Control.LinearCore.extend({
@@ -604,19 +592,6 @@
 
         } else if(e.total.unit === 'm'){
           distance *= 3.28084;
-        }
-
-        var data = {
-          total_above_ground: numberWithCommas(L.Util.formatNum(cost_above_ground * distance, 2)),
-          total_underground: numberWithCommas(L.Util.formatNum(cost_underground * distance, 2))
-        };
-
-        if(e.rulerOn){
-          var content = L.Util.template(html, data),
-            popup = L.popup().setContent(content);
-
-          e.total_label.bindPopup(popup, { offset: [45, 0] });
-          e.total_label.openPopup();
         }
       }
     });
