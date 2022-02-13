@@ -779,6 +779,11 @@
       }
     });
 
+    function numberWithCommas() {
+      var x = document.getElementById('abc').value;
+      x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
     mainMap.addControl(new customControl());
 
     var CoreParcelle = L.Control.LinearCore.extend({
