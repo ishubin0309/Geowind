@@ -842,19 +842,6 @@
         } else if(e.total.unit === 'm'){
           distanceParcelle *= 3.28084;
         }
-
-        var dataParcelle = {
-          total_above_ground: numberWithCommas(L.Util.formatNum(cost_above_ground * distanceParcelle, 2)),
-          total_underground: numberWithCommas(L.Util.formatNum(cost_underground * distanceParcelle, 2))
-        };
-
-        if(e.rulerOn){
-          var content = L.Util.template(html, dataParcelle),
-            popup = L.popup().setContent(content);
-
-          e.total_label.bindPopup(popup, { offset: [45, 0] });
-          e.total_label.openPopup();
-        }
       }
     });
     parcelleMap.addControl(new CoreParcelle({
