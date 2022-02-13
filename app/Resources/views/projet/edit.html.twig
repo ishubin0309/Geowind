@@ -781,32 +781,32 @@
 
     mainMap.addControl(new customControl());
 
-    var Core = L.Control.LinearCore.extend({
+    var CoreParcelle = L.Control.LinearCore.extend({
       onSelect: function(e){
 
         if(!e.total){
           return;
         }
 
-        var distance = e.total.scalar;
+        var distanceParcelle = e.total.scalar;
 
         if(e.total.unit === 'mi'){
-          distance *= e.sub_unit;
+          distanceParcelle *= e.sub_unit;
 
         } else if(e.total.unit === 'km'){
-          distance *= 3280.84;
+          distanceParcelle *= 3280.84;
 
         } else if(e.total.unit === 'm'){
-          distance *= 3.28084;
+          distanceParcelle *= 3.28084;
         }
 
-        var data = {
-          total_above_ground: numberWithCommas(L.Util.formatNum(cost_above_ground * distance, 2)),
-          total_underground: numberWithCommas(L.Util.formatNum(cost_underground * distance, 2))
+        var dataParcelle = {
+          total_above_ground: numberWithCommas(L.Util.formatNum(cost_above_ground * distanceParcelle, 2)),
+          total_underground: numberWithCommas(L.Util.formatNum(cost_underground * distanceParcelle, 2))
         };
 
         if(e.rulerOn){
-          var content = L.Util.template(html, data),
+          var content = L.Util.template(html, dataParcelle),
             popup = L.popup().setContent(content);
 
           e.total_label.bindPopup(popup, { offset: [45, 0] });
@@ -814,7 +814,7 @@
         }
       }
     });
-    mainMap.addControl(new Core({
+    mainMap.addControl(new CoreParcelle({
       unitSystem: 'metric',
       color: '#FF0080',
       features: ['ruler']
