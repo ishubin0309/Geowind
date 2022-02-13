@@ -573,10 +573,17 @@
       }
     });
 
-    function numberWithCommas() {
-      var x = document.getElementById('abc').value;
-      x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    }
+    var cost_underground = 12.55,
+    cost_above_ground = 17.89,
+    html = [
+        '<table>',
+        ' <tr><td class="cost_label">Cost Above Ground:</td><td class="cost_value">${total_above_ground}</td></tr>',
+        ' <tr><td class="cost_label">Cost Underground:</td><td class="cost_value">${total_underground}</td></tr>',
+        '</table>'
+    ].join(''),
+    numberWithCommas = function(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    };
 
     mainMap.addControl(new customControl());
 
