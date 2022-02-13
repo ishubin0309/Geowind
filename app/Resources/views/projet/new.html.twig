@@ -708,6 +708,198 @@
 
     L.control.layers(baseMaps).addTo(parcelleMap);
 
+        var theParcelleCircle = null;
+    var theParcelleCircles = [];
+
+    function updateParcelleCircleRadius(lat, long) {
+      var dist = document.getElementById("circleRadius").value;
+      xy = [lat, long];  //center point of circle
+      var theRadius = parseInt(dist)
+      // draw circle to see the selection area
+      if(theRadius) {
+        theParcelleCircle = L.circle(xy, theRadius , {   // Number is in Meters
+          color: 'orange',
+          fillOpacity: 0,
+          opacity: 1
+        }).addTo(parcelleMap);
+      }
+      else {
+        theParcelleCircle = L.circleMarker(xy, fixedCircle).addTo(parcelleMap);
+      }
+      theParcelleCircles.push(theParcelleCircle);
+    }
+
+    var customControl =  L.Control.extend({
+
+      options: {
+        position: 'topleft'
+      },
+
+      onAdd: function (parcelleMap) {
+        var container = L.DomUtil.create('a');
+        container.setAttribute("role", "button");
+        container.title = 'Centre';
+        container.text = "⊗";
+
+        container.style.backgroundColor = 'white';
+        container.style.backgroundSize = "30px 30px";
+        container.style.width = '32px';
+        container.style.height = '32px';
+        container.style.lineHeight = '28px';
+        container.style.textDecoration = 'none';
+        container.style.cursor = 'pointer';
+        container.style.textAlign = 'center';
+        container.style.color = '#0078A8';
+        container.style.fontSize = '22px';
+        container.style.borderRadius = '4px';
+        container.style.marginTop = '2px';
+        container.style.border = '2px solid rgba(0,0,0,0.2)';
+        
+        container.onmouseover = function(){
+          container.style.backgroundColor = '#f4f4f4'; 
+        }
+        container.onmouseout = function(){
+          container.style.backgroundColor = 'white'; 
+        }
+
+        container.onclick = function() {
+          update_parcelle_marker = 0;
+          parcelleMap.setView([46,2],5);
+        }
+
+        return container;
+      }
+    });
+
+    parcelleMap.addControl(new customControl());
+
+    var addParcelleCircles = false;
+
+    function clearParcelletheParcelleCircles() {
+      if (theParcelleCircles.length) {
+          $.each(theParcelleCircles, function(i, theParcelleCircle) {
+            parcelleMap.removeLayer(theParcelleCircle);
+          });
+          theParcelleCircles = [];
+        }
+    }
+
+    var customControl =  L.Control.extend({
+
+      options: {
+        position: 'topleft'
+      },
+
+      onAdd: function (parcelleMap) {
+        var container = L.DomUtil.create('a');
+        container.setAttribute("role", "button");
+        container.title = "Ne pas ajouter des cercles";
+        container.text = '〇';
+
+        container.style.backgroundColor = 'white';     
+        {# container.style.backgroundImage = "url(https://t1.gstatic.com/images?q=tbn:ANd9GcR6FCUMW5bPn8C4PbKak2BJQQsmC-K9-mbYBeFZm1ZM2w2GRy40Ew)"; #}
+        container.style.backgroundSize = "30px 30px";
+        container.style.width = '32px';
+        container.style.height = '32px';
+        container.style.textDecoration = 'none';
+        container.style.cursor = 'pointer';
+        container.style.textAlign = 'center';
+        container.style.color = '#FF0000';
+        container.style.fontSize = '18px';
+        container.style.borderRadius = '4px';
+        container.style.marginTop = '2px';
+        container.style.border = '2px solid rgba(0,0,0,0.2)';
+        
+        container.onmouseover = function(){
+          container.style.backgroundColor = '#f4f4f4'; 
+        }
+        container.onmouseout = function(){
+          container.style.backgroundColor = 'white';
+        }
+
+        container.onclick = function() {
+          update_parcelle_marker = 0;
+          if(addParcelleCircles) {
+            addParcelleCircles = 0;
+            clearParcelletheParcelleCircles();
+            container.text = '〇';
+            container.title = "Ne pas ajouter des cercles";
+          } else {
+            addParcelleCircles = 1;
+            container.text = '⬤';
+            container.title = "Ajouter des cercles";
+          }
+        }
+
+        return container;
+      }
+    });
+
+    parcelleMap.addControl(new customControl());
+
+    var CoreParcelle = L.Control.LinearCore.extend({
+      onSelect: function(e){
+
+        if(!e.total){
+          return;
+        }
+
+        var distanceParcelle = e.total.scalar;
+
+        if(e.total.unit === 'mi'){
+          distanceParcelle *= e.sub_unit;
+
+        } else if(e.total.unit === 'km'){
+          distanceParcelle *= 3280.84;
+
+        } else if(e.total.unit === 'm'){
+          distanceParcelle *= 3.28084;
+        }
+
+        var dataParcelle = {
+          total_above_ground: numberWithCommas(L.Util.formatNum(cost_above_ground * distanceParcelle, 2)),
+          total_underground: numberWithCommas(L.Util.formatNum(cost_underground * distanceParcelle, 2))
+        };
+
+        if(e.rulerOn){
+          var content = L.Util.template(html, dataParcelle),
+            popup = L.popup().setContent(content);
+
+          e.total_label.bindPopup(popup, { offset: [45, 0] });
+          e.total_label.openPopup();
+        }
+      }
+    });
+    parcelleMap.addControl(new CoreParcelle({
+      unitSystem: 'metric',
+      color: '#FF0080',
+      features: ['ruler']
+    }));
+
+    L.simpleMapScreenshoter().addTo(parcelleMap);
+
+    var measureControl = new L.Control.Measure({ 
+      position: 'topleft', 
+      primaryLengthUnit: 'meters', 
+      secondaryLengthUnit: 'kilometers', 
+      primaryAreaUnit: 'sqmeters', 
+      secondaryAreaUnit: 'hectares', 
+      activeColor: '#991f00', 
+      completedColor: '#ff9980', 
+      decPoint: ',', 
+      thousandsSep: ' ' 
+    });
+    measureControl.addTo(parcelleMap);
+    
+    var update_parcelle_marker = 1;
+    parcelleMap.on('click', function(e) {
+      if(update_parcelle_marker) {
+        if (addParcelleCircles) {
+          updateParcelleCircleRadius(e.latlng.lat, e.latlng.lng)
+        }
+      } else update_parcelle_marker = 1;
+    });
+
     parcelleMap.createPane('parcelPane');
 
     parcelleMap.getPane('parcelPane').style.zIndex = 650;

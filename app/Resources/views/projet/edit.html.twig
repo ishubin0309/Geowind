@@ -914,7 +914,7 @@
 
     L.control.layers(baseMaps).addTo(parcelleMap);
 
-        var theParcelleCircle = null;
+    var theParcelleCircle = null;
     var theParcelleCircles = [];
 
     function updateParcelleCircleRadius(lat, long) {
@@ -970,7 +970,7 @@
 
         container.onclick = function() {
           update_parcelle_marker = 0;
-          parcelleMap.setView([46,2],7);
+          parcelleMap.setView([46,2],5);
         }
 
         return container;
