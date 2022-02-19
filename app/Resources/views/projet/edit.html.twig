@@ -604,7 +604,7 @@
         "Aérienne": googleHybrid,
         "Terrain": googleTerrain
     };
-    {# L.control.layers(baseMaps).addTo(mainMap); #}
+    L.control.layers(baseMaps).addTo(mainMap);
 
     function go() {
         var lyr = L.geoportalLayer.WMTS({
@@ -624,7 +624,7 @@
     }
 
     Gp.Services.getConfig({
-        apiKey : "jhyvi0fgmnuxvfv0zjzorvdn",
+        apiKey : "qgr57eoty42sfsc16ec8sxfk",
         onSuccess : go
     });
 
