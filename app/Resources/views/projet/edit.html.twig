@@ -604,7 +604,7 @@
         "Aérienne": googleHybrid,
         "Terrain": googleTerrain
     };
-    {# L.control.layers(baseMaps).addTo(mainMap); #}
+    L.control.layers(baseMaps).addTo(mainMap);
 
     function go() {
         var lyr = L.geoportalLayer.WMTS({
@@ -614,6 +614,13 @@
             opacity: 0.8
         });
         lyr.addTo(baseMaps); // ou baseMaps.addLayer(lyr);
+        var baseMaps = {
+          "Rue": streetLayer,
+          "Aérienne": googleHybrid,
+          "Terrain": googleTerrain,
+          "IGN": lyr
+      };
+        L.control.layers(baseMaps).addTo(mainMap);
     }
 
     Gp.Services.getConfig({
