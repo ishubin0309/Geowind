@@ -273,7 +273,7 @@ class ProjetController extends Controller
                     $last_insee = $data[$inseeColumn];
                     // echo $row . ': Insee ' . $data[$inseeColumn] . '<br>';
                     if($last_mairie === false) {
-                        $last_mairie = $em->getRepository('AppBundle:Mairie')->findOneBy(['insee' => '0' . $data[$inseeColumn]]);
+                        $last_mairie = $em->getRepository('AppBundle:Mairie')->findOneBy(['insee' => $data[$inseeColumn]]);
                         if(!$last_mairie) {
                             continue;
                         }

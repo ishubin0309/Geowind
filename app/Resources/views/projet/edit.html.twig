@@ -6,6 +6,7 @@
 {% block css %}
   <link rel="stylesheet" href="{{ asset('vendor/Leaflet.markercluster-1.1.0/dist/MarkerCluster.css') }}">
   <link rel="stylesheet" href="{{ asset('vendor/Leaflet.markercluster-1.1.0/dist/MarkerCluster.Default.css') }}">
+  <link rel="stylesheet" href="https://ignf.github.io/geoportal-extensions/leaflet-latest/dist/GpPluginLeaflet.css">
 
 {% endblock %}
 
@@ -577,6 +578,7 @@
   <script src="https://unpkg.com/leaflet.vectorgrid@latest/dist/Leaflet.VectorGrid.bundled.js"></script>
   <script src="https://unpkg.com/leaflet-canvas-marker@0.2.0/dist/leaflet.canvas-markers.js"></script>
   <script src="https://france-cadastre.fr/assets/js/leaflet-event-forwarder.js"></script>
+  <script src="https://ignf.github.io/geoportal-extensions/leaflet-latest/dist/GpPluginLeaflet.js"></script>
   
   <script>
     var mainMap = L.map('map').setView([46, 2], 5.5);
@@ -600,9 +602,25 @@
     var baseMaps = {
         "Rue": streetLayer,
         "Aérienne": googleHybrid,
-        "Terrain": googleTerrain
+        "Terrain": googleTerrain,
+        "IGN": ign
     };
     L.control.layers(baseMaps).addTo(mainMap);
+
+    function go() {
+        var lyr = L.geoportalLayer.WMTS({
+            // layer: "ORTHOIMAGERY.ORTHOPHOTOS",
+            layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS",
+        }, { // leafletParams
+            opacity: 0.8
+        });
+        lyr.addTo(baseMaps); // ou baseMaps.addLayer(lyr);
+    }
+
+    Gp.Services.getConfig({
+        apiKey : "jhyvi0fgmnuxvfv0zjzorvdn",
+        onSuccess : go
+    });
 
     var marker = null;
     var markerParcelle = null;
