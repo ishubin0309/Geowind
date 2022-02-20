@@ -3957,6 +3957,22 @@
       });
     });
 
+    function go() {
+        var lyr = L.geoportalLayer.WMTS({
+            // layer: "ORTHOIMAGERY.ORTHOPHOTOS",
+            layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS",
+        }, { // leafletParams
+            opacity: 0.8
+        });
+        mainMap.addLayer(lyr);
+        parcelleMap.addLayer(lyr);
+    }
+
+    Gp.Services.getConfig({
+        apiKey : "e4fgzzy5jlsrvi1sy4ysnb0c",
+        onSuccess : go
+    });
+
     $('document').ready(function() {
       $('#projet_batimentExistant_documentEnergie').css('width', '100%').select2();
       $('<legend>Raccordement</legend>').insertBefore($('#projet_batimentExistant_livraison').parents('.form-group'));

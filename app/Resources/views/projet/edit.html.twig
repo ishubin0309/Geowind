@@ -606,28 +606,6 @@
     };
     L.control.layers(baseMaps).addTo(mainMap);
 
-    function go() {
-        var lyr = L.geoportalLayer.WMTS({
-            // layer: "ORTHOIMAGERY.ORTHOPHOTOS",
-            layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS",
-        }, { // leafletParams
-            opacity: 0.8
-        });
-        mainMap.addLayer(lyr);
-        {# var baseMaps = {
-          "Rue": streetLayer,
-          "Aérienne": googleHybrid,
-          "Terrain": googleTerrain,
-          "IGN": lyr
-      };
-        L.control.layers(baseMaps).addTo(mainMap); #}
-    }
-
-    Gp.Services.getConfig({
-        apiKey : "e4fgzzy5jlsrvi1sy4ysnb0c",
-        onSuccess : go
-    });
-
     var marker = null;
     var markerParcelle = null;
     var theCircle = null;
@@ -4287,6 +4265,22 @@
         if(!search || search_found) row.removeClass('hide');
         else row.addClass('hide');
       });
+    });
+
+    function go() {
+        var lyr = L.geoportalLayer.WMTS({
+            // layer: "ORTHOIMAGERY.ORTHOPHOTOS",
+            layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS",
+        }, { // leafletParams
+            opacity: 0.8
+        });
+        mainMap.addLayer(lyr);
+        parcelleMap.addLayer(lyr);
+    }
+
+    Gp.Services.getConfig({
+        apiKey : "e4fgzzy5jlsrvi1sy4ysnb0c",
+        onSuccess : go
     });
 
     $('document').ready(function() {
