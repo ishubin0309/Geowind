@@ -83,11 +83,11 @@
           <option value="0" selected>Partenaire</option>
         </select>
       </div>
-      <div class="col-md-2 col-lg-2">
+      {# <div class="col-md-2 col-lg-2">
         <select id="select-departement" class="form-control input-filter" data-attr="departement">
           <option value="" selected>Département</option>
         </select>
-      </div>
+      </div> #}
       <div class="clearfix"></div>
       <div class="col-md-9 col-lg-10">
         <nav aria-label="Page navigation center-text">
@@ -381,9 +381,9 @@
         if(!$('#select-partenaire option[value="{{ projet.partenaire }}"]').length) {
           $('#select-partenaire').append(new Option("{{ projet.partenaire }}", "{{ projet.partenaire }}"));
         }
-        {# if(!$('#select-departement option[value="{{ projet.departement|e('js') }}"]').length) {
+        if(!$('#select-departement option[value="{{ projet.departement|e('js') }}"]').length) {
           $('#select-departement').append(new Option("{{ projet.departement|e('js') }}", "{{ projet.departement|e('js') }}"));
-        } #}
+        }
         {% set listeDate = false %}
         {% set unreadMessage = false %}
         {# {% if is_granted('edit', projet) %} #}
