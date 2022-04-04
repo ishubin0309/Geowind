@@ -68,19 +68,24 @@
           <option value="" selected>Source</option>
         </select>
       </div>
-      <div class="col-md-3 col-lg-2">
+      <div class="col-md-2 col-lg-2">
         <select id="select-chefProjet" class="form-control input-filter" data-attr="chefProjet">
           <option value="" selected>Chef projet</option>
         </select>
       </div>
-      <div class="col-md-3 col-lg-2">
+      <div class="col-md-2 col-lg-2">
         <select id="select-chargeFoncier" class="form-control input-filter" data-attr="chargeFoncier">
           <option value="" selected>Chargé foncier</option>
         </select>
       </div>
-      <div class="col-md-3 col-lg-2">
+      <div class="col-md-2 col-lg-2">
         <select id="select-partenaire" class="form-control input-filter" data-attr="partenaire">
           <option value="0" selected>Partenaire</option>
+        </select>
+      </div>
+      <div class="col-md-2 col-lg-2">
+        <select id="select-departement" class="form-control input-filter" data-attr="departement">
+          <option value="" selected>Département</option>
         </select>
       </div>
       <div class="col-md-9 col-lg-10">
@@ -353,6 +358,10 @@
           return false;
       }
 
+      if (args.departement != "0" && item["departement"] !== args.departement) {
+          return false;
+      }
+
       return true;
     }
 
@@ -370,6 +379,9 @@
         }
         if(!$('#select-partenaire option[value="{{ projet.partenaire }}"]').length) {
           $('#select-partenaire').append(new Option("{{ projet.partenaire }}", "{{ projet.partenaire }}"));
+        }
+        if(!$('#select-departement option[value="{{ projet.departement }}"]').length) {
+          $('#select-departement').append(new Option("{{ projet.departement }}", "{{ projet.departement }}"));
         }
         {% set listeDate = false %}
         {% set unreadMessage = false %}
@@ -527,6 +539,7 @@
         chefProjet: "",
         chargeFoncier: "",
         partenaire: "",
+        departement: "",
       };
       function updateFilter(){
         dataView.setFilterArgs(filterArgs);
