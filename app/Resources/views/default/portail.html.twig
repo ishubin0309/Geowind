@@ -379,7 +379,7 @@
           $('#select-chargeFoncier').append(new Option("{{ projet.chargeFoncier }}", "{{ projet.chargeFoncier }}"));
         }
         if(!$('#select-partenaire option[value="{{ projet.partenaire }}"]').length) {
-          $('#select-partenaire').append(new Option("{{ projet.partenaire }}", "{{ projet.partenaire }}"));
+          $('#select-partenaire').append(new Option("{{ projet.partenaire|e('js') }}", "{{ projet.partenaire|e('js') }}"));
         }
         if(!$('#select-departement option[value="{{ projet.departement }}"]').length) {
           $('#select-departement').append(new Option("{{ projet.departement }}", "{{ projet.departement }}"));
