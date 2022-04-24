@@ -4107,6 +4107,9 @@
           $('fieldset#' + attr + ' .col-sm-4').addClass('col-sm-2').removeClass('col-sm-4');
         } else {
           if(attr != 'tab_documents' && attr != 'tab_images') {
+            $('#map, #map_search').removeClass('hide');
+            $('#main_photo').addClass('hide');
+          } else {
             if(attr == 'tab_documents') {
               $('.nav_documents').show();
               $('.nav_images').hide();
@@ -4114,9 +4117,6 @@
               $('.nav_documents').show();
               $('.nav_images').show();
             }
-            $('#map, #map_search').removeClass('hide');
-            $('#main_photo').addClass('hide');
-          } else {
             $('#map, #map_search').addClass('hide');
             $('#main_photo').removeClass('hide');
           }
