@@ -4027,12 +4027,12 @@
         if(current_main_plan_image > parseInt(i)) plan_prev = 1;
         if(plan_next == -1 && current_main_plan_image < parseInt(i)) plan_next = 1;
       });
-      if(plan_prev >= 0) $('#prev_plan_image').parent().removeClass('disabled');
-      else  $('#prev_plan_image').parent().addClass('disabled');
-      if(plan_next >= 0) $('#next_plan_image').parent().removeClass('disabled');
-      else $('#next_plan_image').parent().addClass('disabled');
+      if(plan_prev >= 0) $('#prev_image').parent().removeClass('disabled');
+      else  $('#prev_image').parent().addClass('disabled');
+      if(plan_next >= 0) $('#next_image').parent().removeClass('disabled');
+      else $('#next_image').parent().addClass('disabled');
     }
-    $('#next_plan_image, #prev_plan_image').click(function(e) {
+    $('#next_image, #prev_image').click(function(e) {
       e.preventDefault();
       plan_prev = -1;
       plan_next = -1;
@@ -4040,8 +4040,8 @@
         if(current_main_plan_image > parseInt(i)) plan_prev = i;
         if(plan_next == -1 && current_main_plan_image < parseInt(i)) plan_next = i;
       });
-      if(($(this).attr('id') == 'prev_plan_image' && plan_prev >= 0) || ($(this).attr('id') == 'next_plan_image' && plan_next >= 0)) {
-        if($(this).attr('id') == 'next_plan_image') current_main_plan_image = plan_next;
+      if(($(this).attr('id') == 'prev_image' && plan_prev >= 0) || ($(this).attr('id') == 'next_image' && plan_next >= 0)) {
+        if($(this).attr('id') == 'next_image') current_main_plan_image = plan_next;
         else current_main_plan_image = plan_prev;
         updatePlanPrevNextButtons();
         $('#main_photo img').attr('src', '');
