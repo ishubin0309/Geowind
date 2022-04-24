@@ -3692,6 +3692,76 @@
       }
     });
 
+    /**
+    * Tab plans
+    **/
+    var current_main_plan_image = 0;
+    {% if form.vars.value.documents[0].photo is defined and form.vars.value.documents[0].photo %}
+    var plan_images = {
+      {% for plan in form.vars.value.documents %}
+      {{ loop.index0 }}:{0:'{{ plan.titre }}', 1:'{{ plan.type }}', 2:'{{ asset('upload/' ~ plan.document) }}', 3:'{{ plan.date|date('d/m/Y') }}'}
+      {% if not loop.last %},{% endif %}{% endfor %}
+      };
+    $('#main_photo img').attr('src', plan_images[0][2]);
+    {% if form.vars.value.documents[1].photo is defined and form.vars.value.documents[1].photo %}
+    updatePlanPrevNextButtons();
+    {% endif %}
+    {% else %}
+    var plan_images = {};
+    {% endif %}
+    function updatePlanPrevNextButtons() {
+      $('#projet_documents tr.info').removeClass('info');
+      $('#projet_documents tr:eq('+current_main_plan_image+')').removeClass('success2').addClass('info');
+      plan_prev = -1;
+      plan_next = -1;
+      $.each(plan_images, function(i, value) {
+        if(current_main_plan_image > parseInt(i)) plan_prev = 1;
+        if(plan_next == -1 && current_main_plan_image < parseInt(i)) plan_next = 1;
+      });
+      if(plan_prev >= 0) $('#prev_plan_image').parent().removeClass('disabled');
+      else  $('#prev_plan_image').parent().addClass('disabled');
+      if(plan_next >= 0) $('#next_plan_image').parent().removeClass('disabled');
+      else $('#next_plan_image').parent().addClass('disabled');
+    }
+    $('#next_plan_image, #prev_plan_image').click(function(e) {
+      e.preventDefault();
+      plan_prev = -1;
+      plan_next = -1;
+      $.each(plan_images, function(i, value) {
+        if(current_main_plan_image > parseInt(i)) plan_prev = i;
+        if(plan_next == -1 && current_main_plan_image < parseInt(i)) plan_next = i;
+      });
+      if(($(this).attr('id') == 'prev_plan_image' && plan_prev >= 0) || ($(this).attr('id') == 'next_plan_image' && plan_next >= 0)) {
+        if($(this).attr('id') == 'next_plan_image') current_main_plan_image = plan_next;
+        else current_main_plan_image = plan_prev;
+        updatePlanPrevNextButtons();
+        $('#main_photo img').attr('src', '');
+        $('#main_photo img').attr('src', plan_images[current_main_plan_image][2]);
+      }
+    });
+    $('body').on('change', '#tab_documents input[id*=_documentFile]', function() {
+      var id = $(this).attr('id').match(/\d+/);
+      id = parseInt(id);
+      if (this.files && this.files[0]) {
+        var reader = new FileReader();
+        
+        reader.onload = function(e) {
+          $('#main_photo img').attr('src', e.target.result);
+          if(plan_images[id] !== undefined) plan_images[id][2] = e.target.result;
+          else {
+            plan_images[id] = {0: $('#projet_documents_'+id+'_titre').val(), 1: $('#projet_documents_'+id+'_type').val(), 2: e.target.result, 3: $('#projet_documents_'+id+'_date').val()};
+          }
+          current_main_plan_image = id;
+          updatePlanPrevNextButtons();
+        }
+        
+        reader.readAsDataURL(this.files[0]); // convert to base64 string
+      }
+    });
+
+    /**
+    * Tab images
+    **/
     var current_main_image = 0;
     {% if form.vars.value.notes[0].photo is defined and form.vars.value.notes[0].photo %}
     var main_images = {

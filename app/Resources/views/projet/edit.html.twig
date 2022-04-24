@@ -4025,7 +4025,7 @@
       plan_next = -1;
       $.each(plan_images, function(i, value) {
         if(current_main_plan_image > parseInt(i)) plan_prev = 1;
-        if(next == -1 && current_main_plan_image < parseInt(i)) plan_next = 1;
+        if(plan_next == -1 && current_main_plan_image < parseInt(i)) plan_next = 1;
       });
       if(plan_prev >= 0) $('#prev_plan_image').parent().removeClass('disabled');
       else  $('#prev_plan_image').parent().addClass('disabled');
