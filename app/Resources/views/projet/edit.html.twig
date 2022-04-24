@@ -4005,14 +4005,14 @@
     * Tab plans
     **/
     var current_main_plan_image = 0;
-    {% if form.vars.value.documents[0].photo is defined and form.vars.value.documents[0].photo %}
+    {% if form.vars.value.documents[0].document is defined and form.vars.value.documents[0].document %}
     var plan_images = {
       {% for plan in form.vars.value.documents %}
-      {{ loop.index0 }}:{0:'{{ plan.titre }}', 1:'{{ plan.type }}', 2:'{{ asset('upload/' ~ plan.document) }}', 3:'{{ plan.date|date('d/m/Y') }}'}
+      {{ loop.index0 }}:{0:'{{ plan.titre }}', 1:'{{ plan.type }}', 2:'{{ asset('upload/' ~ plan.document) }}'}
       {% if not loop.last %},{% endif %}{% endfor %}
       };
     $('#main_photo img').attr('src', plan_images[0][2]);
-    {% if form.vars.value.documents[1].photo is defined and form.vars.value.documents[1].photo %}
+    {% if form.vars.value.documents[1].document is defined and form.vars.value.documents[1].document %}
     updatePlanPrevNextButtons();
     {% endif %}
     {% else %}
@@ -4058,7 +4058,7 @@
           $('#main_photo img').attr('src', e.target.result);
           if(plan_images[id] !== undefined) plan_images[id][2] = e.target.result;
           else {
-            plan_images[id] = {0: $('#projet_documents_'+id+'_titre').val(), 1: $('#projet_documents_'+id+'_type').val(), 2: e.target.result, 3: $('#projet_documents_'+id+'_date').val()};
+            plan_images[id] = {0: $('#projet_documents_'+id+'_titre').val(), 1: $('#projet_documents_'+id+'_type').val(), 2: e.target.result};
           }
           current_main_plan_image = id;
           updatePlanPrevNextButtons();
