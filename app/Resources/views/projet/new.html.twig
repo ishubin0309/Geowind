@@ -321,7 +321,8 @@
         </div>
         {{ form_row(form.adresse) }}
       </div>
-      <div id="main_photo" class="hide col-sm-12"><img style="width: inherit;" src=""><nav style="margin-left:30%;" aria-label="Page navigation center-text"><ul class="pagination"><li class="page-item disabled"><a id="prev_image" class="page-link" href="#">Précédent</a></li><li class="page-item disabled"><a id="next_image" class="page-link" href="#">Suivant</a></li></ul></nav></div>
+
+      <div id="main_photo" class="hide col-sm-12"><img style="width: inherit;" src=""><nav class="nav_images" style="margin-left:30%;display:none;" aria-label="Page navigation center-text"><ul class="pagination"><li class="page-item disabled"><a id="prev_image" class="page-link" href="#">Précédent</a></li><li class="page-item disabled"><a id="next_image" class="page-link" href="#">Suivant</a></li></ul></nav><nav class="nav_documents" style="margin-left:30%;display:none;" aria-label="Page navigation center-text"><ul class="pagination"><li class="page-item disabled"><a id="prev_plan_image" class="page-link" href="#">Précédent</a></li><li class="page-item disabled"><a id="next_plan_image" class="page-link" href="#">Suivant</a></li></ul></nav></div>
 
       <div class="text-right m-t-10">
         <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Sauvegarder</button>
@@ -3713,17 +3714,17 @@
       $('#projet_documents tr.info').removeClass('info');
       $('#projet_documents tr:eq('+current_main_plan_image+')').removeClass('success2').addClass('info');
       plan_prev = -1;
-      plan_next = -1;
+      plan_next = -1;console.log(plan_images);
       $.each(plan_images, function(i, value) {
         if(current_main_plan_image > parseInt(i)) plan_prev = 1;
         if(plan_next == -1 && current_main_plan_image < parseInt(i)) plan_next = 1;
       });
-      if(plan_prev >= 0) $('#prev_image').parent().removeClass('disabled');
-      else  $('#prev_image').parent().addClass('disabled');
-      if(plan_next >= 0) $('#next_image').parent().removeClass('disabled');
-      else $('#next_image').parent().addClass('disabled');
+      if(plan_prev >= 0) $('#prev_plan_image').parent().removeClass('disabled');
+      else  $('#prev_plan_image').parent().addClass('disabled');
+      if(plan_next >= 0) $('#next_plan_image').parent().removeClass('disabled');
+      else $('#next_plan_image').parent().addClass('disabled');
     }
-    $('#tab_documents').on('click', '#next_image, #prev_image', function(e) {
+    $('#next_plan_image, #prev_plan_image').click(function(e) {
       e.preventDefault();
       plan_prev = -1;
       plan_next = -1;
@@ -3731,8 +3732,8 @@
         if(current_main_plan_image > parseInt(i)) plan_prev = i;
         if(plan_next == -1 && current_main_plan_image < parseInt(i)) plan_next = i;
       });
-      if(($(this).attr('id') == 'prev_image' && plan_prev >= 0) || ($(this).attr('id') == 'next_image' && plan_next >= 0)) {
-        if($(this).attr('id') == 'next_image') current_main_plan_image = plan_next;
+      if(($(this).attr('id') == 'prev_plan_image' && plan_prev >= 0) || ($(this).attr('id') == 'next_plan_image' && plan_next >= 0)) {
+        if($(this).attr('id') == 'next_plan_image') current_main_plan_image = plan_next;
         else current_main_plan_image = plan_prev;
         updatePlanPrevNextButtons();
         $('#main_photo img').attr('src', '');
@@ -3795,7 +3796,7 @@
         $('#projet_notes_recherche').val();
       } else $('#projet_notes_recherche').removeClass('hide');
     }
-    $('#tab_images').on('click', '#next_image, #prev_image', function(e) {
+    $('#next_image, #prev_image').click(function(e) {
       e.preventDefault();
       prev = -1;
       next = -1;
@@ -4105,7 +4106,14 @@
           $('#fields_div').addClass('col-sm-12');
           $('fieldset#' + attr + ' .col-sm-4').addClass('col-sm-2').removeClass('col-sm-4');
         } else {
-          if(attr != 'tab_images') {
+          if(attr != 'tab_documents' && attr != 'tab_images') {
+            if(attr == 'tab_documents') {
+              $('.nav_documents').show();
+              $('.nav_images').hide();
+            } else if(attr == 'tab_images') {
+              $('.nav_documents').show();
+              $('.nav_images').show();
+            }
             $('#map, #map_search').removeClass('hide');
             $('#main_photo').addClass('hide');
           } else {
