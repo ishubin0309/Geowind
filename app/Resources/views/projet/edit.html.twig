@@ -4022,7 +4022,7 @@
       $('#projet_documents tr.info').removeClass('info');
       $('#projet_documents tr:eq('+current_main_plan_image+')').removeClass('success2').addClass('info');
       plan_prev = -1;
-      plan_next = -1;console.log(plan_images);
+      plan_next = -1;
       $.each(plan_images, function(i, value) {
         if(current_main_plan_image > parseInt(i)) plan_prev = 1;
         if(plan_next == -1 && current_main_plan_image < parseInt(i)) plan_next = 1;
