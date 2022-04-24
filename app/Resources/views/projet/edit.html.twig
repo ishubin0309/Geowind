@@ -4032,7 +4032,7 @@
       if(plan_next >= 0) $('#next_image').parent().removeClass('disabled');
       else $('#next_image').parent().addClass('disabled');
     }
-    $('#tab_documents').on('click', '#next_image, #prev_image'function(e) {
+    $('#tab_documents').on('click', '#next_image, #prev_image', function(e) {
       e.preventDefault();
       plan_prev = -1;
       plan_next = -1;
@@ -4104,7 +4104,7 @@
         $('#projet_notes_recherche').val();
       } else $('#projet_notes_recherche').removeClass('hide');
     }
-    $('#tab_images').on('click', '#next_image, #prev_image'function(e) {
+    $('#tab_images').on('click', '#next_image, #prev_image', function(e) {
       e.preventDefault();
       prev = -1;
       next = -1;
