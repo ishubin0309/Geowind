@@ -341,6 +341,14 @@ class ProjetEditType extends AbstractType
                 'required' => false,
                 'by_reference' => false,
             ])
+            ->add('consultations', CollectionType::class, [
+                'entry_type' => ConsultationType::class,
+                'allow_add' => true,
+                'allow_delete' => true,
+                'label' => 'Consultation',
+                'required' => false,
+                'by_reference' => false,
+            ])
             ->add('documents', CollectionType::class, [
                 'entry_type' => DocumentType::class,
                 'allow_add' => true,
