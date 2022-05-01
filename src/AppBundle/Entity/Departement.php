@@ -64,10 +64,18 @@ class Departement
      * @ORM\ManyToMany(targetEntity="User", mappedBy="departements")
      */
     private $users;
+    
+    /**
+     * @var ArrayCollection|Gestionnaire[]
+     * 
+     * @ORM\OneToMany(targetEntity="Gestionnaire", mappedBy="departement")
+     */
+    private $gestionnaires;
 
     public function __construct()
     {
         $this->users = new ArrayCollection();
+        $this->gestionnaires = new ArrayCollection();
     }
 
     /**
@@ -183,6 +191,17 @@ class Departement
     public function setUsers(ArrayCollection $users)
     {
         $this->users = $users;
+        return $this;
+    }
+    
+    public function getGestionnaires()
+    {
+        return $this->gestionnaires;
+    }
+
+    public function setGestionnaires(ArrayCollection $gestionnaires)
+    {
+        $this->gestionnaires = $gestionnaires;
         return $this;
     }
 
