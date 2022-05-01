@@ -16,6 +16,7 @@ use AppBundle\Entity\Messagerie;
 use AppBundle\Entity\Mairie;
 use AppBundle\Entity\MessageParcelles;
 use AppBundle\Entity\Gestionnaire;
+use AppBundle\Entity\Consultation;
 use AppBundle\Model\Environnement;
 use AppBundle\Model\Etat as EtatModel;
 use AppBundle\Form\ProjetEditType;
