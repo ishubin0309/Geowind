@@ -211,8 +211,8 @@ class ProjetController extends Controller
                     $gestionnaire->setCompetence($data[$competenceColumn]);
                     $gestionnaire->setContact($data[$contactColumn]);
                     $gestionnaire->setFonction($data[$fonctionColumn]);
-                    $gestionnaire->setAdresse($data[$adresseColumn]);
-                    $gestionnaire->setVille($data[$villeColumn]);
+                    $gestionnaire->setAdresse($data[$adresseColumn] ?? '');
+                    $gestionnaire->setVille($data[$villeColumn] ?? '');
                     $gestionnaire->setEmail($data[$emailColumn]);
                     $gestionnaire->setTelephone($data[$telephoneColumn]);
                     $gestionnaire->setDepartement($departement);
