@@ -60,14 +60,14 @@ class Gestionnaire
     /**
      * @var string
      * 
-     * @ORM\Column(type="string", name="adresse")
+     * @ORM\Column(type="string", name="adresse", nullable=true)
      */
     private $adresse;
     
     /**
      * @var string
      * 
-     * @ORM\Column(type="string", name="ville")
+     * @ORM\Column(type="string", name="ville", nullable=true)
      */
     private $ville;
     
@@ -81,7 +81,7 @@ class Gestionnaire
     /**
      * @var string
      * 
-     * @ORM\Column(type="string", name="telephone")
+     * @ORM\Column(type="string", name="telephone", nullable=true)
      */
     private $telephone;
 
