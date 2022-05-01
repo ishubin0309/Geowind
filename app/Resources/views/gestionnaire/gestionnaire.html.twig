@@ -1,0 +1,88 @@
+{% extends 'base.html.twig' %}
+
+{% set title = 'Gestionnaire' %}
+{% set item = 'gestionnaire' %}
+
+{% block body %}
+  <style>
+  .table-striped tbody tr:hover {
+    background-color: #31b0d5;
+  }
+  </style>
+  <div class="container">
+    {# <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#mairie_nav" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#"></a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="mairie_nav">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#" rel="tab_list">Liste</a></li>
+            <li><a href="#" rel="tab_carte">Afficher <i style="color:red;" class="fa fa-map-o" aria-hidden="true"></i></a></li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav> #}
+    <fieldset id="tab_list">
+      <legend>Liste</legend>
+      {% if gestionnaires is empty %}
+        <div class="alert alert-info mt0">
+          Aucun gestionnaire
+        </div>
+      {% else %}
+        <table id="datatable" class="table table-striped table-middle">
+          <thead>
+            <tr>
+              <th>Gestionnaire</th>
+              <th>Compétence</th>
+              <th>Contact</th>
+              <th>Fonction</th>
+              <th>Adresse</th>
+              <th>Ville</th>
+              <th>Email</th>
+              <th>Téléphone</th>
+              <th>Département</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for gestionnaire in gestionnaires %}
+            <tr>
+              <td>{{ gestionnaire.gestionnaire }}</td>
+              <td>{{ gestionnaire.competence }}</td>
+              <td>{{ gestionnaire.contact }}</td>
+              <td>{{ gestionnaire.fonction }}</td>
+              <td>{{ gestionnaire.adresse }}</td>
+              <td>{{ gestionnaire.ville }}</td>
+              <td>{{ gestionnaire.email }}</td>
+              <td>{{ gestionnaire.telephone }}</td>
+              <td>{{ gestionnaire.departement.nom }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% endif %}
+    </fieldset>
+    <fieldset id="tab_annuaire" class="hide">
+      <legend>Annuaire</legend>
+    </fieldset>
+
+  </div>
+  
+  <div class="modal fade bs-modal" tabindex="-1" role="dialog" aria-labelledby="emailModal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content text-center">
+        <div id="show_message" style="padding: 20px;text-align: left;" class="modal-body">
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

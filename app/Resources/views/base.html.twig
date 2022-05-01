@@ -139,6 +139,7 @@
             <li{{ item is defined and item == 'finance' ? ' class="active"' }}><a href="{{ path('finance_index') }}"><i class="fa fa-euro"></i> Finances</a></li>
             <li{{ item is defined and item == 'archives' ? ' class="active"' }}><a href="{{ path('projet_archive') }}"><i class="fa fa-archive"></i> Archives</a></li>
             <li{{ item is defined and item == 'annuaire' ? ' class="active"' }}><a href="{{ path('annuaire_index') }}"><i class="fa fa-institution"></i> Mairies</a></li>
+            <li{{ item is defined and item == 'gestionnaire' ? ' class="active"' }}><a href="{{ path('gestionnaire_index') }}"><i class="fa fa-id-badge"></i> Gestionnaires</a></li>
             <li{{ item is defined and item == 'proprietaires' ? ' class="active"' }}><a href="{{ path('proprietaires') }}"><i class="fa fa-users"></i> Propriétaires</a></li>
             <li{{ item is defined and item == 'bureau' ? ' class="active"' }}><a href="{{ path('bureau_index') }}"><i class="fa fa-book"></i> Prestataires</a></li>
             {% if is_granted('ROLE_ADMIN') %}
