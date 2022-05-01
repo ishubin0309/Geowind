@@ -24,6 +24,7 @@ use AppBundle\Form\ProjetType;
 use AppBundle\Form\ListeType;
 use AppBundle\Form\RappelType;
 use AppBundle\Form\MessageParcellesType;
+use AppBundle\Form\ConsultationType;
 use AppBundle\Helper\GridHelper;
 use AppBundle\Model\ExportOption;
 use AppBundle\Service\ProjetExport;
