@@ -550,10 +550,10 @@ col-sm-8
 {% block _projet_consultations_entry_row %}
   {% spaceless %}
     <tr>
-      <td>{% if form.vars.value.date is defined %}{{ form_widget(form.date) }}{% else %}{{ form_widget(form.date, {'value' : "now"|date("d/m/Y")}) }}{% endif %}</td>
-      <td>{{ form_widget(form.to) }}</td>
-      <td>{{ form_widget(form.object) }}</td>
-      <td>{{ form_widget(form.body) }}</td>
+      <td>{% if form.vars.value.date is defined %}{{ form.vars.value.date }}{% endif %}</td>
+      <td>{{ form.vars.value.to }}</td>
+      <td>{{ form.vars.value.object }}</td>
+      <td>{{ form.vars.value.body }}</td>
     </tr>
   {% endspaceless %}
 {% endblock %}
