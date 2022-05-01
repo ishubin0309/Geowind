@@ -60,14 +60,14 @@ class Gestionnaire
     /**
      * @var string
      * 
-     * @ORM\Column(type="string", name="adresse", nullable=true)
+     * @ORM\Column(type="string", name="adresse")
      */
     private $adresse;
     
     /**
      * @var string
      * 
-     * @ORM\Column(type="string", name="ville", nullable=true)
+     * @ORM\Column(type="string", name="ville")
      */
     private $ville;
     
@@ -153,9 +153,9 @@ class Gestionnaire
         return $this->adresse;
     }
 
-    public function setAdresse($to)
+    public function setAdresse($adresse)
     {
-        $this->to = $to;
+        $this->adresse = $adresse;
         return $this;
     }
 
