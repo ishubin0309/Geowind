@@ -18,6 +18,13 @@ class ConsultationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('date', DatePickerType::class, [
+                'label' => 'Date',
+                'widget' => 'single_text',
+                'format' => 'dd/MM/yyyy',
+                'html5' => false,
+                'required' => false,
+            ])
             ->add('from', EmailType::class, [
                 'label' => 'Expéditeur',
                 'disabled' => true,
