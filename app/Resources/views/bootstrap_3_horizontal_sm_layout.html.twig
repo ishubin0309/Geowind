@@ -516,6 +516,49 @@ col-sm-8
   {% endspaceless %}
 {% endblock %}
 
+{% block _projet_consultations_widget %}
+  {% if prototype is defined %}
+      {%- set attr = attr|merge({'data-prototype': form_row(prototype) }) -%}
+  {% endif %}
+
+    <table class="table table-condensed table-form">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Destinataire</th>
+          <th>Objet</th>
+          <th>Message</th>
+        </tr>
+      </thead>
+      <tbody {{ block('widget_container_attributes') }}>
+        {% for child in form %}
+          {{- form_row(child) -}}
+        {% endfor %}
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="8">
+            <button type="button" id="projet_send_consultation" class="btn btn-primary btn-xs"><i class="fa fa-plus-circle"></i> Lettre</button>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+    
+
+{% endblock %}
+
+{% block _projet_consultations_entry_row %}
+  {% spaceless %}
+    <tr>
+      <td>{% if form.vars.value.date is defined %}{{ form_widget(form.date) }}{% else %}{{ form_widget(form.date, {'value' : "now"|date("d/m/Y")}) }}{% endif %}</td>
+      <td>{{ form_widget(form.type) }}</td>
+      <td>{{ form_widget(form.to) }}</td>
+      <td>{{ form_widget(form.object) }}</td>
+      <td>{{ form_widget(form.body) }}</td>
+    </tr>
+  {% endspaceless %}
+{% endblock %}
+
 {% block _projet_documents_widget %}
   {% if prototype is defined %}
       {%- set attr = attr|merge({'data-prototype': form_row(prototype) }) -%}

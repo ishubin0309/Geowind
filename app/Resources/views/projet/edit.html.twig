@@ -127,6 +127,7 @@
             <li class=""><a href="#" rel="tab_taches">Taches</a></li>
             <li class=""><a href="#" rel="tab_concertation">Suivi</a></li>
             <li class=""><a href="#" rel="tab_commandes">Commandes</a></li>
+            <li class=""><a href="#" rel="tab_consultations">Consultations</a></li>
             <li class=""><a href="#" rel="tab_documents">Plans</a></li>
             <li class=""><a href="#" rel="tab_images">Images</a></li>
             {% set unreadMessage = false %}
@@ -406,6 +407,10 @@
         {{ form_widget(form.finances) }}
       </fieldset>
 
+      <fieldset class="hide" id="tab_consultations">
+        {{ form_widget(form.consultations) }}
+      </fieldset>
+
       <fieldset class="hide" id="tab_documents">
         {{ form_widget(form.documents) }}
       </fieldset>
@@ -565,6 +570,32 @@
             </div>
           </div>
           {{ form_end(formMail) }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade send-consultation-modal" tabindex="-1" role="dialog" aria-labelledby="sendConsultationModal">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content text-center">
+        <div class="modal-body">
+          <h1>Envoyer une consultation</h1>
+          <hr>
+          {{ form_start(formConsultation) }}
+          
+          {{ form_row(formConsultation.from) }}
+          {{ form_row(formConsultation.to) }}
+          
+          <hr>
+          
+          {{ form_rest(formConsultation) }}
+
+          <div class="form-group">
+            <div class="col-sm-10 col-sm-offset-2">
+              <button type="submit" class="btn btn-primary"><i class="fa fa-send fa-fw"></i> Envoyer</button>
+            </div>
+          </div>
+          {{ form_end(formConsultation) }}
         </div>
       </div>
     </div>
@@ -3804,6 +3835,14 @@
         $('#message_parcelles_departements, #message_parcelles_communes, #message_parcelles_parcelles').parents('.form-group').addClass('hide');
         $('.send-mail-modal').modal('show');
       }
+    });
+    $('#projet_send_consultation').click(function () {
+      $('#consultation_object').val('Sujet');
+      $('#consultation_body').val('Madame, monsieur,'+"\n\n"+
+      'Nous réalisons actuellement une étude de faisabilité foncière d’un projet d’énergie renouvelable situé sur la commune  dans le départment de ' +"\n\n"+
+      'A cette fin,nous sollicitons de votre part, la communication des matices cadastrales des parcelles suivantes afin de demander l’avis des propriétaires concernés.'+"\n\n"+
+      'Vous remerciant par avance, je vous prie d\'agréer, madame, monsieur, l’expression de mes salutations distinguées'+"\n\n";
+      $('.send-consultation-modal').modal('show');
     });
 
     var $collectionHolderEnjeux = $('#projet_enjeuxs');

@@ -798,6 +798,29 @@ class ProjetController extends Controller
             }
         }
 
+        $consultation = new Consultation;
+        $from = $this->getParameter('mailer_from');
+        $consultation->setFrom($from);
+        $consultation->setProjet($projet);
+        $formConsultation = $this->createForm(ConsultationType::class, $consultation);
+        $formConsultation->handleRequest($request);
+        if ($formConsultation->isSubmitted() && $formConsultation->isValid()) {
+            $annuaireMailer = new AnnuaireMailer($this->getParameter('mailer_password'));
+            $errors = [];
+            $dir = $this->getParameter('document_upload_dir');
+            $consultation->setDate(new DateTime('now'));
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($consultation);
+            if ($annuaireMailer->handleConsultation($consultation, $errors, $dir)) {
+                $em->flush();
+                $this->addFlash('success', 'Consultation envoyée.');
+                // return $this->redirectToRoute('projet_edit', ['id' => $projet]);
+            
+            } else {
+                $this->addFlash('error', 'Erreur');
+            }
+        }
+
         $form = $this->createForm(ProjetEditType::class, $projet);
         $form->handleRequest($request);
 
@@ -841,6 +864,7 @@ class ProjetController extends Controller
         return $this->render('projet/edit.html.twig', [
             'form' => $form->createView(),
             'formMail' => $formMail->createView(),
+            'formConsultation' => $formConsultation->createView(),
             'projet' => $projet,
             'show' => $show,
             'grid_helper' => $gridHelper,

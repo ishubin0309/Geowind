@@ -5,6 +5,7 @@ namespace AppBundle\Service;
 use AppBundle\Entity\Message;
 use AppBundle\Entity\MessageProprietaire;
 use AppBundle\Entity\MessageParcelles;
+use AppBundle\Entity\Consultation;
 
 /**
  * Haffoudhi
@@ -29,6 +30,11 @@ class AnnuaireMailer
     }
     
     public function handleMessageProprietaire(MessageProprietaire $message, &$errors,  $dir='')
+    {
+        return $this->sendMail($message, $errors,  $dir);
+    }
+    
+    public function handleConsultation(Consultation $message, &$errors,  $dir='')
     {
         return $this->sendMail($message, $errors,  $dir);
     }

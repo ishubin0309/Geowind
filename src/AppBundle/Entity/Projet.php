@@ -255,6 +255,13 @@ class Projet
     private $concertations;
 
     /**
+     * @var ArrayCollection|Consultation[]
+     *
+     * @ORM\OneToMany(targetEntity="Consultation", mappedBy="projet", cascade={"all"}, orphanRemoval=true)
+     */
+    private $consultations;
+
+    /**
      * @var ArrayCollection|Document[]
      *
      * @ORM\OneToMany(targetEntity="Document", mappedBy="projet", cascade={"all"}, orphanRemoval=true)
@@ -543,6 +550,7 @@ class Projet
         $this->etats = new ArrayCollection();
         $this->taches = new ArrayCollection();
         $this->concertations = new ArrayCollection();
+        $this->consultations = new ArrayCollection();
         $this->documents = new ArrayCollection();
         $this->parcelles = new ArrayCollection();
         $this->notes = new ArrayCollection();
@@ -1157,6 +1165,43 @@ class Projet
     public function removeConcertation(Concertation $concertation)
     {
         $this->concertations->removeElement($concertation);
+    }
+
+    /**
+     * @return ArrayCollection|Consultation[]
+     */
+    public function getConsultations()
+    {
+        return $this->consultations;
+    }
+
+    /**
+     * @param ArrayCollection $consultations
+     * @return \AppBundle\Entity\Projet
+     */
+    public function setConsultations(ArrayCollection $consultations)
+    {
+        $this->consultations = $consultations;
+        return $this;
+    }
+    
+    /**
+     * @param \AppBundle\Entity\Consultation $document
+     */
+    public function addConsultation(Consultation $consultation)
+    {
+        if (!$this->consultations->contains($consultation)) {
+            $consultation->setProjet($this);
+            $this->consultations->add($consultation);
+        }
+    }
+
+    /**
+     * @param \AppBundle\Entity\Consultation $consultation
+     */
+    public function removeConsultation(Consultation $consultation)
+    {
+        $this->consultations->removeElement($consultation);
     }
 
     /**
