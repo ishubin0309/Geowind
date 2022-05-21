@@ -296,12 +296,15 @@ class Document
     public static function getTypeList()
     {
         return [
-            'plan_contexte' => 'Plan de contexte',
-            'plan_zonage' => 'Plan de zonage',
+            'plan_situation' => 'Plan de situation',
+            'zone_projet' => 'Zone de projet',
+            'zone_etude' => 'Zone d\'étude',
             'plan_implantation' => 'Plan d\'implantation',
             'maitrise_fonciere' => 'Maîtrise foncière',
-            'delibération' => 'Délibération',
-            'pre_faisabilite' => 'Pré-faisabilité',
+            'plan_acces' => 'Plan des accès',
+            'raccordement' => 'Raccordement',
+            'reseaux_entres' => 'Réseaux enterés',
+            'amenagements' => 'Aménagements',
         ];
     }
 
