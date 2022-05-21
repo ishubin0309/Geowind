@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use AppBundle\Form\Extension\DatePickerType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextAreaType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -34,7 +35,7 @@ class DocumentType extends AbstractType
                 'required' => false,
                 'choices' => array_flip(Document::getTypeList()),
             ])
-            ->add('titre', TextType::class, [
+            ->add('titre', TextAreaType::class, [
                 'label' => 'Titre',
                 'required' => false,
             ])
@@ -42,7 +43,7 @@ class DocumentType extends AbstractType
                 'label' => 'Fichier',
                 'required' => false,
             ])
-            ->add('description', TextType::class, [
+            ->add('description', TextAreaType::class, [
                 'label' => 'Description',
                 'required' => false,
             ])
