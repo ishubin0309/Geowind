@@ -4,6 +4,8 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Departement;
 use AppBundle\Entity\Gestionnaire;
+use AppBundle\Entity\Import;
+use AppBundle\Form\ImportType;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
