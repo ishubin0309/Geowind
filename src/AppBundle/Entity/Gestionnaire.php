@@ -202,4 +202,21 @@ class Gestionnaire
         $this->departement = $departement;
         return $this;
     }
+
+    public function getRowForExport()
+    {
+        return [
+            $this->gestionnaire, 
+            $this->competence, 
+            $this->contact, 
+            $this->fonction, 
+            $this->adresse, 
+            $this->ville, 
+            $this->email, 
+            $this->telephone, 
+            $this->departement->getCode(),
+            strtolower($this->departement->getNom()), 
+            strtoupper($this->departement->getNom())
+        ];
+    }
 }

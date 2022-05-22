@@ -16,4 +16,20 @@ class GestionnaireRepository extends EntityRepository
 
         return $query->getQuery()->getResult();
     }
+
+    public function findAllCount()
+    {
+        $query = $this->createQueryBuilder('g', 'g.id')
+                    ->select('COUNT(g)')
+                ;
+
+        return $query->getQuery()->getSingleScalarResult();
+    }
+    
+    public function emptyTable()
+    {
+        $query = $this->createQueryBuilder('g')->delete('AppBundle:Gestionnaire', 'g');
+
+        return $query->getQuery()->execute();
+    }
 }

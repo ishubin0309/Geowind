@@ -34,6 +34,10 @@
     </nav> #}
     <fieldset id="tab_list">
       <legend>Liste</legend>
+      <div class="btn-group col-sm-offset-3" role="group" aria-label="...">
+        <a href="{{ path('gestionnaire_export') }}" class="btn btn-success btn-sm"><i class="fa fa-fw fa-save"></i> Exporter</a>
+        <button id="import" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-paperclip"></i> Importer</a>
+      </div>
       {% if gestionnaires is empty %}
         <div class="alert alert-info mt0">
           Aucun gestionnaire
@@ -76,6 +80,25 @@
     </fieldset>
 
   </div>
+
+  <div class="row hide">
+    <div class="col-xs-12">
+      
+      {{ form_start(form) }}
+      <fieldset>
+        <legend>Importer</legend>
+        <div class="col-xs-4">
+        {{ form_row(form.importFile) }}
+        </div>
+        <div class="col-xs-2">
+          <button id="import_submit" type="submit" class="btn btn-primary"><i class="fa fa-paperclip"></i> Importer</button>
+        </div>
+      </fieldset>
+      
+      {{ form_rest(form) }}
+      {{ form_end(form) }}
+    </div>
+  </div>
   
   <div class="modal fade bs-modal" tabindex="-1" role="dialog" aria-labelledby="emailModal">
     <div class="modal-dialog" role="document">
@@ -85,4 +108,45 @@
       </div>
     </div>
   </div>
+{% endblock %}
+
+{% block js %}
+  <script>
+$('#import').click(function() {
+    $('#import_importFile').click();
+  });
+  var count = 1;
+  
+  $('#import_importFile').change(function() {
+    swal({
+        title: "Importer ce fichier ?",
+        text: "Les parcs anciens seront supprimés définitivement.",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Importer",
+        cancelButtonText: "Annuler",
+        closeOnConfirm: false,
+        closeOnCancel: true,
+        allowOutsideClick: true,
+        showLoaderOnConfirm: true,
+      },
+      function(isConfirm){
+        if (isConfirm) {
+          $('#import_importFile').parents('form').submit();
+          setInterval(function() {
+            if(count) {
+              count = 0;
+              $.get('{{ path('gestionnaire_count_all') }}', function( data ) {
+                count = 1;
+                $('body').find('.sweet-alert h2').html(data + ' éoliennes importées');
+              });
+            }
+          }, 3000);
+        } else {
+
+        }
+    });
+  });
+  </script>
 {% endblock %}

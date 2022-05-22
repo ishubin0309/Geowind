@@ -73,6 +73,7 @@ class GestionnaireController extends Controller
                         $emailColumn = 6;
                         $telephoneColumn = 7;
                         $departementColumn = 8;
+                        $parcs = $em->getRepository('AppBundle:Gestionnaire')->emptyTable();
                         continue;
                     }
                     // if($row > 10) continue;
@@ -102,5 +103,42 @@ class GestionnaireController extends Controller
             }
             return new Response('Done');
         } else new Response('Fichier introuvable');
+    }
+
+    /**
+     * @Route("/nombre-totale", name="gestionnaire_count_all")
+     */
+    public function countAllAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $count = $em->getRepository('AppBundle:Gestionnaire')->findAllCount();
+        $response = new Response($count);
+        return $response;
+    }
+
+    /**
+     * @Route("/export-csv", name="gestionnaire_export")
+     */
+    public function exportAction(Request $request)
+    {
+
+        $response = new StreamedResponse();
+        $response->setCallback(function() {
+            $handle = fopen('php://output', 'w+');
+
+            $em = $this->getDoctrine()->getManager();
+            $gestionnaires = $em->getRepository('AppBundle:Gestionnaire')->findAll();
+            fputcsv($handle, ['Gestionnaire','Compétence','Contact','Fonction','Adresse','Ville','Email','Téléphone','Département_num','Département_min','Département_maj'],',');
+            foreach($gestionnaires as $gestionnaire) {
+                fputcsv($handle, $gestionnaire->getRowForExport(), ',');
+            }
+
+            fclose($handle);
+        });
+        $response->setStatusCode(200);
+        $response->headers->set('Content-Type', 'text/csv; charset=utf-8');
+        $response->headers->set('Content-Disposition', 'attachment; filename="eoliens.csv"');
+
+        return $response;
     }
 }
