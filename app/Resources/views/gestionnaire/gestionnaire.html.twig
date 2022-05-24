@@ -73,6 +73,19 @@
             </tr>
             {% endfor %}
           </tbody>
+          <tfoot>
+            <tr>
+              <th>Gestionnaire</th>
+              <th>Compétence</th>
+              <th>Contact</th>
+              <th>Fonction</th>
+              <th>Adresse</th>
+              <th>Ville</th>
+              <th>Email</th>
+              <th>Téléphone</th>
+              <th>Département</th>
+            </tr>
+          </tfoot>
         </table>
       {% endif %}
     </fieldset>
@@ -138,7 +151,20 @@
           sortAscending:  ": activer pour trier la colonne par ordre croissant",
           sortDescending: ": activer pour trier la colonne par ordre décroissant"
         }
-      }
+      },
+      initComplete: function () {
+        // Apply the search
+        this.api()
+          .columns()
+          .every(function () {
+            var that = this;
+
+            $('input', this.footer()).on('keyup change clear', function () {
+                if (that.search() !== this.value) {
+                    that.search(this.value).draw();
+                }
+            });
+          });
   } );
   });
 
