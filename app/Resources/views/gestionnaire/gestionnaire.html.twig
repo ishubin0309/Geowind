@@ -129,10 +129,7 @@
   <script src="https://cdn.datatables.net/1.12.0/js/dataTables.bootstrap.min.js"></script>
   <script>
   $(document).ready(function () {
-    $('#datatable tfoot th').each(function () {
-        var title = $(this).text();
-        $(this).html('<input type="text" class="form-control input-sm" placeholder="Search ' + title + '" />');
-    });
+    $('#datatable tfoot th:last').html('<input type="text" class="form-control input-sm" placeholder="Search ' + title + '" />');
     $('#datatable').DataTable( {
       language: {
         processing:     "Traitement en cours...",
