@@ -55,7 +55,7 @@
               <th>Ville</th>
               <th>Email</th>
               <th>Téléphone</th>
-              <th>Département</th>
+              <th><input type="text" class="form-control input-sm" placeholder="Département" /></th>
             </tr>
           </thead>
           <tbody>
@@ -129,7 +129,6 @@
   <script src="https://cdn.datatables.net/1.12.0/js/dataTables.bootstrap.min.js"></script>
   <script>
   $(document).ready(function () {
-    $('#datatable tfoot th:last').html('<input type="text" class="form-control input-sm" placeholder="Search ' + title + '" />');
     $('#datatable').DataTable( {
       language: {
         processing:     "Traitement en cours...",
