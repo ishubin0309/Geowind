@@ -4,6 +4,7 @@
 {% set item = 'gestionnaire' %}
 
 {% block body %}
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.12.0/css/dataTables.bootstrap.min.css">
   <style>
   .table-striped tbody tr:hover {
     background-color: #31b0d5;
@@ -111,8 +112,14 @@
 {% endblock %}
 
 {% block js %}
+  <script src="https://cdn.datatables.net/1.12.0/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.12.0/js/dataTables.bootstrap.min.js"></script>
   <script>
-$('#import').click(function() {
+  $(document).ready(function () {
+    $('#datatable').DataTable();
+  });
+
+  $('#import').click(function() {
     $('#import_importFile').click();
   });
   var count = 1;
