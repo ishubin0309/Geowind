@@ -8,11 +8,6 @@
   <link rel="stylesheet" href="{{ asset('vendor/Leaflet.markercluster-1.1.0/dist/MarkerCluster.Default.css') }}">
   <link rel="stylesheet" href="https://ignf.github.io/geoportal-extensions/leaflet-latest/dist/GpPluginLeaflet.css">
 
-{% endblock %}
-
-{% form_theme form 'bootstrap_3_horizontal_sm_layout.html.twig' %}
-
-{% block body %}
   <style>
   #nouveau_projet_nav > .nav > li > a {
     padding-right: 10px;
@@ -97,7 +92,23 @@
     padding-top: 1rem !important;
     padding-bottom: 1rem !important;
   }
+  #tab_documents table {
+      counter-reset: rowNumber;
+  }
+  #tab_documents table tr {
+      counter-increment: rowNumber;
+  }
+  #tab_documents table tr td:first-child::before {
+      content: counter(rowNumber);
+      min-width: 1em;
+      margin-right: 0.5em;
+  }
   </style>
+{% endblock %}
+
+{% form_theme form 'bootstrap_3_horizontal_sm_layout.html.twig' %}
+
+{% block body %}
   {{ form_start(form) }}
   <div class="container-fluid">
     <nav class="navbar navbar-default">
