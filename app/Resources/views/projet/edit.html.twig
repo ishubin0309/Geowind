@@ -98,10 +98,13 @@
   #tab_documents table tbody tr {
       counter-increment: rowNumber;
   }
-  #tab_documents table tbody tr td:nth-child(2)::after {
+  #tab_documents table tbody tr td:nth-child(3)::after {
       content: counter(rowNumber);
       min-width: 1em;
       margin-right: 0.5em;
+  }
+  #tab_documents table tbody tr td:nth-child(3) input {
+    float: left;
   }
   </style>
 {% endblock %}
