@@ -46,6 +46,7 @@
               <th>Destinaire</th>
               <th>Contactée par</th>
               <th>Commune</th>
+              <th>Département</th>
               <th>Parcelles</th>
               <th class="column-fit">Objet</th>
               <th>Message</th>
@@ -56,10 +57,11 @@
             {% for message in messages %}
             <tr>
               <td>{{ message.date|date('d/m/Y') }}</td>
-              <td><a href="{{ path('projet_edit', {id: message.projet.id}) }}">{{ message.projet }}</a></td>
+              <td>{% if message.projet is not empty %}<a href="{{ path('projet_edit', {id: message.projet.id}) }}">{{ message.projet }}</a>{% else %}{{ message.projet }}{% endif %}</td>
               <td>{{ message.to }}</td>
               <td>{{ message.createdBy }}</td>
               <td class="column-fit">{{ message.communes }}</td>
+              <td class="column-fit">{{ message.departements }}</td>
               <td class="column-fit">{{ message.parcelles }}</td>
               <td class="column-fit">{{ message.object }}</td>
               <td>
@@ -101,9 +103,10 @@
         { targets: 3, searchable: false },
         { targets: 4, searchable: false },
         { targets: 5, searchable: false },
-        { targets: 6, orderable: false },
-        { targets: 7, searchable: false, orderable: false },
-        { targets: 8, orderable: false, orderable: false }
+        { targets: 6, searchable: false },
+        { targets: 7, orderable: false },
+        { targets: 8, searchable: false, orderable: false },
+        { targets: 9, orderable: false, orderable: false }
     ],
     paging: false,
     bInfo: false,
