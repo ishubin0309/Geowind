@@ -418,7 +418,7 @@
             commune: '',
           {% endif %}
           {% if columnsType == 1 %}
-          plan: {% if projet.photoImplantation %}'Oui'{% else %}'Non'{% endif %},
+          plan: {{ projet.documents|length }},
           {% endif %}
           {% if columnsType == 2 %}
             {% set servitudes = false %}
