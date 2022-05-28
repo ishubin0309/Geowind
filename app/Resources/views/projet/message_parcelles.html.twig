@@ -60,8 +60,8 @@
               <td>{% if message.projet is not empty %}<a href="{{ path('projet_edit', {id: message.projet.id}) }}">{{ message.projet }}</a>{% else %}{{ message.projet }}{% endif %}</td>
               <td>{{ message.to }}</td>
               <td>{{ message.createdBy }}</td>
-              <td class="column-fit">{{ message.communes|replace({',': ', '}) }}</td>
-              <td class="column-fit">{{ message.departements|replace({',': ', '}) }}</td>
+              <td class="column-fit">{{ message.communes|replace({',': '<br>'})|raw }}</td>
+              <td class="column-fit">{{ message.departements|replace({',': '<br>'})|raw }}</td>
               <td class="column-fit">{{ message.parcelles }}</td>
               <td class="column-fit">{{ message.object }}</td>
               <td>
