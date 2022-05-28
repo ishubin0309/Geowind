@@ -98,7 +98,7 @@
   #tab_documents table tbody tr {
       counter-increment: rowNumber;
   }
-  #tab_documents table tbody tr td:third-child::before {
+  #tab_documents table tbody tr td:nth-child(3)::before {
       content: counter(rowNumber);
       min-width: 1em;
       margin-right: 0.5em;
