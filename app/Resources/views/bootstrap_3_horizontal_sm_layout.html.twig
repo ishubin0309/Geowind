@@ -568,7 +568,7 @@ col-sm-8
         <tr>
           <th>Date</th>
           <th>Type</th>
-          <th>Titre</th>
+          {# <th>Titre</th> #}
           <th>Fichier</th>
           <th>Description</th>
           <th class="hide2">Plan (?)</th>
@@ -597,7 +597,7 @@ col-sm-8
     <tr>
       <td>{% if form.vars.value.date is defined %}{{ form_widget(form.date) }}{% else %}{{ form_widget(form.date, {'value' : "now"|date("d/m/Y")}) }}{% endif %}</td>
       <td>{{ form_widget(form.type) }}</td>
-      <td>{{ form_widget(form.titre) }}</td>
+      {# <td>{{ form_widget(form.titre) }}</td> #}
       <td>{{ form_widget(form.documentFile) }}</td>
       <td>{{ form_widget(form.description) }}</td>
       <td class="hide2">{{ form_widget(form.plan) }}</td>

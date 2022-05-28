@@ -39,7 +39,7 @@ class Document
     /**
      * @var string
      *
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     private $titre;
 
@@ -297,6 +297,7 @@ class Document
     {
         return [
             'plan_situation' => 'Plan de situation',
+            'plan_parcellaire' => 'Plan parcellaire',
             'zone_projet' => 'Zone de projet',
             'zone_etude' => 'Zone d\'étude',
             'plan_implantation' => 'Plan d\'implantation',

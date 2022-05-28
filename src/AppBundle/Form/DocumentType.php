@@ -35,10 +35,10 @@ class DocumentType extends AbstractType
                 'required' => false,
                 'choices' => array_flip(Document::getTypeList()),
             ])
-            ->add('titre', TextAreaType::class, [
+           /*  ->add('titre', TextAreaType::class, [
                 'label' => 'Titre',
                 'required' => false,
-            ])
+            ]) */
             ->add('documentFile', FileType::class, [
                 'label' => 'Fichier',
                 'required' => false,
