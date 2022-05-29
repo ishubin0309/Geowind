@@ -25,7 +25,7 @@
                 {{ mairie.address1 }}
                 {{ mairie.address2 is not empty ? '<br>' ~ mairie.address2 }}
                 <br>{{ mairie.codePostal }} {{ mairie.commune }}
-                <button type="button" data-addressone="{{ mairie.address1 }}" data-addresstwo="{{ mairie.address2 }}" data-codepostal="{{ mairie.codePostal }}" data-commune="{{ mairie.commune }}" class="select-address btn btn-xs btn-primary pull-right"><i class="fa fa-mail-forward"></i></button>
+                <button type="button" data-address="{{ mairie }}" data-addressone="{{ mairie.address1 }}" data-addresstwo="{{ mairie.address2 }}" data-codepostal="{{ mairie.codePostal }}" data-commune="{{ mairie.commune }}" class="select-address btn btn-xs btn-primary pull-right"><i class="fa fa-mail-forward"></i></button>
               </td>
             </tr>
             <tr>
@@ -280,8 +280,8 @@
       $('#form_date .btn-primary').html('<i class="fa fa-save fa-fw"></i> Enregistrer');
       $('.select-mail').remove();
     } else {
-      $('.select-address').remove();
-      $('.select-telephone').remove();
+      if(!$('#form_{{ date }} #lettre_to').length) $('.select-address').remove();
+      if(!$('#form_{{ date }} #appel_to').length) $('.select-telephone').remove();
     }
     
     $('.select-mail').click(function() {
@@ -289,7 +289,8 @@
     });
     
     $('.select-address').click(function() {
-      var address = $(this).data('addressone');
+      var address = $(this).data('address');
+      address += '\n' + $(this).data('addressone');
       if($(this).data('addresstwo')) {
         address += '\n' + $(this).data('addresstwo');
       }
