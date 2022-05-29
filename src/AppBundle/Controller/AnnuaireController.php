@@ -11,6 +11,7 @@ use AppBundle\Entity\Lettre;
 use AppBundle\Entity\Commune;
 use AppBundle\Form\MessageModelType;
 use AppBundle\Form\MessageType;
+use AppBundle\Form\AppelType;
 use AppBundle\Form\LettreType;
 use AppBundle\Service\AnnuaireMailer;
 use DateTime;

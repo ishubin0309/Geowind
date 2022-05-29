@@ -22,7 +22,7 @@ class LettreType extends AbstractType
                 'label' => 'Enquêteur',
                 'disabled' => true,
             ])
-            ->add('to', TextType::class, [
+            ->add('to', TextareaType::class, [
                 'label' => 'Destinataire',
                 'required' => true,
             ])
