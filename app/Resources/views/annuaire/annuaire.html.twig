@@ -248,7 +248,7 @@
     <fieldset id="tab_lettre" class="hide">
       <legend>Lettre</legend>
       <select id="input-mairie-lettre" style="width:50%" type="text" class="form-control"></select>
-      <div style="margin-top:20px;" id="new_call"></div>
+      <div style="margin-top:20px;" id="new_letter"></div>
     </fieldset>
     <fieldset id="tab_reminder" class="hide">
       <legend>Rappel</legend>
@@ -674,10 +674,10 @@
       type: 'GET',
       data: { token: csrf },
       beforeSend: function() {
-        $('#new_call').html('');
+        $('#new_letter').html('');
       },
       success: function(result) {
-        $('#new_call').html(result);
+        $('#new_letter').html(result);
       }
     });
   }
