@@ -291,7 +291,13 @@
     });
     
     $('.select-address').click(function() {
-      $('#form_{{ date }} #lettre_to').val($(this).data('addressone') + '\n' + $(this).data('addresstwo') + '\n' + $(this).data('codepostal') + '\n' + $(this).data('commune'));
+      var address = $(this).data('addressone');
+      if($(this).data('addresstwo')) {
+        address += '\n' + $(this).data('addresstwo');
+      }
+      address += '\n' + $(this).data('codepostal');
+      address += '\n' + $(this).data('commune');
+      $('#form_{{ date }} #lettre_to').val(address);
     });
     
     $('.select-telephone').click(function() {
