@@ -25,7 +25,7 @@
                 {{ mairie.address1 }}
                 {{ mairie.address2 is not empty ? '<br>' ~ mairie.address2 }}
                 <br>{{ mairie.codePostal }} {{ mairie.commune }}
-                <button type="button" data-address="{{ mairie.address1 }}{{ mairie.address2 is not empty ? "\n" ~ mairie.address2 }}\n{{ mairie.codePostal }} {{ mairie.commune }}" class="select-address btn btn-xs btn-primary pull-right"><i class="fa fa-mail-forward"></i></button>
+                <button type="button" data-address="{{ mairie.address1 }}{{ mairie.address2 is not empty ? "\n" ~ mairie.address2|raw }}\n{{ mairie.codePostal }} {{ mairie.commune }}" class="select-address btn btn-xs btn-primary pull-right"><i class="fa fa-mail-forward"></i></button>
               </td>
             </tr>
             <tr>
