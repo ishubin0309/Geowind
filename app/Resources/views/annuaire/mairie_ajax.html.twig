@@ -25,6 +25,7 @@
                 {{ mairie.address1 }}
                 {{ mairie.address2 is not empty ? '<br>' ~ mairie.address2 }}
                 <br>{{ mairie.codePostal }} {{ mairie.commune }}
+                <button type="button" data-address="{{ mairie.address1 }}{{ mairie.address2 is not empty ? "\n" ~ mairie.address2 }}\n{{ mairie.codePostal }} {{ mairie.commune }}" class="select-address btn btn-xs btn-primary pull-right"><i class="fa fa-mail-forward"></i></button>
               </td>
             </tr>
             <tr>
@@ -281,11 +282,16 @@
       $('#form_{{ date }} .btn-primary').html('<i class="fa fa-save fa-fw"></i> Enregistrer');
       $('.select-mail').remove();
     } else {
+      $('.select-address').remove();
       $('.select-telephone').remove();
     }
     
     $('.select-mail').click(function() {
       $('#form_{{ date }} #message_to').val($(this).data('mail'));
+    });
+    
+    $('.select-address').click(function() {
+      $('#form_{{ date }} #appel_to').val($(this).data('address'));
     });
     
     $('.select-telephone').click(function() {

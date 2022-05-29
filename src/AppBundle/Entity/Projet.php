@@ -365,6 +365,14 @@ class Projet
     private $messagesParcelles;
     
     /**
+     * @var ArrayCollection|Lettre[]
+     * 
+     * @ORM\OneToMany(targetEntity="Lettre", mappedBy="projet")
+     * @ORM\OrderBy({"createdAt" = "ASC"})
+     */
+    private $lettres;
+    
+    /**
      * @var ArrayCollection|DateCle[]
      *
      * @ORM\OneToMany(targetEntity="DateCle", mappedBy="projet", cascade={"all"}, orphanRemoval=true)
@@ -557,6 +565,7 @@ class Projet
         $this->proprietaires = new ArrayCollection();
         $this->messages = new ArrayCollection();
         $this->messagesParcelles = new ArrayCollection();
+        $this->lettres = new ArrayCollection();
     }
 
     /**
@@ -1583,6 +1592,17 @@ class Projet
     public function removeMessagesParcelle(MessageParcelles $messagesParcelle)
     {
         $this->messagesParcelles->removeElement($messagesParcelle);
+    }
+    
+    public function getLettres()
+    {
+        return $this->lettres;
+    }
+
+    public function setLettres(ArrayCollection $lettres)
+    {
+        $this->lettres = $lettres;
+        return $this;
     }
     
     /**

@@ -7,10 +7,11 @@ use AppBundle\Entity\Message;
 use AppBundle\Entity\MessageModel;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Appel;
+use AppBundle\Entity\Lettre;
 use AppBundle\Entity\Commune;
 use AppBundle\Form\MessageModelType;
 use AppBundle\Form\MessageType;
-use AppBundle\Form\AppelType;
+use AppBundle\Form\LettreType;
 use AppBundle\Service\AnnuaireMailer;
 use DateTime;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -39,6 +40,9 @@ class AnnuaireController extends Controller
 
         $appels = $em->getRepository('AppBundle:Appel')
                         ->findAll();
+
+        $lettres = $em->getRepository('AppBundle:Lettre')
+                        ->findAll();
         
         $models = $em->getRepository('AppBundle:MessageModel')
                         ->findBy([], ['name' => 'ASC']);
@@ -49,6 +53,7 @@ class AnnuaireController extends Controller
         return $this->render('annuaire/annuaire.html.twig', [
             'messages' => $messages,
             'appels' => $appels,
+            'lettres' => $lettres,
             'models' => $models,
             'regions' => $regions,
         ]);
@@ -244,6 +249,48 @@ class AnnuaireController extends Controller
     }
     
     /**
+     * @Route("/mairie/lettre/{insee}/contact", name="annuaire_mairie_lettre", options={"expose": true})
+     * @ParamConverter("mairie", options={"mapping": {"insee": "insee"}})
+     * @Method({"GET", "POST"})
+     */
+    public function mairieLettreAction(Request $request, Mairie $mairie, UserInterface $user)
+    {
+        /* @var $user User */
+        
+        $lettre = new Lettre();
+        $from = $this->getParameter('mailer_from');
+        $lettre->setMairie($mairie);
+        
+        $form = $this->createForm(LettreType::class, $lettre, [
+            'action' => $this->generateUrl('annuaire_mairie_lettre', ['insee' => $mairie->getInsee()]),
+            'method' => 'POST',
+        ]);
+        $form->handleRequest($request);
+        
+        $em = $this->getDoctrine()->getManager();
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->persist($lettre);
+            $em->flush();
+            return $this->redirectToRoute('annuaire_index');
+            return $this->redirectToRoute('annuaire_mairie_lettre', ['insee' => $mairie->getInsee()]);
+        }
+        
+        $models = $em->getRepository('AppBundle:MessageModel')
+                        ->findBy([], ['name' => 'ASC']);
+        $commune = $em->getRepository('AppBundle:Commune')->findOneBy(['insee' => $mairie->getInsee()]);
+
+        if($request->isXmlHttpRequest()) $page = 'mairie_ajax';
+        else $page = 'mairie';
+        return $this->render('annuaire/'.$page.'.html.twig', [
+            'form' => $form->createView(),
+            'models' => $models,
+            'mairie' => $mairie,
+            'commune' => $commune,
+        ]);
+    }
+    
+    /**
      * @Route("/modele/nouveau", name="model_new")
      * @Method({"GET", "POST"})
      */
@@ -401,6 +448,48 @@ class AnnuaireController extends Controller
         }
         return $response;
     }
+    
+    /**
+     * @Route("/lettre/{id}/modifier", name="lettre_edit", options={ "expose": true })
+     * @Method({"POST"})
+     * @Security("has_role('ROLE_ADMIN')")
+     */
+    public function editLettreAction(Request $request, Lettre $lettre)
+    {
+        $result = $request->request->get('result', '?');
+        $dateReminder = $request->request->get('dateReminder', null);
+        $csrf = $request->request->get('csrf', null);
+
+        if ($this->isCsrfTokenValid('token', $csrf)) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $response = new JsonResponse();
+        $response->setData(['success' => 0]);
+        if($dateReminder) {
+            if($dateReminder >= date('d/m/Y')) {
+                $em = $this->getDoctrine()->getManager();
+
+                $dateReminder = new DateTime(str_replace('/', '-', $dateReminder));
+                $lettre->setDateReminder($dateReminder);
+                $em->persist($lettre);
+                $em->flush();
+
+                $this->addFlash('success', 'La date de rappel de la lettre « ' . $lettre->getObject() . ' » a été modifié.');
+                $response->setData(['success' => 1]);
+            }
+        } elseif(in_array($result, ['?', '-', '+', 'R'])) {
+            $em = $this->getDoctrine()->getManager();
+
+            $lettre->setResult($result);
+            $em->persist($lettre);
+            $em->flush();
+
+            $this->addFlash('success', 'Le résultat de la lettre « ' . $lettre->getObject() . ' » a été modifié.');
+            $response->setData(['success' => 1]);
+        }
+        return $response;
+    }
 
     /**
      * @Route("/message/{id}/supprimer", name="message_delete", options={ "expose": true })
@@ -450,6 +539,32 @@ class AnnuaireController extends Controller
         $em->remove($appel);
         $em->flush();
         $this->addFlash('success', 'Appel « '.$sujet.' » a été supprimé.');
+
+        return $response;
+    }
+
+    /**
+     * @Route("/lettre/{id}/supprimer", name="lettre_delete", options={ "expose": true })
+     * @Method("DELETE")
+     * @Security("has_role('ROLE_EDIT')")
+     */
+    public function lettreDeleteAction(Request $request, Lettre $lettre)
+    {
+        $csrf = $request->request->get('csrf', null);
+
+        if ($this->isCsrfTokenValid('token', $csrf)) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $em = $this->getDoctrine()->getManager();
+
+        $response = new JsonResponse();
+        $response->setData(['success' => 0]);
+        $em = $this->getDoctrine()->getManager();
+        $sujet = $lettre->getObject();
+        $em->remove($lettre);
+        $em->flush();
+        $this->addFlash('success', 'Lettre « '.$sujet.' » a été supprimée.');
 
         return $response;
     }
