@@ -515,7 +515,9 @@
     /*if(message[4] && message[5]) {
       marker = new L.DivIcon.SVGIcon({ iconSize: L.point(24, 32), weight: 1, circleWeight: 1, color: '#000000', fillColor: message[3], fillOpacity: 0.7 });
       L.marker([message[4], message[5]], { icon: marker}).addTo(map).bindTooltip(message[2]).bindPopup('Région: ' + message[0] + '<br>Commune: ' + message[1]);
-    } else */reverseGeolocalisation(message[0], message[1], message[2], message[3], i);
+    } else */
+    
+    //reverseGeolocalisation(message[0], message[1], message[2], message[3], i);
   });
   function reverseGeolocalisation(query, commune, marie, color, index) {
     var nominatimUrl = 'https://nominatim.openstreetmap.org/search';
