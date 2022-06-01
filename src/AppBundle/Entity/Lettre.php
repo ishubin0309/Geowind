@@ -89,6 +89,9 @@ class Lettre
      */
     private $dateReminder;
 
+    
+    private $departement = '';
+
     /**
      * @return string
      */
@@ -178,6 +181,17 @@ class Lettre
     public function setDateReminder(DateTime $dateReminder = null)
     {
         $this->dateReminder = $dateReminder;
+        return $this;
+    }
+
+    public function getDepartement()
+    {
+        return $this->departement;
+    }
+
+    public function setDepartement($departement)
+    {
+        $this->departement = $departement;
         return $this;
     }
     

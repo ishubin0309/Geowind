@@ -36,14 +36,27 @@ class AnnuaireController extends Controller
     {   
         $em = $this->getDoctrine()->getManager();
 
+        $insees = array();
+
         $messages = $em->getRepository('AppBundle:Message')
                         ->findAll();
 
-        $insees = array();
+        $appels = $em->getRepository('AppBundle:Appel')
+                        ->findAll();
+
+        $lettres = $em->getRepository('AppBundle:Lettre')
+                        ->findAll();
+
         foreach ($messages as $message) {
             $insees[] = $message->getMairie()->getInsee();
         }
-        
+        foreach ($appels as $appel) {
+            $insees[] = $appel->getMairie()->getInsee();
+        }
+        foreach ($lettres as $lettre) {
+            $insees[] = $lettre->getMairie()->getInsee();
+        }
+
         $communes = $em->getRepository('AppBundle:Commune')->findByInseeIdxByInsee($insees);
         foreach ($messages as $message) {
             $insee = $message->getMairie()->getInsee();
@@ -54,12 +67,24 @@ class AnnuaireController extends Controller
                 }
             }
         }
-
-        $appels = $em->getRepository('AppBundle:Appel')
-                        ->findAll();
-
-        $lettres = $em->getRepository('AppBundle:Lettre')
-                        ->findAll();
+        foreach ($appels as $appel) {
+            $insee = $appel->getMairie()->getInsee();
+            foreach ($communes as $commune) {
+                if ($commune->getInsee() == $insee) {
+                    $appel->setDepartement($commune->getDepartement());
+                    break;
+                }
+            }
+        }
+        foreach ($lettres as $lettre) {
+            $insee = $lettre->getMairie()->getInsee();
+            foreach ($communes as $commune) {
+                if ($commune->getInsee() == $insee) {
+                    $lettre->setDepartement($commune->getDepartement());
+                    break;
+                }
+            }
+        }
         
         $models = $em->getRepository('AppBundle:MessageModel')
                         ->findBy([], ['name' => 'ASC']);

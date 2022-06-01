@@ -167,11 +167,6 @@ class Message
         return $this->result;
     }
 
-    public function getDepartement()
-    {
-        return $this->departement;
-    }
-
     public function setId($id)
     {
         $this->id = $id;
@@ -211,12 +206,6 @@ class Message
     public function setResult($result)
     {
         $this->result = $result;
-        return $this;
-    }
-
-    public function setDepartement($departement)
-    {
-        $this->departement = $departement;
         return $this;
     }
 
@@ -296,6 +285,17 @@ class Message
     public function setDateReminder(DateTime $dateReminder = null)
     {
         $this->dateReminder = $dateReminder;
+        return $this;
+    }
+
+    public function getDepartement()
+    {
+        return $this->departement;
+    }
+
+    public function setDepartement($departement)
+    {
+        $this->departement = $departement;
         return $this;
     }
     

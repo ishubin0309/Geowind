@@ -92,6 +92,7 @@
             {% for lettre in lettres %}
             <tr>
               <td>{{ lettre.createdAt|date('d/m/Y') }}</td>
+              <td>{{ lettre.departement }}</td>
               <td><a href="{{ path('annuaire_mairie_lettre', { 'insee': lettre.mairie.insee }) }}">{{ lettre.mairie }}</a></td>
               <td>{{ lettre.to }}</td>
               <td>{{ lettre.createdBy }}</td>
@@ -120,6 +121,7 @@
             {% for appel in appels %}
             <tr>
               <td>{{ appel.createdAt|date('d/m/Y') }}</td>
+              <td>{{ appel.departement }}</td>
               <td><a href="{{ path('annuaire_mairie_appel', { 'insee': appel.mairie.insee }) }}">{{ appel.mairie }}</a></td>
               <td>{{ appel.to }}</td>
               <td>{{ appel.createdBy }}</td>
