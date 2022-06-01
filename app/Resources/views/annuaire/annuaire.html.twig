@@ -327,7 +327,7 @@
           Aucune mairie contactée
         </div>
       {% else %}
-        <table id="datatable2" class="table table-striped table-middle">
+        <table id="datatable3" class="table table-striped table-middle">
           <thead>
             <tr>
               <th>Date1</th>
@@ -608,6 +608,13 @@
     paging: false,
     bInfo: false,
   });
+  $('#datatable3').DataTable({
+    language: dtLang,
+    "order": [[ 6, "asc" ]],
+    searching: false,
+    paging: false,
+    bInfo: false,
+  });
   var oTable = $('#datatable').DataTable({
     language: dtLang,
     "order": [[ 0, "asc" ]],
@@ -617,10 +624,11 @@
         { targets: 2, searchable: false },
         { targets: 3, searchable: false },
         { targets: 4, searchable: false },
-        { targets: 5, searchable: false, orderable: false },
-        { targets: 6, orderable: false },
-        { targets: 7, searchable: false },
-        { targets: 8, searchable: false }
+        { targets: 5, searchable: false },
+        { targets: 6, searchable: false, orderable: false },
+        { targets: 7, orderable: false },
+        { targets: 8, searchable: false },
+        { targets: 9, searchable: false }
     ],
     paging: false,
     bInfo: false,
@@ -632,7 +640,7 @@
     else if($(this).val().toLowerCase() == 'r') keyword = 'rappel';
     else if($(this).val() == '?') keyword = 'interrogation';
     else keyword = '';
-    oTable.column(6).search(keyword).draw();
+    oTable.column(7).search(keyword).draw();
   });
   $("#input-mairie, #input-mairie-lettre, #input-mairie-appel").select2({
     ajax: {
