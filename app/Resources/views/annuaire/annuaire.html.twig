@@ -49,6 +49,7 @@
           <thead>
             <tr>
               <th>Date1</th>
+              <th>Département</th>
               <th>Mairie</th>
               <th>Destinaire</th>
               <th>Contactée par</th>
@@ -63,6 +64,7 @@
             {% for message in messages %}
             <tr>
               <td>{{ message.createdAt|date('d/m/Y') }}</td>
+              <td>{{ message.departement }}</td>
               <td><a href="{{ path('annuaire_mairie', { 'insee': message.mairie.insee }) }}">{{ message.mairie }}</a></td>
               <td>{{ message.to }}</td>
               <td>{{ message.createdBy }}</td>

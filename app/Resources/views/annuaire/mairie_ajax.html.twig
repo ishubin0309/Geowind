@@ -24,7 +24,7 @@
                 {{ mairie }}<br>
                 {{ mairie.address1 }}
                 {{ mairie.address2 is not empty ? '<br>' ~ mairie.address2 }}
-                <br>{{ mairie.codePostal }} {{ commune is not null ? commune.departement : '' }} {{ mairie.commune }}
+                <br>{{ mairie.codePostal }} {{ mairie.commune }}
                 <button type="button" data-address="{{ mairie }}" data-addressone="{{ mairie.address1 }}" data-addresstwo="{{ mairie.address2 }}" data-codepostal="{{ mairie.codePostal }}" data-commune="{{ mairie.commune }}" class="select-address btn btn-xs btn-primary pull-right"><i class="fa fa-mail-forward"></i></button>
               </td>
             </tr>
