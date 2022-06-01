@@ -39,12 +39,19 @@ class AnnuaireController extends Controller
         $messages = $em->getRepository('AppBundle:Message')
                         ->findAll();
 
-        $insee = array();
+        $insees = array();
         foreach ($messages as $message) {
-            $insee[] = $message->getMairie()->getInsee();
-            $commune = $em->getRepository('AppBundle:Commune')->findOneBy(['insee' => $message->getMairie()->getInsee()]);
-            if (!empty($commune)) {
-                $message->setDepartement($commune->getDepartement());
+            $insees[] = $message->getMairie()->getInsee();
+        }
+        
+        $communes = $em->getRepository('AppBundle:Commune')->findByInseeIdxByInsee($insees);
+        foreach ($messages as $message) {
+            $insee = $message->getMairie()->getInsee();
+            foreach ($communes as $commune) {
+                if ($commune->getInsee() == $insee) {
+                    $message->setDepartement($commune->getDepartement());
+                    break;
+                }
             }
         }
 
