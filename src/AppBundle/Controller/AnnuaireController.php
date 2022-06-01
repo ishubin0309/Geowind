@@ -62,7 +62,7 @@ class AnnuaireController extends Controller
             $insee = $message->getMairie()->getInsee();
             foreach ($communes as $commune) {
                 if ($commune->getInsee() == $insee) {
-                    $message->setDepartement($commune->getDepartement());
+                    $message->setDepartement(ucfirst($commune->getDepartement()));
                     break;
                 }
             }
@@ -71,7 +71,7 @@ class AnnuaireController extends Controller
             $insee = $appel->getMairie()->getInsee();
             foreach ($communes as $commune) {
                 if ($commune->getInsee() == $insee) {
-                    $appel->setDepartement($commune->getDepartement());
+                    $appel->setDepartement(ucfirst($commune->getDepartement()));
                     break;
                 }
             }
@@ -80,7 +80,7 @@ class AnnuaireController extends Controller
             $insee = $lettre->getMairie()->getInsee();
             foreach ($communes as $commune) {
                 if ($commune->getInsee() == $insee) {
-                    $lettre->setDepartement($commune->getDepartement());
+                    $lettre->setDepartement(ucfirst($commune->getDepartement()));
                     break;
                 }
             }
