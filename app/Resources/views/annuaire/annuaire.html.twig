@@ -101,7 +101,7 @@
               <button class="btn btn-info btn-sm btn_message">Afficher</button>
               <span class="hide">
               {{ lettre.body }}
-              {% if lettre.projet.documents is not empty %}
+              {% if lettre.projet is not empty and lettre.projet.documents is not empty %}
                 {% for document in lettre.projet.documents %}
                   {% if document.type == 'plan_parcellaire' %}
                   <img src="{{ asset('upload/' ~ document.document) }}" alt="Plan parcellaire">
