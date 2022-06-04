@@ -32,7 +32,7 @@ class ProjetRepository extends EntityRepository
             $denomination = $result['denomination'];
             $arr = [
                 'id' => $result['id'],
-                'text' => $denomination,
+                'text' => str_replace('_id', '_'.$result['id'], $denomination),
             ];
             $data[] = $arr;
         }
