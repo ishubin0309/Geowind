@@ -26,12 +26,12 @@ class ProjetRepository extends EntityRepository
 
         $results = $query->getQuery()->getResult(Query::HYDRATE_ARRAY);
 
-        $data = [];echo '<pre>';print_r($results);die;
+        $data = [];
 
         foreach ($results as $result) {
-            $denomination = $result[0]['denomination'];
+            $denomination = $result['denomination'];
             $arr = [
-                'id' => $result[0]['id'],
+                'id' => $result['id'],
                 'text' => $denomination,
             ];
             $data[] = $arr;
