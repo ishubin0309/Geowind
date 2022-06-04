@@ -11,6 +11,34 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
 class ProjetRepository extends EntityRepository
 {
 
+    public function searchTerm($term)
+    {
+        $query = $this->createQueryBuilder('p')
+            ->select('p')
+            ->where('p.denomination LIKE :denomination OR p.id = :id')
+            ->orderBy('id', 'DESC')
+            ->setFirstResult(0)
+            ->setMaxResults(10)
+            ->setParameter('denomination', '%' . $term . '%')
+            ->setParameter('id', $term)
+        ;
+
+        $results = $query->getQuery()->getResult(Query::HYDRATE_ARRAY);
+
+        $data = [];
+
+        foreach ($results as $result) {
+            $denomination = $result[0]['denomination'];
+            $arr = [
+                'id' => $result[0]['id'],
+                'text' => $denomination,
+            ];
+            $data[] = $arr;
+        }
+
+        return $data;
+    }
+
     public function find($id)
     {
         $query = $this->createQueryBuilder('p')

@@ -1215,6 +1215,27 @@ class ProjetController extends Controller
         $response->setData($results);
         return $response;
     }
+
+    /**
+     * @Route("/projets/search", name="projet_search", options={ "expose": true })
+     * @Security("has_role('ROLE_VIEW')")
+     */
+    public function projetsAction(Request $request)
+    {
+        $response = new JsonResponse();
+
+        $term = $request->query->get('term', null);
+
+        $results = [];
+
+        if (!empty($term)) {
+            $em = $this->getDoctrine()->getManager();
+            $results = $em->getRepository('AppBundle:Projet')->searchTerm($term);
+        }
+
+        $response->setData($results);
+        return $response;
+    }
     
     /**
      * @Route("/{id}/epci-by-commune", name="epci_search_by_commune", options={ "expose": true })
