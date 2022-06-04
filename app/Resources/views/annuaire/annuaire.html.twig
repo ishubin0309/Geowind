@@ -111,7 +111,7 @@
               {% if lettre.projet is not empty and lettre.projet.documents is not empty %}
                 {% for document in lettre.projet.documents %}
                   {% if document.type == 'plan_parcellaire' %}
-                  <img class="letter_plan_parcellaire" src="{{ asset('upload/' ~ document.document) }}" alt="Plan parcellaire"><br>
+                  <img class="letter_plan_parcellaire" src="{{ absolute_url(asset('upload/' ~ document.document)) }}" alt="Plan parcellaire"><br>
                   {% endif %}
                 {% endfor %}
               {% endif %}
@@ -409,7 +409,7 @@
         <div id="show_message" style="padding: 20px;text-align: left;" class="modal-body">
         </div>
         <div class="modal-footer">
-          <button id="export_message" type="button" class="btn btn-primary">Exporter</button>
+          <button id="export_message" onclick="Export2Word('');" type="button" class="btn btn-primary">Exporter</button>
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
         </div>
       </div>
@@ -899,9 +899,6 @@
     }
   });
 
-  $('#export_message').on('click', function() {
-    Export2Word('');
-  });
   function Export2Word(filename = '') {
     var preHtml = "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'><title>Export HTML To Doc</title></head><body>";
     var postHtml = "</body></html>";
