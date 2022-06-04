@@ -228,7 +228,7 @@ class AnnuaireController extends Controller
                 $em->flush();
                 $this->addFlash('success', 'Mail envoyé.');
                 return $this->redirectToRoute('annuaire_index');
-                return $this->redirectToRoute('annuaire_mairie', ['insee' => $mairie->getInsee()]);
+                // return $this->redirectToRoute('annuaire_mairie', ['insee' => $mairie->getInsee()]);
             
             } else {
                 $this->addFlash('error', 'Erreur');
@@ -273,7 +273,7 @@ class AnnuaireController extends Controller
             $em->persist($appel);
             $em->flush();
             return $this->redirectToRoute('annuaire_index');
-            return $this->redirectToRoute('annuaire_mairie_appel', ['insee' => $mairie->getInsee()]);
+            // return $this->redirectToRoute('annuaire_mairie_appel', ['insee' => $mairie->getInsee()]);
         }
         
         $models = $em->getRepository('AppBundle:MessageModel')
@@ -315,7 +315,7 @@ class AnnuaireController extends Controller
             $em->persist($lettre);
             $em->flush();
             return $this->redirectToRoute('annuaire_index');
-            return $this->redirectToRoute('annuaire_mairie_lettre', ['insee' => $mairie->getInsee()]);
+            // return $this->redirectToRoute('annuaire_mairie_lettre', ['insee' => $mairie->getInsee()]);
         }
         
         $models = $em->getRepository('AppBundle:MessageModel')

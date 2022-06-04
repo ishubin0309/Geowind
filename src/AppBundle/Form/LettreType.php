@@ -2,6 +2,8 @@
 
 namespace AppBundle\Form;
 
+use AppBundle\Form\EventListener\AddLettreProjetFieldSubscriber as projetSubscriber;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -17,6 +19,7 @@ class LettreType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $builder->addEventSubscriber(new projetSubscriber($this->entityManager));
         $builder
             ->add('from', TextType::class, [
                 'label' => 'Enquêteur',
@@ -43,6 +46,13 @@ class LettreType extends AbstractType
                     '-' => '-',
                     'R' => 'R',
                 ],
+            ])
+            ->add('projet', EntityType::class, [
+                'class' => 'AppBundle:Projet',
+                'required' => false,
+                'label' => 'Projet',
+                'choices' => array(),
+                'multiple' => false,
             ])
             ->add('body', TextareaType::class, [
                 'label' => 'Message',
