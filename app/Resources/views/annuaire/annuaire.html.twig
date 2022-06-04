@@ -3,12 +3,19 @@
 {% set title = 'Mairie' %}
 {% set item = 'annuaire' %}
 
-{% block body %}
+{% block css %}
   <style>
-  .table-striped tbody tr:hover {
-    background-color: #31b0d5;
-  }
+    .table-striped tbody tr:hover {
+      background-color: #31b0d5;
+    }
+    .letter_plan_parcellaire {
+      width: 100%;
+      margin-top: 20px;
+    }
   </style>
+{% endblock %}
+
+{% block body %}
   <div class="container-fluid">
     <nav class="navbar navbar-default">
       <div class="container-fluid">
@@ -104,7 +111,7 @@
               {% if lettre.projet is not empty and lettre.projet.documents is not empty %}
                 {% for document in lettre.projet.documents %}
                   {% if document.type == 'plan_parcellaire' %}
-                  <img src="{{ asset('upload/' ~ document.document) }}" alt="Plan parcellaire">
+                  <img class="letter_plan_parcellaire" src="{{ asset('upload/' ~ document.document) }}" alt="Plan parcellaire"><br>
                   {% endif %}
                 {% endfor %}
               {% endif %}
