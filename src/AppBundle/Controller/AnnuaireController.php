@@ -312,6 +312,12 @@ class AnnuaireController extends Controller
         $em = $this->getDoctrine()->getManager();
         
         if ($form->isSubmitted() && $form->isValid()) {
+            /* if ($lettre->getProjet()) {
+                if (!$lettre->getProjet()->getDocuments()->isEmpty()) {
+                    foreach ($lettre->getProjet()->getDocuments() as $document)
+                }
+                echo '<pre>';print_r($lettre->getProjet()->getDocuments());
+            }exit('test'); */
             $em->persist($lettre);
             $em->flush();
             return $this->redirectToRoute('annuaire_index');

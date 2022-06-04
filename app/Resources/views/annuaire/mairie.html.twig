@@ -311,6 +311,25 @@
         $('#form_date [id*="_body"]').val(models[$(this).val()].body);
       }
     });
+
+    
+
+    var queryProjetUrl = "{{ path('projet_search') }}";
+    
+    $('#form_{{ date }} #lettre_projet').select2({
+      ajax: {
+        url: queryProjetUrl,
+        dataType: 'json',
+        delay: 500,
+        processResults: function (data) {
+          return {
+            results: data
+          };
+        }
+      },
+      escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+      minimumInputLength: 1,
+    });
     
   </script>
 {% endblock %}
