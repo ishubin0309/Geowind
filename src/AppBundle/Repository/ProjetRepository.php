@@ -17,7 +17,7 @@ class ProjetRepository extends EntityRepository
         $query = $this->createQueryBuilder('p')
             ->select('p')
             ->where('p.denomination LIKE :denomination OR p.id = :id')
-            ->orderBy('id', 'DESC')
+            ->orderBy('p.id', 'DESC')
             ->setFirstResult(0)
             ->setMaxResults(10)
             ->setParameter('denomination', '%' . $term . '%')
