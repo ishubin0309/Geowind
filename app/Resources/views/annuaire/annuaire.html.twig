@@ -1,0 +1,950 @@
+{% extends 'base.html.twig' %}
+
+{% set title = 'Mairie' %}
+{% set item = 'annuaire' %}
+
+{% block css %}
+  <style>
+    .table-striped tbody tr:hover {
+      background-color: #31b0d5;
+    }
+    .letter_plan_parcellaire {
+      width: 100%;
+      margin-top: 20px;
+    }
+  </style>
+{% endblock %}
+
+{% block body %}
+  <div class="container-fluid">
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#mairie_nav" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">{# <img alt="Brand" width="20"  src="{{ asset('favicon.png') }}"> #}</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="mairie_nav">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#" rel="tab_list">Journal</a></li>
+            <li><a href="#" rel="tab_carte">Afficher <i style="color:red;" class="fa fa-map-o" aria-hidden="true"></i></a></li>
+            <li class=""><a href="#" rel="tab_model">Modèles</a></li>
+            <li class=""><a href="#" rel="tab_search">Email</a></li>
+            <li class=""><a href="#" rel="tab_lettre">Lettre</a></li>
+            <li class=""><a href="#" rel="tab_appel">Appel</a></li>
+            <li class=""><a href="#" rel="tab_reminder">Rappel</a></li>
+            <li class="hide"><a href="#" rel="tab_annuaire">Annuaire</a></li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+    <fieldset id="tab_list">
+      <legend>Journal</legend>
+      {% if messages is empty and lettres is empty and appels is empty %}
+        <div class="alert alert-info mt0">
+          Aucune mairie contactée
+        </div>
+      {% else %}
+        <table id="datatable" class="table table-striped table-middle">
+          <thead>
+            <tr>
+              <th>Date1</th>
+              <th>Département</th>
+              <th>Mairie</th>
+              <th>Destinaire</th>
+              <th>Contactée par</th>
+              <th class="column-fit">Objet</th>
+              <th>Message</th>
+              <th>Résultat</th>
+              <th>Date2</th>
+              <th class="column-fit">Mode contact</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for message in messages %}
+            <tr>
+              <td>{{ message.createdAt|date('d/m/Y') }}</td>
+              <td>{{ message.departement }}</td>
+              <td><a href="{{ path('annuaire_mairie', { 'insee': message.mairie.insee }) }}">{{ message.mairie }}</a></td>
+              <td>{{ message.to }}</td>
+              <td>{{ message.createdBy }}</td>
+              <td class="column-fit">{{ message.object }}</td>
+              <td>
+              <button class="btn btn-info btn-sm btn_message">Afficher</button>
+              <span class="hide">{{ message.body }}</span>
+              </td>
+              <td>
+              {% set result = message.result ? message.result : '?' %}
+                <span class="hide">{% if result == '+' %}plus{% elseif result == '-' %}moins{% elseif result == 'R' %}rappel{% else %}interrogation{% endif %}</span>
+                <select rel="{{ message.id }}" type="message" data="{{ result }}" style="width:100%;" class="form-control change_result">
+                  {% for option in ['?', '+', '-', 'R'] %}
+                  <option {% if option == result %}selected{% endif %}>({{ option }})</option>
+                  {% endfor %}
+                </select>
+              </td>
+              <td>{{ message.result is not null and message.result != '?' ? message.updatedAt|date('d/m/Y') : '' }}</td>
+              <td class="column-fit">Email
+              {% if is_granted('ROLE_ADMIN') %}
+              &nbsp;&nbsp;<button id="{{ message.id }}" type="message" class="btn btn-danger btn-xs button-delete" title="Double click"><i class="fa fa-fw fa-trash"></i></button>
+              {% endif %}</td>
+            </tr>
+            {% endfor %}
+            {% for lettre in lettres %}
+            <tr>
+              <td>{{ lettre.createdAt|date('d/m/Y') }}</td>
+              <td>{{ lettre.departement }}</td>
+              <td><a href="{{ path('annuaire_mairie_lettre', { 'insee': lettre.mairie.insee }) }}">{{ lettre.mairie }}</a></td>
+              <td>{{ lettre.to }}</td>
+              <td>{{ lettre.createdBy }}</td>
+              <td class="column-fit">{{ lettre.object }}</td>
+              <td>
+              <button class="btn btn-info btn-sm btn_message">Afficher</button>
+              <span class="hide">
+              <strong>Adresse:</strong> <br>{{ lettre.to }}<br><br>
+              <strong>Lettre:</strong> <br>{{ lettre.body }}
+              {% if lettre.projet is not empty and lettre.projet.documents is not empty %}
+                {% for document in lettre.projet.documents %}
+                  {% if document.type == 'plan_parcellaire' %}
+                  <img class="letter_plan_parcellaire" src="{{ asset('upload/' ~ document.document) }}" alt="Plan parcellaire"><br>
+                  {% endif %}
+                {% endfor %}
+              {% endif %}
+              </span>
+              </td>
+              <td>
+              {% set result = lettre.result ? lettre.result : '?' %}
+                <span class="hide">{% if result == '+' %}plus{% elseif result == '-' %}moins{% elseif result == 'R' %}rappel{% else %}interrogation{% endif %}</span>
+                <select rel="{{ lettre.id }}" type="lettre" data="{{ result }}" style="width:100%;" class="form-control change_result">
+                  {% for option in ['?', '+', '-', 'R'] %}
+                  <option {% if option == result %}selected{% endif %}>({{ option }})</option>
+                  {% endfor %}
+                </select>
+              </td>
+              <td>{{ lettre.updatedAt|date('d/m/Y') }}</td>
+              <td class="column-fit">Lettre
+              {% if is_granted('ROLE_ADMIN') %}
+              &nbsp;&nbsp;<button id="{{ lettre.id }}" type="lettre" class="btn btn-danger btn-xs button-delete" title="Double click"><i class="fa fa-fw fa-trash"></i></button>
+              {% endif %}
+              </td>
+            </tr>
+            {% endfor %}
+            {% for appel in appels %}
+            <tr>
+              <td>{{ appel.createdAt|date('d/m/Y') }}</td>
+              <td>{{ appel.departement }}</td>
+              <td><a href="{{ path('annuaire_mairie_appel', { 'insee': appel.mairie.insee }) }}">{{ appel.mairie }}</a></td>
+              <td>{{ appel.to }}</td>
+              <td>{{ appel.createdBy }}</td>
+              <td class="column-fit">{{ appel.object }}</td>
+              <td>
+              <button class="btn btn-info btn-sm btn_message">Afficher</button>
+              <span class="hide">{{ appel.body }}</span>
+              </td>
+              <td>
+              {% set result = appel.result ? appel.result : '?' %}
+                <span class="hide">{% if result == '+' %}plus{% elseif result == '-' %}moins{% elseif result == 'R' %}rappel{% else %}interrogation{% endif %}</span>
+                <select rel="{{ appel.id }}" type="appel" data="{{ result }}" style="width:100%;" class="form-control change_result">
+                  {% for option in ['?', '+', '-', 'R'] %}
+                  <option {% if option == result %}selected{% endif %}>({{ option }})</option>
+                  {% endfor %}
+                </select>
+              </td>
+              <td>{{ appel.updatedAt|date('d/m/Y') }}</td>
+              <td class="column-fit">Appel
+              {% if is_granted('ROLE_ADMIN') %}
+              &nbsp;&nbsp;<button id="{{ appel.id }}" type="appel" class="btn btn-danger btn-xs button-delete" title="Double click"><i class="fa fa-fw fa-trash"></i></button>
+              {% endif %}
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% endif %}
+    </fieldset>
+    <fieldset id="tab_carte" class="hide">
+      <legend>Afficher</legend>
+      
+      {% if messages is empty and lettres is empty and appels is empty %}
+        <div class="alert alert-info mt0">
+          Aucune mairie contactée
+        </div>
+      {% else %}
+        <div class="row">
+          <div class="col-sm-6">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Mairie</th>
+                  <th>Mode contact</th>
+                  <th>Résultat</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for message in messages if message.result != 'R' %}
+                <tr>
+                  <td>{{ message.createdAt|date('d/m/Y') }}</td>
+                  <td>{{ message.mairie }}</td>
+                  <td>Email</td>
+                  <td>
+                  {% set result = message.result ? message.result : '?' %}
+                  {{ message.result ? '(' ~ message.result ~ ')' : '(?)' }} <i style="color:{% if result == '+' %}green{% elseif result == '-'%}red{% else %}gray{% endif %};" class="fa fa-map-marker" aria-hidden="true"></i>
+                  </td>
+                </tr>
+                {% endfor %}
+                {% for lettre in lettres if lettre.result != 'R' %}
+                <tr>
+                  <td>{{ lettre.createdAt|date('d/m/Y') }}</td>
+                  <td>{{ lettre.mairie }}</td>
+                  <td>Lettre</td>
+                  <td>
+                  {% set result = lettre.result ? lettre.result : '?' %}
+                  {{ lettre.result ? '(' ~ lettre.result ~ ')' : '(?)' }} <i style="color:{% if result == '+' %}green{% elseif result == '-'%}red{% else %}gray{% endif %};" class="fa fa-map-marker" aria-hidden="true"></i>
+                  </td>
+                </tr>
+                {% endfor %}
+                {% for appel in appels if appel.result != 'R' %}
+                <tr>
+                  <td>{{ appel.createdAt|date('d/m/Y') }}</td>
+                  <td>{{ appel.mairie }}</td>
+                  <td>Appel</td>
+                  <td>
+                  {% set result = appel.result ? appel.result : '?' %}
+                  {{ appel.result ? '(' ~ appel.result ~ ')' : '(?)' }} <i style="color:{% if result == '+' %}green{% elseif result == '-'%}red{% else %}gray{% endif %};" class="fa fa-map-marker" aria-hidden="true"></i>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          <div class="col-sm-6">
+            <div id="map" class="map map-home " style="height: 500px; margin-bottom: 20px;"></div>
+          </div>
+        </div>
+      {% endif %}
+    </fieldset>
+    <fieldset id="tab_model" class="hide">
+      <legend>Modèle <a href="{{ path('model_new') }}" class="btn btn-primary btn-sm pull-right">Nouveau modèle</a></legend>
+      {% if models is empty %}
+        <div class="alert alert-info mt0">
+          Aucun modèle
+        </div>
+      {% else %}
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Intitulé du modèle</th>
+              <th class="column-fit"></th>
+              <th class="column-fit"></th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for model in models %}
+            <tr>
+              <td>{{ model }}</td>
+              <td class="column-fit">
+                <a href="{{ path('model_edit', { 'id': model.id }) }}" class="btn btn-warning btn-xs"><i class="fa fa-pencil"></i></a>
+              </td>
+              <td class="column-fit">
+                <button id="{{ model.id }}" model="{{ model }}" class="btn btn-danger btn-xs button-delete-model" title="Double click"><i class="fa fa-fw fa-trash"></i></button>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% endif %}
+    </fieldset>
+    <fieldset id="tab_search" class="hide">
+      <legend>Chercher une mairie</legend>
+      <select id="input-mairie" style="width:50%" type="text" class="form-control"></select>
+      <div style="margin-top:20px;" id="new_mail"></div>
+    </fieldset>
+    <fieldset id="tab_lettre" class="hide">
+      <legend>Lettre</legend>
+      <select id="input-mairie-lettre" style="width:50%" type="text" class="form-control"></select>
+      <div style="margin-top:20px;" id="new_letter"></div>
+    </fieldset>
+    <fieldset id="tab_reminder" class="hide">
+      <legend>Rappel</legend>
+      {% if messages is empty and lettres is empty %}
+        <div class="alert alert-info mt0">
+          Aucune mairie contactée
+        </div>
+      {% else %}
+        <table id="datatable2" class="table table-striped table-middle">
+          <thead>
+            <tr>
+              <th>Date1</th>
+              <th>Mairie</th>
+              <th>Destinaire</th>
+              <th>Contactée par</th>
+              <th class="column-fit">Objet</th>
+              <th>Message</th>
+              <th class="column-fit">Date rappel</th>
+              <th>Mode contact</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for message in messages if message.result == 'R' %}
+            <tr>
+              <td>{{ message.createdAt|date('d/m/Y') }}</td>
+              <td>{{ message.mairie }}</td>
+              <td>{{ message.to }}</td>
+              <td>{{ message.createdBy }}</td>
+              <td class="column-fit">{{ message.object }}</td>
+              <td>
+              <button class="btn btn-info btn-sm btn_message">Afficher</button>
+              <span class="hide">{{ message.body }}</span>
+              </td>
+              <td class="column-fit">
+              <span class="hide">{{ message.dateReminder is not null ? message.dateReminder|date('d/m/Y') : 'now'|date('d/m/Y') }}</span>
+              <input class="form-control reminder-datepicker" rel="{{ message.id }}" type="message" data="{{ message.dateReminder is not null ? message.dateReminder|date('d/m/Y') : 'now'|date('d/m/Y') }}" value="{{ message.dateReminder is not null ? message.dateReminder|date('d/m/Y') : 'now'|date('d/m/Y') }}">
+              </td>
+              <td class="column-fit">Email</td>
+            </tr>
+            {% endfor %}
+            {% for lettre in lettres if lettre.result == 'R' %}
+            <tr>
+              <td>{{ lettre.createdAt|date('d/m/Y') }}</td>
+              <td>{{ lettre.mairie }}</td>
+              <td>{{ lettre.to }}</td>
+              <td>{{ lettre.createdBy }}</td>
+              <td class="column-fit">{{ lettre.object }}</td>
+              <td>
+              <button class="btn btn-info btn-sm btn_message">Afficher</button>
+              <span class="hide">{{ lettre.body }}</span>
+              </td>
+              <td class="column-fit">
+              <span class="hide">{{ lettre.dateReminder is not null ? lettre.dateReminder|date('d/m/Y') : 'now'|date('d/m/Y') }}</span>
+              <input class="form-control reminder-datepicker" rel="{{ lettre.id }}" type="lettre" data="{{ lettre.dateReminder is not null ? lettre.dateReminder|date('d/m/Y') : 'now'|date('d/m/Y') }}" value="{{ appel.dateReminder is not null ? appel.dateReminder|date('d/m/Y') : 'now'|date('d/m/Y') }}">
+              </td>
+              <td class="column-fit">Lettre</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% endif %}
+    </fieldset>
+    <fieldset id="tab_appel" class="hide">
+      <legend>Appel</legend>
+      <select id="input-mairie-appel" style="width:50%" type="text" class="form-control"></select>
+      <div style="margin-top:20px;" id="new_call"></div>
+    </fieldset>
+    <fieldset id="tab_reminder" class="hide">
+      <legend>Rappel</legend>
+      {% if messages is empty and appels is empty %}
+        <div class="alert alert-info mt0">
+          Aucune mairie contactée
+        </div>
+      {% else %}
+        <table id="datatable3" class="table table-striped table-middle">
+          <thead>
+            <tr>
+              <th>Date1</th>
+              <th>Mairie</th>
+              <th>Destinaire</th>
+              <th>Contactée par</th>
+              <th class="column-fit">Objet</th>
+              <th>Message</th>
+              <th class="column-fit">Date rappel</th>
+              <th>Mode contact</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for message in messages if message.result == 'R' %}
+            <tr>
+              <td>{{ message.createdAt|date('d/m/Y') }}</td>
+              <td>{{ message.mairie }}</td>
+              <td>{{ message.to }}</td>
+              <td>{{ message.createdBy }}</td>
+              <td class="column-fit">{{ message.object }}</td>
+              <td>
+              <button class="btn btn-info btn-sm btn_message">Afficher</button>
+              <span class="hide">{{ message.body }}</span>
+              </td>
+              <td class="column-fit">
+              <span class="hide">{{ message.dateReminder is not null ? message.dateReminder|date('d/m/Y') : 'now'|date('d/m/Y') }}</span>
+              <input class="form-control reminder-datepicker" rel="{{ message.id }}" type="message" data="{{ message.dateReminder is not null ? message.dateReminder|date('d/m/Y') : 'now'|date('d/m/Y') }}" value="{{ message.dateReminder is not null ? message.dateReminder|date('d/m/Y') : 'now'|date('d/m/Y') }}">
+              </td>
+              <td class="column-fit">Email</td>
+            </tr>
+            {% endfor %}
+            {% for appel in appels if appel.result == 'R' %}
+            <tr>
+              <td>{{ appel.createdAt|date('d/m/Y') }}</td>
+              <td>{{ appel.mairie }}</td>
+              <td>{{ appel.to }}</td>
+              <td>{{ appel.createdBy }}</td>
+              <td class="column-fit">{{ appel.object }}</td>
+              <td>
+              <button class="btn btn-info btn-sm btn_message">Afficher</button>
+              <span class="hide">{{ appel.body }}</span>
+              </td>
+              <td class="column-fit">
+              <span class="hide">{{ appel.dateReminder is not null ? appel.dateReminder|date('d/m/Y') : 'now'|date('d/m/Y') }}</span>
+              <input class="form-control reminder-datepicker" rel="{{ appel.id }}" type="appel" data="{{ appel.dateReminder is not null ? appel.dateReminder|date('d/m/Y') : 'now'|date('d/m/Y') }}" value="{{ appel.dateReminder is not null ? appel.dateReminder|date('d/m/Y') : 'now'|date('d/m/Y') }}">
+              </td>
+              <td class="column-fit">Appel</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% endif %}
+    </fieldset>
+    <fieldset id="tab_annuaire" class="hide">
+      <legend>Annuaire</legend>
+    </fieldset>
+
+  </div>
+  
+  <div class="modal fade bs-modal" tabindex="-1" role="dialog" aria-labelledby="emailModal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content text-center">
+        <div id="show_message" style="padding: 20px;text-align: left;" class="modal-body">
+        </div>
+        <div class="modal-footer">
+          <button id="export_message" onclick="copyDivToClipboard();" type="button" class="btn btn-primary">Copier le contenu</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block js %}
+  <script>
+  {% if messages is not empty or lettres is not empty or appels is not empty %}
+  var map = L.map('map').setView([46, 2], 5.5);
+    
+    var streetLayer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    var googleHybrid = L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',{
+        maxZoom: 20,
+        subdomains:['mt0','mt1','mt2','mt3']
+    });
+
+    var googleTerrain = L.tileLayer('http://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}',{
+        maxZoom: 20,
+        subdomains:['mt0','mt1','mt2','mt3']
+    });
+
+    var baseMaps = {
+        "Rue": streetLayer,
+        "Aérienne": googleHybrid,
+        "Terrain": googleTerrain
+    };
+    L.control.layers(baseMaps).addTo(map);
+
+  var customControl =  L.Control.extend({
+
+    options: {
+      position: 'topleft'
+    },
+
+    onAdd: function (map) {
+      var container = L.DomUtil.create('a');
+      container.setAttribute("role", "button");
+      container.title="Center";
+      container.text = "c";
+
+      container.style.backgroundColor = 'white';     
+      {# container.style.backgroundImage = "url(https://t1.gstatic.com/images?q=tbn:ANd9GcR6FCUMW5bPn8C4PbKak2BJQQsmC-K9-mbYBeFZm1ZM2w2GRy40Ew)"; #}
+      container.style.backgroundSize = "30px 30px";
+      container.style.width = '32px';
+      container.style.height = '32px';
+      container.style.lineHeight = '24px';
+      container.style.textDecoration = 'none';
+      container.style.cursor = 'pointer';
+      container.style.textAlign = 'center';
+      container.style.color = 'black';
+      container.style.fontSize = '24px';
+      container.style.borderRadius = '4px';
+      container.style.marginTop = '2px';
+      container.style.border = '2px solid rgba(0,0,0,0.2)';
+      
+      container.onmouseover = function(){
+        container.style.backgroundColor = '#f4f4f4'; 
+      }
+      container.onmouseout = function(){
+        container.style.backgroundColor = 'white'; 
+      }
+
+      container.onclick = function() {
+        update_marker = 0;
+        map.setView([46,2],5.5);
+      }
+
+      return container;
+    }
+  });
+
+  map.addControl(new customControl());
+  var messages = {};
+  var markers = {};
+  {% set loop_index = 0 %}
+  {% for message in messages if message.result != 'R' %}
+    {% set lat = 0 %}
+    {% set lng = 0 %}
+    {% set break = 0 %}
+    {% for region in regions if not break %}
+      {% if region.nom == message.mairie.region|replace({'Î':'I'}) or region.nom in message.mairie.region or message.mairie.region in region.nom %}
+        {% set lat = region.latitude + 0.02 *loop_index %}
+        {% set lng = region.longitude + 0.02 *loop_index %}
+        {% set break = 1 %}
+      {% endif %}
+    {% endfor %}
+    {% set result = message.result ? message.result : '?' %}
+    messages[{{ loop_index }}] = {0:'{{ message.mairie.region }}', 1:'{{ message.mairie.commune }}', 2:'{{ message.mairie }}', 3:'{% if result == '+' %}green{% elseif result == '-'%}red{% else %}gray{% endif %}', 4: {{ lat }},5: {{ lng }}};
+    {% set loop_index = loop_index + 1 %}
+  {% endfor %}
+  {% for lettre in lettres if lettre.result != 'R' %}
+    {% set lat = 0 %}
+    {% set lng = 0 %}
+    {% set break = 0 %}
+    {% for region in regions if not break %}
+      {% if region.nom == lettre.mairie.region|replace({'Î':'I'}) or region.nom in lettre.mairie.region or lettre.mairie.region in region.nom %}
+        {% set lat = region.latitude + 0.02 *loop_index %}
+        {% set lng = region.longitude + 0.02 *loop_index %}
+        {% set break = 1 %}
+      {% endif %}
+    {% endfor %}
+    {% set result = lettre.result ? lettre.result : '?' %}
+    messages[{{ loop_index }}] = {0:'{{ lettre.mairie.region }}', 1:'{{ lettre.mairie.commune }}', 2:'{{ lettre.mairie }}', 3:'{% if result == '+' %}green{% elseif result == '-'%}red{% else %}gray{% endif %}', 4: {{ lat }},5: {{ lng }}};
+    {% set loop_index = loop_index + 1 %}
+  {% endfor %}
+  {% for appel in appels if appel.result != 'R' %}
+    {% set lat = 0 %}
+    {% set lng = 0 %}
+    {% set break = 0 %}
+    {% for region in regions if not break %}
+      {% if region.nom == appel.mairie.region|replace({'Î':'I'}) or region.nom in appel.mairie.region or appel.mairie.region in region.nom %}
+        {% set lat = region.latitude + 0.02 *loop_index %}
+        {% set lng = region.longitude + 0.02 *loop_index %}
+        {% set break = 1 %}
+      {% endif %}
+    {% endfor %}
+    {% set result = appel.result ? appel.result : '?' %}
+    messages[{{ loop_index }}] = {0:'{{ appel.mairie.region }}', 1:'{{ appel.mairie.commune }}', 2:'{{ appel.mairie }}', 3:'{% if result == '+' %}green{% elseif result == '-'%}red{% else %}gray{% endif %}', 4: {{ lat }},5: {{ lng }}};
+    {% set loop_index = loop_index + 1 %}
+  {% endfor %}
+  $.each(messages, function(i, message) {
+    /*if(message[4] && message[5]) {
+      marker = new L.DivIcon.SVGIcon({ iconSize: L.point(24, 32), weight: 1, circleWeight: 1, color: '#000000', fillColor: message[3], fillOpacity: 0.7 });
+      L.marker([message[4], message[5]], { icon: marker}).addTo(map).bindTooltip(message[2]).bindPopup('Région: ' + message[0] + '<br>Commune: ' + message[1]);
+    } else */
+    
+    //reverseGeolocalisation(message[0], message[1], message[2], message[3], i);
+  });
+  function reverseGeolocalisation(query, commune, marie, color, index) {
+    var nominatimUrl = 'https://nominatim.openstreetmap.org/search';
+    $.ajax({
+      type: 'GET',
+      url: nominatimUrl,
+      data: {
+        q: commune,
+        extratags: 0,
+        namedetails: 0,
+        polygon_geojson: 0,
+        format: 'json',
+      },
+      dataType: 'json',
+
+    })
+    .done(function(data) {
+
+      if (data.length === 0) {
+        return;
+      }
+
+      var searchLat = data[0]['lat'];
+      var searchLong = data[0]['lon'];
+      var bbox = data[0]['boundingbox'];
+      var adresse = data[0]['display_name'];
+      if(!adresse.match('France') && data.length > 1) {
+        var searchLat = data[1]['lat'];
+        var searchLong = data[1]['lon'];
+        var bbox = data[1]['boundingbox'];
+        var adresse = data[1]['display_name'];
+      }
+      if(adresse.match('France')) {
+        searchLat = searchLat*1+0.02 *index;
+        searchLong = searchLong*1+0.02 *index;
+        marker = new L.DivIcon.SVGIcon({ iconSize: L.point(24, 32), weight: 1, circleWeight: 1, color: '#000000', fillColor: color, fillOpacity: 0.7 });
+        L.marker([searchLat, searchLong], { icon: marker}).addTo(map).bindTooltip(marie).bindPopup('Région: ' + query + '<br>Commune: ' + commune);
+      }
+      
+    });
+  }
+  {% endif %}
+  $('.button-delete-model').dblclick(function() {
+    id = $(this).attr('id');
+    model = $(this).attr('model');
+    
+    if (!id) {
+      return;
+    }
+    swal({
+      title: "Supprimer ?",
+      text: "Le modèle « "+model+" » sera supprimé définitivement.",
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#DD6B55",
+      confirmButtonText: "Supprimer",
+      cancelButtonText: "Annuler",
+      closeOnConfirm: false,
+      closeOnCancel: true,
+      allowOutsideClick: true,
+      showLoaderOnConfirm: true,
+    },
+    function(isConfirm){
+      if (isConfirm) {
+        var csrf = '{{ csrf_token('token')|e('js') }}';
+        $.ajax({
+          url: Routing.generate('model_delete', {id: id}),
+          type: 'DELETE',
+          data: { token: csrf  },
+          success: function(result) {
+            location.reload();
+          }
+        });
+      } else {
+
+      }
+    });
+
+  });
+  $('#datatable2').DataTable({
+    language: dtLang,
+    "order": [[ 6, "asc" ]],
+    searching: false,
+    paging: false,
+    bInfo: false,
+  });
+  $('#datatable3').DataTable({
+    language: dtLang,
+    "order": [[ 6, "asc" ]],
+    searching: false,
+    paging: false,
+    bInfo: false,
+  });
+  var oTable = $('#datatable').DataTable({
+    language: dtLang,
+    "order": [[ 0, "asc" ]],
+    columnDefs: [
+        { targets: 0, searchable: false },
+        { targets: 1, searchable: false },
+        { targets: 2, searchable: false },
+        { targets: 3, searchable: false },
+        { targets: 4, searchable: false },
+        { targets: 5, searchable: false },
+        { targets: 6, searchable: false, orderable: false },
+        { targets: 7, orderable: false },
+        { targets: 8, searchable: false },
+        { targets: 9, searchable: false }
+    ],
+    paging: false,
+    bInfo: false,
+  });
+  $('body').on('keyup change', '#datatable_filter input', function (e) {
+    e.preventDefault();
+    if($(this).val() == '+') keyword = 'plus';
+    else if($(this).val() == '-') keyword = 'moins';
+    else if($(this).val().toLowerCase() == 'r') keyword = 'rappel';
+    else if($(this).val() == '?') keyword = 'interrogation';
+    else keyword = '';
+    oTable.column(7).search(keyword).draw();
+  });
+  $("#input-mairie, #input-mairie-lettre, #input-mairie-appel").select2({
+    ajax: {
+      url: Routing.generate('mairie_search'),
+      dataType: 'json',
+      delay: 500,
+      processResults: function (data) {
+        return {
+          results: data
+        };
+      }
+    },
+    escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+    minimumInputLength: 1,
+  });
+  var last_annuaire_mairie_insee = '';
+  function annuaire_mairie(insee) {
+    last_annuaire_mairie_insee = insee;
+    var csrf = '{{ csrf_token('token')|e('js') }}';
+    $.ajax({
+      url: Routing.generate('annuaire_mairie', { insee: last_annuaire_mairie_insee }),
+      type: 'GET',
+      data: { token: csrf },
+      beforeSend: function() {
+        $('#new_mail').html('');
+      },
+      success: function(result) {
+        $('#new_mail').html(result);
+      }
+    });
+  }
+  $('#input-mairie').on('select2:select', function (e) {
+    var data = e.params.data;
+    annuaire_mairie(data.insee);
+  });
+  
+  var last_annuaire_mairie_lettre_insee = '';
+  function annuaire_mairie_lettre(insee) {
+    last_annuaire_mairie_lettre_insee = insee;
+    var csrf = '{{ csrf_token('token')|e('js') }}';
+    $.ajax({
+      url: Routing.generate('annuaire_mairie_lettre', { insee: last_annuaire_mairie_lettre_insee }),
+      type: 'GET',
+      data: { token: csrf },
+      beforeSend: function() {
+        $('#new_letter').html('');
+      },
+      success: function(result) {
+        $('#new_letter').html(result);
+      }
+    });
+  }
+  $('#input-mairie-lettre').on('select2:select', function (e) {
+    var data = e.params.data;
+    annuaire_mairie_lettre(data.insee);
+  });
+
+  var last_annuaire_mairie_appel_insee = '';
+  function annuaire_mairie_appel(insee) {
+    last_annuaire_mairie_appel_insee = insee;
+    var csrf = '{{ csrf_token('token')|e('js') }}';
+    $.ajax({
+      url: Routing.generate('annuaire_mairie_appel', { insee: last_annuaire_mairie_appel_insee }),
+      type: 'GET',
+      data: { token: csrf },
+      beforeSend: function() {
+        $('#new_call').html('');
+      },
+      success: function(result) {
+        $('#new_call').html(result);
+      }
+    });
+  }
+  $('#input-mairie-appel').on('select2:select', function (e) {
+    var data = e.params.data;
+    annuaire_mairie_appel(data.insee);
+  });
+
+  {# $('#input-mairie').on('select2:select', function (e) {
+    var data = e.params.data;
+    window.location.href = Routing.generate('annuaire_mairie', { insee: data.insee });
+  }); #}
+
+  $('.btn_message').click(function() {
+    var message = $(this).parent().find('span').html().replace(/\n/, '<br>');
+    $('.bs-modal').modal('show');
+    $('#show_message').html(message.replace(/\n/g, '<br>'));
+  });
+  $(".change_result").select2();
+
+  $('.change_result').on('select2:select', function() {
+    option = $(this).val().replace(/(\(|\))/g, '').trim();
+    id = $(this).attr('rel');
+    type = $(this).attr('type');
+    if (type=='message') {
+      title = 'Le résultat du message va être changé';
+    } else if (type=='lettre') {
+      title = 'Le résultat de la lettre va être changé';
+    } else {
+      title = 'Le résultat d\'appel va être changé';
+    }
+    old_data = $(this).attr('data');
+    swal({
+        title: "êtes-vous sûr ?",
+        text: title,
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Changer",
+        cancelButtonText: "Annuler",
+        closeOnConfirm: false,
+        closeOnCancel: true,
+        allowOutsideClick: true,
+        showLoaderOnConfirm: true,
+      },
+      function(isConfirm){
+        if (isConfirm) {
+          var csrf = '{{ csrf_token('token')|e('js') }}';
+          $.ajax({
+            url: Routing.generate(type + '_edit', {id: id}),
+            type: 'POST',
+            data: { result: option, token: csrf  },
+            success: function(result) {
+              window.location.href = '{{ path('annuaire_index') }}';
+            }
+          });
+        } else {
+          $('select[rel="'+id+'"]').val('('+old_data+')');
+          $('.change_result').change();
+        }
+    });
+  });
+  {% if is_granted('ROLE_ADMIN') %}
+  $('.button-delete').dblclick(function() {
+    id = $(this).attr('id');
+    type = $(this).attr('type');
+    if (type=='message') {
+      title = 'Le message sera supprimé définitivement.';
+    } else if (type=='lettre') {
+      title = 'La lettre sera supprimée définitivement.';
+    } else {
+      title = 'L\'appel sera supprimé définitivement.';
+    }
+    if (!id) {
+      return;
+    }
+    swal({
+      title: "Supprimer ?",
+      text: title,
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#DD6B55",
+      confirmButtonText: "Supprimer",
+      cancelButtonText: "Annuler",
+      closeOnConfirm: false,
+      closeOnCancel: true,
+      allowOutsideClick: true,
+      showLoaderOnConfirm: true,
+    },
+    function(isConfirm){
+      if (isConfirm) {
+        var csrf = '{{ csrf_token('token')|e('js') }}';
+        $.ajax({
+          url: Routing.generate(type + '_delete', {id: id}),
+          type: 'DELETE',
+          data: {token: csrf},
+          success: function(result) {
+            location.reload();
+          }
+        });
+      } else {
+
+      }
+    });
+
+  });
+  {% endif %}
+  $('.reminder-datepicker').datepicker({
+    format: 'dd/mm/yyyy',
+    autoclose: true,
+    language: 'fr',
+    clearBtn: true,
+  });
+  $('.reminder-datepicker').change(function() {
+    option = $(this).val().trim();
+    id = $(this).attr('rel');
+    type = $(this).attr('type');
+    if (type=='message') {
+      title = 'La date de rappel du message va être changée';
+    } else if (type=='lettre') {
+      title = 'La date de rappel de la lettre va être changée';
+    } else {
+      title = 'La date de rappel d\'appel va être changée';
+    }
+    old_data = $(this).attr('data');
+    if(option > '{{ 'now'|date('d/m/Y') }}') {
+      swal({
+          title: "êtes-vous sûr ?",
+          text: title,
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#DD6B55",
+          confirmButtonText: "Changer",
+          cancelButtonText: "Annuler",
+          closeOnConfirm: false,
+          closeOnCancel: true,
+          allowOutsideClick: true,
+          showLoaderOnConfirm: true,
+        },
+        function(isConfirm){
+          if (isConfirm) {
+            var csrf = '{{ csrf_token('token')|e('js') }}';
+            $.ajax({
+              url: Routing.generate(type + '_edit', {id: id}),
+              type: 'POST',
+              data: { dateReminder: option, token: csrf  },
+              success: function(result) {
+                window.location.href = '{{ path('annuaire_index') }}';
+              }
+            });
+          } else {
+            $('input[type="'+type+'"][rel="'+id+'"]').val(old_data);
+          }
+      });
+    } else $('input[type="'+type+'"][rel="'+id+'"]').val(old_data);
+  });
+  $('#mairie_nav a').click(function (e) {
+    var attr = $(this).attr('rel');
+    if(typeof attr !== typeof undefined && attr !== false) {
+      e.preventDefault();
+      $('#mairie_nav li').removeClass('active');
+      $(this).parent().addClass('active');
+      $('fieldset').addClass('hide');
+      $('fieldset#' + attr).removeClass('hide');
+      if(attr == 'tab_carte') map.invalidateSize();
+    }
+  });
+
+  function copyDivToClipboard() {
+      var range = document.createRange();
+      range.selectNode(document.getElementById('show_message'));
+      window.getSelection().removeAllRanges(); // clear current selection
+      window.getSelection().addRange(range); // to select text
+      document.execCommand("copy");
+      window.getSelection().removeAllRanges();// to deselect
+      alert('Le message est copié.');
+  }
+
+  function Export2Word(filename = '') {
+    copyDivToClipboard();
+    var preHtml = "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'><title>Export HTML To Doc</title></head><body>";
+    var postHtml = "</body></html>";
+    var html = preHtml+document.getElementById('show_message').innerHTML+postHtml;
+
+    var blob = new Blob(['\ufeff', html], {
+        type: 'application/msword'
+    });
+    
+    // Specify link url
+    var url = 'data:application/vnd.ms-word;charset=utf-8,' + encodeURIComponent(html);
+    
+    // Specify file name
+    filename = filename ? filename+'.doc' : 'document.doc';
+    
+    // Create download link element
+    var downloadLink = document.createElement('a');
+
+    document.body.appendChild(downloadLink);
+    
+    if(navigator.msSaveOrOpenBlob ) {
+        navigator.msSaveOrOpenBlob(blob, filename);
+    } else {
+        // Create a link to the file
+        downloadLink.href = url;
+        
+        // Setting the file name
+        downloadLink.download = filename;
+        
+        //triggering the function
+        downloadLink.click();
+    }
+    
+    document.body.removeChild(downloadLink);
+  }
+  </script>
+{% endblock %}
