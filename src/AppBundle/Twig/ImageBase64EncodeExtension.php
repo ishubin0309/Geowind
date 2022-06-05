@@ -24,7 +24,7 @@ class ImageBase64EncodeExtension extends \Twig_Extension
     public function getBase64EncodeData($path)
     {
         if (!file_exists($path)) {
-            return 'data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg=='; // Red dot
+            return 'data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg=='; // 
         }
 
         $type = pathinfo($path, PATHINFO_EXTENSION);

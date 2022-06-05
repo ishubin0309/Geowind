@@ -111,7 +111,7 @@
               {% if lettre.projet is not empty and lettre.projet.documents is not empty %}
                 {% for document in lettre.projet.documents %}
                   {% if document.type == 'plan_parcellaire' %}
-                  <img class="letter_plan_parcellaire" src="{{ image_base64_encode('upload/' ~ document.document) }}" alt="Plan parcellaire"><br>
+                  <img class="letter_plan_parcellaire" src="{{ asset('upload/' ~ document.document) }}" alt="Plan parcellaire"><br>
                   {% endif %}
                 {% endfor %}
               {% endif %}
@@ -899,7 +899,17 @@
     }
   });
 
+  function copyDivToClipboard() {
+      var range = document.createRange();
+      range.selectNode(document.getElementById('show_message'));
+      window.getSelection().removeAllRanges(); // clear current selection
+      window.getSelection().addRange(range); // to select text
+      document.execCommand("copy");
+      window.getSelection().removeAllRanges();// to deselect
+  }
+
   function Export2Word(filename = '') {
+    copyDivToClipboard();
     var preHtml = "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'><title>Export HTML To Doc</title></head><body>";
     var postHtml = "</body></html>";
     var html = preHtml+document.getElementById('show_message').innerHTML+postHtml;
@@ -912,7 +922,7 @@
     var url = 'data:application/vnd.ms-word;charset=utf-8,' + encodeURIComponent(html);
     
     // Specify file name
-    filename = filename ? filename+'.doc' : 'document.doc';
+    filename = filename ? filename+'.docx' : 'document.docx';
     
     // Create download link element
     var downloadLink = document.createElement('a');
