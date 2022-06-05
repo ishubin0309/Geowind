@@ -118,6 +118,10 @@
   $(document).ready(function () {
     $('#datatable').DataTable( {
       "order": [],
+      "columnDefs": [{
+        "targets": 8,
+        "orderable": false
+      }],
       language: {
         processing:     "Traitement en cours...",
         search:         "Rechercher&nbsp;:",
