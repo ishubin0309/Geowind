@@ -1627,6 +1627,24 @@ class Proprietaire
         return $this;
     }
 
+    public function setMaritalProprietaire2($maritalProprietaire2)
+    {
+        $this->maritalProprietaire2 = $maritalProprietaire2;
+        return $this;
+    }
+
+    public function setMaritalProprietaire3($maritalProprietaire3)
+    {
+        $this->maritalProprietaire3 = $maritalProprietaire3;
+        return $this;
+    }
+
+    public function setMaritalProprietaire4($maritalProprietaire4)
+    {
+        $this->maritalProprietaire4 = $maritalProprietaire4;
+        return $this;
+    }
+
     public function setDateSignatureExploitant(DateTime $dateSignatureExploitant = null)
     {
         $this->dateSignatureExploitant = $dateSignatureExploitant;
