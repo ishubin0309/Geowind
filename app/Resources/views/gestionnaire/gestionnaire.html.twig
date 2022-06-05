@@ -73,19 +73,6 @@
             </tr>
             {% endfor %}
           </tbody>
-          <tfoot>
-            <tr>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th>Département</th>
-            </tr>
-          </tfoot>
         </table>
       {% endif %}
     </fieldset>
@@ -159,7 +146,7 @@
           .every(function () {
             var column = this;
             var select = $('<select class="form-control input-sm"><option value=""></option></select>')
-              .appendTo($(column.footer()).empty())
+              .appendTo($(column.header()).empty())
               .on('change', function () {
                   var val = $.fn.dataTable.util.escapeRegex($(this).val());
 

@@ -259,11 +259,11 @@ class ProjetType extends AbstractType
                 'choices' => array(),
                 'required' => true,
             ])
-            ->add('surfaceUtile', NumberType::class, [
+            ->add('surfaceUtile', textType::class, [
                 'label' => 'Surface utile (m2)',
                 'required' => false,
             ])
-            ->add('voiries', NumberType::class, [
+            ->add('voiries', textType::class, [
                 'label' => 'Voiries (m2)',
                 'required' => false,
             ])
@@ -280,7 +280,7 @@ class ProjetType extends AbstractType
                 'required' => false,
                 'scale' => 3,
             ])
-            ->add('unite', NumberType::class, [
+            ->add('unite', textType::class, [
                 'label' => 'Unités (NB)',
                 'required' => false,
             ])
