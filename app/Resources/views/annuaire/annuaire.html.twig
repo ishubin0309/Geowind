@@ -409,7 +409,7 @@
         <div id="show_message" style="padding: 20px;text-align: left;" class="modal-body">
         </div>
         <div class="modal-footer">
-          <button id="export_message" onclick="Export2Word('');" type="button" class="btn btn-primary">Exporter</button>
+          <button id="export_message" onclick="copyDivToClipboard();" type="button" class="btn btn-primary">Copier le contenu</button>
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
         </div>
       </div>
@@ -905,6 +905,8 @@
       window.getSelection().removeAllRanges(); // clear current selection
       window.getSelection().addRange(range); // to select text
       document.execCommand("copy");
+      window.getSelection().removeAllRanges();// to deselect
+      alert('La lettre est copier.');
   }
 
   function Export2Word(filename = '') {
