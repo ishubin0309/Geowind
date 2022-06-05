@@ -145,7 +145,7 @@
           .columns(8)
           .every(function () {
             var column = this;
-            var select = $('<select class="form-control input-sm"><option value="">Tous départements</option></select>')
+            var select = $('<select class="form-control input-sm"><option value="">Tous les départements</option></select>')
               .appendTo($(column.header()).empty())
               .on('change', function () {
                   var val = $.fn.dataTable.util.escapeRegex($(this).val());
