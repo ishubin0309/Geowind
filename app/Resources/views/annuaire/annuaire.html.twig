@@ -111,7 +111,7 @@
               {% if lettre.projet is not empty and lettre.projet.documents is not empty %}
                 {% for document in lettre.projet.documents %}
                   {% if document.type == 'plan_parcellaire' %}
-                  <img class="letter_plan_parcellaire" src="{{ absolute_url(asset('upload/' ~ document.document)) }}" alt="Plan parcellaire"><br>
+                  <img class="letter_plan_parcellaire" src="{{ 'upload/' ~ document.document|image_base64_encode }}" alt="Plan parcellaire"><br>
                   {% endif %}
                 {% endfor %}
               {% endif %}
