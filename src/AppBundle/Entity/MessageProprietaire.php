@@ -90,6 +90,27 @@ class MessageProprietaire
     private $body;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $document;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $documentOriginalName = 'document';
+
+    /**
+     * @var UploadedFile
+     *
+     * @Vich\UploadableField(mapping="document", fileNameProperty="document")
+     */
+    private $documentFile;
+
+    /**
      * @return string
      */
     public function __toString()
@@ -178,6 +199,67 @@ class MessageProprietaire
     public function setBody($body)
     {
         $this->body = $body;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDocument()
+    {
+        return $this->document;
+    }
+
+    /**
+     *
+     * @param string $document
+     * @return \AppBundle\Entity\Message
+     */
+    public function setDocument($document)
+    {
+        $this->document = $document;
+        return $this;
+    }
+
+    /**
+     * @return File|\Symfony\Component\HttpFoundation\File\UploadedFile|null
+     */
+    public function getDocumentFile()
+    {
+        return $this->documentFile;
+    }
+
+    /**
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $document
+     *
+     * @return $this
+     */
+    public function setDocumentFile(File $document = null)
+    {
+        $this->documentFile = $document;
+        if ($document) {
+            if ($document instanceof UploadedFile) {
+                $this->documentOriginalName = $document->getClientOriginalName();
+            }
+        }
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDocumentOriginalName()
+    {
+        return $this->documentOriginalName;
+    }
+
+    /**
+     * @param string $documentOriginalName
+     * @return \AppBundle\Entity\Message
+     */
+    public function setDocumentOriginalName($documentOriginalName)
+    {
+        $this->documentOriginalName = $documentOriginalName;
         return $this;
     }
     
