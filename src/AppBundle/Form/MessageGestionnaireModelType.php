@@ -31,13 +31,6 @@ class MessageGestionnaireModelType extends AbstractType
                     'rows' => 10,
                 ]
             ])
-            ->add('projet', EntityType::class, [
-                'class' => 'AppBundle:Projet',
-                'required' => false,
-                'label' => 'Projet',
-                'choices' => array(),
-                'multiple' => false,
-            ])
         ;
     }
 

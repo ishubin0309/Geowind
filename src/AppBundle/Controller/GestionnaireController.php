@@ -4,6 +4,18 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Departement;
 use AppBundle\Entity\Gestionnaire;
+
+use AppBundle\Entity\MessageGestionnaire;
+use AppBundle\Entity\MessageGestionnaireModel;
+use AppBundle\Entity\User;
+use AppBundle\Entity\LettreGestionnaire;
+use AppBundle\Entity\Commune;
+use AppBundle\Form\MessageGestionnaireModelType;
+use AppBundle\Form\MessageGestionnaireType;
+use AppBundle\Form\LettreGestionnaireType;
+use AppBundle\Service\AnnuaireMailer;
+use DateTime;
+
 use AppBundle\Entity\Import;
 use AppBundle\Form\ImportType;
 
@@ -42,9 +54,46 @@ class GestionnaireController extends Controller
         $gestionnaires = $em->getRepository('AppBundle:Gestionnaire')
                         ->findAll();
 
-        return $this->render('gestionnaire/gestionnaire.html.twig', [
+        $insees = array();
+
+        $messages = $em->getRepository('AppBundle:MessageGestionnaire')
+                        ->findAll();
+
+        $lettres = $em->getRepository('AppBundle:LettreGestionnaire')
+                        ->findAll();
+
+        foreach ($messages as $message) {
+            $insees[] = $message->getMairie()->getInsee();
+        }
+        foreach ($lettres as $lettre) {
+            $insees[] = $lettre->getMairie()->getInsee();
+        }
+
+        $communes = $em->getRepository('AppBundle:Commune')->findByInseeIdxByInsee($insees);
+        foreach ($messages as $message) {
+            $insee = $message->getMairie()->getInsee();
+            foreach ($communes as $commune) {
+                if ($commune->getInsee() == $insee) {
+                    $message->setDepartement(ucfirst(strtolower($commune->getDepartement())));
+                    break;
+                }
+            }
+        }
+        foreach ($lettres as $lettre) {
+            $insee = $lettre->getMairie()->getInsee();
+            foreach ($communes as $commune) {
+                if ($commune->getInsee() == $insee) {
+                    $lettre->setDepartement(ucfirst(strtolower($commune->getDepartement())));
+                    break;
+                }
+            }
+        }
+
+        return $this->render('gestionnaire/index.html.twig', [
             'gestionnaires' => $gestionnaires,
             'form' => $form->createView(),
+            'messages' => $messages,
+            'lettres' => $lettres,
         ]);
     }
 
@@ -158,6 +207,313 @@ class GestionnaireController extends Controller
         $response->setStatusCode(200);
         $response->headers->set('Content-Type', 'text/csv; charset=utf-8');
         $response->headers->set('Content-Disposition', 'attachment; filename="Gestionnaires.csv"');
+
+        return $response;
+    }
+
+    /**
+     * @Route("/message/{insee}/contact", name="gestionnaire_message", options={"expose": true})
+     * @ParamConverter("gestionnaire", options={"mapping": {"insee": "insee"}})
+     * @Method({"GET", "POST"})
+     */
+    public function messageAction(Request $request, Gestionnaire $gestionnaire, UserInterface $user)
+    {
+        /* @var $user User */
+        
+        $message = new MessageMessage();
+        $from = $this->getParameter('mailer_from');
+        $message->setFrom($from);
+        // $message->setReplyTo($user->getEmail());
+        $message->setGestionnaire($gestionnaire);
+        
+        $form = $this->createForm(MessageType::class, $message, [
+            'action' => $this->generateUrl('gestionnaire_message', ['insee' => $gestionnaire->getInsee()]),
+            'method' => 'POST',
+        ]);
+        $form->handleRequest($request);
+        
+        $em = $this->getDoctrine()->getManager();
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            
+            $annuaireMailer = new AnnuaireMailer($this->getParameter('mailer_password'));
+            
+            $errors = [];
+            $dir = $this->getParameter('document_upload_dir');
+            $em->persist($message);
+            if ($annuaireMailer->handleMessage($message, $errors, $dir)) {
+                $em->flush();
+                $this->addFlash('success', 'Mail envoyé.');
+                return $this->redirectToRoute('gestionnaire_index');
+                // return $this->redirectToRoute('gestionnaire_message', ['insee' => $gestionnaire->getInsee()]);
+            
+            } else {
+                $this->addFlash('error', 'Erreur');
+            }
+        }
+        
+        $models = $em->getRepository('AppBundle:MessageGestionnaireModel')
+                        ->findBy([], ['name' => 'ASC']);
+        $commune = $em->getRepository('AppBundle:Commune')->findOneBy(['insee' => $gestionnaire->getInsee()]);
+        if($request->isXmlHttpRequest()) $page = 'gestionnaire_ajax';
+        else $page = 'gestionnaire';
+        return $this->render('gestionnaire/'.$page.'.html.twig', [
+            'form' => $form->createView(),
+            'models' => $models,
+            'gestionnaire' => $gestionnaire,
+            'commune' => $commune,
+        ]);
+    }
+
+    /**
+     * @Route("/lettre/{insee}/contact", name="gestionnaire_lettre", options={"expose": true})
+     * @ParamConverter("gestionnaire", options={"mapping": {"insee": "insee"}})
+     * @Method({"GET", "POST"})
+     */
+    public function mairieLettreAction(Request $request, Gestionnaire $gestionnaire, UserInterface $user)
+    {
+        /* @var $user User */
+        
+        $lettre = new LettreGestionnaire();
+        $from = $this->getParameter('mailer_from');
+        $lettre->setGestionnaire($gestionnaire);
+        
+        $form = $this->createForm(LettreType::class, $lettre, [
+            'action' => $this->generateUrl('gestionnaire_lettre', ['insee' => $gestionnaire->getInsee()]),
+            'method' => 'POST',
+        ]);
+        $form->handleRequest($request);
+        
+        $em = $this->getDoctrine()->getManager();
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->persist($lettre);
+            $em->flush();
+            return $this->redirectToRoute('gestionnaire_ajax');
+            // return $this->redirectToRoute('gestionnaire_lettre', ['insee' => $gestionnaire->getInsee()]);
+        }
+        
+        $models = $em->getRepository('AppBundle:MessageGestionnaireModel')
+                        ->findBy([], ['name' => 'ASC']);
+        $commune = $em->getRepository('AppBundle:Commune')->findOneBy(['insee' => $maigestionnairerie->getInsee()]);
+
+        if($request->isXmlHttpRequest()) $page = 'gestionnaire_ajax';
+        else $page = 'gestionnaire';
+        return $this->render('annuaire/'.$page.'.html.twig', [
+            'form' => $form->createView(),
+            'models' => $models,
+            'gestionnaire' => $gestionnaire,
+            'commune' => $commune,
+        ]);
+    }
+
+    /**
+     * @Route("/modele/nouveau", name="model_new")
+     * @Method({"GET", "POST"})
+     */
+    public function newModelAction(Request $request)
+    {
+        $model = new MessageGestionnaireModel();
+        
+        $form = $this->createForm(MessageGestionnaireModelType::class, $model);
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($model);
+            $em->flush();
+            
+            $this->addFlash('success', 'Modèle créé.');
+            return $this->redirectToRoute('gestionnaire_ajax');
+        }
+
+        return $this->render('annuaire/model_new.html.twig', [
+            'model' => $model,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/modele/{id}/modifier", name="model_edit")
+     * @Method({"GET", "POST"})
+     */
+    public function editModelAction(Request $request, MessageGestionnaireModel $model)
+    {
+        $form = $this->createForm(MessageGestionnaireModelType::class, $model);
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+            
+            $this->addFlash('success', 'Modèle modifié.');
+            return $this->redirectToRoute('gestionnaire_ajax');
+        }
+
+        return $this->render('annuaire/model_edit.html.twig', [
+            'model' => $model,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/modele/{id}/supprimer", name="model_delete", options={ "expose": true })
+     * @Method("DELETE")
+     */
+    public function deleteAction(Request $request, MessageGestionnaireModel $model)
+    {
+        $csrf = $request->request->get('csrf', null);
+
+        if ($this->isCsrfTokenValid('token', $csrf)) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $em = $this->getDoctrine()->getManager();
+
+        $response = new JsonResponse();
+        $response->setData(['success' => 0]);
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($model);
+        $em->flush();
+        $this->addFlash('success', 'Modèle a été supprimé.');
+
+        return $response;
+    }
+
+    /**
+     * @Route("/message/{id}/modifier", name="message_gestionnaire_edit", options={ "expose": true })
+     * @Method({"POST"})
+     * @Security("has_role('ROLE_EDIT')")
+     */
+    public function editMessageAction(Request $request, MessageGestionnaire $message)
+    {
+        $result = $request->request->get('result', '?');
+        $dateReminder = $request->request->get('dateReminder', null);
+        $csrf = $request->request->get('csrf', null);
+
+        if ($this->isCsrfTokenValid('token', $csrf)) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $response = new JsonResponse();
+        $response->setData(['success' => 0]);
+        if($dateReminder) {
+            if($dateReminder >= date('d/m/Y')) {
+                $em = $this->getDoctrine()->getManager();
+
+                $dateReminder = new DateTime(str_replace('/', '-', $dateReminder));
+                $message->setDateReminder($dateReminder);
+                $em->persist($message);
+                $em->flush();
+
+                $this->addFlash('success', 'La date de rappel du message « ' . $message->getObject() . ' » a été modifié.');
+                $response->setData(['success' => 1]);
+            }
+        } elseif(in_array($result, ['?', '-', '+', 'R'])) {
+            $em = $this->getDoctrine()->getManager();
+
+            $message->setResult($result);
+            $em->persist($message);
+            $em->flush();
+
+            $this->addFlash('success', 'Le résultat du message « ' . $message->getObject() . ' » a été modifié.');
+            $response->setData(['success' => 1]);
+        }
+        return $response;
+    }
+
+    /**
+     * @Route("/lettre/{id}/modifier", name="lettre_gestionnaire_edit", options={ "expose": true })
+     * @Method({"POST"})
+     * @Security("has_role('ROLE_ADMIN')")
+     */
+    public function editLettreAction(Request $request, LettreGestionnaire $lettre)
+    {
+        $result = $request->request->get('result', '?');
+        $dateReminder = $request->request->get('dateReminder', null);
+        $csrf = $request->request->get('csrf', null);
+
+        if ($this->isCsrfTokenValid('token', $csrf)) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $response = new JsonResponse();
+        $response->setData(['success' => 0]);
+        if($dateReminder) {
+            if($dateReminder >= date('d/m/Y')) {
+                $em = $this->getDoctrine()->getManager();
+
+                $dateReminder = new DateTime(str_replace('/', '-', $dateReminder));
+                $lettre->setDateReminder($dateReminder);
+                $em->persist($lettre);
+                $em->flush();
+
+                $this->addFlash('success', 'La date de rappel de la lettre « ' . $lettre->getObject() . ' » a été modifié.');
+                $response->setData(['success' => 1]);
+            }
+        } elseif(in_array($result, ['?', '-', '+', 'R'])) {
+            $em = $this->getDoctrine()->getManager();
+
+            $lettre->setResult($result);
+            $em->persist($lettre);
+            $em->flush();
+
+            $this->addFlash('success', 'Le résultat de la lettre « ' . $lettre->getObject() . ' » a été modifié.');
+            $response->setData(['success' => 1]);
+        }
+        return $response;
+    }
+
+    /**
+     * @Route("/message/{id}/supprimer", name="message_gestionnaire_delete", options={ "expose": true })
+     * @Method("DELETE")
+     * @Security("has_role('ROLE_ADMIN')")
+     */
+    public function messageDeleteAction(Request $request, MessageGestionnaire $message)
+    {
+        $csrf = $request->request->get('csrf', null);
+
+        if ($this->isCsrfTokenValid('token', $csrf)) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $em = $this->getDoctrine()->getManager();
+
+        $response = new JsonResponse();
+        $response->setData(['success' => 0]);
+        $em = $this->getDoctrine()->getManager();
+        $sujet = $message->getObject();
+        $em->remove($message);
+        $em->flush();
+        $this->addFlash('success', 'Message « '.$sujet.' » a été supprimé.');
+
+        return $response;
+    }
+
+    /**
+     * @Route("/lettre/{id}/supprimer", name="lettre_gestionnaire_delete", options={ "expose": true })
+     * @Method("DELETE")
+     * @Security("has_role('ROLE_EDIT')")
+     */
+    public function lettreDeleteAction(Request $request, LettreGestionnaire $lettre)
+    {
+        $csrf = $request->request->get('csrf', null);
+
+        if ($this->isCsrfTokenValid('token', $csrf)) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $em = $this->getDoctrine()->getManager();
+
+        $response = new JsonResponse();
+        $response->setData(['success' => 0]);
+        $em = $this->getDoctrine()->getManager();
+        $sujet = $lettre->getObject();
+        $em->remove($lettre);
+        $em->flush();
+        $this->addFlash('success', 'Lettre « '.$sujet.' » a été supprimée.');
 
         return $response;
     }
