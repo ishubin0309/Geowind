@@ -70,6 +70,7 @@ class DefaultController extends Controller
             'departement' => $departement,
             'origine' => $origine,
             'chefProjet' => $chefProjet,
+            'chargeFoncier' => $chargeFoncier,
             'partenaire' => $partenaire,
         ]);
     }
