@@ -51,6 +51,13 @@ class DefaultController extends Controller
 
         $typesProjet = Projet::getTypeProjetList(1);
 
+        $typeProjet = $_GET['typeProjet'] ?? '';
+        $departement = $_GET['departement'] ?? '';
+        $origine = $_GET['origine'] ?? '';
+        $chefProjet = $_GET['chefProjet'] ?? '';
+        $chargeFoncier = $_GET['chargeFoncier'] ?? '';
+        $partenaire = $_GET['partenaire'] ?? '';
+
         return $this->render('default/portail.html.twig', [
             'projets' => $projets,
             'page' => $page,
@@ -59,6 +66,11 @@ class DefaultController extends Controller
             'grid_helper' => $gridHelper,
             'typesProjet' => $typesProjet,
             'export_option' => new ExportOption(),
+            'typeProjet' => $typeProjet,
+            'departement' => $departement,
+            'origine' => $origine,
+            'chefProjet' => $chefProjet,
+            'partenaire' => $partenaire,
         ]);
     }
     /**
