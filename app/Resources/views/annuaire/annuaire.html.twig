@@ -667,7 +667,7 @@
     else if($(this).val() == '-') keyword = 'moins';
     else if($(this).val().toLowerCase() == 'r') keyword = 'rappel';
     else if($(this).val() == '?') keyword = 'interrogation';
-    else keyword = '';
+    // else keyword = '';
     oTable.columns([2,8]).search(keyword).draw();
   });
   $("#input-mairie, #input-mairie-lettre, #input-mairie-appel").select2({
