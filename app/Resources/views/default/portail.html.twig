@@ -57,7 +57,7 @@
       </div>
       <div class="col-md-3 col-lg-2">
         <select id="select-typeProjet" class="form-control input-filter" data-attr="typeProjet">
-          <option value="" selected>Type de projet</option>
+          <option value="">Type de projet</option>
           {% for code, type in typesProjet %}
             <option value="{{ code }}" {% if code == typeProjet %}selected{% endif %}>{{ type }}</option>
           {% endfor %}
@@ -65,29 +65,29 @@
       </div>
       <div class="col-md-3 col-lg-2">
         <select id="select-origine" class="form-control input-filter" data-attr="origine">
-          <option value="" selected>Source</option>
+          <option value="">Source</option>
         </select>
       </div>
       <div class="col-md-2 col-lg-2">
         <select id="select-chefProjet" class="form-control input-filter" data-attr="chefProjet">
-          <option value="" selected>Chef projet</option>
+          <option value="">Chef projet</option>
         </select>
       </div>
       <div class="col-md-2 col-lg-2">
         <select id="select-chargeFoncier" class="form-control input-filter" data-attr="chargeFoncier">
-          <option value="" selected>Chargé foncier</option>
+          <option value="">Chargé foncier</option>
         </select>
       </div>
       <div class="col-md-2 col-lg-2">
         <select id="select-partenaire" class="form-control input-filter" data-attr="partenaire">
-          <option value="0" selected>Partenaire</option>
+          <option value="0">Partenaire</option>
         </select>
       </div>
       <div class="col-md-2 col-lg-2">
       </div>
       <div class="col-md-2 col-lg-2">
         <select id="select-departement" class="form-control input-filter" data-attr="departement">
-          <option value="" selected>Département</option>
+          <option value="">Département</option>
         </select>
       </div>
       <div class="clearfix"></div>
@@ -372,19 +372,19 @@
       var data = [];
       {% for projet in projets %}
         if(!$('#select-origine option[value="{{ projet.origine }}"]').length) {
-          $('#select-origine').append(new Option("{{ projet.origine }}", "{{ projet.origine }}" {% if projet.origine and projet.origine == origine %}, true{% endif %}));
+          $('#select-origine').append(new Option("{{ projet.origine }}", "{{ projet.origine }}" {% if projet.origine == origine %}, true{% endif %}));
         }
         if(!$('#select-chefProjet option[value="{{ projet.chefProjet }}"]').length) {
-          $('#select-chefProjet').append(new Option("{{ projet.chefProjet }}", "{{ projet.chefProjet }}" {% if projet.chefProjet and projet.chefProjet == chefProjet %}, true, '{{ chefProjet }}'{% else %}, false, '{{ chefProjet }}'{% endif %}));
+          $('#select-chefProjet').append(new Option("{{ projet.chefProjet }}", "{{ projet.chefProjet }}" {% if projet.chefProjet == chefProjet %}, true, '{{ chefProjet }}'{% else %}, false, '{{ chefProjet }}'{% endif %}));
         }
         if(!$('#select-chargeFoncier option[value="{{ projet.chargeFoncier }}"]').length) {
-          $('#select-chargeFoncier').append(new Option("{{ projet.chargeFoncier }}", "{{ projet.chargeFoncier }}" {% if projet.chargeFoncier and projet.chargeFoncier == chargeFoncier %}, true{% endif %}));
+          $('#select-chargeFoncier').append(new Option("{{ projet.chargeFoncier }}", "{{ projet.chargeFoncier }}" {% if projet.chargeFoncier == chargeFoncier %}, true{% endif %}));
         }
         if(!$('#select-partenaire option[value="{{ projet.partenaire }}"]').length) {
-          $('#select-partenaire').append(new Option("{{ projet.partenaire }}", "{{ projet.partenaire }}" {% if projet.partenaire and projet.partenaire == partenaire %}, true{% endif %}));
+          $('#select-partenaire').append(new Option("{{ projet.partenaire }}", "{{ projet.partenaire }}" {% if projet.partenaire == partenaire %}, true{% endif %}));
         }
         if(!$('#select-departement option[value="{{ projet.departement|e('js') }}"]').length) {
-          $('#select-departement').append(new Option("{{ projet.departement|e('js') }}", "{{ projet.departement|e('js') }}" {% if projet.departement and projet.departement == departement %}, true{% endif %}));
+          $('#select-departement').append(new Option("{{ projet.departement|e('js') }}", "{{ projet.departement|e('js') }}" {% if projet.departement == departement %}, true{% endif %}));
         }
         {% set listeDate = false %}
         {% set unreadMessage = false %}
