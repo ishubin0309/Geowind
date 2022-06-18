@@ -212,6 +212,27 @@ class GestionnaireController extends Controller
     }
 
     /**
+     * @Route("/search", name="gestionnaire_search", options={ "expose": true })
+     * @Security("has_role('ROLE_VIEW')")
+     */
+    public function communesAction(Request $request)
+    {
+        $response = new JsonResponse();
+
+        $term = $request->query->get('term', null);
+
+        $results = [];
+
+        if (!empty($term)) {
+            $em = $this->getDoctrine()->getManager();
+            $results = $em->getRepository('AppBundle:Gestionnaire')->searchTerm($term);
+        }
+
+        $response->setData($results);
+        return $response;
+    }
+
+    /**
      * @Route("/message/{insee}/contact", name="gestionnaire_message", options={"expose": true})
      * @ParamConverter("gestionnaire", options={"mapping": {"insee": "insee"}})
      * @Method({"GET", "POST"})
