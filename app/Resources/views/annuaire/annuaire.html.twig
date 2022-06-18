@@ -647,9 +647,9 @@
     "order": [[ 0, "asc" ]],
     columnDefs: [
         { targets: 0, searchable: false },
-        { targets: 1, searchable: false },
+        { targets: 1, searchable: true },
         { targets: 2, searchable: true },
-        { targets: 3, searchable: false },
+        { targets: 3, searchable: true },
         { targets: 4, searchable: false },
         { targets: 5, searchable: false },
         { targets: 6, searchable: false },
@@ -668,8 +668,7 @@
     else if($(this).val().toLowerCase() == 'r') keyword = 'rappel';
     else if($(this).val() == '?') keyword = 'interrogation';
     else keyword = $(this).val();
-    oTable.column(2).search(keyword).draw();
-    {# oTable.column(8).search(keyword).draw(); #}
+    oTable.search(keyword).draw();
   });
   $("#input-mairie, #input-mairie-lettre, #input-mairie-appel").select2({
     ajax: {
