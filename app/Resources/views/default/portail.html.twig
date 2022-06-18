@@ -556,10 +556,10 @@
         $('a.page-link').each(function() {
           regex1 = new RegExp('&' + filterName + '=.+?&', 'gi');
           regex2 = new RegExp('&' + filterName + '=.+', 'gi');
-          var href = $(this).attr('href').replace(regex1, '&').replace(regex2, '');
+          {# var href = $(this).attr('href').replace(regex1, '&').replace(regex2, ''); #}
           $(this).attr('href', href);
           if(filterValue && filterValue != '0') {
-            $(this).attr('href', href + '&' + filterName + '=' + filterValue);
+            {# $(this).attr('href', href + '&' + filterName + '=' + filterValue); #}
           }
         });
       });
