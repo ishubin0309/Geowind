@@ -556,14 +556,16 @@
         $('a.page-link').each(function() {
           regex1 = new RegExp('&' + filterName + '=.+?&', 'gi');
           regex2 = new RegExp('&' + filterName + '=.+', 'gi');
-          {# var href = $(this).attr('href').replace(regex1, '&').replace(regex2, ''); #}
+          var href = $(this).attr('href').replace(regex1, '&').replace(regex2, '');
           $(this).attr('href', href);
           if(filterValue && filterValue != '0') {
-            {# $(this).attr('href', href + '&' + filterName + '=' + filterValue); #}
+            $(this).attr('href', href + '&' + filterName + '=' + filterValue);
           }
         });
       });
-      $(".input-filter").change();
+      setTimeout(function() {
+        $(".input-filter").change();
+      }, 1000);
       $('#button-unread').click(function() {
         if($(this).hasClass('btn-outline-success')) {
           filterArgs['unread'] = '1';
