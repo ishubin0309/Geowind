@@ -375,7 +375,7 @@
           $('#select-origine').append(new Option("{{ projet.origine }}", "{{ projet.origine }}" {% if projet.origine == origine %}, true{% endif %}));
         }
         if(!$('#select-chefProjet option[value="{{ projet.chefProjet }}"]').length) {
-          $('#select-chefProjet').append(new Option("{{ projet.chefProjet }}", "{{ projet.chefProjet }}" {% if projet.chefProjet == chefProjet %}, true{% endif %}));
+          $('#select-chefProjet').append(new Option("{{ projet.chefProjet }}", "{{ projet.chefProjet }}" {% if projet.chefProjet == chefProjet %}, true, '{{ chefProjet }}'{% endif %}));
         }
         if(!$('#select-chargeFoncier option[value="{{ projet.chargeFoncier }}"]').length) {
           $('#select-chargeFoncier').append(new Option("{{ projet.chargeFoncier }}", "{{ projet.chargeFoncier }}" {% if projet.chargeFoncier == chargeFoncier %}, true{% endif %}));
