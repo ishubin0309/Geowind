@@ -33,10 +33,10 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="mairie_nav">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#" rel="tab_list">Journal</a></li>
+            <li class="active"><a href="#" rel="tab_journal">Journal</a></li>
             <li><a href="#" rel="tab_carte">Afficher <i style="color:red;" class="fa fa-map-o" aria-hidden="true"></i></a></li>
             <li class=""><a href="#" rel="tab_model">Modèles</a></li>
-            <li class=""><a href="#" rel="tab_search">Email</a></li>
+            <li class=""><a href="#" rel="tab_email">Email</a></li>
             <li class=""><a href="#" rel="tab_lettre">Lettre</a></li>
             <li class=""><a href="#" rel="tab_appel">Appel</a></li>
             <li class=""><a href="#" rel="tab_reminder">Rappel</a></li>
@@ -45,7 +45,7 @@
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
     </nav>
-    <fieldset id="tab_list">
+    <fieldset id="tab_journal">
       <legend>Journal</legend>
       {% if messages is empty and lettres is empty and appels is empty %}
         <div class="alert alert-info mt0">
@@ -57,6 +57,7 @@
             <tr>
               <th>Date1</th>
               <th>Département</th>
+              <th>Commune</th>
               <th>Mairie</th>
               <th>Destinaire</th>
               <th>Contactée par</th>
@@ -72,6 +73,7 @@
             <tr>
               <td>{{ message.createdAt|date('d/m/Y') }}</td>
               <td>{{ message.departement }}</td>
+              <td>{{ message.mairie.insee }}</td>
               <td><a href="{{ path('annuaire_mairie', { 'insee': message.mairie.insee }) }}">{{ message.mairie }}</a></td>
               <td>{{ message.to }}</td>
               <td>{{ message.createdBy }}</td>
@@ -100,6 +102,7 @@
             <tr>
               <td>{{ lettre.createdAt|date('d/m/Y') }}</td>
               <td>{{ lettre.departement }}</td>
+              <td>{{ lettre.mairie.insee }}</td>
               <td><a href="{{ path('annuaire_mairie_lettre', { 'insee': lettre.mairie.insee }) }}">{{ lettre.mairie }}</a></td>
               <td>{{ lettre.to }}</td>
               <td>{{ lettre.createdBy }}</td>
@@ -139,6 +142,7 @@
             <tr>
               <td>{{ appel.createdAt|date('d/m/Y') }}</td>
               <td>{{ appel.departement }}</td>
+              <td>{{ appel.mairie.insee }}</td>
               <td><a href="{{ path('annuaire_mairie_appel', { 'insee': appel.mairie.insee }) }}">{{ appel.mairie }}</a></td>
               <td>{{ appel.to }}</td>
               <td>{{ appel.createdBy }}</td>
@@ -261,7 +265,7 @@
         </table>
       {% endif %}
     </fieldset>
-    <fieldset id="tab_search" class="hide">
+    <fieldset id="tab_email" class="hide">
       <legend>Chercher une mairie</legend>
       <select id="input-mairie" style="width:50%" type="text" class="form-control"></select>
       <div style="margin-top:20px;" id="new_mail"></div>
@@ -648,10 +652,11 @@
         { targets: 3, searchable: false },
         { targets: 4, searchable: false },
         { targets: 5, searchable: false },
-        { targets: 6, searchable: false, orderable: false },
-        { targets: 7, orderable: false },
+        { targets: 6, searchable: false },
+        { targets: 7, searchable: false, orderable: false },
         { targets: 8, searchable: false },
-        { targets: 9, searchable: false }
+        { targets: 9, searchable: false },
+        { targets: 10, searchable: false }
     ],
     paging: false,
     bInfo: false,
@@ -663,7 +668,7 @@
     else if($(this).val().toLowerCase() == 'r') keyword = 'rappel';
     else if($(this).val() == '?') keyword = 'interrogation';
     else keyword = '';
-    oTable.column(7).search(keyword).draw();
+    oTable.columns([2,8]).search(keyword).draw();
   });
   $("#input-mairie, #input-mairie-lettre, #input-mairie-appel").select2({
     ajax: {
