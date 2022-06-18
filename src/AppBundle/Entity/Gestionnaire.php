@@ -84,6 +84,28 @@ class Gestionnaire
      * @ORM\Column(type="string", name="telephone", nullable=true)
      */
     private $telephone;
+    
+    /**
+     * @var ArrayCollection|MessageGestionnaire[]
+     * 
+     * @ORM\OneToMany(targetEntity="MessageGestionnaire", mappedBy="gestionnaire")
+     * @ORM\OrderBy({"createdAt" = "ASC"})
+     */
+    private $messages;
+    
+    /**
+     * @var ArrayCollection|LettreGestionnaire[]
+     * 
+     * @ORM\OneToMany(targetEntity="LettreGestionnaire", mappedBy="gestionnaire")
+     * @ORM\OrderBy({"createdAt" = "ASC"})
+     */
+    private $lettres;
+
+    public function __construct()
+    {
+        $this->messages = new ArrayCollection();
+        $this->lettres = new ArrayCollection();
+    }
 
     /**
      * @return string
@@ -200,6 +222,28 @@ class Gestionnaire
     public function setDepartement(Departement $departement)
     {
         $this->departement = $departement;
+        return $this;
+    }
+    
+    public function getMessages()
+    {
+        return $this->messages;
+    }
+
+    public function setMessages(ArrayCollection $messages)
+    {
+        $this->messages = $messages;
+        return $this;
+    }
+    
+    public function getLettres()
+    {
+        return $this->lettres;
+    }
+
+    public function setLettres(ArrayCollection $lettres)
+    {
+        $this->lettres = $lettres;
         return $this;
     }
 

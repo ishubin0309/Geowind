@@ -21,7 +21,7 @@ use DateTime;
  * @ORM\Entity(repositoryClass="AppBundle\Repository\MessageGestionnaireRepository")
  * @Vich\Uploadable
  */
-class Message
+class MessageGestionnaire
 {
     use BlameableTrait;
     use TimestampableTrait;
