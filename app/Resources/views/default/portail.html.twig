@@ -381,7 +381,7 @@
           $('#select-chargeFoncier').append(new Option("{{ projet.chargeFoncier }}", "{{ projet.chargeFoncier }}" {% if projet.chargeFoncier == chargeFoncier %}, true{% endif %}));
         }
         if(!$('#select-partenaire option[value="{{ projet.partenaire }}"]').length) {
-          $('#select-partenaire').append(new Option("{{ projet.partenaire }}", "{{ projet.partenaire }}" {% if projet.partenaire == partenaire %}, true{% endif %}));
+          $('#select-partenaire').append(new Option("{{ projet.partenaire }}", "{{ projet.partenaire }}" {% if projet.partenaire === partenaire %}, true{% endif %}));
         }
         if(!$('#select-departement option[value="{{ projet.departement|e('js') }}"]').length) {
           $('#select-departement').append(new Option("{{ projet.departement|e('js') }}", "{{ projet.departement|e('js') }}" {% if projet.departement == departement %}, true{% endif %}));
