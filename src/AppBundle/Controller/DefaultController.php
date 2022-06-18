@@ -56,7 +56,7 @@ class DefaultController extends Controller
         $origine = isset($_GET['origine']) ? $_GET['origine'] : '';
         $chefProjet = isset($_GET['chefProjet']) ? $_GET['chefProjet'] : '';
         $chargeFoncier = isset($_GET['chargeFoncier']) ? $_GET['chargeFoncier'] : '';
-        $partenaire = isset($_GET['partenaire']) ? $_GET['partenaire'] : '';
+        $partenaire = isset($_GET['partenaire']) ? $_GET['partenaire'] : '0';
 
         return $this->render('default/portail.html.twig', [
             'projets' => $projets,
