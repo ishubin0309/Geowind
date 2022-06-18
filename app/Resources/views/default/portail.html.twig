@@ -96,11 +96,11 @@
           <ul style="margin: 0px;margin-bottom: 10px;" class="pagination">
             {% if totalPages %}
             {% set route_path = liste.id is defined ? path('view_liste', {'liste' : liste.id}) : path('homepage') %}
-            <li class="page-item {% if page <= 1 %}disabled{% endif %}"><a class="page-link" href="{% if page > 1 %}{{ route_path ~ '?page=' ~ (page - 1) }}{% if columnsType > 1 %}&type={{ columnsType }}{% endif %}{% else %}#{% endif %}">Précédent</a></li>
+            <li class="page-item {% if page <= 1 %}disabled{% endif %}"><a class="page-link" href="{% if page > 1 %}{{ route_path ~ '?page=' ~ (page - 1) }}{% if columnsType > 1 %}&type={{ columnsType }}{% endif %}{% if typeProjet %}&typeProjet={{ typeProjet }}{% endif %}{% if departement %}&departement={{ departement }}{% endif %}{% if origine %}&origine={{ origine }}{% endif %}{% if chefProjet %}&chefProjet={{ chefProjet }}{% endif %}{% if chargeFoncier %}&chargeFoncier={{ chargeFoncier }}{% endif %}{% if partenaire != '0' %}&partenaire={{ partenaire }}{% endif %}{% else %}#{% endif %}">Précédent</a></li>
             {% for i in 1..totalPages %}
-              <li class="page-item {% if page == i %}active{% endif %}"><a class="page-link" href="{{ route_path ~ '?page=' ~ i }}{% if columnsType > 1 %}&type={{ columnsType }}{% endif %}">{{ i }}</a></li>
+              <li class="page-item {% if page == i %}active{% endif %}"><a class="page-link" href="{{ route_path ~ '?page=' ~ i }}{% if columnsType > 1 %}&type={{ columnsType }}{% endif %}{% if typeProjet %}&typeProjet={{ typeProjet }}{% endif %}{% if departement %}&departement={{ departement }}{% endif %}{% if origine %}&origine={{ origine }}{% endif %}{% if chefProjet %}&chefProjet={{ chefProjet }}{% endif %}{% if chargeFoncier %}&chargeFoncier={{ chargeFoncier }}{% endif %}{% if partenaire != '0' %}&partenaire={{ partenaire }}{% endif %}">{{ i }}</a></li>
             {% endfor %}
-            <li class="page-item {% if page >= totalPages %}disabled{% endif %}"><a class="page-link" href="{% if page < totalPages %}{{ route_path ~ '?page=' ~ (page + 1) }}{% if columnsType > 1 %}&type={{ columnsType }}{% endif %}{% else %}#{% endif %}">Suivant</a></li>
+            <li class="page-item {% if page >= totalPages %}disabled{% endif %}"><a class="page-link" href="{% if page < totalPages %}{{ route_path ~ '?page=' ~ (page + 1) }}{% if columnsType > 1 %}&type={{ columnsType }}{% endif %}{% if typeProjet %}&typeProjet={{ typeProjet }}{% endif %}{% if departement %}&departement={{ departement }}{% endif %}{% if origine %}&origine={{ origine }}{% endif %}{% if chefProjet %}&chefProjet={{ chefProjet }}{% endif %}{% if chargeFoncier %}&chargeFoncier={{ chargeFoncier }}{% endif %}{% if partenaire != '0' %}&partenaire={{ partenaire }}{% endif %}{% else %}#{% endif %}">Suivant</a></li>
             {% endif %}
           </ul>
         </nav>
