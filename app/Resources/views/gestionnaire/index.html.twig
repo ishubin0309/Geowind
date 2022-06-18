@@ -175,6 +175,16 @@
         </table>
       {% endif %}
     </fieldset>
+    <fieldset id="tab_email" class="hide">
+      <legend>Chercher une mairie</legend>
+      <select id="input-gestionnaire" style="width:50%" type="text" class="form-control"></select>
+      <div style="margin-top:20px;" id="new_mail"></div>
+    </fieldset>
+    <fieldset id="tab_lettre" class="hide">
+      <legend>Lettre</legend>
+      <select id="input-gestionnaire-lettre" style="width:50%" type="text" class="form-control"></select>
+      <div style="margin-top:20px;" id="new_letter"></div>
+    </fieldset>
     <fieldset id="tab_annuaire" class="hide">
       <legend>Annuaire</legend>
     </fieldset>
@@ -355,7 +365,7 @@
     else keyword = $(this).val();
     oTable.search(keyword).draw();
   });
-  $("#input-gestionnaire, #input-gestionnaire-lettre, #input-gestionnaire-appel").select2({
+  $("#input-gestionnaire, #input-gestionnaire-lettre").select2({
     ajax: {
       url: Routing.generate('gestionnaire_search'),
       dataType: 'json',
