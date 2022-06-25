@@ -11,6 +11,7 @@ class GestionnaireRepository extends EntityRepository
 {
     public function searchTerm($term)
     {
+        $term = trim($term);
         $query = $this->createQueryBuilder('g')
                     ->select('g, LENGTH(g.gestionnaire) len')
                     ->where('g.contact LIKE :contact')

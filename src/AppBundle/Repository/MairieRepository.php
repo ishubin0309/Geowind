@@ -11,6 +11,7 @@ class MairieRepository extends EntityRepository
 {
     public function searchTerm($term)
     {
+        $term = trim($term);
         $query = $this->createQueryBuilder('c')
                     ->select('c, LENGTH(c.mairie) len')
                     ->where('c.commune LIKE :commune')
