@@ -54,40 +54,11 @@ class GestionnaireController extends Controller
         $gestionnaires = $em->getRepository('AppBundle:Gestionnaire')
                         ->findAll();
 
-        $insees = array();
-
         $messages = $em->getRepository('AppBundle:MessageGestionnaire')
                         ->findAll();
 
         $lettres = $em->getRepository('AppBundle:LettreGestionnaire')
                         ->findAll();
-
-        foreach ($messages as $message) {
-            $insees[] = $message->getMairie()->getInsee();
-        }
-        foreach ($lettres as $lettre) {
-            $insees[] = $lettre->getMairie()->getInsee();
-        }
-
-        $communes = $em->getRepository('AppBundle:Commune')->findByInseeIdxByInsee($insees);
-        foreach ($messages as $message) {
-            $insee = $message->getMairie()->getInsee();
-            foreach ($communes as $commune) {
-                if ($commune->getInsee() == $insee) {
-                    $message->setDepartement(ucfirst(strtolower($commune->getDepartement())));
-                    break;
-                }
-            }
-        }
-        foreach ($lettres as $lettre) {
-            $insee = $lettre->getMairie()->getInsee();
-            foreach ($communes as $commune) {
-                if ($commune->getInsee() == $insee) {
-                    $lettre->setDepartement(ucfirst(strtolower($commune->getDepartement())));
-                    break;
-                }
-            }
-        }
 
         return $this->render('gestionnaire/index.html.twig', [
             'gestionnaires' => $gestionnaires,
@@ -144,7 +115,7 @@ class GestionnaireController extends Controller
                     $emailColumn = 6;
                     $telephoneColumn = 7;
                     $departementColumn = 8;
-                    $parcs = $em->getRepository('AppBundle:Gestionnaire')->emptyTable();
+                    $em->getRepository('AppBundle:Gestionnaire')->emptyTable();
                     continue;
                 }
                 // if($row > 10) continue;
@@ -153,7 +124,15 @@ class GestionnaireController extends Controller
                 if(empty($departement)) {
                     continue;
                 }
+                
                 $gestionnaire = new Gestionnaire;
+
+                if (false !== strpos($data[$emailColumn], '@')) {
+                    $gestionnaire = $em->getRepository('AppBundle:Gestionnaire')->findOneBy(['email' => $data[$emailColumn]]);
+                    if(empty($gestionnaire)) {
+                        $gestionnaire = new Gestionnaire;
+                    }
+                }
                 $gestionnaire->setGestionnaire($data[$gestionnaireColumn]);
                 $gestionnaire->setCompetence($data[$competenceColumn]);
                 $gestionnaire->setContact($data[$contactColumn]);
@@ -233,8 +212,8 @@ class GestionnaireController extends Controller
     }
 
     /**
-     * @Route("/message/{insee}/contact", name="gestionnaire_message", options={"expose": true})
-     * @ParamConverter("gestionnaire", options={"mapping": {"insee": "insee"}})
+     * @Route("/message/{id}/contact", name="gestionnaire_message", options={"expose": true})
+     * @ParamConverter("gestionnaire", options={"mapping": {"id": "id"}})
      * @Method({"GET", "POST"})
      */
     public function messageAction(Request $request, Gestionnaire $gestionnaire, UserInterface $user)
@@ -248,7 +227,7 @@ class GestionnaireController extends Controller
         $message->setGestionnaire($gestionnaire);
         
         $form = $this->createForm(MessageType::class, $message, [
-            'action' => $this->generateUrl('gestionnaire_message', ['insee' => $gestionnaire->getInsee()]),
+            'action' => $this->generateUrl('gestionnaire_message', ['id' => $gestionnaire->getId()]),
             'method' => 'POST',
         ]);
         $form->handleRequest($request);
@@ -266,7 +245,7 @@ class GestionnaireController extends Controller
                 $em->flush();
                 $this->addFlash('success', 'Mail envoyé.');
                 return $this->redirectToRoute('gestionnaire_index');
-                // return $this->redirectToRoute('gestionnaire_message', ['insee' => $gestionnaire->getInsee()]);
+                // return $this->redirectToRoute('gestionnaire_message', ['id' => $gestionnaire->getId()]);
             
             } else {
                 $this->addFlash('error', 'Erreur');
@@ -275,20 +254,19 @@ class GestionnaireController extends Controller
         
         $models = $em->getRepository('AppBundle:MessageGestionnaireModel')
                         ->findBy([], ['name' => 'ASC']);
-        $commune = $em->getRepository('AppBundle:Commune')->findOneBy(['insee' => $gestionnaire->getInsee()]);
+        
         if($request->isXmlHttpRequest()) $page = 'gestionnaire_ajax';
         else $page = 'gestionnaire';
         return $this->render('gestionnaire/'.$page.'.html.twig', [
             'form' => $form->createView(),
             'models' => $models,
             'gestionnaire' => $gestionnaire,
-            'commune' => $commune,
         ]);
     }
 
     /**
-     * @Route("/lettre/{insee}/contact", name="gestionnaire_lettre", options={"expose": true})
-     * @ParamConverter("gestionnaire", options={"mapping": {"insee": "insee"}})
+     * @Route("/lettre/{id}/contact", name="gestionnaire_lettre", options={"expose": true})
+     * @ParamConverter("gestionnaire", options={"mapping": {"id": "id"}})
      * @Method({"GET", "POST"})
      */
     public function mairieLettreAction(Request $request, Gestionnaire $gestionnaire, UserInterface $user)
@@ -300,7 +278,7 @@ class GestionnaireController extends Controller
         $lettre->setGestionnaire($gestionnaire);
         
         $form = $this->createForm(LettreType::class, $lettre, [
-            'action' => $this->generateUrl('gestionnaire_lettre', ['insee' => $gestionnaire->getInsee()]),
+            'action' => $this->generateUrl('gestionnaire_lettre', ['id' => $gestionnaire->getId()]),
             'method' => 'POST',
         ]);
         $form->handleRequest($request);
@@ -311,20 +289,18 @@ class GestionnaireController extends Controller
             $em->persist($lettre);
             $em->flush();
             return $this->redirectToRoute('gestionnaire_ajax');
-            // return $this->redirectToRoute('gestionnaire_lettre', ['insee' => $gestionnaire->getInsee()]);
+            // return $this->redirectToRoute('gestionnaire_lettre', ['id' => $gestionnaire->getId()]);
         }
         
         $models = $em->getRepository('AppBundle:MessageGestionnaireModel')
                         ->findBy([], ['name' => 'ASC']);
-        $commune = $em->getRepository('AppBundle:Commune')->findOneBy(['insee' => $maigestionnairerie->getInsee()]);
 
         if($request->isXmlHttpRequest()) $page = 'gestionnaire_ajax';
         else $page = 'gestionnaire';
-        return $this->render('annuaire/'.$page.'.html.twig', [
+        return $this->render('gestionnaire/'.$page.'.html.twig', [
             'form' => $form->createView(),
             'models' => $models,
             'gestionnaire' => $gestionnaire,
-            'commune' => $commune,
         ]);
     }
 

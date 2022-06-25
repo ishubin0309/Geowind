@@ -11,9 +11,9 @@ class GestionnaireRepository extends EntityRepository
 {
     public function searchTerm($term)
     {
-        $query = $this->createQueryBuilder('c')
-                    ->select('c, LENGTH(c.gestionnaire) len')
-                    ->where('c.gestionnaire LIKE :gestionnaire')
+        $query = $this->createQueryBuilder('g')
+                    ->select('g, LENGTH(g.gestionnaire) len')
+                    ->where('g.gestionnaire LIKE :gestionnaire')
                     ->orderBy('len', 'ASC')
                     ->setFirstResult(0)
                     ->setMaxResults(30)
@@ -26,11 +26,11 @@ class GestionnaireRepository extends EntityRepository
 
         foreach ($results as $result) {
             $arr = [
-                'insee' => $result[0]['insee'],
                 'id' => $result[0]['id'],
                 'telephone' => $result[0]['telephone'],
+                'email' => $result[0]['email'],
                 'gestionnaire' => $result[0]['gestionnaire'],
-                'text' => $result[0]['gestionnaire'],
+                'text' => $result[0]['email'] . '( ' . $result[0]['telephone'] . ' )',
             ];
             $data[] = $arr;
         }
@@ -59,7 +59,10 @@ class GestionnaireRepository extends EntityRepository
     
     public function emptyTable()
     {
-        $query = $this->createQueryBuilder('g')->delete('AppBundle:Gestionnaire', 'g');
+        $query = $this->createQueryBuilder('g')
+                ->leftJoin('g.messages', 'message')
+                ->where('message.id IS NULL')
+                ->delete('AppBundle:Gestionnaire', 'g');
 
         return $query->getQuery()->execute();
     }

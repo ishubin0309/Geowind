@@ -47,7 +47,6 @@
             <tr>
               <th>Date1</th>
               <th>Département</th>
-              <th>Commune</th>
               <th>Gestionnaire</th>
               <th>Destinaire</th>
               <th>Contactée par</th>
@@ -63,8 +62,7 @@
             <tr>
               <td>{{ message.createdAt|date('d/m/Y') }}</td>
               <td>{{ message.departement }}</td>
-              <td>{{ message.gestionnaire.insee }}</td>
-              <td><a href="{{ path('gestionnaire_message', { 'insee': message.gestionnaire.insee }) }}">{{ message.gestionnaire }}</a></td>
+              <td><a href="{{ path('gestionnaire_message', { 'id': message.gestionnaire.id }) }}">{{ message.gestionnaire }}</a></td>
               <td>{{ message.to }}</td>
               <td>{{ message.createdBy }}</td>
               <td class="column-fit">{{ message.object }}</td>
@@ -92,8 +90,7 @@
             <tr>
               <td>{{ lettre.createdAt|date('d/m/Y') }}</td>
               <td>{{ lettre.departement }}</td>
-              <td>{{ lettre.gestionnaire.insee }}</td>
-              <td><a href="{{ path('gestionnaire_lettre', { 'insee': lettre.gestionnaire.insee }) }}">{{ lettre.gestionnaire }}</a></td>
+              <td><a href="{{ path('gestionnaire_lettre', { 'id': lettre.gestionnaire.id }) }}">{{ lettre.gestionnaire }}</a></td>
               <td>{{ lettre.to }}</td>
               <td>{{ lettre.createdBy }}</td>
               <td class="column-fit">{{ lettre.object }}</td>
@@ -379,12 +376,12 @@
     escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
     minimumInputLength: 1,
   });
-  var last_annuaire_gestionnaire_insee = '';
-  function annuaire_gestionnaire(insee) {
-    last_annuaire_gestionnaire_insee = insee;
+  var last_annuaire_gestionnaire_id = '';
+  function annuaire_gestionnaire(id) {
+    last_annuaire_gestionnaire_id = id;
     var csrf = '{{ csrf_token('token')|e('js') }}';
     $.ajax({
-      url: Routing.generate('gestionnaire_message', { insee: last_annuaire_gestionnaire_insee }),
+      url: Routing.generate('gestionnaire_message', { id: last_annuaire_gestionnaire_id }),
       type: 'GET',
       data: { token: csrf },
       beforeSend: function() {
@@ -397,15 +394,15 @@
   }
   $('#input-gestionnaire').on('select2:select', function (e) {
     var data = e.params.data;
-    annuaire_gestionnaire(data.insee);
+    annuaire_gestionnaire(data.id);
   });
 
-  var last_annuaire_gestionnaire_lettre_insee = '';
-  function annuaire_gestionnaire_lettre(insee) {
-    last_annuaire_gestionnaire_lettre_insee = insee;
+  var last_annuaire_gestionnaire_lettre_id = '';
+  function annuaire_gestionnaire_lettre(id) {
+    last_annuaire_gestionnaire_lettre_id = id;
     var csrf = '{{ csrf_token('token')|e('js') }}';
     $.ajax({
-      url: Routing.generate('gestionnaire_lettre', { insee: last_annuaire_gestionnaire_lettre_insee }),
+      url: Routing.generate('gestionnaire_lettre', { id: last_annuaire_gestionnaire_lettre_id }),
       type: 'GET',
       data: { token: csrf },
       beforeSend: function() {
@@ -418,7 +415,7 @@
   }
   $('#input-gestionnaire-lettre').on('select2:select', function (e) {
     var data = e.params.data;
-    annuaire_gestionnaire_lettre(data.insee);
+    annuaire_gestionnaire_lettre(data.id);
   });
 
   $('.btn_message').click(function() {

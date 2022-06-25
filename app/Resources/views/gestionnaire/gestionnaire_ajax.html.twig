@@ -1,6 +1,6 @@
 {# {% extends 'base.html.twig' %}
 
-{% set title = mairie %}
+{% set title = gestionnaire %}
 {% set item = 'annuaire' %}
 
 {% block body %} #}
@@ -9,115 +9,47 @@
 
     <div class="row">
       <div class="col-md-6">
-        <h1>{{ mairie }}</h1>
+        <h1>{{ gestionnaire }}</h1>
         <hr>
         
         <table class="table table-hover table-striped">
           <tbody>
             <tr>
               <th>Département</th>
-              <td>{{ commune is not null ? commune.departement : '' }}</td>
+              <td>{{ gestionnaire.departement is not empty ? gestionnaire.departement.nom : '' }}</td>
             </tr>
             <tr>
               <th><i class="fa fa-map-marker fa-fw"></i> Adresse</th>
               <td>
-                {{ mairie }}<br>
-                {{ mairie.address1 }}
-                {{ mairie.address2 is not empty ? '<br>' ~ mairie.address2 }}
-                <br>{{ mairie.codePostal }} {{ mairie.commune }}
-                <button type="button" data-address="{{ mairie }}" data-addressone="{{ mairie.address1 }}" data-addresstwo="{{ mairie.address2 }}" data-codepostal="{{ mairie.codePostal }}" data-commune="{{ mairie.commune }}" class="select-address btn btn-xs btn-primary pull-right"><i class="fa fa-mail-forward"></i></button>
+                {{ gestionnaire.adresse }}
+                <button type="button" data-address="{{ gestionnaire.adresse }}" class="select-address btn btn-xs btn-primary pull-right"><i class="fa fa-mail-forward"></i></button>
               </td>
             </tr>
             <tr>
-              <th><i class="fa fa-calendar-times-o fa-fw"></i> Horaire</th>
-              <td>{{ mairie.horaire }}</td>
+              <th><i class="fa fa-map-marker fa-fw"></i> Ville</th>
+              <td>
+                {{ gestionnaire.ville }}
+                <button type="button" data-address="{{ gestionnaire.ville }}" class="select-address btn btn-xs btn-primary pull-right"><i class="fa fa-mail-forward"></i></button>
+              </td>
             </tr>
             <tr>
-              <th><i class="fa fa-user fa-fw"></i> Maire</th>
-              <td>{{ mairie.civiliteMaire }} {{ mairie.prenomMaire }} {{ mairie.nomMaire|upper }}
-              <button type="button" data-telephone="{{ mairie.civiliteMaire }} {{ mairie.prenomMaire }} {{ mairie.nomMaire|upper }}" class="select-telephone btn btn-xs btn-primary pull-right"><i class="fa fa-mail-forward"></i></button>
-              </td>
+              <th><i class="fa fa-send fa-fw"></i> Email</th>
+              <td>{{ gestionnaire.email }}</td>
             </tr>
             <tr>
               <th><i class="fa fa-phone fa-fw"></i> Téléphone</th>
               <td>
-              {% if is_granted('ROLE_ADMIN') %}<button class="btn btn-default btn-xs edit_data" title="Modifier" data='{"telephone": "{{ mairie.telephone }}"}'><i class="fa fa-pencil-square-o"></i></button>&nbsp;{% endif %}
-              {{ mairie.telephone }}
-              <button type="button" data-telephone="{{ mairie.telephone }}" class="select-telephone btn btn-xs btn-primary pull-right"><i class="fa fa-mail-forward"></i></button>
+              {% if is_granted('ROLE_ADMIN') %}<button class="btn btn-default btn-xs edit_data" title="Modifier" data='{"telephone": "{{ gestionnaire.telephone }}"}'><i class="fa fa-pencil-square-o"></i></button>&nbsp;{% endif %}
+              {{ gestionnaire.telephone }}
               </td>
-            </tr>
-            {# <tr>
-              <th><i class="fa fa-fax fa-fw"></i> Fax</th>
-              <td>{{ mairie.fax }}</td>
-            </tr> #}
-            <tr>
-              <th>Population 2016</th>
-              <td>{{ mairie.population2016 }}</td>
             </tr>
             <tr>
               <th><i class="fa fa-envelope-o"></i> EMAIL 1</th>
               <td>
-                {% if is_granted('ROLE_ADMIN') %}<button class="btn btn-default btn-xs edit_data" title="Modifier" data='{"email1": "{{ mairie.email1 }}"}'><i class="fa fa-pencil-square-o"></i></button>&nbsp;{% endif %}
-                {{ mairie.email1 }}
-                <button type="button" data-mail="{{ mairie.email1 }}" class="select-mail btn btn-xs btn-primary pull-right"><i class="fa fa-mail-forward"></i></button>
+              {% if is_granted('ROLE_ADMIN') %}<button class="btn btn-default btn-xs edit_data" title="Modifier" data='{"email": "{{ gestionnaire.email }}"}'><i class="fa fa-pencil-square-o"></i></button>&nbsp;{% endif %}
+              {{ gestionnaire.email }}
+                <button type="button" data-mail="{{ gestionnaire.email }}" class="select-mail btn btn-xs btn-primary pull-right"><i class="fa fa-mail-forward"></i></button>
               </td>
-            </tr>
-            {% if mairie.email2 %}
-            <tr>
-              <th><i class="fa fa-envelope-o"></i> EMAIL 2</th>
-              <td>{{ mairie.email2 }}
-              <button type="button" data-mail="{{ mairie.email2 }}" class="select-mail btn btn-xs btn-primary pull-right"><i class="fa fa-mail-forward"></i></button>
-              </td>
-            </tr>
-            {% endif %}
-            {% if mairie.email3 %}
-            <tr>
-              <th><i class="fa fa-envelope-o"></i> EMAIL 3</th>
-              <td>{{ mairie.email3 }}
-              <button type="button" data-mail="{{ mairie.email3 }}" class="select-mail btn btn-xs btn-primary pull-right"><i class="fa fa-mail-forward"></i></button>
-              </td>
-            </tr>
-            {% endif %}
-            {% if mairie.email4 %}
-            <tr>
-              <th><i class="fa fa-envelope-o"></i> EMAIL 4</th>
-              <td>{{ mairie.email4 }}
-              <button type="button" data-mail="{{ mairie.email4 }}" class="select-mail btn btn-xs btn-primary pull-right"><i class="fa fa-mail-forward"></i></button>
-              </td>
-            </tr>
-            {% endif %}
-            {% if mairie.email5 %}
-            <tr>
-              <th><i class="fa fa-envelope-o"></i> EMAIL 5</th>
-              <td>{{ mairie.email5 }}
-                <button type="button" data-mail="{{ mairie.email5 }}" class="select-mail btn btn-xs btn-primary pull-right"><i class="fa fa-mail-forward"></i></button>
-              </td>
-            </tr>
-            {% endif %}
-            {% if mairie.elus|length > 0 %}<tr><td>Conseillers</td><td></td><td></td></tr>{% endif %}
-            {% for elu in mairie.elus %}
-            <tr>
-              <td>{{ elu['nom'] }}</td>
-              <td>
-                {% if is_granted('ROLE_ADMIN') %}<button class="btn btn-default btn-xs edit_data" title="Modifier" data='{"order":"{{ loop.index0 }}", "elu" : "{{ elu['nom'] }}", "email": "{{ elu['email'] }}", "telephone": "{{ elu['telephone'] }}"}'><i class="fa fa-pencil-square-o"></i></button>&nbsp;{% endif %}
-                {% if elu['email'] %}{{ elu['email'] }}{% endif %}
-                {% if elu['telephone'] %}{{ elu['telephone'] }}{% endif %}
-                {% if elu['email'] %}
-                  <button type="button" data-mail="{{ elu['email'] }}" class="select-mail btn btn-xs btn-primary pull-right"><i class="fa fa-mail-forward"></i></button>
-                {% endif %}
-                {% if elu['telephone'] %}
-                  <button type="button" data-telephone="{{ elu['telephone'] }}" class="select-telephone btn btn-xs btn-primary pull-right"><i class="fa fa-mail-forward"></i></button>
-                {% endif %}
-              </td>
-            </tr>
-            {% endfor %}
-            <tr>
-              <th>Code INSEE</th>
-              <td>{{ mairie.insee }}</td>
-            </tr>
-            <tr>
-              <th>Région</th>
-              <td>{{ mairie.region }}</td>
             </tr>
           </tbody>
         </table>
@@ -125,7 +57,7 @@
         <h1>Email envoyé</h1>
         <hr>
 
-        {% if mairie.messages is empty %}
+        {% if gestionnaire.messages is empty %}
           <p>Aucun email envoyé</p>
         {% else %}
           <table class="table table-striped">
@@ -137,7 +69,7 @@
               </tr>
             </thead>
             <tbody>
-              {% for message in mairie.messages %}
+              {% for message in gestionnaire.messages %}
               <tr>
                 <td>{{ message.createdAt|date('d/m/Y H:i:s') }}</td>
                 <td>{{ message.to }}</td>
@@ -192,19 +124,19 @@
   </div>
 
   {% if is_granted('ROLE_ADMIN') %}
-  <div id="mairieModal_{{ date }}" class="modal fade" tabindex="-1" role="dialog">
+  <div id="gestionnaireModal_{{ date }}" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title">Modifier mairie</h4>
+          <h4 class="modal-title">Modifier gestionnaire</h4>
         </div>
         <div class="modal-body">
           
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
-          <button id="submitMairieModal_{{ date }}" type="button" class="btn btn-primary">Sauvegarder</button>
+          <button id="submitGestionnaireModal_{{ date }}" type="button" class="btn btn-primary">Sauvegarder</button>
         </div>
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
@@ -218,7 +150,7 @@
   {% if is_granted('ROLE_ADMIN') %}
   $('body').on('click', '.edit_data', function() {
     var data = JSON.parse($(this).attr('data'));
-    var html = '<div id="alertMairieModal_{{ date }}" class="alert"></div>';
+    var html = '<div id="alertGestionnaireModal_{{ date }}" class="alert"></div>';
     $.each(data, function(index, value) {
       if(index == 'order') class_name = 'hide';
       else class_name = '';
@@ -229,38 +161,38 @@
           </div>\
         </div><div class="clearfix"></div>';
     });
-    $('#mairieModal_{{ date }} .modal-body').html('<form id="formMairieModal_{{ date }}" data="'+$(this).attr('data')+'" action="">'+html+'</form><div class="clearfix"></div>');
-    $('#mairieModal_{{ date }}').modal('show');
+    $('#gestionnaireModal_{{ date }} .modal-body').html('<form id="formGestionnaireModal_{{ date }}" data="'+$(this).attr('data')+'" action="">'+html+'</form><div class="clearfix"></div>');
+    $('#gestionnaireModal_{{ date }}').modal('show');
   });
-  $('body').on('click', '#submitMairieModal_{{ date }}', function(e) {
+  $('body').on('click', '#submitGestionnaireModal_{{ date }}', function(e) {
     e.preventDefault();
-    submit_mairie_modal = $(this);
-    submit_mairie_modal.addClass('disabled');
-    submit_mairie_modal.prop('disabled', true);
-    var data = $('#formMairieModal_{{ date }}').serialize();
+    submit_gestionnaire_modal = $(this);
+    submit_gestionnaire_modal.addClass('disabled');
+    submit_gestionnaire_modal.prop('disabled', true);
+    var data = $('#formGestionnaireModal_{{ date }}').serialize();
     $.ajax({
-        url: Routing.generate('mairie_edit', { id: {{ mairie.id }} }),
+        url: Routing.generate('gestionnaire_edit', { id: {{ gestionnaire.id }} }),
         type: 'POST',
         data: data,
         beforeSend: function() {
-          $('body').find('#alertMairieModal_{{ date }}').addClass('alert-info').removeClass('alert-success').removeClass('alert-warning').removeClass('alert-danger').text('En cours...');
+          $('body').find('#alertGestionnaireModal_{{ date }}').addClass('alert-info').removeClass('alert-success').removeClass('alert-warning').removeClass('alert-danger').text('En cours...');
         },
         success: function(result) {
           if(result['status']) {
-            $('body').find('#alertMairieModal_{{ date }}').addClass('alert-success').removeClass('alert-info').text('Mairie modifiée avec succcès');
-            submit_mairie_modal.removeClass('disabled');
-            submit_mairie_modal.prop('disabled', false);
-            setTimeout(function() {$('.modal').modal('hide');setTimeout(function() {if(!$('fieldset#tab_search').hasClass('hide')) annuaire_mairie(last_annuaire_mairie_insee);else annuaire_mairie_appel(last_annuaire_mairie_appel_insee);}, 1000);}, 2000);
+            $('body').find('#alertGestionnaireModal_{{ date }}').addClass('alert-success').removeClass('alert-info').text('Gestionnaire modifiée avec succcès');
+            submit_gestionnaire_modal.removeClass('disabled');
+            submit_gestionnaire_modal.prop('disabled', false);
+            setTimeout(function() {$('.modal').modal('hide');setTimeout(function() {if(!$('fieldset#tab_search').hasClass('hide')) annuaire_gestionnaire(last_annuaire_gestionnaire_id);}, 1000);}, 2000);
           } else {
-            $('body').find('#alertMairieModal_{{ date }}').addClass('alert-warning').removeClass('alert-info').text('Modification a échouer');
-            submit_mairie_modal.removeClass('disabled');
-            submit_mairie_modal.prop('disabled', false);
+            $('body').find('#alertGestionnaireModal_{{ date }}').addClass('alert-warning').removeClass('alert-info').text('Modification a échouer');
+            submit_gestionnaire_modal.removeClass('disabled');
+            submit_gestionnaire_modal.prop('disabled', false);
           }
         },
         error: function() {
-          $('body').find('#alertMairieModal_{{ date }}').addClass('alert-danger').removeClass('alert-info').text('Erreur 500');
-          submit_mairie_modal.removeClass('disabled');
-          submit_mairie_modal.prop('disabled', false);
+          $('body').find('#alertGestionnaireModal_{{ date }}').addClass('alert-danger').removeClass('alert-info').text('Erreur 500');
+          submit_gestionnaire_modal.removeClass('disabled');
+          submit_gestionnaire_modal.prop('disabled', false);
         }
       });
   });
@@ -282,10 +214,8 @@
       $('#form_{{ date }} .btn-primary').html('<i class="fa fa-save fa-fw"></i> Enregistrer');
       $('.select-mail').remove();
       if(!$('#form_{{ date }} #lettre_to').length) $('.select-address').remove();
-      if(!$('#form_{{ date }} #appel_to').length) $('.select-telephone').remove();
     } else {
       $('.select-address').remove();
-      $('.select-telephone').remove();
     }
     
     $('.select-mail').click(function() {
@@ -294,17 +224,7 @@
     
     $('.select-address').click(function() {
       var address = $(this).data('address');
-      address += '\n' + $(this).data('addressone');
-      if($(this).data('addresstwo')) {
-        address += '\n' + $(this).data('addresstwo');
-      }
-      address += '\n' + $(this).data('codepostal');
-      address += '\n' + $(this).data('commune');
       $('#form_{{ date }} #lettre_to').val(address);
-    });
-    
-    $('.select-telephone').click(function() {
-      $('#form_{{ date }} #appel_to').val($(this).data('telephone'));
     });
     
     $('#form_{{ date }} #select-model').change(function() {

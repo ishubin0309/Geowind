@@ -9,11 +9,11 @@ class MessageGestionnaireRepository extends EntityRepository
 {
     public function findAll()
     {
-        $query = $this->createQueryBuilder('message')
-                ->select(['message', 'gestionnaire', 'user'])
-                ->leftJoin('message.gestionnaire', 'gestionnaire')
-                ->leftJoin('message.createdBy', 'user')
-                ->orderBy('message.createdAt', 'ASC')
+        $query = $this->createQueryBuilder('m')
+                ->select(['m', 'gestionnaire', 'user'])
+                ->leftJoin('m.gestionnaire', 'gestionnaire')
+                ->leftJoin('m.createdBy', 'user')
+                ->orderBy('m.createdAt', 'ASC')
         ;
 
         return $query->getQuery()->getResult();
