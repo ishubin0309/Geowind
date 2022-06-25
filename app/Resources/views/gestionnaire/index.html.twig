@@ -29,6 +29,7 @@
           <ul class="nav navbar-nav">
             <li class="active"><a href="#" rel="tab_journal">Journal</a></li>
             <li><a href="#" rel="tab_list">Liste</a></li>
+            <li class=""><a href="#" rel="tab_model">Modèles</a></li>
             <li class=""><a href="#" rel="tab_email">Email</a></li>
             <li class=""><a href="#" rel="tab_lettre">Lettre</a></li>
           </ul>
@@ -166,6 +167,39 @@
               <td>{{ gestionnaire.email }}</td>
               <td>{{ gestionnaire.telephone }}</td>
               <td>{{ gestionnaire.departement.nom }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% endif %}
+    </fieldset>
+    <fieldset id="tab_model" class="hide">
+      <legend>Modèle <a href="{{ path('model_gestionnaire_new') }}" class="btn btn-primary btn-sm pull-right">Nouveau modèle</a></legend>
+      {% if models is empty %}
+        <div class="alert alert-info mt0">
+          Aucun modèle
+        </div>
+      {% else %}
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Intitulé du modèle</th>
+              <th class="column-fit"></th>
+              <th class="column-fit"></th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for model in models %}
+            <tr>
+              <td>{{ model }}</td>
+              <td class="column-fit">
+                <a href="{{ path('model_gestionnaire_edit', { 'id': model.id }) }}" class="btn btn-warning btn-xs"><i class="fa fa-pencil"></i></a>
+              </td>
+              <td class="column-fit">
+                {% if is_granted('ROLE_ADMIN') %}
+                <button id="{{ model.id }}" model="{{ model }}" class="btn btn-danger btn-xs button-delete-model" title="Double click"><i class="fa fa-fw fa-trash"></i></button>
+                {% endif %}
+              </td>
             </tr>
             {% endfor %}
           </tbody>
@@ -497,6 +531,44 @@
           url: Routing.generate(type + '_delete', {id: id}),
           type: 'DELETE',
           data: {token: csrf},
+          success: function(result) {
+            location.reload();
+          }
+        });
+      } else {
+
+      }
+    });
+
+  });
+
+  $('.button-delete-model').dblclick(function() {
+    id = $(this).attr('id');
+    model = $(this).attr('model');
+    
+    if (!id) {
+      return;
+    }
+    swal({
+      title: "Supprimer ?",
+      text: "Le modèle « "+model+" » sera supprimé définitivement.",
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#DD6B55",
+      confirmButtonText: "Supprimer",
+      cancelButtonText: "Annuler",
+      closeOnConfirm: false,
+      closeOnCancel: true,
+      allowOutsideClick: true,
+      showLoaderOnConfirm: true,
+    },
+    function(isConfirm){
+      if (isConfirm) {
+        var csrf = '{{ csrf_token('token')|e('js') }}';
+        $.ajax({
+          url: Routing.generate('model_gestionnaire_delete', {id: id}),
+          type: 'DELETE',
+          data: { token: csrf  },
           success: function(result) {
             location.reload();
           }

@@ -257,7 +257,9 @@
                 <a href="{{ path('model_edit', { 'id': model.id }) }}" class="btn btn-warning btn-xs"><i class="fa fa-pencil"></i></a>
               </td>
               <td class="column-fit">
+                {% if is_granted('ROLE_ADMIN') %}
                 <button id="{{ model.id }}" model="{{ model }}" class="btn btn-danger btn-xs button-delete-model" title="Double click"><i class="fa fa-fw fa-trash"></i></button>
+                {% endif %}
               </td>
             </tr>
             {% endfor %}
@@ -591,43 +593,6 @@
     });
   }
   {% endif %}
-  $('.button-delete-model').dblclick(function() {
-    id = $(this).attr('id');
-    model = $(this).attr('model');
-    
-    if (!id) {
-      return;
-    }
-    swal({
-      title: "Supprimer ?",
-      text: "Le modèle « "+model+" » sera supprimé définitivement.",
-      type: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#DD6B55",
-      confirmButtonText: "Supprimer",
-      cancelButtonText: "Annuler",
-      closeOnConfirm: false,
-      closeOnCancel: true,
-      allowOutsideClick: true,
-      showLoaderOnConfirm: true,
-    },
-    function(isConfirm){
-      if (isConfirm) {
-        var csrf = '{{ csrf_token('token')|e('js') }}';
-        $.ajax({
-          url: Routing.generate('model_delete', {id: id}),
-          type: 'DELETE',
-          data: { token: csrf  },
-          success: function(result) {
-            location.reload();
-          }
-        });
-      } else {
-
-      }
-    });
-
-  });
   $('#datatable2').DataTable({
     language: dtLang,
     "order": [[ 6, "asc" ]],
@@ -835,6 +800,44 @@
           url: Routing.generate(type + '_delete', {id: id}),
           type: 'DELETE',
           data: {token: csrf},
+          success: function(result) {
+            location.reload();
+          }
+        });
+      } else {
+
+      }
+    });
+
+  });
+  
+  $('.button-delete-model').dblclick(function() {
+    id = $(this).attr('id');
+    model = $(this).attr('model');
+    
+    if (!id) {
+      return;
+    }
+    swal({
+      title: "Supprimer ?",
+      text: "Le modèle « "+model+" » sera supprimé définitivement.",
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#DD6B55",
+      confirmButtonText: "Supprimer",
+      cancelButtonText: "Annuler",
+      closeOnConfirm: false,
+      closeOnCancel: true,
+      allowOutsideClick: true,
+      showLoaderOnConfirm: true,
+    },
+    function(isConfirm){
+      if (isConfirm) {
+        var csrf = '{{ csrf_token('token')|e('js') }}';
+        $.ajax({
+          url: Routing.generate('model_delete', {id: id}),
+          type: 'DELETE',
+          data: { token: csrf  },
           success: function(result) {
             location.reload();
           }

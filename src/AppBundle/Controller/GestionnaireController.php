@@ -305,7 +305,7 @@ class GestionnaireController extends Controller
     }
 
     /**
-     * @Route("/modele/nouveau", name="model_new")
+     * @Route("/modele/nouveau", name="model_gestionnaire_new")
      * @Method({"GET", "POST"})
      */
     public function newModelAction(Request $request)
@@ -332,7 +332,7 @@ class GestionnaireController extends Controller
     }
 
     /**
-     * @Route("/modele/{id}/modifier", name="model_edit")
+     * @Route("/modele/{id}/modifier", name="model_gestionnaire_edit")
      * @Method({"GET", "POST"})
      */
     public function editModelAction(Request $request, MessageGestionnaireModel $model)
@@ -356,7 +356,7 @@ class GestionnaireController extends Controller
     }
 
     /**
-     * @Route("/modele/{id}/supprimer", name="model_delete", options={ "expose": true })
+     * @Route("/modele/{id}/supprimer", name="model_gestionnaire_delete", options={ "expose": true })
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, MessageGestionnaireModel $model)
