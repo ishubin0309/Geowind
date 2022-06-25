@@ -3,6 +3,7 @@
 namespace AppBundle\Service;
 
 use AppBundle\Entity\Message;
+use AppBundle\Entity\MessageGestionnaire;
 use AppBundle\Entity\MessageProprietaire;
 use AppBundle\Entity\MessageParcelles;
 use AppBundle\Entity\Consultation;
@@ -20,6 +21,11 @@ class AnnuaireMailer
     }
     
     public function handleMessage(Message $message, &$errors,  $dir='')
+    {
+        return $this->sendMail($message, $errors,  $dir);
+    }
+    
+    public function handleMessageGestionnaire(MessageGestionnaire $message, &$errors,  $dir='')
     {
         return $this->sendMail($message, $errors,  $dir);
     }

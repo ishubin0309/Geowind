@@ -245,7 +245,7 @@ class GestionnaireController extends Controller
             $errors = [];
             $dir = $this->getParameter('document_upload_dir');
             $em->persist($message);
-            if ($annuaireMailer->handleMessage($message, $errors, $dir)) {
+            if ($annuaireMailer->handleMessageGestionnaire($message, $errors, $dir)) {
                 $em->flush();
                 $this->addFlash('success', 'Mail envoyé.');
                 return $this->redirectToRoute('gestionnaire_index');
