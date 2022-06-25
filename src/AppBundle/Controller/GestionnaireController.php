@@ -60,11 +60,15 @@ class GestionnaireController extends Controller
         $lettres = $em->getRepository('AppBundle:LettreGestionnaire')
                         ->findAll();
 
+        $models = $em->getRepository('AppBundle:MessageGestionnaireModel')
+                        ->findBy([], ['name' => 'ASC']);
+
         return $this->render('gestionnaire/index.html.twig', [
             'gestionnaires' => $gestionnaires,
             'form' => $form->createView(),
             'messages' => $messages,
             'lettres' => $lettres,
+            'models' => $models,
         ]);
     }
 
