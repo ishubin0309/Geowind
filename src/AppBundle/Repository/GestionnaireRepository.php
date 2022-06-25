@@ -14,10 +14,14 @@ class GestionnaireRepository extends EntityRepository
         $query = $this->createQueryBuilder('g')
                     ->select('g, LENGTH(g.gestionnaire) len')
                     ->where('g.gestionnaire LIKE :gestionnaire')
+                    ->orWhere('g.email LIKE :email')
+                    ->orWhere('g.telephone LIKE :telephone')
                     ->orderBy('len', 'ASC')
                     ->setFirstResult(0)
                     ->setMaxResults(30)
                     ->setParameter('gestionnaire', '%' . $term . '%')
+                    ->setParameter('email', '%' . $term . '%')
+                    ->setParameter('telephone', '%' . $term . '%')
                 ;
 
         $results = $query->getQuery()->getResult(Query::HYDRATE_ARRAY);
