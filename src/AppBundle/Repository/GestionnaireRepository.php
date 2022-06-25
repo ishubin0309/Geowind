@@ -30,7 +30,7 @@ class GestionnaireRepository extends EntityRepository
                 'telephone' => $result[0]['telephone'],
                 'email' => $result[0]['email'],
                 'gestionnaire' => $result[0]['gestionnaire'],
-                'text' => $result[0]['email'] . '( ' . $result[0]['telephone'] . ' )',
+                'text' => $result[0]['email'] . ' (' . $result[0]['telephone'] . ')',
             ];
             $data[] = $arr;
         }
