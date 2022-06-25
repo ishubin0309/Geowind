@@ -107,14 +107,6 @@ class Gestionnaire
         $this->messages = new ArrayCollection();
         $this->lettres = new ArrayCollection();
     }
-
-    /**
-     * @return string
-     */
-    public function __toString()
-    {
-        return $this->object;
-    }
     
     public function getId()
     {
