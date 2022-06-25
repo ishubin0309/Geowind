@@ -1,7 +1,9 @@
 {% extends 'base.html.twig' %}
 
 {% set title = 'Modifié un modèle' %}
-{% set item = 'annuaire' %}
+{% if item is empty %}
+  {% set item = 'annuaire' %}
+{% endif %}
 
 {% block body %}
 

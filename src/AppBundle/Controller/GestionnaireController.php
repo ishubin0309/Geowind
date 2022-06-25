@@ -332,6 +332,7 @@ class GestionnaireController extends Controller
         return $this->render('annuaire/model_new.html.twig', [
             'model' => $model,
             'form' => $form->createView(),
+            'item' => 'gestionnaire',
         ]);
     }
 
@@ -356,6 +357,7 @@ class GestionnaireController extends Controller
         return $this->render('annuaire/model_edit.html.twig', [
             'model' => $model,
             'form' => $form->createView(),
+            'item' => 'gestionnaire',
         ]);
     }
 
