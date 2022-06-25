@@ -292,7 +292,7 @@ class GestionnaireController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($lettre);
             $em->flush();
-            return $this->redirectToRoute('gestionnaire_ajax');
+            return $this->redirectToRoute('gestionnaire_index');
             // return $this->redirectToRoute('gestionnaire_lettre', ['id' => $gestionnaire->getId()]);
         }
         
@@ -326,7 +326,7 @@ class GestionnaireController extends Controller
             $em->flush();
             
             $this->addFlash('success', 'Modèle créé.');
-            return $this->redirectToRoute('gestionnaire_ajax');
+            return $this->redirectToRoute('gestionnaire_index');
         }
 
         return $this->render('annuaire/model_new.html.twig', [
@@ -350,7 +350,7 @@ class GestionnaireController extends Controller
             $em->flush();
             
             $this->addFlash('success', 'Modèle modifié.');
-            return $this->redirectToRoute('gestionnaire_ajax');
+            return $this->redirectToRoute('gestionnaire_index');
         }
 
         return $this->render('annuaire/model_edit.html.twig', [
