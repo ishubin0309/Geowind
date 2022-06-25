@@ -220,13 +220,13 @@ class GestionnaireController extends Controller
     {
         /* @var $user User */
         
-        $message = new MessageMessage();
+        $message = new MessageGestionnaire();
         $from = $this->getParameter('mailer_from');
         $message->setFrom($from);
         // $message->setReplyTo($user->getEmail());
         $message->setGestionnaire($gestionnaire);
         
-        $form = $this->createForm(MessageType::class, $message, [
+        $form = $this->createForm(MessageGestionnaireType::class, $message, [
             'action' => $this->generateUrl('gestionnaire_message', ['id' => $gestionnaire->getId()]),
             'method' => 'POST',
         ]);
@@ -277,7 +277,7 @@ class GestionnaireController extends Controller
         $from = $this->getParameter('mailer_from');
         $lettre->setGestionnaire($gestionnaire);
         
-        $form = $this->createForm(LettreType::class, $lettre, [
+        $form = $this->createForm(LettreGestionnaireType::class, $lettre, [
             'action' => $this->generateUrl('gestionnaire_lettre', ['id' => $gestionnaire->getId()]),
             'method' => 'POST',
         ]);
