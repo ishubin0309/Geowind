@@ -264,4 +264,12 @@ class Gestionnaire
             strtoupper($this->departement->getNom())
         ];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->email;
+    }
 }

@@ -15,6 +15,22 @@
         <table class="table table-hover table-striped">
           <tbody>
             <tr>
+              <th>Gestionnaire</th>
+              <td>{{ gestionnaire.gestionnaire }}</td>
+            </tr>
+            <tr>
+              <th>Compétence</th>
+              <td>{{ gestionnaire.competence }}</td>
+            </tr>
+            <tr>
+              <th>Contact</th>
+              <td>{{ gestionnaire.contact }}</td>
+            </tr>
+            <tr>
+              <th>Fonction</th>
+              <td>{{ gestionnaire.fonction }}</td>
+            </tr>
+            <tr>
               <th>Département</th>
               <td>{{ gestionnaire.departement is not empty ? gestionnaire.departement.nom : '' }}</td>
             </tr>
