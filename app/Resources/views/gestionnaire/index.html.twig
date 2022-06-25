@@ -62,7 +62,7 @@
             {% for message in messages %}
             <tr>
               <td>{{ message.createdAt|date('d/m/Y') }}</td>
-              <td>{{ message.departement }}</td>
+              <td>{{ message.gestionnaire.departement }}</td>
               <td><a href="{{ path('gestionnaire_message', { 'id': message.gestionnaire.id }) }}">{{ message.gestionnaire }}</a></td>
               <td>{{ message.to }}</td>
               <td>{{ message.createdBy }}</td>
@@ -90,7 +90,7 @@
             {% for lettre in lettres %}
             <tr>
               <td>{{ lettre.createdAt|date('d/m/Y') }}</td>
-              <td>{{ lettre.departement }}</td>
+              <td>{{ lettre.gestionnaire.departement }}</td>
               <td><a href="{{ path('gestionnaire_lettre', { 'id': lettre.gestionnaire.id }) }}">{{ lettre.gestionnaire }}</a></td>
               <td>{{ lettre.to }}</td>
               <td>{{ lettre.createdBy }}</td>
