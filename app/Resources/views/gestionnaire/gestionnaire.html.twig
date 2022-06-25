@@ -252,7 +252,7 @@
 
     var queryProjetUrl = "{{ path('projet_search') }}";
     
-    $('#form_date #lettre_gestionnaire_projet').select2({
+    $('#form_date #message_gestionnaire_projet, #form_date #lettre_gestionnaire_projet').select2({
       ajax: {
         url: queryProjetUrl,
         dataType: 'json',
