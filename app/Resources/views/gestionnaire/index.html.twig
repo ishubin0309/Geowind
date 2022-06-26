@@ -98,7 +98,7 @@
               <td>
               <button class="btn btn-info btn-sm btn_message">Afficher</button>
               <span class="hide">
-              <strong>Adresse:</strong> <br><div style="text-align: right;">{{ lettre.to }}</div><br><br>
+              <div style="text-align: right;"><strong>Adresse:</strong> <br>{{ lettre.to }}</div><br><br>
               <strong>Lettre:</strong> <br>{{ lettre.body }}
               {% if lettre.projet is not empty and lettre.projet.documents is not empty %}
                 {% for document in lettre.projet.documents %}
