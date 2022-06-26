@@ -98,8 +98,8 @@
               <td>
               <button class="btn btn-info btn-sm btn_message">Afficher</button>
               <span class="hide">
-              <div style="text-align: right;"><strong>Adresse:</strong> <br>{{ lettre.to }}</div><br><br>
-              <strong>Lettre:</strong> <br>{{ lettre.body }}
+              <div style="text-align: right;"><strong>Adresse:</strong> <br>{{ lettre.to }}<br>{{ lettre.createdAt|date('l d F Y')|replace({'Monday':'Lundi','Tuesday':'Mardi','Wednesday':'Mercredi','Thursday':'Jeudi','Friday':'Vendredi','Saturday':'Samedi','Sunday':'Dimanche','January':'Janvier','February':'Février','March':'Mars','April':'Avril','May':'Mai','June':'Juin','July':'Juillet','August':'Août','September':'Septembre','October':'Octobre','November':'Novembre','December':'Décembre'}) }}</div><br><br>
+              <strong>{{ lettre.object }}:</strong> <br>{{ lettre.body }}
               {% if lettre.projet is not empty and lettre.projet.documents is not empty %}
                 {% for document in lettre.projet.documents %}
                   {% if document.type == 'plan_parcellaire' %}
