@@ -317,7 +317,7 @@
     measureControl.addTo(map);
 
     var update_marker = 1;
-    mainMap.on('click', function(e) {
+    map.on('click', function(e) {
       if(update_marker) {
         lat = e.latlng.lat;
         long = e.latlng.lng;
