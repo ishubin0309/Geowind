@@ -129,6 +129,9 @@
         "Terrain": googleTerrain
     };
     L.control.layers(baseMaps).addTo(map);
+    
+    var theCircle = null;
+    var theCircles = [];
 
     var fixedCircle = {
       radius: 6,
