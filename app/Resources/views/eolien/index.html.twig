@@ -316,6 +316,19 @@
     });
     measureControl.addTo(map);
 
+    var update_marker = 1;
+    mainMap.on('click', function(e) {
+      if(update_marker) {
+        lat = e.latlng.lat;
+        long = e.latlng.lng;
+        if (!addCircles) {
+          {# updateMarkerPosition(); #}
+        } else {
+          updateCircleRadius(lat, long)
+        }
+      } else update_marker = 1;
+    });
+
     var markers = {};
     
     var markerIcon = new L.DivIcon.SVGIcon({
