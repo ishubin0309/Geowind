@@ -189,9 +189,10 @@
       }
 
       if (args.any != "") {
+        var keyword = args.any.toLowerCase();
         var found = false;
         $.each(item, function(index, element) {
-          if(String(element).match(args.any)) {
+          if(String(element.toLowerCase()).match(keyword)) {
             found = true;
           }
         });
