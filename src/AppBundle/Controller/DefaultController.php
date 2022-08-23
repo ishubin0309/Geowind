@@ -169,7 +169,7 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $this->publier();
+        // $this->publier();
         $em = $this->getDoctrine()->getManager();
 
         $page = isset($_GET['page']) && $_GET['page'] >= 1 ? trim($_GET['page']) : 1;
