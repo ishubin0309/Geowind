@@ -338,7 +338,7 @@
       });
 
       $("#proprietaires_recherche, #type2_recherche").change(function (e) {
-        filterArgs[$(this).data('attr')] = this.value;
+        filterArgs[$(this).data('attr')] = this.value;console.log(filterArgs);
         updateFilter();
         updateFilter();
         grid.render();
