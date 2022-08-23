@@ -32,9 +32,19 @@
       <legend>Propriétaires</legend>
       <button id="button-send" class="btn btn-success btn-sm" data-toggle="modal" data-target=".bs-modal-lg" disabled><i class="fa fa-fw fa-paperclip"></i> Envoyer message</button>
       <br>
-      <div class="form-group">
-        <label for="input-all">Recherche</label>
-        <input id="proprietaires_recherche" class="form-control input-sm input-filter" data-attr="any">
+      <div class="row">
+        <div class="form-group col-sm-6">
+          <label for="input-all">Recherche</label>
+          <input id="proprietaires_recherche" class="form-control input-sm input-filter" data-attr="any">
+        </div>
+        <div class="form-group col-sm-6">
+          <label for="input-all">Propriétaire/Exploitant</label>
+          <select id="type2_recherche" class="form-control input-sm input-filter" data-attr="type2">
+            <option value=""></option>
+            <option value="proprietaire">Propriétaire</option>
+            <option value="exploitant">Exploitant</option>
+          </select>
+        </div>
       </div>
       <div class="form-group">
         <button id="form-clear" class="btn btn-default btn-sm" type="reset" value="Clear">Clear</button>
@@ -195,6 +205,7 @@
             projetId: {{ projet.id }},
             parcelles: '{{ proprietaire.parcelles|e('js') }}',
             type: 'Propriétaire',
+            type2: 'proprietaire',
             identite: '{{ proprietaire.proprietaire|e('js') }}',
             accord: '{{ proprietaire.accordProprietaire|e('js') }}',
             telephone: '{{ proprietaire.telephoneProprietaire|e('js') }}',
@@ -209,6 +220,7 @@
             projetId: {{ projet.id }},
             parcelles: '{{ proprietaire.parcelles|e('js') }}',
             type: 'Propriétaire2',
+            type2: 'proprietaire',
             identite: '{{ proprietaire.proprietaire2|e('js') }}',
             accord: '{{ proprietaire.accordProprietaire2|e('js') }}',
             telephone: '{{ proprietaire.telephoneProprietaire2|e('js') }}',
@@ -224,6 +236,7 @@
             projetId: {{ projet.id }},
             parcelles: '{{ proprietaire.parcelles|e('js') }}',
             type: 'Propriétaire3',
+            type2: 'proprietaire',
             identite: '{{ proprietaire.proprietaire3|e('js') }}',
             accord: '{{ proprietaire.accordProprietaire3|e('js') }}',
             telephone: '{{ proprietaire.telephoneProprietaire3|e('js') }}',
@@ -239,6 +252,7 @@
             projetId: {{ projet.id }},
             parcelles: '{{ proprietaire.parcelles|e('js') }}',
             type: 'Propriétaire4',
+            type2: 'proprietaire',
             identite: '{{ proprietaire.proprietaire4|e('js') }}',
             accord: '{{ proprietaire.accordProprietaire4|e('js') }}',
             telephone: '{{ proprietaire.telephoneProprietaire4|e('js') }}',
@@ -254,6 +268,7 @@
             projetId: {{ projet.id }},
             parcelles: '{{ proprietaire.parcelles|e('js') }}',
             type: 'Exploitant',
+            type2: 'exploitant',
             identite: '{{ proprietaire.exploitant|e('js') }}',
             accord: '{{ proprietaire.accordExploitant|e('js') }}',
             telephone: '{{ proprietaire.telephoneExploitant|e('js') }}',
@@ -269,6 +284,7 @@
             projetId: {{ projet.id }},
             parcelles: '{{ proprietaire.parcelles|e('js') }}',
             type: 'Exploitant2',
+            type2: 'exploitant',
             identite: '{{ proprietaire.exploitant2|e('js') }}',
             accord: '{{ proprietaire.accordExploitant2|e('js') }}',
             telephone: '{{ proprietaire.telephoneExploitant2|e('js') }}',
@@ -284,6 +300,7 @@
             projetId: {{ projet.id }},
             parcelles: '{{ proprietaire.parcelles|e('js') }}',
             type: 'Exploitant3',
+            type2: 'exploitant',
             identite: '{{ proprietaire.exploitant3|e('js') }}',
             accord: '{{ proprietaire.accordExploitant3|e('js') }}',
             telephone: '{{ proprietaire.telephoneExploitant3|e('js') }}',
@@ -299,6 +316,7 @@
 
       var filterArgs = {
         any: "",
+        type2: "",
       };
 
       function updateFilter() {
@@ -310,14 +328,16 @@
       $("#form-clear").click(function() {
         filterArgs = {
           any: "",
+          type2: "",
         };
         $("#proprietaires_recherche").val("");
+        $("#type2_recherche").val("");
         updateFilter();
         updateFilter();
         grid.render();
       });
 
-      $("#proprietaires_recherche").change(function (e) {
+      $("#proprietaires_recherche, #type2_recherche").change(function (e) {
         filterArgs[$(this).data('attr')] = this.value;
         updateFilter();
         updateFilter();
