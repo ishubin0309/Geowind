@@ -209,7 +209,7 @@
           data.push({
             id: '+{{ proprietaire.id }}',
             projetId: {{ projet.id }},
-            communes: '{{ projet.communes|e('js') }}',
+            communes: '{{ projet.communes|first }}',
             parcelles: '{{ proprietaire.parcelles|e('js') }}',
             type: 'Propriétaire',
             type2: 'proprietaire',
@@ -225,7 +225,7 @@
           data.push({
             id: '++{{ proprietaire.id }}',
             projetId: {{ projet.id }},
-            communes: '{{ projet.communes|e('js') }}',
+            communes: '{{ projet.communes|first }}',
             parcelles: '{{ proprietaire.parcelles|e('js') }}',
             type: 'Propriétaire2',
             type2: 'proprietaire',
@@ -242,7 +242,7 @@
           data.push({
             id: '+++{{ proprietaire.id }}',
             projetId: {{ projet.id }},
-            communes: '{{ projet.communes|e('js') }}',
+            communes: '{{ projet.communes|first }}',
             parcelles: '{{ proprietaire.parcelles|e('js') }}',
             type: 'Propriétaire3',
             type2: 'proprietaire',
@@ -259,7 +259,7 @@
           data.push({
             id: '++++{{ proprietaire.id }}',
             projetId: {{ projet.id }},
-            communes: '{{ projet.communes|e('js') }}',
+            communes: '{{ projet.communes|first }}',
             parcelles: '{{ proprietaire.parcelles|e('js') }}',
             type: 'Propriétaire4',
             type2: 'proprietaire',
@@ -276,7 +276,7 @@
           data.push({
             id: '-{{ proprietaire.id }}',
             projetId: {{ projet.id }},
-            communes: '{{ projet.communes|e('js') }}',
+            communes: '{{ projet.communes|first }}',
             parcelles: '{{ proprietaire.parcelles|e('js') }}',
             type: 'Exploitant',
             type2: 'exploitant',
@@ -293,7 +293,7 @@
           data.push({
             id: '--{{ proprietaire.id }}',
             projetId: {{ projet.id }},
-            communes: '{{ projet.communes|e('js') }}',
+            communes: '{{ projet.communes|first }}',
             parcelles: '{{ proprietaire.parcelles|e('js') }}',
             type: 'Exploitant2',
             type2: 'exploitant',
@@ -310,7 +310,7 @@
           data.push({
             id: '---{{ proprietaire.id }}',
             projetId: {{ projet.id }},
-            communes: '{{ projet.communes|e('js') }}',
+            communes: '{{ projet.communes|first }}',
             parcelles: '{{ proprietaire.parcelles|e('js') }}',
             type: 'Exploitant3',
             type2: 'exploitant',
