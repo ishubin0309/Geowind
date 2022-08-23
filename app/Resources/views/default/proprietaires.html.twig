@@ -183,7 +183,11 @@
 
     var dateMajColumn = { id: "dateMaj", name: "Date maj", field: "dateMaj", sortable: true };
 
-    function filter(item, args){
+    function filter(item, args) {
+      if (args.type2 != "" && item["type2"] != args.type2) {
+          return false;
+      }
+
       if (args.any != "") {
         var found = false;
         $.each(item, function(index, element) {
@@ -338,7 +342,7 @@
       });
 
       $("#proprietaires_recherche, #type2_recherche").change(function (e) {
-        filterArgs[$(this).data('attr')] = this.value;console.log(filterArgs);
+        filterArgs[$(this).data('attr')] = this.value;
         updateFilter();
         updateFilter();
         grid.render();
