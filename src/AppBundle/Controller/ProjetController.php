@@ -760,12 +760,17 @@ class ProjetController extends Controller
             $technologies['eolienne']['data'][$modele->getNom() . ' ('.$modele->getHauteurMat().'m)'] = $modele->jsonSerialize();
         }
 
+        $proprietaires = ['BAZIN Bénedicte', 'BAZIN Anick', 'BAZIN Perrine', 'BAZIN William'];
+        $exploitants = ['Kerhoas Gerard', 'TAILLIEU Bruno', 'SCEA DES MAISONS'];
+
         return $this->render('projet/new.html.twig', [
             'form' => $form->createView(),
             'grid_helper' => $gridHelper,
             'telephones' => json_encode($telephones),
             'batiments' => json_encode($batiments),
-            'technologies' => json_encode($technologies)
+            'technologies' => json_encode($technologies),
+            'proprietaires' => json_encode($proprietaires),
+            'exploitants' => json_encode($exploitants),
         ]);
     }
 
@@ -863,6 +868,9 @@ class ProjetController extends Controller
             $technologies['eolienne']['data'][$modele->getNom() . ' ('.$modele->getHauteurMat().'m)'] = $modele->jsonSerialize();
         }
 
+        $proprietaires = ['BAZIN Bénedicte', 'BAZIN Anick', 'BAZIN Perrine', 'BAZIN William'];
+        $exploitants = ['Kerhoas Gerard', 'TAILLIEU Bruno', 'SCEA DES MAISONS'];
+
         return $this->render('projet/edit.html.twig', [
             'form' => $form->createView(),
             'formMail' => $formMail->createView(),
@@ -872,7 +880,9 @@ class ProjetController extends Controller
             'grid_helper' => $gridHelper,
             'telephones' => json_encode($telephones),
             'batiments' => json_encode($batiments),
-            'technologies' => json_encode($technologies)
+            'technologies' => json_encode($technologies),
+            'proprietaires' => json_encode($proprietaires),
+            'exploitants' => json_encode($exploitants),
         ]);
     }
 

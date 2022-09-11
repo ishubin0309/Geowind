@@ -3201,6 +3201,8 @@
       }
       loadAllParcellesTags();
     });
+    var proprietairesList = {{ proprietaires|raw }};
+    var exploitantsList = {{ exploitants|raw }};
     var selectedParcellesCarte = [];
     function loadAllParcellesTags() {
       if($('#projet_proprietaires tr').length) $('#projet_proprietaires_recherche').removeClass('hide');
@@ -3209,6 +3211,44 @@
       $('#projet_proprietaires input[id$="_parcelles"]').each(function(i,element) {
         id = $(this).attr('name').match(/\d+/);
         id = parseInt(id);
+
+        // show suggestions for proprietaire fields
+        $('#projet_proprietaires_'+id+'_proprietaire, #projet_proprietaires_'+id+'_proprietaire2, #projet_proprietaires_'+id+'_proprietaire3, #projet_proprietaires_'+id+'_proprietaire4').tagsinput({
+          maxTags: 1,
+          typeahead: {
+            afterSelect: function(val) { this.$element.val(''); },
+            minLength : 0,
+            source: function(query) {
+              suggestionsArray = [];
+              $('#projet_parcelles tr').each(function(i,element) {
+                if(!suggestionsArray.includes($(element).find('td:eq(2) input[name]').val().trim()) && !proprietairesList[id].includes($(element).find('td:eq(2) input[name]').val().trim())) {
+                  suggestionsArray.push($(element).find('td:eq(2) input[name]').val().trim());
+                }
+              });
+              return suggestionsArray;
+            }
+          },
+          freeInput: true
+        });
+
+        // show suggestions for exploitant fields
+        $('#projet_proprietaires_'+id+'_exploitant, #projet_proprietaires_'+id+'_exploitant2, #projet_proprietaires_'+id+'_exploitant3').tagsinput({
+          maxTags: 1,
+          typeahead: {
+            afterSelect: function(val) { this.$element.val(''); },
+            minLength : 0,
+            source: function(query) {
+              suggestionsArray = [];
+              $('#projet_parcelles tr').each(function(i,element) {
+                if(!suggestionsArray.includes($(element).find('td:eq(2) input[name]').val().trim()) && !proprietairesList[id].includes($(element).find('td:eq(2) input[name]').val().trim())) {
+                  suggestionsArray.push($(element).find('td:eq(2) input[name]').val().trim());
+                }
+              });
+              return suggestionsArray;
+            }
+          },
+          freeInput: true
+        });
         
         selectedSuggestionsArray[id] = $('#projet_proprietaires_'+id+'_parcelles').val().split(',');
         $('#projet_proprietaires_'+id+'_parcelles').tagsinput({
