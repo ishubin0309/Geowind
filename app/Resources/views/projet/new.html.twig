@@ -2911,8 +2911,8 @@
       }
       loadAllParcellesTags();
     });
-    var proprietairesList = {{ proprietaires|raw }};
-    var exploitantsList = {{ exploitants|raw }};
+    var proprietairesList = [];
+    var exploitantsList = [];
     var selectedParcellesCarte = [];
     function loadAllParcellesTags() {
       if($('#projet_proprietaires tr').length) $('#projet_proprietaires_recherche').removeClass('hide');
@@ -2931,7 +2931,7 @@
             source: function(query) {
               suggestionsArray = [];
               $('#projet_parcelles tr').each(function(i,element) {
-                if(!suggestionsArray.includes($(element).find('td:eq(2) input[name]').val().trim()) && !proprietairesList[id].includes($(element).find('td:eq(2) input[name]').val().trim())) {
+                if(!suggestionsArray.includes($(element).find('td:eq(2) input[name]').val().trim()) && !proprietairesList.includes($(element).find('td:eq(2) input[name]').val().trim())) {
                   suggestionsArray.push($(element).find('td:eq(2) input[name]').val().trim());
                 }
               });
@@ -2950,7 +2950,7 @@
             source: function(query) {
               suggestionsArray = [];
               $('#projet_parcelles tr').each(function(i,element) {
-                if(!suggestionsArray.includes($(element).find('td:eq(2) input[name]').val().trim()) && !proprietairesList[id].includes($(element).find('td:eq(2) input[name]').val().trim())) {
+                if(!suggestionsArray.includes($(element).find('td:eq(2) input[name]').val().trim()) && !exploitantsList.includes($(element).find('td:eq(2) input[name]').val().trim())) {
                   suggestionsArray.push($(element).find('td:eq(2) input[name]').val().trim());
                 }
               });
