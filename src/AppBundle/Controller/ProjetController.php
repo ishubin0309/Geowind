@@ -868,8 +868,28 @@ class ProjetController extends Controller
             $technologies['eolienne']['data'][$modele->getNom() . ' ('.$modele->getHauteurMat().'m)'] = $modele->jsonSerialize();
         }
 
-        $proprietaires = ['BAZIN Bénedicte', 'BAZIN Anick', 'BAZIN Perrine', 'BAZIN William'];
-        $exploitants = ['Kerhoas Gerard', 'TAILLIEU Bruno', 'SCEA DES MAISONS'];
+        $proprietaires = [];
+        $exploitants = [];
+
+        $proprietairesList = $em->getRepository('AppBundle:Proprietaire')->findAll();
+        foreach($proprietairesList as $proprietaire) {
+            if($proprietaire->getProprietaire()) {
+                $proprietaires[] = $proprietaire->getProprietaire();
+            } elseif($proprietaire->getProprietaire2()) {
+                $proprietaires[] = $proprietaire->getProprietaire2();
+            } elseif($proprietaire->getProprietaire3()) {
+                $proprietaires[] = $proprietaire->getProprietaire3();
+            } elseif($proprietaire->getProprietaire4()) {
+                $proprietaires[] = $proprietaire->getProprietaire4();
+            }
+            if($proprietaire->getExploitant()) {
+                $exploitants[] = $proprietaire->getExploitant();
+            } elseif($proprietaire->getExploitant2()) {
+                $exploitants[] = $proprietaire->getExploitant2();
+            } elseif($proprietaire->getExploitant3()) {
+                $exploitants[] = $proprietaire->getExploitant3();
+            }
+        }
 
         return $this->render('projet/edit.html.twig', [
             'form' => $form->createView(),
