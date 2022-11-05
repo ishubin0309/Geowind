@@ -91,7 +91,7 @@
                   {% endfor %}
                 </select>
               </td>
-              <td>{{ message.result is not null and message.result != '?' ? '<span class="hide">' ~ message.updatedAt|date('Y/m/d') ~ '</span>' ~ message.updatedAt|date('d/m/Y') : '' }}</td>
+              <td>{% if message.result is not null and message.result != '?' %}<span class="hide">{{ message.updatedAt|date('Y/m/d') }}</span>{{ message.updatedAt|date('d/m/Y') }} {% endif %}</td>
               <td class="column-fit">Email
               {% if is_granted('ROLE_ADMIN') %}
               &nbsp;&nbsp;<button id="{{ message.id }}" type="message" class="btn btn-danger btn-xs button-delete" title="Double click"><i class="fa fa-fw fa-trash"></i></button>
