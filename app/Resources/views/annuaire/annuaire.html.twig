@@ -71,7 +71,7 @@
           <tbody>
             {% for message in messages %}
             <tr>
-              <td>{{ message.createdAt|date('d/m/Y') }}</td>
+              <td><span class="hide">{{ message.createdAt|date('Y/m/d') }}</span>{{ message.createdAt|date('d/m/Y') }}</td>
               <td>{{ message.departement }}</td>
               <td>{{ message.mairie.insee }}</td>
               <td><a href="{{ path('annuaire_mairie', { 'insee': message.mairie.insee }) }}">{{ message.mairie }}</a></td>
@@ -91,7 +91,7 @@
                   {% endfor %}
                 </select>
               </td>
-              <td>{{ message.result is not null and message.result != '?' ? message.updatedAt|date('d/m/Y') : '' }}</td>
+              <td>{{ message.result is not null and message.result != '?' ? '<span class="hide">' ~ message.updatedAt|date('Y/m/d') ~ '</span>' ~ message.updatedAt|date('d/m/Y') : '' }}</td>
               <td class="column-fit">Email
               {% if is_granted('ROLE_ADMIN') %}
               &nbsp;&nbsp;<button id="{{ message.id }}" type="message" class="btn btn-danger btn-xs button-delete" title="Double click"><i class="fa fa-fw fa-trash"></i></button>
@@ -100,7 +100,7 @@
             {% endfor %}
             {% for lettre in lettres %}
             <tr>
-              <td>{{ lettre.createdAt|date('d/m/Y') }}</td>
+              <td><span class="hide">{{ lettre.createdAt|date('Y/m/d') }}</span>{{ lettre.createdAt|date('d/m/Y') }}</td>
               <td>{{ lettre.departement }}</td>
               <td>{{ lettre.mairie.insee }}</td>
               <td><a href="{{ path('annuaire_mairie_lettre', { 'insee': lettre.mairie.insee }) }}">{{ lettre.mairie }}</a></td>
@@ -130,7 +130,7 @@
                   {% endfor %}
                 </select>
               </td>
-              <td>{{ lettre.updatedAt|date('d/m/Y') }}</td>
+              <td><span class="hide">{{ lettre.updatedAt|date('Y/m/d') }}</span>{{ lettre.updatedAt|date('d/m/Y') }}</td>
               <td class="column-fit">Lettre
               {% if is_granted('ROLE_ADMIN') %}
               &nbsp;&nbsp;<button id="{{ lettre.id }}" type="lettre" class="btn btn-danger btn-xs button-delete" title="Double click"><i class="fa fa-fw fa-trash"></i></button>
@@ -140,7 +140,7 @@
             {% endfor %}
             {% for appel in appels %}
             <tr>
-              <td>{{ appel.createdAt|date('d/m/Y') }}</td>
+              <td><span class="hide">{{ appel.createdAt|date('Y/m/d') }}</span>{{ appel.createdAt|date('d/m/Y') }}</td>
               <td>{{ appel.departement }}</td>
               <td>{{ appel.mairie.insee }}</td>
               <td><a href="{{ path('annuaire_mairie_appel', { 'insee': appel.mairie.insee }) }}">{{ appel.mairie }}</a></td>
@@ -160,7 +160,7 @@
                   {% endfor %}
                 </select>
               </td>
-              <td>{{ appel.updatedAt|date('d/m/Y') }}</td>
+              <td><span class="hide">{{ appel.updatedAt|date('Y/m/d') }}</span>{{ appel.updatedAt|date('d/m/Y') }}</td>
               <td class="column-fit">Appel
               {% if is_granted('ROLE_ADMIN') %}
               &nbsp;&nbsp;<button id="{{ appel.id }}" type="appel" class="btn btn-danger btn-xs button-delete" title="Double click"><i class="fa fa-fw fa-trash"></i></button>
