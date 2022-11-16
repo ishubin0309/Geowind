@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Projet;
 use AppBundle\Entity\Liste;
+use AppBundle\Entity\Proprietaire;
 use AppBundle\Entity\Rappel;
 use AppBundle\Entity\Terrain;
 use AppBundle\Entity\Batiment;
@@ -30,6 +31,7 @@ use AppBundle\Model\ExportOption;
 use AppBundle\Service\ProjetExport;
 use AppBundle\Service\AnnuaireMailer;
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
 use Imagick;
 use Mpdf\Mpdf;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -726,7 +728,123 @@ class ProjetController extends Controller
         $form = $this->createForm(ProjetType::class, $projet);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        $fparam = $request->request->all();
+
+        if(isset($fparam['projet']['proprietaires']) && is_array($fparam['projet']['proprietaires']) && count($fparam['projet']['proprietaires']) > 0)
+        {
+            $arrpro = new ArrayCollection();
+            foreach ($fparam['projet']['proprietaires'] as $propri)
+            {
+
+
+                $proprietaires = new Proprietaire();
+                $proprietaires->setParcelles($propri['parcelles']);
+                $proprietaires->setProjet($projet);
+                $proprietaires->setCiviliteProprietaire($propri['civiliteProprietaire']);
+                $proprietaires->setProprietaire($propri['proprietaire']);
+                $proprietaires->setQualiteProprietaire($propri['qualiteProprietaire']);
+                $proprietaires->setAccordProprietaire($propri['accordProprietaire']);
+                $proprietaires->setTelephoneProprietaire($propri['telephoneProprietaire']);
+                $proprietaires->setAdresseProprietaire($propri['adresseProprietaire']);
+                $proprietaires->setEmailProprietaire($propri['emailProprietaire']);
+                $proprietaires->setDateNaissanceProprietaire(($propri['dateNaissanceProprietaire'] != '' ? new \DateTime(str_replace('/', '-', $propri['dateNaissanceProprietaire']))  : null));
+                $proprietaires->setLieuNaissanceProprietaire($propri['lieuNaissanceProprietaire']);
+                $proprietaires->setDroitProprietaire($propri['droitProprietaire']);
+                $proprietaires->setMaritalProprietaire($propri['maritalProprietaire']);
+                $proprietaires->setDateSignatureProprietaire(($propri['dateSignatureProprietaire'] != '' ? new \DateTime(str_replace('/', '-', $propri['dateSignatureProprietaire'])) : null));
+                $proprietaires->setDureeProprietaire($propri['dureeProprietaire']);
+                $proprietaires->setDateEcheanceProprietaire(($propri['dateEcheanceProprietaire'] != '' ? new \DateTime(str_replace('/', '-', $propri['dateEcheanceProprietaire'])) : null));
+
+                $proprietaires->setCiviliteProprietaire2($propri['civiliteProprietaire2']);
+                $proprietaires->setProprietaire2($propri['proprietaire2']);
+                $proprietaires->setQualiteProprietaire2($propri['qualiteProprietaire2']);
+                $proprietaires->setAccordProprietaire2($propri['accordProprietaire2']);
+                $proprietaires->setTelephoneProprietaire2($propri['telephoneProprietaire2']);
+                $proprietaires->setAdresseProprietaire2($propri['adresseProprietaire2']);
+                $proprietaires->setEmailProprietaire2($propri['emailProprietaire2']);
+                $proprietaires->setDateNaissanceProprietaire2(($propri['dateNaissanceProprietaire2'] != '' ? new \DateTime(str_replace('/', '-', $propri['dateNaissanceProprietaire2'])) : null));
+                $proprietaires->setLieuNaissanceProprietaire2($propri['lieuNaissanceProprietaire2']);
+                $proprietaires->setDroitProprietaire2($propri['droitProprietaire2']);
+                $proprietaires->setMaritalProprietaire2($propri['maritalProprietaire2']);
+                $proprietaires->setDateSignatureProprietaire2(($propri['dateSignatureProprietaire2'] != '' ? new \DateTime(str_replace('/', '-', $propri['dateSignatureProprietaire2'])) : null));
+                $proprietaires->setDateEcheanceProprietaire2(($propri['dateEcheanceProprietaire2'] != '' ? new \DateTime(str_replace('/', '-', $propri['dateEcheanceProprietaire2'])) : null));
+
+                $proprietaires->setCiviliteProprietaire3($propri['civiliteProprietaire3']);
+                $proprietaires->setProprietaire3($propri['proprietaire3']);
+                $proprietaires->setQualiteProprietaire3($propri['qualiteProprietaire3']);
+                $proprietaires->setAccordProprietaire3($propri['accordProprietaire3']);
+                $proprietaires->setTelephoneProprietaire3($propri['telephoneProprietaire3']);
+                $proprietaires->setAdresseProprietaire3($propri['adresseProprietaire3']);
+                $proprietaires->setEmailProprietaire3($propri['emailProprietaire3']);
+                $proprietaires->setDateNaissanceProprietaire3(($propri['dateNaissanceProprietaire3'] != '' ? new \DateTime(str_replace('/', '-', $propri['dateNaissanceProprietaire3'])) : null));
+                $proprietaires->setLieuNaissanceProprietaire3($propri['lieuNaissanceProprietaire3']);
+                $proprietaires->setDroitProprietaire3($propri['droitProprietaire3']);
+                $proprietaires->setMaritalProprietaire3($propri['maritalProprietaire3']);
+                $proprietaires->setDateSignatureProprietaire3(($propri['dateSignatureProprietaire3'] != '' ? new \DateTime(str_replace('/', '-', $propri['dateSignatureProprietaire3'])) : null));
+                $proprietaires->setDateEcheanceProprietaire3(($propri['dateEcheanceProprietaire3'] != '' ? new \DateTime(str_replace('/', '-', $propri['dateEcheanceProprietaire3'])) : null));
+
+                $proprietaires->setCiviliteProprietaire4($propri['civiliteProprietaire4']);
+                $proprietaires->setProprietaire4($propri['proprietaire4']);
+                $proprietaires->setQualiteProprietaire4($propri['qualiteProprietaire4']);
+                $proprietaires->setAccordProprietaire4($propri['accordProprietaire4']);
+                $proprietaires->setTelephoneProprietaire4($propri['telephoneProprietaire4']);
+                $proprietaires->setAdresseProprietaire4($propri['adresseProprietaire4']);
+                $proprietaires->setEmailProprietaire4($propri['emailProprietaire4']);
+                $proprietaires->setDateNaissanceProprietaire4(($propri['dateNaissanceProprietaire4'] != '' ? new \DateTime(str_replace('/', '-', $propri['dateNaissanceProprietaire4'])) : null));
+                $proprietaires->setLieuNaissanceProprietaire4($propri['lieuNaissanceProprietaire4']);
+                $proprietaires->setDroitProprietaire4($propri['droitProprietaire4']);
+                $proprietaires->setMaritalProprietaire4($propri['maritalProprietaire4']);
+                $proprietaires->setDateSignatureProprietaire4(($propri['dateSignatureProprietaire4'] != '' ? new \DateTime(str_replace('/', '-', $propri['dateSignatureProprietaire4'])) : null));
+                $proprietaires->setDateEcheanceProprietaire4(($propri['dateEcheanceProprietaire4'] != '' ? new \DateTime(str_replace('/', '-', $propri['dateEcheanceProprietaire4'])) : null));
+
+                $proprietaires->setCiviliteExploitant($propri['civiliteExploitant']);
+                $proprietaires->setExploitant($propri['exploitant']);
+                $proprietaires->setQualiteExploitant($propri['qualiteExploitant']);
+                $proprietaires->setAccordExploitant($propri['accordExploitant']);
+                $proprietaires->setTelephoneExploitant($propri['telephoneExploitant']);
+                $proprietaires->setAdresseExploitant($propri['adresseExploitant']);
+                $proprietaires->setEmailExploitant($propri['emailExploitant']);
+                $proprietaires->setDateNaissanceExploitant(($propri['dateNaissanceExploitant'] != '' ? new \DateTime(str_replace('/', '-', $propri['dateNaissanceExploitant'])) : null));
+                $proprietaires->setLieuNaissanceExploitant($propri['lieuNaissanceExploitant']);
+                $proprietaires->setDroitExploitant($propri['droitExploitant']);
+                $proprietaires->setMaritalExploitant($propri['maritalExploitant']);
+                $proprietaires->setDateSignatureExploitant(($propri['dateSignatureExploitant'] != '' ? new \DateTime(str_replace('/', '-', $propri['dateSignatureExploitant'])) : null));
+                $proprietaires->setDateEcheanceExploitant(($propri['dateEcheanceExploitant'] != '' ? new \DateTime(str_replace('/', '-', $propri['dateEcheanceExploitant'])) : null));
+
+                $proprietaires->setCiviliteExploitant2($propri['civiliteExploitant2']);
+                $proprietaires->setExploitant2($propri['exploitant2']);
+                $proprietaires->setQualiteExploitant2($propri['qualiteExploitant2']);
+                $proprietaires->setAccordExploitant2($propri['accordExploitant2']);
+                $proprietaires->setTelephoneExploitant2($propri['telephoneExploitant2']);
+                $proprietaires->setAdresseExploitant2($propri['adresseExploitant2']);
+                $proprietaires->setEmailExploitant2($propri['emailExploitant2']);
+                $proprietaires->setDateNaissanceExploitant2(($propri['dateNaissanceExploitant2'] != '' ? new \DateTime(str_replace('/', '-', $propri['dateNaissanceExploitant2'])) : null));
+                $proprietaires->setLieuNaissanceExploitant2($propri['lieuNaissanceExploitant2']);
+                $proprietaires->setDroitExploitant2($propri['droitExploitant2']);
+                $proprietaires->setMaritalExploitant2($propri['maritalExploitant2']);
+                $proprietaires->setDateSignatureExploitant2(($propri['dateSignatureExploitant2'] != '' ? new \DateTime(str_replace('/', '-', $propri['dateSignatureExploitant2'])) : null));
+                $proprietaires->setDateEcheanceExploitant2(($propri['dateEcheanceExploitant2'] != '' ? new \DateTime(str_replace('/', '-', $propri['dateEcheanceExploitant2'])) : null));
+
+                $proprietaires->setCiviliteExploitant3($propri['civiliteExploitant3']);
+                $proprietaires->setExploitant3($propri['exploitant3']);
+                $proprietaires->setQualiteExploitant3($propri['qualiteExploitant3']);
+                $proprietaires->setAccordExploitant3($propri['accordExploitant3']);
+                $proprietaires->setTelephoneExploitant3($propri['telephoneExploitant3']);
+                $proprietaires->setAdresseExploitant3($propri['adresseExploitant3']);
+                $proprietaires->setEmailExploitant3($propri['emailExploitant3']);
+                $proprietaires->setDateNaissanceExploitant3(($propri['dateNaissanceExploitant3'] != '' ? new \DateTime(str_replace('/', '-', $propri['dateNaissanceExploitant3'])) : null));
+                $proprietaires->setLieuNaissanceExploitant3($propri['lieuNaissanceExploitant3']);
+                $proprietaires->setDroitExploitant3($propri['droitExploitant3']);
+                $proprietaires->setMaritalExploitant3($propri['maritalExploitant3']);
+                $proprietaires->setDateSignatureExploitant3(($propri['dateSignatureExploitant3'] != '' ? new \DateTime(str_replace('/', '-', $propri['dateSignatureExploitant3'])) : null));
+                $proprietaires->setDateEcheanceExploitant3(($propri['dateEcheanceExploitant3'] != '' ? new \DateTime(str_replace('/', '-', $propri['dateEcheanceExploitant3'])) : null));
+
+                $arrpro->add($proprietaires);
+            }
+            $projet->setProprietaires($arrpro);
+        }
+//        dump($projet);
+        if ($form->isSubmitted()) {
 
             $em = $this->getDoctrine()->getManager();
             $liste = $em->getRepository('AppBundle:Liste')->findOneBy(['listeOriginalName' => 'Sans liste']);
@@ -746,6 +864,7 @@ class ProjetController extends Controller
                 'focus' => $projet->getId(),
             ]);
         }
+
         $em = $this->getDoctrine()->getManager();
         $telephones = $em->getRepository('AppBundle:User')->getFindAllTelephones();
         $batimentNouveaux = $em->getRepository('AppBundle:BatimentNouveau')->findAll();
@@ -830,10 +949,132 @@ class ProjetController extends Controller
 
         $form = $this->createForm(ProjetEditType::class, $projet);
         $form->handleRequest($request);
+        $em = $this->getDoctrine()->getManager();
+        $fparam = $request->request->all();
+        
+        if(isset($fparam['projet']['proprietaires']) && is_array($fparam['projet']['proprietaires']) && count($fparam['projet']['proprietaires']) > 0)
+        {
+            $arrpro = new ArrayCollection();
+            foreach ($fparam['projet']['proprietaires'] as $propri)
+            {
+                
+                if(isset($propri['id']) && $propri['id'] != '')
+                {
+                    $proprietaires = $em->getRepository('AppBundle:Proprietaire')->find($propri['id']);
+                }else{
+                    $proprietaires = new Proprietaire();
+                }
+
+                $proprietaires->setParcelles($propri['parcelles']);
+                $proprietaires->setProjet($projet);
+                $proprietaires->setCiviliteProprietaire($propri['civiliteProprietaire']);
+                $proprietaires->setProprietaire($propri['proprietaire']);
+                $proprietaires->setQualiteProprietaire($propri['qualiteProprietaire']);
+                $proprietaires->setAccordProprietaire($propri['accordProprietaire']);
+                $proprietaires->setTelephoneProprietaire($propri['telephoneProprietaire']);
+                $proprietaires->setAdresseProprietaire($propri['adresseProprietaire']);
+                $proprietaires->setEmailProprietaire($propri['emailProprietaire']);
+                $proprietaires->setDateNaissanceProprietaire(($propri['dateNaissanceProprietaire'] != '' ? new \DateTime(str_replace('/', '-', $propri['dateNaissanceProprietaire']))  : null));
+                $proprietaires->setLieuNaissanceProprietaire($propri['lieuNaissanceProprietaire']);
+                $proprietaires->setDroitProprietaire($propri['droitProprietaire']);
+                $proprietaires->setMaritalProprietaire($propri['maritalProprietaire']);
+                $proprietaires->setDateSignatureProprietaire(($propri['dateSignatureProprietaire'] != '' ? new \DateTime(str_replace('/', '-', $propri['dateSignatureProprietaire'])) : null));
+                $proprietaires->setDureeProprietaire($propri['dureeProprietaire']);
+                $proprietaires->setDateEcheanceProprietaire(($propri['dateEcheanceProprietaire'] != '' ? new \DateTime(str_replace('/', '-', $propri['dateEcheanceProprietaire'])) : null));
+
+                $proprietaires->setCiviliteProprietaire2($propri['civiliteProprietaire2']);
+                $proprietaires->setProprietaire2($propri['proprietaire2']);
+                $proprietaires->setQualiteProprietaire2($propri['qualiteProprietaire2']);
+                $proprietaires->setAccordProprietaire2($propri['accordProprietaire2']);
+                $proprietaires->setTelephoneProprietaire2($propri['telephoneProprietaire2']);
+                $proprietaires->setAdresseProprietaire2($propri['adresseProprietaire2']);
+                $proprietaires->setEmailProprietaire2($propri['emailProprietaire2']);
+                $proprietaires->setDateNaissanceProprietaire2(($propri['dateNaissanceProprietaire2'] != '' ? new \DateTime(str_replace('/', '-', $propri['dateNaissanceProprietaire2'])) : null));
+                $proprietaires->setLieuNaissanceProprietaire2($propri['lieuNaissanceProprietaire2']);
+                $proprietaires->setDroitProprietaire2($propri['droitProprietaire2']);
+                $proprietaires->setMaritalProprietaire2($propri['maritalProprietaire2']);
+                $proprietaires->setDateSignatureProprietaire2(($propri['dateSignatureProprietaire2'] != '' ? new \DateTime(str_replace('/', '-', $propri['dateSignatureProprietaire2'])) : null));
+                $proprietaires->setDateEcheanceProprietaire2(($propri['dateEcheanceProprietaire2'] != '' ? new \DateTime(str_replace('/', '-', $propri['dateEcheanceProprietaire2'])) : null));
+
+                $proprietaires->setCiviliteProprietaire3($propri['civiliteProprietaire3']);
+                $proprietaires->setProprietaire3($propri['proprietaire3']);
+                $proprietaires->setQualiteProprietaire3($propri['qualiteProprietaire3']);
+                $proprietaires->setAccordProprietaire3($propri['accordProprietaire3']);
+                $proprietaires->setTelephoneProprietaire3($propri['telephoneProprietaire3']);
+                $proprietaires->setAdresseProprietaire3($propri['adresseProprietaire3']);
+                $proprietaires->setEmailProprietaire3($propri['emailProprietaire3']);
+                $proprietaires->setDateNaissanceProprietaire3(($propri['dateNaissanceProprietaire3'] != '' ? new \DateTime(str_replace('/', '-', $propri['dateNaissanceProprietaire3'])) : null));
+                $proprietaires->setLieuNaissanceProprietaire3($propri['lieuNaissanceProprietaire3']);
+                $proprietaires->setDroitProprietaire3($propri['droitProprietaire3']);
+                $proprietaires->setMaritalProprietaire3($propri['maritalProprietaire3']);
+                $proprietaires->setDateSignatureProprietaire3(($propri['dateSignatureProprietaire3'] != '' ? new \DateTime(str_replace('/', '-', $propri['dateSignatureProprietaire3'])) : null));
+                $proprietaires->setDateEcheanceProprietaire3(($propri['dateEcheanceProprietaire3'] != '' ? new \DateTime(str_replace('/', '-', $propri['dateEcheanceProprietaire3'])) : null));
+
+                $proprietaires->setCiviliteProprietaire4($propri['civiliteProprietaire4']);
+                $proprietaires->setProprietaire4($propri['proprietaire4']);
+                $proprietaires->setQualiteProprietaire4($propri['qualiteProprietaire4']);
+                $proprietaires->setAccordProprietaire4($propri['accordProprietaire4']);
+                $proprietaires->setTelephoneProprietaire4($propri['telephoneProprietaire4']);
+                $proprietaires->setAdresseProprietaire4($propri['adresseProprietaire4']);
+                $proprietaires->setEmailProprietaire4($propri['emailProprietaire4']);
+                $proprietaires->setDateNaissanceProprietaire4(($propri['dateNaissanceProprietaire4'] != '' ? new \DateTime(str_replace('/', '-', $propri['dateNaissanceProprietaire4'])) : null));
+                $proprietaires->setLieuNaissanceProprietaire4($propri['lieuNaissanceProprietaire4']);
+                $proprietaires->setDroitProprietaire4($propri['droitProprietaire4']);
+                $proprietaires->setMaritalProprietaire4($propri['maritalProprietaire4']);
+                $proprietaires->setDateSignatureProprietaire4(($propri['dateSignatureProprietaire4'] != '' ? new \DateTime(str_replace('/', '-', $propri['dateSignatureProprietaire4'])) : null));
+                $proprietaires->setDateEcheanceProprietaire4(($propri['dateEcheanceProprietaire4'] != '' ? new \DateTime(str_replace('/', '-', $propri['dateEcheanceProprietaire4'])) : null));
+
+                $proprietaires->setCiviliteExploitant($propri['civiliteExploitant']);
+                $proprietaires->setExploitant($propri['exploitant']);
+                $proprietaires->setQualiteExploitant($propri['qualiteExploitant']);
+                $proprietaires->setAccordExploitant($propri['accordExploitant']);
+                $proprietaires->setTelephoneExploitant($propri['telephoneExploitant']);
+                $proprietaires->setAdresseExploitant($propri['adresseExploitant']);
+                $proprietaires->setEmailExploitant($propri['emailExploitant']);
+                $proprietaires->setDateNaissanceExploitant(($propri['dateNaissanceExploitant'] != '' ? new \DateTime(str_replace('/', '-', $propri['dateNaissanceExploitant'])) : null));
+                $proprietaires->setLieuNaissanceExploitant($propri['lieuNaissanceExploitant']);
+                $proprietaires->setDroitExploitant($propri['droitExploitant']);
+                $proprietaires->setMaritalExploitant($propri['maritalExploitant']);
+                $proprietaires->setDateSignatureExploitant(($propri['dateSignatureExploitant'] != '' ? new \DateTime(str_replace('/', '-', $propri['dateSignatureExploitant'])) : null));
+                $proprietaires->setDateEcheanceExploitant(($propri['dateEcheanceExploitant'] != '' ? new \DateTime(str_replace('/', '-', $propri['dateEcheanceExploitant'])) : null));
+
+                $proprietaires->setCiviliteExploitant2($propri['civiliteExploitant2']);
+                $proprietaires->setExploitant2($propri['exploitant2']);
+                $proprietaires->setQualiteExploitant2($propri['qualiteExploitant2']);
+                $proprietaires->setAccordExploitant2($propri['accordExploitant2']);
+                $proprietaires->setTelephoneExploitant2($propri['telephoneExploitant2']);
+                $proprietaires->setAdresseExploitant2($propri['adresseExploitant2']);
+                $proprietaires->setEmailExploitant2($propri['emailExploitant2']);
+                $proprietaires->setDateNaissanceExploitant2(($propri['dateNaissanceExploitant2'] != '' ? new \DateTime(str_replace('/', '-', $propri['dateNaissanceExploitant2'])) : null));
+                $proprietaires->setLieuNaissanceExploitant2($propri['lieuNaissanceExploitant2']);
+                $proprietaires->setDroitExploitant2($propri['droitExploitant2']);
+                $proprietaires->setMaritalExploitant2($propri['maritalExploitant2']);
+                $proprietaires->setDateSignatureExploitant2(($propri['dateSignatureExploitant2'] != '' ? new \DateTime(str_replace('/', '-', $propri['dateSignatureExploitant2'])) : null));
+                $proprietaires->setDateEcheanceExploitant2(($propri['dateEcheanceExploitant2'] != '' ? new \DateTime(str_replace('/', '-', $propri['dateEcheanceExploitant2'])) : null));
+
+                $proprietaires->setCiviliteExploitant3($propri['civiliteExploitant3']);
+                $proprietaires->setExploitant3($propri['exploitant3']);
+                $proprietaires->setQualiteExploitant3($propri['qualiteExploitant3']);
+                $proprietaires->setAccordExploitant3($propri['accordExploitant3']);
+                $proprietaires->setTelephoneExploitant3($propri['telephoneExploitant3']);
+                $proprietaires->setAdresseExploitant3($propri['adresseExploitant3']);
+                $proprietaires->setEmailExploitant3($propri['emailExploitant3']);
+                $proprietaires->setDateNaissanceExploitant3(($propri['dateNaissanceExploitant3'] != '' ? new \DateTime(str_replace('/', '-', $propri['dateNaissanceExploitant3'])) : null));
+                $proprietaires->setLieuNaissanceExploitant3($propri['lieuNaissanceExploitant3']);
+                $proprietaires->setDroitExploitant3($propri['droitExploitant3']);
+                $proprietaires->setMaritalExploitant3($propri['maritalExploitant3']);
+                $proprietaires->setDateSignatureExploitant3(($propri['dateSignatureExploitant3'] != '' ? new \DateTime(str_replace('/', '-', $propri['dateSignatureExploitant3'])) : null));
+                $proprietaires->setDateEcheanceExploitant3(($propri['dateEcheanceExploitant3'] != '' ? new \DateTime(str_replace('/', '-', $propri['dateEcheanceExploitant3'])) : null));
+
+                $arrpro->add($proprietaires);
+            }
+
+            $projet->setProprietaires($arrpro);
+        }
 
         $show = $request->query->get('show', null);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted()) {
 
             $projet->setUpdatedAt(new DateTime('now'));
             $em = $this->getDoctrine()->getManager();
@@ -854,7 +1095,7 @@ class ProjetController extends Controller
                 'show' => $show,
             ]);
         }
-        $em = $this->getDoctrine()->getManager();
+        
         $telephones = $em->getRepository('AppBundle:User')->getFindAllTelephones();
         $batimentNouveaux = $em->getRepository('AppBundle:BatimentNouveau')->findAll();
         $batiments = json_encode($batimentNouveaux);
@@ -903,6 +1144,7 @@ class ProjetController extends Controller
             'technologies' => json_encode($technologies),
             'proprietaires' => json_encode($proprietaires),
             'exploitants' => json_encode($exploitants),
+            'proprietairesInfo' => $projet->getProprietaires()->getValues(),
         ]);
     }
 

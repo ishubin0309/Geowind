@@ -159,6 +159,7 @@
       </div><!-- /.container-fluid -->
     </nav>
     <h1><i class="fa fa-edit"></i> Editer {{ projet }}</h1>
+
     <div class="row">
     <div id="fields_div" class="col-sm-6">
 
@@ -180,6 +181,7 @@
         <legend>Situation administrative</legend>
         {{ form_row(form.departement) }}
         {{ form_row(form.communes) }}
+
         <div class="form-group form-group-sm">
           <label class="col-sm-4 control-label" for="projet_epci">EPCI</label>
           <div id="projet_epci" class="col-sm-8 control-label">
@@ -216,13 +218,13 @@
               <td class="required">{% if is_granted('ROLE_ADMIN') or projet.origine.id == app.user.id %}{{ form_widget(form.origine, {'attr': {'style': 'width:100%'}}) }}{% else %}{{ form.vars.value.origine }}{{ form_widget(form.origine, {'attr': {'class': 'hide','style': 'width:100%'}}) }}{% endif %}</td>
               <td>{% if is_granted('ROLE_ADMIN') or projet.origine.id == app.user.id %}{{ form_widget(form.origineTelephone) }}{% else %}{{ form.vars.value.origineTelephone }}{{ form_widget(form.origineTelephone, {'attr': {'class': 'hide'}}) }}{% endif %}</td>
             </tr>
-            {# {% if is_granted('ROLE_ADMIN') %} #}
+             {#{% if is_granted('ROLE_ADMIN') %}#}
             <tr>
               <td>Chef projet</td>
               <td class="required">{% if is_granted('ROLE_ADMIN') or projet.origine.id == app.user.id %}{{ form_widget(form.chefProjet, {'attr': {'style': 'width:100%'}}) }}{% else %}{{ form.vars.value.chefProjet }}{{ form_widget(form.chefProjet, {'attr': {'class': 'hide','style': 'width:100%'}}) }}{% endif %}</td>
               <td>{% if is_granted('ROLE_ADMIN') or projet.origine.id == app.user.id %}{{ form_widget(form.chefProjetTelephone) }}{% else %}{{ form.vars.value.chefProjetTelephone }}{{ form_widget(form.chefProjetTelephone, {'attr': {'class': 'hide'}}) }}{% endif %}</td>
             </tr>
-            {# {% endif %} #}
+             {#{% endif %}#}
             <tr>
               <td>Chargé foncier</td>
               <td>{% if is_granted('ROLE_ADMIN') or projet.origine.id == app.user.id %}{{ form_widget(form.chargeFoncier, {'attr': {'style': 'width:100%'}}) }}{% else %}{{ form.vars.value.chargeFoncier }}{{ form_widget(form.chargeFoncier, {'attr': {'class': 'hide','style': 'width:100%'}}) }}{% endif %}</td>
@@ -248,7 +250,7 @@
               <td class="required"></td>
               <td></td>
             </tr>
-            {% if form.vars.value.proprietaires[0] is defined %}
+ {#           {% if form.vars.value.proprietaires[0] is defined %}
               {% for proprietaire in form.vars.value.proprietaires %}
                 <tr rel="{{ loop.index0 }}" class="{% if not proprietaire.proprietaire %}hide{% endif %}">
                   <td>Propriétaire</td>
@@ -295,7 +297,7 @@
                   <td>{{ finance.bureau.telephone is defined ? finance.bureau.telephone : '-' }}</td>
                 <tr>
               {% endfor %}
-            {% endif %}
+            {% endif %}#}
           </tbody>
         </table>
       </fieldset>
@@ -391,8 +393,9 @@
           </div>
           <div role="tabpanel" class="tab-pane" id="parcelleTable">{{ form_widget(form.parcelles) }}</div>
         </div>
-        
+
       </fieldset>
+
 
       <fieldset class="hide" id="tab_enjeux">
         {{ form_widget(form.enjeuxs) }}
@@ -408,10 +411,846 @@
       
       <fieldset class="hide" id="tab_foncier">
         <legend>Accords</legend>
+        
         <div class="col-sm-12 col-md-6 col-lg-3">
-          <input type="text" id="projet_proprietaires_recherche" class="form-control {% if form.vars.value.proprietaires[0] is not defined %}hide{% endif %}" placeholder="recherche" autocomplete="off">
+          {#<input type="text" id="projet_proprietaires_recherche" class="form-control {% if form.vars.value.proprietaires[0] is not defined %}hide{% endif %}" placeholder="recherche" autocomplete="off">#}
         </div>
-        {{ form_widget(form.proprietaires) }}
+{#        {{ form_widget(form.proprietaires) }}#}
+{#        <table style="width: 2000px !important;max-width: 2000px !important;" class="table table-condensed table-form">#}
+        <table class="table table-striped table-middle table-form" id="proprietaires-info">
+          <thead>
+          <tr>
+            <th>Parcelles<span class="control-label required"></span></th>
+            <th>Civilité</th>
+            <th>Propriétaire/Exploitant</th>
+            <th>Identité<span class="control-label required"></span></th>
+            <th>Qualité</th>
+{#            <th style="width:80px;">Accords</th>#}
+            <th>Téléphone</th>
+            <th>Adresse</th>
+            <th>Email</th>
+{#            <th style="width:90px;">Né le</th>#}
+{#            <th>Né à</th>#}
+            <th>Droit</th>
+            <th>Statut marital</th>
+            <th>Date signature</th>
+            <th>Durée</th>
+            <th>Date échéance</th>
+            <th></th>
+          </tr>
+          </thead>
+          <tbody>
+              {% for key, propInfo in proprietairesInfo %}
+                <tr data-propId="{{key}}" data-pe="proprietaire1">
+                  <td>{{propInfo.parcelles}}</td>
+                  <td>{{propInfo.civiliteProprietaire}}</td>
+                  <td>Propriétaire</td>
+                  <td>{{propInfo.proprietaire}}</td>
+                  <td>{{propInfo.qualiteProprietaire}}</td>
+                  <td>{{propInfo.telephoneProprietaire}}</td>
+                  <td>{{propInfo.adresseProprietaire}}</td>
+                  <td>{{propInfo.emailProprietaire}}</td>
+                  <td>{{propInfo.droitProprietaire}}</td>
+                  <td>{{propInfo.maritalProprietaire}}</td>
+                  <td>{{propInfo.dateSignatureProprietaire|date('d/m/Y')}}</td>
+                  <td>{{propInfo.dureeProprietaire}}</td>
+                  <td>{{propInfo.dateEcheanceProprietaire|date('d/m/Y')}}</td>
+                  <td>
+                    <button class="btn btn-danger btn-xs button-prop-delete" title="Delete" style="margin-right: 5px;"><i class="fa fa-fw fa-trash"></i></button>
+                    <button class="btn btn-warning btn-xs button-prop-edit" title="Edit"><i class="fa fa-fw fa-pencil"></i></button>
+                  </td>
+                </tr>
+                {% if propInfo.proprietaire2 != null %}
+                  <tr data-propId="{{key}}" data-pe="proprietaire2">
+                    <td></td>
+                    <td>{{propInfo.civiliteProprietaire2}}</td>
+                    <td>Propriétaire2</td>
+                    <td>{{propInfo.proprietaire2}}</td>
+                    <td>{{propInfo.qualiteProprietaire2}}</td>
+                    <td>{{propInfo.telephoneProprietaire2}}</td>
+                    <td>{{propInfo.adresseProprietaire2}}</td>
+                    <td>{{propInfo.emailProprietaire2}}</td>
+                    <td>{{propInfo.droitProprietaire2}}</td>
+                    <td>{{propInfo.maritalProprietaire2}}</td>
+                    <td>{{propInfo.dateSignatureProprietaire2|date('d/m/Y')}}</td>
+                    <td></td>
+                    <td>{{propInfo.dateEcheanceProprietaire2|date('d/m/Y')}}</td>
+                    <td>
+                      <button class="btn btn-danger btn-xs button-prop-delete" title="Delete" style="margin-right: 5px;"><i class="fa fa-fw fa-trash"></i></button>
+                    </td>
+                  </tr>
+                {% endif %}
+                
+                {% if propInfo.proprietaire3 != null %}
+                  <tr data-propId="{{key}}" data-pe="proprietaire3">
+                    <td></td>
+                    <td>{{propInfo.civiliteProprietaire3}}</td>
+                    <td>Propriétaire3</td>
+                    <td>{{propInfo.proprietaire3}}</td>
+                    <td>{{propInfo.qualiteProprietaire3}}</td>
+                    <td>{{propInfo.telephoneProprietaire3}}</td>
+                    <td>{{propInfo.adresseProprietaire3}}</td>
+                    <td>{{propInfo.emailProprietaire3}}</td>
+                    <td>{{propInfo.droitProprietaire3}}</td>
+                    <td>{{propInfo.maritalProprietaire3}}</td>
+                    <td>{{propInfo.dateSignatureProprietaire3|date('d/m/Y')}}</td>
+                    <td></td>
+                    <td>{{propInfo.dateEcheanceProprietaire3|date('d/m/Y')}}</td>
+                    <td>
+                      <button class="btn btn-danger btn-xs button-prop-delete" title="Delete" style="margin-right: 5px;"><i class="fa fa-fw fa-trash"></i></button>
+                    </td>
+                  </tr>
+                {% endif %} 
+
+                {% if propInfo.proprietaire4 != null %}
+                  <tr data-propId="{{key}}" data-pe="proprietaire4">
+                    <td></td>
+                    <td>{{propInfo.civiliteProprietaire4}}</td>
+                    <td>Propriétaire4</td>
+                    <td>{{propInfo.proprietaire4}}</td>
+                    <td>{{propInfo.qualiteProprietaire4}}</td>
+                    <td>{{propInfo.telephoneProprietaire4}}</td>
+                    <td>{{propInfo.adresseProprietaire4}}</td>
+                    <td>{{propInfo.emailProprietaire4}}</td>
+                    <td>{{propInfo.droitProprietaire4}}</td>
+                    <td>{{propInfo.maritalProprietaire4}}</td>
+                    <td>{{propInfo.dateSignatureProprietaire4|date('d/m/Y')}}</td>
+                    <td></td>
+                    <td>{{propInfo.dateEcheanceProprietaire4|date('d/m/Y')}}</td>
+                    <td>
+                      <button class="btn btn-danger btn-xs button-prop-delete" title="Delete" style="margin-right: 5px;"><i class="fa fa-fw fa-trash"></i></button>
+                    </td>
+                  </tr>
+                {% endif %}
+
+                {% if propInfo.exploitant != null %}
+                  <tr data-propId="{{key}}" data-pe="exploitant1">
+                      <td></td>
+                      <td>{{propInfo.civiliteExploitant}}</td>
+                      <td>Exploitant</td>
+                      <td>{{propInfo.exploitant}}</td>
+                      <td>{{propInfo.qualiteExploitant}}</td>
+                      <td>{{propInfo.telephoneExploitant}}</td>
+                      <td>{{propInfo.adresseExploitant}}</td>
+                      <td>{{propInfo.emailExploitant}}</td>
+                      <td>{{propInfo.droitExploitant}}</td>
+                      <td>{{propInfo.maritalExploitant}}</td>
+                      <td>{{propInfo.dateSignatureExploitant|date('d/m/Y')}}</td>
+                      <td></td>
+                      <td>{{propInfo.dateEcheanceExploitant|date('d/m/Y')}}</td>
+                      <td>
+                        <button class="btn btn-danger btn-xs button-prop-delete" title="Delete" style="margin-right: 5px;"><i class="fa fa-fw fa-trash"></i></button>
+                      </td>
+                    </tr>
+                {% endif %}
+
+                {% if propInfo.exploitant2 != null %}
+                  <tr data-propId="{{key}}" data-pe="exploitant2">
+                      <td></td>
+                      <td>{{propInfo.civiliteExploitant2}}</td>
+                      <td>Exploitant2</td>
+                      <td>{{propInfo.exploitant2}}</td>
+                      <td>{{propInfo.qualiteExploitant2}}</td>
+                      <td>{{propInfo.telephoneExploitant2}}</td>
+                      <td>{{propInfo.adresseExploitant2}}</td>
+                      <td>{{propInfo.emailExploitant2}}</td>
+                      <td>{{propInfo.droitExploitant2}}</td>
+                      <td>{{propInfo.maritalExploitant2}}</td>
+                      <td>{{propInfo.dateSignatureExploitant2|date('Y-m-d')}}</td>
+                      <td></td>
+                      <td>{{propInfo.dateEcheanceExploitant2|date('Y-m-d')}}</td>
+                      <td>
+                        <button class="btn btn-danger btn-xs button-prop-delete" title="Delete" style="margin-right: 5px;"><i class="fa fa-fw fa-trash"></i></button>
+                      </td>
+                    </tr>
+                {% endif %}
+                {% if propInfo.exploitant3 != null %}
+                  <tr data-propId="{{key}}" data-pe="exploitant3">
+                      <td></td>
+                      <td>{{propInfo.civiliteExploitant3}}</td>
+                      <td>Exploitant3</td>
+                      <td>{{propInfo.exploitant3}}</td>
+                      <td>{{propInfo.qualiteExploitant3}}</td>
+                      <td>{{propInfo.telephoneExploitant3}}</td>
+                      <td>{{propInfo.adresseExploitant3}}</td>
+                      <td>{{propInfo.emailExploitant3}}</td>
+                      <td>{{propInfo.droitExploitant3}}</td>
+                      <td>{{propInfo.maritalExploitant3}}</td>
+                      <td>{{propInfo.dateSignatureExploitant3|date('d/m/Y')}}</td>
+                      <td></td>
+                      <td>{{propInfo.dateEcheanceExploitant3|date('d/m/Y')}}</td>
+                      <td>
+                        <button class="btn btn-danger btn-xs button-prop-delete" title="Delete" style="margin-right: 5px;"><i class="fa fa-fw fa-trash"></i></button>
+                      </td>
+                    </tr>
+                {% endif %}
+              {% endfor %}
+          </tbody>
+        </table>
+        <div class="proprietaires_hidden">
+      
+          {% for key, propInfo in proprietairesInfo %}
+              <input type="hidden" class="prop" name="projet[proprietaires][{{key}}][id]" value="{{propInfo.id}}">
+            <div class="proprietaire_info" data-pid="{{key}}">
+              <input type="hidden" class="proprietaire1" name="projet[proprietaires][{{key}}][parcelles]" value="{{propInfo.parcelles}}">
+              <input type="hidden" class="proprietaire1" name="projet[proprietaires][{{key}}][civiliteProprietaire]" value="{{propInfo.civiliteProprietaire}}">
+              <input type="hidden" class="proprietaire1" name="projet[proprietaires][{{key}}][proprietaire]" value="{{propInfo.proprietaire}}">
+              <input type="hidden" class="proprietaire1" name="projet[proprietaires][{{key}}][qualiteProprietaire]" value="{{propInfo.qualiteProprietaire}}">
+              <input type="hidden" class="proprietaire1" name="projet[proprietaires][{{key}}][accordProprietaire]" value="{{propInfo.accordProprietaire}}">
+              <input type="hidden" class="proprietaire1" name="projet[proprietaires][{{key}}][telephoneProprietaire]" value="{{propInfo.telephoneProprietaire}}">
+              <input type="hidden" class="proprietaire1" name="projet[proprietaires][{{key}}][adresseProprietaire]" value="{{propInfo.adresseProprietaire}}">
+              <input type="hidden" class="proprietaire1" name="projet[proprietaires][{{key}}][emailProprietaire]" value="{{propInfo.emailProprietaire}}">
+              <input type="hidden" class="proprietaire1" name="projet[proprietaires][{{key}}][dateNaissanceProprietaire]" value="{{propInfo.dateNaissanceProprietaire|date('d/m/Y')}}">
+              <input type="hidden" class="proprietaire1" name="projet[proprietaires][{{key}}][lieuNaissanceProprietaire]" value="{{propInfo.lieuNaissanceProprietaire}}">
+              <input type="hidden" class="proprietaire1" name="projet[proprietaires][{{key}}][droitProprietaire]" value="{{propInfo.droitProprietaire}}">
+              <input type="hidden" class="proprietaire1" name="projet[proprietaires][{{key}}][maritalProprietaire]" value="{{propInfo.maritalProprietaire}}">
+              <input type="hidden" class="proprietaire1" name="projet[proprietaires][{{key}}][dateSignatureProprietaire]" value="{{propInfo.dateSignatureProprietaire|date('d/m/Y')}}">
+              <input type="hidden" class="proprietaire1" name="projet[proprietaires][{{key}}][dureeProprietaire]" value="{{propInfo.dureeProprietaire}}">
+              <input type="hidden" class="proprietaire1" name="projet[proprietaires][{{key}}][dateEcheanceProprietaire]" value="{{propInfo.dateEcheanceProprietaire|date('d/m/Y')}}">
+
+              
+              <input type="hidden" class="proprietaire2" name="projet[proprietaires][{{key}}][civiliteProprietaire2]" value="{{propInfo.civiliteProprietaire2}}">
+              <input type="hidden" class="proprietaire2" name="projet[proprietaires][{{key}}][proprietaire2]" value="{{propInfo.proprietaire2}}">
+              <input type="hidden" class="proprietaire2" name="projet[proprietaires][{{key}}][qualiteProprietaire2]" value="{{propInfo.qualiteProprietaire2}}">
+              <input type="hidden" class="proprietaire2" name="projet[proprietaires][{{key}}][accordProprietaire2]" value="{{propInfo.accordProprietaire2}}">
+              <input type="hidden" class="proprietaire2" name="projet[proprietaires][{{key}}][telephoneProprietaire2]" value="{{propInfo.telephoneProprietaire2}}">
+              <input type="hidden" class="proprietaire2" name="projet[proprietaires][{{key}}][adresseProprietaire2]" value="{{propInfo.adresseProprietaire2}}">
+              <input type="hidden" class="proprietaire2" name="projet[proprietaires][{{key}}][emailProprietaire2]" value="{{propInfo.emailProprietaire2}}">
+              <input type="hidden" class="proprietaire2" name="projet[proprietaires][{{key}}][dateNaissanceProprietaire2]" value="{{propInfo.dateNaissanceProprietaire2|date('d/m/Y')}}">
+              <input type="hidden" class="proprietaire2" name="projet[proprietaires][{{key}}][lieuNaissanceProprietaire2]" value="{{propInfo.lieuNaissanceProprietaire2}}">
+              <input type="hidden" class="proprietaire2" name="projet[proprietaires][{{key}}][droitProprietaire2]" value="{{propInfo.droitProprietaire2}}">
+              <input type="hidden" class="proprietaire2" name="projet[proprietaires][{{key}}][maritalProprietaire2]" value="{{propInfo.maritalProprietaire2}}">
+              <input type="hidden" class="proprietaire2" name="projet[proprietaires][{{key}}][dateSignatureProprietaire2]" value="{{propInfo.dateSignatureProprietaire2|date('d/m/Y')}}">
+              <input type="hidden" class="proprietaire2" name="projet[proprietaires][{{key}}][dateEcheanceProprietaire2]" value="{{propInfo.dateEcheanceProprietaire2|date('d/m/Y')}}">
+              
+              <input type="hidden" class="proprietaire3" name="projet[proprietaires][{{key}}][civiliteProprietaire3]" value="{{propInfo.civiliteProprietaire3}}">
+              <input type="hidden" class="proprietaire3" name="projet[proprietaires][{{key}}][proprietaire3]" value="{{propInfo.proprietaire3}}">
+              <input type="hidden" class="proprietaire3" name="projet[proprietaires][{{key}}][qualiteProprietaire3]" value="{{propInfo.qualiteProprietaire3}}">
+              <input type="hidden" class="proprietaire3" name="projet[proprietaires][{{key}}][accordProprietaire3]" value="{{propInfo.accordProprietaire3}}">
+              <input type="hidden" class="proprietaire3" name="projet[proprietaires][{{key}}][telephoneProprietaire3]" value="{{propInfo.telephoneProprietaire3}}">
+              <input type="hidden" class="proprietaire3" name="projet[proprietaires][{{key}}][adresseProprietaire3]" value="{{propInfo.adresseProprietaire3}}">
+              <input type="hidden" class="proprietaire3" name="projet[proprietaires][{{key}}][emailProprietaire3]" value="{{propInfo.emailProprietaire3}}">
+              <input type="hidden" class="proprietaire3" name="projet[proprietaires][{{key}}][dateNaissanceProprietaire3]" value="{{propInfo.dateNaissanceProprietaire3|date('d/m/Y')}}">
+              <input type="hidden" class="proprietaire3" name="projet[proprietaires][{{key}}][lieuNaissanceProprietaire3]" value="{{propInfo.lieuNaissanceProprietaire3}}">
+              <input type="hidden" class="proprietaire3" name="projet[proprietaires][{{key}}][droitProprietaire3]" value="{{propInfo.droitProprietaire3}}">
+              <input type="hidden" class="proprietaire3" name="projet[proprietaires][{{key}}][maritalProprietaire3]" value="{{propInfo.maritalProprietaire3}}">
+              <input type="hidden" class="proprietaire3" name="projet[proprietaires][{{key}}][dateSignatureProprietaire3]" value="{{propInfo.dateSignatureProprietaire3|date('d/m/Y')}}">
+              <input type="hidden" class="proprietaire3" name="projet[proprietaires][{{key}}][dateEcheanceProprietaire3]" value="{{propInfo.dateEcheanceProprietaire3|date('d/m/Y')}}">
+              
+              <input type="hidden" class="proprietaire4" name="projet[proprietaires][{{key}}][civiliteProprietaire4]" value="{{propInfo.civiliteProprietaire4}}">
+              <input type="hidden" class="proprietaire4" name="projet[proprietaires][{{key}}][proprietaire4]" value="{{propInfo.proprietaire4}}">
+              <input type="hidden" class="proprietaire4" name="projet[proprietaires][{{key}}][qualiteProprietaire4]" value="{{propInfo.qualiteProprietaire4}}">
+              <input type="hidden" class="proprietaire4" name="projet[proprietaires][{{key}}][accordProprietaire4]" value="{{propInfo.accordProprietaire4}}">
+              <input type="hidden" class="proprietaire4" name="projet[proprietaires][{{key}}][telephoneProprietaire4]" value="{{propInfo.telephoneProprietaire4}}">
+              <input type="hidden" class="proprietaire4" name="projet[proprietaires][{{key}}][adresseProprietaire4]" value="{{propInfo.adresseProprietaire4}}">
+              <input type="hidden" class="proprietaire4" name="projet[proprietaires][{{key}}][emailProprietaire4]" value="{{propInfo.emailProprietaire4}}">
+              <input type="hidden" class="proprietaire4" name="projet[proprietaires][{{key}}][dateNaissanceProprietaire4]" value="{{propInfo.dateNaissanceProprietaire4|date('d/m/Y')}}">
+              <input type="hidden" class="proprietaire4" name="projet[proprietaires][{{key}}][lieuNaissanceProprietaire4]" value="{{propInfo.lieuNaissanceProprietaire4}}">
+              <input type="hidden" class="proprietaire4" name="projet[proprietaires][{{key}}][droitProprietaire4]" value="{{propInfo.droitProprietaire4}}">
+              <input type="hidden" class="proprietaire4" name="projet[proprietaires][{{key}}][maritalProprietaire4]" value="{{propInfo.maritalProprietaire4}}">
+              <input type="hidden" class="proprietaire4" name="projet[proprietaires][{{key}}][dateSignatureProprietaire4]" value="{{propInfo.dateSignatureProprietaire4|date('d/m/Y')}}">
+              <input type="hidden" class="proprietaire4" name="projet[proprietaires][{{key}}][dateEcheanceProprietaire4]" value="{{propInfo.dateEcheanceProprietaire4|date('d/m/Y')}}">
+              
+              <input type="hidden" class="exploitant1" name="projet[proprietaires][{{key}}][civiliteExploitant]" value="{{propInfo.civiliteExploitant}}">
+              <input type="hidden" class="exploitant1" name="projet[proprietaires][{{key}}][exploitant]" value="{{propInfo.exploitant}}">
+              <input type="hidden" class="exploitant1" name="projet[proprietaires][{{key}}][qualiteExploitant]" value="{{propInfo.qualiteExploitant}}">
+              <input type="hidden" class="exploitant1" name="projet[proprietaires][{{key}}][accordExploitant]" value="{{propInfo.accordExploitant}}">
+              <input type="hidden" class="exploitant1" name="projet[proprietaires][{{key}}][telephoneExploitant]" value="{{propInfo.telephoneExploitant}}">
+              <input type="hidden" class="exploitant1" name="projet[proprietaires][{{key}}][adresseExploitant]" value="{{propInfo.adresseExploitant}}">
+              <input type="hidden" class="exploitant1" name="projet[proprietaires][{{key}}][emailExploitant]" value="{{propInfo.emailExploitant}}">
+              <input type="hidden" class="exploitant1" name="projet[proprietaires][{{key}}][dateNaissanceExploitant]" value="{{propInfo.dateNaissanceExploitant|date('d/m/Y')}}">
+              <input type="hidden" class="exploitant1" name="projet[proprietaires][{{key}}][lieuNaissanceExploitant]" value="{{propInfo.lieuNaissanceExploitant}}">
+              <input type="hidden" class="exploitant1" name="projet[proprietaires][{{key}}][droitExploitant]" value="{{propInfo.droitExploitant}}">
+              <input type="hidden" class="exploitant1" name="projet[proprietaires][{{key}}][maritalExploitant]" value="{{propInfo.maritalExploitant}}">
+              <input type="hidden" class="exploitant1" name="projet[proprietaires][{{key}}][dateSignatureExploitant]" value="{{propInfo.dateSignatureExploitant|date('d/m/Y')}}">
+              <input type="hidden" class="exploitant1" name="projet[proprietaires][{{key}}][dateEcheanceExploitant]" value="{{propInfo.dateEcheanceExploitant|date('d/m/Y')}}">
+              
+              <input type="hidden" class="exploitant2" name="projet[proprietaires][{{key}}][civiliteExploitant2]" value="{{propInfo.civiliteExploitant2}}">
+              <input type="hidden" class="exploitant2" name="projet[proprietaires][{{key}}][exploitant2]" value="{{propInfo.exploitant2}}">
+              <input type="hidden" class="exploitant2" name="projet[proprietaires][{{key}}][qualiteExploitant2]" value="{{propInfo.qualiteExploitant2}}">
+              <input type="hidden" class="exploitant2" name="projet[proprietaires][{{key}}][accordExploitant2]" value="{{propInfo.accordExploitant2}}">
+              <input type="hidden" class="exploitant2" name="projet[proprietaires][{{key}}][telephoneExploitant2]" value="{{propInfo.telephoneExploitant2}}">
+              <input type="hidden" class="exploitant2" name="projet[proprietaires][{{key}}][adresseExploitant2]" value="{{propInfo.adresseExploitant2}}">
+              <input type="hidden" class="exploitant2" name="projet[proprietaires][{{key}}][emailExploitant2]" value="{{propInfo.emailExploitant2}}">
+              <input type="hidden" class="exploitant2" name="projet[proprietaires][{{key}}][dateNaissanceExploitant2]" value="{{propInfo.dateNaissanceExploitant2|date('d/m/Y')}}">
+              <input type="hidden" class="exploitant2" name="projet[proprietaires][{{key}}][lieuNaissanceExploitant2]" value="{{propInfo.lieuNaissanceExploitant2}}">
+              <input type="hidden" class="exploitant2" name="projet[proprietaires][{{key}}][droitExploitant2]" value="{{propInfo.droitExploitant2}}">
+              <input type="hidden" class="exploitant2" name="projet[proprietaires][{{key}}][maritalExploitant2]" value="{{propInfo.maritalExploitant2}}">
+              <input type="hidden" class="exploitant2" name="projet[proprietaires][{{key}}][dateSignatureExploitant2]" value="{{propInfo.dateSignatureExploitant2|date('d/m/Y')}}">
+              <input type="hidden" class="exploitant2" name="projet[proprietaires][{{key}}][dateEcheanceExploitant2]" value="{{propInfo.dateEcheanceExploitant2|date('d/m/Y')}}">
+              
+              <input type="hidden" class="exploitant3" name="projet[proprietaires][{{key}}][civiliteExploitant3]" value="{{propInfo.civiliteExploitant3}}">
+              <input type="hidden" class="exploitant3" name="projet[proprietaires][{{key}}][exploitant3]" value="{{propInfo.exploitant3}}">
+              <input type="hidden" class="exploitant3" name="projet[proprietaires][{{key}}][qualiteExploitant3]" value="{{propInfo.qualiteExploitant3}}">
+              <input type="hidden" class="exploitant3" name="projet[proprietaires][{{key}}][accordExploitant3]" value="{{propInfo.accordExploitant3}}">
+              <input type="hidden" class="exploitant3" name="projet[proprietaires][{{key}}][telephoneExploitant3]" value="{{propInfo.telephoneExploitant3}}">
+              <input type="hidden" class="exploitant3" name="projet[proprietaires][{{key}}][adresseExploitant3]" value="{{propInfo.adresseExploitant3}}">
+              <input type="hidden" class="exploitant3" name="projet[proprietaires][{{key}}][emailExploitant3]" value="{{propInfo.emailExploitant3}}">
+              <input type="hidden" class="exploitant3" name="projet[proprietaires][{{key}}][dateNaissanceExploitant3]" value="{{propInfo.dateNaissanceExploitant3|date('d/m/Y')}}">
+              <input type="hidden" class="exploitant3" name="projet[proprietaires][{{key}}][lieuNaissanceExploitant3]" value="{{propInfo.lieuNaissanceExploitant3}}">
+              <input type="hidden" class="exploitant3" name="projet[proprietaires][{{key}}][droitExploitant3]" value="{{propInfo.droitExploitant3}}">
+              <input type="hidden" class="exploitant3" name="projet[proprietaires][{{key}}][maritalExploitant3]" value="{{propInfo.maritalExploitant3}}">
+              <input type="hidden" class="exploitant3" name="projet[proprietaires][{{key}}][dateSignatureExploitant3]" value="{{propInfo.dateSignatureExploitant3|date('d/m/Y')}}">
+              <input type="hidden" class="exploitant3" name="projet[proprietaires][{{key}}][dateEcheanceExploitant3]" value="{{propInfo.dateEcheanceExploitant3|date('d/m/Y')}}">
+              
+            </div>
+          {% endfor %}
+        </div>
+        <div style="margin-top: 10px;" class="col-md-12">
+          <table>
+            <tbody>
+            <tr>
+              <td colspan="8">
+                <button type="button" id="projet_proprietaires_add_entry" class="btn btn-primary btn-xs"><i class="fa fa-plus-circle"></i> Ajouter</button>
+{#                <button type="button" id="{{ id }}_duplicate_entry" class="btn btn-success disabled btn-xs"><i class="fa fa-plus-circle"></i> Dupliquer</button>#}
+                <button type="button" id="projet_proprietaires_publish_entry" class="btn btn-success disabled btn-xs"><i class="fa fa-file-word-o"></i> Publier</button>
+                <button type="button" id="projet_proprietaires_remove_entry" class="btn btn-danger disabled btn-xs"><i class="fa fa-minus-circle"></i> Supprimer</button>
+{#                            <button type="button" id="{{ id }}_add_proprietaire_entry" class="btn btn-primary disabled btn-xs"><i class="fa fa-plus-square"></i> Propriétaire</button>#}
+{#                            <button type="button" id="{{ id }}_add_exploitant_entry" class="btn btn-primary disabled btn-xs"><i class="fa fa-plus-square"></i> Exploitant</button>#}
+                <button type="button" id="projet_proprietaires_export_entry" class="btn btn-info btn-xs"><i class="fa fa-file-excel-o"></i> Exporter</button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="modal fade" id="proprietairesModal" tabindex="-1" role="dialog" aria-labelledby="proprietairesLabel" aria-hidden="true">
+          <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Accords</h5>
+                <button type="button" class="close modal_close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="proprietaires-body">
+                <div class="panel panel-default">
+                  <div class="panel-heading panel-heading-nav">
+                    <ul class="nav nav-tabs">
+                      <li role="presentation" class="active">
+                        <a href="#projet_proprietairesm" aria-controls="projet_proprietairesm" role="tab" data-toggle="tab">Proprietaire</a>
+                      </li>
+                      <li role="presentation">
+                        <a href="#projet_exploitantm" aria-controls="projet_exploitantm" role="tab" data-toggle="tab">Exploitant</a>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="panel-body" style="padding: 10px;">
+                    <div class="tab-content">
+                      <div role="tabpanel" class="tab-pane fade in active table-form" id="projet_proprietairesm">
+                        <button type="button" id="projet_proprietaires_add_proprietaire_entry" class="btn btn-primary btn-xs" style="margin-bottom: 7px; float: right;"><i class="fa fa-plus-square"></i> Propriétaire</button>
+                        <div class="form-group f-parcelles" style="margin-bottom: 15px;">
+                          <div class="col-md-6">
+                            <label>Parcelles <span class="control-label required"></span></label><br>
+                            <input type="text" id="projet_proprietaires_parcelles" name="parcelles" required="required" style="width: 150px; display: none;" class="form-control" placeholder="Parcelles">
+                          </div>
+                        </div>
+                        <div class="proprietaire_entry info" style="border: 2px solid #d7d7d7;padding: 7px;">
+                          <div class="form-group" style="margin-bottom: 15px;">
+                            <div class="col-md-3">
+                              <label>Civilité</label>
+                              <select id="projet_proprietaires_0_civiliteProprietaire" name="civiliteProprietaire" class="form-control"><option value=""></option><option value="Mr">Mr</option><option value="Mme">Mme</option><option value="Mlle">Mlle</option></select>
+                            </div>
+                            <div class="col-md-3">
+                              <label>Identité <span class="control-label required"></span></label><br>
+                              <input type="text" id="projet_proprietaires_0_proprietaire" name="projet[proprietaires][0][proprietaire]" required="required" class="form-control" placeholder="Proprietaire" style="display: none;">
+                            </div>
+                            <div class="col-md-3">
+                              <label>Qualité</label>
+                              <select id="projet_proprietaires_0_qualiteProprietaire" name="qualiteProprietaire" class="form-control"><option value=""></option><option value="Société">Société</option><option value="Personne">Personne</option></select>
+                            </div>
+                            <div class="col-md-3">
+                              <label>Accords</label>
+                              <select id="projet_proprietaires_0_accordProprietaire" name="accordProprietaire" class="form-control"><option value=""></option><option value="OUI">OUI</option><option value="NON">NON</option><option value="NEGO">NEGO</option></select>
+                            </div>
+                          </div>
+                          <div class="form-group" style="margin-bottom: 15px;">
+                            <div class="col-md-3">
+                              <label>Téléphone</label>
+                              <input type="text" id="projet_proprietaires_0_telephoneProprietaire" name="telephoneProprietaire" class="form-control" placeholder="Téléphone">
+                            </div>
+                            <div class="col-md-3">
+                              <label>Adresse</label>
+                              <input type="text" id="projet_proprietaires_0_adresseProprietaire" name="adresseProprietaire" class="form-control" placeholder="Adresse">
+                            </div>
+                            <div class="col-md-3">
+                              <label>Email</label>
+                              <input type="email" id="projet_proprietaires_0_emailProprietaire" name="emailProprietaire" class="form-control" placeholder="Email">
+                            </div>
+                            <div class="col-md-3">
+                              <label>Né le</label>
+                              <input type="text" id="projet_proprietaires_0_dateNaissanceProprietaire" name="dateNaissanceProprietaire" class="datepicker-type form-control" placeholder="Date naissance">
+                            </div>
+                          </div>
+                          <div class="form-group" style="margin-bottom: 15px;">
+                            <div class="col-md-2">
+                              <label>Né à</label>
+                              <input type="text" id="projet_proprietaires_0_lieuNaissanceProprietaire" name="lieuNaissanceProprietaire" class="form-control" placeholder="Lieu naissance">
+                            </div>
+                            <div class="col-md-2">
+                              <label>Droit</label>
+                              <select id="projet_proprietaires_0_droitProprietaire" name="droitProprietaire" class="form-control"><option value=""></option><option value="Propriétaire">Propriétaire</option><option value="Indivisaire">Indivisaire</option><option value="Usufruitier">Usufruitier</option><option value="Usufruitiere">Usufruitiere</option><option value="Nu-propriétaire">Nu-propriétaire</option><option value="Nue-propriétaire">Nue-propriétaire</option><option value="Exploitant">Exploitant</option></select>
+                            </div>
+                            <div class="col-md-2">
+                              <label>Statut marital</label>
+                              <select id="projet_proprietaires_0_maritalProprietaire" name="maritalProprietaire" class="form-control"><option value=""></option><option value="Célibataire">Célibataire</option><option value="Veuf">Veuf</option><option value="Veuve">Veuve</option><option value="Pacsé">Pacsé</option><option value="Pacsée">Pacsée</option><option value="Marié">Marié</option><option value="Mariée">Mariée</option><option value="Séparé">Séparé</option><option value="Séparée">Séparée</option></select>
+                            </div>
+                            <div class="col-md-2">
+                              <label>Date signature</label>
+                              {#                              {% if form.vars.value.dateSignatureProprietaire is defined %}{% else %}{{ form_widget(form.dateSignatureProprietaire, {'value' : "now"|date("d/m/Y")}) }}{% endif %}#}
+                              <input type="text" id="projet_proprietaires_0_dateSignatureProprietaire" name="dateSignatureProprietaire" class="datepicker-type form-control" placeholder="Date signature" value="{{ "now"|date("d/m/Y") }}">
+                            </div>
+                            <div class="col-md-2">
+                              <label>Durée</label>
+                              <input type="text" id="projet_proprietaires_0_dureeProprietaire" name="dureeProprietaire" class="form-control" placeholder="Duree">
+                            </div>
+                            <div class="col-md-2">
+                              <label>Date échéance</label>
+                              {#                              {% if form.vars.value.dateEcheanceProprietaire is defined %}{% else %}{{ form_widget(form.dateEcheanceProprietaire, {'value' : "now"|date("d/m/Y")}) }}{% endif %}#}
+                              <input type="text" id="projet_proprietaires_0_dateEcheanceProprietaire" name="dateEcheanceProprietaire" class="datepicker-type form-control" placeholder="Date échéance" value="{{ "now"|date("d/m/Y") }}">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="proprietaire2_entry info {% if form.vars.value.proprietaire2 is not defined or not form.vars.value.proprietaire2 %}hide{% endif %}" style="border: 2px solid #d7d7d7;padding: 7px;margin-top: 20px;">
+                          <div class="form-group">
+                            <div class="col-md-12"><button class="btn btn-danger btn-xs remove-proprietaire" value="delete" style="float: right;"><i class="fa fa-minus-circle"></i> Supprimer</button></div>
+                          </div>
+                          <div class="form-group" style="margin-bottom: 15px;">
+                            <div class="col-md-3">
+                              <label>Civilité</label>
+                              <select id="projet_proprietaires_0_civiliteProprietaire2" name="civiliteProprietaire2" class="form-control"><option value=""></option><option value="Mr">Mr</option><option value="Mme">Mme</option><option value="Mlle">Mlle</option></select>
+                            </div>
+                            <div class="col-md-3">
+                              <label>Identité <span class="control-label required"></span></label>
+                              <input type="text" id="projet_proprietaires_0_proprietaire2" name="proprietaire2" class="form-control" placeholder="Proprietaire 2" style="display: none;">
+                            </div>
+                            <div class="col-md-3">
+                              <label>Qualité</label>
+                              <select id="projet_proprietaires_0_qualiteProprietaire2" name="qualiteProprietaire2" class="form-control"><option value=""></option><option value="Société">Société</option><option value="Personne">Personne</option></select>
+                            </div>
+                            <div class="col-md-3">
+                              <label>Accords</label>
+                              <select id="projet_proprietaires_0_accordProprietaire2" name="accordProprietaire2" class="form-control"><option value=""></option><option value="OUI">OUI</option><option value="NON">NON</option><option value="NEGO">NEGO</option></select>
+                            </div>
+                          </div>
+                          <div class="form-group" style="margin-bottom: 15px;">
+                            <div class="col-md-3">
+                              <label>Téléphone</label>
+                              <input type="text" id="projet_proprietaires_0_telephoneProprietaire2" name="telephoneProprietaire2" class="form-control" placeholder="Téléphone">
+                            </div>
+                            <div class="col-md-3">
+                              <label>Adresse</label>
+                              <input type="text" id="projet_proprietaires_0_adresseProprietaire2" name="adresseProprietaire2" class="form-control" placeholder="Adresse">
+                            </div>
+                            <div class="col-md-3">
+                              <label>Email</label>
+                              <input type="email" id="projet_proprietaires_0_emailProprietaire2" name="emailProprietaire2" class="form-control" placeholder="Email">
+                            </div>
+                            <div class="col-md-3">
+                              <label>Né le</label>
+                              <input type="text" id="projet_proprietaires_0_dateNaissanceProprietaire2" name="dateNaissanceProprietaire2" class="datepicker-type form-control" placeholder="Date naissance">
+                            </div>
+                          </div>
+                          <div class="form-group" style="margin-bottom: 15px;">
+                            <div class="col-md-2">
+                              <label>Né à</label>
+                              <input type="text" id="projet_proprietaires_0_lieuNaissanceProprietaire2" name="lieuNaissanceProprietaire2" class="form-control" placeholder="Lieu naissance">
+                            </div>
+                            <div class="col-md-2">
+                              <label>Droit</label>
+                              <select id="projet_proprietaires_0_droitProprietaire2" name="droitProprietaire2" class="form-control"><option value=""></option><option value="Propriétaire">Propriétaire</option><option value="Indivisaire">Indivisaire</option><option value="Usufruitier">Usufruitier</option><option value="Usufruitiere">Usufruitiere</option><option value="Nu-propriétaire">Nu-propriétaire</option><option value="Nue-propriétaire">Nue-propriétaire</option><option value="Exploitant">Exploitant</option></select>
+                            </div>
+                            <div class="col-md-2">
+                              <label>Statut marital</label>
+                              <select id="projet_proprietaires_0_maritalProprietaire2" name="maritalProprietaire2" class="form-control"><option value=""></option><option value="Célibataire">Célibataire</option><option value="Veuf">Veuf</option><option value="Veuve">Veuve</option><option value="Pacsé">Pacsé</option><option value="Pacsée">Pacsée</option><option value="Marié">Marié</option><option value="Mariée">Mariée</option><option value="Séparé">Séparé</option><option value="Séparée">Séparée</option></select>
+                            </div>
+                            <div class="col-md-2">
+                              <label>Date signature</label>
+                              {#                              {% if form.vars.value.dateSignatureProprietaire2 is defined %}{% else %}{{ form_widget(form.dateSignatureProprietaire2, {'value' : "now"|date("d/m/Y")}) }}{% endif %}#}
+                              <input type="text" id="projet_proprietaires_0_dateSignatureProprietaire2" name="dateSignatureProprietaire2" class="dureDateSignature datepicker-type form-control" placeholder="Date signature" value="{{ "now"|date("d/m/Y") }}">
+                            </div>
+                            {#{% if form.vars.value.dureeProprietaire is defined %}
+                              <div class="col-md-2">
+                                <label>Durée</label>
+                                <input type="text" id="projet_proprietaires_0_dureeProprietaire" name="dureeProprietaire" class="form-control" placeholder="Duree">
+                              </div>
+                            {% endif %}#}
+                            <div class="col-md-2">
+                              <label>Date échéance</label>
+                              {#                              {% if form.vars.value.dateEcheanceProprietaire2 is defined %}{% else %}{{ form_widget(form.dateEcheanceProprietaire2, {'value' : "now"|date("d/m/Y")}) }}{% endif %}#}
+                              <input type="text" id="projet_proprietaires_0_dateEcheanceProprietaire2" name="dateEcheanceProprietaire2" class="dureDateEcheance datepicker-type form-control" placeholder="Date échéance" value="{{ "now"|date("d/m/Y") }}">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="proprietaire3_entry info {% if form.vars.value.proprietaire3 is not defined or not form.vars.value.proprietaire3 %}hide{% endif %}" style="border: 2px solid #d7d7d7;padding: 7px;margin-top: 20px;">
+                          <div class="form-group">
+                            <div class="col-md-12"><button  class="btn btn-danger btn-xs remove-proprietaire" value="delete" style="float: right;"><i class="fa fa-minus-circle"></i> Supprimer</button></div>
+                          </div>
+                          <div class="form-group" style="margin-bottom: 15px;">
+                            <div class="col-md-3">
+                              <label>Civilité</label>
+                              <select id="projet_proprietaires_0_civiliteProprietaire3" name="civiliteProprietaire3" class="form-control"><option value=""></option><option value="Mr">Mr</option><option value="Mme">Mme</option><option value="Mlle">Mlle</option></select>
+                            </div>
+                            <div class="col-md-3">
+                              <label>Identité <span class="control-label required"></span></label>
+                              <input type="text" id="projet_proprietaires_0_proprietaire3" name="proprietaire3" class="form-control" placeholder="Proprietaire 3" style="display: none;">
+                            </div>
+                            <div class="col-md-3">
+                              <label>Qualité</label>
+                              <select id="projet_proprietaires_0_qualiteProprietaire3" name="qualiteProprietaire3" class="form-control"><option value=""></option><option value="Société">Société</option><option value="Personne">Personne</option></select>
+                            </div>
+                            <div class="col-md-3">
+                              <label>Accords</label>
+                              <select id="projet_proprietaires_0_accordProprietaire3" name="accordProprietaire3" class="form-control"><option value=""></option><option value="OUI">OUI</option><option value="NON">NON</option><option value="NEGO">NEGO</option></select>
+                            </div>
+                          </div>
+                          <div class="form-group" style="margin-bottom: 15px;">
+                            <div class="col-md-3">
+                              <label>Téléphone</label>
+                              <input type="text" id="projet_proprietaires_0_telephoneProprietaire3" name="telephoneProprietaire3" class="form-control" placeholder="Téléphone">
+                            </div>
+                            <div class="col-md-3">
+                              <label>Adresse</label>
+                              <input type="text" id="projet_proprietaires_0_adresseProprietaire3" name="adresseProprietaire3" class="form-control" placeholder="Adresse">
+                            </div>
+                            <div class="col-md-3">
+                              <label>Email</label>
+                              <input type="email" id="projet_proprietaires_0_emailProprietaire3" name="emailProprietaire3" class="form-control" placeholder="Email">
+                            </div>
+                            <div class="col-md-3">
+                              <label>Né le</label>
+                              <input type="text" id="projet_proprietaires_0_dateNaissanceProprietaire3" name="dateNaissanceProprietaire3" class="datepicker-type form-control" placeholder="Date naissance">
+                            </div>
+                          </div>
+                          <div class="form-group" style="margin-bottom: 15px;">
+                            <div class="col-md-2">
+                              <label>Né à</label>
+                              <input type="text" id="projet_proprietaires_0_lieuNaissanceProprietaire3" name="lieuNaissanceProprietaire3" class="form-control" placeholder="Lieu naissance">
+                            </div>
+                            <div class="col-md-2">
+                              <label>Droit</label>
+                              <select id="projet_proprietaires_0_droitProprietaire3" name="droitProprietaire3" class="form-control"><option value=""></option><option value="Propriétaire">Propriétaire</option><option value="Indivisaire">Indivisaire</option><option value="Usufruitier">Usufruitier</option><option value="Usufruitiere">Usufruitiere</option><option value="Nu-propriétaire">Nu-propriétaire</option><option value="Nue-propriétaire">Nue-propriétaire</option><option value="Exploitant">Exploitant</option></select>
+                            </div>
+                            <div class="col-md-2">
+                              <label>Statut marital</label>
+                              <select id="projet_proprietaires_0_maritalProprietaire3" name="maritalProprietaire3" class="form-control"><option value=""></option><option value="Célibataire">Célibataire</option><option value="Veuf">Veuf</option><option value="Veuve">Veuve</option><option value="Pacsé">Pacsé</option><option value="Pacsée">Pacsée</option><option value="Marié">Marié</option><option value="Mariée">Mariée</option><option value="Séparé">Séparé</option><option value="Séparée">Séparée</option></select>
+                            </div>
+                            <div class="col-md-2">
+                              <label>Date signature</label>
+                              {#                              {% if form.vars.value.dateSignatureProprietaire3 is defined %}{{ form_widget(form.dateSignatureProprietaire3) }}{% else %}{{ form_widget(form.dateSignatureProprietaire3, {'value' : "now"|date("d/m/Y")}) }}{% endif %}#}
+                              <input type="text" id="projet_proprietaires_0_dateSignatureProprietaire3" name="dateSignatureProprietaire3" class="datepicker-type form-control" placeholder="Date signature" value="{{ "now"|date("d/m/Y") }}">
+                            </div>
+                            {#<div class="col-md-3">
+                             <label>Durée</label>
+      #}{#                              {% if form.vars.value.dureeProprietaire is defined %}{{ form.vars.value.dureeProprietaire }}{% endif %}#}{#
+                             <input type="text" id="projet_proprietaires_0_dureeProprietaire" name="projet[proprietaires][0][dureeProprietaire]" class="form-control" placeholder="Duree">
+                           </div>#}
+                            <div class="col-md-2">
+                              <label>Date échéance</label>
+                              {#                              {% if form.vars.value.dateEcheanceProprietaire3 is defined %}{{ form_widget(form.dateEcheanceProprietaire3) }}{% else %}{{ form_widget(form.dateEcheanceProprietaire3, {'value' : "now"|date("d/m/Y")}) }}{% endif %}#}
+                              <input type="text" id="projet_proprietaires_0_dateEcheanceProprietaire3" name="dateEcheanceProprietaire3" class="datepicker-type form-control" placeholder="Date échéance" value="{{ "now"|date("d/m/Y") }}">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="proprietaire4_entry info {% if form.vars.value.proprietaire4 is not defined or not form.vars.value.proprietaire4 %}hide{% endif %}" style="border: 2px solid #d7d7d7;padding: 7px; margin-top: 20px;">
+                          <div class="form-group">
+                            <div class="col-md-12"><button  class="btn btn-danger btn-xs remove-proprietaire" value="delete" style="float: right;"><i class="fa fa-minus-circle"></i> Supprimer</button></div>
+                          </div>
+                          <div class="form-group" style="margin-bottom: 15px;">
+                            <div class="col-md-3">
+                              <label>Civilité</label>
+                              <select id="projet_proprietaires_0_civiliteProprietaire4" name="civiliteProprietaire4" class="form-control"><option value=""></option><option value="Mr">Mr</option><option value="Mme">Mme</option><option value="Mlle">Mlle</option></select>
+                            </div>
+                            <div class="col-md-3">
+                              <label>Identité <span class="control-label required"></span></label>
+                              <input type="text" id="projet_proprietaires_0_proprietaire4" name="proprietaire4" class="form-control" placeholder="Proprietaire 4" style="display: none;">
+                            </div>
+                            <div class="col-md-3">
+                              <label>Qualité</label>
+                              <select id="projet_proprietaires_0_qualiteProprietaire4" name="qualiteProprietaire4" class="form-control"><option value=""></option><option value="Société">Société</option><option value="Personne">Personne</option></select>
+                            </div>
+                            <div class="col-md-3">
+                              <label>Accords</label>
+                              <select id="projet_proprietaires_0_accordProprietaire4" name="accordProprietaire4" class="form-control"><option value=""></option><option value="OUI">OUI</option><option value="NON">NON</option><option value="NEGO">NEGO</option></select>
+                            </div>
+                          </div>
+                          <div class="form-group" style="margin-bottom: 15px;">
+                            <div class="col-md-3">
+                              <label>Téléphone</label>
+                              <input type="text" id="projet_proprietaires_0_telephoneProprietaire4" name="telephoneProprietaire4" class="form-control" placeholder="Téléphone">
+                            </div>
+                            <div class="col-md-3">
+                              <label>Adresse</label>
+                              <input type="text" id="projet_proprietaires_0_adresseProprietaire4" name="adresseProprietaire4" class="form-control" placeholder="Adresse">
+                            </div>
+                            <div class="col-md-3">
+                              <label>Email</label>
+                              <input type="email" id="projet_proprietaires_0_emailProprietaire4" name="emailProprietaire4" class="form-control" placeholder="Email">
+                            </div>
+                            <div class="col-md-3">
+                              <label>Né le</label>
+                              <input type="text" id="projet_proprietaires_0_dateNaissanceProprietaire4" name="dateNaissanceProprietaire4" class="datepicker-type form-control" placeholder="Date naissance">
+                            </div>
+                          </div>
+                          <div class="form-group" style="margin-bottom: 15px;">
+                            <div class="col-md-2">
+                              <label>Né à</label>
+                              <input type="text" id="projet_proprietaires_0_lieuNaissanceProprietaire4" name="lieuNaissanceProprietaire4" class="form-control" placeholder="Lieu naissance">
+                            </div>
+                            <div class="col-md-2">
+                              <label>Droit</label>
+                              <select id="projet_proprietaires_0_droitProprietaire4" name="droitProprietaire4" class="form-control"><option value=""></option><option value="Propriétaire">Propriétaire</option><option value="Indivisaire">Indivisaire</option><option value="Usufruitier">Usufruitier</option><option value="Usufruitiere">Usufruitiere</option><option value="Nu-propriétaire">Nu-propriétaire</option><option value="Nue-propriétaire">Nue-propriétaire</option><option value="Exploitant">Exploitant</option></select>
+                            </div>
+                            <div class="col-md-2">
+                              <label>Statut marital</label>
+                              <select id="projet_proprietaires_0_maritalProprietaire4" name="maritalProprietaire4" class="form-control"><option value=""></option><option value="Célibataire">Célibataire</option><option value="Veuf">Veuf</option><option value="Veuve">Veuve</option><option value="Pacsé">Pacsé</option><option value="Pacsée">Pacsée</option><option value="Marié">Marié</option><option value="Mariée">Mariée</option><option value="Séparé">Séparé</option><option value="Séparée">Séparée</option></select>
+                            </div>
+                            <div class="col-md-2">
+                              <label>Date signature</label>
+                              {#                              {% if form.vars.value.dateSignatureProprietaire4 is defined %}{{ form_widget(form.dateSignatureProprietaire4) }}{% else %}{{ form_widget(form.dateSignatureProprietaire4, {'value' : "now"|date("d/m/Y")}) }}{% endif %}#}
+                              <input type="text" id="projet_proprietaires_0_dateSignatureProprietaire4" name="dateSignatureProprietaire4" class="datepicker-type form-control" placeholder="Date signature" value="{{ "now"|date("d/m/Y") }}">
+                            </div>
+                            {#<div class="col-md-3">
+                              <label>Durée</label>
+      #}{#                              {% if form.vars.value.dureeProprietaire is defined %}{{ form.vars.value.dureeProprietaire }}{% endif %}#}{#
+                              <input type="text" id="projet_proprietaires_0_dureeProprietaire" name="projet[proprietaires][0][dureeProprietaire]" class="form-control" placeholder="Duree">
+                            </div>#}
+                            <div class="col-md-2">
+                              <label>Date échéance</label>
+                              {#                              {% if form.vars.value.dateEcheanceProprietaire4 is defined %}{{ form_widget(form.dateEcheanceProprietaire4) }}{% else %}{{ form_widget(form.dateEcheanceProprietaire4, {'value' : "now"|date("d/m/Y")}) }}{% endif %}#}
+                              <input type="text" id="projet_proprietaires_0_dateEcheanceProprietaire4" name="dateEcheanceProprietaire4" class="datepicker-type form-control" placeholder="Date échéance" value="{{ "now"|date("d/m/Y") }}">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div role="tabpanel" class="tab-pane fade" id="projet_exploitantm">
+                        <button type="button" id="projet_proprietaires_add_exploitant_entry" class="btn btn-primary btn-xs" style="margin-bottom: 7px; float: right;"><i class="fa fa-plus-square"></i> Exploitant</button>
+                        <br>
+                        <div class="form-group" style="margin-bottom: 15px;">
+                        </div>
+                        <div class="exploitant_entry info" style="border: 2px solid #d7d7d7;padding: 7px;">
+                          <div class="form-group" style="margin-bottom: 15px;">
+                            <div class="col-md-3">
+                              <label>Civilité</label>
+                              <select id="projet_proprietaires_0_civiliteExploitant" name="civiliteExploitant" class="form-control"><option value=""></option><option value="Mr">Mr</option><option value="Mme">Mme</option><option value="Mlle">Mlle</option></select>
+                            </div>
+                            <div class="col-md-3">
+                              <label>Identité <span class="control-label required"></span></label><br>
+                              <input type="text" id="projet_proprietaires_0_exploitant" name="exploitant" class="form-control" placeholder="Exploitant" style="display: none;">                            </div>
+                            <div class="col-md-3">
+                              <label>Qualité</label>
+                              <select id="projet_proprietaires_0_qualiteExploitant" name="qualiteExploitant" class="form-control"><option value=""></option><option value="Société">Société</option><option value="Personne">Personne</option></select>
+                            </div>
+                            <div class="col-md-3">
+                              <label>Accords</label>
+                              <select id="projet_proprietaires_0_accordExploitant" name="accordExploitant" class="form-control"><option value=""></option><option value="OUI">OUI</option><option value="NON">NON</option><option value="NEGO">NEGO</option></select>
+                            </div>
+                          </div>
+                          <div class="form-group" style="margin-bottom: 15px;">
+                            <div class="col-md-3">
+                              <label>Téléphone</label>
+                              <input type="text" id="projet_proprietaires_0_telephoneExploitant" name="telephoneExploitant" class="form-control" placeholder="Téléphone">
+                            </div>
+                            <div class="col-md-3">
+                              <label>Adresse</label>
+                              <input type="text" id="projet_proprietaires_0_adresseExploitant" name="adresseExploitant" class="form-control" placeholder="Adresse">
+                            </div>
+                            <div class="col-md-3">
+                              <label>Email</label>
+                              <input type="email" id="projet_proprietaires_0_emailExploitant" name="emailExploitant" class="form-control" placeholder="Email">
+                            </div>
+                            <div class="col-md-3">
+                              <label>Né le</label>
+                              <input type="text" id="projet_proprietaires_0_dateNaissanceExploitant" name="dateNaissanceExploitant" class="datepicker-type form-control" placeholder="Date naissance">
+                            </div>
+                          </div>
+                          <div class="form-group" style="margin-bottom: 15px;">
+                            <div class="col-md-2">
+                              <label>Né à</label>
+                              <input type="text" id="projet_proprietaires_0_lieuNaissanceExploitant" name="lieuNaissanceExploitant" class="form-control" placeholder="Lieu naissance exploitant">
+                            </div>
+                            <div class="col-md-2">
+                              <label>Droit</label>
+                              <select id="projet_proprietaires_0_droitExploitant" name="droitExploitant" class="form-control"><option value=""></option><option value="Propriétaire">Propriétaire</option><option value="Indivisaire">Indivisaire</option><option value="Usufruitier(e)">Usufruitier(e)</option><option value="Nu(e)-propriétaire)">Nu(e)-propriétaire</option></select>
+                            </div>
+                            <div class="col-md-2">
+                              <label>Statut marital</label>
+                              <select id="projet_proprietaires_0_maritalExploitant" name="maritalExploitant" class="form-control"><option value=""></option><option value="Célibataire">Célibataire</option><option value="Veuf">Veuf</option><option value="Veuve">Veuve</option><option value="Pacsé">Pacsé</option><option value="Pacsée">Pacsée</option><option value="Marié">Marié</option><option value="Mariée">Mariée</option><option value="Séparé">Séparé</option><option value="Séparée">Séparée</option></select>
+                            </div>
+                            <div class="col-md-2">
+                              <label>Date signature</label>
+                              {#                              {% if form.vars.value.dateSignatureExploitant is defined %}{{ form_widget(form.dateSignatureExploitant) }}{% else %}{{ form_widget(form.dateSignatureExploitant, {'value' : "now"|date("d/m/Y")}) }}{% endif %}#}
+                              <input type="text" id="projet_proprietaires_0_dateSignatureExploitant" name="dateSignatureExploitant" class="datepicker-type form-control" placeholder="Date signature" value="{{ "now"|date("d/m/Y") }}">
+                            </div>
+                            {% if form.vars.value.dureeProprietaire is defined %}
+                              <div class="col-md-2">
+                                <label>Durée</label>
+                                <input type="text" id="projet_proprietaires_0_dureeProprietaire" name="dureeProprietaire" class="form-control" placeholder="Duree">
+                              </div>
+                            {% endif %}
+                            <div class="col-md-2">
+                              <label>Date échéance</label>
+                              {#                              {% if form.vars.value.dateEcheanceExploitant is defined %}{{ form_widget(form.dateEcheanceExploitant) }}{% else %}{{ form_widget(form.dateEcheanceExploitant, {'value' : "now"|date("d/m/Y")}) }}{% endif %}#}
+                              <input type="text" id="projet_proprietaires_0_dateEcheanceExploitant" name="dateEcheanceExploitant" class="datepicker-type form-control" placeholder="Date échéance" value="{{ "now"|date("d/m/Y") }}">
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="exploitant2_entry info {% if form.vars.value.exploitant2 is not defined or not form.vars.value.exploitant2 %}hide{% endif %}" style="border: 2px solid #d7d7d7;padding: 7px;margin-top: 20px;">
+                          <div class="form-group">
+                            <div class="col-md-12"><button class="btn btn-danger btn-xs remove-exploitant" value="delete" style="float: right;"><i class="fa fa-minus-circle"></i> Supprimer</button></div>
+                          </div>
+                          <div class="form-group" style="margin-bottom: 15px;">
+                            <div class="col-md-3">
+                              <label>Civilité</label>
+                              <select id="projet_proprietaires_0_civiliteExploitant2" name="civiliteExploitant2" class="form-control"><option value=""></option><option value="Mr">Mr</option><option value="Mme">Mme</option><option value="Mlle">Mlle</option></select>
+                            </div>
+                            <div class="col-md-3">
+                              <label>Identité <span class="control-label required"></span></label><br>
+                              <input type="text" id="projet_proprietaires_0_exploitant2" name="exploitant2" class="form-control" placeholder="Exploitant 2" style="display: none;">
+                            </div>
+                            <div class="col-md-3">
+                              <label>Qualité</label>
+                              <select id="projet_proprietaires_0_qualiteExploitant2" name="qualiteExploitant2" class="form-control"><option value=""></option><option value="Société">Société</option><option value="Personne">Personne</option></select>
+                            </div>
+                            <div class="col-md-3">
+                              <label>Accords</label>
+                              <select id="projet_proprietaires_0_accordExploitant2" name="accordExploitant2" class="form-control"><option value=""></option><option value="OUI">OUI</option><option value="NON">NON</option><option value="NEGO">NEGO</option></select>                            </div>
+                          </div>
+                          <div class="form-group" style="margin-bottom: 15px;">
+                            <div class="col-md-3">
+                              <label>Téléphone</label>
+                              <input type="text" id="projet_proprietaires_0_telephoneExploitant2" name="telephoneExploitant2" class="form-control" placeholder="Téléphone">
+                            </div>
+                            <div class="col-md-3">
+                              <label>Adresse</label>
+                              <input type="text" id="projet_proprietaires_0_adresseExploitant2" name="adresseExploitant2" class="form-control" placeholder="Adresse">
+                            </div>
+                            <div class="col-md-3">
+                              <label>Email</label>
+                              <input type="email" id="projet_proprietaires_0_emailExploitant2" name="emailExploitant2" class="form-control" placeholder="Email">
+                            </div>
+                            <div class="col-md-3">
+                              <label>Né le</label>
+                              <input type="text" id="projet_proprietaires_0_dateNaissanceExploitant2" name="dateNaissanceExploitant2" class="datepicker-type form-control" placeholder="Date naissance">
+                            </div>
+                          </div>
+                          <div class="form-group" style="margin-bottom: 15px;">
+                            <div class="col-md-2">
+                              <label>Né à</label>
+                              <input type="text" id="projet_proprietaires_0_lieuNaissanceExploitant2" name="lieuNaissanceExploitant2" class="form-control" placeholder="Lieu naissance exploitant">
+                            </div>
+                            <div class="col-md-2">
+                              <label>Droit</label>
+                              <select id="projet_proprietaires_0_droitExploitant2" name="droitExploitant2" class="form-control"><option value=""></option><option value="Propriétaire">Propriétaire</option><option value="Indivisaire">Indivisaire</option><option value="Usufruitier(e)">Usufruitier(e)</option><option value="Nu(e)-propriétaire)">Nu(e)-propriétaire</option></select>
+                            </div>
+                            <div class="col-md-2">
+                              <label>Statut marital</label>
+                              <select id="projet_proprietaires_0_maritalExploitant2" name="maritalExploitant2" class="form-control"><option value=""></option><option value="Célibataire">Célibataire</option><option value="Veuf">Veuf</option><option value="Veuve">Veuve</option><option value="Pacsé">Pacsé</option><option value="Pacsée">Pacsée</option><option value="Marié">Marié</option><option value="Mariée">Mariée</option><option value="Séparé">Séparé</option><option value="Séparée">Séparée</option></select>
+                            </div>
+                            <div class="col-md-2">
+                              <label>Date signature</label>
+                              {#                              {% if form.vars.value.dateSignatureExploitant2 is defined %}{{ form_widget(form.dateSignatureExploitant2) }}{% else %}{{ form_widget(form.dateSignatureExploitant2, {'value' : "now"|date("d/m/Y")}) }}{% endif %}#}
+                              <input type="text" id="projet_proprietaires_0_dateSignatureExploitant2" name="dateSignatureExploitant2" class="datepicker-type form-control" placeholder="Date signature" value="{{ "now"|date("d/m/Y") }}">
+                            </div>
+                            {% if form.vars.value.dureeProprietaire is defined %}
+                              <div class="col-md-2">
+                                <label>Durée</label>
+                                <input type="text" id="projet_proprietaires_0_dureeProprietaire" name="projet[proprietaires][0][dureeProprietaire]" class="form-control" placeholder="Duree">
+                              </div>
+                            {% endif %}
+                            <div class="col-md-2">
+                              <label>Date échéance</label>
+                              {#                              {% if form.vars.value.dateEcheanceExploitant2 is defined %}{{ form_widget(form.dateEcheanceExploitant2) }}{% else %}{{ form_widget(form.dateEcheanceExploitant2, {'value' : "now"|date("d/m/Y")}) }}{% endif %}#}
+                              <input type="text" id="projet_proprietaires_0_dateEcheanceExploitant2" name="dateEcheanceExploitant2" class="datepicker-type form-control" placeholder="Date échéance" value="{{ "now"|date("d/m/Y") }}">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="exploitant3_entry info {% if form.vars.value.exploitant3 is not defined or not form.vars.value.exploitant3 %}hide{% endif %}" style="border: 2px solid #d7d7d7;padding: 7px;margin-top: 20px;">
+                          <div class="form-group">
+                            <div class="col-md-12"><button class="btn btn-danger btn-xs remove-exploitant" value="delete" style="float: right;"><i class="fa fa-minus-circle"></i> Supprimer</button></div>
+                          </div>
+                          <div class="form-group" style="margin-bottom: 15px;">
+                            <div class="col-md-3">
+                              <label>Civilité</label>
+                              <select id="projet_proprietaires_0_civiliteExploitant3" name="civiliteExploitant3" class="form-control"><option value=""></option><option value="Mr">Mr</option><option value="Mme">Mme</option><option value="Mlle">Mlle</option></select>
+                            </div>
+                            <div class="col-md-3">
+                              <label>Identité <span class="control-label required"></span></label><br>
+                              <input type="text" id="projet_proprietaires_0_exploitant3" name="exploitant3" class="form-control" placeholder="Exploitant 3" style="display: none;">
+                            </div>
+                            <div class="col-md-3">
+                              <label>Qualité</label>
+                              <select id="projet_proprietaires_0_qualiteExploitant3" name="qualiteExploitant3" class="form-control"><option value=""></option><option value="Société">Société</option><option value="Personne">Personne</option></select>
+                            </div>
+                            <div class="col-md-3">
+                              <label>Accords</label>
+                              <select id="projet_proprietaires_0_accordExploitant3" name="accordExploitant3" class="form-control"><option value=""></option><option value="OUI">OUI</option><option value="NON">NON</option><option value="NEGO">NEGO</option></select>
+                            </div>
+                          </div>
+                          <div class="form-group" style="margin-bottom: 15px;">
+                            <div class="col-md-3">
+                              <label>Téléphone</label>
+                              <input type="text" id="projet_proprietaires_0_telephoneExploitant3" name="telephoneExploitant3" class="form-control" placeholder="Téléphone">
+                            </div>
+                            <div class="col-md-3">
+                              <label>Adresse</label>
+                              <input type="text" id="projet_proprietaires_0_adresseExploitant3" name="adresseExploitant3" class="form-control" placeholder="Adresse">
+                            </div>
+                            <div class="col-md-3">
+                              <label>Email</label>
+                              <input type="email" id="projet_proprietaires_0_emailExploitant3" name="emailExploitant3" class="form-control" placeholder="Email">
+                            </div>
+                            <div class="col-md-3">
+                              <label>Né le</label>
+                              <input type="text" id="projet_proprietaires_0_dateNaissanceExploitant3" name="dateNaissanceExploitant3" class="datepicker-type form-control" placeholder="Date naissance">
+                            </div>
+                          </div>
+                          <div class="form-group" style="margin-bottom: 15px;">
+                            <div class="col-md-2">
+                              <label>Né à</label>
+                              <input type="text" id="projet_proprietaires_0_lieuNaissanceExploitant3" name="lieuNaissanceExploitant3" class="form-control" placeholder="Lieu naissance exploitant">
+                            </div>
+                            <div class="col-md-2">
+                              <label>Droit</label>
+                              <select id="projet_proprietaires_0_droitExploitant3" name="droitExploitant3" class="form-control"><option value=""></option><option value="Propriétaire">Propriétaire</option><option value="Indivisaire">Indivisaire</option><option value="Usufruitier(e)">Usufruitier(e)</option><option value="Nu(e)-propriétaire)">Nu(e)-propriétaire</option></select>
+                            </div>
+                            <div class="col-md-2">
+                              <label>Statut marital</label>
+                              <select id="projet_proprietaires_0_maritalExploitant3" name="maritalExploitant3" class="form-control"><option value=""></option><option value="Célibataire">Célibataire</option><option value="Veuf">Veuf</option><option value="Veuve">Veuve</option><option value="Pacsé">Pacsé</option><option value="Pacsée">Pacsée</option><option value="Marié">Marié</option><option value="Mariée">Mariée</option><option value="Séparé">Séparé</option><option value="Séparée">Séparée</option></select>
+                            </div>
+                            <div class="col-md-2">
+                              <label>Date signature</label>
+                              {#                              {% if form.vars.value.dateSignatureExploitant3 is defined %}{{ form_widget(form.dateSignatureExploitant3) }}{% else %}{{ form_widget(form.dateSignatureExploitant3, {'value' : "now"|date("d/m/Y")}) }}{% endif %}#}
+                              <input type="text" id="projet_proprietaires_0_dateSignatureExploitant3" name="dateSignatureExploitant3" class="datepicker-type form-control" placeholder="Date signature" value="{{ "now"|date("d/m/Y") }}">
+                            </div>
+                            {% if form.vars.value.dureeProprietaire is defined %}
+                              <div class="col-md-2">
+                                <label>Durée</label>
+                                <input type="text" id="projet_proprietaires_0_dureeProprietaire" name="dureeProprietaire" class="form-control" placeholder="Duree">
+                              </div>
+                            {% endif %}
+                            <div class="col-md-2">
+                              <label>Date échéance</label>
+                              {#                              {% if form.vars.value.dateEcheanceExploitant3 is defined %}{{ form_widget(form.dateEcheanceExploitant3) }}{% else %}{{ form_widget(form.dateEcheanceExploitant3, {'value' : "now"|date("d/m/Y")}) }}{% endif %}#}
+                              <input type="text" id="projet_proprietaires_0_dateEcheanceExploitant3" name="dateEcheanceExploitant3" class="datepicker-type form-control" placeholder="Date échéance" value="{{ "now"|date("d/m/Y") }}">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <input type="hidden" class="edit_propId" name="edit_proprietaire">
+                      <input type="hidden" class="edit_propExp" name="edit_propExp">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="btn_closeProprieModal">Close</button>
+                <button type="button" class="btn btn-primary" id="savePropriet">Save changes</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </fieldset>
 
       <fieldset class="hide" id="tab_concertation">
@@ -486,8 +1325,8 @@
           </div>
         </div>
       </fieldset>
-
     </div>
+
     <div class="col-sm-offset-1 col-sm-5">
       <div id="map" class="map map-home" style="height: 500px; margin-bottom: 20px;"></div>
       <div id="parcelleMap" class="map map-home" style="height: 500px; margin-bottom: 20px;"></div>
@@ -531,10 +1370,10 @@
        
     </div>
   </div>
-  
+
+
   <div class="row">
     <div class="col-xs-12">
-    
       {{ form_rest(form) }}
     </div>
   </div>
@@ -1415,7 +2254,7 @@
         loadAllParcellesTags();
       }
     });
-    
+
     function reverseGeolocalisation(query, update_marker) {
       var nominatimUrl = 'https://nominatim.openstreetmap.org/search';
       $.ajax({
@@ -2246,15 +3085,21 @@
         if($collectionHolder.children().length) $('#projet_finances_duplicate_entry').removeClass('disabled');
       }
     });
-    
+    bindfunctions();
     var $collectionHolderProprietaire = $('#projet_proprietaires');
     var prototypeproprietaire = $collectionHolderProprietaire.data('prototype');
 
     $('#projet_proprietaires_add_entry').click(function () {
-      var length = $collectionHolderProprietaire.children().length / 7;
-      var entry = prototypeproprietaire.replace(/__name__label__/g, length);
-      entry = entry.replace(/__name__/g, length);
-      $collectionHolderProprietaire.append(entry);
+      var length = $('#projet_proprietairesm').children().length / 7;
+      // var length = $collectionHolderProprietaire.children().length / 7;
+      // var entry = prototypeproprietaire.replace(/__name__label__/g, length);
+      // entry = entry.replace(/__name__/g, length);
+      // $collectionHolderProprietaire.append(entry);
+
+      // $('.proprietaires-body').empty();
+      // $('.proprietaires-body').append(entry);
+      $('.edit_propId').val('');
+      $('#proprietairesModal').modal('show');
 
       $('#projet_proprietaires_' + length + '_accordProprietaire').val('NON');
       $('#projet_proprietaires_' + length + '_accordExploitant').val('NON');
@@ -2456,7 +3301,866 @@
       }
     });
 
-    $('#projet_proprietaires_add_proprietaire_entry').click(function () {
+    function bindfunctions(){
+      /*$('#projet_proprietaires_add_proprietaire_entry').click(function () {
+        if (!$(this).hasClass('disabled') && $collectionHolderProprietaire.find('div.info').length == 7) {
+          if ($collectionHolderProprietaire.find('tr[class*="info"][class*="proprietaire"][class*="hide"]:eq(0)').length) {
+            $collectionHolderProprietaire.find('tr[class*="info"][class*="proprietaire"][class*="hide"]:eq(0)').removeClass('hide');
+            if (!$collectionHolderProprietaire.find('tr[class*="info"][class*="proprietaire"][class*="hide"]:eq(0)').length) {
+              $('#projet_proprietaires_add_proprietaire_entry').addClass('disabled');
+            }
+          }
+        }
+      });*/
+
+      //Add/show properties in popup box when click on add properties button
+      $('#projet_proprietaires_add_proprietaire_entry').click(function () {
+        if (!$(this).hasClass('disabled') && $('#projet_proprietairesm').find('div.info').length == 4) {
+          if ($('#projet_proprietairesm').find('div[class*="info"][class*="proprietaire"][class*="hide"]:eq(0)').length) {
+            if($(".edit_propId").val() != '')
+            {
+              
+              $('#projet_proprietairesm').find('div[class*="info"][class*="proprietaire"][class*="hide"]:eq(0)').find('.dureDateEcheance').val($('#projet_proprietairesm').find('div.info:eq(0)').find('#projet_proprietaires_0_dateEcheanceProprietaire').val())
+            }
+            $('#projet_proprietairesm').find('div[class*="info"][class*="proprietaire"][class*="hide"]:eq(0)').removeClass('hide');
+            
+            if (!$('#projet_proprietairesm').find('div[class*="info"][class*="proprietaire"][class*="hide"]:eq(0)').length) {
+              $('#projet_proprietaires_add_proprietaire_entry').addClass('disabled');
+            }
+          }
+        }
+
+      });
+
+      $('#projet_proprietaires_add_exploitant_entry').click(function () {
+        if (!$(this).hasClass('disabled') && $('#projet_exploitantm').find('div.info').length == 3) {
+          if ($('#projet_exploitantm').find('div[class*="info"][class*="exploitant"][class*="hide"]:eq(0)').length) {
+            if($(".edit_propId").val() != '')
+            {
+              
+              $('#projet_proprietairesm').find('div[class*="info"][class*="exploitant"][class*="hide"]:eq(0)').find('.dureDateEcheance').val($('#projet_proprietairesm').find('div.info:eq(0)').find('#projet_proprietaires_0_dateEcheanceProprietaire').val())
+            }
+            $('#projet_exploitantm').find('div[class*="info"][class*="exploitant"][class*="hide"]:eq(0)').removeClass('hide');
+            if (!$('#projet_exploitantm').find('div[class*="info"][class*="exploitant"][class*="hide"]:eq(0)').length) {
+              $('#projet_proprietaires_add_exploitant_entry').addClass('disabled');
+            }
+          }
+        }
+      });
+
+
+      $('#projet_proprietairesm').on('change', '[id$="_dureeProprietaire"], [id$="_dateSignatureProprietaire"], [id$="_dateSignatureProprietaire2"], [id$="_dateSignatureProprietaire3"], [id$="_dateSignatureProprietaire4"], [id$="_dateSignatureExploitant"], [id$="_dateSignatureExploitant2"], [id$="_dateSignatureExploitant3"]', function () {
+      
+        var id = $(this).attr('id').match(/\d+/);
+        id = parseInt(id);
+
+        if($('#projet_proprietaires_'+id+'_dateSignatureProprietaire').val() && $('#projet_proprietaires_'+id+'_dureeProprietaire').val()) {
+          var duree = $('#projet_proprietaires_'+id+'_dureeProprietaire').val().trim();
+          var dateSplitted = $('#projet_proprietaires_'+id+'_dateSignatureProprietaire').val().trim().split('/');
+          var year  = dateSplitted[2];
+          var month = dateSplitted[1];
+          var day   = dateSplitted[0];
+          var dateEcheanceProprietaire  = new Date((parseInt(year) + parseInt(duree)), month, day);
+          $('#projet_proprietaires_'+id+'_dateEcheanceProprietaire').val(('0' + dateEcheanceProprietaire.getDate()).slice(-2) + '/' + ('0' + dateEcheanceProprietaire.getMonth()).slice(-2) + '/' + dateEcheanceProprietaire.getFullYear());
+        }
+        if($('#projet_proprietaires_'+id+'_dateSignatureProprietaire2').val() && $('#projet_proprietaires_'+id+'_dureeProprietaire').val()) {
+          var duree = $('#projet_proprietaires_'+id+'_dureeProprietaire').val().trim();
+          var dateSplitted = $('#projet_proprietaires_'+id+'_dateSignatureProprietaire2').val().trim().split('/');
+          var year  = dateSplitted[2];
+          var month = dateSplitted[1];
+          var day   = dateSplitted[0];
+          var dateEcheanceProprietaire  = new Date((parseInt(year) + parseInt(duree)), month, day);
+          $('#projet_proprietaires_'+id+'_dateEcheanceProprietaire2').val(('0' + dateEcheanceProprietaire.getDate()).slice(-2) + '/' + ('0' + dateEcheanceProprietaire.getMonth()).slice(-2) + '/' + dateEcheanceProprietaire.getFullYear());
+        }
+        if($('#projet_proprietaires_'+id+'_dateSignatureProprietaire3').val() && $('#projet_proprietaires_'+id+'_dureeProprietaire').val()) {
+          var duree = $('#projet_proprietaires_'+id+'_dureeProprietaire').val().trim();
+          var dateSplitted = $('#projet_proprietaires_'+id+'_dateSignatureProprietaire3').val().trim().split('/');
+          var year  = dateSplitted[2];
+          var month = dateSplitted[1];
+          var day   = dateSplitted[0];
+          var dateEcheanceProprietaire  = new Date((parseInt(year) + parseInt(duree)), month, day);
+          $('#projet_proprietaires_'+id+'_dateEcheanceProprietaire3').val(('0' + dateEcheanceProprietaire.getDate()).slice(-2) + '/' + ('0' + dateEcheanceProprietaire.getMonth()).slice(-2) + '/' + dateEcheanceProprietaire.getFullYear());
+        }
+        if($('#projet_proprietaires_'+id+'_dateSignatureProprietaire4').val() && $('#projet_proprietaires_'+id+'_dureeProprietaire').val()) {
+          var duree = $('#projet_proprietaires_'+id+'_dureeProprietaire').val().trim();
+          var dateSplitted = $('#projet_proprietaires_'+id+'_dateSignatureProprietaire4').val().trim().split('/');
+          var year  = dateSplitted[2];
+          var month = dateSplitted[1];
+          var day   = dateSplitted[0];
+          var dateEcheanceProprietaire  = new Date((parseInt(year) + parseInt(duree)), month, day);
+          $('#projet_proprietaires_'+id+'_dateEcheanceProprietaire4').val(('0' + dateEcheanceProprietaire.getDate()).slice(-2) + '/' + ('0' + dateEcheanceProprietaire.getMonth()).slice(-2) + '/' + dateEcheanceProprietaire.getFullYear());
+        }
+        if($('#projet_proprietaires_'+id+'_dateSignatureExploitant').val() && $('#projet_proprietaires_'+id+'_dureeProprietaire').val()) {
+          var duree = $('#projet_proprietaires_'+id+'_dureeProprietaire').val().trim();
+          var dateSplitted = $('#projet_proprietaires_'+id+'_dateSignatureExploitant').val().trim().split('/');
+          var year  = dateSplitted[2];
+          var month = dateSplitted[1];
+          var day   = dateSplitted[0];
+          var dateEcheanceExploitant  = new Date((parseInt(year) + parseInt(duree)), month, day);
+          $('#projet_proprietaires_'+id+'_dateEcheanceExploitant').val(('0' + dateEcheanceExploitant.getDate()).slice(-2) + '/' + ('0' + dateEcheanceExploitant.getMonth()).slice(-2) + '/' + dateEcheanceExploitant.getFullYear());
+        }
+        if($('#projet_proprietaires_'+id+'_dateSignatureExploitant2').val() && $('#projet_proprietaires_'+id+'_dureeProprietaire').val()) {
+          var duree = $('#projet_proprietaires_'+id+'_dureeProprietaire').val().trim();
+          var dateSplitted = $('#projet_proprietaires_'+id+'_dateSignatureExploitant2').val().trim().split('/');
+          var year  = dateSplitted[2];
+          var month = dateSplitted[1];
+          var day   = dateSplitted[0];
+          var dateEcheanceExploitant  = new Date((parseInt(year) + parseInt(duree)), month, day);
+          $('#projet_proprietaires_'+id+'_dateEcheanceExploitant2').val(('0' + dateEcheanceExploitant.getDate()).slice(-2) + '/' + ('0' + dateEcheanceExploitant.getMonth()).slice(-2) + '/' + dateEcheanceExploitant.getFullYear());
+        }
+        if($('#projet_proprietaires_'+id+'_dateSignatureExploitant3').val() && $('#projet_proprietaires_'+id+'_dureeProprietaire').val()) {
+          var duree = $('#projet_proprietaires_'+id+'_dureeProprietaire').val().trim();
+          var dateSplitted = $('#projet_proprietaires_'+id+'_dateSignatureExploitant3').val().trim().split('/');
+          var year  = dateSplitted[2];
+          var month = dateSplitted[1];
+          var day   = dateSplitted[0];
+          var dateEcheanceExploitant  = new Date((parseInt(year) + parseInt(duree)), month, day);
+          $('#projet_proprietaires_'+id+'_dateEcheanceExploitant3').val(('0' + dateEcheanceExploitant.getDate()).slice(-2) + '/' + ('0' + dateEcheanceExploitant.getMonth()).slice(-2) + '/' + dateEcheanceExploitant.getFullYear());
+        }
+      });
+
+      $("#savePropriet").on("click", function () {
+
+        //below code for add added data as hidden
+        var parcelles = $('#projet_proprietaires_parcelles').val();
+
+        var editPropId = $(".edit_propId").val();
+
+        var propId = $('.proprietaires_hidden').find('.proprietaire_info').length;
+        if(editPropId !== '')
+        {
+          propId = editPropId;
+        }
+        
+        var tr_proprietaire = $('#projet_proprietairesm').find('div.info:eq(0)');
+        var tr_proprietaire2 = $('#projet_proprietairesm').find('div.info:eq(1)');
+        var tr_proprietaire3 = $('#projet_proprietairesm').find('div.info:eq(2)');
+        var tr_proprietaire4 = $('#projet_proprietairesm').find('div.info:eq(3)');
+
+        if(parcelles == '' || tr_proprietaire.find('input[id$="_proprietaire"]').val() == ''){
+          alert("Please enter parcelles and Identité");
+          return false;
+        }
+
+        var tr_exploitant = $('#projet_exploitantm').find('div.info:eq(0)');
+        var tr_exploitant2 = $('#projet_exploitantm').find('div.info:eq(1)');
+        var tr_exploitant3 = $('#projet_exploitantm').find('div.info:eq(2)');
+
+        var inputName = "projet[proprietaires]["+propId+"]";
+        var proprietaire_entry = '<div class="proprietaire_info" data-pid="'+propId+'">';
+
+        proprietaire_entry += '<input type="hidden" class="proprietaire1" name="'+inputName+'[parcelles]" value="'+parcelles+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire1" name="'+inputName+'[civiliteProprietaire]" value="'+tr_proprietaire.find('select[id$="_civiliteProprietaire"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire1" name="'+inputName+'[proprietaire]" value="'+tr_proprietaire.find('input[id$="_proprietaire"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire1" name="'+inputName+'[qualiteProprietaire]" value="'+tr_proprietaire.find('select[id$="_qualiteProprietaire"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire1" name="'+inputName+'[accordProprietaire]" value="'+tr_proprietaire.find('select[id$="_accordProprietaire"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire1" name="'+inputName+'[telephoneProprietaire]" value="'+tr_proprietaire.find('input[id$="_telephoneProprietaire"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire1" name="'+inputName+'[adresseProprietaire]" value="'+tr_proprietaire.find('input[id$="_adresseProprietaire"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire1" name="'+inputName+'[emailProprietaire]" value="'+tr_proprietaire.find('input[id$="_emailProprietaire"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire1" name="'+inputName+'[dateNaissanceProprietaire]" value="'+tr_proprietaire.find('input[id$="_dateNaissanceProprietaire"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire1" name="'+inputName+'[lieuNaissanceProprietaire]" value="'+tr_proprietaire.find('input[id$="_lieuNaissanceProprietaire"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire1" name="'+inputName+'[droitProprietaire]" value="'+tr_proprietaire.find('select[id$="_droitProprietaire"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire1" name="'+inputName+'[maritalProprietaire]" value="'+tr_proprietaire.find('select[id$="_maritalProprietaire"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire1" name="'+inputName+'[dateSignatureProprietaire]" value="'+tr_proprietaire.find('input[id$="_dateSignatureProprietaire"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire1" name="'+inputName+'[dureeProprietaire]" value="'+tr_proprietaire.find('input[id$="_dureeProprietaire"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire1" name="'+inputName+'[dateEcheanceProprietaire]" value="'+tr_proprietaire.find('input[id$="_dateEcheanceProprietaire"]').val()+'">';
+
+        proprietaire_entry += '<input type="hidden" class="proprietaire2" name="'+inputName+'[civiliteProprietaire2]" value="'+tr_proprietaire2.find('select[id$="_civiliteProprietaire2"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire2" name="'+inputName+'[proprietaire2]" value="'+tr_proprietaire2.find('input[id$="_proprietaire2"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire2" name="'+inputName+'[qualiteProprietaire2]" value="'+tr_proprietaire2.find('select[id$="_qualiteProprietaire2"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire2" name="'+inputName+'[accordProprietaire2]" value="'+tr_proprietaire2.find('select[id$="_accordProprietaire2"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire2" name="'+inputName+'[telephoneProprietaire2]" value="'+tr_proprietaire2.find('input[id$="_telephoneProprietaire2"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire2" name="'+inputName+'[adresseProprietaire2]" value="'+tr_proprietaire2.find('input[id$="_adresseProprietaire2"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire2" name="'+inputName+'[emailProprietaire2]" value="'+tr_proprietaire2.find('input[id$="_emailProprietaire2"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire2" name="'+inputName+'[dateNaissanceProprietaire2]" value="'+tr_proprietaire2.find('input[id$="_dateNaissanceProprietaire2"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire2" name="'+inputName+'[lieuNaissanceProprietaire2]" value="'+tr_proprietaire2.find('input[id$="_lieuNaissanceProprietaire2"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire2" name="'+inputName+'[droitProprietaire2]" value="'+tr_proprietaire2.find('select[id$="_droitProprietaire2"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire2" name="'+inputName+'[maritalProprietaire2]" value="'+tr_proprietaire2.find('select[id$="_maritalProprietaire2"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire2" name="'+inputName+'[dateSignatureProprietaire2]" value="'+tr_proprietaire2.find('input[id$="_dateSignatureProprietaire2"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire2" name="'+inputName+'[dateEcheanceProprietaire2]" value="'+tr_proprietaire2.find('input[id$="_dateEcheanceProprietaire2"]').val()+'">';
+
+        proprietaire_entry += '<input type="hidden" class="proprietaire3" name="'+inputName+'[civiliteProprietaire3]" value="'+tr_proprietaire3.find('select[id$="_civiliteProprietaire3"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire3" name="'+inputName+'[proprietaire3]" value="'+tr_proprietaire3.find('input[id$="_proprietaire3"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire3" name="'+inputName+'[qualiteProprietaire3]" value="'+tr_proprietaire3.find('select[id$="_qualiteProprietaire3"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire3" name="'+inputName+'[accordProprietaire3]" value="'+tr_proprietaire3.find('select[id$="_accordProprietaire3"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire3" name="'+inputName+'[telephoneProprietaire3]" value="'+tr_proprietaire3.find('input[id$="_telephoneProprietaire3"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire3" name="'+inputName+'[adresseProprietaire3]" value="'+tr_proprietaire3.find('input[id$="_adresseProprietaire3"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire3" name="'+inputName+'[emailProprietaire3]" value="'+tr_proprietaire3.find('input[id$="_emailProprietaire3"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire3" name="'+inputName+'[dateNaissanceProprietaire3]" value="'+tr_proprietaire3.find('input[id$="_dateNaissanceProprietaire3"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire3" name="'+inputName+'[lieuNaissanceProprietaire3]" value="'+tr_proprietaire3.find('input[id$="_lieuNaissanceProprietaire3"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire3" name="'+inputName+'[droitProprietaire3]" value="'+tr_proprietaire3.find('select[id$="_droitProprietaire3"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire3" name="'+inputName+'[maritalProprietaire3]" value="'+tr_proprietaire3.find('select[id$="_maritalProprietaire3"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire3" name="'+inputName+'[dateSignatureProprietaire3]" value="'+tr_proprietaire3.find('input[id$="_dateSignatureProprietaire3"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire3" name="'+inputName+'[dateEcheanceProprietaire3]" value="'+tr_proprietaire3.find('input[id$="_dateEcheanceProprietaire3"]').val()+'">';
+
+        proprietaire_entry += '<input type="hidden" class="proprietaire4" name="'+inputName+'[civiliteProprietaire4]" value="'+tr_proprietaire4.find('select[id$="_civiliteProprietaire4"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire4" name="'+inputName+'[proprietaire4]" value="'+tr_proprietaire4.find('input[id$="_proprietaire4"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire4" name="'+inputName+'[qualiteProprietaire4]" value="'+tr_proprietaire4.find('select[id$="_qualiteProprietaire4"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire4" name="'+inputName+'[accordProprietaire4]" value="'+tr_proprietaire4.find('select[id$="_accordProprietaire4"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire4" name="'+inputName+'[telephoneProprietaire4]" value="'+tr_proprietaire4.find('input[id$="_telephoneProprietaire4"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire4" name="'+inputName+'[adresseProprietaire4]" value="'+tr_proprietaire4.find('input[id$="_adresseProprietaire4"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire4" name="'+inputName+'[emailProprietaire4]" value="'+tr_proprietaire4.find('input[id$="_emailProprietaire4"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire4" name="'+inputName+'[dateNaissanceProprietaire4]" value="'+tr_proprietaire4.find('input[id$="_dateNaissanceProprietaire4"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire4" name="'+inputName+'[lieuNaissanceProprietaire4]" value="'+tr_proprietaire4.find('input[id$="_lieuNaissanceProprietaire4"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire4" name="'+inputName+'[droitProprietaire4]" value="'+tr_proprietaire4.find('select[id$="_droitProprietaire4"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire4" name="'+inputName+'[maritalProprietaire4]" value="'+tr_proprietaire4.find('select[id$="_maritalProprietaire4"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire4" name="'+inputName+'[dateSignatureProprietaire4]" value="'+tr_proprietaire4.find('input[id$="_dateSignatureProprietaire4"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire4" name="'+inputName+'[dateEcheanceProprietaire4]" value="'+tr_proprietaire4.find('input[id$="_dateEcheanceProprietaire4"]').val()+'">';
+
+        proprietaire_entry += '<input type="hidden" class="exploitant1" name="'+inputName+'[civiliteExploitant]" value="'+tr_exploitant.find('select[id$="_civiliteExploitant"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="exploitant1" name="'+inputName+'[exploitant]" value="'+tr_exploitant.find('input[id$="_exploitant"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="exploitant1" name="'+inputName+'[qualiteExploitant]" value="'+tr_exploitant.find('select[id$="_qualiteExploitant"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="exploitant1" name="'+inputName+'[accordExploitant]" value="'+tr_exploitant.find('select[id$="_accordExploitant"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="exploitant1" name="'+inputName+'[telephoneExploitant]" value="'+tr_exploitant.find('input[id$="_telephoneExploitant"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="exploitant1" name="'+inputName+'[adresseExploitant]" value="'+tr_exploitant.find('input[id$="_adresseExploitant"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="exploitant1" name="'+inputName+'[emailExploitant]" value="'+tr_exploitant.find('input[id$="_emailExploitant"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="exploitant1" name="'+inputName+'[dateNaissanceExploitant]" value="'+tr_exploitant.find('input[id$="_dateNaissanceExploitant"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="exploitant1" name="'+inputName+'[lieuNaissanceExploitant]" value="'+tr_exploitant.find('input[id$="_lieuNaissanceExploitant"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="exploitant1" name="'+inputName+'[droitExploitant]" value="'+tr_exploitant.find('select[id$="_droitExploitant"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="exploitant1" name="'+inputName+'[maritalExploitant]" value="'+tr_exploitant.find('select[id$="_maritalExploitant"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="exploitant1" name="'+inputName+'[dateSignatureExploitant]" value="'+tr_exploitant.find('input[id$="_dateSignatureExploitant"]').val()+'">';
+        //proprietaire_entry += '<input type="hidden" name="'+inputName+'[dureeProprietaire]" value="'+tr_proprietaire.find('input[id$="_dureeProprietaire"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="exploitant1" name="'+inputName+'[dateEcheanceExploitant]" value="'+tr_exploitant.find('input[id$="_dateEcheanceExploitant"]').val()+'">';
+
+        proprietaire_entry += '<input type="hidden" class="exploitant2" name="'+inputName+'[civiliteExploitant2]" value="'+tr_exploitant2.find('select[id$="_civiliteExploitant2"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="exploitant2" name="'+inputName+'[exploitant2]" value="'+tr_exploitant2.find('input[id$="_exploitant2"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="exploitant2" name="'+inputName+'[qualiteExploitant2]" value="'+tr_exploitant2.find('select[id$="_qualiteExploitant2"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="exploitant2" name="'+inputName+'[accordExploitant2]" value="'+tr_exploitant2.find('select[id$="_accordExploitant2"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="exploitant2" name="'+inputName+'[telephoneExploitant2]" value="'+tr_exploitant2.find('input[id$="_telephoneExploitant2"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="exploitant2" name="'+inputName+'[adresseExploitant2]" value="'+tr_exploitant2.find('input[id$="_adresseExploitant2"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="exploitant2" name="'+inputName+'[emailExploitant2]" value="'+tr_exploitant2.find('input[id$="_emailExploitant2"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="exploitant2" name="'+inputName+'[dateNaissanceExploitant2]" value="'+tr_exploitant2.find('input[id$="_dateNaissanceExploitant2"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="exploitant2" name="'+inputName+'[lieuNaissanceExploitant2]" value="'+tr_exploitant2.find('input[id$="_lieuNaissanceExploitant2"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="exploitant2" name="'+inputName+'[droitExploitant2]" value="'+tr_exploitant2.find('select[id$="_droitExploitant2"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="exploitant2" name="'+inputName+'[maritalExploitant2]" value="'+tr_exploitant2.find('select[id$="_maritalExploitant2"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="exploitant2" name="'+inputName+'[dateSignatureExploitant2]" value="'+tr_exploitant2.find('input[id$="_dateSignatureExploitant2"]').val()+'">';
+        //proprietaire_entry += '<input type="hidden" name="'+inputName+'[dureeProprietaire2]" value="'+tr_proprietaire.find('input[id$="_dureeProprietaire2"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="exploitant2" name="'+inputName+'[dateEcheanceExploitant2]" value="'+tr_exploitant2.find('input[id$="_dateEcheanceExploitant2"]').val()+'">';
+
+        proprietaire_entry += '<input type="hidden" class="exploitant3" name="'+inputName+'[civiliteExploitant3]" value="'+tr_exploitant3.find('select[id$="_civiliteExploitant3"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="exploitant3" name="'+inputName+'[exploitant3]" value="'+tr_exploitant3.find('input[id$="_exploitant3"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="exploitant3" name="'+inputName+'[qualiteExploitant3]" value="'+tr_exploitant3.find('select[id$="_qualiteExploitant3"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="exploitant3" name="'+inputName+'[accordExploitant3]" value="'+tr_exploitant3.find('select[id$="_accordExploitant3"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="exploitant3" name="'+inputName+'[telephoneExploitant3]" value="'+tr_exploitant3.find('input[id$="_telephoneExploitant3"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="exploitant3" name="'+inputName+'[adresseExploitant3]" value="'+tr_exploitant3.find('input[id$="_adresseExploitant3"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="exploitant3" name="'+inputName+'[emailExploitant3]" value="'+tr_exploitant3.find('input[id$="_emailExploitant3"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="exploitant3" name="'+inputName+'[dateNaissanceExploitant3]" value="'+tr_exploitant3.find('input[id$="_dateNaissanceExploitant3"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="exploitant3" name="'+inputName+'[lieuNaissanceExploitant3]" value="'+tr_exploitant3.find('input[id$="_lieuNaissanceExploitant3"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="exploitant3" name="'+inputName+'[droitExploitant3]" value="'+tr_exploitant3.find('select[id$="_droitExploitant3"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="exploitant3" name="'+inputName+'[maritalExploitant3]" value="'+tr_exploitant3.find('select[id$="_maritalExploitant3"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="exploitant3" name="'+inputName+'[dateSignatureExploitant3]" value="'+tr_exploitant3.find('input[id$="_dateSignatureExploitant3"]').val()+'">';
+        //proprietaire_entry += '<input type="hidden" name="'+inputName+'[dureeProprietaire3]" value="'+tr_proprietaire.find('input[id$="_dureeProprietaire3"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="exploitant3" name="'+inputName+'[dateEcheanceExploitant3]" value="'+tr_exploitant3.find('input[id$="_dateEcheanceExploitant3"]').val()+'">';
+
+
+        proprietaire_entry += '</div>';
+
+        //Below code for display added data as list in table after added in popup
+        var html_proprietaire1 = '';
+        html_proprietaire1 += '<tr data-propId="'+propId+'" data-pe="proprietaire1">';
+        html_proprietaire1 += '<td>'+parcelles+'</td>';
+        html_proprietaire1 += '<td>'+tr_proprietaire.find('select[id$="_civiliteProprietaire"]').val()+'</td>';
+        html_proprietaire1 += '<td>Propriétaire</td>';
+        html_proprietaire1 += '<td>'+tr_proprietaire.find('input[id$="_proprietaire"]').val()+'</td>';
+        html_proprietaire1 += '<td>'+tr_proprietaire.find('select[id$="_qualiteProprietaire"]').val()+'</td>';
+        html_proprietaire1 += '<td>'+tr_proprietaire.find('input[id$="_telephoneProprietaire"]').val()+'</td>';
+        html_proprietaire1 += '<td>'+tr_proprietaire.find('input[id$="_adresseProprietaire"]').val()+'</td>';
+        html_proprietaire1 += '<td>'+tr_proprietaire.find('input[id$="_emailProprietaire"]').val()+'</td>';
+        html_proprietaire1 += '<td>'+tr_proprietaire.find('select[id$="_droitProprietaire"]').val()+'</td>';
+        html_proprietaire1 += '<td>'+tr_proprietaire.find('select[id$="_maritalProprietaire"]').val()+'</td>';
+        html_proprietaire1 += '<td>'+tr_proprietaire.find('input[id$="_dateSignatureProprietaire"]').val()+'</td>';
+        html_proprietaire1 += '<td>'+tr_proprietaire.find('input[id$="_dureeProprietaire"]').val()+'</td>';
+        html_proprietaire1 += '<td>'+tr_proprietaire.find('input[id$="_dateEcheanceProprietaire"]').val()+'</td>';
+        html_proprietaire1 += '<td><button class="btn btn-danger btn-xs button-prop-delete" title="Delete" style="margin-right: 5px;"><i class="fa fa-fw fa-trash"></i></button>';
+        html_proprietaire1 += '<button class="btn btn-warning btn-xs button-prop-edit" title="Edit"><i class="fa fa-fw fa-pencil"></i></button>';
+        html_proprietaire1 += '</td>';
+
+        html_proprietaire1 += '</tr>';
+
+        var html_proprietaire2 = '';
+        if(!tr_proprietaire2.hasClass('hide') && tr_proprietaire2.find('input[id$="_proprietaire2"]').val() != '')
+        {
+          html_proprietaire2 += '<tr data-propId="'+propId+'" data-pe="proprietaire2">';
+          html_proprietaire2 += '<td></td>';
+          html_proprietaire2 += '<td>'+tr_proprietaire2.find('select[id$="_civiliteProprietaire2"]').val()+'</td>';
+          html_proprietaire2 += '<td>Propriétaire2</td>';
+          html_proprietaire2 += '<td>'+tr_proprietaire2.find('input[id$="_proprietaire2"]').val()+'</td>';
+          html_proprietaire2 += '<td>'+tr_proprietaire2.find('select[id$="_qualiteProprietaire2"]').val()+'</td>';
+          html_proprietaire2 += '<td>'+tr_proprietaire2.find('input[id$="_telephoneProprietaire2"]').val()+'</td>';
+          html_proprietaire2 += '<td>'+tr_proprietaire2.find('input[id$="_adresseProprietaire2"]').val()+'</td>';
+          html_proprietaire2 += '<td>'+tr_proprietaire2.find('input[id$="_emailProprietaire2"]').val()+'</td>';
+          html_proprietaire2 += '<td>'+tr_proprietaire2.find('select[id$="_droitProprietaire2"]').val()+'</td>';
+          html_proprietaire2 += '<td>'+tr_proprietaire2.find('select[id$="_maritalProprietaire2"]').val()+'</td>';
+          html_proprietaire2 += '<td>'+tr_proprietaire2.find('input[id$="_dateSignatureProprietaire2"]').val()+'</td>';
+          html_proprietaire2 += '<td></td>';
+          html_proprietaire2 += '<td>'+tr_proprietaire2.find('input[id$="_dateEcheanceProprietaire2"]').val()+'</td>';
+          html_proprietaire2 += '<td><button class="btn btn-danger btn-xs button-prop-delete" title="Delete"><i class="fa fa-fw fa-trash"></i></button>';
+
+          html_proprietaire2 += '</tr>';
+        }
+
+        var html_proprietaire3 = '';
+        if(!tr_proprietaire3.hasClass('hide') && tr_proprietaire3.find('input[id$="_proprietaire3"]').val() != '')
+        {
+          html_proprietaire3 += '<tr data-propId="'+propId+'" data-pe="proprietaire3">';
+          html_proprietaire3 += '<td></td>';
+          html_proprietaire3 += '<td>'+tr_proprietaire3.find('select[id$="_civiliteProprietaire3"]').val()+'</td>';
+          html_proprietaire3 += '<td>Propriétaire3</td>';
+          html_proprietaire3 += '<td>'+tr_proprietaire3.find('input[id$="_proprietaire3"]').val()+'</td>';
+          html_proprietaire3 += '<td>'+tr_proprietaire3.find('select[id$="_qualiteProprietaire3"]').val()+'</td>';
+          html_proprietaire3 += '<td>'+tr_proprietaire3.find('input[id$="_telephoneProprietaire3"]').val()+'</td>';
+          html_proprietaire3 += '<td>'+tr_proprietaire3.find('input[id$="_adresseProprietaire3"]').val()+'</td>';
+          html_proprietaire3 += '<td>'+tr_proprietaire3.find('input[id$="_emailProprietaire3"]').val()+'</td>';
+          html_proprietaire3 += '<td>'+tr_proprietaire3.find('select[id$="_droitProprietaire3"]').val()+'</td>';
+          html_proprietaire3 += '<td>'+tr_proprietaire3.find('select[id$="_maritalProprietaire3"]').val()+'</td>';
+          html_proprietaire3 += '<td>'+tr_proprietaire3.find('input[id$="_dateSignatureProprietaire3"]').val()+'</td>';
+          html_proprietaire3 += '<td></td>';
+          html_proprietaire3 += '<td>'+tr_proprietaire3.find('input[id$="_dateEcheanceProprietaire3"]').val()+'</td>';
+          html_proprietaire3 += '<td><button class="btn btn-danger btn-xs button-prop-delete" title="Delete"><i class="fa fa-fw fa-trash"></i></button>';
+
+          html_proprietaire3 += '</tr>';
+        }
+
+        var html_proprietaire4 = '';
+        if(!tr_proprietaire4.hasClass('hide') && tr_proprietaire4.find('input[id$="_proprietaire4"]').val() != '')
+        {
+          html_proprietaire4 += '<tr data-propId="'+propId+'" data-pe="proprietaire4">';
+          html_proprietaire4 += '<td></td>';
+          html_proprietaire4 += '<td>'+tr_proprietaire4.find('select[id$="_civiliteProprietaire4"]').val()+'</td>';
+          html_proprietaire4 += '<td>Propriétaire4</td>';
+          html_proprietaire4 += '<td>'+tr_proprietaire4.find('input[id$="_proprietaire4"]').val()+'</td>';
+          html_proprietaire4 += '<td>'+tr_proprietaire4.find('select[id$="_qualiteProprietaire4"]').val()+'</td>';
+          html_proprietaire4 += '<td>'+tr_proprietaire4.find('input[id$="_telephoneProprietaire4"]').val()+'</td>';
+          html_proprietaire4 += '<td>'+tr_proprietaire4.find('input[id$="_adresseProprietaire4"]').val()+'</td>';
+          html_proprietaire4 += '<td>'+tr_proprietaire4.find('input[id$="_emailProprietaire4"]').val()+'</td>';
+          html_proprietaire4 += '<td>'+tr_proprietaire4.find('select[id$="_droitProprietaire4"]').val()+'</td>';
+          html_proprietaire4 += '<td>'+tr_proprietaire4.find('select[id$="_maritalProprietaire4"]').val()+'</td>';
+          html_proprietaire4 += '<td>'+tr_proprietaire4.find('input[id$="_dateSignatureProprietaire4"]').val()+'</td>';
+          html_proprietaire4 += '<td></td>';
+          html_proprietaire4 += '<td>'+tr_proprietaire4.find('input[id$="_dateEcheanceProprietaire4"]').val()+'</td>';
+          html_proprietaire4 += '<td><button class="btn btn-danger btn-xs button-prop-delete" title="Delete"><i class="fa fa-fw fa-trash"></i></button>';
+
+          html_proprietaire4 += '</tr>';
+        }
+
+        var html_exploitant = '';
+        if(!tr_exploitant.hasClass('hide') && tr_exploitant.find('input[id$="_exploitant"]').val() != '')
+        {
+          html_exploitant += '<tr data-propId="'+propId+'" data-pe="exploitant1">';
+          html_exploitant += '<td></td>';
+          html_exploitant += '<td>'+tr_exploitant.find('select[id$="_civiliteExploitant"]').val()+'</td>';
+          html_exploitant += '<td>Exploitant</td>';
+          html_exploitant += '<td>'+tr_exploitant.find('input[id$="_exploitant"]').val()+'</td>';
+          html_exploitant += '<td>'+tr_exploitant.find('select[id$="_qualiteExploitant"]').val()+'</td>';
+          html_exploitant += '<td>'+tr_exploitant.find('input[id$="_telephoneExploitant"]').val()+'</td>';
+          html_exploitant += '<td>'+tr_exploitant.find('input[id$="_adresseExploitant"]').val()+'</td>';
+          html_exploitant += '<td>'+tr_exploitant.find('input[id$="_emailExploitant"]').val()+'</td>';
+          html_exploitant += '<td>'+tr_exploitant.find('select[id$="_droitExploitant"]').val()+'</td>';
+          html_exploitant += '<td>'+tr_exploitant.find('select[id$="_maritalExploitant"]').val()+'</td>';
+          html_exploitant += '<td>'+tr_exploitant.find('input[id$="_dateSignatureExploitant"]').val()+'</td>';
+          html_exploitant += '<td></td>';
+          html_exploitant += '<td>'+tr_exploitant.find('input[id$="_dateEcheanceExploitant"]').val()+'</td>';
+          html_exploitant += '<td><button class="btn btn-danger btn-xs button-prop-delete" title="Delete"><i class="fa fa-fw fa-trash"></i></button>';
+
+          html_exploitant += '</tr>';
+        }
+
+        var html_exploitant2 = '';
+        if(!tr_exploitant2.hasClass('hide') && tr_exploitant2.find('input[id$="_exploitant2"]').val() != '')
+        {
+          html_exploitant2 += '<tr  data-propId="'+propId+'" data-pe="exploitant2">';
+          html_exploitant2 += '<td></td>';
+          html_exploitant2 += '<td>'+tr_exploitant2.find('select[id$="_civiliteExploitant2"]').val()+'</td>';
+          html_exploitant2 += '<td>Exploitant2</td>';
+          html_exploitant2 += '<td>'+tr_exploitant2.find('input[id$="_exploitant2"]').val()+'</td>';
+          html_exploitant2 += '<td>'+tr_exploitant2.find('select[id$="_qualiteExploitant2"]').val()+'</td>';
+          html_exploitant2 += '<td>'+tr_exploitant2.find('input[id$="_telephoneExploitant2"]').val()+'</td>';
+          html_exploitant2 += '<td>'+tr_exploitant2.find('input[id$="_adresseExploitant2"]').val()+'</td>';
+          html_exploitant2 += '<td>'+tr_exploitant2.find('input[id$="_emailExploitant2"]').val()+'</td>';
+          html_exploitant2 += '<td>'+tr_exploitant2.find('select[id$="_droitExploitant2"]').val()+'</td>';
+          html_exploitant2 += '<td>'+tr_exploitant2.find('select[id$="_maritalExploitant2"]').val()+'</td>';
+          html_exploitant2 += '<td>'+tr_exploitant2.find('input[id$="_dateSignatureExploitant2"]').val()+'</td>';
+          html_exploitant2 += '<td></td>';
+          html_exploitant2 += '<td>'+tr_exploitant2.find('input[id$="_dateEcheanceExploitant2"]').val()+'</td>';
+          html_exploitant2 += '<td><button class="btn btn-danger btn-xs button-prop-delete" title="Delete"><i class="fa fa-fw fa-trash"></i></button>';
+
+          html_exploitant2 += '</tr>';
+        }
+
+        var html_exploitant3 = '';
+        if(!tr_exploitant3.hasClass('hide') && tr_exploitant3.find('input[id$="_exploitant3"]').val() != '')
+        {
+          html_exploitant3 += '<tr  data-propId="'+propId+'" data-pe="exploitant3">';
+          html_exploitant3 += '<td></td>';
+          html_exploitant3 += '<td>'+tr_exploitant3.find('select[id$="_civiliteExploitant3"]').val()+'</td>';
+          html_exploitant3 += '<td>Exploitant3</td>';
+          html_exploitant3 += '<td>'+tr_exploitant3.find('input[id$="_exploitant3"]').val()+'</td>';
+          html_exploitant3 += '<td>'+tr_exploitant3.find('select[id$="_qualiteExploitant3"]').val()+'</td>';
+          html_exploitant3 += '<td>'+tr_exploitant3.find('input[id$="_telephoneExploitant3"]').val()+'</td>';
+          html_exploitant3 += '<td>'+tr_exploitant3.find('input[id$="_adresseExploitant3"]').val()+'</td>';
+          html_exploitant3 += '<td>'+tr_exploitant3.find('input[id$="_emailExploitant3"]').val()+'</td>';
+          html_exploitant3 += '<td>'+tr_exploitant3.find('select[id$="_droitExploitant3"]').val()+'</td>';
+          html_exploitant3 += '<td>'+tr_exploitant3.find('select[id$="_maritalExploitant3"]').val()+'</td>';
+          html_exploitant3 += '<td>'+tr_exploitant3.find('input[id$="_dateSignatureExploitant3"]').val()+'</td>';
+          html_exploitant3 += '<td></td>';
+          html_exploitant3 += '<td>'+tr_exploitant3.find('input[id$="_dateEcheanceExploitant3"]').val()+'</td>';
+          html_exploitant3 += '<td><button class="btn btn-danger btn-xs button-prop-delete" title="Delete"><i class="fa fa-fw fa-trash"></i></button>';
+
+          html_exploitant3 += '</tr>';
+        }
+
+      
+        // $(".edit_propExp").val(propExp);
+        if(editPropId !== '')
+        {
+          $('#proprietaires-info tbody').find("tr[data-propid='"+propId+"'][data-pe='proprietaire1']").replaceWith(html_proprietaire1);
+
+          if($('#proprietaires-info tbody').find("tr[data-propid='"+propId+"'][data-pe='proprietaire2']").length == 1){
+            $('#proprietaires-info tbody').find("tr[data-propid='"+propId+"'][data-pe='proprietaire2']").replaceWith(html_proprietaire2);
+
+          }else{
+            $(html_proprietaire2).insertAfter($("#proprietaires-info tbody tr[data-propid='"+propId+"'][data-pe='proprietaire1']"));
+          }
+
+          if($('#proprietaires-info tbody').find("tr[data-propid='"+propId+"'][data-pe='proprietaire3']").length == 1){
+            $('#proprietaires-info tbody').find("tr[data-propid='"+propId+"'][data-pe='proprietaire3']").replaceWith(html_proprietaire3);
+
+          }else{
+            $(html_proprietaire3).insertAfter($("#proprietaires-info tbody tr[data-propid='"+propId+"'][data-pe='proprietaire2']"));
+          }
+
+          if($('#proprietaires-info tbody').find("tr[data-propid='"+propId+"'][data-pe='proprietaire4']").length == 1){
+            $('#proprietaires-info tbody').find("tr[data-propid='"+propId+"'][data-pe='proprietaire4']").replaceWith(html_proprietaire4);
+
+          }else{
+            $(html_proprietaire4).insertAfter($("#proprietaires-info tbody tr[data-propid='"+propId+"'][data-pe='proprietaire3']"));
+          }
+
+          if($('#proprietaires-info tbody').find("tr[data-propid='"+propId+"'][data-pe='exploitant1']").length == 1){
+            $('#proprietaires-info tbody').find("tr[data-propid='"+propId+"'][data-pe='exploitant1']").replaceWith(html_exploitant);
+
+          }else{
+            $(html_exploitant).insertAfter($('#proprietaires-info tbody').find("tr[data-propid='"+propId+"']").last());
+          }
+
+          if($('#proprietaires-info tbody').find("tr[data-propid='"+propId+"'][data-pe='exploitant2']").length == 1){
+            $('#proprietaires-info tbody').find("tr[data-propid='"+propId+"'][data-pe='exploitant2']").replaceWith(html_exploitant2);
+
+          }else{
+            $(html_exploitant2).insertAfter( $('#proprietaires-info tbody').find("tr[data-propid='"+propId+"'][data-pe='exploitant1']"));
+          }
+
+          if($('#proprietaires-info tbody').find("tr[data-propid='"+propId+"'][data-pe='exploitant3']").length == 1){
+            $('#proprietaires-info tbody').find("tr[data-propid='"+propId+"'][data-pe='exploitant3']").replaceWith(html_exploitant3);
+
+          }else{
+            $(html_exploitant3).insertAfter( $('#proprietaires-info tbody').find("tr[data-propid='"+propId+"'][data-pe='exploitant2']"));
+          }
+
+          $(".proprietaires_hidden .proprietaire_info[data-pid='"+propId+"']").replaceWith(proprietaire_entry);
+
+
+        }else{
+          var html = html_proprietaire1 + html_proprietaire2 + html_proprietaire3 + html_proprietaire4 + html_exploitant + html_exploitant2 + html_exploitant3;
+          $('#proprietaires-info tbody').append(html);
+          $('.proprietaires_hidden').append(proprietaire_entry);
+        }
+        $(".edit_propId").val('');
+        //reset popup form after click on save chnages
+        resetPropForm();
+        $('#proprietairesModal').modal('toggle');
+        buttonPropDelete();
+        buttonPropEdit();
+
+      });
+
+      $(".remove-proprietaire").on("click", function (e) {
+        e.preventDefault();
+        $(this).parent().parent().parent().addClass('hide');
+        // bindfunctions();
+
+        //console.log('.remove-proprietaire');
+        setTimeout(function () {
+          if($('#projet_proprietaires_add_proprietaire_entry').hasClass('disabled') && $('#projet_proprietairesm').find('div.info').length==4){
+            if($('#projet_proprietairesm').find('div[class*="info"][class*="proprietaire"][class*="hide"]:eq(0)').length){
+              $('#projet_proprietaires_add_proprietaire_entry').removeClass('disabled');
+            }
+          }
+        },500);
+
+      });
+
+      $(".remove-exploitant").on("click", function (e) {
+        e.preventDefault();
+        $(this).parent().parent().parent().addClass('hide');
+        // bindfunctions();
+
+          setTimeout(function (){
+            if($('#projet_proprietaires_add_exploitant_entry').hasClass('disabled') && $('#projet_exploitantm').find('div.info').length==3){
+              if($('#projet_exploitantm').find('div[class*="info"][class*="exploitant"][class*="hide"]:eq(0)').length){
+                $('#projet_proprietaires_add_exploitant_entry').removeClass('disabled');
+              }
+            }
+          },500);
+      });
+
+      buttonPropDelete();
+      buttonPropEdit();
+    }
+
+    function buttonPropDelete()
+    {
+      $(".button-prop-delete").on("click", function (e) {
+        e.preventDefault();
+        var parentEle = $(this).parent().parent();
+        var propId = parentEle.data('propid');
+        var propIde = parentEle.attr('data-pe');
+
+        // $(".proprietaires_hidden").find('div[class="proprietaire_info"][data-propid*="'+propId+'"]').find('.'+propIde).val('');
+
+        if(propIde === 'proprietaire1')
+        {
+          $(".proprietaires_hidden").find("div[data-pid='" + propId + "']").remove();
+          $("#proprietaires-info").find("tr[data-propid='"+propId+"']").remove()
+          //console.log($("#proprietaires-info").find("tr[data-propid='"+propId+"']"));
+        }
+        else{
+          $(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("."+propIde).val("");
+          parentEle.remove();
+        }
+        
+
+      });
+    }
+
+    function buttonPropEdit()
+    {
+      $(".button-prop-edit").on("click", function (e) {
+        e.preventDefault();
+        var parentEle = $(this).parent().parent();
+        var propId = parentEle.data('propid');
+        var propExp = parentEle.data('pe');
+
+        // $("#projet_proprietaires_parcelles").val($(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name='projet[proprietaires][0][parcelles]']").val());
+
+        $('#projet_proprietaires_parcelles').tagsinput('removeAll');
+        $('#projet_proprietaires_parcelles').tagsinput('add', $(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][parcelles]']").val());
+
+        $("#projet_proprietaires_parcelles").val($(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][parcelles]']").val());
+        $("#projet_proprietaires_0_civiliteProprietaire").val($(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][civiliteProprietaire]']").val());
+        $("#projet_proprietaires_0_proprietaire").val($(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][proprietaire]']").val());
+        $("#projet_proprietaires_0_qualiteProprietaire").val($(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][qualiteProprietaire]']").val());
+        $("#projet_proprietaires_0_accordProprietaire").val($(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][accordProprietaire]']").val());
+        $("#projet_proprietaires_0_telephoneProprietaire").val($(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][telephoneProprietaire]']").val());
+        $("#projet_proprietaires_0_adresseProprietaire").val($(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][adresseProprietaire]']").val());
+        $("#projet_proprietaires_0_emailProprietaire").val($(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][emailProprietaire]']").val());
+        $("#projet_proprietaires_0_dateNaissanceProprietaire").val($(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][dateNaissanceProprietaire]']").val());
+        $("#projet_proprietaires_0_lieuNaissanceProprietaire").val($(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][lieuNaissanceProprietaire]']").val());
+        $("#projet_proprietaires_0_droitProprietaire").val($(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][droitProprietaire]']").val());
+        $("#projet_proprietaires_0_maritalProprietaire").val($(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][maritalProprietaire]']").val());
+        $("#projet_proprietaires_0_dateSignatureProprietaire").val($(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][dateSignatureProprietaire]']").val());
+        $("#projet_proprietaires_0_dureeProprietaire").val($(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][dureeProprietaire]']").val());
+        $("#projet_proprietaires_0_dateEcheanceProprietaire").val($(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][dateEcheanceProprietaire]']").val());
+
+        var civilite2 = $(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][civiliteProprietaire2]']").val();
+        var proprietaire2 = $(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][proprietaire2]']").val();
+        var qualite2 = $(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][qualiteProprietaire2]']").val();
+        var accord2 = $(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][accordProprietaire2]']").val();
+        var telephone2 = $(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][telephoneProprietaire2]']").val();
+        var adresse2 = $(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][adresseProprietaire2]']").val();
+        var email2 = $(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][emailProprietaire2]']").val();
+        var dateNaissance2 = $(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][dateNaissanceProprietaire2]']").val();
+        var lieuNaissance2 = $(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][lieuNaissanceProprietaire2]']").val();
+        var droit2 = $(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][droitProprietaire2]']").val();
+        var marital2 = $(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][maritalProprietaire2]']").val();
+        var dateSignature2 = $(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][dateSignatureProprietaire2]']").val();
+        var duree2 = $(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][dureeProprietaire2]']").val();
+        var dateEcheance2 = $(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][dateEcheanceProprietaire2]']").val();
+
+        if(civilite2 !== '' || proprietaire2 !== '' || qualite2 !== '' || accord2 !== '' || telephone2 !== '' || adresse2 !== '' || email2 !== ''
+         || lieuNaissance2 !== '' || droit2 !== '' || marital2 !== ''){
+
+          $("#projet_proprietaires_0_civiliteProprietaire2").val(civilite2);
+
+          $("#projet_proprietaires_0_proprietaire2").tagsinput('removeAll');
+          $("#projet_proprietaires_0_proprietaire2").tagsinput('add', proprietaire2);
+          $("#projet_proprietaires_0_proprietaire2").val(proprietaire2);
+          $("#projet_proprietaires_0_qualiteProprietaire2").val(qualite2);
+          $("#projet_proprietaires_0_accordProprietaire2").val(accord2);
+          $("#projet_proprietaires_0_telephoneProprietaire2").val(telephone2);
+          $("#projet_proprietaires_0_adresseProprietaire2").val(adresse2);
+          $("#projet_proprietaires_0_emailProprietaire2").val(email2);
+          $("#projet_proprietaires_0_dateNaissanceProprietaire2").val(dateNaissance2);
+          $("#projet_proprietaires_0_lieuNaissanceProprietaire2").val(lieuNaissance2);
+          $("#projet_proprietaires_0_droitProprietaire2").val(droit2);
+          $("#projet_proprietaires_0_maritalProprietaire2").val(marital2);
+          $("#projet_proprietaires_0_dateSignatureProprietaire2").val(dateSignature2);
+          $("#projet_proprietaires_0_dureeProprietaire2").val(duree2);
+          $("#projet_proprietaires_0_dateEcheanceProprietaire2").val(dateEcheance2);
+
+          $(".proprietaire2_entry").removeClass('hide');
+        }
+
+        var civilite3 = $(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][civiliteProprietaire3]']").val();
+        var proprietaire3 = $(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][proprietaire3]']").val();
+        var qualite3 = $(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][qualiteProprietaire3]']").val();
+        var accord3 = $(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][accordProprietaire3]']").val();
+        var telephone3 = $(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][telephoneProprietaire3]']").val();
+        var adresse3 = $(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][adresseProprietaire3]']").val();
+        var email3 = $(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][emailProprietaire3]']").val();
+        var dateNaissance3 = $(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][dateNaissanceProprietaire3]']").val();
+        var lieuNaissance3 = $(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][lieuNaissanceProprietaire3]']").val();
+        var droit3 = $(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][droitProprietaire3]']").val();
+        var marital3 = $(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][maritalProprietaire3]']").val();
+        var dateSignature3 = $(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][dateSignatureProprietaire3]']").val();
+        var duree3 = $(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][dureeProprietaire3]']").val();
+        var dateEcheance3 = $(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][dateEcheanceProprietaire3]']").val();
+
+
+        if(civilite3 !== '' || proprietaire3 !== '' || qualite3 !== '' || accord3 !== '' || telephone3 !== '' || adresse3 !== '' || email3 !== ''
+        || lieuNaissance3 !== '' || droit3 !== '' || marital3 !== ''){
+
+          $("#projet_proprietaires_0_civiliteProprietaire3").val(civilite3);
+
+          $("#projet_proprietaires_0_proprietaire3").tagsinput('removeAll');
+          $("#projet_proprietaires_0_proprietaire3").tagsinput('add', proprietaire3);
+          $("#projet_proprietaires_0_proprietaire3").val(proprietaire3);
+          $("#projet_proprietaires_0_qualiteProprietaire3").val(qualite3);
+          $("#projet_proprietaires_0_accordProprietaire3").val(accord3);
+          $("#projet_proprietaires_0_telephoneProprietaire3").val(telephone3);
+          $("#projet_proprietaires_0_adresseProprietaire3").val(adresse3);
+          $("#projet_proprietaires_0_emailProprietaire3").val(email3);
+          $("#projet_proprietaires_0_dateNaissanceProprietaire3").val(dateNaissance3);
+          $("#projet_proprietaires_0_lieuNaissanceProprietaire3").val(lieuNaissance3);
+          $("#projet_proprietaires_0_droitProprietaire3").val(droit3);
+          $("#projet_proprietaires_0_maritalProprietaire3").val(marital3);
+          $("#projet_proprietaires_0_dateSignatureProprietaire3").val(dateSignature3);
+          $("#projet_proprietaires_0_dureeProprietaire3").val(duree3);
+          $("#projet_proprietaires_0_dateEcheanceProprietaire3").val(dateEcheance3);
+
+          $(".proprietaire3_entry").removeClass('hide');
+        }
+
+        var civilite4 = $(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][civiliteProprietaire4]']").val();
+        var proprietaire4 = $(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][proprietaire4]']").val();
+        var qualite4 = $(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][qualiteProprietaire4]']").val();
+        var accord4 = $(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][accordProprietaire4]']").val();
+        var telephone4 = $(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][telephoneProprietaire4]']").val();
+        var adresse4 = $(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][adresseProprietaire4]']").val();
+        var email4 = $(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][emailProprietaire4]']").val();
+        var dateNaissance4 = $(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][dateNaissanceProprietaire4]']").val();
+        var lieuNaissance4 = $(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][lieuNaissanceProprietaire4]']").val();
+        var droit4 = $(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][droitProprietaire4]']").val();
+        var marital4 = $(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][maritalProprietaire4]']").val();
+        var dateSignature4 = $(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][dateSignatureProprietaire4]']").val();
+        var duree4 = $(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][dureeProprietaire4]']").val();
+        var dateEcheance4 = $(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][dateEcheanceProprietaire4]']").val();
+
+        if(civilite4 !== '' || proprietaire4 !== '' || qualite4 !== '' || accord4 !== '' || telephone4 !== '' || adresse4 !== '' || email4 !== ''
+         || lieuNaissance4 !== '' || droit4 !== '' || marital4 !== ''){
+
+          $("#projet_proprietaires_0_civiliteProprietaire4").val(civilite4);
+
+          $("#projet_proprietaires_0_proprietaire4").tagsinput('removeAll');
+          $("#projet_proprietaires_0_proprietaire4").tagsinput('add', proprietaire4);
+          $("#projet_proprietaires_0_proprietaire4").val(proprietaire4);
+          $("#projet_proprietaires_0_qualiteProprietaire4").val(qualite4);
+          $("#projet_proprietaires_0_accordProprietaire4").val(accord4);
+          $("#projet_proprietaires_0_telephoneProprietaire4").val(telephone4);
+          $("#projet_proprietaires_0_adresseProprietaire4").val(adresse4);
+          $("#projet_proprietaires_0_emailProprietaire4").val(email4);
+          $("#projet_proprietaires_0_dateNaissanceProprietaire4").val(dateNaissance4);
+          $("#projet_proprietaires_0_lieuNaissanceProprietaire4").val(lieuNaissance4);
+          $("#projet_proprietaires_0_droitProprietaire4").val(droit4);
+          $("#projet_proprietaires_0_maritalProprietaire4").val(marital4);
+          $("#projet_proprietaires_0_dateSignatureProprietaire4").val(dateSignature4);
+          $("#projet_proprietaires_0_dureeProprietaire4").val(duree4);
+          $("#projet_proprietaires_0_dateEcheanceProprietaire4").val(dateEcheance4);
+
+          $(".proprietaire4_entry").removeClass('hide');
+        }
+
+        $("#projet_proprietaires_0_civiliteExploitant").val($(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][civiliteExploitant]']").val());
+
+        $("#projet_proprietaires_0_exploitant").tagsinput('removeAll');
+        $("#projet_proprietaires_0_exploitant").tagsinput('add', $(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][exploitant]']").val());
+        $("#projet_proprietaires_0_exploitant").val($(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][exploitant]']").val());
+        $("#projet_proprietaires_0_qualiteExploitant").val($(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][qualiteExploitant]']").val());
+        $("#projet_proprietaires_0_accordExploitant").val($(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][accordExploitant]']").val());
+        $("#projet_proprietaires_0_telephoneExploitant").val($(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][telephoneExploitant]']").val());
+        $("#projet_proprietaires_0_adresseExploitant").val($(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][adresseExploitant]']").val());
+        $("#projet_proprietaires_0_emailExploitant").val($(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][emailExploitant]']").val());
+        $("#projet_proprietaires_0_dateNaissanceExploitant").val($(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][dateNaissanceExploitant]']").val());
+        $("#projet_proprietaires_0_lieuNaissanceExploitant").val($(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][lieuNaissanceExploitant]']").val());
+        $("#projet_proprietaires_0_droitExploitant").val($(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][droitExploitant]']").val());
+        $("#projet_proprietaires_0_maritalExploitant").val($(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][maritalExploitant]']").val());
+        $("#projet_proprietaires_0_dateSignatureExploitant").val($(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][dateSignatureExploitant]']").val());
+        $("#projet_proprietaires_0_dateEcheanceExploitant").val($(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][dateEcheanceExploitant]']").val());
+
+        var explcivilite2 = $(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][civiliteExploitant2]']").val();
+        var explproprietaire2 = $(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][exploitant2]']").val();
+        var explqualite2 = $(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][qualiteExploitant2]']").val();
+        var explaccord2 = $(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][accordExploitant2]']").val();
+        var expltelephone2 = $(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][telephoneExploitant2]']").val();
+        var expladresse2 = $(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][adresseExploitant2]']").val();
+        var explemail2 = $(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][emailExploitant2]']").val();
+        var expldateNaissance2 = $(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][dateNaissanceExploitant2]']").val();
+        var expllieuNaissance2 = $(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][lieuNaissanceExploitant2]']").val();
+        var expldroit2 = $(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][droitExploitant2]']").val();
+        var explmarital2 = $(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][maritalExploitant2]']").val();
+        var expldateSignature2 = $(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][dateSignatureExploitant2]']").val();
+        // var explduree2 = $(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][dureeProprietaire4]']").val();
+        var expldateEcheance2 = $(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][dateEcheanceExploitant2]']").val();
+
+        if(explcivilite2 !== '' || explproprietaire2 !== '' || explqualite2 !== '' || explaccord2 !== '' || expltelephone2 !== '' || expladresse2 !== '' || explemail2 !== ''
+         || expllieuNaissance2 !== '' || expldroit2 !== '' || explmarital2 !== ''){
+
+          $("#projet_proprietaires_0_civiliteExploitant").val(explcivilite2);
+
+          $("#projet_proprietaires_0_exploitant2").tagsinput('removeAll');
+          $("#projet_proprietaires_0_exploitant2").tagsinput('add', explproprietaire2);
+          $("#projet_proprietaires_0_exploitant2").val(explproprietaire2);
+          $("#projet_proprietaires_0_qualiteExploitant2").val(explqualite2);
+          $("#projet_proprietaires_0_accordExploitant2").val(explaccord2);
+          $("#projet_proprietaires_0_telephoneExploitant2").val(expltelephone2);
+          $("#projet_proprietaires_0_adresseExploitant2").val(expladresse2);
+          $("#projet_proprietaires_0_emailExploitant2").val(explemail2);
+          $("#projet_proprietaires_0_dateNaissanceExploitant2").val(expldateNaissance2);
+          $("#projet_proprietaires_0_lieuNaissanceExploitant2").val(expllieuNaissance2);
+          $("#projet_proprietaires_0_droitExploitant2").val(expldroit2);
+          $("#projet_proprietaires_0_maritalExploitant2").val(explmarital2);
+          $("#projet_proprietaires_0_dateSignatureExploitant2").val(expldateSignature2);
+          $("#projet_proprietaires_0_dateEcheanceExploitant2").val(expldateEcheance2);
+
+          $(".exploitant2_entry").removeClass('hide');
+        }
+
+        var explcivilite3 = $(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][civiliteExploitant3]']").val();
+        var explproprietaire3 = $(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][exploitant3]']").val();
+        var explqualite3 = $(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][qualiteExploitant3]']").val();
+        var explaccord3 = $(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][accordExploitant3]']").val();
+        var expltelephone3 = $(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][telephoneExploitant3]']").val();
+        var expladresse3 = $(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][adresseExploitant3]']").val();
+        var explemail3 = $(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][emailExploitant3]']").val();
+        var expldateNaissance3 = $(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][dateNaissanceExploitant3]']").val();
+        var expllieuNaissance3 = $(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][lieuNaissanceExploitant3]']").val();
+        var expldroit3 = $(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][droitExploitant3]']").val();
+        var explmarital3 = $(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][maritalExploitant3]']").val();
+        var expldateSignature3 = $(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][dateSignatureExploitant3]']").val();
+        // var explduree2 = $(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][dureeProprietaire4]']").val();
+        var expldateEcheance3 = $(".proprietaires_hidden").find("div[data-pid='" + propId + "']").find("input[name$='["+propId+"][dateEcheanceExploitant3]']").val();
+
+        if(explcivilite3 !== '' || explproprietaire3 !== '' || explqualite3 !== '' || explaccord3 !== '' || expltelephone3 !== '' || expladresse3 !== '' || explemail3 !== ''
+        || expllieuNaissance3 !== '' || expldroit3 !== '' || explmarital3 !== ''){
+
+          $("#projet_proprietaires_0_civiliteExploitan3").val(explcivilite3);
+
+          $("#projet_proprietaires_0_exploitant3").tagsinput('removeAll');
+          $("#projet_proprietaires_0_exploitant3").tagsinput('add', explproprietaire3);
+          $("#projet_proprietaires_0_exploitant3").val(explproprietaire3);
+          $("#projet_proprietaires_0_qualiteExploitant3").val(explqualite3);
+          $("#projet_proprietaires_0_accordExploitant3").val(explaccord3);
+          $("#projet_proprietaires_0_telephoneExploitant3").val(expltelephone3);
+          $("#projet_proprietaires_0_adresseExploitant3").val(expladresse3);
+          $("#projet_proprietaires_0_emailExploitant3").val(explemail3);
+          $("#projet_proprietaires_0_dateNaissanceExploitant3").val(expldateNaissance3);
+          $("#projet_proprietaires_0_lieuNaissanceExploitant3").val(expllieuNaissance3);
+          $("#projet_proprietaires_0_droitExploitant3").val(expldroit3);
+          $("#projet_proprietaires_0_maritalExploitant3").val(explmarital3);
+          $("#projet_proprietaires_0_dateSignatureExploitant3").val(expldateSignature3);
+          $("#projet_proprietaires_0_dateEcheanceExploitant3").val(expldateEcheance3);
+
+          $(".exploitant3_entry").removeClass('hide');
+        }
+        $('projet_proprietairesm').append();
+
+        //set logic to add propId in edit_proprietaire hidden
+        $(".edit_propId").val(propId);
+        $(".edit_propExp").val(propExp);
+
+        $('#proprietairesModal').modal('show');
+      });
+    }
+
+    //reset popup form after click on close button
+    $("#btn_closeProprieModal, .modal_close").on("click", function () {
+      resetPropForm();
+      $('#proprietairesModal').modal('toggle');
+    });
+
+    function resetPropForm(){
+
+      var d = new Date();
+      var strDate = d.getDate() + "/" + (d.getMonth()+1) + "/" + d.getFullYear();
+
+      // $('#projet_proprietaires_parcelles').val('');
+      /*$('.f-parcelles .bootstrap-tagsinput span').remove();
+      $('.f-parcelles .bootstrap-tagsinput ul').remove();*/
+      // $("#projet_proprietaires_parcelles").tagsinput('removeAll');
+      $('#projet_proprietairesm').find('div.info:eq(0)').find('select[id$="_civiliteProprietaire"]').val("");
+      // $('#projet_proprietairesm').find('div.info:eq(0)').find('.bootstrap-tagsinput span').remove();
+      // $('#projet_proprietairesm').find('div.info:eq(0)').find('input[id$="_proprietaire"]').val("");
+      $('#projet_proprietairesm').find('div.info:eq(0)').find('select[id$="_qualiteProprietaire"]').val("");
+      $('#projet_proprietairesm').find('div.info:eq(0)').find('input[id$="_telephoneProprietaire"]').val("");
+      $('#projet_proprietairesm').find('div.info:eq(0)').find('input[id$="_adresseProprietaire"]').val("");
+      $('#projet_proprietairesm').find('div.info:eq(0)').find('input[id$="_emailProprietaire"]').val("");
+      $('#projet_proprietairesm').find('div.info:eq(0)').find('select[id$="_droitProprietaire"]').val("");
+      $('#projet_proprietairesm').find('div.info:eq(0)').find('select[id$="_maritalProprietaire"]').val("");
+      $('#projet_proprietairesm').find('div.info:eq(0)').find('input[id$="_dateSignatureProprietaire"]').val("");
+      $('#projet_proprietairesm').find('div.info:eq(0)').find('input[id$="_dureeProprietaire"]').val("");
+      $('#projet_proprietairesm').find('div.info:eq(0)').find('input[id$="_dateEcheanceProprietaire"]').val("");
+      // $('#projet_proprietairesm').find('div.info:eq(0)').find('input').val("");
+      $('#projet_proprietairesm').find('div.info:eq(0)').find('input[id$="_dateSignatureProprietaire"]').val(strDate);
+      $('#projet_proprietairesm').find('div.info:eq(0)').find('input[id$="_dateEcheanceProprietaire"]').val(strDate);
+
+      $('#projet_proprietairesm').find('div.info:eq(1)').addClass("hide");
+      $('#projet_proprietairesm').find('div.info:eq(1)').find('input').val("");
+      $('#projet_proprietairesm').find('div.info:eq(1)').find('select').val("");
+      // $('#projet_proprietairesm').find('div.info:eq(1)').find('.bootstrap-tagsinput span').remove();
+      $('#projet_proprietairesm').find('div.info:eq(1)').find('input[id$="_dateSignatureProprietaire2"]').val(strDate);
+      $('#projet_proprietairesm').find('div.info:eq(1)').find('input[id$="_dateEcheanceProprietaire2"]').val(strDate);
+
+      $('#projet_proprietairesm').find('div.info:eq(2)').addClass("hide");
+      $('#projet_proprietairesm').find('div.info:eq(2)').find('input').val("");
+      $('#projet_proprietairesm').find('div.info:eq(2)').find('select').val("");
+      // $('#projet_proprietairesm').find('div.info:eq(2)').find('.bootstrap-tagsinput span').remove();
+      $('#projet_proprietairesm').find('div.info:eq(2)').find('input[id$="_dateSignatureProprietaire3"]').val(strDate);
+      $('#projet_proprietairesm').find('div.info:eq(2)').find('input[id$="_dateSignatureProprietaire3"]').val(strDate);
+
+      $('#projet_proprietairesm').find('div.info:eq(3)').addClass("hide");
+      $('#projet_proprietairesm').find('div.info:eq(3)').find('input').val("");
+      $('#projet_proprietairesm').find('div.info:eq(3)').find('select').val("");
+      // $('#projet_proprietairesm').find('div.info:eq(3)').find('.bootstrap-tagsinput span').remove();
+      $('#projet_proprietairesm').find('div.info:eq(3)').find('input[id$="_dateSignatureProprietaire4"]').val(strDate);
+      $('#projet_proprietairesm').find('div.info:eq(3)').find('input[id$="_dateEcheanceProprietaire4"]').val(strDate);
+
+      //$('#projet_exploitantm').find('div.info:eq(0)').addClass("hide");
+      $('#projet_exploitantm').find('div.info:eq(0)').find('input').val("");
+      $('#projet_exploitantm').find('div.info:eq(0)').find('select').val("");
+      // $('#projet_exploitantm').find('div.info:eq(0)').find('.bootstrap-tagsinput span').remove();
+      $('#projet_exploitantm').find('div.info:eq(0)').find('input[id$="_dateSignatureExploitant"]').val(strDate);
+      $('#projet_exploitantm').find('div.info:eq(0)').find('input[id$="_dateEcheanceExploitant"]').val(strDate);
+
+      $('#projet_exploitantm').find('div.info:eq(1)').addClass("hide");
+      $('#projet_exploitantm').find('div.info:eq(1)').find('input').val("");
+      $('#projet_exploitantm').find('div.info:eq(1)').find('select').val("");
+      // $('#projet_exploitantm').find('div.info:eq(1)').find('.bootstrap-tagsinput span').remove();
+      $('#projet_exploitantm').find('div.info:eq(1)').find('input[id$="_dateSignatureExploitant2"]').val(strDate);
+      $('#projet_exploitantm').find('div.info:eq(1)').find('input[id$="_dateEcheanceExploitant2"]').val(strDate);
+
+      $('#projet_exploitantm').find('div.info:eq(2)').addClass("hide");
+      $('#projet_exploitantm').find('div.info:eq(2)').find('input').val("");
+      $('#projet_exploitantm').find('div.info:eq(2)').find('select').val("");
+      // $('#projet_exploitantm').find('div.info:eq(2)').find('.bootstrap-tagsinput span').remove();
+      $('#projet_exploitantm').find('div.info:eq(2)').find('input[id$="_dateSignatureExploitant3"]').val(strDate);
+      $('#projet_exploitantm').find('div.info:eq(2)').find('input[id$="_dateEcheanceExploitant3"]').val(strDate);
+
+      $('#projet_proprietaires_add_proprietaire_entry').removeClass('disabled');
+      $('#projet_proprietaires_add_exploitant_entry').removeClass('disabled');
+
+    }
+
+    /*$('#projet_proprietaires_add_proprietaire_entry').click(function () {
       if (!$(this).hasClass('disabled') && $collectionHolderProprietaire.find('tr.info').length == 7) {
         if ($collectionHolderProprietaire.find('tr[class*="info"][class*="proprietaire"][class*="hide"]:eq(0)').length) {
           $collectionHolderProprietaire.find('tr[class*="info"][class*="proprietaire"][class*="hide"]:eq(0)').removeClass('hide');
@@ -2476,7 +4180,7 @@
           }
         }
       }
-    });
+    });*/
     
     $('#projet_proprietaires_publish_entry').click(function () {
       if(!$(this).hasClass('disabled') && $collectionHolderProprietaire.find('tr.info').length == 7) {
@@ -2992,7 +4696,9 @@
       return initial + row;
     }
     
-    $collectionHolderProprietaire.on('change', '[id$="_proprietaire"], [id$="_telephoneProprietaire"], [id$="_proprietaire2"], [id$="_telephoneProprietaire2"], [id$="_proprietaire3"], [id$="_telephoneProprietaire3"], [id$="_proprietaire4"], [id$="_telephoneProprietaire4"], [id$="_exploitant"], [id$="_telephoneExploitant"], [id$="_exploitant2"], [id$="_telephoneExploitant2"], [id$="_exploitant3"], [id$="_telephoneExploitant3"]', function () {
+    //$collectionHolderProprietaire.on('change', '[id$="_proprietaire"], [id$="_telephoneProprietaire"], [id$="_proprietaire2"], [id$="_telephoneProprietaire2"], [id$="_proprietaire3"], [id$="_telephoneProprietaire3"], [id$="_proprietaire4"], [id$="_telephoneProprietaire4"], [id$="_exploitant"], [id$="_telephoneExploitant"], [id$="_exploitant2"], [id$="_telephoneExploitant2"], [id$="_exploitant3"], [id$="_telephoneExploitant3"]', function () {
+    $('#projet_proprietairesm').on('change', '[id$="_proprietaire"], [id$="_telephoneProprietaire"], [id$="_proprietaire2"], [id$="_telephoneProprietaire2"], [id$="_proprietaire3"], [id$="_telephoneProprietaire3"], [id$="_proprietaire4"], [id$="_telephoneProprietaire4"], [id$="_exploitant"], [id$="_telephoneExploitant"], [id$="_exploitant2"], [id$="_telephoneExploitant2"], [id$="_exploitant3"], [id$="_telephoneExploitant3"]', function () {
+
       var id = $(this).attr('id').match(/\d+/);
       id = parseInt(id);
       if($(this).attr('id')=='projet_proprietaires_'+id+'_proprietaire') {
@@ -3038,7 +4744,7 @@
       } else if($(this).attr('id')=='projet_proprietaires_'+id+'_telephoneExploitant3')
         $('#tab_contacts tbody tr[rel="'+id+'"]:eq(6) td:eq(2)').text($(this).val());
     });
-    $collectionHolderProprietaire.on('change', '[id$="_dureeProprietaire"], [id$="_dateSignatureProprietaire"], [id$="_dateSignatureProprietaire2"], [id$="_dateSignatureProprietaire3"], [id$="_dateSignatureProprietaire4"], [id$="_dateSignatureExploitant"], [id$="_dateSignatureExploitant2"], [id$="_dateSignatureExploitant3"]', function () {
+    /*$collectionHolderProprietaire.on('change', '[id$="_dureeProprietaire"], [id$="_dateSignatureProprietaire"], [id$="_dateSignatureProprietaire2"], [id$="_dateSignatureProprietaire3"], [id$="_dateSignatureProprietaire4"], [id$="_dateSignatureExploitant"], [id$="_dateSignatureExploitant2"], [id$="_dateSignatureExploitant3"]', function () {
       var id = $(this).attr('id').match(/\d+/);
       id = parseInt(id);
       
@@ -3105,7 +4811,7 @@
         var dateEcheanceExploitant  = new Date((parseInt(year) + parseInt(duree)), month, day);
         $('#projet_proprietaires_'+id+'_dateEcheanceExploitant3').val(('0' + dateEcheanceExploitant.getDate()).slice(-2) + '/' + ('0' + dateEcheanceExploitant.getMonth()).slice(-2) + '/' + dateEcheanceExploitant.getFullYear());
       }
-    });
+    });*/
     $($collectionHolderProprietaire).on('click', 'tr', function() {
       $collectionHolderProprietaire.children().removeClass('info');
       $(this).addClass('info');
@@ -3169,7 +4875,7 @@
         $('#projet_proprietaires_remove_entry').removeClass('disabled');
         $('#projet_proprietaires_duplicate_entry').removeClass('disabled');
         $('#projet_proprietaires_publish_entry').removeClass('disabled');
-        if ($collectionHolderProprietaire.find('tr[class*="info"][class*="proprietaire"][class*="hide"]:eq(0)').length) {
+        if ($collectionHolderProprietaire.find('div[class*="info"][class*="proprietaire"][class*="hide"]:eq(0)').length) {
           $('#projet_proprietaires_add_proprietaire_entry').removeClass('disabled');
         } else {
           $('#projet_proprietaires_add_proprietaire_entry').addClass('disabled');
@@ -3201,8 +4907,130 @@
       }
       loadAllParcellesTags();
     });
+
     var proprietairesList = {{ proprietaires|raw }};
     var exploitantsList = {{ exploitants|raw }};
+    var selectedParcellesCarte = [];
+    function loadAllParcellesTags() {
+      if($('#projet_proprietaires tr').length) $('#projet_proprietaires_recherche').removeClass('hide');
+      else $('#projet_proprietaires_recherche').addClass('hide');
+      var selectedSuggestionsArray = [];
+
+      $('#projet_proprietairesm input[id$="_parcelles"]').each(function(i,element) {
+
+        id = $(this).attr('name').match(/\d+/);
+        id = parseInt(id);
+        id = 0;
+        // show suggestions for proprietaire fields
+        // $('#projet_proprietaires_'+id+'_proprietaire, #projet_proprietaires_'+id+'_proprietaire2, #projet_proprietaires_'+id+'_proprietaire3, #projet_proprietaires_'+id+'_proprietaire4').tagsinput({
+
+        $('#projet_proprietaires_0_proprietaire, #projet_proprietaires_'+id+'_proprietaire2, #projet_proprietaires_'+id+'_proprietaire3, #projet_proprietaires_'+id+'_proprietaire4').tagsinput({
+          maxTags: 1,
+          typeahead: {
+            afterSelect: function(val) { this.$element.val(''); },
+            minLength : 0,
+            // source: proprietairesList
+          },
+          freeInput: true
+        });
+
+        // show suggestions for exploitant fields
+        $('#projet_proprietaires_'+id+'_exploitant, #projet_proprietaires_'+id+'_exploitant2, #projet_proprietaires_'+id+'_exploitant3').tagsinput({
+          maxTags: 1,
+          typeahead: {
+            afterSelect: function(val) { this.$element.val(''); },
+            minLength : 0,
+            // source: exploitantsList
+          },
+          freeInput: true
+        });
+
+        // selectedSuggestionsArray[id] = $('#projet_proprietaires_'+id+'_parcelles').val().split(',');
+        selectedSuggestionsArray[id] = $('#projet_proprietaires_parcelles').val().split(',');
+        // $('#projet_proprietaires_'+id+'_parcelles').tagsinput({
+        $('#projet_proprietaires_parcelles').tagsinput({
+          maxTags: 40,
+          typeahead: {
+            afterSelect: function(val) { this.$element.val(''); },
+            minLength : 0,
+            source: function(query) {
+              suggestionsArray = [];
+              $('#projet_parcelles tr').each(function(i,element) {
+                if(!suggestionsArray.includes($(element).find('td:eq(0) input[name]').val().trim()) && !selectedSuggestionsArray[id].includes($(element).find('td:eq(0) input[name]').val().trim())) {
+                  suggestionsArray.push($(element).find('td:eq(0) input[name]').val().trim());
+                }
+              });
+              return suggestionsArray;
+            }
+          },
+          freeInput: false
+        });
+        // $('#projet_proprietaires_'+id+'_parcelles').on('itemAdded', function(event) {
+        $('#projet_proprietaires_parcelles').on('itemAdded', function(event) {
+
+          selectedSuggestionsArray[id] = $('#projet_proprietaires_parcelles').val().split(',');
+        });
+        $('#projet_proprietaires_parcelles').on('itemRemoved', function(event) {
+          selectedSuggestionsArray[id] = $('#projet_proprietaires_parcelles').val().split(',');
+        });
+      });
+      if(typeof tileLayer !== 'undefined') {
+        $('#parcelles_carte').empty();
+        selectedParcellesCarte.forEach(featureId => {
+          tileLayer.setFeatureStyle(featureId, {
+            fillColor: "green",
+            color: "black",
+            weight: 1,
+            fill: true
+          });
+        });
+        selectedParcellesCarte = [];
+        if($('#projet_parcelles tr').length) {
+          parcellesArray = [];
+          parcelleCommuneArray = [];
+          communeIdsArray = [];
+          $('#projet_parcelles tr').each(function(i,element) {
+            if($(element).find('td:eq(0) input[name]').val() && !parcellesArray.includes($(element).find('td:eq(0) input[name]').val().trim())) {
+              parcellesArray.push($(element).find('td:eq(0) input[name]').val().trim());
+              parcelleCommuneArray.push([$(element).find('td:eq(0) input[name]').val().trim(), $(element).find('select[id$="_commune"]').val(), $(element).find('select[id$="_commune"] :selected').text().replace(/\(.+/, '').trim()]);
+            }
+            if($(element).find('select[id$="_commune"]').val() && !communeIdsArray.includes($(element).find('select[id$="_commune"]').val())) {
+              communeIdsArray.push($(element).find('select[id$="_commune"]').val());
+            }
+          });
+          if(parcellesArray.length) {
+            if(!communeIdsArray.length) {
+              communeIdsArray.push($('#projet_parcelles select[id$="_commune"]:eq(0) option:selected').val());
+            }
+            if(communeIdsArray.length>0) {
+              $.ajax({
+                url: "{{ path('france_cadastre') }}",
+                dataType: 'json',
+                data: {communes: communeIdsArray, parcelleCommunes: parcelleCommuneArray, parcelles: parcellesArray},
+                success:  function(features) {
+                  features.forEach(feature => {
+                    $('#parcelles_carte').append('<tr><td>'+feature.section+'</td><td>'+feature.numero+'</td><td>'+feature.commune+'</td><td>'+feature.contenance+'</td></tr>');
+                    if(feature.selected) {
+                      selectedParcellesCarte.push(feature.id);
+                      tileLayer.setFeatureStyle(feature.id, {
+                        fillColor: "red",
+                        color: "black",
+                        weight: 1,
+                        fill: true
+                      });
+                    }
+                  });
+                }
+              });
+            }
+          }
+        }
+      }
+    }
+    /*var proprietairesList = {#{{ proprietaires|raw }}#};
+    var exploitantsList = {#{{ exploitants|raw }}#};*/
+    /*var proprietairesList = [];
+    var exploitantsList = [];
     var selectedParcellesCarte = [];
     function loadAllParcellesTags() {
       if($('#projet_proprietaires tr').length) $('#projet_proprietaires_recherche').removeClass('hide');
@@ -3211,10 +5039,12 @@
       $('#projet_proprietaires input[id$="_parcelles"]').each(function(i,element) {
         id = $(this).attr('name').match(/\d+/);
         id = parseInt(id);
+        id = 0;
 
         // show suggestions for proprietaire fields
-        $('#projet_proprietaires_'+id+'_proprietaire, #projet_proprietaires_'+id+'_proprietaire2, #projet_proprietaires_'+id+'_proprietaire3, #projet_proprietaires_'+id+'_proprietaire4').tagsinput({
-          maxTags: 1,
+        //$('#projet_proprietaires_'+id+'_proprietaire, #projet_proprietaires_'+id+'_proprietaire2, #projet_proprietaires_'+id+'_proprietaire3, #projet_proprietaires_'+id+'_proprietaire4').tagsinput({
+        $('#projet_proprietaires_0_proprietaire, #projet_proprietaires_'+id+'_proprietaire2, #projet_proprietaires_'+id+'_proprietaire3, #projet_proprietaires_'+id+'_proprietaire4').tagsinput({
+        maxTags: 1,
           typeahead: {
             afterSelect: function(val) { this.$element.val(''); },
             minLength : 0,
@@ -3234,8 +5064,8 @@
           freeInput: true
         });
         
-        selectedSuggestionsArray[id] = $('#projet_proprietaires_'+id+'_parcelles').val().split(',');
-        $('#projet_proprietaires_'+id+'_parcelles').tagsinput({
+        selectedSuggestionsArray[id] = $('#projet_proprietaires_parcelles').val().split(',');
+        $('#projet_proprietaires_parcelles').tagsinput({
           maxTags: 40,
           typeahead: {
             afterSelect: function(val) { this.$element.val(''); },
@@ -3252,11 +5082,11 @@
           },
           freeInput: false
         });
-        $('#projet_proprietaires_'+id+'_parcelles').on('itemAdded', function(event) {
-          selectedSuggestionsArray[id] = $('#projet_proprietaires_'+id+'_parcelles').val().split(',');
+        $('#projet_proprietaires_parcelles').on('itemAdded', function(event) {
+          selectedSuggestionsArray[id] = $('#projet_proprietaires_parcelles').val().split(',');
         });
-        $('#projet_proprietaires_'+id+'_parcelles').on('itemRemoved', function(event) {
-          selectedSuggestionsArray[id] = $('#projet_proprietaires_'+id+'_parcelles').val().split(',');
+        $('#projet_proprietaires_parcelles').on('itemRemoved', function(event) {
+          selectedSuggestionsArray[id] = $('#projet_proprietaires_parcelles').val().split(',');
         });
       });
       if(typeof tileLayer !== 'undefined') {
@@ -3289,7 +5119,7 @@
             }
             if(communeIdsArray.length>0) {
               $.ajax({
-                url: "{{ path('france_cadastre') }}",
+                url: "{#{{ path('france_cadastre') }}#}",
                 dataType: 'json',
                 data: {communes: communeIdsArray, parcelleCommunes: parcelleCommuneArray, parcelles: parcellesArray},
                 success:  function(features) {
@@ -3311,7 +5141,7 @@
           }
         }
       }
-    }
+    }*/
     $('#projet_proprietaires_recherche').on('change', function() {
       var search = $(this).val().trim();
       var search_found_in_proprietaire = false;

@@ -229,13 +229,14 @@ col-sm-8
             <th style="width:90px;">Date échéance</th>
           </tr>
         </thead>
-        <tbody {{ block('widget_container_attributes') }}>
+        <tbody {{ block('widget_container_attributes') }} class="hide">
         {% for child in form %}
           {{- form_row(child) -}}
         {% endfor %}
         </tbody>
       </table>
     </div>
+
     <div style="margin-top: 10px;" class="col-md-12">
       <table>
         <tbody>
@@ -245,21 +246,535 @@ col-sm-8
             {#<button type="button" id="{{ id }}_duplicate_entry" class="btn btn-success disabled btn-xs"><i class="fa fa-plus-circle"></i> Dupliquer</button>#}
             <button type="button" id="{{ id }}_publish_entry" class="btn btn-success disabled btn-xs"><i class="fa fa-file-word-o"></i> Publier</button>
             <button type="button" id="{{ id }}_remove_entry" class="btn btn-danger disabled btn-xs"><i class="fa fa-minus-circle"></i> Supprimer</button>
-            <button type="button" id="{{ id }}_add_proprietaire_entry" class="btn btn-primary disabled btn-xs"><i class="fa fa-plus-square"></i> Propriétaire</button>
-            <button type="button" id="{{ id }}_add_exploitant_entry" class="btn btn-primary disabled btn-xs"><i class="fa fa-plus-square"></i> Exploitant</button>
+{#            <button type="button" id="{{ id }}_add_proprietaire_entry" class="btn btn-primary disabled btn-xs"><i class="fa fa-plus-square"></i> Propriétaire</button>#}
+{#            <button type="button" id="{{ id }}_add_exploitant_entry" class="btn btn-primary disabled btn-xs"><i class="fa fa-plus-square"></i> Exploitant</button>#}
             <button type="button" id="{{ id }}_export_entry" class="btn btn-info btn-xs"><i class="fa fa-file-excel-o"></i> Exporter</button>
           </td>
         </tr>
         </tbody>
       </table>
     </div>
-    
 
+    {#<div class="modal fade" id="proprietairesModal" tabindex="-1" role="dialog" aria-labelledby="proprietairesLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Accords</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="proprietaires-body">
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="savePropriet">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>#}
 {% endblock %}
 
 {% block _projet_proprietaires_entry_row %}
   {% spaceless %}
-    <tr class="proprietaire_entry">
+
+{#  <div class="panel panel-default">
+    <div class="panel-heading panel-heading-nav">
+      <ul class="nav nav-tabs">
+        <li role="presentation" class="active">
+          <a href="#projet_proprietairesm" aria-controls="projet_proprietairesm" role="tab" data-toggle="tab">Proprietaire</a>
+        </li>
+        <li role="presentation">
+          <a href="#projet_exploitantm" aria-controls="projet_exploitantm" role="tab" data-toggle="tab">Exploitant</a>
+        </li>
+      </ul>
+    </div>
+    <div class="panel-body" style="padding: 10px;">
+      <div class="tab-content">
+        <div role="tabpanel" class="tab-pane fade in active table-form" id="projet_proprietairesm">
+        <button type="button" id="projet_proprietaires_add_proprietaire_entry" class="btn btn-primary btn-xs" style="margin-bottom: 7px; float: right;"><i class="fa fa-plus-square"></i> Propriétaire</button>
+
+          #}{#          {{ form_widget(form.parcelles, {'attr': {'style': 'width:150px'}}) }}#}{#
+          <div class="form-group" style="margin-bottom: 15px;">
+            <div class="col-md-6">
+              <label>Parcelles <span class="control-label required"></span></label><br>
+              {{ form_widget(form.parcelles) }}
+            </div>
+          </div>
+          <div class="proprietaire_entry info" style="border: 2px solid #d7d7d7;padding: 7px;">
+
+            <div class="form-group" style="margin-bottom: 15px;">
+              <div class="col-md-3">
+                <label>Civilité</label>
+                {{ form_widget(form.civiliteProprietaire) }}
+              </div>
+              <div class="col-md-3">
+                <label>Identité <span class="control-label required"></span></label><br>
+                {{ form_widget(form.proprietaire, {'attr': {'style': 'width:170px'}}) }}
+              </div>
+              <div class="col-md-3">
+                <label>Qualité</label>
+                {{ form_widget(form.qualiteProprietaire) }}
+              </div>
+              <div class="col-md-3">
+                <label>Accords</label>
+                {{ form_widget(form.accordProprietaire) }}
+              </div>
+            </div>
+            <div class="form-group" style="margin-bottom: 15px;">
+              <div class="col-md-3">
+                <label>Téléphone</label>
+                {{ form_widget(form.telephoneProprietaire) }}
+              </div>
+              <div class="col-md-3">
+                <label>Adresse</label>
+                {{ form_widget(form.adresseProprietaire) }}
+              </div>
+              <div class="col-md-3">
+                <label>Email</label>
+                {{ form_widget(form.emailProprietaire) }}
+              </div>
+              <div class="col-md-3">
+                <label>Né le</label>
+                {{ form_widget(form.dateNaissanceProprietaire) }}
+              </div>
+            </div>
+            <div class="form-group" style="margin-bottom: 15px;">
+              <div class="col-md-2">
+                <label>Né à</label>
+                {{ form_widget(form.lieuNaissanceProprietaire) }}
+              </div>
+              <div class="col-md-2">
+                <label>Droit</label>
+                {{ form_widget(form.droitProprietaire) }}
+              </div>
+              <div class="col-md-2">
+                <label>Statut marital</label>
+                {{ form_widget(form.maritalProprietaire) }}
+              </div>
+              <div class="col-md-2">
+                <label>Date signature</label>
+                {% if form.vars.value.dateSignatureProprietaire is defined %}{{ form_widget(form.dateSignatureProprietaire) }}{% else %}{{ form_widget(form.dateSignatureProprietaire, {'value' : "now"|date("d/m/Y")}) }}{% endif %}
+              </div>
+              <div class="col-md-2">
+                <label>Durée</label>
+                {{ form_widget(form.dureeProprietaire) }}
+              </div>
+              <div class="col-md-2">
+                <label>Date échéance</label>
+                {% if form.vars.value.dateEcheanceProprietaire is defined %}{{ form_widget(form.dateEcheanceProprietaire) }}{% else %}{{ form_widget(form.dateEcheanceProprietaire, {'value' : "now"|date("d/m/Y")}) }}{% endif %}
+              </div>
+            </div>
+          </div>
+          <div class="proprietaire2_entry info {% if form.vars.value.proprietaire2 is not defined or not form.vars.value.proprietaire2 %}hide{% endif %}" style="border: 2px solid #d7d7d7;padding: 7px;margin-top: 5px;">
+            <div class="form-group" style="margin-bottom: 15px;">
+              <div class="col-md-3">
+                <label>Civilité</label>
+                {{ form_widget(form.civiliteProprietaire2) }}
+              </div>
+              <div class="col-md-3">
+                <label>Identité <span class="control-label required"></span></label>
+                {{ form_widget(form.proprietaire2) }}
+              </div>
+              <div class="col-md-3">
+                <label>Qualité</label>
+                {{ form_widget(form.qualiteProprietaire2) }}
+              </div>
+              <div class="col-md-3">
+                <label>Accords</label>
+                {{ form_widget(form.accordProprietaire2) }}
+              </div>
+            </div>
+            <div class="form-group" style="margin-bottom: 15px;">
+              <div class="col-md-3">
+                <label>Téléphone</label>
+                {{ form_widget(form.telephoneProprietaire2) }}
+              </div>
+              <div class="col-md-3">
+                <label>Adresse</label>
+                {{ form_widget(form.adresseProprietaire2) }}
+              </div>
+              <div class="col-md-3">
+                <label>Email</label>
+                {{ form_widget(form.emailProprietaire2) }}
+              </div>
+              <div class="col-md-3">
+                <label>Né le</label>
+                {{ form_widget(form.dateNaissanceProprietaire2) }}
+              </div>
+            </div>
+            <div class="form-group" style="margin-bottom: 15px;">
+              <div class="col-md-2">
+                <label>Né à</label>
+                {{ form_widget(form.lieuNaissanceProprietaire2) }}
+              </div>
+              <div class="col-md-2">
+                <label>Droit</label>
+                {{ form_widget(form.droitProprietaire2) }}
+              </div>
+              <div class="col-md-2">
+                <label>Statut marital</label>
+                {{ form_widget(form.maritalProprietaire2) }}
+              </div>
+              <div class="col-md-2">
+                <label>Date signature</label>
+                {% if form.vars.value.dateSignatureProprietaire2 is defined %}{{ form_widget(form.dateSignatureProprietaire2) }}{% else %}{{ form_widget(form.dateSignatureProprietaire2, {'value' : "now"|date("d/m/Y")}) }}{% endif %}
+              </div>
+              {% if form.vars.value.dureeProprietaire is defined %}
+                <div class="col-md-2">
+                  <label>Durée</label>
+                  {{ form.vars.value.dureeProprietaire }}
+                </div>
+              {% endif %}
+              <div class="col-md-2">
+                <label>Date échéance</label>
+                {% if form.vars.value.dateEcheanceProprietaire2 is defined %}{{ form_widget(form.dateEcheanceProprietaire2) }}{% else %}{{ form_widget(form.dateEcheanceProprietaire2, {'value' : "now"|date("d/m/Y")}) }}{% endif %}
+              </div>
+            </div>
+          </div>
+          <div class="proprietaire3_entry info {% if form.vars.value.proprietaire3 is not defined or not form.vars.value.proprietaire3 %}hide{% endif %}" style="border: 2px solid #d7d7d7;padding: 7px;margin-top: 5px;">
+            <div class="form-group" style="margin-bottom: 15px;">
+              <div class="col-md-3">
+                <label>Civilité</label>
+                {{ form_widget(form.civiliteProprietaire3) }}
+              </div>
+              <div class="col-md-3">
+                <label>Identité <span class="control-label required"></span></label>
+                {{ form_widget(form.proprietaire3) }}
+              </div>
+              <div class="col-md-3">
+                <label>Qualité</label>
+                {{ form_widget(form.qualiteProprietaire3) }}
+              </div>
+              <div class="col-md-3">
+                <label>Accords</label>
+                {{ form_widget(form.accordProprietaire3) }}
+              </div>
+            </div>
+            <div class="form-group" style="margin-bottom: 15px;">
+              <div class="col-md-3">
+                <label>Téléphone</label>
+                {{ form_widget(form.telephoneProprietaire3) }}
+              </div>
+              <div class="col-md-3">
+                <label>Adresse</label>
+                {{ form_widget(form.adresseProprietaire3) }}
+              </div>
+              <div class="col-md-3">
+                <label>Email</label>
+                {{ form_widget(form.emailProprietaire3) }}
+              </div>
+              <div class="col-md-3">
+                <label>Né le</label>
+                {{ form_widget(form.dateNaissanceProprietaire3) }}
+              </div>
+            </div>
+            <div class="form-group" style="margin-bottom: 15px;">
+              <div class="col-md-3">
+                <label>Né à</label>
+                {{ form_widget(form.lieuNaissanceProprietaire3) }}
+              </div>
+              <div class="col-md-3">
+                <label>Droit</label>
+                {{ form_widget(form.droitProprietaire3) }}
+              </div>
+              <div class="col-md-3">
+                <label>Statut marital</label>
+                {{ form_widget(form.maritalProprietaire3) }}
+              </div>
+              <div class="col-md-3">
+                <label>Date signature</label>
+                {% if form.vars.value.dateSignatureProprietaire3 is defined %}{{ form_widget(form.dateSignatureProprietaire3) }}{% else %}{{ form_widget(form.dateSignatureProprietaire3, {'value' : "now"|date("d/m/Y")}) }}{% endif %}
+              </div>
+            </div>
+            <div class="form-group" style="margin-bottom: 15px;">
+              <div class="col-md-3">
+                <label>Durée</label>
+                {% if form.vars.value.dureeProprietaire is defined %}{{ form.vars.value.dureeProprietaire }}{% endif %}
+              </div>
+              <div class="col-md-3">
+                <label>Date échéance</label>
+                {% if form.vars.value.dateEcheanceProprietaire3 is defined %}{{ form_widget(form.dateEcheanceProprietaire3) }}{% else %}{{ form_widget(form.dateEcheanceProprietaire3, {'value' : "now"|date("d/m/Y")}) }}{% endif %}
+              </div>
+            </div>
+          </div>
+          <div class="proprietaire4_entry info {% if form.vars.value.proprietaire4 is not defined or not form.vars.value.proprietaire4 %}hide{% endif %}" style="border: 2px solid #d7d7d7;padding: 7px; margin-top: 5px;">
+            <div class="form-group" style="margin-bottom: 15px;">
+              <div class="col-md-3">
+                <label>Civilité</label>
+                {{ form_widget(form.civiliteProprietaire4) }}
+              </div>
+              <div class="col-md-3">
+                <label>Identité <span class="control-label required"></span></label>
+                {{ form_widget(form.proprietaire4) }}
+              </div>
+              <div class="col-md-3">
+                <label>Qualité</label>
+                {{ form_widget(form.qualiteProprietaire4) }}
+              </div>
+              <div class="col-md-3">
+                <label>Accords</label>
+                {{ form_widget(form.accordProprietaire4) }}
+              </div>
+            </div>
+            <div class="form-group" style="margin-bottom: 15px;">
+              <div class="col-md-3">
+                <label>Téléphone</label>
+                {{ form_widget(form.telephoneProprietaire4) }}
+              </div>
+              <div class="col-md-3">
+                <label>Adresse</label>
+                {{ form_widget(form.adresseProprietaire4) }}
+              </div>
+              <div class="col-md-3">
+                <label>Email</label>
+                {{ form_widget(form.emailProprietaire4) }}
+              </div>
+              <div class="col-md-3">
+                <label>Né le</label>
+                {{ form_widget(form.dateNaissanceProprietaire4) }}
+              </div>
+            </div>
+            <div class="form-group" style="margin-bottom: 15px;">
+              <div class="col-md-3">
+                <label>Né à</label>
+                {{ form_widget(form.lieuNaissanceProprietaire4) }}
+              </div>
+              <div class="col-md-3">
+                <label>Droit</label>
+                {{ form_widget(form.droitProprietaire4) }}
+              </div>
+              <div class="col-md-3">
+                <label>Statut marital</label>
+                {{ form_widget(form.maritalProprietaire4) }}
+              </div>
+              <div class="col-md-3">
+                <label>Date signature</label>
+                {% if form.vars.value.dateSignatureProprietaire4 is defined %}{{ form_widget(form.dateSignatureProprietaire4) }}{% else %}{{ form_widget(form.dateSignatureProprietaire4, {'value' : "now"|date("d/m/Y")}) }}{% endif %}
+              </div>
+            </div>
+            <div class="form-group" style="margin-bottom: 15px;">
+              <div class="col-md-3">
+                <label>Durée</label>
+                {% if form.vars.value.dureeProprietaire is defined %}{{ form.vars.value.dureeProprietaire }}{% endif %}
+              </div>
+              <div class="col-md-3">
+                <label>Date échéance</label>
+                {% if form.vars.value.dateEcheanceProprietaire4 is defined %}{{ form_widget(form.dateEcheanceProprietaire4) }}{% else %}{{ form_widget(form.dateEcheanceProprietaire4, {'value' : "now"|date("d/m/Y")}) }}{% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div role="tabpanel" class="tab-pane fade" id="projet_exploitantm">
+          <button type="button" id="projet_proprietaires_add_exploitant_entry" class="btn btn-primary btn-xs" style="margin-bottom: 7px; float: right;"><i class="fa fa-plus-square"></i> Exploitant</button>
+          <div class="form-group">
+          </div>
+          <br>
+          <div class="exploitant_entry info" style="border: 2px solid #d7d7d7;padding: 7px;">
+            <div class="form-group" style="margin-bottom: 15px;">
+              <div class="col-md-3">
+                <label>Civilité</label>
+                {{ form_widget(form.civiliteExploitant) }}
+              </div>
+              <div class="col-md-3">
+                <label>Identité <span class="control-label required"></span></label><br>
+                {{ form_widget(form.exploitant, {'attr': {'style': 'width:170px'}}) }}
+              </div>
+              <div class="col-md-3">
+                <label>Qualité</label>
+                {{ form_widget(form.qualiteExploitant) }}
+              </div>
+              <div class="col-md-3">
+                <label>Accords</label>
+                {{ form_widget(form.accordExploitant) }}
+              </div>
+            </div>
+            <div class="form-group" style="margin-bottom: 15px;">
+              <div class="col-md-3">
+                <label>Téléphone</label>
+                {{ form_widget(form.telephoneExploitant) }}
+              </div>
+              <div class="col-md-3">
+                <label>Adresse</label>
+                {{ form_widget(form.adresseExploitant) }}
+              </div>
+              <div class="col-md-3">
+                <label>Email</label>
+                {{ form_widget(form.emailExploitant) }}
+              </div>
+              <div class="col-md-3">
+                <label>Né le</label>
+                {{ form_widget(form.dateNaissanceExploitant) }}
+              </div>
+            </div>
+            <div class="form-group" style="margin-bottom: 15px;">
+              <div class="col-md-2">
+                <label>Né à</label>
+                {{ form_widget(form.lieuNaissanceExploitant) }}
+              </div>
+              <div class="col-md-2">
+                <label>Droit</label>
+                {{ form_widget(form.droitExploitant) }}
+              </div>
+              <div class="col-md-2">
+                <label>Statut marital</label>
+                {{ form_widget(form.maritalExploitant) }}
+              </div>
+              <div class="col-md-2">
+                <label>Date signature</label>
+                {% if form.vars.value.dateSignatureExploitant is defined %}{{ form_widget(form.dateSignatureExploitant) }}{% else %}{{ form_widget(form.dateSignatureExploitant, {'value' : "now"|date("d/m/Y")}) }}{% endif %}
+              </div>
+              {% if form.vars.value.dureeProprietaire is defined %}
+                <div class="col-md-2">
+                  <label>Durée</label>
+                  {{ form.vars.value.dureeProprietaire }}
+                </div>
+              {% endif %}
+              <div class="col-md-2">
+                <label>Date échéance</label>
+                {% if form.vars.value.dateEcheanceExploitant is defined %}{{ form_widget(form.dateEcheanceExploitant) }}{% else %}{{ form_widget(form.dateEcheanceExploitant, {'value' : "now"|date("d/m/Y")}) }}{% endif %}
+              </div>
+            </div>
+          </div>
+
+          <div class="exploitant2_entry info {% if form.vars.value.exploitant2 is not defined or not form.vars.value.exploitant2 %}hide{% endif %}" style="border: 2px solid #d7d7d7;padding: 7px;margin-top: 5px;">
+            <div class="form-group" style="margin-bottom: 15px;">
+              <div class="col-md-3">
+                <label>Civilité</label>
+                {{ form_widget(form.civiliteExploitant2) }}
+              </div>
+              <div class="col-md-3">
+                <label>Identité <span class="control-label required"></span></label><br>
+                {{ form_widget(form.exploitant2, {'attr': {'style': 'width:170px'}}) }}
+              </div>
+              <div class="col-md-3">
+                <label>Qualité</label>
+                {{ form_widget(form.qualiteExploitant2) }}
+              </div>
+              <div class="col-md-3">
+                <label>Accords</label>
+                {{ form_widget(form.accordExploitant2) }}
+              </div>
+            </div>
+            <div class="form-group" style="margin-bottom: 15px;">
+              <div class="col-md-3">
+                <label>Téléphone</label>
+                {{ form_widget(form.telephoneExploitant2) }}
+              </div>
+              <div class="col-md-3">
+                <label>Adresse</label>
+                {{ form_widget(form.adresseExploitant2) }}
+              </div>
+              <div class="col-md-3">
+                <label>Email</label>
+                {{ form_widget(form.emailExploitant2) }}
+              </div>
+              <div class="col-md-3">
+                <label>Né le</label>
+                {{ form_widget(form.dateNaissanceExploitant2) }}
+              </div>
+            </div>
+            <div class="form-group" style="margin-bottom: 15px;">
+              <div class="col-md-2">
+                <label>Né à</label>
+                {{ form_widget(form.lieuNaissanceExploitant2) }}
+              </div>
+              <div class="col-md-2">
+                <label>Droit</label>
+                {{ form_widget(form.droitExploitant2) }}
+              </div>
+              <div class="col-md-2">
+                <label>Statut marital</label>
+                {{ form_widget(form.maritalExploitant2) }}
+              </div>
+              <div class="col-md-2">
+                <label>Date signature</label>
+                {% if form.vars.value.dateSignatureExploitant2 is defined %}{{ form_widget(form.dateSignatureExploitant2) }}{% else %}{{ form_widget(form.dateSignatureExploitant2, {'value' : "now"|date("d/m/Y")}) }}{% endif %}
+              </div>
+              {% if form.vars.value.dureeProprietaire is defined %}
+                <div class="col-md-2">
+                  <label>Durée</label>
+                  {{ form.vars.value.dureeProprietaire }}
+                </div>
+              {% endif %}
+              <div class="col-md-2">
+                <label>Date échéance</label>
+                {% if form.vars.value.dateEcheanceExploitant2 is defined %}{{ form_widget(form.dateEcheanceExploitant2) }}{% else %}{{ form_widget(form.dateEcheanceExploitant2, {'value' : "now"|date("d/m/Y")}) }}{% endif %}
+              </div>
+            </div>
+          </div>
+          <div class="exploitant3_entry info {% if form.vars.value.exploitant3 is not defined or not form.vars.value.exploitant3 %}hide{% endif %}" style="border: 2px solid #d7d7d7;padding: 7px;margin-top: 5px;">
+            <div class="form-group" style="margin-bottom: 15px;">
+              <div class="col-md-3">
+                <label>Civilité</label>
+                {{ form_widget(form.civiliteExploitant3) }}
+              </div>
+              <div class="col-md-3">
+                <label>Identité <span class="control-label required"></span></label><br>
+                {{ form_widget(form.exploitant3, {'attr': {'style': 'width:170px'}}) }}
+              </div>
+              <div class="col-md-3">
+                <label>Qualité</label>
+                {{ form_widget(form.qualiteExploitant3) }}
+              </div>
+              <div class="col-md-3">
+                <label>Accords</label>
+                {{ form_widget(form.accordExploitant3) }}
+              </div>
+            </div>
+            <div class="form-group" style="margin-bottom: 15px;">
+              <div class="col-md-3">
+                <label>Téléphone</label>
+                {{ form_widget(form.telephoneExploitant3) }}
+              </div>
+              <div class="col-md-3">
+                <label>Adresse</label>
+                {{ form_widget(form.adresseExploitant3) }}
+              </div>
+              <div class="col-md-3">
+                <label>Email</label>
+                {{ form_widget(form.emailExploitant3) }}
+              </div>
+              <div class="col-md-3">
+                <label>Né le</label>
+                {{ form_widget(form.dateNaissanceExploitant3) }}
+              </div>
+            </div>
+            <div class="form-group" style="margin-bottom: 15px;">
+              <div class="col-md-2">
+                <label>Né à</label>
+                {{ form_widget(form.lieuNaissanceExploitant3) }}
+              </div>
+              <div class="col-md-2">
+                <label>Droit</label>
+                {{ form_widget(form.droitExploitant3) }}
+              </div>
+              <div class="col-md-2">
+                <label>Statut marital</label>
+                {{ form_widget(form.maritalExploitant3) }}
+              </div>
+              <div class="col-md-2">
+                <label>Date signature</label>
+                {% if form.vars.value.dateSignatureExploitant3 is defined %}{{ form_widget(form.dateSignatureExploitant3) }}{% else %}{{ form_widget(form.dateSignatureExploitant3, {'value' : "now"|date("d/m/Y")}) }}{% endif %}
+              </div>
+              {% if form.vars.value.dureeProprietaire is defined %}
+                <div class="col-md-2">
+                  <label>Durée</label>
+                  {{ form.vars.value.dureeProprietaire }}
+                </div>
+              {% endif %}
+              <div class="col-md-2">
+                <label>Date échéance</label>
+                {% if form.vars.value.dateEcheanceExploitant3 is defined %}{{ form_widget(form.dateEcheanceExploitant3) }}{% else %}{{ form_widget(form.dateEcheanceExploitant3, {'value' : "now"|date("d/m/Y")}) }}{% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>#}
+    {#<tr class="proprietaire_entry">
       <td>{{ form_widget(form.parcelles, {'attr': {'style': 'width:150px'}}) }}</td>
       <td>{{ form_widget(form.civiliteProprietaire) }}</td>
       <td>{{ form_widget(form.proprietaire) }}</td>
@@ -377,7 +892,7 @@ col-sm-8
       <td>{% if form.vars.value.dateSignatureExploitant3 is defined %}{{ form_widget(form.dateSignatureExploitant3) }}{% else %}{{ form_widget(form.dateSignatureExploitant3, {'value' : "now"|date("d/m/Y")}) }}{% endif %}</td>
       <td>{% if form.vars.value.dureeProprietaire is defined %}{{ form.vars.value.dureeProprietaire }}{% endif %}</td>
       <td>{% if form.vars.value.dateEcheanceExploitant3 is defined %}{{ form_widget(form.dateEcheanceExploitant3) }}{% else %}{{ form_widget(form.dateEcheanceExploitant3, {'value' : "now"|date("d/m/Y")}) }}{% endif %}</td>
-    </tr>
+    </tr>#}
   {% endspaceless %}
 {% endblock %}
 
