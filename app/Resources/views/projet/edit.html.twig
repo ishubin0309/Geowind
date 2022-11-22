@@ -592,106 +592,112 @@
           {% for key, propInfo in proprietairesInfo %}
               <input type="hidden" class="prop" name="projet[proprietaires][{{key}}][id]" value="{{propInfo.id}}">
             <div class="proprietaire_info" data-pid="{{key}}">
-              <input type="hidden" class="proprietaire1" name="projet[proprietaires][{{key}}][parcelles]" value="{{propInfo.parcelles}}">
-              <input type="hidden" class="proprietaire1" name="projet[proprietaires][{{key}}][civiliteProprietaire]" value="{{propInfo.civiliteProprietaire}}">
-              <input type="hidden" class="proprietaire1" name="projet[proprietaires][{{key}}][proprietaire]" value="{{propInfo.proprietaire}}">
-              <input type="hidden" class="proprietaire1" name="projet[proprietaires][{{key}}][qualiteProprietaire]" value="{{propInfo.qualiteProprietaire}}">
-              <input type="hidden" class="proprietaire1" name="projet[proprietaires][{{key}}][accordProprietaire]" value="{{propInfo.accordProprietaire}}">
-              <input type="hidden" class="proprietaire1" name="projet[proprietaires][{{key}}][telephoneProprietaire]" value="{{propInfo.telephoneProprietaire}}">
-              <input type="hidden" class="proprietaire1" name="projet[proprietaires][{{key}}][adresseProprietaire]" value="{{propInfo.adresseProprietaire}}">
-              <input type="hidden" class="proprietaire1" name="projet[proprietaires][{{key}}][emailProprietaire]" value="{{propInfo.emailProprietaire}}">
-              <input type="hidden" class="proprietaire1" name="projet[proprietaires][{{key}}][dateNaissanceProprietaire]" value="{{propInfo.dateNaissanceProprietaire|date('d/m/Y')}}">
-              <input type="hidden" class="proprietaire1" name="projet[proprietaires][{{key}}][lieuNaissanceProprietaire]" value="{{propInfo.lieuNaissanceProprietaire}}">
-              <input type="hidden" class="proprietaire1" name="projet[proprietaires][{{key}}][droitProprietaire]" value="{{propInfo.droitProprietaire}}">
-              <input type="hidden" class="proprietaire1" name="projet[proprietaires][{{key}}][maritalProprietaire]" value="{{propInfo.maritalProprietaire}}">
-              <input type="hidden" class="proprietaire1" name="projet[proprietaires][{{key}}][dateSignatureProprietaire]" value="{{propInfo.dateSignatureProprietaire|date('d/m/Y')}}">
-              <input type="hidden" class="proprietaire1" name="projet[proprietaires][{{key}}][dureeProprietaire]" value="{{propInfo.dureeProprietaire}}">
-              <input type="hidden" class="proprietaire1" name="projet[proprietaires][{{key}}][dateEcheanceProprietaire]" value="{{propInfo.dateEcheanceProprietaire|date('d/m/Y')}}">
+              <input type="hidden" class="proprietaire1 form-input" name="projet[proprietaires][{{key}}][parcelles]" value="{{propInfo.parcelles}}">
+              <input type="hidden" class="proprietaire1 form-input" name="projet[proprietaires][{{key}}][civiliteProprietaire]" value="{{propInfo.civiliteProprietaire}}">
+              <input type="hidden" class="proprietaire1 form-input" name="projet[proprietaires][{{key}}][proprietaire]" value="{{propInfo.proprietaire}}">
+              <input type="hidden" class="proprietaire1 form-input" name="projet[proprietaires][{{key}}][qualiteProprietaire]" value="{{propInfo.qualiteProprietaire}}">
+              <input type="hidden" class="proprietaire1 form-input" name="projet[proprietaires][{{key}}][accordProprietaire]" value="{{propInfo.accordProprietaire}}">
+              <input type="hidden" class="proprietaire1 form-input" name="projet[proprietaires][{{key}}][telephoneProprietaire]" value="{{propInfo.telephoneProprietaire}}">
+              <input type="hidden" class="proprietaire1 form-input" name="projet[proprietaires][{{key}}][adresseProprietaire]" value="{{propInfo.adresseProprietaire}}">
+              <input type="hidden" class="proprietaire1 form-input" name="projet[proprietaires][{{key}}][emailProprietaire]" value="{{propInfo.emailProprietaire}}">
+              <input type="hidden" class="proprietaire1 form-input" name="projet[proprietaires][{{key}}][dateNaissanceProprietaire]" value="{{propInfo.dateNaissanceProprietaire|date('d/m/Y')}}">
+              <input type="hidden" class="proprietaire1 form-input" name="projet[proprietaires][{{key}}][lieuNaissanceProprietaire]" value="{{propInfo.lieuNaissanceProprietaire}}">
+              <input type="hidden" class="proprietaire1 form-input" name="projet[proprietaires][{{key}}][droitProprietaire]" value="{{propInfo.droitProprietaire}}">
+              <input type="hidden" class="proprietaire1 form-input" name="projet[proprietaires][{{key}}][maritalProprietaire]" value="{{propInfo.maritalProprietaire}}">
+              <input type="hidden" class="proprietaire1 form-input" name="projet[proprietaires][{{key}}][dateSignatureProprietaire]" value="{{propInfo.dateSignatureProprietaire|date('d/m/Y')}}">
+              <input type="hidden" class="proprietaire1 form-input" name="projet[proprietaires][{{key}}][dureeProprietaire]" value="{{propInfo.dureeProprietaire}}">
+              <input type="hidden" class="proprietaire1 form-input" name="projet[proprietaires][{{key}}][dateEcheanceProprietaire]" value="{{propInfo.dateEcheanceProprietaire|date('d/m/Y')}}">
 
               
-              <input type="hidden" class="proprietaire2" name="projet[proprietaires][{{key}}][civiliteProprietaire2]" value="{{propInfo.civiliteProprietaire2}}">
-              <input type="hidden" class="proprietaire2" name="projet[proprietaires][{{key}}][proprietaire2]" value="{{propInfo.proprietaire2}}">
-              <input type="hidden" class="proprietaire2" name="projet[proprietaires][{{key}}][qualiteProprietaire2]" value="{{propInfo.qualiteProprietaire2}}">
-              <input type="hidden" class="proprietaire2" name="projet[proprietaires][{{key}}][accordProprietaire2]" value="{{propInfo.accordProprietaire2}}">
-              <input type="hidden" class="proprietaire2" name="projet[proprietaires][{{key}}][telephoneProprietaire2]" value="{{propInfo.telephoneProprietaire2}}">
-              <input type="hidden" class="proprietaire2" name="projet[proprietaires][{{key}}][adresseProprietaire2]" value="{{propInfo.adresseProprietaire2}}">
-              <input type="hidden" class="proprietaire2" name="projet[proprietaires][{{key}}][emailProprietaire2]" value="{{propInfo.emailProprietaire2}}">
-              <input type="hidden" class="proprietaire2" name="projet[proprietaires][{{key}}][dateNaissanceProprietaire2]" value="{{propInfo.dateNaissanceProprietaire2|date('d/m/Y')}}">
-              <input type="hidden" class="proprietaire2" name="projet[proprietaires][{{key}}][lieuNaissanceProprietaire2]" value="{{propInfo.lieuNaissanceProprietaire2}}">
-              <input type="hidden" class="proprietaire2" name="projet[proprietaires][{{key}}][droitProprietaire2]" value="{{propInfo.droitProprietaire2}}">
-              <input type="hidden" class="proprietaire2" name="projet[proprietaires][{{key}}][maritalProprietaire2]" value="{{propInfo.maritalProprietaire2}}">
-              <input type="hidden" class="proprietaire2" name="projet[proprietaires][{{key}}][dateSignatureProprietaire2]" value="{{propInfo.dateSignatureProprietaire2|date('d/m/Y')}}">
-              <input type="hidden" class="proprietaire2" name="projet[proprietaires][{{key}}][dateEcheanceProprietaire2]" value="{{propInfo.dateEcheanceProprietaire2|date('d/m/Y')}}">
+              <input type="hidden" class="proprietaire2 form-prop2" name="projet[proprietaires][{{key}}][civiliteProprietaire2]" value="{{propInfo.civiliteProprietaire2}}">
+              <input type="hidden" class="proprietaire2 form-prop2" name="projet[proprietaires][{{key}}][proprietaire2]" value="{{propInfo.proprietaire2}}">
+              <input type="hidden" class="proprietaire2 form-prop2" name="projet[proprietaires][{{key}}][qualiteProprietaire2]" value="{{propInfo.qualiteProprietaire2}}">
+              <input type="hidden" class="proprietaire2 form-prop2" name="projet[proprietaires][{{key}}][accordProprietaire2]" value="{{propInfo.accordProprietaire2}}">
+              <input type="hidden" class="proprietaire2 form-prop2" name="projet[proprietaires][{{key}}][telephoneProprietaire2]" value="{{propInfo.telephoneProprietaire2}}">
+              <input type="hidden" class="proprietaire2 form-prop2" name="projet[proprietaires][{{key}}][adresseProprietaire2]" value="{{propInfo.adresseProprietaire2}}">
+              <input type="hidden" class="proprietaire2 form-prop2" name="projet[proprietaires][{{key}}][emailProprietaire2]" value="{{propInfo.emailProprietaire2}}">
+              <input type="hidden" class="proprietaire2 form-prop2" name="projet[proprietaires][{{key}}][dateNaissanceProprietaire2]" value="{{propInfo.dateNaissanceProprietaire2|date('d/m/Y')}}">
+              <input type="hidden" class="proprietaire2 form-prop2" name="projet[proprietaires][{{key}}][lieuNaissanceProprietaire2]" value="{{propInfo.lieuNaissanceProprietaire2}}">
+              <input type="hidden" class="proprietaire2 form-prop2" name="projet[proprietaires][{{key}}][droitProprietaire2]" value="{{propInfo.droitProprietaire2}}">
+              <input type="hidden" class="proprietaire2 form-prop2" name="projet[proprietaires][{{key}}][maritalProprietaire2]" value="{{propInfo.maritalProprietaire2}}">
+              <input type="hidden" class="proprietaire2 form-prop2" name="projet[proprietaires][{{key}}][dateSignatureProprietaire2]" value="{{propInfo.dateSignatureProprietaire2|date('d/m/Y')}}">
+              <input type="hidden" class="proprietaire2  form-prop2" name="hidden2" value="">
+              <input type="hidden" class="proprietaire2 form-prop2" name="projet[proprietaires][{{key}}][dateEcheanceProprietaire2]" value="{{propInfo.dateEcheanceProprietaire2|date('d/m/Y')}}">
               
-              <input type="hidden" class="proprietaire3" name="projet[proprietaires][{{key}}][civiliteProprietaire3]" value="{{propInfo.civiliteProprietaire3}}">
-              <input type="hidden" class="proprietaire3" name="projet[proprietaires][{{key}}][proprietaire3]" value="{{propInfo.proprietaire3}}">
-              <input type="hidden" class="proprietaire3" name="projet[proprietaires][{{key}}][qualiteProprietaire3]" value="{{propInfo.qualiteProprietaire3}}">
-              <input type="hidden" class="proprietaire3" name="projet[proprietaires][{{key}}][accordProprietaire3]" value="{{propInfo.accordProprietaire3}}">
-              <input type="hidden" class="proprietaire3" name="projet[proprietaires][{{key}}][telephoneProprietaire3]" value="{{propInfo.telephoneProprietaire3}}">
-              <input type="hidden" class="proprietaire3" name="projet[proprietaires][{{key}}][adresseProprietaire3]" value="{{propInfo.adresseProprietaire3}}">
-              <input type="hidden" class="proprietaire3" name="projet[proprietaires][{{key}}][emailProprietaire3]" value="{{propInfo.emailProprietaire3}}">
-              <input type="hidden" class="proprietaire3" name="projet[proprietaires][{{key}}][dateNaissanceProprietaire3]" value="{{propInfo.dateNaissanceProprietaire3|date('d/m/Y')}}">
-              <input type="hidden" class="proprietaire3" name="projet[proprietaires][{{key}}][lieuNaissanceProprietaire3]" value="{{propInfo.lieuNaissanceProprietaire3}}">
-              <input type="hidden" class="proprietaire3" name="projet[proprietaires][{{key}}][droitProprietaire3]" value="{{propInfo.droitProprietaire3}}">
-              <input type="hidden" class="proprietaire3" name="projet[proprietaires][{{key}}][maritalProprietaire3]" value="{{propInfo.maritalProprietaire3}}">
-              <input type="hidden" class="proprietaire3" name="projet[proprietaires][{{key}}][dateSignatureProprietaire3]" value="{{propInfo.dateSignatureProprietaire3|date('d/m/Y')}}">
-              <input type="hidden" class="proprietaire3" name="projet[proprietaires][{{key}}][dateEcheanceProprietaire3]" value="{{propInfo.dateEcheanceProprietaire3|date('d/m/Y')}}">
+              <input type="hidden" class="proprietaire3 form-prop3" name="projet[proprietaires][{{key}}][civiliteProprietaire3]" value="{{propInfo.civiliteProprietaire3}}">
+              <input type="hidden" class="proprietaire3 form-prop3" name="projet[proprietaires][{{key}}][proprietaire3]" value="{{propInfo.proprietaire3}}">
+              <input type="hidden" class="proprietaire3 form-prop3" name="projet[proprietaires][{{key}}][qualiteProprietaire3]" value="{{propInfo.qualiteProprietaire3}}">
+              <input type="hidden" class="proprietaire3 form-prop3" name="projet[proprietaires][{{key}}][accordProprietaire3]" value="{{propInfo.accordProprietaire3}}">
+              <input type="hidden" class="proprietaire3 form-prop3" name="projet[proprietaires][{{key}}][telephoneProprietaire3]" value="{{propInfo.telephoneProprietaire3}}">
+              <input type="hidden" class="proprietaire3 form-prop3" name="projet[proprietaires][{{key}}][adresseProprietaire3]" value="{{propInfo.adresseProprietaire3}}">
+              <input type="hidden" class="proprietaire3 form-prop3" name="projet[proprietaires][{{key}}][emailProprietaire3]" value="{{propInfo.emailProprietaire3}}">
+              <input type="hidden" class="proprietaire3 form-prop3" name="projet[proprietaires][{{key}}][dateNaissanceProprietaire3]" value="{{propInfo.dateNaissanceProprietaire3|date('d/m/Y')}}">
+              <input type="hidden" class="proprietaire3 form-prop3" name="projet[proprietaires][{{key}}][lieuNaissanceProprietaire3]" value="{{propInfo.lieuNaissanceProprietaire3}}">
+              <input type="hidden" class="proprietaire3 form-prop3" name="projet[proprietaires][{{key}}][droitProprietaire3]" value="{{propInfo.droitProprietaire3}}">
+              <input type="hidden" class="proprietaire3 form-prop3" name="projet[proprietaires][{{key}}][maritalProprietaire3]" value="{{propInfo.maritalProprietaire3}}">
+              <input type="hidden" class="proprietaire3 form-prop3" name="projet[proprietaires][{{key}}][dateSignatureProprietaire3]" value="{{propInfo.dateSignatureProprietaire3|date('d/m/Y')}}">
+              <input type="hidden" class="proprietaire3  form-prop3" name="hidden3" value="">
+              <input type="hidden" class="proprietaire3 form-prop3" name="projet[proprietaires][{{key}}][dateEcheanceProprietaire3]" value="{{propInfo.dateEcheanceProprietaire3|date('d/m/Y')}}">
               
-              <input type="hidden" class="proprietaire4" name="projet[proprietaires][{{key}}][civiliteProprietaire4]" value="{{propInfo.civiliteProprietaire4}}">
-              <input type="hidden" class="proprietaire4" name="projet[proprietaires][{{key}}][proprietaire4]" value="{{propInfo.proprietaire4}}">
-              <input type="hidden" class="proprietaire4" name="projet[proprietaires][{{key}}][qualiteProprietaire4]" value="{{propInfo.qualiteProprietaire4}}">
-              <input type="hidden" class="proprietaire4" name="projet[proprietaires][{{key}}][accordProprietaire4]" value="{{propInfo.accordProprietaire4}}">
-              <input type="hidden" class="proprietaire4" name="projet[proprietaires][{{key}}][telephoneProprietaire4]" value="{{propInfo.telephoneProprietaire4}}">
-              <input type="hidden" class="proprietaire4" name="projet[proprietaires][{{key}}][adresseProprietaire4]" value="{{propInfo.adresseProprietaire4}}">
-              <input type="hidden" class="proprietaire4" name="projet[proprietaires][{{key}}][emailProprietaire4]" value="{{propInfo.emailProprietaire4}}">
-              <input type="hidden" class="proprietaire4" name="projet[proprietaires][{{key}}][dateNaissanceProprietaire4]" value="{{propInfo.dateNaissanceProprietaire4|date('d/m/Y')}}">
-              <input type="hidden" class="proprietaire4" name="projet[proprietaires][{{key}}][lieuNaissanceProprietaire4]" value="{{propInfo.lieuNaissanceProprietaire4}}">
-              <input type="hidden" class="proprietaire4" name="projet[proprietaires][{{key}}][droitProprietaire4]" value="{{propInfo.droitProprietaire4}}">
-              <input type="hidden" class="proprietaire4" name="projet[proprietaires][{{key}}][maritalProprietaire4]" value="{{propInfo.maritalProprietaire4}}">
-              <input type="hidden" class="proprietaire4" name="projet[proprietaires][{{key}}][dateSignatureProprietaire4]" value="{{propInfo.dateSignatureProprietaire4|date('d/m/Y')}}">
-              <input type="hidden" class="proprietaire4" name="projet[proprietaires][{{key}}][dateEcheanceProprietaire4]" value="{{propInfo.dateEcheanceProprietaire4|date('d/m/Y')}}">
+              <input type="hidden" class="proprietaire4 form-prop4" name="projet[proprietaires][{{key}}][civiliteProprietaire4]" value="{{propInfo.civiliteProprietaire4}}">
+              <input type="hidden" class="proprietaire4 form-prop4" name="projet[proprietaires][{{key}}][proprietaire4]" value="{{propInfo.proprietaire4}}">
+              <input type="hidden" class="proprietaire4 form-prop4" name="projet[proprietaires][{{key}}][qualiteProprietaire4]" value="{{propInfo.qualiteProprietaire4}}">
+              <input type="hidden" class="proprietaire4 form-prop4" name="projet[proprietaires][{{key}}][accordProprietaire4]" value="{{propInfo.accordProprietaire4}}">
+              <input type="hidden" class="proprietaire4 form-prop4" name="projet[proprietaires][{{key}}][telephoneProprietaire4]" value="{{propInfo.telephoneProprietaire4}}">
+              <input type="hidden" class="proprietaire4 form-prop4" name="projet[proprietaires][{{key}}][adresseProprietaire4]" value="{{propInfo.adresseProprietaire4}}">
+              <input type="hidden" class="proprietaire4 form-prop4" name="projet[proprietaires][{{key}}][emailProprietaire4]" value="{{propInfo.emailProprietaire4}}">
+              <input type="hidden" class="proprietaire4 form-prop4" name="projet[proprietaires][{{key}}][dateNaissanceProprietaire4]" value="{{propInfo.dateNaissanceProprietaire4|date('d/m/Y')}}">
+              <input type="hidden" class="proprietaire4 form-prop4" name="projet[proprietaires][{{key}}][lieuNaissanceProprietaire4]" value="{{propInfo.lieuNaissanceProprietaire4}}">
+              <input type="hidden" class="proprietaire4 form-prop4" name="projet[proprietaires][{{key}}][droitProprietaire4]" value="{{propInfo.droitProprietaire4}}">
+              <input type="hidden" class="proprietaire4 form-prop4" name="projet[proprietaires][{{key}}][maritalProprietaire4]" value="{{propInfo.maritalProprietaire4}}">
+              <input type="hidden" class="proprietaire4 form-prop4" name="projet[proprietaires][{{key}}][dateSignatureProprietaire4]" value="{{propInfo.dateSignatureProprietaire4|date('d/m/Y')}}">
+              <input type="hidden" class="proprietaire4  form-prop4" name="hidden4" value="">
+              <input type="hidden" class="proprietaire4 form-prop4" name="projet[proprietaires][{{key}}][dateEcheanceProprietaire4]" value="{{propInfo.dateEcheanceProprietaire4|date('d/m/Y')}}">
               
-              <input type="hidden" class="exploitant1" name="projet[proprietaires][{{key}}][civiliteExploitant]" value="{{propInfo.civiliteExploitant}}">
-              <input type="hidden" class="exploitant1" name="projet[proprietaires][{{key}}][exploitant]" value="{{propInfo.exploitant}}">
-              <input type="hidden" class="exploitant1" name="projet[proprietaires][{{key}}][qualiteExploitant]" value="{{propInfo.qualiteExploitant}}">
-              <input type="hidden" class="exploitant1" name="projet[proprietaires][{{key}}][accordExploitant]" value="{{propInfo.accordExploitant}}">
-              <input type="hidden" class="exploitant1" name="projet[proprietaires][{{key}}][telephoneExploitant]" value="{{propInfo.telephoneExploitant}}">
-              <input type="hidden" class="exploitant1" name="projet[proprietaires][{{key}}][adresseExploitant]" value="{{propInfo.adresseExploitant}}">
-              <input type="hidden" class="exploitant1" name="projet[proprietaires][{{key}}][emailExploitant]" value="{{propInfo.emailExploitant}}">
-              <input type="hidden" class="exploitant1" name="projet[proprietaires][{{key}}][dateNaissanceExploitant]" value="{{propInfo.dateNaissanceExploitant|date('d/m/Y')}}">
-              <input type="hidden" class="exploitant1" name="projet[proprietaires][{{key}}][lieuNaissanceExploitant]" value="{{propInfo.lieuNaissanceExploitant}}">
-              <input type="hidden" class="exploitant1" name="projet[proprietaires][{{key}}][droitExploitant]" value="{{propInfo.droitExploitant}}">
-              <input type="hidden" class="exploitant1" name="projet[proprietaires][{{key}}][maritalExploitant]" value="{{propInfo.maritalExploitant}}">
-              <input type="hidden" class="exploitant1" name="projet[proprietaires][{{key}}][dateSignatureExploitant]" value="{{propInfo.dateSignatureExploitant|date('d/m/Y')}}">
-              <input type="hidden" class="exploitant1" name="projet[proprietaires][{{key}}][dateEcheanceExploitant]" value="{{propInfo.dateEcheanceExploitant|date('d/m/Y')}}">
+              <input type="hidden" class="exploitant1 form-expo1" name="projet[proprietaires][{{key}}][civiliteExploitant]" value="{{propInfo.civiliteExploitant}}">
+              <input type="hidden" class="exploitant1 form-expo1" name="projet[proprietaires][{{key}}][exploitant]" value="{{propInfo.exploitant}}">
+              <input type="hidden" class="exploitant1 form-expo1" name="projet[proprietaires][{{key}}][qualiteExploitant]" value="{{propInfo.qualiteExploitant}}">
+              <input type="hidden" class="exploitant1 form-expo1" name="projet[proprietaires][{{key}}][accordExploitant]" value="{{propInfo.accordExploitant}}">
+              <input type="hidden" class="exploitant1 form-expo1" name="projet[proprietaires][{{key}}][telephoneExploitant]" value="{{propInfo.telephoneExploitant}}">
+              <input type="hidden" class="exploitant1 form-expo1" name="projet[proprietaires][{{key}}][adresseExploitant]" value="{{propInfo.adresseExploitant}}">
+              <input type="hidden" class="exploitant1 form-expo1" name="projet[proprietaires][{{key}}][emailExploitant]" value="{{propInfo.emailExploitant}}">
+              <input type="hidden" class="exploitant1 form-expo1" name="projet[proprietaires][{{key}}][dateNaissanceExploitant]" value="{{propInfo.dateNaissanceExploitant|date('d/m/Y')}}">
+              <input type="hidden" class="exploitant1 form-expo1" name="projet[proprietaires][{{key}}][lieuNaissanceExploitant]" value="{{propInfo.lieuNaissanceExploitant}}">
+              <input type="hidden" class="exploitant1 form-expo1" name="projet[proprietaires][{{key}}][droitExploitant]" value="{{propInfo.droitExploitant}}">
+              <input type="hidden" class="exploitant1 form-expo1" name="projet[proprietaires][{{key}}][maritalExploitant]" value="{{propInfo.maritalExploitant}}">
+              <input type="hidden" class="exploitant1 form-expo1" name="projet[proprietaires][{{key}}][dateSignatureExploitant]" value="{{propInfo.dateSignatureExploitant|date('d/m/Y')}}">
+              <input type="hidden" class="exploitant1 form-expo1" name="e1hidden" value="">
+              <input type="hidden" class="exploitant1 form-expo1" name="projet[proprietaires][{{key}}][dateEcheanceExploitant]" value="{{propInfo.dateEcheanceExploitant|date('d/m/Y')}}">
               
-              <input type="hidden" class="exploitant2" name="projet[proprietaires][{{key}}][civiliteExploitant2]" value="{{propInfo.civiliteExploitant2}}">
-              <input type="hidden" class="exploitant2" name="projet[proprietaires][{{key}}][exploitant2]" value="{{propInfo.exploitant2}}">
-              <input type="hidden" class="exploitant2" name="projet[proprietaires][{{key}}][qualiteExploitant2]" value="{{propInfo.qualiteExploitant2}}">
-              <input type="hidden" class="exploitant2" name="projet[proprietaires][{{key}}][accordExploitant2]" value="{{propInfo.accordExploitant2}}">
-              <input type="hidden" class="exploitant2" name="projet[proprietaires][{{key}}][telephoneExploitant2]" value="{{propInfo.telephoneExploitant2}}">
-              <input type="hidden" class="exploitant2" name="projet[proprietaires][{{key}}][adresseExploitant2]" value="{{propInfo.adresseExploitant2}}">
-              <input type="hidden" class="exploitant2" name="projet[proprietaires][{{key}}][emailExploitant2]" value="{{propInfo.emailExploitant2}}">
-              <input type="hidden" class="exploitant2" name="projet[proprietaires][{{key}}][dateNaissanceExploitant2]" value="{{propInfo.dateNaissanceExploitant2|date('d/m/Y')}}">
-              <input type="hidden" class="exploitant2" name="projet[proprietaires][{{key}}][lieuNaissanceExploitant2]" value="{{propInfo.lieuNaissanceExploitant2}}">
-              <input type="hidden" class="exploitant2" name="projet[proprietaires][{{key}}][droitExploitant2]" value="{{propInfo.droitExploitant2}}">
-              <input type="hidden" class="exploitant2" name="projet[proprietaires][{{key}}][maritalExploitant2]" value="{{propInfo.maritalExploitant2}}">
-              <input type="hidden" class="exploitant2" name="projet[proprietaires][{{key}}][dateSignatureExploitant2]" value="{{propInfo.dateSignatureExploitant2|date('d/m/Y')}}">
-              <input type="hidden" class="exploitant2" name="projet[proprietaires][{{key}}][dateEcheanceExploitant2]" value="{{propInfo.dateEcheanceExploitant2|date('d/m/Y')}}">
+              <input type="hidden" class="exploitant2 form-expo2" name="projet[proprietaires][{{key}}][civiliteExploitant2]" value="{{propInfo.civiliteExploitant2}}">
+              <input type="hidden" class="exploitant2 form-expo2" name="projet[proprietaires][{{key}}][exploitant2]" value="{{propInfo.exploitant2}}">
+              <input type="hidden" class="exploitant2 form-expo2" name="projet[proprietaires][{{key}}][qualiteExploitant2]" value="{{propInfo.qualiteExploitant2}}">
+              <input type="hidden" class="exploitant2 form-expo2" name="projet[proprietaires][{{key}}][accordExploitant2]" value="{{propInfo.accordExploitant2}}">
+              <input type="hidden" class="exploitant2 form-expo2" name="projet[proprietaires][{{key}}][telephoneExploitant2]" value="{{propInfo.telephoneExploitant2}}">
+              <input type="hidden" class="exploitant2 form-expo2" name="projet[proprietaires][{{key}}][adresseExploitant2]" value="{{propInfo.adresseExploitant2}}">
+              <input type="hidden" class="exploitant2 form-expo2" name="projet[proprietaires][{{key}}][emailExploitant2]" value="{{propInfo.emailExploitant2}}">
+              <input type="hidden" class="exploitant2 form-expo2" name="projet[proprietaires][{{key}}][dateNaissanceExploitant2]" value="{{propInfo.dateNaissanceExploitant2|date('d/m/Y')}}">
+              <input type="hidden" class="exploitant2 form-expo2" name="projet[proprietaires][{{key}}][lieuNaissanceExploitant2]" value="{{propInfo.lieuNaissanceExploitant2}}">
+              <input type="hidden" class="exploitant2 form-expo2" name="projet[proprietaires][{{key}}][droitExploitant2]" value="{{propInfo.droitExploitant2}}">
+              <input type="hidden" class="exploitant2 form-expo2" name="projet[proprietaires][{{key}}][maritalExploitant2]" value="{{propInfo.maritalExploitant2}}">
+              <input type="hidden" class="exploitant2 form-expo2" name="projet[proprietaires][{{key}}][dateSignatureExploitant2]" value="{{propInfo.dateSignatureExploitant2|date('d/m/Y')}}">
+              <input type="hidden" class="exploitant2 form-expo2" name="e2hidden" value="">
+              <input type="hidden" class="exploitant2 form-expo2" name="projet[proprietaires][{{key}}][dateEcheanceExploitant2]" value="{{propInfo.dateEcheanceExploitant2|date('d/m/Y')}}">
               
-              <input type="hidden" class="exploitant3" name="projet[proprietaires][{{key}}][civiliteExploitant3]" value="{{propInfo.civiliteExploitant3}}">
-              <input type="hidden" class="exploitant3" name="projet[proprietaires][{{key}}][exploitant3]" value="{{propInfo.exploitant3}}">
-              <input type="hidden" class="exploitant3" name="projet[proprietaires][{{key}}][qualiteExploitant3]" value="{{propInfo.qualiteExploitant3}}">
-              <input type="hidden" class="exploitant3" name="projet[proprietaires][{{key}}][accordExploitant3]" value="{{propInfo.accordExploitant3}}">
-              <input type="hidden" class="exploitant3" name="projet[proprietaires][{{key}}][telephoneExploitant3]" value="{{propInfo.telephoneExploitant3}}">
-              <input type="hidden" class="exploitant3" name="projet[proprietaires][{{key}}][adresseExploitant3]" value="{{propInfo.adresseExploitant3}}">
-              <input type="hidden" class="exploitant3" name="projet[proprietaires][{{key}}][emailExploitant3]" value="{{propInfo.emailExploitant3}}">
-              <input type="hidden" class="exploitant3" name="projet[proprietaires][{{key}}][dateNaissanceExploitant3]" value="{{propInfo.dateNaissanceExploitant3|date('d/m/Y')}}">
-              <input type="hidden" class="exploitant3" name="projet[proprietaires][{{key}}][lieuNaissanceExploitant3]" value="{{propInfo.lieuNaissanceExploitant3}}">
-              <input type="hidden" class="exploitant3" name="projet[proprietaires][{{key}}][droitExploitant3]" value="{{propInfo.droitExploitant3}}">
-              <input type="hidden" class="exploitant3" name="projet[proprietaires][{{key}}][maritalExploitant3]" value="{{propInfo.maritalExploitant3}}">
-              <input type="hidden" class="exploitant3" name="projet[proprietaires][{{key}}][dateSignatureExploitant3]" value="{{propInfo.dateSignatureExploitant3|date('d/m/Y')}}">
-              <input type="hidden" class="exploitant3" name="projet[proprietaires][{{key}}][dateEcheanceExploitant3]" value="{{propInfo.dateEcheanceExploitant3|date('d/m/Y')}}">
+              <input type="hidden" class="exploitant3 form-expo3" name="projet[proprietaires][{{key}}][civiliteExploitant3]" value="{{propInfo.civiliteExploitant3}}">
+              <input type="hidden" class="exploitant3 form-expo3" name="projet[proprietaires][{{key}}][exploitant3]" value="{{propInfo.exploitant3}}">
+              <input type="hidden" class="exploitant3 form-expo3" name="projet[proprietaires][{{key}}][qualiteExploitant3]" value="{{propInfo.qualiteExploitant3}}">
+              <input type="hidden" class="exploitant3 form-expo3" name="projet[proprietaires][{{key}}][accordExploitant3]" value="{{propInfo.accordExploitant3}}">
+              <input type="hidden" class="exploitant3 form-expo3" name="projet[proprietaires][{{key}}][telephoneExploitant3]" value="{{propInfo.telephoneExploitant3}}">
+              <input type="hidden" class="exploitant3 form-expo3" name="projet[proprietaires][{{key}}][adresseExploitant3]" value="{{propInfo.adresseExploitant3}}">
+              <input type="hidden" class="exploitant3 form-expo3" name="projet[proprietaires][{{key}}][emailExploitant3]" value="{{propInfo.emailExploitant3}}">
+              <input type="hidden" class="exploitant3 form-expo3" name="projet[proprietaires][{{key}}][dateNaissanceExploitant3]" value="{{propInfo.dateNaissanceExploitant3|date('d/m/Y')}}">
+              <input type="hidden" class="exploitant3 form-expo3" name="projet[proprietaires][{{key}}][lieuNaissanceExploitant3]" value="{{propInfo.lieuNaissanceExploitant3}}">
+              <input type="hidden" class="exploitant3 form-expo3" name="projet[proprietaires][{{key}}][droitExploitant3]" value="{{propInfo.droitExploitant3}}">
+              <input type="hidden" class="exploitant3 form-expo3" name="projet[proprietaires][{{key}}][maritalExploitant3]" value="{{propInfo.maritalExploitant3}}">
+              <input type="hidden" class="exploitant3 form-expo3" name="projet[proprietaires][{{key}}][dateSignatureExploitant3]" value="{{propInfo.dateSignatureExploitant3|date('d/m/Y')}}">
+              <input type="hidden" class="exploitant3 form-expo3" name="e3hidden" value="">
+              <input type="hidden" class="exploitant3 form-expo3" name="projet[proprietaires][{{key}}][dateEcheanceExploitant3]" value="{{propInfo.dateEcheanceExploitant3|date('d/m/Y')}}">
               
             </div>
           {% endfor %}
@@ -703,8 +709,8 @@
               <td colspan="8">
                 <button type="button" id="projet_proprietaires_add_entry" class="btn btn-primary btn-xs"><i class="fa fa-plus-circle"></i> Ajouter</button>
 {#                <button type="button" id="{{ id }}_duplicate_entry" class="btn btn-success disabled btn-xs"><i class="fa fa-plus-circle"></i> Dupliquer</button>#}
-                <button type="button" id="projet_proprietaires_publish_entry" class="btn btn-success disabled btn-xs"><i class="fa fa-file-word-o"></i> Publier</button>
-                <button type="button" id="projet_proprietaires_remove_entry" class="btn btn-danger disabled btn-xs"><i class="fa fa-minus-circle"></i> Supprimer</button>
+                <button type="button" id="projet_proprietaires_publish_entry" class="btn btn-success -disabled btn-xs"><i class="fa fa-file-word-o"></i> Publier</button>
+                {#<button type="button" id="projet_proprietaires_remove_entry" class="btn btn-danger disabled btn-xs"><i class="fa fa-minus-circle"></i> Supprimer</button>#}
 {#                            <button type="button" id="{{ id }}_add_proprietaire_entry" class="btn btn-primary disabled btn-xs"><i class="fa fa-plus-square"></i> Propriétaire</button>#}
 {#                            <button type="button" id="{{ id }}_add_exploitant_entry" class="btn btn-primary disabled btn-xs"><i class="fa fa-plus-square"></i> Exploitant</button>#}
                 <button type="button" id="projet_proprietaires_export_entry" class="btn btn-info btn-xs"><i class="fa fa-file-excel-o"></i> Exporter</button>
@@ -741,71 +747,71 @@
                         <button type="button" id="projet_proprietaires_add_proprietaire_entry" class="btn btn-primary btn-xs" style="margin-bottom: 7px; float: right;"><i class="fa fa-plus-square"></i> Propriétaire</button>
                         <div class="form-group f-parcelles" style="margin-bottom: 15px;">
                           <div class="col-md-6">
-                            <label>Parcelles <span class="control-label required"></span></label><br>
+                            <label class="form-label">Parcelles <span class="control-label required"></span></label><br>
                             <input type="text" id="projet_proprietaires_parcelles" name="parcelles" required="required" style="width: 150px; display: none;" class="form-control" placeholder="Parcelles">
                           </div>
                         </div>
                         <div class="proprietaire_entry info" style="border: 2px solid #d7d7d7;padding: 7px;">
                           <div class="form-group" style="margin-bottom: 15px;">
                             <div class="col-md-3">
-                              <label>Civilité</label>
+                              <label class="form-label">Civilité</label>
                               <select id="projet_proprietaires_0_civiliteProprietaire" name="civiliteProprietaire" class="form-control"><option value=""></option><option value="Mr">Mr</option><option value="Mme">Mme</option><option value="Mlle">Mlle</option></select>
                             </div>
                             <div class="col-md-3">
-                              <label>Identité <span class="control-label required"></span></label><br>
+                              <label class="form-label">Identité <span class="control-label required"></span></label><br>
                               <input type="text" id="projet_proprietaires_0_proprietaire" name="projet[proprietaires][0][proprietaire]" required="required" class="form-control" placeholder="Proprietaire" style="display: none;">
                             </div>
                             <div class="col-md-3">
-                              <label>Qualité</label>
+                              <label class="form-label">Qualité</label>
                               <select id="projet_proprietaires_0_qualiteProprietaire" name="qualiteProprietaire" class="form-control"><option value=""></option><option value="Société">Société</option><option value="Personne">Personne</option></select>
                             </div>
                             <div class="col-md-3">
-                              <label>Accords</label>
+                              <label class="form-label">Accords</label>
                               <select id="projet_proprietaires_0_accordProprietaire" name="accordProprietaire" class="form-control"><option value=""></option><option value="OUI">OUI</option><option value="NON">NON</option><option value="NEGO">NEGO</option></select>
                             </div>
                           </div>
                           <div class="form-group" style="margin-bottom: 15px;">
                             <div class="col-md-3">
-                              <label>Téléphone</label>
+                              <label class="form-label">Téléphone</label>
                               <input type="text" id="projet_proprietaires_0_telephoneProprietaire" name="telephoneProprietaire" class="form-control" placeholder="Téléphone">
                             </div>
                             <div class="col-md-3">
-                              <label>Adresse</label>
+                              <label class="form-label">Adresse</label>
                               <input type="text" id="projet_proprietaires_0_adresseProprietaire" name="adresseProprietaire" class="form-control" placeholder="Adresse">
                             </div>
                             <div class="col-md-3">
-                              <label>Email</label>
+                              <label class="form-label">Email</label>
                               <input type="email" id="projet_proprietaires_0_emailProprietaire" name="emailProprietaire" class="form-control" placeholder="Email">
                             </div>
                             <div class="col-md-3">
-                              <label>Né le</label>
+                              <label class="form-label">Né le</label>
                               <input type="text" id="projet_proprietaires_0_dateNaissanceProprietaire" name="dateNaissanceProprietaire" class="datepicker-type form-control" placeholder="Date naissance">
                             </div>
                           </div>
                           <div class="form-group" style="margin-bottom: 15px;">
                             <div class="col-md-2">
-                              <label>Né à</label>
+                              <label class="form-label">Né à</label>
                               <input type="text" id="projet_proprietaires_0_lieuNaissanceProprietaire" name="lieuNaissanceProprietaire" class="form-control" placeholder="Lieu naissance">
                             </div>
                             <div class="col-md-2">
-                              <label>Droit</label>
+                              <label class="form-label">Droit</label>
                               <select id="projet_proprietaires_0_droitProprietaire" name="droitProprietaire" class="form-control"><option value=""></option><option value="Propriétaire">Propriétaire</option><option value="Indivisaire">Indivisaire</option><option value="Usufruitier">Usufruitier</option><option value="Usufruitiere">Usufruitiere</option><option value="Nu-propriétaire">Nu-propriétaire</option><option value="Nue-propriétaire">Nue-propriétaire</option><option value="Exploitant">Exploitant</option></select>
                             </div>
                             <div class="col-md-2">
-                              <label>Statut marital</label>
+                              <label class="form-label">Statut marital</label>
                               <select id="projet_proprietaires_0_maritalProprietaire" name="maritalProprietaire" class="form-control"><option value=""></option><option value="Célibataire">Célibataire</option><option value="Veuf">Veuf</option><option value="Veuve">Veuve</option><option value="Pacsé">Pacsé</option><option value="Pacsée">Pacsée</option><option value="Marié">Marié</option><option value="Mariée">Mariée</option><option value="Séparé">Séparé</option><option value="Séparée">Séparée</option></select>
                             </div>
                             <div class="col-md-2">
-                              <label>Date signature</label>
+                              <label class="form-label">Date signature</label>
                               {#                              {% if form.vars.value.dateSignatureProprietaire is defined %}{% else %}{{ form_widget(form.dateSignatureProprietaire, {'value' : "now"|date("d/m/Y")}) }}{% endif %}#}
                               <input type="text" id="projet_proprietaires_0_dateSignatureProprietaire" name="dateSignatureProprietaire" class="datepicker-type form-control" placeholder="Date signature" value="{{ "now"|date("d/m/Y") }}">
                             </div>
                             <div class="col-md-2">
-                              <label>Durée</label>
+                              <label class="form-label">Durée</label>
                               <input type="text" id="projet_proprietaires_0_dureeProprietaire" name="dureeProprietaire" class="form-control" placeholder="Duree">
                             </div>
                             <div class="col-md-2">
-                              <label>Date échéance</label>
+                              <label class="form-label">Date échéance</label>
                               {#                              {% if form.vars.value.dateEcheanceProprietaire is defined %}{% else %}{{ form_widget(form.dateEcheanceProprietaire, {'value' : "now"|date("d/m/Y")}) }}{% endif %}#}
                               <input type="text" id="projet_proprietaires_0_dateEcheanceProprietaire" name="dateEcheanceProprietaire" class="datepicker-type form-control" placeholder="Date échéance" value="{{ "now"|date("d/m/Y") }}">
                             </div>
@@ -3449,108 +3455,114 @@
         var inputName = "projet[proprietaires]["+propId+"]";
         var proprietaire_entry = '<div class="proprietaire_info" data-pid="'+propId+'">';
 
-        proprietaire_entry += '<input type="hidden" class="proprietaire1" name="'+inputName+'[parcelles]" value="'+parcelles+'">';
-        proprietaire_entry += '<input type="hidden" class="proprietaire1" name="'+inputName+'[civiliteProprietaire]" value="'+tr_proprietaire.find('select[id$="_civiliteProprietaire"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="proprietaire1" name="'+inputName+'[proprietaire]" value="'+tr_proprietaire.find('input[id$="_proprietaire"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="proprietaire1" name="'+inputName+'[qualiteProprietaire]" value="'+tr_proprietaire.find('select[id$="_qualiteProprietaire"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="proprietaire1" name="'+inputName+'[accordProprietaire]" value="'+tr_proprietaire.find('select[id$="_accordProprietaire"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="proprietaire1" name="'+inputName+'[telephoneProprietaire]" value="'+tr_proprietaire.find('input[id$="_telephoneProprietaire"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="proprietaire1" name="'+inputName+'[adresseProprietaire]" value="'+tr_proprietaire.find('input[id$="_adresseProprietaire"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="proprietaire1" name="'+inputName+'[emailProprietaire]" value="'+tr_proprietaire.find('input[id$="_emailProprietaire"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="proprietaire1" name="'+inputName+'[dateNaissanceProprietaire]" value="'+tr_proprietaire.find('input[id$="_dateNaissanceProprietaire"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="proprietaire1" name="'+inputName+'[lieuNaissanceProprietaire]" value="'+tr_proprietaire.find('input[id$="_lieuNaissanceProprietaire"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="proprietaire1" name="'+inputName+'[droitProprietaire]" value="'+tr_proprietaire.find('select[id$="_droitProprietaire"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="proprietaire1" name="'+inputName+'[maritalProprietaire]" value="'+tr_proprietaire.find('select[id$="_maritalProprietaire"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="proprietaire1" name="'+inputName+'[dateSignatureProprietaire]" value="'+tr_proprietaire.find('input[id$="_dateSignatureProprietaire"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="proprietaire1" name="'+inputName+'[dureeProprietaire]" value="'+tr_proprietaire.find('input[id$="_dureeProprietaire"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="proprietaire1" name="'+inputName+'[dateEcheanceProprietaire]" value="'+tr_proprietaire.find('input[id$="_dateEcheanceProprietaire"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire1 form-input" name="'+inputName+'[parcelles]" value="'+parcelles+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire1 form-input" name="'+inputName+'[civiliteProprietaire]" value="'+tr_proprietaire.find('select[id$="_civiliteProprietaire"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire1 form-input" name="'+inputName+'[proprietaire]" value="'+tr_proprietaire.find('input[id$="_proprietaire"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire1 form-input" name="'+inputName+'[qualiteProprietaire]" value="'+tr_proprietaire.find('select[id$="_qualiteProprietaire"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire1 form-input" name="'+inputName+'[accordProprietaire]" value="'+tr_proprietaire.find('select[id$="_accordProprietaire"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire1 form-input" name="'+inputName+'[telephoneProprietaire]" value="'+tr_proprietaire.find('input[id$="_telephoneProprietaire"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire1 form-input" name="'+inputName+'[adresseProprietaire]" value="'+tr_proprietaire.find('input[id$="_adresseProprietaire"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire1 form-input" name="'+inputName+'[emailProprietaire]" value="'+tr_proprietaire.find('input[id$="_emailProprietaire"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire1 form-input" name="'+inputName+'[dateNaissanceProprietaire]" value="'+tr_proprietaire.find('input[id$="_dateNaissanceProprietaire"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire1 form-input" name="'+inputName+'[lieuNaissanceProprietaire]" value="'+tr_proprietaire.find('input[id$="_lieuNaissanceProprietaire"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire1 form-input" name="'+inputName+'[droitProprietaire]" value="'+tr_proprietaire.find('select[id$="_droitProprietaire"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire1 form-input" name="'+inputName+'[maritalProprietaire]" value="'+tr_proprietaire.find('select[id$="_maritalProprietaire"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire1 form-input" name="'+inputName+'[dateSignatureProprietaire]" value="'+tr_proprietaire.find('input[id$="_dateSignatureProprietaire"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire1 form-input" name="'+inputName+'[dureeProprietaire]" value="'+tr_proprietaire.find('input[id$="_dureeProprietaire"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire1 form-input" name="'+inputName+'[dateEcheanceProprietaire]" value="'+tr_proprietaire.find('input[id$="_dateEcheanceProprietaire"]').val()+'">';
 
-        proprietaire_entry += '<input type="hidden" class="proprietaire2" name="'+inputName+'[civiliteProprietaire2]" value="'+tr_proprietaire2.find('select[id$="_civiliteProprietaire2"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="proprietaire2" name="'+inputName+'[proprietaire2]" value="'+tr_proprietaire2.find('input[id$="_proprietaire2"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="proprietaire2" name="'+inputName+'[qualiteProprietaire2]" value="'+tr_proprietaire2.find('select[id$="_qualiteProprietaire2"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="proprietaire2" name="'+inputName+'[accordProprietaire2]" value="'+tr_proprietaire2.find('select[id$="_accordProprietaire2"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="proprietaire2" name="'+inputName+'[telephoneProprietaire2]" value="'+tr_proprietaire2.find('input[id$="_telephoneProprietaire2"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="proprietaire2" name="'+inputName+'[adresseProprietaire2]" value="'+tr_proprietaire2.find('input[id$="_adresseProprietaire2"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="proprietaire2" name="'+inputName+'[emailProprietaire2]" value="'+tr_proprietaire2.find('input[id$="_emailProprietaire2"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="proprietaire2" name="'+inputName+'[dateNaissanceProprietaire2]" value="'+tr_proprietaire2.find('input[id$="_dateNaissanceProprietaire2"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="proprietaire2" name="'+inputName+'[lieuNaissanceProprietaire2]" value="'+tr_proprietaire2.find('input[id$="_lieuNaissanceProprietaire2"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="proprietaire2" name="'+inputName+'[droitProprietaire2]" value="'+tr_proprietaire2.find('select[id$="_droitProprietaire2"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="proprietaire2" name="'+inputName+'[maritalProprietaire2]" value="'+tr_proprietaire2.find('select[id$="_maritalProprietaire2"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="proprietaire2" name="'+inputName+'[dateSignatureProprietaire2]" value="'+tr_proprietaire2.find('input[id$="_dateSignatureProprietaire2"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="proprietaire2" name="'+inputName+'[dateEcheanceProprietaire2]" value="'+tr_proprietaire2.find('input[id$="_dateEcheanceProprietaire2"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire2 form-prop2" name="'+inputName+'[civiliteProprietaire2]" value="'+tr_proprietaire2.find('select[id$="_civiliteProprietaire2"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire2 form-prop2" name="'+inputName+'[proprietaire2]" value="'+tr_proprietaire2.find('input[id$="_proprietaire2"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire2 form-prop2" name="'+inputName+'[qualiteProprietaire2]" value="'+tr_proprietaire2.find('select[id$="_qualiteProprietaire2"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire2 form-prop2" name="'+inputName+'[accordProprietaire2]" value="'+tr_proprietaire2.find('select[id$="_accordProprietaire2"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire2 form-prop2" name="'+inputName+'[telephoneProprietaire2]" value="'+tr_proprietaire2.find('input[id$="_telephoneProprietaire2"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire2 form-prop2" name="'+inputName+'[adresseProprietaire2]" value="'+tr_proprietaire2.find('input[id$="_adresseProprietaire2"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire2 form-prop2" name="'+inputName+'[emailProprietaire2]" value="'+tr_proprietaire2.find('input[id$="_emailProprietaire2"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire2 form-prop2" name="'+inputName+'[dateNaissanceProprietaire2]" value="'+tr_proprietaire2.find('input[id$="_dateNaissanceProprietaire2"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire2 form-prop2" name="'+inputName+'[lieuNaissanceProprietaire2]" value="'+tr_proprietaire2.find('input[id$="_lieuNaissanceProprietaire2"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire2 form-prop2" name="'+inputName+'[droitProprietaire2]" value="'+tr_proprietaire2.find('select[id$="_droitProprietaire2"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire2 form-prop2" name="'+inputName+'[maritalProprietaire2]" value="'+tr_proprietaire2.find('select[id$="_maritalProprietaire2"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire2 form-prop2" name="'+inputName+'[dateSignatureProprietaire2]" value="'+tr_proprietaire2.find('input[id$="_dateSignatureProprietaire2"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire2  form-prop2" name="hidden2" value="">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire2 form-prop2" name="'+inputName+'[dateEcheanceProprietaire2]" value="'+tr_proprietaire2.find('input[id$="_dateEcheanceProprietaire2"]').val()+'">';
 
-        proprietaire_entry += '<input type="hidden" class="proprietaire3" name="'+inputName+'[civiliteProprietaire3]" value="'+tr_proprietaire3.find('select[id$="_civiliteProprietaire3"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="proprietaire3" name="'+inputName+'[proprietaire3]" value="'+tr_proprietaire3.find('input[id$="_proprietaire3"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="proprietaire3" name="'+inputName+'[qualiteProprietaire3]" value="'+tr_proprietaire3.find('select[id$="_qualiteProprietaire3"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="proprietaire3" name="'+inputName+'[accordProprietaire3]" value="'+tr_proprietaire3.find('select[id$="_accordProprietaire3"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="proprietaire3" name="'+inputName+'[telephoneProprietaire3]" value="'+tr_proprietaire3.find('input[id$="_telephoneProprietaire3"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="proprietaire3" name="'+inputName+'[adresseProprietaire3]" value="'+tr_proprietaire3.find('input[id$="_adresseProprietaire3"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="proprietaire3" name="'+inputName+'[emailProprietaire3]" value="'+tr_proprietaire3.find('input[id$="_emailProprietaire3"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="proprietaire3" name="'+inputName+'[dateNaissanceProprietaire3]" value="'+tr_proprietaire3.find('input[id$="_dateNaissanceProprietaire3"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="proprietaire3" name="'+inputName+'[lieuNaissanceProprietaire3]" value="'+tr_proprietaire3.find('input[id$="_lieuNaissanceProprietaire3"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="proprietaire3" name="'+inputName+'[droitProprietaire3]" value="'+tr_proprietaire3.find('select[id$="_droitProprietaire3"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="proprietaire3" name="'+inputName+'[maritalProprietaire3]" value="'+tr_proprietaire3.find('select[id$="_maritalProprietaire3"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="proprietaire3" name="'+inputName+'[dateSignatureProprietaire3]" value="'+tr_proprietaire3.find('input[id$="_dateSignatureProprietaire3"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="proprietaire3" name="'+inputName+'[dateEcheanceProprietaire3]" value="'+tr_proprietaire3.find('input[id$="_dateEcheanceProprietaire3"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire3 form-prop3" name="'+inputName+'[civiliteProprietaire3]" value="'+tr_proprietaire3.find('select[id$="_civiliteProprietaire3"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire3 form-prop3" name="'+inputName+'[proprietaire3]" value="'+tr_proprietaire3.find('input[id$="_proprietaire3"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire3 form-prop3" name="'+inputName+'[qualiteProprietaire3]" value="'+tr_proprietaire3.find('select[id$="_qualiteProprietaire3"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire3 form-prop3" name="'+inputName+'[accordProprietaire3]" value="'+tr_proprietaire3.find('select[id$="_accordProprietaire3"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire3 form-prop3" name="'+inputName+'[telephoneProprietaire3]" value="'+tr_proprietaire3.find('input[id$="_telephoneProprietaire3"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire3 form-prop3" name="'+inputName+'[adresseProprietaire3]" value="'+tr_proprietaire3.find('input[id$="_adresseProprietaire3"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire3 form-prop3" name="'+inputName+'[emailProprietaire3]" value="'+tr_proprietaire3.find('input[id$="_emailProprietaire3"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire3 form-prop3" name="'+inputName+'[dateNaissanceProprietaire3]" value="'+tr_proprietaire3.find('input[id$="_dateNaissanceProprietaire3"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire3 form-prop3" name="'+inputName+'[lieuNaissanceProprietaire3]" value="'+tr_proprietaire3.find('input[id$="_lieuNaissanceProprietaire3"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire3 form-prop3" name="'+inputName+'[droitProprietaire3]" value="'+tr_proprietaire3.find('select[id$="_droitProprietaire3"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire3 form-prop3" name="'+inputName+'[maritalProprietaire3]" value="'+tr_proprietaire3.find('select[id$="_maritalProprietaire3"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire3 form-prop3" name="'+inputName+'[dateSignatureProprietaire3]" value="'+tr_proprietaire3.find('input[id$="_dateSignatureProprietaire3"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire3  form-prop3" name="hidden3" value="">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire3 form-prop3" name="'+inputName+'[dateEcheanceProprietaire3]" value="'+tr_proprietaire3.find('input[id$="_dateEcheanceProprietaire3"]').val()+'">';
 
-        proprietaire_entry += '<input type="hidden" class="proprietaire4" name="'+inputName+'[civiliteProprietaire4]" value="'+tr_proprietaire4.find('select[id$="_civiliteProprietaire4"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="proprietaire4" name="'+inputName+'[proprietaire4]" value="'+tr_proprietaire4.find('input[id$="_proprietaire4"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="proprietaire4" name="'+inputName+'[qualiteProprietaire4]" value="'+tr_proprietaire4.find('select[id$="_qualiteProprietaire4"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="proprietaire4" name="'+inputName+'[accordProprietaire4]" value="'+tr_proprietaire4.find('select[id$="_accordProprietaire4"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="proprietaire4" name="'+inputName+'[telephoneProprietaire4]" value="'+tr_proprietaire4.find('input[id$="_telephoneProprietaire4"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="proprietaire4" name="'+inputName+'[adresseProprietaire4]" value="'+tr_proprietaire4.find('input[id$="_adresseProprietaire4"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="proprietaire4" name="'+inputName+'[emailProprietaire4]" value="'+tr_proprietaire4.find('input[id$="_emailProprietaire4"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="proprietaire4" name="'+inputName+'[dateNaissanceProprietaire4]" value="'+tr_proprietaire4.find('input[id$="_dateNaissanceProprietaire4"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="proprietaire4" name="'+inputName+'[lieuNaissanceProprietaire4]" value="'+tr_proprietaire4.find('input[id$="_lieuNaissanceProprietaire4"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="proprietaire4" name="'+inputName+'[droitProprietaire4]" value="'+tr_proprietaire4.find('select[id$="_droitProprietaire4"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="proprietaire4" name="'+inputName+'[maritalProprietaire4]" value="'+tr_proprietaire4.find('select[id$="_maritalProprietaire4"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="proprietaire4" name="'+inputName+'[dateSignatureProprietaire4]" value="'+tr_proprietaire4.find('input[id$="_dateSignatureProprietaire4"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="proprietaire4" name="'+inputName+'[dateEcheanceProprietaire4]" value="'+tr_proprietaire4.find('input[id$="_dateEcheanceProprietaire4"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire4 form-prop4" name="'+inputName+'[civiliteProprietaire4]" value="'+tr_proprietaire4.find('select[id$="_civiliteProprietaire4"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire4 form-prop4" name="'+inputName+'[proprietaire4]" value="'+tr_proprietaire4.find('input[id$="_proprietaire4"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire4 form-prop4" name="'+inputName+'[qualiteProprietaire4]" value="'+tr_proprietaire4.find('select[id$="_qualiteProprietaire4"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire4 form-prop4" name="'+inputName+'[accordProprietaire4]" value="'+tr_proprietaire4.find('select[id$="_accordProprietaire4"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire4 form-prop4" name="'+inputName+'[telephoneProprietaire4]" value="'+tr_proprietaire4.find('input[id$="_telephoneProprietaire4"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire4 form-prop4" name="'+inputName+'[adresseProprietaire4]" value="'+tr_proprietaire4.find('input[id$="_adresseProprietaire4"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire4 form-prop4" name="'+inputName+'[emailProprietaire4]" value="'+tr_proprietaire4.find('input[id$="_emailProprietaire4"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire4 form-prop4" name="'+inputName+'[dateNaissanceProprietaire4]" value="'+tr_proprietaire4.find('input[id$="_dateNaissanceProprietaire4"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire4 form-prop4" name="'+inputName+'[lieuNaissanceProprietaire4]" value="'+tr_proprietaire4.find('input[id$="_lieuNaissanceProprietaire4"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire4 form-prop4" name="'+inputName+'[droitProprietaire4]" value="'+tr_proprietaire4.find('select[id$="_droitProprietaire4"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire4 form-prop4" name="'+inputName+'[maritalProprietaire4]" value="'+tr_proprietaire4.find('select[id$="_maritalProprietaire4"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire4 form-prop4" name="'+inputName+'[dateSignatureProprietaire4]" value="'+tr_proprietaire4.find('input[id$="_dateSignatureProprietaire4"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire4  form-prop4" name="hidden4" value="">';
+        proprietaire_entry += '<input type="hidden" class="proprietaire4 form-prop4" name="'+inputName+'[dateEcheanceProprietaire4]" value="'+tr_proprietaire4.find('input[id$="_dateEcheanceProprietaire4"]').val()+'">';
 
-        proprietaire_entry += '<input type="hidden" class="exploitant1" name="'+inputName+'[civiliteExploitant]" value="'+tr_exploitant.find('select[id$="_civiliteExploitant"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="exploitant1" name="'+inputName+'[exploitant]" value="'+tr_exploitant.find('input[id$="_exploitant"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="exploitant1" name="'+inputName+'[qualiteExploitant]" value="'+tr_exploitant.find('select[id$="_qualiteExploitant"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="exploitant1" name="'+inputName+'[accordExploitant]" value="'+tr_exploitant.find('select[id$="_accordExploitant"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="exploitant1" name="'+inputName+'[telephoneExploitant]" value="'+tr_exploitant.find('input[id$="_telephoneExploitant"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="exploitant1" name="'+inputName+'[adresseExploitant]" value="'+tr_exploitant.find('input[id$="_adresseExploitant"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="exploitant1" name="'+inputName+'[emailExploitant]" value="'+tr_exploitant.find('input[id$="_emailExploitant"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="exploitant1" name="'+inputName+'[dateNaissanceExploitant]" value="'+tr_exploitant.find('input[id$="_dateNaissanceExploitant"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="exploitant1" name="'+inputName+'[lieuNaissanceExploitant]" value="'+tr_exploitant.find('input[id$="_lieuNaissanceExploitant"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="exploitant1" name="'+inputName+'[droitExploitant]" value="'+tr_exploitant.find('select[id$="_droitExploitant"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="exploitant1" name="'+inputName+'[maritalExploitant]" value="'+tr_exploitant.find('select[id$="_maritalExploitant"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="exploitant1" name="'+inputName+'[dateSignatureExploitant]" value="'+tr_exploitant.find('input[id$="_dateSignatureExploitant"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="exploitant1 form-expo1" name="'+inputName+'[civiliteExploitant]" value="'+tr_exploitant.find('select[id$="_civiliteExploitant"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="exploitant1 form-expo1" name="'+inputName+'[exploitant]" value="'+tr_exploitant.find('input[id$="_exploitant"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="exploitant1 form-expo1" name="'+inputName+'[qualiteExploitant]" value="'+tr_exploitant.find('select[id$="_qualiteExploitant"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="exploitant1 form-expo1" name="'+inputName+'[accordExploitant]" value="'+tr_exploitant.find('select[id$="_accordExploitant"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="exploitant1 form-expo1" name="'+inputName+'[telephoneExploitant]" value="'+tr_exploitant.find('input[id$="_telephoneExploitant"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="exploitant1 form-expo1" name="'+inputName+'[adresseExploitant]" value="'+tr_exploitant.find('input[id$="_adresseExploitant"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="exploitant1 form-expo1" name="'+inputName+'[emailExploitant]" value="'+tr_exploitant.find('input[id$="_emailExploitant"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="exploitant1 form-expo1" name="'+inputName+'[dateNaissanceExploitant]" value="'+tr_exploitant.find('input[id$="_dateNaissanceExploitant"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="exploitant1 form-expo1" name="'+inputName+'[lieuNaissanceExploitant]" value="'+tr_exploitant.find('input[id$="_lieuNaissanceExploitant"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="exploitant1 form-expo1" name="'+inputName+'[droitExploitant]" value="'+tr_exploitant.find('select[id$="_droitExploitant"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="exploitant1 form-expo1" name="'+inputName+'[maritalExploitant]" value="'+tr_exploitant.find('select[id$="_maritalExploitant"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="exploitant1 form-expo1" name="'+inputName+'[dateSignatureExploitant]" value="'+tr_exploitant.find('input[id$="_dateSignatureExploitant"]').val()+'">';
         //proprietaire_entry += '<input type="hidden" name="'+inputName+'[dureeProprietaire]" value="'+tr_proprietaire.find('input[id$="_dureeProprietaire"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="exploitant1" name="'+inputName+'[dateEcheanceExploitant]" value="'+tr_exploitant.find('input[id$="_dateEcheanceExploitant"]').val()+'">';
+       proprietaire_entry += '<input type="hidden" class="exploitant1 form-expo1" name="e1hidden" value="">';
+        proprietaire_entry += '<input type="hidden" class="exploitant1 form-expo1" name="'+inputName+'[dateEcheanceExploitant]" value="'+tr_exploitant.find('input[id$="_dateEcheanceExploitant"]').val()+'">';
 
-        proprietaire_entry += '<input type="hidden" class="exploitant2" name="'+inputName+'[civiliteExploitant2]" value="'+tr_exploitant2.find('select[id$="_civiliteExploitant2"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="exploitant2" name="'+inputName+'[exploitant2]" value="'+tr_exploitant2.find('input[id$="_exploitant2"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="exploitant2" name="'+inputName+'[qualiteExploitant2]" value="'+tr_exploitant2.find('select[id$="_qualiteExploitant2"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="exploitant2" name="'+inputName+'[accordExploitant2]" value="'+tr_exploitant2.find('select[id$="_accordExploitant2"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="exploitant2" name="'+inputName+'[telephoneExploitant2]" value="'+tr_exploitant2.find('input[id$="_telephoneExploitant2"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="exploitant2" name="'+inputName+'[adresseExploitant2]" value="'+tr_exploitant2.find('input[id$="_adresseExploitant2"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="exploitant2" name="'+inputName+'[emailExploitant2]" value="'+tr_exploitant2.find('input[id$="_emailExploitant2"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="exploitant2" name="'+inputName+'[dateNaissanceExploitant2]" value="'+tr_exploitant2.find('input[id$="_dateNaissanceExploitant2"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="exploitant2" name="'+inputName+'[lieuNaissanceExploitant2]" value="'+tr_exploitant2.find('input[id$="_lieuNaissanceExploitant2"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="exploitant2" name="'+inputName+'[droitExploitant2]" value="'+tr_exploitant2.find('select[id$="_droitExploitant2"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="exploitant2" name="'+inputName+'[maritalExploitant2]" value="'+tr_exploitant2.find('select[id$="_maritalExploitant2"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="exploitant2" name="'+inputName+'[dateSignatureExploitant2]" value="'+tr_exploitant2.find('input[id$="_dateSignatureExploitant2"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="exploitant2 form-expo2" name="'+inputName+'[civiliteExploitant2]" value="'+tr_exploitant2.find('select[id$="_civiliteExploitant2"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="exploitant2 form-expo2" name="'+inputName+'[exploitant2]" value="'+tr_exploitant2.find('input[id$="_exploitant2"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="exploitant2 form-expo2" name="'+inputName+'[qualiteExploitant2]" value="'+tr_exploitant2.find('select[id$="_qualiteExploitant2"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="exploitant2 form-expo2" name="'+inputName+'[accordExploitant2]" value="'+tr_exploitant2.find('select[id$="_accordExploitant2"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="exploitant2 form-expo2" name="'+inputName+'[telephoneExploitant2]" value="'+tr_exploitant2.find('input[id$="_telephoneExploitant2"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="exploitant2 form-expo2" name="'+inputName+'[adresseExploitant2]" value="'+tr_exploitant2.find('input[id$="_adresseExploitant2"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="exploitant2 form-expo2" name="'+inputName+'[emailExploitant2]" value="'+tr_exploitant2.find('input[id$="_emailExploitant2"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="exploitant2 form-expo2" name="'+inputName+'[dateNaissanceExploitant2]" value="'+tr_exploitant2.find('input[id$="_dateNaissanceExploitant2"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="exploitant2 form-expo2" name="'+inputName+'[lieuNaissanceExploitant2]" value="'+tr_exploitant2.find('input[id$="_lieuNaissanceExploitant2"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="exploitant2 form-expo2" name="'+inputName+'[droitExploitant2]" value="'+tr_exploitant2.find('select[id$="_droitExploitant2"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="exploitant2 form-expo2" name="'+inputName+'[maritalExploitant2]" value="'+tr_exploitant2.find('select[id$="_maritalExploitant2"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="exploitant2 form-expo2" name="'+inputName+'[dateSignatureExploitant2]" value="'+tr_exploitant2.find('input[id$="_dateSignatureExploitant2"]').val()+'">';
         //proprietaire_entry += '<input type="hidden" name="'+inputName+'[dureeProprietaire2]" value="'+tr_proprietaire.find('input[id$="_dureeProprietaire2"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="exploitant2" name="'+inputName+'[dateEcheanceExploitant2]" value="'+tr_exploitant2.find('input[id$="_dateEcheanceExploitant2"]').val()+'">';
+       proprietaire_entry += '<input type="hidden" class="exploitant2 form-expo2" name="e2hidden" value="">';
+        proprietaire_entry += '<input type="hidden" class="exploitant2 form-expo2" name="'+inputName+'[dateEcheanceExploitant2]" value="'+tr_exploitant2.find('input[id$="_dateEcheanceExploitant2"]').val()+'">';
 
-        proprietaire_entry += '<input type="hidden" class="exploitant3" name="'+inputName+'[civiliteExploitant3]" value="'+tr_exploitant3.find('select[id$="_civiliteExploitant3"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="exploitant3" name="'+inputName+'[exploitant3]" value="'+tr_exploitant3.find('input[id$="_exploitant3"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="exploitant3" name="'+inputName+'[qualiteExploitant3]" value="'+tr_exploitant3.find('select[id$="_qualiteExploitant3"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="exploitant3" name="'+inputName+'[accordExploitant3]" value="'+tr_exploitant3.find('select[id$="_accordExploitant3"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="exploitant3" name="'+inputName+'[telephoneExploitant3]" value="'+tr_exploitant3.find('input[id$="_telephoneExploitant3"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="exploitant3" name="'+inputName+'[adresseExploitant3]" value="'+tr_exploitant3.find('input[id$="_adresseExploitant3"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="exploitant3" name="'+inputName+'[emailExploitant3]" value="'+tr_exploitant3.find('input[id$="_emailExploitant3"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="exploitant3" name="'+inputName+'[dateNaissanceExploitant3]" value="'+tr_exploitant3.find('input[id$="_dateNaissanceExploitant3"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="exploitant3" name="'+inputName+'[lieuNaissanceExploitant3]" value="'+tr_exploitant3.find('input[id$="_lieuNaissanceExploitant3"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="exploitant3" name="'+inputName+'[droitExploitant3]" value="'+tr_exploitant3.find('select[id$="_droitExploitant3"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="exploitant3" name="'+inputName+'[maritalExploitant3]" value="'+tr_exploitant3.find('select[id$="_maritalExploitant3"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="exploitant3" name="'+inputName+'[dateSignatureExploitant3]" value="'+tr_exploitant3.find('input[id$="_dateSignatureExploitant3"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="exploitant3 form-expo3" name="'+inputName+'[civiliteExploitant3]" value="'+tr_exploitant3.find('select[id$="_civiliteExploitant3"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="exploitant3 form-expo3" name="'+inputName+'[exploitant3]" value="'+tr_exploitant3.find('input[id$="_exploitant3"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="exploitant3 form-expo3" name="'+inputName+'[qualiteExploitant3]" value="'+tr_exploitant3.find('select[id$="_qualiteExploitant3"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="exploitant3 form-expo3" name="'+inputName+'[accordExploitant3]" value="'+tr_exploitant3.find('select[id$="_accordExploitant3"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="exploitant3 form-expo3" name="'+inputName+'[telephoneExploitant3]" value="'+tr_exploitant3.find('input[id$="_telephoneExploitant3"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="exploitant3 form-expo3" name="'+inputName+'[adresseExploitant3]" value="'+tr_exploitant3.find('input[id$="_adresseExploitant3"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="exploitant3 form-expo3" name="'+inputName+'[emailExploitant3]" value="'+tr_exploitant3.find('input[id$="_emailExploitant3"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="exploitant3 form-expo3" name="'+inputName+'[dateNaissanceExploitant3]" value="'+tr_exploitant3.find('input[id$="_dateNaissanceExploitant3"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="exploitant3 form-expo3" name="'+inputName+'[lieuNaissanceExploitant3]" value="'+tr_exploitant3.find('input[id$="_lieuNaissanceExploitant3"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="exploitant3 form-expo3" name="'+inputName+'[droitExploitant3]" value="'+tr_exploitant3.find('select[id$="_droitExploitant3"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="exploitant3 form-expo3" name="'+inputName+'[maritalExploitant3]" value="'+tr_exploitant3.find('select[id$="_maritalExploitant3"]').val()+'">';
+        proprietaire_entry += '<input type="hidden" class="exploitant3 form-expo3" name="'+inputName+'[dateSignatureExploitant3]" value="'+tr_exploitant3.find('input[id$="_dateSignatureExploitant3"]').val()+'">';
         //proprietaire_entry += '<input type="hidden" name="'+inputName+'[dureeProprietaire3]" value="'+tr_proprietaire.find('input[id$="_dureeProprietaire3"]').val()+'">';
-        proprietaire_entry += '<input type="hidden" class="exploitant3" name="'+inputName+'[dateEcheanceExploitant3]" value="'+tr_exploitant3.find('input[id$="_dateEcheanceExploitant3"]').val()+'">';
+         proprietaire_entry += '<input type="hidden" class="exploitant3 form-expo3" name="e3hidden" value="">';
+        proprietaire_entry += '<input type="hidden" class="exploitant3 form-expo3" name="'+inputName+'[dateEcheanceExploitant3]" value="'+tr_exploitant3.find('input[id$="_dateEcheanceExploitant3"]').val()+'">';
 
 
         proprietaire_entry += '</div>';
@@ -4183,7 +4195,10 @@
     });*/
     
     $('#projet_proprietaires_publish_entry').click(function () {
-      if(!$(this).hasClass('disabled') && $collectionHolderProprietaire.find('tr.info').length == 7) {
+      if(!$(this).hasClass('disabled') && $('#proprietaires-info').find('tr').length > 0) {
+          
+          $hidden_values = $('.proprietaires_hidden');
+          
         var tr_proprietaire = $collectionHolderProprietaire.find('tr.info:eq(0)');
         var tr_proprietaire2 = $collectionHolderProprietaire.find('tr.info:eq(1)');
         var tr_proprietaire3 = $collectionHolderProprietaire.find('tr.info:eq(2)');
@@ -4193,8 +4208,10 @@
         var tr_exploitant3 = $collectionHolderProprietaire.find('tr.info:eq(6)');
         var publish_form = $('#publish_form');
         var fields = [];
+        
+        var pid = $hidden_values.children().last().attr('data-pid');
         // name, type, value
-        fields.push(['PARTIES', 'title', '']);
+       /* fields.push(['PARTIES', 'title', '']);
         fields.push(['proprietaire_civilite', 'field', tr_proprietaire.find('select[id$="_civiliteProprietaire"]').val()]);
         fields.push(['proprietaire_identite', 'field', tr_proprietaire.find('input[id$="_proprietaire"]').val()]);
         fields.push(['proprietaire_qualite', 'field', tr_proprietaire.find('select[id$="_qualiteProprietaire"]').val()]);
@@ -4210,7 +4227,26 @@
         fields.push(['exploitant_ne_le', 'field', tr_exploitant.find('input[id$="_dateNaissanceExploitant"]').val()]);
         fields.push(['exploitant_ne_a', 'field', tr_exploitant.find('input[id$="_lieuNaissanceExploitant"]').val()]);
         fields.push(['exploitant_droit', 'field', tr_exploitant.find('select[id$="_droitExploitant"]').val()]);
-        fields.push(['exploitant_marital', 'field', tr_exploitant.find('select[id$="_maritalExploitant"]').val()]);
+        fields.push(['exploitant_marital', 'field', tr_exploitant.find('select[id$="_maritalExploitant"]').val()]);*/
+        
+        
+        fields.push(['PARTIES', 'title', '']);
+        fields.push(['proprietaire_civilite', 'field', $('input[name="projet[proprietaires][' + pid + '][civiliteProprietaire]"]').val()]);
+        fields.push(['proprietaire_identite', 'field', $('input[name="projet[proprietaires][' + pid + '][proprietaire]"]').val()]);
+        fields.push(['proprietaire_qualite', 'field', $('input[name="projet[proprietaires][' + pid + '][qualiteProprietaire]"]').val()]);
+        fields.push(['proprietaire_adresse', 'field', $('input[name="projet[proprietaires][' + pid + '][adresseProprietaire]"]').val()]);
+        fields.push(['proprietaire_droit', 'field', $('input[name="projet[proprietaires][' + pid + '][droitProprietaire]"]').val()]);
+        fields.push(['proprietaire_marital', 'field', $('input[name="projet[proprietaires][' + pid + '][maritalProprietaire]"]').val()]);
+        fields.push(['proprietaire_ne_le', 'field', $('input[name="projet[proprietaires][' + pid + '][dateNaissanceProprietaire]"]').val()]);
+        fields.push(['proprietaire_ne_a', 'field', $('input[name="projet[proprietaires][' + pid + '][lieuNaissanceProprietaire]"]').val()]);
+        fields.push(['exploitant_civilite', 'field', $('input[name="projet[proprietaires][' + pid + '][civiliteExploitant]"]').val()]);
+        fields.push(['exploitant_identite', 'field', $('input[name="projet[proprietaires][' + pid + '][exploitant]"]').val()]);
+        fields.push(['exploitant_qualite', 'field', $('input[name="projet[proprietaires][' + pid + '][qualiteExploitant]"]').val()]);
+        fields.push(['exploitant_adresse', 'field', $('input[name="projet[proprietaires][' + pid + '][adresseExploitant]"]').val()]);
+        fields.push(['exploitant_ne_le', 'field', $('input[name="projet[proprietaires][' + pid + '][dateNaissanceExploitant]"]').val()]);
+        fields.push(['exploitant_ne_a', 'field', $('input[name="projet[proprietaires][' + pid + '][lieuNaissanceExploitant]"]').val()]);
+        fields.push(['exploitant_droit', 'field', $('input[name="projet[proprietaires][' + pid + '][droitExploitant]"]').val()]);
+        fields.push(['exploitant_marital', 'field', $('input[name="projet[proprietaires][' + pid + '][maritalExploitant]"]').val()]);
 
         if($('#projet_technologie').val() == 'eolienne') {
           fields.push(['WKN', 'title', '']);
@@ -4250,7 +4286,9 @@
           fields.push(['representant_societe', 'field', '']);
           fields.push(['societe', 'field', 'WKN France']);
           fields.push(['ANNEXES', 'title', '']);
-          var selectedParcelles = tr_proprietaire.find('input[id$="_parcelles"]').val().trim().split(',');
+          
+         /* var selectedParcelles = tr_proprietaire.find('input[id$="_parcelles"]').val().trim().split(',');*/
+          var selectedParcelles =  $('input[name="projet[proprietaires][' + pid + '][parcelles]"]').val().trim().split(',');
           var parcellesArray = [];
           if($('#projet_parcelles tr').length) {
             $('#projet_parcelles tr').each(function(i,element) {
@@ -4259,6 +4297,8 @@
               }
             });
           }
+          
+         
           fields.push(['publish_parcelles', 'field', JSON.stringify(parcellesArray)]);
           {# fields.push(['Né(e) le', 'field', '']);
           fields.push(['Demeurant à', 'field', '']);
@@ -4314,7 +4354,8 @@
           fields.push(['representant_societe', 'field', '']);
           fields.push(['societe', 'field', 'WKN France']);
           fields.push(['ANNEXES', 'title', '']);
-          var selectedParcelles = tr_proprietaire.find('input[id$="_parcelles"]').val().trim().split(',');
+         /*var selectedParcelles = tr_proprietaire.find('input[id$="_parcelles"]').val().trim().split(',');*/
+          var selectedParcelles =  $('input[name="projet[proprietaires][' + pid + '][parcelles]"]').val().trim().split(',');
           var parcellesArray = [];
           if($('#projet_parcelles tr').length) {
             $('#projet_parcelles tr').each(function(i,element) {
@@ -4329,52 +4370,52 @@
           fields.push(['Représenté(e) par', 'field', '']); #}
         }
         //if (tr_proprietaire2.find('input[id$="_proprietaire2"]').val() && tr_proprietaire2.find('select[id$="_qualiteProprietaire2"]').val() == 'Personne') {
-          fields.push(['proprietaire2_civilite', 'field', tr_proprietaire2.find('select[id$="_civiliteProprietaire2"]').val()]);
-          fields.push(['proprietaire2_identite', 'field', tr_proprietaire2.find('input[id$="_proprietaire2"]').val()]);
-          fields.push(['proprietaire2_qualite', 'field', tr_proprietaire2.find('select[id$="_qualiteProprietaire2"]').val()]);
-          fields.push(['proprietaire2_adresse', 'field', tr_proprietaire2.find('input[id$="_adresseProprietaire2"]').val()]);
-          fields.push(['proprietaire2_droit', 'field', tr_proprietaire2.find('select[id$="_droitProprietaire2"]').val()]);
-          fields.push(['proprietaire2_marital', 'field', tr_proprietaire2.find('select[id$="_maritalProprietaire2"]').val()]);
-          fields.push(['proprietaire2_ne_le', 'field', tr_proprietaire2.find('input[id$="_dateNaissanceProprietaire2"]').val()]);
-          fields.push(['proprietaire2_ne_a', 'field', tr_proprietaire2.find('input[id$="_lieuNaissanceProprietaire2"]').val()]);
+          fields.push(['proprietaire2_civilite', 'field', $('input[name="projet[proprietaires][' + pid + '][civiliteProprietaire2]"]').val()]);
+          fields.push(['proprietaire2_identite', 'field', $('input[name="projet[proprietaires][' + pid + '][proprietaire2]"]').val()]);
+          fields.push(['proprietaire2_qualite', 'field', $('input[name="projet[proprietaires][' + pid + '][qualiteProprietaire2]"]').val()]);
+          fields.push(['proprietaire2_adresse', 'field', $('input[name="projet[proprietaires][' + pid + '][adresseProprietaire2]"]').val()]);
+          fields.push(['proprietaire2_droit', 'field', $('input[name="projet[proprietaires][' + pid + '][droitProprietaire2]"]').val()]);
+          fields.push(['proprietaire2_marital', 'field', $('input[name="projet[proprietaires][' + pid + '][maritalProprietaire2]"]').val()]);
+          fields.push(['proprietaire2_ne_le', 'field',  $('input[name="projet[proprietaires][' + pid + '][dateNaissanceProprietaire2]"]').val()]);
+          fields.push(['proprietaire2_ne_a', 'field', $('input[name="projet[proprietaires][' + pid + '][lieuNaissanceProprietaire2]"]').val()]);
         //}
         //if (tr_proprietaire3.find('input[id$="_proprietaire3"]').val() && tr_proprietaire3.find('select[id$="_qualiteProprietaire3"]').val() == 'Personne') {
-        fields.push(['proprietaire3_civilite', 'field', tr_proprietaire3.find('select[id$="_civiliteProprietaire3"]').val()]);
-        fields.push(['proprietaire3_identite', 'field', tr_proprietaire3.find('input[id$="_proprietaire3"]').val()]);
-        fields.push(['proprietaire3_qualite', 'field', tr_proprietaire3.find('select[id$="_qualiteProprietaire3"]').val()]);
-        fields.push(['proprietaire3_adresse', 'field', tr_proprietaire3.find('input[id$="_adresseProprietaire3"]').val()]);
-        fields.push(['proprietaire3_droit', 'field', tr_proprietaire3.find('select[id$="_droitProprietaire3"]').val()]);
-        fields.push(['proprietaire3_marital', 'field', tr_proprietaire3.find('select[id$="_maritalProprietaire3"]').val()]);
-        fields.push(['proprietaire3_ne_le', 'field', tr_proprietaire3.find('input[id$="_dateNaissanceProprietaire3"]').val()]);
-        fields.push(['proprietaire3_ne_a', 'field', tr_proprietaire3.find('input[id$="_lieuNaissanceProprietaire3"]').val()]);
+        fields.push(['proprietaire3_civilite', 'field', $('input[name="projet[proprietaires][' + pid + '][civiliteProprietaire3]"]').val()]);
+        fields.push(['proprietaire3_identite', 'field', $('input[name="projet[proprietaires][' + pid + '][proprietaire3]"]').val()]);
+        fields.push(['proprietaire3_qualite', 'field', $('input[name="projet[proprietaires][' + pid + '][qualiteProprietaire3]"]').val()]);
+        fields.push(['proprietaire3_adresse', 'field', $('input[name="projet[proprietaires][' + pid + '][adresseProprietaire3]"]').val()]);
+        fields.push(['proprietaire3_droit', 'field', $('input[name="projet[proprietaires][' + pid + '][droitProprietaire3]"]').val()]);
+        fields.push(['proprietaire3_marital', 'field', $('input[name="projet[proprietaires][' + pid + '][maritalProprietaire3]"]').val()]);
+        fields.push(['proprietaire3_ne_le', 'field', $('input[name="projet[proprietaires][' + pid + '][dateNaissanceProprietaire3]"]').val()]);
+        fields.push(['proprietaire3_ne_a', 'field', $('input[name="projet[proprietaires][' + pid + '][lieuNaissanceProprietaire3]"]').val()]);
         //}
         //if (tr_proprietaire4.find('input[id$="_proprietaire4"]').val() && tr_proprietaire4.find('select[id$="_qualiteProprietaire4"]').val() == 'Personne') {
-        fields.push(['proprietaire4_civilite', 'field', tr_proprietaire4.find('select[id$="_civiliteProprietaire4"]').val()]);
-        fields.push(['proprietaire4_identite', 'field', tr_proprietaire4.find('input[id$="_proprietaire4"]').val()]);
-        fields.push(['proprietaire4_qualite', 'field', tr_proprietaire4.find('select[id$="_qualiteProprietaire4"]').val()]);
-        fields.push(['proprietaire4_adresse', 'field', tr_proprietaire4.find('input[id$="_adresseProprietaire4"]').val()]);
-        fields.push(['proprietaire4_droit', 'field', tr_proprietaire4.find('select[id$="_droitProprietaire4"]').val()]);
-        fields.push(['proprietaire4_marital', 'field', tr_proprietaire4.find('select[id$="_maritalProprietaire4"]').val()]);
-        fields.push(['proprietaire4_ne_le', 'field', tr_proprietaire4.find('input[id$="_dateNaissanceProprietaire4"]').val()]);
-        fields.push(['proprietaire4_ne_a', 'field', tr_proprietaire4.find('input[id$="_lieuNaissanceProprietaire4"]').val()]);
+        fields.push(['proprietaire4_civilite', 'field', $('input[name="projet[proprietaires][' + pid + '][civiliteProprietaire4]"]').val()]);
+        fields.push(['proprietaire4_identite', 'field', $('input[name="projet[proprietaires][' + pid + '][proprietaire4]"]').val()]);
+        fields.push(['proprietaire4_qualite', 'field', $('input[name="projet[proprietaires][' + pid + '][qualiteProprietaire4]"]').val()]);
+        fields.push(['proprietaire4_adresse', 'field', $('input[name="projet[proprietaires][' + pid + '][adresseProprietaire4]"]').val()]);
+        fields.push(['proprietaire4_droit', 'field', $('input[name="projet[proprietaires][' + pid + '][droitProprietaire4]"]').val()]);
+        fields.push(['proprietaire4_marital', 'field', $('input[name="projet[proprietaires][' + pid + '][maritalProprietaire4]"]').val()]);
+        fields.push(['proprietaire4_ne_le', 'field', $('input[name="projet[proprietaires][' + pid + '][dateNaissanceProprietaire4]"]').val()]);
+        fields.push(['proprietaire4_ne_a', 'field', $('input[name="projet[proprietaires][' + pid + '][lieuNaissanceProprietaire4]"]').val()]);
         //}
-        fields.push(['exploitant2_civilite', 'field', tr_exploitant2.find('select[id$="_civiliteExploitant2"]').val()]);
-        fields.push(['exploitant2_identite', 'field', tr_exploitant2.find('input[id$="_exploitant2"]').val()]);
-        fields.push(['exploitant2_qualite', 'field', tr_exploitant2.find('select[id$="_qualiteExploitant2"]').val()]);
-        fields.push(['exploitant2_adresse', 'field', tr_exploitant2.find('input[id$="_adresseExploitant2"]').val()]);
-        fields.push(['exploitant2_ne_le', 'field', tr_exploitant2.find('input[id$="_dateNaissanceExploitant2"]').val()]);
-        fields.push(['exploitant2_ne_a', 'field', tr_exploitant2.find('input[id$="_lieuNaissanceExploitant2"]').val()]);
-        fields.push(['exploitant2_droit', 'field', tr_exploitant2.find('select[id$="_droitExploitant2"]').val()]);
-        fields.push(['exploitant2_marital', 'field', tr_exploitant2.find('select[id$="_maritalExploitant2"]').val()]);
+        fields.push(['exploitant2_civilite', 'field', $('input[name="projet[proprietaires][' + pid + '][civiliteExploitant2]"]').val()]);
+        fields.push(['exploitant2_identite', 'field', $('input[name="projet[proprietaires][' + pid + '][exploitant2]"]').val()]);
+        fields.push(['exploitant2_qualite', 'field', $('input[name="projet[proprietaires][' + pid + '][qualiteExploitant2]"]').val()]);
+        fields.push(['exploitant2_adresse', 'field', $('input[name="projet[proprietaires][' + pid + '][adresseExploitant2]"]').val()]);
+        fields.push(['exploitant2_ne_le', 'field', $('input[name="projet[proprietaires][' + pid + '][dateNaissanceExploitant2]"]').val()]);
+        fields.push(['exploitant2_ne_a', 'field', $('input[name="projet[proprietaires][' + pid + '][lieuNaissanceExploitant2]"]').val()]);
+        fields.push(['exploitant2_droit', 'field', $('input[name="projet[proprietaires][' + pid + '][droitExploitant2]"]').val()]);
+        fields.push(['exploitant2_marital', 'field', $('input[name="projet[proprietaires][' + pid + '][maritalExploitant2]"]').val()]);
         
-        fields.push(['exploitant3_civilite', 'field', tr_exploitant3.find('select[id$="_civiliteExploitant3"]').val()]);
-        fields.push(['exploitant3_identite', 'field', tr_exploitant3.find('input[id$="_exploitant3"]').val()]);
-        fields.push(['exploitant3_qualite', 'field', tr_exploitant3.find('select[id$="_qualiteExploitant3"]').val()]);
-        fields.push(['exploitant3_adresse', 'field', tr_exploitant3.find('input[id$="_adresseExploitant3"]').val()]);
-        fields.push(['exploitant3_ne_le', 'field', tr_exploitant3.find('input[id$="_dateNaissanceExploitant3"]').val()]);
-        fields.push(['exploitant3_ne_a', 'field', tr_exploitant3.find('input[id$="_lieuNaissanceExploitant3"]').val()]);
-        fields.push(['exploitant3_droit', 'field', tr_exploitant3.find('select[id$="_droitExploitant3"]').val()]);
-        fields.push(['exploitant3_marital', 'field', tr_exploitant3.find('select[id$="_maritalExploitant3"]').val()]);
+        fields.push(['exploitant3_civilite', 'field', $('input[name="projet[proprietaires][' + pid + '][civiliteExploitant3]"]').val()]);
+        fields.push(['exploitant3_identite', 'field', $('input[name="projet[proprietaires][' + pid + '][exploitant3]"]').val()]);
+        fields.push(['exploitant3_qualite', 'field', $('input[name="projet[proprietaires][' + pid + '][qualiteExploitant3]"]').val()]);
+        fields.push(['exploitant3_adresse', 'field', $('input[name="projet[proprietaires][' + pid + '][adresseExploitant3]"]').val()]);
+        fields.push(['exploitant3_ne_le', 'field', $('input[name="projet[proprietaires][' + pid + '][dateNaissanceExploitant3]"]').val()]);
+        fields.push(['exploitant3_ne_a', 'field', $('input[name="projet[proprietaires][' + pid + '][lieuNaissanceExploitant3]"]').val()]);
+        fields.push(['exploitant3_droit', 'field', $('input[name="projet[proprietaires][' + pid + '][droitExploitant3]"]').val()]);
+        fields.push(['exploitant3_marital', 'field', $('input[name="projet[proprietaires][' + pid + '][maritalExploitant3]"]').val()]);
         if (publish_form.text().trim().length == 0 ) {
           publish_form.append('<div class="form-group row"><div class="col-xs-offset-4 col-xs-8"><button name="submit" type="submit" class="btn btn-primary">Publier</button></div></div>');
           publish_form.append('<input type="hidden" name="projet_technologie" value="' + $('#projet_technologie').val() + '">');
@@ -4388,78 +4429,79 @@
           });
           publish_form.append('<div class="form-group row"><div class="col-xs-offset-4 col-xs-8"><button name="submit" type="submit" class="btn btn-primary">Publier</button></div></div>');
         } else {
-          publish_form.find('input[name="{proprietaire_civilite}"]').val(tr_proprietaire.find('select[id$="_civiliteProprietaire"]').val());
-          publish_form.find('input[name="{proprietaire_identite}"]').val(tr_proprietaire.find('input[id$="_proprietaire"]').val());
-          publish_form.find('input[name="{proprietaire_qualite}"]').val(tr_proprietaire.find('select[id$="_qualiteProprietaire"]').val());
-          publish_form.find('input[name="{proprietaire_adresse}"]').val(tr_proprietaire.find('input[id$="_adresseProprietaire"]').val());
-          publish_form.find('input[name="{proprietaire_ne_le}"]').val(tr_proprietaire.find('input[id$="_dateNaissanceProprietaire"]').val());
-          publish_form.find('input[name="{proprietaire_ne_a}"]').val(tr_proprietaire.find('input[id$="_lieuNaissanceProprietaire"]').val());
-          publish_form.find('input[name="{proprietaire_droit}"]').val(tr_proprietaire.find('select[id$="_droitProprietaire"]').val());
-          publish_form.find('input[name="{proprietaire_marital}"]').val(tr_proprietaire.find('select[id$="_maritalProprietaire"]').val());
+          publish_form.find('input[name="{proprietaire_civilite}"]').val($('input[name="projet[proprietaires][' + pid + '][civiliteProprietaire]"]').val());
+          publish_form.find('input[name="{proprietaire_identite}"]').val($('input[name="projet[proprietaires][' + pid + '][proprietaire]"]').val());
+          publish_form.find('input[name="{proprietaire_qualite}"]').val($('input[name="projet[proprietaires][' + pid + '][qualiteProprietaire]"]').val());
+          publish_form.find('input[name="{proprietaire_adresse}"]').val($('input[name="projet[proprietaires][' + pid + '][adresseProprietaire]"]').val());
+          publish_form.find('input[name="{proprietaire_ne_le}"]').val($('input[name="projet[proprietaires][' + pid + '][dateNaissanceProprietaire]"]').val());
+          publish_form.find('input[name="{proprietaire_ne_a}"]').val($('input[name="projet[proprietaires][' + pid + '][lieuNaissanceProprietaire]"]').val());
+          publish_form.find('input[name="{proprietaire_droit}"]').val($('input[name="projet[proprietaires][' + pid + '][droitProprietaire]"]').val());
+          publish_form.find('input[name="{proprietaire_marital}"]').val($('input[name="projet[proprietaires][' + pid + '][maritalProprietaire]"]').val());
   
           if (publish_form.find('input[name="{proprietaire2_civilite}"]').length) {
-            publish_form.find('input[name="{proprietaire2_civilite}"]').val(tr_proprietaire2.find('select[id$="_civiliteProprietaire2"]').val());
-            publish_form.find('input[name="{proprietaire2_identite}"]').val(tr_proprietaire2.find('input[id$="_proprietaire2"]').val());
-            publish_form.find('input[name="{proprietaire2_qualite}"]').val(tr_proprietaire2.find('select[id$="_qualiteProprietaire2"]').val());
-            publish_form.find('input[name="{proprietaire2_adresse}"]').val(tr_proprietaire2.find('input[id$="_adresseProprietaire2"]').val());
-            publish_form.find('input[name="{proprietaire2_ne_le}"]').val(tr_proprietaire2.find('input[id$="_dateNaissanceProprietaire2"]').val());
-            publish_form.find('input[name="{proprietaire2_ne_a}"]').val(tr_proprietaire2.find('input[id$="_lieuNaissanceProprietaire2"]').val());
-            publish_form.find('input[name="{proprietaire2_droit}"]').val(tr_proprietaire2.find('select[id$="_droitProprietaire2"]').val());
-            publish_form.find('input[name="{proprietaire2_marital}"]').val(tr_proprietaire2.find('select[id$="_maritalProprietaire2"]').val());
+            publish_form.find('input[name="{proprietaire2_civilite}"]').val($('input[name="projet[proprietaires][' + pid + '][civiliteProprietaire2]"]').val());
+            publish_form.find('input[name="{proprietaire2_identite}"]').val($('input[name="projet[proprietaires][' + pid + '][proprietaire2]"]').val());
+            publish_form.find('input[name="{proprietaire2_qualite}"]').val($('input[name="projet[proprietaires][' + pid + '][qualiteProprietaire2]"]').val());
+            publish_form.find('input[name="{proprietaire2_adresse}"]').val($('input[name="projet[proprietaires][' + pid + '][adresseProprietaire2]"]').val());
+            publish_form.find('input[name="{proprietaire2_ne_le}"]').val($('input[name="projet[proprietaires][' + pid + '][dateNaissanceProprietaire2]"]').val());
+            publish_form.find('input[name="{proprietaire2_ne_a}"]').val($('input[name="projet[proprietaires][' + pid + '][lieuNaissanceProprietaire2]"]').val());
+            publish_form.find('input[name="{proprietaire2_droit}"]').val($('input[name="projet[proprietaires][' + pid + '][droitProprietaire2]"]').val());
+            publish_form.find('input[name="{proprietaire2_marital}"]').val($('input[name="projet[proprietaires][' + pid + '][maritalProprietaire2]"]').val());
           }
           if (publish_form.find('input[name="{proprietaire3_civilite}"]').length) {
-            publish_form.find('input[name="{proprietaire3_civilite}"]').val(tr_proprietaire3.find('select[id$="_civiliteProprietaire3"]').val());
-            publish_form.find('input[name="{proprietaire3_identite}"]').val(tr_proprietaire3.find('input[id$="_proprietaire3"]').val());
-            publish_form.find('input[name="{proprietaire3_qualite}"]').val(tr_proprietaire3.find('select[id$="_qualiteProprietaire3"]').val());
-            publish_form.find('input[name="{proprietaire3_adresse}"]').val(tr_proprietaire3.find('input[id$="_adresseProprietaire3"]').val());
-            publish_form.find('input[name="{proprietaire3_ne_le}"]').val(tr_proprietaire3.find('input[id$="_dateNaissanceProprietaire3"]').val());
-            publish_form.find('input[name="{proprietaire3_ne_a}"]').val(tr_proprietaire3.find('input[id$="_lieuNaissanceProprietaire3"]').val());
-            publish_form.find('input[name="{proprietaire3_droit}"]').val(tr_proprietaire3.find('select[id$="_droitProprietaire3"]').val());
-            publish_form.find('input[name="{proprietaire3_marital}"]').val(tr_proprietaire3.find('select[id$="_maritalProprietaire3"]').val());
+           publish_form.find('input[name="{proprietaire3_civilite}"]').val($('input[name="projet[proprietaires][' + pid + '][civiliteProprietaire3]"]').val());
+            publish_form.find('input[name="{proprietaire3_identite}"]').val($('input[name="projet[proprietaires][' + pid + '][proprietaire3]"]').val());
+            publish_form.find('input[name="{proprietaire3_qualite}"]').val($('input[name="projet[proprietaires][' + pid + '][qualiteProprietaire3]"]').val());
+            publish_form.find('input[name="{proprietaire3_adresse}"]').val($('input[name="projet[proprietaires][' + pid + '][adresseProprietaire3]"]').val());
+            publish_form.find('input[name="{proprietaire3_ne_le}"]').val($('input[name="projet[proprietaires][' + pid + '][dateNaissanceProprietaire3]"]').val());
+            publish_form.find('input[name="{proprietaire3_ne_a}"]').val($('input[name="projet[proprietaires][' + pid + '][lieuNaissanceProprietaire3]"]').val());
+            publish_form.find('input[name="{proprietaire3_droit}"]').val($('input[name="projet[proprietaires][' + pid + '][droitProprietaire3]"]').val());
+            publish_form.find('input[name="{proprietaire3_marital}"]').val($('input[name="projet[proprietaires][' + pid + '][maritalProprietaire3]"]').val());
          }
           if (publish_form.find('input[name="{proprietaire4_civilite}"]').length) {
-            publish_form.find('input[name="{proprietaire4_civilite}"]').val(tr_proprietaire4.find('select[id$="_civiliteProprietaire4"]').val());
-            publish_form.find('input[name="{proprietaire4_identite}"]').val(tr_proprietaire4.find('input[id$="_proprietaire4"]').val());
-            publish_form.find('input[name="{proprietaire4_qualite}"]').val(tr_proprietaire4.find('select[id$="_qualiteProprietaire4"]').val());
-            publish_form.find('input[name="{proprietaire4_adresse}"]').val(tr_proprietaire4.find('input[id$="_adresseProprietaire4"]').val());
-            publish_form.find('input[name="{proprietaire4_ne_le}"]').val(tr_proprietaire4.find('input[id$="_dateNaissanceProprietaire4"]').val());
-            publish_form.find('input[name="{proprietaire4_ne_a}"]').val(tr_proprietaire4.find('input[id$="_lieuNaissanceProprietaire4"]').val());
-            publish_form.find('input[name="{proprietaire4_droit}"]').val(tr_proprietaire4.find('select[id$="_droitProprietaire4"]').val());
-            publish_form.find('input[name="{proprietaire4_marital}"]').val(tr_proprietaire4.find('select[id$="_maritalProprietaire4"]').val());
+            publish_form.find('input[name="{proprietaire4_civilite}"]').val($('input[name="projet[proprietaires][' + pid + '][civiliteProprietaire4]"]').val());
+            publish_form.find('input[name="{proprietaire4_identite}"]').val($('input[name="projet[proprietaires][' + pid + '][proprietaire4]"]').val());
+            publish_form.find('input[name="{proprietaire4_qualite}"]').val($('input[name="projet[proprietaires][' + pid + '][qualiteProprietaire4]"]').val());
+            publish_form.find('input[name="{proprietaire4_adresse}"]').val($('input[name="projet[proprietaires][' + pid + '][adresseProprietaire4]"]').val());
+            publish_form.find('input[name="{proprietaire4_ne_le}"]').val($('input[name="projet[proprietaires][' + pid + '][dateNaissanceProprietaire4]"]').val());
+            publish_form.find('input[name="{proprietaire4_ne_a}"]').val($('input[name="projet[proprietaires][' + pid + '][lieuNaissanceProprietaire4]"]').val());
+            publish_form.find('input[name="{proprietaire4_droit}"]').val($('input[name="projet[proprietaires][' + pid + '][droitProprietaire4]"]').val());
+            publish_form.find('input[name="{proprietaire4_marital}"]').val($('input[name="projet[proprietaires][' + pid + '][maritalProprietaire4]"]').val());
           }
           
-          publish_form.find('input[name="{exploitant_civilite}"]').val(tr_exploitant.find('select[id$="_civiliteExploitant"]').val());
-          publish_form.find('input[name="{exploitant_identite}"]').val(tr_exploitant.find('input[id$="_exploitant"]').val());
-          publish_form.find('input[name="{exploitant_qualite}"]').val(tr_exploitant.find('select[id$="_qualiteExploitant"]').val());
-          publish_form.find('input[name="{exploitant_adresse}"]').val(tr_exploitant.find('input[id$="_adresseExploitant"]').val());
-          publish_form.find('input[name="{exploitant_ne_le}"]').val(tr_exploitant.find('input[id$="_dateNaissanceExploitant"]').val());
-          publish_form.find('input[name="{exploitant_ne_a}"]').val(tr_exploitant.find('input[id$="_lieuNaissanceExploitant"]').val());
-          publish_form.find('input[name="{exploitant_droit}"]').val(tr_exploitant.find('select[id$="_droitExploitant"]').val());
-          publish_form.find('input[name="{exploitant_marital}"]').val(tr_exploitant.find('select[id$="_maritalExploitant"]').val());
+         publish_form.find('input[name="{exploitant_civilite}"]').val($('input[name="projet[proprietaires][' + pid + '][civiliteExploitant]"]').val());
+          publish_form.find('input[name="{exploitant_identite}"]').val($('input[name="projet[proprietaires][' + pid + '][exploitant]"]').val());
+          publish_form.find('input[name="{exploitant_qualite}"]').val($('input[name="projet[proprietaires][' + pid + '][qualiteExploitant]"]').val());
+          publish_form.find('input[name="{exploitant_adresse}"]').val($('input[name="projet[proprietaires][' + pid + '][adresseExploitant]"]').val());
+          publish_form.find('input[name="{exploitant_ne_le}"]').val($('input[name="projet[proprietaires][' + pid + '][dateNaissanceExploitant]"]').val());
+          publish_form.find('input[name="{exploitant_ne_a}"]').val($('input[name="projet[proprietaires][' + pid + '][lieuNaissanceExploitant]"]').val());
+          publish_form.find('input[name="{exploitant_droit}"]').val($('input[name="projet[proprietaires][' + pid + '][droitExploitant]"]').val());
+          publish_form.find('input[name="{exploitant_marital}"]').val($('input[name="projet[proprietaires][' + pid + '][maritalExploitant]"]').val());
   
           if (publish_form.find('input[name="{exploitant2_civilite}"]').length) {
-            publish_form.find('input[name="{exploitant2_civilite}"]').val(tr_exploitant2.find('select[id$="_civiliteExploitant2"]').val());
-            publish_form.find('input[name="{exploitant2_identite}"]').val(tr_exploitant2.find('input[id$="_exploitant2"]').val());
-            publish_form.find('input[name="{exploitant2_qualite}"]').val(tr_exploitant2.find('select[id$="_qualiteExploitant2"]').val());
-            publish_form.find('input[name="{exploitant2_adresse}"]').val(tr_exploitant2.find('input[id$="_adresseExploitant2"]').val());
-            publish_form.find('input[name="{exploitant2_ne_le}"]').val(tr_exploitant2.find('input[id$="_dateNaissanceExploitant2"]').val());
-            publish_form.find('input[name="{exploitant2_ne_a}"]').val(tr_exploitant2.find('input[id$="_lieuNaissanceExploitant2"]').val());
-            publish_form.find('input[name="{exploitant2_droit}"]').val(tr_exploitant2.find('select[id$="_droitExploitant2"]').val());
-            publish_form.find('input[name="{exploitant2_marital}"]').val(tr_exploitant2.find('select[id$="_maritalExploitant2"]').val());
+            publish_form.find('input[name="{exploitant2_civilite}"]').val($('input[name="projet[proprietaires][' + pid + '][civiliteExploitant2]"]').val());
+            publish_form.find('input[name="{exploitant2_identite}"]').val($('input[name="projet[proprietaires][' + pid + '][exploitant2]"]').val());
+            publish_form.find('input[name="{exploitant2_qualite}"]').val($('input[name="projet[proprietaires][' + pid + '][qualiteExploitant2]"]').val());
+            publish_form.find('input[name="{exploitant2_adresse}"]').val($('input[name="projet[proprietaires][' + pid + '][adresseExploitant2]"]').val());
+            publish_form.find('input[name="{exploitant2_ne_le}"]').val($('input[name="projet[proprietaires][' + pid + '][dateNaissanceExploitant2]"]').val());
+            publish_form.find('input[name="{exploitant2_ne_a}"]').val($('input[name="projet[proprietaires][' + pid + '][lieuNaissanceExploitant2]"]').val());
+            publish_form.find('input[name="{exploitant2_droit}"]').val($('input[name="projet[proprietaires][' + pid + '][droitExploitant2]"]').val());
+            publish_form.find('input[name="{exploitant2_marital}"]').val($('input[name="projet[proprietaires][' + pid + '][maritalExploitant2]"]').val());
           }
   
           if (publish_form.find('input[name="{exploitant3_civilite}"]').length) {
-            publish_form.find('input[name="{exploitant3_civilite}"]').val(tr_exploitant3.find('select[id$="_civiliteExploitant3"]').val());
-            publish_form.find('input[name="{exploitant3_identite}"]').val(tr_exploitant3.find('input[id$="_exploitant3"]').val());
-            publish_form.find('input[name="{exploitant3_qualite}"]').val(tr_exploitant3.find('select[id$="_qualiteExploitant3"]').val());
-            publish_form.find('input[name="{exploitant3_adresse}"]').val(tr_exploitant3.find('input[id$="_adresseExploitant3"]').val());
-            publish_form.find('input[name="{exploitant3_ne_le}"]').val(tr_exploitant3.find('input[id$="_dateNaissanceExploitant3"]').val());
-            publish_form.find('input[name="{exploitant3_ne_a}"]').val(tr_exploitant3.find('input[id$="_lieuNaissanceExploitant3"]').val());
-            publish_form.find('input[name="{exploitant3_droit}"]').val(tr_exploitant3.find('select[id$="_droitExploitant3"]').val());
-            publish_form.find('input[name="{exploitant3_marital}"]').val(tr_exploitant3.find('select[id$="_maritalExploitant3"]').val());
+            publish_form.find('input[name="{exploitant3_civilite}"]').val($('input[name="projet[proprietaires][' + pid + '][civiliteExploitant3]"]').val());
+            publish_form.find('input[name="{exploitant3_identite}"]').val($('input[name="projet[proprietaires][' + pid + '][exploitant3]"]').val());
+            publish_form.find('input[name="{exploitant3_qualite}"]').val($('input[name="projet[proprietaires][' + pid + '][qualiteExploitant3]"]').val());
+            publish_form.find('input[name="{exploitant3_adresse}"]').val($('input[name="projet[proprietaires][' + pid + '][adresseExploitant3]"]').val());
+            publish_form.find('input[name="{exploitant3_ne_le}"]').val($('input[name="projet[proprietaires][' + pid + '][dateNaissanceExploitant3]"]').val());
+            publish_form.find('input[name="{exploitant3_ne_a}"]').val($('input[name="projet[proprietaires][' + pid + '][lieuNaissanceExploitant3]"]').val());
+            publish_form.find('input[name="{exploitant3_droit}"]').val($('input[name="projet[proprietaires][' + pid + '][droitExploitant3]"]').val());
+            publish_form.find('input[name="{exploitant3_marital}"]').val($('input[name="projet[proprietaires][' + pid + '][maritalExploitant3]"]').val());
           }
   
-          var selectedParcelles = tr_proprietaire.find('input[id$="_parcelles"]').val().trim().split(',');
+          /*var selectedParcelles = tr_proprietaire.find('input[id$="_parcelles"]').val().trim().split(',');*/
+          var selectedParcelles =  $('input[name="projet[proprietaires][' + pid + '][parcelles]"]').val().trim().split(',');
           var parcellesArray = [];
           if($('#projet_parcelles tr').length) {
             $('#projet_parcelles tr').each(function(i,element) {
@@ -4613,14 +4655,99 @@
       document.body.removeChild(downloadLink);
     }
 
-    $('#projet_proprietaires_export_entry').click(function () {
-      if($collectionHolderProprietaire.find('tr').length) {
+
+    
+     $('#projet_proprietaires_export_entry').click(function () {
+      /*console.log($collectionHolderProprietaire);*/
+      if($('#proprietaires-info').find('tr').length > 0) {
         var titles = ['Fonction'];
         var data = [];
-        $collectionHolderProprietaire.parents('table').find('th').each(function() {
+        //console.log(jQuery('#projet_proprietairesm').find('.form-label'));
+      /*  $collectionHolderProprietaire.parents('table').find('th').each(function() {
           titles.push($(this).text());
+
+        });*/
+
+        jQuery('#projet_proprietairesm').find('.form-label').each(function(){
+
+          titles.push($(this).text());
+
         });
-        $collectionHolderProprietaire.children().each(function(i, tr) {
+
+        jQuery('.proprietaires_hidden').find('.proprietaire_info').each(function() {
+         // data.push('Proprietaire');
+          $this = jQuery(this);
+
+          if($this.find('.form-input').first().val() != '') {
+            data.push('Proprietaire');
+            $this.find('.form-input').each(function () {
+                var val = jQuery(this).val();
+               
+              data.push(val.replace(',','|'));
+
+            });
+          }
+          if($this.find('.form-prop2').first().val() != '') {
+            data.push('Proprietaire 2');
+            data.push('');
+            $this.find('.form-prop2').each(function () {
+
+              data.push(jQuery(this).val());
+
+            });
+          }
+          if($this.find('.form-prop3').first().val() != '') {
+            data.push('Proprietaire 3');
+            data.push('');
+            $this.find('.form-prop3').each(function () {
+              data.push(jQuery(this).val());
+
+            });
+          }
+          if($this.find('.form-prop4').first().val() != '') {
+            data.push('Proprietaire 4');
+            data.push('');
+            $this.find('.form-prop4').each(function () {
+
+              data.push(jQuery(this).val());
+
+            });
+          }
+          if($this.find('.form-expo1').first().val() != '') {
+
+            data.push('Exploitant');
+            data.push('');
+            $this.find('.form-expo1').each(function () {
+
+              data.push(jQuery(this).val());
+
+            });
+          }
+          if($this.find('.form-expo2').first().val() != '') {
+            data.push('Exploitant 2');
+            data.push('');
+            $this.find('.form-expo2').each(function () {
+
+              data.push(jQuery(this).val());
+
+            });
+          }
+          if($this.find('.form-expo3').first().val() != '')
+          {
+            data.push('Exploitant 3');
+            data.push('');
+            $this.find('.form-expo3').each(function () {
+
+              data.push(jQuery(this).val());
+
+            });
+          }
+
+
+        });
+
+
+       /* $collectionHolderProprietaire.children().each(function(i, tr) {
           if (($(tr).find('input[id*="_proprietaire"]').length && $(tr).find('input[id*="_proprietaire"]').val().trim()) || ($(tr).find('input[id*="_exploitant"]').length && $(tr).find('input[id*="_exploitant"]').val().trim())) {
             if ($(tr).hasClass('proprietaire_entry')) {
               data.push('Proprietaire');
@@ -4651,12 +4778,11 @@
               });
             }
           }
-        });
-        
+        });*/
+    
         exportToCsv(titles, data, 'foncier_');
       }
     });
-
     function prepCSVRow(arr, columnCount, initial) {
       var row = ''; // this will hold data
       var delimeter = ','; // data slice separator, in excel it's `;`, in usual CSv it's `,`
