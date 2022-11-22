@@ -198,13 +198,13 @@ class ProjetType extends AbstractType
                 'label' => false,
                 'by_reference' => false,
             ])
-            ->add('proprietaires', CollectionType::class, [
+            /*->add('proprietaires', CollectionType::class, [
                 'entry_type' => ProprietaireType::class,
                 'allow_add' => true,
                 'allow_delete' => true,
                 'label' => false,
                 'by_reference' => false,
-            ])
+            ])*/
             ->add('terrain', TerrainType::class, [
                 'label' => 'Terrain'
             ])
