@@ -20,7 +20,7 @@ class Environnement
     const ZONEMIXTE = 'zone_mixte';
     const PATURAGES = 'paturages';
     const PRAIRIE = 'prairie';
-    const MILIEUOUVERT = 'milieu_ouvert';
+    const VERGER = 'verger';
     const ZONEURBAINE = 'zone_urbaine';
     const EXPLOITATION_AGRICOLE = 'exploitation_agricole';
     const ACTIVITE = 'zone_activite';
@@ -52,7 +52,7 @@ class Environnement
                 self::ZONEMIXTE => 'Grandes cultures',
                 self::PATURAGES => 'Pâturages',
                 self::PRAIRIE => 'Prairie',
-                self::MILIEUOUVERT => 'Milieu ouvert',
+                self::VERGER => 'Verger',
                 self::ZONEURBAINE => 'Zone urbaine',
                 self::EXPLOITATION_AGRICOLE => 'Exploitation agricole',
                 self::ACTIVITE => 'Zone d\'activité',
@@ -72,7 +72,7 @@ class Environnement
                 self::ZONEMIXTE => 'Grandes cultures',
                 self::PATURAGES => 'Pâturages',
                 self::PRAIRIE => 'Prairie',
-                self::MILIEUOUVERT => 'Milieu ouvert',
+                self::VERGER => 'Verger',
                 self::ZONEURBAINE => 'Zone urbaine',
                 self::EXPLOITATION_AGRICOLE => 'Exploitation agricole',
                 self::ACTIVITE => 'Zone d\'activité',

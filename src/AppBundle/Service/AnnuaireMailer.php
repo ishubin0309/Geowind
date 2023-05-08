@@ -48,12 +48,13 @@ class AnnuaireMailer
     private function sendMail($message, &$errors,  $dir)
     {
         $email = new \SendGrid\Mail\Mail();
-        // $email->setFrom('climactif@hotmail.com', 'Climactif');
-        $email->setFrom('r.ammour@wkn-france.fr', 'WKN France');
+        $email->setFrom('climactif@hotmail.com', 'Climactif');
+        // $email->setFrom('r.ammour@wkn-france.fr', 'WKN France');
         $email->setSubject($message->getObject());
         $email->addTo($message->getTo());
         $email->addContent("text/plain", strip_tags($message->getBody()));
         $logo = '<br><br><img width="200" src="https://www.climactif.com/images/wkn-france.png" alt="WKN France"><br>WKN France<br>10 Rue Charles Brunellière<br>44100 Nantes';
+        $logo = '';
         $email->addContent(
             "text/html", str_replace("\n", '<br>', $message->getBody()).$logo
         );
